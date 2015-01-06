@@ -1,0 +1,51 @@
+/**
+
+@mainpage Manual of VSCP Framework PC example
+<hr>
+@section pageTOC Content
+  -# @ref vscp
+  -# @ref framework
+  -# @ref pc
+    + @ref ps
+    + @ref startup
+  -# @ref Structure
+
+@section vscp Very Simple Control Protocol (VSCP)
+The Very Simple Control Protocol (VSCP), an open and free protocol for IoT/m2m automation tasks.
+
+@section framework Framework
+The VSCP software framework implements the mandatory and some optional features of VSCP. It provides easy and fast access to the embedded VSCP world.
+If you are interested in details about the framework, please take a look to the manual of the VSCP framework.
+
+@section pc PC example
+This example shows how the VSCP framework can be used.
+If it is called without any option, it starts up sends a heartbeat. Send some events to the node by pressing the keys '0' to '9' and see what happens.
+
+The following sequence diagram shows simpflied how the VSCP framework is handled.
+@image html main_seq.jpg
+
+@subsection ps Persistent memory
+The example simulates the persistent memory with a eeprom simulation.
+The first time the binary is called, it creates a eeprom.asc file, which contains the eeprom content in a user friendly form. Open it with a editor to learn more about it.
+If a eeprom.asc file exists, it will be loaded and used.
+
+@subsection startup Startup
+The node behaves like an not initialized node, which means the LED blinks and waits that the user starts the nickname discovery process.
+Press 'i' to start it.
+
+@section Structure
+
+<pre>
+./examples (VSCP examples)
+    \\---pc (PC example)
+        +---doc (VSCP doxygen documentation)
+        |   +---doxfiles (Doxygen related files)
+        |   \\---html (Generated HTML documentation)
+        +---include (Include files for the vscphelper lib)
+        +---lib (Libs for the vscphelper lib)
+        |   +---linux (Linux specific libs .a and .so)
+        |   \\---win32 (Windows specific libs .lib and .dll)
+        \\---vscpUser (Specific adaption of the VSCP framework)
+</pre>
+  
+*/

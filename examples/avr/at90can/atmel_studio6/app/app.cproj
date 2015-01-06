@@ -1,0 +1,396 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>6.2</ProjectVersion>
+    <ToolchainName>com.Atmel.AVRGCC8.C</ToolchainName>
+    <ProjectGuid>{d84a7703-c8df-43a3-9195-82f64d63943a}</ProjectGuid>
+    <avrdevice>AT90CAN32</avrdevice>
+    <avrdeviceseries>none</avrdeviceseries>
+    <OutputType>Executable</OutputType>
+    <Language>C</Language>
+    <OutputFileName>$(MSBuildProjectName)</OutputFileName>
+    <OutputFileExtension>.elf</OutputFileExtension>
+    <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
+    <AssemblyName>app</AssemblyName>
+    <Name>app</Name>
+    <RootNamespace>app</RootNamespace>
+    <ToolchainFlavour>Native</ToolchainFlavour>
+    <KeepTimersRunning>true</KeepTimersRunning>
+    <OverrideVtor>false</OverrideVtor>
+    <CacheFlash>true</CacheFlash>
+    <ProgFlashFromRam>true</ProgFlashFromRam>
+    <RamSnippetAddress />
+    <UncachedRange />
+    <preserveEEPROM>true</preserveEEPROM>
+    <OverrideVtorValue />
+    <BootSegment>2</BootSegment>
+    <eraseonlaunchrule>1</eraseonlaunchrule>
+    <AsfFrameworkConfig>
+      <framework-data xmlns="">
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.19.0" />
+        </dependencies>
+      </framework-data>
+    </AsfFrameworkConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <ToolchainSettings>
+      <AvrGcc>
+        <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+        <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+        <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+        <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+        <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
+        <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+        <avrgcc.compiler.symbols.DefSymbols>
+          <ListValues>
+            <Value>F_CPU=16000000UL</Value>
+            <Value>NDEBUG</Value>
+          </ListValues>
+        </avrgcc.compiler.symbols.DefSymbols>
+        <avrgcc.compiler.directories.IncludePaths>
+          <ListValues>
+            <Value>../../../common</Value>
+            <Value>../../../driver</Value>
+            <Value>../../../vscp_user</Value>
+            <Value>../../../../../../vscp</Value>
+            <Value>../../../../../../vscp/events</Value>
+          </ListValues>
+        </avrgcc.compiler.directories.IncludePaths>
+        <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
+        <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+        <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+        <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+        <avrgcc.linker.libraries.Libraries>
+          <ListValues>
+            <Value>libm</Value>
+          </ListValues>
+        </avrgcc.linker.libraries.Libraries>
+      </AvrGcc>
+    </ToolchainSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <ToolchainSettings>
+      <AvrGcc>
+        <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+        <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+        <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+        <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+        <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
+        <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>False</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+        <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+        <avrgcc.compiler.symbols.DefSymbols>
+          <ListValues>
+            <Value>F_CPU=16000000UL</Value>
+            <Value>DEBUG</Value>
+          </ListValues>
+        </avrgcc.compiler.symbols.DefSymbols>
+        <avrgcc.compiler.directories.IncludePaths>
+          <ListValues>
+            <Value>../../../common</Value>
+            <Value>../../../driver</Value>
+            <Value>../../../vscp_user</Value>
+            <Value>../../../../../../vscp</Value>
+            <Value>../../../../../../vscp/events</Value>
+          </ListValues>
+        </avrgcc.compiler.directories.IncludePaths>
+        <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+        <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+        <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+        <avrgcc.compiler.warnings.Pedantic>True</avrgcc.compiler.warnings.Pedantic>
+        <avrgcc.linker.libraries.Libraries>
+          <ListValues>
+            <Value>libm</Value>
+          </ListValues>
+        </avrgcc.linker.libraries.Libraries>
+        <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
+        <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
+        <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
+      </AvrGcc>
+    </ToolchainSettings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\..\..\vscp\events\vscp_alarm.c">
+      <SubType>compile</SubType>
+      <Link>vscp\events\vscp_alarm.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\events\vscp_alarm.h">
+      <SubType>compile</SubType>
+      <Link>vscp\events\vscp_alarm.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\events\vscp_control.c">
+      <SubType>compile</SubType>
+      <Link>vscp\events\vscp_control.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\events\vscp_control.h">
+      <SubType>compile</SubType>
+      <Link>vscp\events\vscp_control.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\events\vscp_information.c">
+      <SubType>compile</SubType>
+      <Link>vscp\events\vscp_information.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\events\vscp_information.h">
+      <SubType>compile</SubType>
+      <Link>vscp\events\vscp_information.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\events\vscp_security.c">
+      <SubType>compile</SubType>
+      <Link>vscp\events\vscp_security.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\events\vscp_security.h">
+      <SubType>compile</SubType>
+      <Link>vscp\events\vscp_security.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\events\vscp_weather.c">
+      <SubType>compile</SubType>
+      <Link>vscp\events\vscp_weather.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\events\vscp_weather.h">
+      <SubType>compile</SubType>
+      <Link>vscp\events\vscp_weather.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\events\vscp_weather_forecast.c">
+      <SubType>compile</SubType>
+      <Link>vscp\events\vscp_weather_forecast.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\events\vscp_weather_forecast.h">
+      <SubType>compile</SubType>
+      <Link>vscp\events\vscp_weather_forecast.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_class_l1.h">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_class_l1.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_config.h">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_config.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_config_base.h">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_config_base.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_core.c">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_core.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_core.h">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_core.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_dev_data.c">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_dev_data.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_dev_data.h">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_dev_data.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_dev_data_config.h">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_dev_data_config.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_dm.c">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_dm.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_dm.h">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_dm.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_dm_ng.c">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_dm_ng.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_dm_ng.h">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_dm_ng.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_ps.c">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_ps.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_ps.h">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_ps.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_transport.c">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_transport.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_transport.h">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_transport.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_types.h">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_types.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_type_alarm.h">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_type_alarm.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_type_control.h">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_type_control.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_type_display.h">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_type_display.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_type_information.h">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_type_information.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_type_phone.h">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_type_phone.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_type_protocol.h">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_type_protocol.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_type_remote.h">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_type_remote.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_type_security.h">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_type_security.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_util.c">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_util.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_util.h">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_util.h</Link>
+    </Compile>
+    <Compile Include="..\..\common\swTimer.c">
+      <SubType>compile</SubType>
+      <Link>common\swTimer.c</Link>
+    </Compile>
+    <Compile Include="..\..\common\swTimer.h">
+      <SubType>compile</SubType>
+      <Link>common\swTimer.h</Link>
+    </Compile>
+    <Compile Include="..\..\common\system.h">
+      <SubType>compile</SubType>
+      <Link>common\system.h</Link>
+    </Compile>
+    <Compile Include="..\..\common\time.c">
+      <SubType>compile</SubType>
+      <Link>common\time.c</Link>
+    </Compile>
+    <Compile Include="..\..\common\time.h">
+      <SubType>compile</SubType>
+      <Link>common\time.h</Link>
+    </Compile>
+    <Compile Include="..\..\driver\canDrv.c">
+      <SubType>compile</SubType>
+      <Link>driver\canDrv.c</Link>
+    </Compile>
+    <Compile Include="..\..\driver\canDrv.h">
+      <SubType>compile</SubType>
+      <Link>driver\canDrv.h</Link>
+    </Compile>
+    <Compile Include="..\..\driver\hw.c">
+      <SubType>compile</SubType>
+      <Link>driver\hw.c</Link>
+    </Compile>
+    <Compile Include="..\..\driver\hw.h">
+      <SubType>compile</SubType>
+      <Link>driver\hw.h</Link>
+    </Compile>
+    <Compile Include="..\..\driver\serialDrv.c">
+      <SubType>compile</SubType>
+      <Link>driver\serialDrv.c</Link>
+    </Compile>
+    <Compile Include="..\..\driver\serialDrv.h">
+      <SubType>compile</SubType>
+      <Link>driver\serialDrv.h</Link>
+    </Compile>
+    <Compile Include="..\..\driver\timerDrv.c">
+      <SubType>compile</SubType>
+      <Link>driver\timerDrv.c</Link>
+    </Compile>
+    <Compile Include="..\..\driver\timerDrv.h">
+      <SubType>compile</SubType>
+      <Link>driver\timerDrv.h</Link>
+    </Compile>
+    <Compile Include="..\..\main.c">
+      <SubType>compile</SubType>
+      <Link>main.c</Link>
+    </Compile>
+    <Compile Include="..\..\vscp_user\vscp_action.c">
+      <SubType>compile</SubType>
+      <Link>vscp_user\vscp_action.c</Link>
+    </Compile>
+    <Compile Include="..\..\vscp_user\vscp_action.h">
+      <SubType>compile</SubType>
+      <Link>vscp_user\vscp_action.h</Link>
+    </Compile>
+    <Compile Include="..\..\vscp_user\vscp_app_reg.c">
+      <SubType>compile</SubType>
+      <Link>vscp_user\vscp_app_reg.c</Link>
+    </Compile>
+    <Compile Include="..\..\vscp_user\vscp_app_reg.h">
+      <SubType>compile</SubType>
+      <Link>vscp_user\vscp_app_reg.h</Link>
+    </Compile>
+    <Compile Include="..\..\vscp_user\vscp_config_overwrite.h">
+      <SubType>compile</SubType>
+      <Link>vscp_user\vscp_config_overwrite.h</Link>
+    </Compile>
+    <Compile Include="..\..\vscp_user\vscp_dev_data_config_overwrite.h">
+      <SubType>compile</SubType>
+      <Link>vscp_user\vscp_dev_data_config_overwrite.h</Link>
+    </Compile>
+    <Compile Include="..\..\vscp_user\vscp_portable.c">
+      <SubType>compile</SubType>
+      <Link>vscp_user\vscp_portable.c</Link>
+    </Compile>
+    <Compile Include="..\..\vscp_user\vscp_portable.h">
+      <SubType>compile</SubType>
+      <Link>vscp_user\vscp_portable.h</Link>
+    </Compile>
+    <Compile Include="..\..\vscp_user\vscp_ps_access.c">
+      <SubType>compile</SubType>
+      <Link>vscp_user\vscp_ps_access.c</Link>
+    </Compile>
+    <Compile Include="..\..\vscp_user\vscp_ps_access.h">
+      <SubType>compile</SubType>
+      <Link>vscp_user\vscp_ps_access.h</Link>
+    </Compile>
+    <Compile Include="..\..\vscp_user\vscp_timer.c">
+      <SubType>compile</SubType>
+      <Link>vscp_user\vscp_timer.c</Link>
+    </Compile>
+    <Compile Include="..\..\vscp_user\vscp_timer.h">
+      <SubType>compile</SubType>
+      <Link>vscp_user\vscp_timer.h</Link>
+    </Compile>
+    <Compile Include="..\..\vscp_user\vscp_tp_adapter.c">
+      <SubType>compile</SubType>
+      <Link>vscp_user\vscp_tp_adapter.c</Link>
+    </Compile>
+    <Compile Include="..\..\vscp_user\vscp_tp_adapter.h">
+      <SubType>compile</SubType>
+      <Link>vscp_user\vscp_tp_adapter.h</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="common\" />
+    <Folder Include="driver\" />
+    <Folder Include="vscp\" />
+    <Folder Include="vscp\events\" />
+    <Folder Include="vscp_user\" />
+  </ItemGroup>
+  <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
+</Project>

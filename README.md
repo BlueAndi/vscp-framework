@@ -8,10 +8,12 @@
 #VSCP
 The Very Simple Control Protocol (VSCP), an open and free protocol for IoT/m2m automation tasks.
 
-#Framework
-The VSCP software framework provides several layers according to the VSCP specification.
+More information can be found on the main site http://www.vscp.org
 
-![overview-diagram](https://github.com/BlueAndi/vscp-framework/vscp_modules.jpg)
+#Framework
+The VSCP software framework provides several layers according to the [VSCP specification](http://www.vscp.org/docs/vscpspec/doku.php):
+
+![overview-diagram](https://github.com/BlueAndi/vscp-framework/blob/master/vscp_modules.jpg)
 
 * The core functionality which has a built-in state machine to handle different use cases of the protocol and etc. (vscp\_core.[ch]). Right now it supports every mandatory event and some minor optional ones.
 * The decision matrix is handled separately (vscp\_dm.[ch]). It contains the standard decision matrix, as described in the VSCP specification and contains an additional extension.
@@ -41,21 +43,21 @@ Templates exists for all of them, which makes it much easier to adapt it and les
 #Structure
 
 <pre>
-./common (Common sourcecode, used for examples or projects)
-./vscp (VSCP core modules)
-    +---doc (VSCP doxygen documentation)
-    |   +---doxfiles (Doxygen related files)
-    |   \\---html (Generated HTML documentation)
-    +---events (These modules are using the VSCP core to send CLASS1 dedicated events.)
-    +---templates (Templates of the files, which the user shall adapt to its needs.)
-    \\---test (VSCP test of the framework)
-        \\---cunit (CUNIT - test framework)
-./vscp_examples (Examples which are showing how to use the VSCP framework)
-    +---avr (Atmel AVR examples)
-    \\---pc (PC examples)
-./vscp_projects (Projects which are using the VSCP framework)
-    \\---avr (Atmel AVR projects)
-./vscp_tools (Tools used by examples or projects)
++---common              (Common sourcecode, used for examples and projects)
++---examples            (Examples which are showing how to use the VSCP framework)
+|   +---avr             (Examples with Atmel AVR microcontrollers)
+|   \\---pc              (PC example for windows and linux)
++---projects            (Projects using the VSCP framework)
+|   \\---avr             (Projects with Atmel AVR microcontrollers)
++---tools               (General tools, used by examples and projects)
+|   \\---xslt            (XML transformation processor)
+\\---vscp                (VSCP framework)
+    +---doc             (Documentation)
+    |   +---doxfiles    (Doxygen related files)
+    |   \\---html        (Doxygen generated documentation in HTML)
+    +---events          (These modules are using the VSCP core to send CLASS1 dedicated events)
+    +---templates       (Templates of the files, which the user shall adapt to its needs)
+    \\---test            (Test of the VSCP framework)
 </pre>
 
 #Getting started

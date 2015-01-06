@@ -1,0 +1,422 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+
+The MIT License (MIT)
+
+Copyright (c) 2014 - 2015, Andreas Merkle
+http://www.blue-andi.de
+vscp@blue-andi.de
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+********************************************************************************
+This module description file (MDF) is for the VSCP framework example AT90CANxxx.
+
+$Author: amerkle $
+$Rev: 449 $
+$Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
+********************************************************************************
+-->
+
+<vscp xmlns="http://www.blue-andi.de/vscp/mdf/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blue-andi.de/vscp/mdf/1.0 mdf.xsd ">
+
+    <module>
+    
+        <name>Example project AT90CANxxx</name>
+        <model>A</model>
+        <version>0.1.0</version>
+        <changed>2014-12-20</changed>
+        <description lang="en">The node contains a basic example for using VSCP.</description>
+        <infourl></infourl>
+        
+        <!-- Max package size a node can receive -->
+        <buffersize>8</buffersize>
+        
+        <!-- Manufacturer -->
+        <manufacturer>	
+            <name>blue-andi</name>
+            <address>
+                <street>Schubertstr. 1</street>
+                <city>Roggenburg</city>
+                <postcode>89297</postcode>
+                <country>Germany</country>
+            </address>
+            <telephone>									
+                <number>+49 ...</number>
+                <description lang="en" >:-)</description>
+            </telephone>
+            <email>
+                <address>web@blue-andi.de</address>
+                <description lang="en">Support email</description>
+            </email>
+            <web>
+                <address>http://www.blue-andi.de</address>
+                <description lang="en">Main web address</description>
+            </web>
+        </manufacturer>
+	
+        <!-- Boot loader information -->
+        <boot>
+            <algorithm>0</algorithm>
+            <blocksize>0</blocksize>
+            <blockcount>0</blockcount>
+        </boot>
+        
+        <!-- Register space -->
+        <registers>        
+
+            <!-- ********** Page 0 ********** -->
+        
+            <reg page="0" offset="0" >
+                <name lang="en">Zone</name>
+                <description lang="en">Zone this module belongs to.</description>
+                <access>rw</access>
+            </reg>
+
+            <reg page="0" offset="1" >
+                <name lang="en">Sub-zone</name>
+                <description lang="en">Sub-zone this module belongs to.</description>
+                <access>rw</access>
+            </reg>
+            
+            <!-- ********** Page 1 ********** -->
+            
+            <!-- DM Row 1 -->
+            <reg page="1" offset="0" >
+                <name lang="en">Decision matrix row 1: oaddr</name>
+                <description lang="en">Originating address: Set to nickname for node that should trigger action.
+oaddr is the originating address. We are only interested in messages from the node given here. 0x00 is segment controller and 0xff is a node without a nickname.
+If bit 6 of flags is set, oaddr will not be checked and events from all nodes will be accepted.</description>
+                <access>rw</access>
+            </reg>
+            
+            <reg page="1" offset="1" >
+                <name lang="en">Decision matrix row 1: flags</name>
+                <description lang="en">Flags: Set selection behaviour.
+The enable bit can be used to disable a decion matrix row while it is edited.
+The zone and sub-zone bits can be activated to have a check on the zone/sub-zone information of an event.
+The zone/sub-zone must match the one of the event to trigger the DM row.</description>
+                <access>rw</access>
+                <bit pos="0" default="0" >
+                    <name lang="en">Class filter bit 8</name>
+                    <description lang="en">Defines the 9th bit of the class filter.</description> 
+                </bit>
+                <bit pos="1" default="0" >
+                    <name lang="en">Class mask bit 8</name>
+                    <description lang="en">Defines the 9th bit of the class mask.</description> 
+                </bit>
+                <bit pos="2" default="false" >
+                    <name lang="en">Reserved bit</name>
+                    <description lang="en">This bit is not used.</description> 
+                </bit>
+                <bit pos="3" default="false" >
+                    <name lang="en">Sub-zone match</name>
+                    <description lang="en">If set to one, sub-zone must match to trigger DM entry action.</description> 
+                </bit>
+                <bit pos="4" default="false" >
+                    <name lang="en">Zone match</name>
+                    <description lang="en">If set to one, zone must match to trigger DM entry action.</description> 
+                </bit>
+                <bit pos="5" default="false" >
+                    <name lang="en">Hardcoded</name>
+                    <description lang="en">If set to one, the originating address must be hardcoded to trigger DM entry action.</description> 
+                </bit>	
+                <bit pos="6" default="false" >
+                    <name lang="en">Check Originating address</name>
+                    <description lang="en">If set to one, the originating address should be checked and match to trigger DM entry action.</description> 
+                </bit>
+                <bit pos="7" default="false" >
+                    <name lang="en">Enable</name>
+                    <description lang="en">Enable (1) or disable (0) the decison matrix row.</description> 
+                </bit>												
+            </reg>		
+            
+            <reg page="0" offset="2" >
+                <name lang="en">Decision matrix row 1: Class mask (low 8 bits) </name>
+                <description lang="en">The lowest 8 bits of the class mask that defines the events that should trigger the action of this decision matrix row.
+Bit 8 of the class mask is stored in bit 1 of the flag byte.</description>
+                <access>rw</access>
+            </reg>
+            
+            <reg page="0" offset="3" >
+                <name lang="en">Decision matrix row 1: Class filter (low 8 bits)</name>
+                <description lang="en">The lowest 8 bits of the class filter that defines the events that should trigger the action of this decision matrix row.
+Bit 8 of the class filter is stored in bit 1 of the flag byte.</description>
+                <access>rw</access>
+            </reg>
+            
+            <reg page="0" offset="4" >
+                <name lang="en">Decision matrix row 1: Type mask</name>
+                <description lang="en">Type mask that defines the events that should trigger the action of this decision matrix row.</description>
+                <access>rw</access>
+            </reg>
+            
+            <reg page="0" offset="5" >
+                <name lang="en">Decision matrix row 1: Type filter</name>
+                <description lang="en">Type filter that defines the events that should trigger the action of this decision matrix row.</description>
+                <access>rw</access>
+            </reg>	
+            
+            <reg page="0" offset="6" >
+                <name lang="en">Decision matrix row 1: Action</name>
+                <description lang="en">This is the action or operation that should be performed if the filtering is satisfied. Only action code 0×00 is predefined and means No-Operation. All other codes are application specific and typical application defined codes could do measurement, send predefined event etc.</description>
+                <access>rw</access>
+            </reg>
+            
+            <reg page="0" offset="7" >
+                <name lang="en">Decision matrix row 1: Action parameter</name>
+                <description lang="en">A numeric action parameter can be set and its meaning is application specific.</description>
+                <access>rw</access>
+            </reg>
+            
+            <!-- DM Row 2 -->
+            <reg page="1" offset="8" >
+                <name lang="en">Decision matrix row 2: oaddr</name>
+                <description lang="en">Originating address: Set to nickname for node that should trigger action.
+oaddr is the originating address. We are only interested in messages from the node given here. 0x00 is segment controller and 0xff is a node without a nickname.
+If bit 6 of flags is set, oaddr will not be checked and events from all nodes will be accepted.</description>
+                <access>rw</access>
+            </reg>
+            
+            <reg page="1" offset="9" >
+                <name lang="en">Decision matrix row 2: flags</name>
+                <description lang="en">Flags: Set selection behaviour.
+The enable bit can be used to disable a decion matrix row while it is edited.
+The zone and sub-zone bits can be activated to have a check on the zone/sub-zone information of an event.
+The zone/sub-zone must match the one of the event to trigger the DM row.</description>
+                <access>rw</access>
+                <bit pos="0" default="0" >
+                    <name lang="en">Class filter bit 8</name>
+                    <description lang="en">Defines the 9th bit of the class filter.</description> 
+                </bit>
+                <bit pos="1" default="0" >
+                    <name lang="en">Class mask bit 8</name>
+                    <description lang="en">Defines the 9th bit of the class mask.</description> 
+                </bit>
+                <bit pos="2" default="false" >
+                    <name lang="en">Reserved bit</name>
+                    <description lang="en">This bit is not used.</description> 
+                </bit>
+                <bit pos="3" default="false" >
+                    <name lang="en">Sub-zone match</name>
+                    <description lang="en">If set to one, sub-zone must match to trigger DM entry action.</description> 
+                </bit>
+                <bit pos="4" default="false" >
+                    <name lang="en">Zone match</name>
+                    <description lang="en">If set to one, zone must match to trigger DM entry action.</description> 
+                </bit>
+                <bit pos="5" default="false" >
+                    <name lang="en">Hardcoded</name>
+                    <description lang="en">If set to one, the originating address must be hardcoded to trigger DM entry action.</description> 
+                </bit>	
+                <bit pos="6" default="false" >
+                    <name lang="en">Check Originating address</name>
+                    <description lang="en">If set to one, the originating address should be checked and match to trigger DM entry action.</description> 
+                </bit>
+                <bit pos="7" default="false" >
+                    <name lang="en">Enable</name>
+                    <description lang="en">Enable (1) or disable (0) the decison matrix row.</description> 
+                </bit>												
+            </reg>		
+            
+            <reg page="0" offset="10" >
+                <name lang="en">Decision matrix row 2: Class mask (low 8 bits) </name>
+                <description lang="en">The lowest 8 bits of the class mask that defines the events that should trigger the action of this decision matrix row.
+Bit 8 of the class mask is stored in bit 1 of the flag byte.</description>
+                <access>rw</access>
+            </reg>
+            
+            <reg page="0" offset="11" >
+                <name lang="en">Decision matrix row 2: Class filter (low 8 bits)</name>
+                <description lang="en">The lowest 8 bits of the class filter that defines the events that should trigger the action of this decision matrix row.
+Bit 8 of the class filter is stored in bit 1 of the flag byte.</description>
+                <access>rw</access>
+            </reg>
+            
+            <reg page="0" offset="12" >
+                <name lang="en">Decision matrix row 2: Type mask</name>
+                <description lang="en">Type mask that defines the events that should trigger the action of this decision matrix row.</description>
+                <access>rw</access>
+            </reg>
+            
+            <reg page="0" offset="13" >
+                <name lang="en">Decision matrix row 2: Type filter</name>
+                <description lang="en">Type filter that defines the events that should trigger the action of this decision matrix row.</description>
+                <access>rw</access>
+            </reg>	
+            
+            <reg page="0" offset="14" >
+                <name lang="en">Decision matrix row 2: Action</name>
+                <description lang="en">This is the action or operation that should be performed if the filtering is satisfied. Only action code 0×00 is predefined and means No-Operation. All other codes are application specific and typical application defined codes could do measurement, send predefined event etc.</description>
+                <access>rw</access>
+            </reg>
+            
+            <reg page="0" offset="15" >
+                <name lang="en">Decision matrix row 2: Action parameter</name>
+                <description lang="en">A numeric action parameter can be set and its meaning is application specific.</description>
+                <access>rw</access>
+            </reg>
+            
+        </registers>
+	
+        <abstractions>
+        
+        </abstractions>
+
+        <alarm>
+        
+            <bit pos="7">
+                <name lang="en">Not used</name>
+                <description lang="en">Not used.</description>
+            </bit>
+
+            <bit pos="6">
+                <name lang="en">Not used</name>
+                <description lang="en">Not used.</description>
+            </bit>
+
+            <bit pos="5">
+                <name lang="en">Not used</name>
+                <description lang="en">Not used.</description>
+            </bit>
+
+            <bit pos="4">
+                <name lang="en">Not used</name>
+                <description lang="en">Not used.</description>
+            </bit>
+
+            <bit pos="3">
+                <name lang="en">Not used</name>
+                <description lang="en">Not used.</description>
+            </bit>
+
+            <bit pos="2">
+                <name lang="en">Not used</name>
+                <description lang="en">Not used.</description>
+            </bit>
+
+            <bit pos="1">
+                <name lang="en">Not used</name>
+                <description lang="en">Not used.</description>
+            </bit>
+
+            <bit pos="0">
+                <name lang="en">Not used</name>
+                <description lang="en">Not used.</description>
+            </bit>
+            
+        </alarm>
+	
+        <!-- Decison matrix -->
+        <dmatrix>
+  
+            <level>1</level>					
+            <start page="1" offset="0"/> 	
+            <rowcnt>2</rowcnt>
+					
+            <action code="0x01">
+                <name lang="en">Enable status LED</name>
+                <description lang="en">Enable the status LED. Note that the VSCP framework can overwrite it.</description>
+                <param>
+                    <name></name>
+                    <description lang="en"></description>
+                    <data offset="1">
+                        <name></name>
+                        <description lang="en"></description>    
+                    </data>
+                </param>
+            </action>
+            
+            <action code="0x02">
+                <name lang="en">Disable status LED</name>
+                <description lang="en">Disable the status LED. Note that the VSCP framework can overwrite it.</description>
+                <param>
+                    <name></name>
+                    <description lang="en"></description>
+                    <data offset="1">
+                        <name></name>
+                        <description lang="en"></description>    
+                    </data>
+                </param>
+            </action>
+            
+        </dmatrix>
+	
+        <events>
+        
+            <event class="20" type="9">
+                <name lang="en">Node heartbeat</name>
+                <description lang="en">The node sends every second a heartbeat.</description> 	
+                <priority>7</priority>
+                <data offset="0">
+                    <name lang="en">Not used</name>
+                    <description lang="en">Not used</description>
+                </data>
+                <data offset="1" >						
+                    <name lang="en">Zone</name>
+                    <description lang="en">Zone of the node.</description>      	
+                </data>
+                <data offset="2" >
+                    <name lang="en">Sub-zone</name>
+                    <description lang="en">Sub-zone of the node.</description>      	
+                </data>
+            </event>
+	
+            <event class="20" type="3" >
+                <name lang="en">On event</name> 					
+                <description lang="en">The status LED is enabled.</description>
+                <priority>3</priority>
+                <data offset="0" >						
+                    <name lang="en">Index</name>
+                    <description lang="en">0: Status LED</description>      	
+                </data>
+                <data offset="1" >						
+                    <name lang="en">Zone</name>
+                    <description lang="en">Zone the event belongs to.</description>      	
+                </data>
+                <data offset="2" >
+                    <name lang="en">Sub-zone</name>
+                    <description lang="en">Sub-zone the event belongs to.</description>      	
+                </data>
+            </event>
+		
+            <event class="20" type="4" >
+                <name lang="en">Off event</name> 					
+                <description lang="en">The status LED is disabled.</description>
+                <priority>3</priority>
+                <data offset="0" >						
+                    <name lang="en">Index</name>
+                    <description lang="en">0: Status LED</description>      	
+                </data>
+                <data offset="1" >						
+                    <name lang="en">Zone</name>
+                    <description lang="en">Zone the event belongs to.</description>      	
+                </data>
+                <data offset="2" >
+                    <name lang="en">Sub-zone</name>
+                    <description lang="en">Sub-zone the event belongs to.</description>      	
+                </data>
+            </event>
+
+        </events>
+	
+    </module>
+    
+</vscp>
