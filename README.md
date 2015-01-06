@@ -8,8 +8,10 @@
 #VSCP
 The Very Simple Control Protocol (VSCP), an open and free protocol for IoT/m2m automation tasks.
 
+More information can be found on the main site http://www.vscp.org
+
 #Framework
-The VSCP software framework provides several layers according to the VSCP specification.
+The VSCP software framework provides several layers according to the [VSCP specification](http://www.vscp.org/docs/vscpspec/doku.php):
 
 ![overview-diagram](https://github.com/BlueAndi/vscp-framework/blob/master/vscp_modules.jpg)
 
