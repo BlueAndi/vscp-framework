@@ -41,6 +41,7 @@ Templates exists for all of them, which makes it much easier to adapt it and les
 #Structure
 
 <pre>
+./common (Common sourcecode, used for examples or projects)
 ./vscp (VSCP core modules)
     +---doc (VSCP doxygen documentation)
     |   +---doxfiles (Doxygen related files)
@@ -54,6 +55,7 @@ Templates exists for all of them, which makes it much easier to adapt it and les
     \\---pc (PC examples)
 ./vscp_projects (Projects which are using the VSCP framework)
     \\---avr (Atmel AVR projects)
+./vscp_tools (Tools used by examples or projects)
 </pre>
 
 #Getting started
