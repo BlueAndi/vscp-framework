@@ -11,7 +11,7 @@ The Very Simple Control Protocol (VSCP), an open and free protocol for IoT/m2m a
 #Framework
 The VSCP software framework provides several layers according to the VSCP specification.
 
-![overview-diagram](https://github.com/BlueAndi/vscp-framework/vscp_modules.jpg)
+![overview-diagram](https://github.com/BlueAndi/vscp-framework/blob/master/vscp_modules.jpg)
 
 * The core functionality which has a built-in state machine to handle different use cases of the protocol and etc. (vscp\_core.[ch]). Right now it supports every mandatory event and some minor optional ones.
 * The decision matrix is handled separately (vscp\_dm.[ch]). It contains the standard decision matrix, as described in the VSCP specification and contains an additional extension.
