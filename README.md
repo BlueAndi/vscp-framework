@@ -52,6 +52,8 @@ Templates exists for all of them, which makes it much easier to adapt it and les
 ./vscp_examples (Examples which are showing how to use the VSCP framework)
     +---avr (Atmel AVR examples)
     \\---pc (PC examples)
+./vscp_projects (Projects which are using the VSCP framework)
+    \\---avr (Atmel AVR projects)
 </pre>
 
 #Getting started
