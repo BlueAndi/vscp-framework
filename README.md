@@ -1,9 +1,9 @@
 #VSCP Framework
 
-1. [VSCP](https://github.com/BlueAndi/vscp-framework/README.md#vscp)
-2. [Framework](https://github.com/BlueAndi/vscp-framework/README.md#framework)
-3. [Structure](https://github.com/BlueAndi/vscp-framework/README.md#structure)
-4. [Getting started](https://github.com/BlueAndi/vscp-framework/README.md#getting-started)
+1. [VSCP](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#vscp)
+2. [Framework](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#framework)
+3. [Structure](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#structure)
+4. [Getting started](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#getting-started)
 
 #VSCP
 The Very Simple Control Protocol (VSCP), an open and free protocol for IoT/m2m automation tasks.
@@ -58,15 +58,15 @@ Templates exists for all of them, which makes it much easier to adapt it and les
 
 This part shows you how to get the VSCP framework working in a "minimal" way:
 
-1. [Copy the VSCP framework to your project](https://github.com/BlueAndi/vscp-framework/README.md#copy-the-vscp-framework-to-your-project)
-2. [Initialization of the VSCP framework](https://github.com/BlueAndi/vscp-framework/README.md#initialization-of-the-vscp-framework)
-3. [Processing of the VSCP framework](https://github.com/BlueAndi/vscp-framework/README.md#processing-of-the-vscp-framework)
-4. [VSCP framework timer](https://github.com/BlueAndi/vscp-framework/README.md#vscp-framework-timer)
-5. [VSCP transport adaption](https://github.com/BlueAndi/vscp-framework/README.md#vscp-transport-adaption)
-6. [Control the VSCP lamp](https://github.com/BlueAndi/vscp-framework/README.md#control-the-vscp-lamp)
-7. [Connect the initialization button](https://github.com/BlueAndi/vscp-framework/README.md#connect-the-initialization-button)
-8. [Persistent memory](https://github.com/BlueAndi/vscp-framework/README.md#persistent-memory)
-9. [Ready to run](https://github.com/BlueAndi/vscp-framework/README.md#ready-to-run)
+1. [Copy the VSCP framework to your project](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#copy-the-vscp-framework-to-your-project)
+2. [Initialization of the VSCP framework](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#initialization-of-the-vscp-framework)
+3. [Processing of the VSCP framework](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#processing-of-the-vscp-framework)
+4. [VSCP framework timer](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#vscp-framework-timer)
+5. [VSCP transport adaption](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#vscp-transport-adaption)
+6. [Control the VSCP lamp](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#control-the-vscp-lamp)
+7. [Connect the initialization button](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#connect-the-initialization-button)
+8. [Persistent memory](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#persistent-memory)
+9. [Ready to run](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#ready-to-run)
 
 ##Copy the VSCP framework to your project
 
