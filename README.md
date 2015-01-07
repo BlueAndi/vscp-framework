@@ -6,6 +6,9 @@
 4. [Getting started](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#getting-started)
 
 #VSCP
+
+![VSCP logo](http://vscp.org/images/vscp_logo.jpg)
+
 The Very Simple Control Protocol (VSCP), an open and free protocol for IoT/m2m automation tasks.
 
 More information can be found on the main site http://www.vscp.org
