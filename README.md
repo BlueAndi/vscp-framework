@@ -1,9 +1,11 @@
-#VSCP Framework
+#VSCP L1 Framework
 
 1. [VSCP](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#vscp)
 2. [Framework](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#framework)
 3. [Structure](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#structure)
 4. [Getting started](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#getting-started)
+5. [Mailing list](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#mailing-list)
+6. [Issues, Ideas and bugs](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#issues-ideas-and-bugs)
 
 #VSCP
 
@@ -14,7 +16,7 @@ The Very Simple Control Protocol (VSCP), an open and free protocol for IoT/m2m a
 More information can be found on the main site http://www.vscp.org
 
 #Framework
-The VSCP software framework provides several layers according to the [VSCP specification](http://www.vscp.org/docs/vscpspec/doku.php):
+The VSCP software framework for level 1 devices provides several layers according to the [VSCP specification](http://www.vscp.org/docs/vscpspec/doku.php).
 
 ![overview-diagram](https://github.com/BlueAndi/vscp-framework/blob/master/vscp_modules.jpg)
 
@@ -143,3 +145,15 @@ functions are used, so you have one read and one write function to adapt.
 Now the minimal sub set is done and your node hopefully starts up with a nickname discovery.
 
 Have fun!
+
+#Mailing list
+
+Are you interesting? Join us on the mailing list: https://groups.google.com/forum/#!forum/vscp
+
+#Issues, Ideas and bugs
+
+If you have further ideas or you found some bugs, great! Create a [issue](https://github.com/BlueAndi/vscp-framework/issues) or if
+you are able and willing to fix it by yourself, clone the repository and create a pull request.
+
+#License
+The whole source code is published under the [MIT license](http://choosealicense.com/licenses/mit/).
