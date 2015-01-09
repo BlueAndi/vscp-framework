@@ -4,6 +4,10 @@ README
 1. Linux
 --------
 
+Following has to be installed:
+- gcc
+- libwxbase3.0-dev (dependency of vscphelper lib)
+
 Steps:
 1. Change the folder to the pc example folder.
 2. Call "make debug" to build a debug version or "make release" to build a release version.
