@@ -77,6 +77,9 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 /** Use this macro to state that a variable is not used. */
 #define MAIN_NOT_USED(__var)    (void)(__var)
 
+/** Number of elements in a array */
+#define MAIN_ARRAY_NUM(__array) (sizeof(__array) / sizeof((__array)[0]))
+
 /*******************************************************************************
     TYPES AND STRUCTURES
 *******************************************************************************/
@@ -886,8 +889,11 @@ static void main_dumpEEPROM(void)
                 platform_setTextColor(color);
                 ++newColor;
                 
-                printf("- %s\n", main_psUserFriendlyName[elementId]);
-                ++elementId;
+                if (MAIN_ARRAY_NUM(main_psUserFriendlyName) > elementId)
+                {
+                    printf("- %s\n", main_psUserFriendlyName[elementId]);
+                    ++elementId;
+                }
                 
                 if (PLATFORM_COLOR_WHITE < color)
                 {
@@ -895,7 +901,7 @@ static void main_dumpEEPROM(void)
                 }
                 
                 nextColor = FALSE;
-            }            
+            }
         }
         
         platform_setTextColor(PLATFORM_COLOR_GREY);
