@@ -105,7 +105,7 @@ CFLAGS= -Wall
 # General linker flags independent of debug or release build
 # All warnings: -Wall
 # Create map file: -Wl,-Map,foo.map
-LDFLAGS= -Wall -Wl,-Map,$(BINDIR)/$(BIN).map
+LDFLAGS= -Wall -Wl,-Map,$(BINDIR)/$(BIN).map -Wl,-rpath='$$ORIGIN/../lib/linux'
 
 ifeq ($(MAKECMDGOALS),debug)
 
@@ -160,7 +160,7 @@ OBJECTS= $(addprefix $(OBJDIR)/,$(notdir $(SOURCES:%.c=%.o)))
 DEPFILES= $(OBJECTS:%.o=%.d)
 
 # Shared objects
-SHARED_OBJS= /usr/lib/libvscphelper.so
+SHARED_OBJS= $(BINDIR)/libvscphelper.so
 
 # DLLS
 DLLS=
@@ -286,7 +286,7 @@ $(BINDIR)/%.dll: $(LIBDIR)/%.dll
 	@$(COPY) $< ./$(BINDIR)
 
 # Copy all necessary shared objects
-/usr/lib/%.so: $(LIBDIR)/%.so
-	@echo "Copy" $< "to ./usr/lib/"
-	@$(COPY) $< /usr/lib
+$(BINDIR)/%.so: $(LIBDIR)/%.so
+	@echo "Copy" $< "to ./"$(BINDIR)"/"
+	@$(COPY) $< ./$(BINDIR)/
 
