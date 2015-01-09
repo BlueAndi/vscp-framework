@@ -160,9 +160,15 @@ OBJECTS= $(addprefix $(OBJDIR)/,$(notdir $(SOURCES:%.c=%.o)))
 DEPFILES= $(OBJECTS:%.o=%.d)
 
 # Shared objects
-DLLS= $(BINDIR)/libvscphelper.so
+SHARED_OBJS= /usr/lib/libvscphelper.so
+
+# DLLS
+DLLS=
 
 ifeq ($(OS),Windows_NT)
+
+# Shared objects
+SHARED_OBJS=
 
 # DLLs
 DLLS= $(BINDIR)/vscphelper.dll \
@@ -208,10 +214,10 @@ help:
 	@echo "help    - This help is shown"
 	@echo ""
 	
-debug: $(BINDIR)/$(BIN).exe $(DLLS)
+debug: $(BINDIR)/$(BIN).exe $(SHARED_OBJS) $(DLLS)
 	@echo "Finished."
 
-release: $(BINDIR)/$(BIN).exe $(DLLS)
+release: $(BINDIR)/$(BIN).exe $(SHARED_OBJS) $(DLLS)
 	@echo "Finished."
 
 clean:
@@ -279,8 +285,8 @@ $(BINDIR)/%.dll: $(LIBDIR)/%.dll
 	@echo "Copy" $< "to ./"$(BINDIR)"/"
 	@$(COPY) $< ./$(BINDIR)
 
-# Copy all necessary shared objects to the binary folder
-$(BINDIR)/%.so: $(LIBDIR)/%.so
-	@echo "Copy" $< "to ./"$(BINDIR)"/"
-	@$(COPY) $< ./$(BINDIR)
+# Copy all necessary shared objects
+/usr/lib/%.so: $(LIBDIR)/%.so
+	@echo "Copy" $< "to ./usr/lib/"
+	@$(COPY) $< /usr/lib
 
