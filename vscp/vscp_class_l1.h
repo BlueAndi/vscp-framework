@@ -101,7 +101,7 @@ extern "C"
 #define VSCP_CLASS_L1_MEASUREMENT_DOUBLE    60
 
 /** VSCP level 1 class: Measurement with zone */
-#define VSCP_CLASS_L1_MEASUREMENT_WITH_ZONE 65
+#define VSCP_CLASS_L1_MEASUREZONE           65
 
 /** VSCP level 1 class: Single precision floating piont measurement */
 #define VSCP_CLASS_L1_MEASUREMENT_SINGLE    70

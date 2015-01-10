@@ -140,6 +140,14 @@
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_information.h</Link>
     </Compile>
+    <Compile Include="..\..\..\..\..\vscp\events\vscp_measurezone.c">
+      <SubType>compile</SubType>
+      <Link>vscp\events\vscp_measurezone.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\events\vscp_measurezone.h">
+      <SubType>compile</SubType>
+      <Link>vscp\events\vscp_measurezone.h</Link>
+    </Compile>
     <Compile Include="..\..\..\..\..\vscp\events\vscp_security.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_security.c</Link>
@@ -247,6 +255,14 @@
     <Compile Include="..\..\..\..\..\vscp\vscp_type_information.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_type_information.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_type_measurement.h">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_type_measurement.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_type_measurezone.h">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_type_measurezone.h</Link>
     </Compile>
     <Compile Include="..\..\..\..\..\vscp\vscp_type_phone.h">
       <SubType>compile</SubType>

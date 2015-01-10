@@ -59,6 +59,7 @@ SOURCES= main.c \
 		vscpUser/vscp_tp_adapter.c \
 		vscpUser/vscp_timer.c \
 		../../vscp/vscp_core.c \
+		../../vscp/vscp_data_coding.c \
 		../../vscp/vscp_dev_data.c \
 		../../vscp/vscp_dm.c \
 		../../vscp/vscp_dm_ng.c \
@@ -68,6 +69,7 @@ SOURCES= main.c \
 		../../vscp/events/vscp_alarm.c \
 		../../vscp/events/vscp_control.c \
 		../../vscp/events/vscp_information.c \
+		../../vscp/events/vscp_measurezone.c \
 		../../vscp/events/vscp_security.c \
 		../../vscp/events/vscp_weather.c \
 		../../vscp/events/vscp_weather_forecast.c
