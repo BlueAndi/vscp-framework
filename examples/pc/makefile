@@ -23,7 +23,7 @@
 # SOFTWARE.
 
 ################################################################################
-# Makefile for VSCP tests
+# Makefile for VSCP PC example
 # Author: Andreas Merkle, http://www.blue-andi.de
 #
 # $Author: amerkle $
@@ -44,7 +44,7 @@ BIN= vscpExamplePc
 # Includes
 INCLUDES= -I. \
 		-Iinclude \
-		-IvscpUser \
+		-Ivscp_user \
 		-I../../vscp
 
 # Sources
@@ -52,12 +52,12 @@ SOURCES= main.c \
 		eeprom.c \
 		log.c \
 		platform.c \
-		vscpUser/vscp_action.c \
-		vscpUser/vscp_app_reg.c \
-		vscpUser/vscp_portable.c \
-		vscpUser/vscp_ps_access.c \
-		vscpUser/vscp_tp_adapter.c \
-		vscpUser/vscp_timer.c \
+		vscp_user/vscp_action.c \
+		vscp_user/vscp_app_reg.c \
+		vscp_user/vscp_portable.c \
+		vscp_user/vscp_ps_access.c \
+		vscp_user/vscp_tp_adapter.c \
+		vscp_user/vscp_timer.c \
 		../../vscp/vscp_core.c \
 		../../vscp/vscp_data_coding.c \
 		../../vscp/vscp_dev_data.c \
@@ -75,7 +75,7 @@ SOURCES= main.c \
 		../../vscp/events/vscp_weather_forecast.c
 
 # Include all source pathes here like ../src1:../src2
-VPATH= ../../vscp:../../vscp/events:vscpUser
+VPATH= ../../vscp:../../vscp/events:vscp_user
 		
 # Library search path (-L...)
 LIBPATH= -Llib/linux
@@ -101,42 +101,52 @@ endif
 PREPROC= -D_REENTRANT -DVERSION=\"$(VERSION)\"
 
 # General compiler flags independent of debug or release build
-# All warnings: -Wall
-CFLAGS= -Wall
+# -Wall                : Enable all warnings
+# -ffunction-sections -fdata-sections : Remove unused functions
+# -fpack-struct        : Pack all structure members together without holes
+# -fshort-enums        : Allocate to an enum type only as many bytes as it needs for the declared range of possible values.
+# -std=gnu99           : Define the C standard
+# -funsigned-bitfields : Bitfields always unsigned
+CFLAGS= -Wall -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -std=gnu99 -funsigned-bitfields
 
 # General linker flags independent of debug or release build
-# All warnings: -Wall
-# Create map file: -Wl,-Map,foo.map
-LDFLAGS= -Wall -Wl,-Map,$(BINDIR)/$(BIN).map -Wl,-rpath='$$ORIGIN/../lib/linux'
+# -Wall             : Enable all warnings
+# -Wl,-Map,foo.map  : Create map file
+# -Wl,--cref        : Add cross reference to map file
+# -Wl,--gc-sections : Enable garbage collection of unused input sections
+# -Wl,-rpath='$$ORIGIN/../lib/linux' : Set shared object search path
+LDFLAGS= -Wall -Wl,-Map,$(BINDIR)/$(BIN).map -Wl,--cref -Wl,--gc-sections -Wl,-rpath='$$ORIGIN/../lib/linux'
 
 ifeq ($(MAKECMDGOALS),debug)
 
-# Additional compiler flags for debug build
-# Minimal: -g1
-# Default: -g
-# Maximum: -g3
-# Optimization: -O1
-# Generate additional coverage information: -ftest-coverage
-# Generate profile output: -fprofile-arcs
+# Additional C compiler flags for debug build
+# -g1             : Minimal debug information
+# -g              : Default debug information
+# -g3             : Maximum debug information
+# -O1             : Optimization level
+# -ftest-coverage : Generate additional coverage information
+# -fprofile-arcs  : Generate profile output
 CFLAGS+= -g -O1
 
-# Additional linker flags
-# Enable coverage: -ftest-coverage
-# Enable profiling: -fprofile-arcs
+# Additional linker flags for debug build
+# -ftest-coverage : Enable coverage
+# -fprofile-arcs  : Enable profiling
 LDFLAGS+=
 
 endif
 
 ifeq ($(MAKECMDGOALS),release)
 
-# Additional compiler flags for release build
-# Optimization: -Os
-# Generate additional coverage information: -ftest-coverage
-# Generate profile output: -fprofile-arcs
+# Additional C compiler flags for release build
+# -Os             : Optimization level
+# -ftest-coverage : Generate additional coverage information
+# -fprofile-arcs  : Generate profile output
 CFLAGS+= -Os
 
-# Additional linker flags
-LDFLAGS+= 
+# Additional linker flags for release build
+# -ftest-coverage : Enable coverage
+# -fprofile-arcs  : Enable profiling
+LDFLAGS+=
 
 endif
 
@@ -280,7 +290,7 @@ $(BINDIR):
 # Link all objects together and build the binary
 $(BINDIR)/$(BIN).exe: $(DEPFILES) $(OBJECTS)
 	@echo "Linking ..."
-	@$(CC) $(OBJECTS) $(LDFLAGS) $(LIBPATH) $(LIBRARIES) -o $(BINDIR)/$(BIN)
+	@$(LD) $(OBJECTS) $(LDFLAGS) $(LIBPATH) $(LIBRARIES) -o $(BINDIR)/$(BIN)
 
 # Copy all necessary windows DLLs to the binary folder
 $(BINDIR)/%.dll: $(LIBDIR)/%.dll
