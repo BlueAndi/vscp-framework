@@ -197,25 +197,29 @@ int main(int argc, char* argv[])
     /* Set log level */
     log_setLevel(LOG_LEVEL_FATAL);
     
-    /* Initialize all modules */
-    if (MAIN_RET_OK != main_init())
-    {
-        status = 1;
-    }
     /* Parse command line arguments */
-    else if (MAIN_RET_OK != main_getCmdLineArgs(&cmdLineArgs, argc, argv))
+    if (MAIN_RET_OK != main_getCmdLineArgs(&cmdLineArgs, argc, argv))
     {
         status = 1;
     }
     else
     {
-        /* Increase verbose level? */
+        /* Increase log level for more detail? */
         if (TRUE == cmdLineArgs.verbose)
         {
             /* Set log level */
             log_setLevel(LOG_LEVEL_INFO | LOG_LEVEL_DEBUG | LOG_LEVEL_WARNING | LOG_LEVEL_ERROR | LOG_LEVEL_FATAL);
         }
-        
+    }
+    
+    /* Initialize all modules */
+    if ((0 == status) &&
+        (MAIN_RET_OK != main_init()))
+    {
+        status = 1;
+    }
+    else
+    {
         /* Show the user which keys can be used. */
         main_showKeyTable();
         printf("\n");
