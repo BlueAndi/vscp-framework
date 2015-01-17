@@ -166,8 +166,8 @@ extern void eeprom_load(char* fileName)
     
     if (NULL != fd)
     {
-        long        fileSize        = 0;
-        BOOL        error           = FALSE;
+        long    fileSize    = 0;
+        BOOL    error       = FALSE;
         
         /* EEPROM file size in bytes. It depends on the used format in ASCII. */
         const long  calcFileSize    = ((eeprom_size / EEPROM_STORAGE_MULTIPLE) * (3 * EEPROM_STORAGE_MULTIPLE + 7));
