@@ -93,13 +93,13 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
  */
 extern BOOL vscp_weather_sendUndefinedEvent(void)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_UNDEFINED, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_UNDEFINED, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 0;
+    txMsg.dataNum = 0;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -115,16 +115,16 @@ extern BOOL vscp_weather_sendUndefinedEvent(void)
  */
 extern BOOL vscp_weather_sendSeasonWinterEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SEASON_WINTER, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SEASON_WINTER, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -140,16 +140,16 @@ extern BOOL vscp_weather_sendSeasonWinterEvent(uint8_t index, uint8_t zone, uint
  */
 extern BOOL vscp_weather_sendSeasonSpringEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SEASON_SPRING, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SEASON_SPRING, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -165,16 +165,16 @@ extern BOOL vscp_weather_sendSeasonSpringEvent(uint8_t index, uint8_t zone, uint
  */
 extern BOOL vscp_weather_sendSeasonSummerEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SEASON_SUMMER, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SEASON_SUMMER, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -190,16 +190,16 @@ extern BOOL vscp_weather_sendSeasonSummerEvent(uint8_t index, uint8_t zone, uint
  */
 extern BOOL vscp_weather_sendAutumnSummerEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_AUTUMN_SUMMER, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_AUTUMN_SUMMER, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -215,16 +215,16 @@ extern BOOL vscp_weather_sendAutumnSummerEvent(uint8_t index, uint8_t zone, uint
  */
 extern BOOL vscp_weather_sendWinNoneEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WIN_NONE, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WIN_NONE, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -240,16 +240,16 @@ extern BOOL vscp_weather_sendWinNoneEvent(uint8_t index, uint8_t zone, uint8_t s
  */
 extern BOOL vscp_weather_sendLowWindEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_LOW_WIND, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_LOW_WIND, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -265,16 +265,16 @@ extern BOOL vscp_weather_sendLowWindEvent(uint8_t index, uint8_t zone, uint8_t s
  */
 extern BOOL vscp_weather_sendMediumWindEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_MEDIUM_WIND, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_MEDIUM_WIND, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -290,16 +290,16 @@ extern BOOL vscp_weather_sendMediumWindEvent(uint8_t index, uint8_t zone, uint8_
  */
 extern BOOL vscp_weather_sendHighWindEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_HIGH_WIND, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_HIGH_WIND, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -315,16 +315,16 @@ extern BOOL vscp_weather_sendHighWindEvent(uint8_t index, uint8_t zone, uint8_t 
  */
 extern BOOL vscp_weather_sendVeryHighWindEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_VERY_HIGH_WIND, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_VERY_HIGH_WIND, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -340,16 +340,16 @@ extern BOOL vscp_weather_sendVeryHighWindEvent(uint8_t index, uint8_t zone, uint
  */
 extern BOOL vscp_weather_sendAirFoggyEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_AIR_FOGGY, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_AIR_FOGGY, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -365,16 +365,16 @@ extern BOOL vscp_weather_sendAirFoggyEvent(uint8_t index, uint8_t zone, uint8_t 
  */
 extern BOOL vscp_weather_sendAirFreezingEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_AIR_FREEZING, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_AIR_FREEZING, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -390,16 +390,16 @@ extern BOOL vscp_weather_sendAirFreezingEvent(uint8_t index, uint8_t zone, uint8
  */
 extern BOOL vscp_weather_sendColdEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_COLD, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_COLD, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -415,16 +415,16 @@ extern BOOL vscp_weather_sendColdEvent(uint8_t index, uint8_t zone, uint8_t subZ
  */
 extern BOOL vscp_weather_sendVeryColdEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_VERY_COLD, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_VERY_COLD, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -440,16 +440,16 @@ extern BOOL vscp_weather_sendVeryColdEvent(uint8_t index, uint8_t zone, uint8_t 
  */
 extern BOOL vscp_weather_sendAirNormalEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_AIR_NORMAL, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_AIR_NORMAL, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -465,16 +465,16 @@ extern BOOL vscp_weather_sendAirNormalEvent(uint8_t index, uint8_t zone, uint8_t
  */
 extern BOOL vscp_weather_sendAirHotEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_AIR_HOT, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_AIR_HOT, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -490,16 +490,16 @@ extern BOOL vscp_weather_sendAirHotEvent(uint8_t index, uint8_t zone, uint8_t su
  */
 extern BOOL vscp_weather_sendAirVeryHotEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_AIR_VERY_HOT, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_AIR_VERY_HOT, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -515,16 +515,16 @@ extern BOOL vscp_weather_sendAirVeryHotEvent(uint8_t index, uint8_t zone, uint8_
  */
 extern BOOL vscp_weather_sendPollutionLowEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_POLLUTION_LOW, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_POLLUTION_LOW, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -540,16 +540,16 @@ extern BOOL vscp_weather_sendPollutionLowEvent(uint8_t index, uint8_t zone, uint
  */
 extern BOOL vscp_weather_sendPollutionMediumEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_POLLUTION_MEDIUM, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_POLLUTION_MEDIUM, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -565,16 +565,16 @@ extern BOOL vscp_weather_sendPollutionMediumEvent(uint8_t index, uint8_t zone, u
  */
 extern BOOL vscp_weather_sendPollutionHighEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_POLLUTION_HIGH, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_POLLUTION_HIGH, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -590,16 +590,16 @@ extern BOOL vscp_weather_sendPollutionHighEvent(uint8_t index, uint8_t zone, uin
  */
 extern BOOL vscp_weather_sendAirHumidEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_AIR_HUMID, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_AIR_HUMID, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -615,16 +615,16 @@ extern BOOL vscp_weather_sendAirHumidEvent(uint8_t index, uint8_t zone, uint8_t 
  */
 extern BOOL vscp_weather_sendAirDryEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_AIR_DRY, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_AIR_DRY, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -640,16 +640,16 @@ extern BOOL vscp_weather_sendAirDryEvent(uint8_t index, uint8_t zone, uint8_t su
  */
 extern BOOL vscp_weather_sendSoilHumidEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SOIL_HUMID, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SOIL_HUMID, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -665,16 +665,16 @@ extern BOOL vscp_weather_sendSoilHumidEvent(uint8_t index, uint8_t zone, uint8_t
  */
 extern BOOL vscp_weather_sendSoilDryEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SOIL_DRY, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SOIL_DRY, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -690,16 +690,16 @@ extern BOOL vscp_weather_sendSoilDryEvent(uint8_t index, uint8_t zone, uint8_t s
  */
 extern BOOL vscp_weather_sendRainNoneEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_RAIN_NONE, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_RAIN_NONE, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -715,16 +715,16 @@ extern BOOL vscp_weather_sendRainNoneEvent(uint8_t index, uint8_t zone, uint8_t 
  */
 extern BOOL vscp_weather_sendRainLightEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_RAIN_LIGHT, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_RAIN_LIGHT, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -740,16 +740,16 @@ extern BOOL vscp_weather_sendRainLightEvent(uint8_t index, uint8_t zone, uint8_t
  */
 extern BOOL vscp_weather_sendRainHeavyEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_RAIN_HEAVY, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_RAIN_HEAVY, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -765,16 +765,16 @@ extern BOOL vscp_weather_sendRainHeavyEvent(uint8_t index, uint8_t zone, uint8_t
  */
 extern BOOL vscp_weather_sendRainVeryHeavyEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_RAIN_VERY_HEAVY, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_RAIN_VERY_HEAVY, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -790,16 +790,16 @@ extern BOOL vscp_weather_sendRainVeryHeavyEvent(uint8_t index, uint8_t zone, uin
  */
 extern BOOL vscp_weather_sendSunNoneEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SUN_NONE, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SUN_NONE, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -815,16 +815,16 @@ extern BOOL vscp_weather_sendSunNoneEvent(uint8_t index, uint8_t zone, uint8_t s
  */
 extern BOOL vscp_weather_sendSunLightEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SUN_LIGHT, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SUN_LIGHT, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -840,16 +840,16 @@ extern BOOL vscp_weather_sendSunLightEvent(uint8_t index, uint8_t zone, uint8_t 
  */
 extern BOOL vscp_weather_sendSunHeavyEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SUN_HEAVY, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SUN_HEAVY, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -865,16 +865,16 @@ extern BOOL vscp_weather_sendSunHeavyEvent(uint8_t index, uint8_t zone, uint8_t 
  */
 extern BOOL vscp_weather_sendSnowNoneEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SNOW_NONE, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SNOW_NONE, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -890,16 +890,16 @@ extern BOOL vscp_weather_sendSnowNoneEvent(uint8_t index, uint8_t zone, uint8_t 
  */
 extern BOOL vscp_weather_sendSnowLightEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SNOW_LIGHT, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SNOW_LIGHT, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -915,16 +915,16 @@ extern BOOL vscp_weather_sendSnowLightEvent(uint8_t index, uint8_t zone, uint8_t
  */
 extern BOOL vscp_weather_sendSnowHeavyEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SNOW_HEAVY, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SNOW_HEAVY, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -940,16 +940,16 @@ extern BOOL vscp_weather_sendSnowHeavyEvent(uint8_t index, uint8_t zone, uint8_t
  */
 extern BOOL vscp_weather_sendDewPointEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_DEW_POINT, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_DEW_POINT, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -965,16 +965,16 @@ extern BOOL vscp_weather_sendDewPointEvent(uint8_t index, uint8_t zone, uint8_t 
  */
 extern BOOL vscp_weather_sendStormEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_STORM, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_STORM, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -990,16 +990,16 @@ extern BOOL vscp_weather_sendStormEvent(uint8_t index, uint8_t zone, uint8_t sub
  */
 extern BOOL vscp_weather_sendFloodEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_FLOOD, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_FLOOD, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1015,16 +1015,16 @@ extern BOOL vscp_weather_sendFloodEvent(uint8_t index, uint8_t zone, uint8_t sub
  */
 extern BOOL vscp_weather_sendEarthquakeEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_EARTHQUAKE, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_EARTHQUAKE, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1040,16 +1040,16 @@ extern BOOL vscp_weather_sendEarthquakeEvent(uint8_t index, uint8_t zone, uint8_
  */
 extern BOOL vscp_weather_sendNuclearDisasterEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_NUCLEAR_DISASTER, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_NUCLEAR_DISASTER, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1065,16 +1065,16 @@ extern BOOL vscp_weather_sendNuclearDisasterEvent(uint8_t index, uint8_t zone, u
  */
 extern BOOL vscp_weather_sendFireEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_FIRE, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_FIRE, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1090,16 +1090,16 @@ extern BOOL vscp_weather_sendFireEvent(uint8_t index, uint8_t zone, uint8_t subZ
  */
 extern BOOL vscp_weather_sendLightningEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_LIGHTNING, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_LIGHTNING, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1115,16 +1115,16 @@ extern BOOL vscp_weather_sendLightningEvent(uint8_t index, uint8_t zone, uint8_t
  */
 extern BOOL vscp_weather_sendUvRadiationLowEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_UV_RADIATION_LOW, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_UV_RADIATION_LOW, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1140,16 +1140,16 @@ extern BOOL vscp_weather_sendUvRadiationLowEvent(uint8_t index, uint8_t zone, ui
  */
 extern BOOL vscp_weather_sendUvRadiationMediumEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_UV_RADIATION_MEDIUM, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_UV_RADIATION_MEDIUM, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1165,16 +1165,16 @@ extern BOOL vscp_weather_sendUvRadiationMediumEvent(uint8_t index, uint8_t zone,
  */
 extern BOOL vscp_weather_sendUvRadiationNormalEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_UV_RADIATION_NORMAL, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_UV_RADIATION_NORMAL, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1190,16 +1190,16 @@ extern BOOL vscp_weather_sendUvRadiationNormalEvent(uint8_t index, uint8_t zone,
  */
 extern BOOL vscp_weather_sendUvRadiationHighEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_UV_RADIATION_HIGH, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_UV_RADIATION_HIGH, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1215,16 +1215,16 @@ extern BOOL vscp_weather_sendUvRadiationHighEvent(uint8_t index, uint8_t zone, u
  */
 extern BOOL vscp_weather_sendUvRadiationVeryHighEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_UV_RADIATION_VERY_HIGH, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_UV_RADIATION_VERY_HIGH, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1240,16 +1240,16 @@ extern BOOL vscp_weather_sendUvRadiationVeryHighEvent(uint8_t index, uint8_t zon
  */
 extern BOOL vscp_weather_sendWarningLevel1Event(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WARNING_LEVEL_1, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WARNING_LEVEL_1, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1265,16 +1265,16 @@ extern BOOL vscp_weather_sendWarningLevel1Event(uint8_t index, uint8_t zone, uin
  */
 extern BOOL vscp_weather_sendWarningLevel2Event(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WARNING_LEVEL_2, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WARNING_LEVEL_2, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1290,16 +1290,16 @@ extern BOOL vscp_weather_sendWarningLevel2Event(uint8_t index, uint8_t zone, uin
  */
 extern BOOL vscp_weather_sendWarningLevel3Event(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WARNING_LEVEL_3, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WARNING_LEVEL_3, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1315,16 +1315,16 @@ extern BOOL vscp_weather_sendWarningLevel3Event(uint8_t index, uint8_t zone, uin
  */
 extern BOOL vscp_weather_sendWarningLevel4Event(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WARNING_LEVEL_4, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WARNING_LEVEL_4, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1340,16 +1340,16 @@ extern BOOL vscp_weather_sendWarningLevel4Event(uint8_t index, uint8_t zone, uin
  */
 extern BOOL vscp_weather_sendWarningLevel5Event(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WARNING_LEVEL_5, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WARNING_LEVEL_5, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1365,16 +1365,16 @@ extern BOOL vscp_weather_sendWarningLevel5Event(uint8_t index, uint8_t zone, uin
  */
 extern BOOL vscp_weather_sendArmageddonEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_ARMAGEDDON, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_ARMAGEDDON, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /*******************************************************************************

@@ -93,13 +93,13 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
  */
 extern BOOL vscp_information_sendUndefinedEvent(void)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_UNDEFINED, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_UNDEFINED, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 0;
+    txMsg.dataNum = 0;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -118,26 +118,26 @@ extern BOOL vscp_information_sendUndefinedEvent(void)
  */
 extern BOOL vscp_information_sendButtonEvent(uint8_t state, uint8_t zone, uint8_t subZone, uint16_t code, uint16_t const * const codePage)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_BUTTON, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_BUTTON, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 5;
-	txMsg.data[0] = state;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
-	txMsg.data[3] = (uint8_t)((code >> 8) & 0xff);
-	txMsg.data[4] = (uint8_t)((code >> 0) & 0xff);
+    txMsg.dataNum = 5;
+    txMsg.data[0] = state;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+    txMsg.data[3] = (uint8_t)((code >> 8) & 0xff);
+    txMsg.data[4] = (uint8_t)((code >> 0) & 0xff);
 
-	if (NULL != codePage)
-	{
-		txMsg.data[5] = (uint8_t)((*codePage >> 8) & 0xff);
-		txMsg.data[6] = (uint8_t)((*codePage >> 0) & 0xff);
-		txMsg.dataNum += 2;
-	}
+    if (NULL != codePage)
+    {
+        txMsg.data[5] = (uint8_t)((*codePage >> 8) & 0xff);
+        txMsg.data[6] = (uint8_t)((*codePage >> 0) & 0xff);
+        txMsg.dataNum += 2;
+    }
 
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -156,20 +156,20 @@ extern BOOL vscp_information_sendButtonEvent(uint8_t state, uint8_t zone, uint8_
  */
 extern BOOL vscp_information_sendMouseEvent(uint8_t coordinateType, uint8_t zone, uint8_t subZone, uint16_t xCoordinate, uint16_t yCoordinate)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_MOUSE, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_MOUSE, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 7;
-	txMsg.data[0] = coordinateType;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
-	txMsg.data[3] = (uint8_t)((xCoordinate >> 8) & 0xff);
-	txMsg.data[4] = (uint8_t)((xCoordinate >> 0) & 0xff);
-	txMsg.data[5] = (uint8_t)((yCoordinate >> 8) & 0xff);
-	txMsg.data[6] = (uint8_t)((yCoordinate >> 0) & 0xff);
+    txMsg.dataNum = 7;
+    txMsg.data[0] = coordinateType;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+    txMsg.data[3] = (uint8_t)((xCoordinate >> 8) & 0xff);
+    txMsg.data[4] = (uint8_t)((xCoordinate >> 0) & 0xff);
+    txMsg.data[5] = (uint8_t)((yCoordinate >> 8) & 0xff);
+    txMsg.data[6] = (uint8_t)((yCoordinate >> 0) & 0xff);
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -185,16 +185,16 @@ extern BOOL vscp_information_sendMouseEvent(uint8_t coordinateType, uint8_t zone
  */
 extern BOOL vscp_information_sendOnEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_ON, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_ON, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -210,16 +210,16 @@ extern BOOL vscp_information_sendOnEvent(uint8_t index, uint8_t zone, uint8_t su
  */
 extern BOOL vscp_information_sendOffEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_OFF, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_OFF, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -235,16 +235,16 @@ extern BOOL vscp_information_sendOffEvent(uint8_t index, uint8_t zone, uint8_t s
  */
 extern BOOL vscp_information_sendAliveEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_ALIVE, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_ALIVE, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = userData;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = userData;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -260,16 +260,16 @@ extern BOOL vscp_information_sendAliveEvent(uint8_t userData, uint8_t zone, uint
  */
 extern BOOL vscp_information_sendTerminatingEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_TERMINATING, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_TERMINATING, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = userData;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = userData;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -285,16 +285,16 @@ extern BOOL vscp_information_sendTerminatingEvent(uint8_t userData, uint8_t zone
  */
 extern BOOL vscp_information_sendOpenedEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_OPENED, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_OPENED, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = userData;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = userData;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -311,16 +311,16 @@ extern BOOL vscp_information_sendOpenedEvent(uint8_t userData, uint8_t zone, uin
  */
 extern BOOL vscp_information_sendClosedEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_CLOSED, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_CLOSED, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = userData;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = userData;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -346,16 +346,16 @@ extern BOOL vscp_information_sendClosedEvent(uint8_t userData, uint8_t zone, uin
  */
 extern BOOL vscp_information_sendNodeHeartbeatEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_NODE_HEARTBEAT, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_NODE_HEARTBEAT, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = userData;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = userData;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -370,16 +370,16 @@ extern BOOL vscp_information_sendNodeHeartbeatEvent(uint8_t userData, uint8_t zo
  */
 extern BOOL vscp_information_sendBelowLimitEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_BELOW_LIMIT, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_BELOW_LIMIT, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -394,16 +394,16 @@ extern BOOL vscp_information_sendBelowLimitEvent(uint8_t zone, uint8_t subZone)
  */
 extern BOOL vscp_information_sendAboveLimitEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_ABOVE_LIMIT, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_ABOVE_LIMIT, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -418,16 +418,16 @@ extern BOOL vscp_information_sendAboveLimitEvent(uint8_t zone, uint8_t subZone)
  */
 extern BOOL vscp_information_sendPulseEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_PULSE, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_PULSE, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -442,16 +442,16 @@ extern BOOL vscp_information_sendPulseEvent(uint8_t zone, uint8_t subZone)
  */
 extern BOOL vscp_information_sendErrorEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_ERROR, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_ERROR, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -466,16 +466,16 @@ extern BOOL vscp_information_sendErrorEvent(uint8_t zone, uint8_t subZone)
  */
 extern BOOL vscp_information_sendResumedEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_RESUMED, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_RESUMED, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -490,16 +490,16 @@ extern BOOL vscp_information_sendResumedEvent(uint8_t zone, uint8_t subZone)
  */
 extern BOOL vscp_information_sendPausedEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_PAUSED, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_PAUSED, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -514,16 +514,16 @@ extern BOOL vscp_information_sendPausedEvent(uint8_t zone, uint8_t subZone)
  */
 extern BOOL vscp_information_sendSleepingEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SLEEPING, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SLEEPING, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -539,16 +539,16 @@ extern BOOL vscp_information_sendSleepingEvent(uint8_t zone, uint8_t subZone)
  */
 extern BOOL vscp_information_sendGoodMorningEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_GOOD_MORNING, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_GOOD_MORNING, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -564,16 +564,16 @@ extern BOOL vscp_information_sendGoodMorningEvent(uint8_t zone, uint8_t subZone)
  */
 extern BOOL vscp_information_sendGoodDayEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_GOOD_DAY, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_GOOD_DAY, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -589,16 +589,16 @@ extern BOOL vscp_information_sendGoodDayEvent(uint8_t zone, uint8_t subZone)
  */
 extern BOOL vscp_information_sendGoodAfternoonEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_GOOD_AFTERNOON, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_GOOD_AFTERNOON, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -614,16 +614,16 @@ extern BOOL vscp_information_sendGoodAfternoonEvent(uint8_t zone, uint8_t subZon
  */
 extern BOOL vscp_information_sendGoodEveningEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_GOOD_EVENING, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_GOOD_EVENING, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -639,16 +639,16 @@ extern BOOL vscp_information_sendGoodEveningEvent(uint8_t zone, uint8_t subZone)
  */
 extern BOOL vscp_information_sendGoodNightEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_GOOD_NIGHT, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_GOOD_NIGHT, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -664,16 +664,16 @@ extern BOOL vscp_information_sendGoodNightEvent(uint8_t zone, uint8_t subZone)
  */
 extern BOOL vscp_information_sendSeeYouSoonEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SEE_YOU_SOON, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SEE_YOU_SOON, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -689,16 +689,16 @@ extern BOOL vscp_information_sendSeeYouSoonEvent(uint8_t zone, uint8_t subZone)
  */
 extern BOOL vscp_information_sendGoodbyeEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_GOODBYE, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_GOODBYE, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -713,16 +713,16 @@ extern BOOL vscp_information_sendGoodbyeEvent(uint8_t zone, uint8_t subZone)
  */
 extern BOOL vscp_information_sendStopEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_STOP, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_STOP, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -737,16 +737,16 @@ extern BOOL vscp_information_sendStopEvent(uint8_t zone, uint8_t subZone)
  */
 extern BOOL vscp_information_sendStartEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_START, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_START, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -761,16 +761,16 @@ extern BOOL vscp_information_sendStartEvent(uint8_t zone, uint8_t subZone)
  */
 extern BOOL vscp_information_sendResetCompletedEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_RESET_COMPLETED, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_RESET_COMPLETED, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -785,16 +785,16 @@ extern BOOL vscp_information_sendResetCompletedEvent(uint8_t zone, uint8_t subZo
  */
 extern BOOL vscp_information_sendInterruptedEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_INTERRUPTED, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_INTERRUPTED, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -809,16 +809,16 @@ extern BOOL vscp_information_sendInterruptedEvent(uint8_t zone, uint8_t subZone)
  */
 extern BOOL vscp_information_sendPreparingToSleepEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_PREPARING_TO_SLEEP, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_PREPARING_TO_SLEEP, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -833,16 +833,16 @@ extern BOOL vscp_information_sendPreparingToSleepEvent(uint8_t zone, uint8_t sub
  */
 extern BOOL vscp_information_sendWokenUpEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_WOKEN_UP, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_WOKEN_UP, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -857,16 +857,16 @@ extern BOOL vscp_information_sendWokenUpEvent(uint8_t zone, uint8_t subZone)
  */
 extern BOOL vscp_information_sendDuskEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_DUSK, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_DUSK, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -881,16 +881,16 @@ extern BOOL vscp_information_sendDuskEvent(uint8_t zone, uint8_t subZone)
  */
 extern BOOL vscp_information_sendDawnEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_DAWN, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_DAWN, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -905,16 +905,16 @@ extern BOOL vscp_information_sendDawnEvent(uint8_t zone, uint8_t subZone)
  */
 extern BOOL vscp_information_sendActiveEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_ACTIVE, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_ACTIVE, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -929,16 +929,16 @@ extern BOOL vscp_information_sendActiveEvent(uint8_t zone, uint8_t subZone)
  */
 extern BOOL vscp_information_sendInactiveEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_INACTIVE, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_INACTIVE, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -953,16 +953,16 @@ extern BOOL vscp_information_sendInactiveEvent(uint8_t zone, uint8_t subZone)
  */
 extern BOOL vscp_information_sendBusyEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_BUSY, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_BUSY, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -977,16 +977,16 @@ extern BOOL vscp_information_sendBusyEvent(uint8_t zone, uint8_t subZone)
  */
 extern BOOL vscp_information_sendIdleEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_IDLE, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_IDLE, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1005,26 +1005,26 @@ extern BOOL vscp_information_sendIdleEvent(uint8_t zone, uint8_t subZone)
  */
 extern BOOL vscp_information_sendStreamDataEvent(uint8_t sequenceNumber, uint8_t const * const data, uint8_t dataSize)
 {
-	uint8_t byteIndex = 0;
-	vscp_TxMessage txMsg;
+    uint8_t byteIndex = 0;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_STREAM_DATA, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_STREAM_DATA, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 1;
-	txMsg.data[0] = sequenceNumber;
+    txMsg.dataNum = 1;
+    txMsg.data[0] = sequenceNumber;
 
-	for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-	{
-		txMsg.data[1 + byteIndex] = data[byteIndex];
-		++txMsg.dataNum;
+    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
+    {
+        txMsg.data[1 + byteIndex] = data[byteIndex];
+        ++txMsg.dataNum;
 
-		if (VSCP_L1_DATA_SIZE <= txMsg.dataNum)
-		{
-			break;
-		}
-	}
+        if (VSCP_L1_DATA_SIZE <= txMsg.dataNum)
+        {
+            break;
+        }
+    }
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1049,29 +1049,29 @@ extern BOOL vscp_information_sendStreamDataEvent(uint8_t sequenceNumber, uint8_t
  */
 extern BOOL vscp_information_sendTokenActivityEvent(uint8_t code, uint8_t zone, uint8_t subZone, uint8_t index, uint8_t const * const tokenData, uint8_t tokenDataSize)
 {
-	uint8_t byteIndex = 0;
-	vscp_TxMessage txMsg;
+    uint8_t byteIndex = 0;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_TOKEN_ACTIVITY, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_TOKEN_ACTIVITY, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 4;
-	txMsg.data[0] = code;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
-	txMsg.data[3] = index;
+    txMsg.dataNum = 4;
+    txMsg.data[0] = code;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+    txMsg.data[3] = index;
 
-	for(byteIndex = 0; byteIndex < tokenDataSize; ++byteIndex)
-	{
-		txMsg.data[4 + byteIndex] = tokenData[byteIndex];
-		++txMsg.dataNum;
+    for(byteIndex = 0; byteIndex < tokenDataSize; ++byteIndex)
+    {
+        txMsg.data[4 + byteIndex] = tokenData[byteIndex];
+        ++txMsg.dataNum;
 
-		if (VSCP_L1_DATA_SIZE <= txMsg.dataNum)
-		{
-			break;
-		}
-	}
+        if (VSCP_L1_DATA_SIZE <= txMsg.dataNum)
+        {
+            break;
+        }
+    }
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1092,28 +1092,28 @@ extern BOOL vscp_information_sendTokenActivityEvent(uint8_t code, uint8_t zone, 
  */
 extern BOOL vscp_information_sendStreamDataWithZoneEvent(uint8_t zone, uint8_t subZone, uint8_t sequenceNumber, uint8_t const * const data, uint8_t dataSize)
 {
-	uint8_t byteIndex = 0;
-	vscp_TxMessage txMsg;
+    uint8_t byteIndex = 0;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_STREAM_DATA_WITH_ZONE, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_STREAM_DATA_WITH_ZONE, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = zone;
-	txMsg.data[1] = subZone;
-	txMsg.data[2] = sequenceNumber;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = zone;
+    txMsg.data[1] = subZone;
+    txMsg.data[2] = sequenceNumber;
 
-	for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-	{
-		txMsg.data[3 + byteIndex] = data[byteIndex];
-		++txMsg.dataNum;
+    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
+    {
+        txMsg.data[3 + byteIndex] = data[byteIndex];
+        ++txMsg.dataNum;
 
-		if (VSCP_L1_DATA_SIZE <= txMsg.dataNum)
-		{
-			break;
-		}
-	}
+        if (VSCP_L1_DATA_SIZE <= txMsg.dataNum)
+        {
+            break;
+        }
+    }
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1130,19 +1130,19 @@ extern BOOL vscp_information_sendStreamDataWithZoneEvent(uint8_t zone, uint8_t s
  */
 extern BOOL vscp_information_sendConfirmEvent(uint8_t zone, uint8_t subZone, uint16_t sequenceNumberClass, uint16_t type)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_CONFIRM, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_CONFIRM, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 6;
-	txMsg.data[0] = zone;
-	txMsg.data[1] = subZone;
-	txMsg.data[2] = (uint8_t)((sequenceNumberClass >> 8) & 0xff);
-	txMsg.data[3] = (uint8_t)((sequenceNumberClass >> 0) & 0xff);
-	txMsg.data[5] = (uint8_t)((type >> 8) & 0xff);
-	txMsg.data[6] = (uint8_t)((type >> 0) & 0xff);
+    txMsg.dataNum = 6;
+    txMsg.data[0] = zone;
+    txMsg.data[1] = subZone;
+    txMsg.data[2] = (uint8_t)((sequenceNumberClass >> 8) & 0xff);
+    txMsg.data[3] = (uint8_t)((sequenceNumberClass >> 0) & 0xff);
+    txMsg.data[5] = (uint8_t)((type >> 8) & 0xff);
+    txMsg.data[6] = (uint8_t)((type >> 0) & 0xff);
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1159,16 +1159,16 @@ extern BOOL vscp_information_sendConfirmEvent(uint8_t zone, uint8_t subZone, uin
  */
 extern BOOL vscp_information_sendLevelChangedEvent(uint8_t levelType, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_LEVEL_CHANGED, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_LEVEL_CHANGED, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = levelType;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = levelType;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1184,16 +1184,16 @@ extern BOOL vscp_information_sendLevelChangedEvent(uint8_t levelType, uint8_t zo
  */
 extern BOOL vscp_information_sendWarningEvent(uint8_t levelType, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_WARNING, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_WARNING, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = levelType;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = levelType;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1212,18 +1212,18 @@ extern BOOL vscp_information_sendWarningEvent(uint8_t levelType, uint8_t zone, u
  */
 extern BOOL vscp_information_sendStateEvent(uint8_t userData, uint8_t zone, uint8_t subZone, uint8_t previousState, uint8_t currentState)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_STATE, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_STATE, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 5;
-	txMsg.data[0] = userData;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
-	txMsg.data[3] = previousState;
-	txMsg.data[4] = currentState;
+    txMsg.dataNum = 5;
+    txMsg.data[0] = userData;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+    txMsg.data[3] = previousState;
+    txMsg.data[4] = currentState;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1239,16 +1239,16 @@ extern BOOL vscp_information_sendStateEvent(uint8_t userData, uint8_t zone, uint
  */
 extern BOOL vscp_information_sendActionTriggerEvent(uint8_t actionId, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_ACTION_TRIGGER, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_ACTION_TRIGGER, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = actionId;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = actionId;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1264,16 +1264,16 @@ extern BOOL vscp_information_sendActionTriggerEvent(uint8_t actionId, uint8_t zo
  */
 extern BOOL vscp_information_sendSunriseEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SUNRISE, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SUNRISE, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = userData;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = userData;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1289,16 +1289,16 @@ extern BOOL vscp_information_sendSunriseEvent(uint8_t userData, uint8_t zone, ui
  */
 extern BOOL vscp_information_sendSunsetEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SUNSET, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SUNSET, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = userData;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = userData;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1317,17 +1317,17 @@ extern BOOL vscp_information_sendSunsetEvent(uint8_t userData, uint8_t zone, uin
  */
 extern BOOL vscp_information_sendStartOfRecordEvent(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t num)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_START_OF_RECORD, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_START_OF_RECORD, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 4;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
-	txMsg.data[3] = num;
+    txMsg.dataNum = 4;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+    txMsg.data[3] = num;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1344,16 +1344,16 @@ extern BOOL vscp_information_sendStartOfRecordEvent(uint8_t index, uint8_t zone,
  */
 extern BOOL vscp_information_sendEndOfRecordEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_END_OF_RECORD, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_END_OF_RECORD, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1370,17 +1370,17 @@ extern BOOL vscp_information_sendEndOfRecordEvent(uint8_t index, uint8_t zone, u
  */
 extern BOOL vscp_information_sendPresetActiveEvent(uint8_t zone, uint8_t subZone, uint8_t code)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_PRESET_ACTIVE, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_PRESET_ACTIVE, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 4;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
-	txMsg.data[3] = code;
+    txMsg.dataNum = 4;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+    txMsg.data[3] = code;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1396,16 +1396,16 @@ extern BOOL vscp_information_sendPresetActiveEvent(uint8_t zone, uint8_t subZone
  */
 extern BOOL vscp_information_sendDetectEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_DETECT, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_DETECT, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1421,16 +1421,16 @@ extern BOOL vscp_information_sendDetectEvent(uint8_t index, uint8_t zone, uint8_
  */
 extern BOOL vscp_information_sendOverflowEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_OVERFLOW, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_OVERFLOW, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1449,28 +1449,28 @@ extern BOOL vscp_information_sendOverflowEvent(uint8_t index, uint8_t zone, uint
  */
 extern BOOL vscp_information_sendBigLevelChangedEvent(uint8_t index, uint8_t zone, uint8_t subZone, int8_t const * const level, uint8_t levelSize)
 {
-	uint8_t byteIndex = 0;
-	vscp_TxMessage txMsg;
+    uint8_t byteIndex = 0;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_BIG_LEVEL_CHANGED, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_BIG_LEVEL_CHANGED, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = index;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	for(byteIndex = 0; byteIndex < levelSize; ++byteIndex)
-	{
-		txMsg.data[3 + byteIndex] = level[byteIndex];
-		++txMsg.dataNum;
+    for(byteIndex = 0; byteIndex < levelSize; ++byteIndex)
+    {
+        txMsg.data[3 + byteIndex] = level[byteIndex];
+        ++txMsg.dataNum;
 
-		if (VSCP_L1_DATA_SIZE <= txMsg.dataNum)
-		{
-			break;
-		}
-	}
+        if (VSCP_L1_DATA_SIZE <= txMsg.dataNum)
+        {
+            break;
+        }
+    }
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1503,16 +1503,16 @@ extern BOOL vscp_information_sendBigLevelChangedEvent(uint8_t index, uint8_t zon
  */
 extern BOOL vscp_information_sendCivilSunriseTwilightTimeEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_CIVIL_SUNRISE_TWILIGHT_TIME, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_CIVIL_SUNRISE_TWILIGHT_TIME, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = userData;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = userData;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1545,16 +1545,16 @@ extern BOOL vscp_information_sendCivilSunriseTwilightTimeEvent(uint8_t userData,
  */
 extern BOOL vscp_information_sendCivilSunsetTwilightTimeEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_CIVIL_SUNSET_TWILIGHT_TIME, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_CIVIL_SUNSET_TWILIGHT_TIME, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = userData;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = userData;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1585,16 +1585,16 @@ extern BOOL vscp_information_sendCivilSunsetTwilightTimeEvent(uint8_t userData, 
  */
 extern BOOL vscp_information_sendNauticalSunriseTwilightTimeEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_NAUTICAL_SUNRISE_TWILIGHT_TIME, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_NAUTICAL_SUNRISE_TWILIGHT_TIME, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = userData;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = userData;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1625,16 +1625,16 @@ extern BOOL vscp_information_sendNauticalSunriseTwilightTimeEvent(uint8_t userDa
  */
 extern BOOL vscp_information_sendNauticalSunsetTwilightTimeEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_NAUTICAL_SUNSET_TWILIGHT_TIME, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_NAUTICAL_SUNSET_TWILIGHT_TIME, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = userData;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = userData;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1665,16 +1665,16 @@ extern BOOL vscp_information_sendNauticalSunsetTwilightTimeEvent(uint8_t userDat
  */
 extern BOOL vscp_information_sendAstronomicalSunriseTwilightTimeEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_ASTRONOMICAL_SUNRISE_TWILIGHT_TIME, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_ASTRONOMICAL_SUNRISE_TWILIGHT_TIME, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = userData;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = userData;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1705,16 +1705,16 @@ extern BOOL vscp_information_sendAstronomicalSunriseTwilightTimeEvent(uint8_t us
  */
 extern BOOL vscp_information_sendAstronomicalSunsetTwilightTimeEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_ASTRONOMICAL_SUNSET_TWILIGHT_TIME, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_ASTRONOMICAL_SUNSET_TWILIGHT_TIME, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = userData;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = userData;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /**
@@ -1729,16 +1729,16 @@ extern BOOL vscp_information_sendAstronomicalSunsetTwilightTimeEvent(uint8_t use
  */
 extern BOOL vscp_information_sendCalculatedNoonEvent(uint8_t zone, uint8_t subZone)
 {
-	vscp_TxMessage txMsg;
+    vscp_TxMessage txMsg;
 
-	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_CALCULATED_NOON, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_CALCULATED_NOON, VSCP_PRIORITY_3_NORMAL);
 
-	txMsg.dataNum = 3;
-	txMsg.data[0] = 0;
-	txMsg.data[1] = zone;
-	txMsg.data[2] = subZone;
+    txMsg.dataNum = 3;
+    txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
-	return vscp_core_sendEvent(&txMsg);
+    return vscp_core_sendEvent(&txMsg);
 }
 
 /*******************************************************************************
