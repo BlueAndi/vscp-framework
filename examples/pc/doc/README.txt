@@ -7,7 +7,7 @@ README
 Following has to be installed:
 - gcc
 - libwxbase3.0-dev (dependency of vscphelper lib)
-- libexpat-dev (XML parser)
+- libexpat1-dev (XML parser)
 
 Steps:
 1. Change the folder to the pc example folder.

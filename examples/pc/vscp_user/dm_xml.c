@@ -1757,7 +1757,15 @@ static void XMLCALL dm_xml_endElementExt(void *userData, const XML_Char *name)
 
             if (0xff >= value)
             {
-                con->extStorage[con->index].action = value;
+                /* Standard or extended? */
+                if (VSCP_DM_ACTION_EXTENDED_DM != con->dmStorage[con->index].action)
+                {
+                    con->dmStorage[con->index].action = value;
+                }
+                else
+                {
+                    con->extStorage[con->index].action = value;
+                }
             }
             else
             {
@@ -1779,7 +1787,15 @@ static void XMLCALL dm_xml_endElementExt(void *userData, const XML_Char *name)
 
             if (0xff >= value)
             {
-                con->extStorage[con->index].actionPar = value;
+                /* Standard or extended? */
+                if (VSCP_DM_ACTION_EXTENDED_DM != con->dmStorage[con->index].action)
+                {
+                    con->dmStorage[con->index].actionPar = value;
+                }
+                else
+                {
+                    con->extStorage[con->index].actionPar = value;
+                }
             }
             else
             {
