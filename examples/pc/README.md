@@ -25,6 +25,12 @@ If this sounds boring, because you like to connect more nodes together. No probl
 and connect to it. Start the program with '-h' as argument and you see the possible options, which are necessary
 to connect to a VSCP daemon.
 
+BTW if you start the PC simulation node again, you will notice that it starts up immediatelly without waiting for the user.
+Thats because the nodes persistency is saved to the file "eeprom.asc". Check it out via editor, its human readable.
+Or use the EEPROM dump mechanism 'e', which additional shows in color which VSCP related data is where.
+
+If you want to restore the factory settings, remove the "eeprom.asc" and start the program.
+
 Have fun!
 
 ##Mailing list
