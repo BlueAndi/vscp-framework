@@ -7,7 +7,7 @@
 5. [Mailing list](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#mailing-list)
 6. [Issues, Ideas and bugs](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#issues-ideas-and-bugs)
 
-#VSCP
+##VSCP
 
 ![VSCP logo](http://vscp.org/images/vscp_logo.jpg)
 
@@ -15,7 +15,7 @@ The Very Simple Control Protocol (VSCP), an open and free protocol for IoT/m2m a
 
 More information can be found on the main site http://www.vscp.org
 
-#Framework
+##Framework
 The VSCP software framework for level 1 devices provides several layers according to the [VSCP specification](http://www.vscp.org/docs/vscpspec/doku.php).
 
 ![overview-diagram](https://github.com/BlueAndi/vscp-framework/blob/master/vscp_modules.jpg)
@@ -45,7 +45,7 @@ how VSCP is integrated into your software:
 
 Templates exists for all of them, which makes it much easier to adapt it and less time. See in the templates folder.
 
-#Structure
+##Structure
 
 <pre>
 +---common              (Common sourcecode, used for examples and projects)
@@ -65,7 +65,7 @@ Templates exists for all of them, which makes it much easier to adapt it and les
     \---test            (Test of the VSCP framework)
 </pre>
 
-#Getting started
+##Getting started
 
 This part shows you how to get the VSCP framework working in a "minimal" way:
 
@@ -79,18 +79,18 @@ This part shows you how to get the VSCP framework working in a "minimal" way:
 8. [Persistent memory](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#persistent-memory)
 9. [Ready to run](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#ready-to-run)
 
-##Copy the VSCP framework to your project
+###Copy the VSCP framework to your project
 
 1. Copy or link the VSCP framework (./vscp and ./vscp/events) to your project.
 2. Copy (!!do not link!!) all necessary template files (./vscp/templates) to your project. Recommended is a sub-directory "vscp_user".
 3. Update your makefile or your project configuration.
  
-##Initialization of the VSCP framework
+###Initialization of the VSCP framework
 
 The VSCP framework has to be initialized, before any function is used. This is simply done
 by calling the function vscp\_core\_init() during start-up.
 
-##Processing of the VSCP framework
+###Processing of the VSCP framework
 
 The VSCP framework has to be called periodically to be able to react on incoming events.
 Call the process routine vscp\_core\_process() in a constant cyclic period. The period should be
@@ -99,7 +99,7 @@ communication bus, the event load on the bus and etc.
 
 The process routine handle all received VSCP events.
 
-##VSCP framework timer
+###VSCP framework timer
 
 VSCP specifies several timing behaviour in different use cases. Therefore the framework needs some
 timers to achieve it.
@@ -118,42 +118,42 @@ Call the timer processing routine equal or lower than 1 s.
 Note, that never all vscp\_process() with a lower period, than vscp\_timer\_process(). Because vscp\_process() reacts
 on timer timeouts and vscp\_timer\_process() decrease only the timers, but doesn't do more.
 
-##VSCP transport adaption
+###VSCP transport adaption
 
 Now its time to connect the VSCP framework to the communication bus. This can be done by implementing the transport
 adapter in the vscp\_tp\_adapter.c template file.
 
-##Control the VSCP lamp
+###Control the VSCP lamp
 
 To see that something is happen on your embedded device, next step is to control the VSCP lamp (in most cases a LED).
 Update the function vscp\_portable\_setLampState() in the vscp\_portable.c module.
 
-##Connect the initialization button
+###Connect the initialization button
 
 According to the VSCP specification, every embedded device should have a button to start the segment initialization.
 Hopefully you have one right now :-) and if it is pressed, call the function vscp\_core\_startNodeSegmentInit() in the
 vscp\_core.c module.
 
-##Persistent memory
+###Persistent memory
 
 It is important that the VSCP framework can store data in a persistent memory, e.g. an EEPROM. Implement in the
 vscp\_ps\_access.c module the low level access to the persistent memory. Its quite easy, because only byte access
 functions are used, so you have one read and one write function to adapt.
 
-##Ready to run
+###Ready to run
 
 Now the minimal sub set is done and your node hopefully starts up with a nickname discovery.
 
 Have fun!
 
-#Mailing list
+##Mailing list
 
 Are you interesting? Join us on the mailing list: https://groups.google.com/forum/#!forum/vscp
 
-#Issues, Ideas and bugs
+##Issues, Ideas and bugs
 
 If you have further ideas or you found some bugs, great! Create a [issue](https://github.com/BlueAndi/vscp-framework/issues) or if
 you are able and willing to fix it by yourself, clone the repository and create a pull request.
 
-#License
+##License
 The whole source code is published under the [MIT license](http://choosealicense.com/licenses/mit/).
