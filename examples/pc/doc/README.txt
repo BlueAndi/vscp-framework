@@ -7,6 +7,7 @@ README
 Following has to be installed:
 - gcc
 - libwxbase3.0-dev (dependency of vscphelper lib)
+- libexpat-dev (XML parser)
 
 Steps:
 1. Change the folder to the pc example folder.
@@ -20,6 +21,9 @@ Steps:
 2.1 Tools to install
 
 Download and install MingGW and MSys (http://www.mingw.org/).
+Download and install the following packages with the installation manager:
+- mingw32-expat
+- mingw32-libexpat-dev
 
 2.2 How to build
 

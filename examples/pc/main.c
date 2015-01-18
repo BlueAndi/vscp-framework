@@ -125,6 +125,7 @@ static MAIN_RET main_getCmdLineArgs(main_CmdLineArgs * const cmdLineArgs, int ar
 static void main_showKeyTable(void);
 static void* main_vscpThread(void* par);
 static void main_dumpEEPROM(void);
+static void main_loop(void);
 
 /*******************************************************************************
     LOCAL VARIABLES
@@ -264,134 +265,10 @@ int main(int argc, char* argv[])
             }
         }
         
-        /* No error? */
+        /* If no error happened, start main loop. */
         if (0 == status)
         {
-            int     keyValue        = 0;
-            BOOL    nodeHeartbeat   = FALSE;
-                        
-            platform_echoOff();
-            
-            /* Execute simple terminal */
-            while('q' != keyValue)
-            {
-                /* Any button pressed? */
-                if (0 < platform_kbhit())
-                {
-                    keyValue = platform_getch();
-
-                    platform_echoOn();
-                    
-                    switch(keyValue)
-                    {
-                    /* Show keys */
-                    case '?':
-                        (void)pthread_mutex_lock(&main_vscpThreadData.mutex);
-                        main_showKeyTable();
-                        (void)pthread_mutex_unlock(&main_vscpThreadData.mutex);
-                        break;
-                    /* Dump EEPROM */
-                    case 'e':
-                        (void)pthread_mutex_lock(&main_vscpThreadData.mutex);
-                        main_dumpEEPROM();
-                        (void)pthread_mutex_unlock(&main_vscpThreadData.mutex);
-                        break;
-                        
-                    /* Enable/Disable node hearbeat */
-                    case 'h':
-                        (void)pthread_mutex_lock(&main_vscpThreadData.mutex);
-                        if (FALSE == nodeHeartbeat)
-                        {
-                            printf("Disable node heartbeat.\n");
-                        }
-                        else
-                        {
-                            printf("Enable node heartbeat.\n");
-                        }
-                        vscp_core_enableHeartbeat(nodeHeartbeat);
-                        (void)pthread_mutex_unlock(&main_vscpThreadData.mutex);
-                        
-                        if (FALSE == nodeHeartbeat)
-                        {
-                            nodeHeartbeat = TRUE;
-                        }
-                        else
-                        {
-                            nodeHeartbeat = FALSE;
-                        }
-                        break;
-                    
-                    /* Start node segment initialization */
-                    case 'i':
-                        (void)pthread_mutex_lock(&main_vscpThreadData.mutex);
-                        printf("Start node segment initialization.\n");
-                        vscp_core_startNodeSegmentInit();
-                        (void)pthread_mutex_unlock(&main_vscpThreadData.mutex);
-                        break;
-                        
-                    /* Quit program */
-                    case 'q':
-                        (void)pthread_mutex_lock(&main_vscpThreadData.mutex);
-                        printf("Quit.\n");
-                        (void)pthread_mutex_unlock(&main_vscpThreadData.mutex);
-                        break;
-
-                    /* Send a button message to the VSCP thread */
-                    case '0':
-                        /* fall through */
-                    case '1':
-                        /* fall through */
-                    case '2':
-                        /* fall through */
-                    case '3':
-                        /* fall through */
-                    case '4':
-                        /* fall through */
-                    case '5':
-                        /* fall through */
-                    case '6':
-                        /* fall through */
-                    case '7':
-                        /* fall through */
-                    case '8':
-                        /* fall through */
-                    case '9':
-                    {
-                        vscp_RxMessage  rxMsg;
-                        
-                        rxMsg.vscpClass = VSCP_CLASS_L1_INFORMATION;
-                        rxMsg.vscpType  = VSCP_TYPE_INFORMATION_BUTTON;
-                        rxMsg.priority  = VSCP_PRIORITY_3_NORMAL;
-                        rxMsg.oAddr     = (uint8_t)(keyValue - '0') + 2;
-                        rxMsg.dataNum   = 7;
-                        rxMsg.data[0]   = (uint8_t)(keyValue - '0');
-                        rxMsg.data[1]   = 0xff;
-                        rxMsg.data[2]   = 0xff;
-                        rxMsg.data[3]   = 0;
-                        rxMsg.data[4]   = 0;
-                        rxMsg.data[5]   = 0;
-                        rxMsg.data[6]   = 0;
-                        
-                        (void)pthread_mutex_lock(&main_vscpThreadData.mutex);
-                        vscp_tp_adapter_simulateReceivedMessage(&rxMsg);
-                        (void)pthread_mutex_unlock(&main_vscpThreadData.mutex);
-                        break;
-                    }
-
-                    default:
-                        break;
-                    }
-                    
-                    platform_echoOff();
-                }
-                else
-                {
-                    /* Give other programs a chance. */
-                    platform_delay(10);
-                }
-            }
-            
-            platform_echoOn();
+            main_loop();
         }
         
         /* Is VSCP thread running? */
@@ -911,5 +788,110 @@ static void main_dumpEEPROM(void)
         platform_setTextColor(PLATFORM_COLOR_GREY);
     }
     
+    return;
+}
+
+/**
+ * This function contains the main loop where every user key press is
+ * interpreted.
+ */
+static void main_loop(void)
+{
+    int     keyValue        = 0;
+    BOOL    nodeHeartbeat   = TRUE; /* Heartbeat is on per default */
+                
+    platform_echoOff();
+    
+    /* Execute simple terminal */
+    while('q' != keyValue)
+    {
+        /* Any button pressed? */
+        if (0 < platform_kbhit())
+        {
+            keyValue = platform_getch();
+
+            platform_echoOn();
+            
+            /* Show keys */
+            if ('?' == keyValue)
+            {
+                (void)pthread_mutex_lock(&main_vscpThreadData.mutex);
+                main_showKeyTable();
+                (void)pthread_mutex_unlock(&main_vscpThreadData.mutex);
+            }
+            /* Dump EEPROM */
+            else if ('e' == keyValue)
+            {
+                (void)pthread_mutex_lock(&main_vscpThreadData.mutex);
+                main_dumpEEPROM();
+                (void)pthread_mutex_unlock(&main_vscpThreadData.mutex);
+            }               
+            /* Enable/Disable node hearbeat */
+            else if ('h' == keyValue)
+            {
+                (void)pthread_mutex_lock(&main_vscpThreadData.mutex);
+                if (TRUE == nodeHeartbeat)
+                {
+                    printf("Disable node heartbeat.\n");
+                    nodeHeartbeat = FALSE;
+                }
+                else
+                {
+                    printf("Enable node heartbeat.\n");
+                    nodeHeartbeat = TRUE;
+                }
+                vscp_core_enableHeartbeat(nodeHeartbeat);
+                (void)pthread_mutex_unlock(&main_vscpThreadData.mutex);
+            }
+            /* Start node segment initialization */
+            else if ('i' == keyValue)
+            {
+                (void)pthread_mutex_lock(&main_vscpThreadData.mutex);
+                printf("Start node segment initialization.\n");
+                vscp_core_startNodeSegmentInit();
+                (void)pthread_mutex_unlock(&main_vscpThreadData.mutex);
+            }
+            /* Quit program */
+            else if ('q' == keyValue)
+            {
+                (void)pthread_mutex_lock(&main_vscpThreadData.mutex);
+                printf("Quit.\n");
+                (void)pthread_mutex_unlock(&main_vscpThreadData.mutex);
+            }
+            /* Send a button message to the VSCP thread */
+            else if (('0' <= keyValue) && ('9' >= keyValue))
+            {
+                vscp_RxMessage  rxMsg;
+                
+                rxMsg.vscpClass = VSCP_CLASS_L1_INFORMATION;
+                rxMsg.vscpType  = VSCP_TYPE_INFORMATION_BUTTON;
+                rxMsg.priority  = VSCP_PRIORITY_3_NORMAL;
+                rxMsg.oAddr     = (uint8_t)(keyValue - '0') + 2;
+                rxMsg.dataNum   = 7;
+                rxMsg.data[0]   = (uint8_t)(keyValue - '0');
+                rxMsg.data[1]   = 0xff;
+                rxMsg.data[2]   = 0xff;
+                rxMsg.data[3]   = 0;
+                rxMsg.data[4]   = 0;
+                rxMsg.data[5]   = 0;
+                rxMsg.data[6]   = 0;
+                
+                (void)pthread_mutex_lock(&main_vscpThreadData.mutex);
+                vscp_tp_adapter_simulateReceivedMessage(&rxMsg);
+                (void)pthread_mutex_unlock(&main_vscpThreadData.mutex);
+                break;
+            }
+            
+            platform_echoOff();
+        }
+        else
+        {
+            /* Give other programs a chance. */
+            platform_delay(10);
+        }
+    }
+    
+    platform_echoOn();
+
     return;
 }

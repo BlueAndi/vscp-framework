@@ -41,7 +41,7 @@ VERSION= 0.1.0
 # Binary file name
 BIN= vscpExamplePc
 
-# Includes
+# General include directories
 INCLUDES= -I. \
 		-Iinclude \
 		-Ivscp_user \
@@ -58,6 +58,7 @@ SOURCES= main.c \
 		vscp_user/vscp_ps_access.c \
 		vscp_user/vscp_tp_adapter.c \
 		vscp_user/vscp_timer.c \
+		vscp_user/dm_xml.c \
 		../../vscp/vscp_core.c \
 		../../vscp/vscp_data_coding.c \
 		../../vscp/vscp_dev_data.c \
@@ -80,18 +81,13 @@ VPATH= ../../vscp:../../vscp/events:vscp_user
 # Library search path (-L...)
 LIBPATH= -Llib/linux
 
-# Windows specific library path:
+# Libraries (-l...)
+LIBRARIES= -lpthread -lvscphelper -lexpat
+
+# Windows specific part
 ifeq ($(OS),Windows_NT)
 
 LIBPATH= -Llib/win32
-
-endif
-
-# Libraries (-l...)
-LIBRARIES= -lpthread -lvscphelper
-
-# Windows specific libraries:
-ifeq ($(OS),Windows_NT)
 
 LIBRARIES+= -lws2_32
 

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+The MIT License (MIT)
+
+Copyright (c) 2014 - 2015, Andreas Merkle
+http://www.blue-andi.de
+vscp@blue-andi.de
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+********************************************************************************
+This xml schema defines the VSCP standard decision matrix file format.
+
+$Author:  $
+$Rev:  $
+$Date:  $
+********************************************************************************
+-->
+
+<schema targetNamespace="http://www.blue-andi.de/vscp/schema/vscp-dm-ext-schema" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:dmext="http://www.blue-andi.de/vscp/schema/vscp-dm-ext-schema">
+    <annotation>
+    	<documentation>VSCP extended decision matrix file format</documentation></annotation>
+
+    <element name="dm" type="dmext:dm-type"></element>
+    
+    <complexType name="dm-type">
+    	<sequence>
+    		<element name="row" type="dmext:row-type" minOccurs="0" maxOccurs="unbounded"></element>
+    	</sequence>
+    	<attribute name="version" type="string" use="required"></attribute>
+    	<attribute name="level" type="int" use="required" fixed="1"></attribute>
+    	<attribute name="type" use="required">
+    		<simpleType>
+    			<restriction base="string">
+    				<enumeration value="std"></enumeration>
+    				<enumeration value="ext"></enumeration>
+    				<enumeration value="ng"></enumeration>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    </complexType>
+
+    <complexType name="row-type">
+    	<sequence>
+    		<element name="description" type="string" minOccurs="0"
+    			maxOccurs="1">
+    		</element>
+    		<element name="oaddr" type="dmext:oaddr-type" minOccurs="0"
+    			maxOccurs="1">
+    		</element>
+    		<element name="hardcoded" type="dmext:hardcoded-type"
+    			minOccurs="0" maxOccurs="1">
+    		</element>
+    		<element name="mask" type="dmext:mask-type" minOccurs="0"
+    			maxOccurs="1">
+    		</element>
+    		<element name="filter" type="dmext:filter-type"
+    			minOccurs="0" maxOccurs="1">
+    		</element>
+    		<element name="zone" type="dmext:zone-type" minOccurs="0"
+    			maxOccurs="1">
+    		</element>
+    		<element name="subzone" type="dmext:subzone-type"
+    			minOccurs="0" maxOccurs="1">
+    		</element>
+    		<element name="action" minOccurs="0" maxOccurs="1">
+    			<simpleType>
+    				<restriction base="unsignedByte">
+    					<minInclusive value="0"></minInclusive>
+    					<maxExclusive value="255"></maxExclusive>
+    				</restriction>
+    			</simpleType>
+    		</element>
+    		<element name="param" minOccurs="0" maxOccurs="1">
+    			<simpleType>
+    				<restriction base="unsignedByte">
+    					<minInclusive value="0"></minInclusive>
+    					<maxInclusive value="255"></maxInclusive>
+    				</restriction>
+    			</simpleType>
+    		</element>
+    		<element name="data" type="dmext:data-type" minOccurs="0"
+    			maxOccurs="1">
+    		</element>
+    	</sequence>
+    	<attribute name="enabled" type="boolean" use="required"></attribute>
+    	<attribute name="type" use="required">
+    		<simpleType>
+    			<restriction base="string">
+    				<enumeration value="std"></enumeration>
+    				<enumeration value="ext"></enumeration>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    </complexType>
+
+
+    <complexType name="oaddr-type">
+    	<simpleContent>
+    		<extension base="unsignedByte">
+    			<attribute name="enabled" type="boolean"
+    				use="required">
+    			</attribute>
+    		</extension>
+    	</simpleContent>
+    </complexType>
+
+    <complexType name="hardcoded-type">
+    	<attribute name="enabled" type="boolean" use="required"></attribute>
+    </complexType>
+
+    <complexType name="mask-type">
+    	<attribute name="class" type="string" use="required"></attribute>
+    	<attribute name="type" type="string" use="required"></attribute>
+    </complexType>
+
+    <complexType name="filter-type">
+    	<attribute name="class" type="string" use="required"></attribute>
+    	<attribute name="type" type="string" use="required"></attribute>
+    </complexType>
+
+    <complexType name="zone-type">
+    	<simpleContent>
+    		<extension base="unsignedByte">
+    			<attribute name="enabled" type="boolean"
+    				use="required">
+    			</attribute>
+    		</extension>
+    	</simpleContent>
+    </complexType>
+
+    <complexType name="subzone-type">
+    	<simpleContent>
+    		<extension base="unsignedByte">
+    			<attribute name="enabled" type="boolean"
+    				use="required">
+    			</attribute>
+    		</extension>
+    	</simpleContent>
+    </complexType>
+
+    <complexType name="data-type">
+    	<sequence>
+    		<element name="byte" type="string" minOccurs="0"
+    			maxOccurs="4">
+    		</element>
+    	</sequence>
+    	<attribute name="id" use="required">
+    		<simpleType>
+    			<restriction base="unsignedByte">
+    				<enumeration value="0"></enumeration>
+    				<enumeration value="3"></enumeration>
+    				<enumeration value="4"></enumeration>
+    				<enumeration value="5"></enumeration>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    	<attribute name="enabled" type="boolean" use="required"></attribute>
+    </complexType>
+</schema>
