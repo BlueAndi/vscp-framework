@@ -146,8 +146,9 @@ extern void vscp_portable_restoreFactoryDefaultSettings(void)
 {
 #if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION )
 
-    uint8_t*            dmNG    = NULL;
-    uint8_t             index   = 0;
+    uint8_t*    dmNG    = NULL;
+    uint8_t     index   = 0;
+    uint8_t*    ps      = eeprom_getBase(NULL);
 
 #endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION ) */
 
@@ -159,7 +160,7 @@ extern void vscp_portable_restoreFactoryDefaultSettings(void)
 
     vscp_portable_loadDMStd();
 
-#endif  VSCP_CONFIG_BASE_IS_DISABLED( VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION )
+#endif  /* VSCP_CONFIG_BASE_IS_DISABLED( VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION ) */
 
 #endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM ) */
 
@@ -170,6 +171,12 @@ extern void vscp_portable_restoreFactoryDefaultSettings(void)
 #endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION ) */
     
 #if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION )
+    
+    if (NULL == ps)
+    {
+        LOG_ERROR("Couldn't get EEPROM base address.");
+        return;
+    }
     
     dmNG = &ps[VSCP_PS_ADDR_DM_NEXT_GENERATION];
     
