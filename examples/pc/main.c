@@ -879,7 +879,6 @@ static void main_loop(void)
                 (void)pthread_mutex_lock(&main_vscpThreadData.mutex);
                 vscp_tp_adapter_simulateReceivedMessage(&rxMsg);
                 (void)pthread_mutex_unlock(&main_vscpThreadData.mutex);
-                break;
             }
             
             platform_echoOff();
