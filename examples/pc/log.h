@@ -84,6 +84,9 @@ extern "C"
 /** Log a debug message with one int32_t parameter. */
 #define LOG_DEBUG_INT32(__msg, __par)       log_writeParInt32(__FILE__, __LINE__, LOG_LEVEL_DEBUG, (__msg), (__par))
 
+/** Log a debug message with a string as parameter. */
+#define LOG_DEBUG_STR(__msg, __par)         log_writeParStr(__FILE__, __LINE__, LOG_LEVEL_DEBUG, (__msg), (__par))
+
 /** Log a info message. */
 #define LOG_INFO(__msg)                     log_write(__FILE__, __LINE__, LOG_LEVEL_INFO, (__msg))
 
@@ -92,6 +95,9 @@ extern "C"
 
 /** Log a info message with one int32_t parameter. */
 #define LOG_INFO_INT32(__msg, __par)        log_writeParInt32(__FILE__, __LINE__, LOG_LEVEL_INFO, (__msg), (__par))
+
+/** Log a info message with a string as parameter. */
+#define LOG_INFO_STR(__msg, __par)          log_writeParStr(__FILE__, __LINE__, LOG_LEVEL_INFO, (__msg), (__par))
 
 /** Log a warning message. */
 #define LOG_WARNING(__msg)                  log_write(__FILE__, __LINE__, LOG_LEVEL_WARNING, (__msg))
@@ -102,6 +108,9 @@ extern "C"
 /** Log a warning message with one int32_t parameter. */
 #define LOG_WARNING_INT32(__msg, __par)     log_writeParInt32(__FILE__, __LINE__, LOG_LEVEL_WARNING, (__msg), (__par))
 
+/** Log a warning message with a string as parameter. */
+#define LOG_WARNING_STR(__msg, __par)       log_writeParStr(__FILE__, __LINE__, LOG_LEVEL_WARNING, (__msg), (__par))
+
 /** Log a error message. */
 #define LOG_ERROR(__msg)                    log_write(__FILE__, __LINE__, LOG_LEVEL_ERROR, (__msg))
 
@@ -111,6 +120,9 @@ extern "C"
 /** Log a error message with one int32_t parameter. */
 #define LOG_ERROR_INT32(__msg, __par)       log_writeParInt32(__FILE__, __LINE__, LOG_LEVEL_ERROR, (__msg), (__par))
 
+/** Log a error message with a string as parameter. */
+#define LOG_ERROR_STR(__msg, __par)         log_writeParStr(__FILE__, __LINE__, LOG_LEVEL_ERROR, (__msg), (__par))
+
 /** Log a fatal error message. */
 #define LOG_FATAL(__msg)                    log_write(__FILE__, __LINE__, LOG_LEVEL_FATAL, (__msg))
 
@@ -119,6 +131,9 @@ extern "C"
 
 /** Log a fatal error message with one int32_t parameter. */
 #define LOG_FATAL_INT32(__msg, __par)       log_writeParInt32(__FILE__, __LINE__, LOG_LEVEL_FATAL, (__msg), (__par))
+
+/** Log a fatal error message with a string as parameter. */
+#define LOG_FATAL_STR(__msg, __par)         log_writeParStr(__FILE__, __LINE__, LOG_LEVEL_FATAL, (__msg), (__par))
 
 /*******************************************************************************
 	TYPES AND STRUCTURES
@@ -190,6 +205,18 @@ extern void log_writeParUInt32(char const * const fileName, int line, uint8_t lo
  * @param[in]   par         Parameter
  */
 extern void log_writeParInt32(char const * const fileName, int line, uint8_t logLevel, char const * const message, int32_t par);
+
+/**
+ * This function write a log message to the configured output stream. Don't call this
+ * function direct, use the LOG_XXXXX macros instead!
+ *
+ * @param[in]   fileName    Module filename
+ * @param[in]   line        Line number in the module
+ * @param[in]   logLevel    Log level of the message
+ * @param[in]   message     Message string
+ * @param[in]   par         Parameter
+ */
+extern void log_writeParStr(char const * const fileName, int line, uint8_t logLevel, char const * const message, char const * const par);
 
 /**
  * This function behave like the standard printf, but it includes always the current

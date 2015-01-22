@@ -48,6 +48,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 #include <stdio.h>
 #include <stdarg.h>
 #include <time.h>
+#include <string.h>
 
 /*******************************************************************************
 	COMPILER SWITCHES
@@ -70,6 +71,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 
 static char const * const   log_getLogLevelStr(LOG_LEVEL level);
+static const char * log_getFileNameOnly(char const * const fileName);
 
 /*******************************************************************************
 	LOCAL VARIABLES
@@ -121,7 +123,7 @@ extern void log_write(char const * const fileName, int line, uint8_t logLevel, c
 {
     if (0 != (log_logLevel & logLevel))
     {
-        log_printf("%s (%d) - %s: %s\n", fileName, line, log_getLogLevelStr(logLevel), message);
+        log_printf("%s (%d) - %s: %s\n", log_getFileNameOnly(fileName), line, log_getLogLevelStr(logLevel), message);
     }
     
     return;
@@ -141,7 +143,7 @@ extern void log_writeParUInt32(char const * const fileName, int line, uint8_t lo
 {
     if (0 != (log_logLevel & logLevel))
     {
-        log_printf("%s (%d) - %s: %s %u\n", fileName, line, log_getLogLevelStr(logLevel), message, par);
+        log_printf("%s (%d) - %s: %s %u\n", log_getFileNameOnly(fileName), line, log_getLogLevelStr(logLevel), message, par);
     }
     
     return;
@@ -161,7 +163,27 @@ extern void log_writeParInt32(char const * const fileName, int line, uint8_t log
 {
     if (0 != (log_logLevel & logLevel))
     {
-        log_printf("%s (%d) - %s: %s %d\n", fileName, line, log_getLogLevelStr(logLevel), message, par);
+        log_printf("%s (%d) - %s: %s %d\n", log_getFileNameOnly(fileName), line, log_getLogLevelStr(logLevel), message, par);
+    }
+    
+    return;
+}
+
+/**
+ * This function write a log message to the configured output stream. Don't call this
+ * function direct, use the LOG_XXXXX macros instead!
+ *
+ * @param[in]   fileName    Module filename
+ * @param[in]   line        Line number in the module
+ * @param[in]   logLevel    Log level of the message
+ * @param[in]   message     Message string
+ * @param[in]   par         Parameter
+ */
+extern void log_writeParStr(char const * const fileName, int line, uint8_t logLevel, char const * const message, char const * const par)
+{
+    if (0 != (log_logLevel & logLevel))
+    {
+        log_printf("%s (%d) - %s: %s %s\n", log_getFileNameOnly(fileName), line, log_getLogLevelStr(logLevel), message, par);
     }
     
     return;
@@ -232,4 +254,38 @@ static char const * const   log_getLogLevelStr(LOG_LEVEL level)
     }
     
     return "Unknown";
+}
+
+/**
+ * This function returns the position of the file name, without path.
+ *
+ * @param[in] fileName  File name with path
+ * @return Pointer to the position of the file name
+ */
+static const char * log_getFileNameOnly(char const * const fileName)
+{
+    char const *    fileNameOnly    = NULL;
+    
+    if (NULL != fileName)
+    {    
+        fileNameOnly = strrchr(fileName, '/');
+        
+        if (NULL == fileNameOnly)
+        {
+            fileNameOnly = strrchr(fileName, '\\');
+        }
+        
+        /* File name has no path? */
+        if (NULL == fileNameOnly)
+        {
+            fileNameOnly = fileName;
+        }
+        else
+        {
+            /* Overstep the (back)slash */
+            fileNameOnly++;
+        }
+    }
+    
+    return fileNameOnly;
 }
