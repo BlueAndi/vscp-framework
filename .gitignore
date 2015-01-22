@@ -1,0 +1,18 @@
+# Object files
+*.o
+*.obj
+*.elf
+
+# Executables
+*.exe
+*.out
+
+# IDE project files
+*.atsuo
+
+# Any other files
+*.asc
+
+# Directories
+obj/
+bin/
