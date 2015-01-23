@@ -213,9 +213,13 @@ int main(int argc, char* argv[])
         }
     }
     
+    /* Abort program? */
+    if (0 != status)
+    {
+        /* Abort now */
+    }
     /* Initialize all modules */
-    if ((0 == status) &&
-        (MAIN_RET_OK != main_init()))
+    else if (MAIN_RET_OK != main_init())
     {
         status = 1;
     }
