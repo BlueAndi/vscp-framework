@@ -153,7 +153,7 @@ extern BOOL vscp_tp_adapter_readMessage(vscp_RxMessage * const msg)
                     msg->vscpClass  = daemonEvent.vscp_class;
                     msg->vscpType   = (uint8_t)(daemonEvent.vscp_type & 0xff);
                     msg->priority   = (daemonEvent.head >> 5) & 0x07;
-                    msg->oAddr      = daemonEvent.GUID[0];
+                    msg->oAddr      = daemonEvent.GUID[15];
                     msg->hardCoded  = (daemonEvent.head >> 4) & 0x01;
                     msg->dataNum    = (uint8_t)(daemonEvent.sizeData & 0xff);
                     
@@ -252,7 +252,7 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg)
             daemonEvent.head        = 0;
             daemonEvent.head        |= (msg->priority & 0x07) << 5;
             daemonEvent.head        |= (msg->hardCoded & 0x01) << 4;
-            daemonEvent.GUID[0]     = msg->oAddr;
+            daemonEvent.GUID[15]    = msg->oAddr;
             daemonEvent.sizeData    = msg->dataNum;
             
             for(index = 0; index < daemonEvent.sizeData; ++index)
