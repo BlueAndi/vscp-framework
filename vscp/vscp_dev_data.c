@@ -104,7 +104,8 @@ extern void vscp_dev_data_restoreFactoryDefaultSettings(void)
         
         for(index = 0; index < VSCP_PS_SIZE_GUID; ++index)
         {
-            vscp_ps_writeGUID(index, guid[index]);
+            /* GUID is given in MSB first, but the persistency stores it LSB first. */
+            vscp_ps_writeGUID(VSCP_PS_SIZE_GUID - index - 1, guid[index]);
         }
     }
 
@@ -228,7 +229,7 @@ extern void vscp_dev_data_restoreFactoryDefaultSettings(void)
 
 /**
  * This function returns one byte of the GUID, which is selected by the index.
- * Index 0 corresponds with the GUID MSB byte, index 15 with the GUID LSB byte.
+ * Index 0 corresponds with the GUID LSB byte, index 15 with the GUID MSB byte.
  *
  * @param[in]   index   Index in the GUID [0-15]
  * @return  GUID byte
@@ -246,7 +247,7 @@ extern uint8_t  vscp_dev_data_getGUID(uint8_t index)
 
     if (VSCP_UTIL_ARRAY_NUM(guid) > index)
     {
-        value = guid[index];
+        value = guid[VSCP_UTIL_ARRAY_NUM(guid) - index - 1];
     }
 
     return value;

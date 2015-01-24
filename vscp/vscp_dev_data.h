@@ -114,7 +114,7 @@ extern void vscp_dev_data_restoreFactoryDefaultSettings(void);
 
 /**
  * This function returns one byte of the GUID, which is selected by the index.
- * Index 0 corresponds with the GUID MSB byte, index 15 with the GUID LSB byte.
+ * Index 0 corresponds with the GUID LSB byte, index 15 with the GUID MSB byte.
  *
  * @param[in]   index   Index in the GUID [0-15]
  * @return  GUID byte
