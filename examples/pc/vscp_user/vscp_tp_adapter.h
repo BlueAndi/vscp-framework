@@ -104,6 +104,14 @@ typedef enum
 
 } VSCP_TP_ADAPTER_RET;
 
+/** This type defines the network level. */
+typedef enum
+{
+    VSCP_TP_ADAPTER_LVL_1 = 0,      /**< Send level 1 events */
+    VSCP_TP_ADAPTER_LVL_1_OVER_2,   /**< Send level 1 events over level 2 */
+
+} VSCP_TP_ADAPTER_LVL;
+
 /*******************************************************************************
     VARIABLES
 *******************************************************************************/
@@ -143,10 +151,11 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg);
  * @param[in]   ipAddr      IP address of the daemon
  * @param[in]   user        User name
  * @param[in]   password    Password
+ * @param[in]   lvl         Supported network level
  *
  * @return Status
  */
-extern VSCP_TP_ADAPTER_RET vscp_tp_adapter_connect(char const * const ipAddr, char const * const user, char const * const password);
+extern VSCP_TP_ADAPTER_RET vscp_tp_adapter_connect(char const * const ipAddr, char const * const user, char const * const password, VSCP_TP_ADAPTER_LVL lvl);
 
 /**
  * This function disconnects a connection to a VSCP daemon.

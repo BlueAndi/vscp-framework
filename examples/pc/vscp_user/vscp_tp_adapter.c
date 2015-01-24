@@ -49,6 +49,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 #include <memory.h>
 #include "log.h"
 #include "vscphelperlib.h"
+#include "vscp_class_l1_l2.h"
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -57,6 +58,9 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 /*******************************************************************************
     CONSTANTS
 *******************************************************************************/
+
+/** Size of the interface GUID in byte */
+#define VSCP_TP_ADAPTER_INTERFACE_GUID_SIZE 16
 
 /*******************************************************************************
     MACROS
@@ -69,13 +73,17 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 /** This type defines the necessary IP network parameter. */
 typedef struct
 {
-    long    hSession;   /**< Session handle */
+    long                hSession;   /**< Session handle */
+    VSCP_TP_ADAPTER_LVL lvl;        /**< Network level */
 
 } vscp_tp_adapter_NetPar;
 
 /*******************************************************************************
     PROTOTYPES
 *******************************************************************************/
+
+static BOOL vscp_tp_adapter_handleL1Event(vscp_RxMessage * const msg, vscpEventEx const * const daemonEvent);
+static BOOL vscp_tp_adapter_handleL1OverL2Event(vscp_RxMessage * const msg, vscpEventEx const * const daemonEvent);
 
 /*******************************************************************************
     LOCAL VARIABLES
@@ -144,26 +152,34 @@ extern BOOL vscp_tp_adapter_readMessage(vscp_RxMessage * const msg)
                 {
                     LOG_WARNING_INT32("Connection lost: ", vscphlpRet);
                 }
-                else if (VSCP_L1_DATA_SIZE < daemonEvent.sizeData)
+                /* Handle all level 1 events? */
+                else if (VSCP_TP_ADAPTER_LVL_1 == client->lvl)
                 {
-                    LOG_WARNING("Invalid L1 event.");
-                }
-                else
-                {
-                    msg->vscpClass  = daemonEvent.vscp_class;
-                    msg->vscpType   = (uint8_t)(daemonEvent.vscp_type & 0xff);
-                    msg->priority   = (daemonEvent.head >> 5) & 0x07;
-                    msg->oAddr      = daemonEvent.GUID[15];
-                    msg->hardCoded  = (daemonEvent.head >> 4) & 0x01;
-                    msg->dataNum    = (uint8_t)(daemonEvent.sizeData & 0xff);
-                    
-                    for(index = 0; index < msg->dataNum; ++index)
+                    if (FALSE == vscp_tp_adapter_handleL1Event(msg, &daemonEvent))
                     {
-                        msg->data[index] = daemonEvent.data[index];
+                        status = TRUE;
                     }
-                    
-                    status = TRUE;
                 }
+                /* Handle all level 1 events and level 1 over level 2 events? */
+                else if (VSCP_TP_ADAPTER_LVL_1_OVER_2 == client->lvl)
+                {
+                    /* Level 1 event? */
+                    if (VSCP_CLASS_L1_L2_BASE > daemonEvent.vscp_class)
+                    {
+                        if (FALSE == vscp_tp_adapter_handleL1Event(msg, &daemonEvent))
+                        {
+                            status = TRUE;
+                        }
+                    }
+                    /* Level 1 over level 2 event? */
+                    else if (1024 > daemonEvent.vscp_class)
+                    {
+                        if (FALSE == vscp_tp_adapter_handleL1OverL2Event(msg, &daemonEvent))
+                        {
+                            status = TRUE;
+                        }
+                    }
+                }              
             }
         }
         /* Any simulated message available? */
@@ -247,12 +263,15 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg)
             
             memset(&daemonEvent, 0, sizeof(daemonEvent));
             
+            /* Send always a level 1 event back, independent of the configured
+             * network level @see VSCP_TP_ADAPTER_LVL
+             */
             daemonEvent.vscp_class  = msg->vscpClass;
             daemonEvent.vscp_type   = msg->vscpType;
             daemonEvent.head        = 0;
             daemonEvent.head        |= (msg->priority & 0x07) << 5;
             daemonEvent.head        |= (msg->hardCoded & 0x01) << 4;
-            daemonEvent.GUID[15]    = msg->oAddr;
+            daemonEvent.GUID[15]    = msg->oAddr; /* Node GUID LSB */
             daemonEvent.sizeData    = msg->dataNum;
             
             for(index = 0; index < daemonEvent.sizeData; ++index)
@@ -278,10 +297,11 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg)
  * @param[in]   ipAddr      IP address of the daemon
  * @param[in]   user        User name
  * @param[in]   password    Password
+ * @param[in]   lvl         Supported network level
  *
  * @return Status
  */
-extern VSCP_TP_ADAPTER_RET vscp_tp_adapter_connect(char const * const ipAddr, char const * const user, char const * const password)
+extern VSCP_TP_ADAPTER_RET vscp_tp_adapter_connect(char const * const ipAddr, char const * const user, char const * const password, VSCP_TP_ADAPTER_LVL lvl)
 {
     VSCP_TP_ADAPTER_RET     status      = VSCP_TP_ADAPTER_RET_OK;
     vscp_tp_adapter_NetPar* client      = &vscp_tp_adapter_clientPar;
@@ -312,10 +332,38 @@ extern VSCP_TP_ADAPTER_RET vscp_tp_adapter_connect(char const * const ipAddr, ch
         pPassword = password;
     }
     
-    /* Set event filter for L1 events only */
-    memset(&filter, 0, sizeof(filter));
-    filter.filter_class = 0x0000;
-    filter.mask_class   = 0xff00;
+    /* Set network level */
+    client->lvl = lvl;
+    
+    /* Set event filter for level 1 events only */
+    if (VSCP_TP_ADAPTER_LVL_1 == client->lvl)
+    {
+        /* The classes of level 1 events are lower than 512.
+         * 512 - 1 = 0x01ff
+         * mask    = 0xfe00
+         * filter  = 0x0000
+         */
+        memset(&filter, 0, sizeof(filter));
+        filter.mask_class   = 0xfe00;
+        filter.filter_class = 0x0000;
+    }
+    /* Set event filter for level 1 events and level 1 over level 2 events. */
+    else if (VSCP_TP_ADAPTER_LVL_1_OVER_2 == client->lvl)
+    {
+        /* The classes of level 1 events over level 2 are greater or equal than 512 and
+         * lower than 1024.
+         * 1024 - 1 = 0x03ff
+         * mask     = 0xfc00
+         * filter   = 0x0000
+         */
+        memset(&filter, 0, sizeof(filter));
+        filter.mask_class   = 0xfc00;
+        filter.filter_class = 0x0000;
+    }
+    else
+    {
+        return VSCP_TP_ADAPTER_RET_ERROR;
+    }
     
     /* Create a session */
     client->hSession = vscphlp_newSession();
@@ -367,7 +415,7 @@ extern VSCP_TP_ADAPTER_RET vscp_tp_adapter_connect(char const * const ipAddr, ch
         LOG_ERROR_INT32("Channel communication error:", vscphlpRet);
         status = VSCP_TP_ADAPTER_RET_ERROR;
     }
-    /* Set filter for L1 events */
+    /* Set filter for configured event level */
     else if (VSCP_ERROR_SUCCESS != (vscphlpRet = vscphlp_setFilter(client->hSession, &filter)))
     {
         LOG_ERROR_INT32("Set filter error:", vscphlpRet);
@@ -436,3 +484,113 @@ extern void vscp_tp_adapter_simulateReceivedMessage(vscp_RxMessage const * const
     LOCAL FUNCTIONS
 *******************************************************************************/
 
+/**
+ * This function handles a level 1 event from the daemon and converts it to the internal
+ * vscp event structure.
+ *
+ * @param[in] msg           Internal vscp event
+ * @param[in] daemonEvent   Daemon event
+ * @return Error status
+ * @retval FALSE    Successful
+ * @retval TRUE     Failed
+ */
+static BOOL vscp_tp_adapter_handleL1Event(vscp_RxMessage * const msg, vscpEventEx const * const daemonEvent)
+{
+    BOOL isError = FALSE;
+
+    if ((NULL == msg) ||
+        (NULL == daemonEvent))
+    {
+        isError = TRUE;
+    }
+    else if (VSCP_CLASS_L1_L2_BASE <= daemonEvent->vscp_class)
+    {
+        LOG_WARNING("Invalid L1 event.");
+        isError = TRUE;
+    }
+    else if (VSCP_L1_DATA_SIZE < daemonEvent->sizeData)
+    {
+        LOG_WARNING("Invalid L1 event.");
+        isError = TRUE;
+    }
+    else
+    {
+        uint8_t index   = 0;
+    
+        msg->vscpClass  = daemonEvent->vscp_class;
+        msg->vscpType   = (uint8_t)(daemonEvent->vscp_type & 0xff);
+        msg->priority   = (daemonEvent->head >> 5) & 0x07;
+        msg->oAddr      = daemonEvent->GUID[15]; /* Node GUID LSB */
+        msg->hardCoded  = (daemonEvent->head >> 4) & 0x01;
+        msg->dataNum    = (uint8_t)(daemonEvent->sizeData & 0xff);
+        
+        for(index = 0; index < msg->dataNum; ++index)
+        {
+            msg->data[index] = daemonEvent->data[index];
+        }
+    }
+    
+    return isError;
+}
+
+/**
+ * This function handles a level 1 over level 2 event from the daemon and converts it to the internal
+ * vscp event structure.
+ *
+ * @param[in] msg           Internal vscp event
+ * @param[in] daemonEvent   Daemon event
+ * @return Error status
+ * @retval FALSE    Successful
+ * @retval TRUE     Failed
+ */
+static BOOL vscp_tp_adapter_handleL1OverL2Event(vscp_RxMessage * const msg, vscpEventEx const * const daemonEvent)
+{
+    BOOL isError = FALSE;
+
+    if ((NULL == msg) ||
+        (NULL == daemonEvent))
+    {
+        isError = TRUE;
+    }
+    else if ((VSCP_CLASS_L1_L2_BASE > daemonEvent->vscp_class) ||
+        (1024 <= daemonEvent->vscp_class))
+    {
+        LOG_WARNING("Invalid L1 event over L2.");
+        isError = TRUE;
+    }
+    else if ((VSCP_L1_DATA_SIZE + VSCP_TP_ADAPTER_INTERFACE_GUID_SIZE) < daemonEvent->sizeData)
+    {
+        LOG_WARNING("Invalid L1 event over L2.");
+        isError = TRUE;
+    }
+    else
+    {
+        uint8_t index       = 0;
+        uint8_t dataOffset  = 0;
+    
+        msg->vscpClass  = daemonEvent->vscp_class - VSCP_CLASS_L1_L2_BASE;
+        msg->vscpType   = (uint8_t)(daemonEvent->vscp_type & 0xff);
+        msg->priority   = (daemonEvent->head >> 5) & 0x07;
+        msg->oAddr      = daemonEvent->GUID[15]; /* Node GUID LSB */
+        msg->hardCoded  = (daemonEvent->head >> 4) & 0x01;
+        
+        /* Determine whether the event has the interface GUID in the payload or not.
+         * This is done quite simple by checking for greater or equal the
+         * GUID size. Because all other level 1 events has a lower data size.
+         */
+        msg->dataNum    = (uint8_t)(daemonEvent->sizeData & 0xff);
+        if (VSCP_TP_ADAPTER_INTERFACE_GUID_SIZE < msg->dataNum)
+        {
+            /* Overstep the interface GUID */
+            msg->dataNum -= VSCP_TP_ADAPTER_INTERFACE_GUID_SIZE;
+            dataOffset = VSCP_TP_ADAPTER_INTERFACE_GUID_SIZE;
+        }
+        
+        for(index = 0; index < msg->dataNum; ++index)
+        {
+            msg->data[index] = daemonEvent->data[index + dataOffset];
+        }
+    }
+    
+    return isError;
+}

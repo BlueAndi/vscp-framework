@@ -96,11 +96,12 @@ typedef enum
 /** This type contains the information from the command line arguments. */
 typedef struct
 {
-    char const *    progName;       /**< Program name without path */
-    char const *    daemonAddr;     /**< Daemon ip address */
-    char const *    daemonUser;     /**< User name for daemon ip access */
-    char const *    daemonPassword; /**< Password for daemon ip access */
-    BOOL            verbose;        /**< Verbose information */
+    char const *        progName;       /**< Program name without path */
+    char const *        daemonAddr;     /**< Daemon ip address */
+    char const *        daemonUser;     /**< User name for daemon ip access */
+    char const *        daemonPassword; /**< Password for daemon ip access */
+    BOOL                verbose;        /**< Verbose information */
+    VSCP_TP_ADAPTER_LVL lvl;            /**< Network level */
     
 } main_CmdLineArgs;
 
@@ -236,7 +237,8 @@ int main(int argc, char* argv[])
         
             ret = vscp_tp_adapter_connect(  cmdLineArgs.daemonAddr,
                                             cmdLineArgs.daemonUser,
-                                            cmdLineArgs.daemonPassword);
+                                            cmdLineArgs.daemonPassword,
+                                            cmdLineArgs.lvl);
             
             if (VSCP_TP_ADAPTER_RET_OK != ret)
             {
@@ -420,6 +422,9 @@ static MAIN_RET main_getCmdLineArgs(main_CmdLineArgs * const cmdLineArgs, int ar
         ++(cmdLineArgs->progName);
     }
     
+    /* Set network level default value */
+    cmdLineArgs->lvl = VSCP_TP_ADAPTER_LVL_1_OVER_2;
+    
     /* Any further program argument available? */
     if (1 < argc)
     {
@@ -433,12 +438,16 @@ static MAIN_RET main_getCmdLineArgs(main_CmdLineArgs * const cmdLineArgs, int ar
                 (0 == strcmp(argv[index], "--help")))
             {
                 printf("%s <options> [<daemon ip address>[:<port>]]\n\n", cmdLineArgs->progName);
-                printf("Options:\n");
-                printf("-h       Show help\n");
-                printf("--help   Show help\n");
-                printf("-u<user> User name for VSCP daemon access\n");
-                printf("-p<pass> Password for VSCP daemon access\n");
-                printf("-v       Increase verbose level\n");
+                printf("General options:\n");
+                printf("-h        Show help\n");
+                printf("--help    Show help\n");
+                printf("-v        Increase verbose level\n");
+                printf("\n");
+                printf("Options only for daemon connection:\n");
+                printf("-l<level>  1: Support L1 events\n");
+                printf("          12: Support L1 and L1 over L2 events (default)\n");
+                printf("-u<user>  User name for VSCP daemon access\n");
+                printf("-p<pass>  Password for VSCP daemon access\n");
                 
                 abort = TRUE;
             }
@@ -446,6 +455,16 @@ static MAIN_RET main_getCmdLineArgs(main_CmdLineArgs * const cmdLineArgs, int ar
             else if (0 == strcmp(argv[index], "-v"))
             {
                 cmdLineArgs->verbose = TRUE;
+            }
+            /* Support level 1 events? */
+            else if (0 == strcmp(argv[index], "-l1"))
+            {
+                cmdLineArgs->lvl = VSCP_TP_ADAPTER_LVL_1;
+            }
+            /* Support level 1 and level 1 over level 2 events? */
+            else if (0 == strcmp(argv[index], "-l12"))
+            {
+                cmdLineArgs->lvl = VSCP_TP_ADAPTER_LVL_1_OVER_2;
             }
             /* Daemon user name? */
             else if (0 == strncmp(argv[index], "-u", 2))
