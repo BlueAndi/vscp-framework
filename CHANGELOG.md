@@ -14,6 +14,7 @@ Bugfixes:
 
   - VSCP framework
     - GUID MSB/LSB problem fixed.
+    - Extended page register read sent only one response back. Now it sends one ore more, dependend on the requested number of register reads.
 
   - PC example
     - The EEPROM dump function of the pc example caused a segmentation fault.
