@@ -109,6 +109,20 @@ typedef enum
 
 } INIT_STATE;
 
+/**
+ * This type is used to store all necessary information, used by a extended
+ * page read event.
+ */
+typedef struct
+{
+    uint16_t    page;   /**< Page */
+    uint8_t     addr;   /**< Address (offset in page) */
+    uint8_t     count;  /**< Number of registers to read */
+    uint8_t     seq;    /**< Sequence id */
+    uint8_t     read;   /**< Number of read registers */
+    
+} ExtPageRead;
+
 /*******************************************************************************
     PROTOTYPES
 *******************************************************************************/
@@ -152,6 +166,7 @@ static void vscp_core_handleProtocolDecrementRegister(void);
 static void vscp_core_handleProtocolWhoIsThere(void);
 static void vscp_core_handleProtocolGetDecisionMatrixInfo(void);
 static void vscp_core_handleProtocolExtendedPageReadRegister(void);
+static void vscp_core_extendedPageReadRegister(ExtPageRead * const data);
 static void vscp_core_handleProtocolExtendedPageWriteRegister(void);
 static uint8_t vscp_core_getStartUpControl(void);
 static uint8_t vscp_core_getRegAppWriteProtect(void);
@@ -215,6 +230,12 @@ static uint16_t         vscp_core_regPageSelect     = 0;
 
 /** Reset requested or not */
 static BOOL             vscp_core_resetRequested    = FALSE;
+
+/**
+ * Extended page read data, which is used to continue a extended page read in
+ * the next process cycle.
+ */
+static ExtPageRead      vscp_core_extPageReadData   = { 0, 0, 0, 0 };
 
 /*******************************************************************************
     GLOBAL VARIABLES
@@ -360,7 +381,12 @@ extern void vscp_core_restoreFactoryDefaultSettings(void)
     
     vscp_core_regAlarmStatus    = 0;
     vscp_core_regPageSelect     = 0;
-
+    
+    vscp_core_extPageReadData.page  = 0;
+    vscp_core_extPageReadData.count = 0;
+    vscp_core_extPageReadData.seq   = 0;
+    vscp_core_extPageReadData.read  = 0;
+    
     /* Clear nickname id */
     vscp_core_writeNicknameId(VSCP_NICKNAME_NOT_INIT);
 
@@ -1027,6 +1053,12 @@ static inline void  vscp_core_stateActive(void)
     }
 
 #endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_HEARTBEAT_NODE ) */
+
+    /* Continue a extended page read? */
+    if (0 < vscp_core_extPageReadData.count)
+    {
+        vscp_core_extendedPageReadRegister(&vscp_core_extPageReadData);
+    }
 
     return;
 }
@@ -2564,62 +2596,114 @@ static inline void  vscp_core_handleProtocolExtendedPageReadRegister(void)
         /* This node? */
         if (vscp_core_nickname == vscp_core_rxMessage.data[0])
         {
-            vscp_TxMessage  txMessage;
-            uint16_t        page        = (((uint16_t)vscp_core_rxMessage.data[1]) << 8) | (vscp_core_rxMessage.data[2]);
-            uint8_t         addr        = vscp_core_rxMessage.data[3];
-            uint8_t         num         = 1;
-            uint8_t         index       = 0;
-            uint8_t         dataIndex   = 0;
-
+            vscp_core_extPageReadData.page  = (((uint16_t)vscp_core_rxMessage.data[1]) << 8) | (vscp_core_rxMessage.data[2]);
+            vscp_core_extPageReadData.addr  = vscp_core_rxMessage.data[3];
+            vscp_core_extPageReadData.seq   = 0;
+            vscp_core_extPageReadData.read  = 0;
+            
             /* Read more than one register? */
             if (5 == vscp_core_rxMessage.dataNum)
             {
-                num = vscp_core_rxMessage.data[4];
-
-                /* Limit the number of registers to 4.
-                 * Note that VSCP specification v1.9.16 mention a wrong number of 6.
-                 */
-                if (4 < num)
+                vscp_core_extPageReadData.count = vscp_core_rxMessage.data[4];
+                
+                /* Read at least one register */
+                if (0 == vscp_core_extPageReadData.count)
                 {
-                    num = 4;
+                    vscp_core_extPageReadData.count = 1;
                 }
             }
-
-            /* If the number of bytes to read overflows the page, it will be
-             * limited to the page end.
+            else
+            {
+                vscp_core_extPageReadData.count = 1;
+            }
+            
+            /* Only one response will be sent now.
+             * If more responses are necessary, they will be sent in the following
+             * process cycles. This avoids that the framework blocks the application
+             * too long. And makes the node more responsive.
              */
-            if (((0xFF - num) + 1) < addr)
+            vscp_core_extendedPageReadRegister(&vscp_core_extPageReadData);
+        }
+    }
+
+    return;
+}
+
+/**
+ * This function handles a extended page read register.
+ *
+ * @param[in] data  Extended page read register data
+ */
+static void vscp_core_extendedPageReadRegister(ExtPageRead * const data)
+{
+    if ((NULL != data) &&
+        (0 < data->count))
+    {
+        vscp_TxMessage  txMessage;
+        uint8_t         index       = 0;
+        uint8_t         addr        = data->addr;
+        uint8_t         count       = data->count;
+        uint8_t         read        = data->read;
+        BOOL            nextPage    = FALSE;
+        
+        /* Prepare tx message */
+        txMessage.vscpClass = VSCP_CLASS_L1_PROTOCOL;
+        txMessage.vscpType  = VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_READ_WRITE_RESPONSE;
+        txMessage.priority  = VSCP_PRIORITY_3_NORMAL;
+        txMessage.oAddr     = vscp_core_nickname;
+        txMessage.hardCoded = VSCP_CORE_HARD_CODED;
+
+        /* Sequence number */
+        txMessage.data[0] = data->seq;
+
+        /* Page */
+        txMessage.data[1] = (data->page >> 8) & 0xff;
+        txMessage.data[2] = (data->page >> 0) & 0xff;
+
+        /* Read registers */
+        index = 4;
+        do
+        {
+            txMessage.data[index] = vscp_core_readRegister(data->page, addr);
+            ++index;
+            --count;
+            ++read;
+
+            /* If the read takes place on the next page, a new event shall be used,
+             * because the event parameter contains the page, where all read
+             * registers are located.
+             */
+            if (0xff > addr)
             {
-                num = (0xFF - addr) + 1;
+                ++addr;
             }
-
-            /* Prepare tx message */
-            txMessage.vscpClass = VSCP_CLASS_L1_PROTOCOL;
-            txMessage.vscpType  = VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_READ_WRITE_RESPONSE;
-            txMessage.priority  = VSCP_PRIORITY_3_NORMAL;
-            txMessage.oAddr     = vscp_core_nickname;
-            txMessage.hardCoded = VSCP_CORE_HARD_CODED;
-
-            /* Sequence number */
-            txMessage.data[0] = 0;
-
-            /* Page and register */
-            txMessage.data[1] = vscp_core_rxMessage.data[1];
-            txMessage.data[2] = vscp_core_rxMessage.data[2];
-            txMessage.data[3] = vscp_core_rxMessage.data[3];
-
-            dataIndex = 4;
-
-            /* Read registers */
-            for(index = 0; index < num; ++index)
+            else
             {
-                txMessage.data[dataIndex] = vscp_core_readRegister(page, addr + index);
-                ++dataIndex;
+                nextPage = TRUE;
             }
+        }
+        while((VSCP_L1_DATA_SIZE > index) && (0 < count) && (FALSE == nextPage));
+        
+        txMessage.data[3] = read;
+        txMessage.dataNum = index;
 
-            txMessage.dataNum = dataIndex;
-
-            (void)vscp_transport_writeMessage(&txMessage);
+        if (TRUE == vscp_transport_writeMessage(&txMessage))
+        {
+            /* Continue on the next page? */
+            if (TRUE == nextPage)
+            {
+                ++data->page;
+                data->addr = 0;
+            }
+            /* Continue on the same page */
+            else
+            {
+                data->addr = addr;
+            }
+            
+            data->count = count;
+            ++data->seq;
+            data->read  = read;
         }
     }
 
