@@ -119,7 +119,6 @@ typedef struct
     uint8_t     addr;   /**< Address (offset in page) */
     uint8_t     count;  /**< Number of registers to read */
     uint8_t     seq;    /**< Sequence id */
-    uint8_t     read;   /**< Number of read registers */
     
 } ExtPageRead;
 
@@ -385,7 +384,6 @@ extern void vscp_core_restoreFactoryDefaultSettings(void)
     vscp_core_extPageReadData.page  = 0;
     vscp_core_extPageReadData.count = 0;
     vscp_core_extPageReadData.seq   = 0;
-    vscp_core_extPageReadData.read  = 0;
     
     /* Clear nickname id */
     vscp_core_writeNicknameId(VSCP_NICKNAME_NOT_INIT);
@@ -2599,7 +2597,6 @@ static inline void  vscp_core_handleProtocolExtendedPageReadRegister(void)
             vscp_core_extPageReadData.page  = (((uint16_t)vscp_core_rxMessage.data[1]) << 8) | (vscp_core_rxMessage.data[2]);
             vscp_core_extPageReadData.addr  = vscp_core_rxMessage.data[3];
             vscp_core_extPageReadData.seq   = 0;
-            vscp_core_extPageReadData.read  = 0;
             
             /* Read more than one register? */
             if (5 == vscp_core_rxMessage.dataNum)
@@ -2643,7 +2640,6 @@ static void vscp_core_extendedPageReadRegister(ExtPageRead * const data)
         uint8_t         index       = 0;
         uint8_t         addr        = data->addr;
         uint8_t         count       = data->count;
-        uint8_t         read        = data->read;
         BOOL            nextPage    = FALSE;
         
         /* Prepare tx message */
@@ -2656,9 +2652,10 @@ static void vscp_core_extendedPageReadRegister(ExtPageRead * const data)
         /* Sequence number */
         txMessage.data[0] = data->seq;
 
-        /* Page */
+        /* Page and offset */
         txMessage.data[1] = (data->page >> 8) & 0xff;
         txMessage.data[2] = (data->page >> 0) & 0xff;
+        txMessage.data[3] = addr;
 
         /* Read registers */
         index = 4;
@@ -2667,7 +2664,6 @@ static void vscp_core_extendedPageReadRegister(ExtPageRead * const data)
             txMessage.data[index] = vscp_core_readRegister(data->page, addr);
             ++index;
             --count;
-            ++read;
 
             /* If the read takes place on the next page, a new event shall be used,
              * because the event parameter contains the page, where all read
@@ -2684,7 +2680,7 @@ static void vscp_core_extendedPageReadRegister(ExtPageRead * const data)
         }
         while((VSCP_L1_DATA_SIZE > index) && (0 < count) && (FALSE == nextPage));
         
-        txMessage.data[3] = read;
+        /* Set event data size */
         txMessage.dataNum = index;
 
         if (TRUE == vscp_transport_writeMessage(&txMessage))
@@ -2703,7 +2699,6 @@ static void vscp_core_extendedPageReadRegister(ExtPageRead * const data)
             
             data->count = count;
             ++data->seq;
-            data->read  = read;
         }
     }
 

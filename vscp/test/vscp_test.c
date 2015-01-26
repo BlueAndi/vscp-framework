@@ -2391,7 +2391,7 @@ extern void vscp_test_active30(void)
 			CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[0], 0);
 			CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[1], (page >> 8) & 0xff);
 			CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[2], (page >> 0) & 0xff);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[3], 1);
+			CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[3], offset & 0xff);
 			CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[4], index + 1);
         }
     }
@@ -3026,7 +3026,7 @@ extern void vscp_test_active31(void)
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[0], 0);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[1], 0);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[2], 0);
-    CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[3], 1);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[3], VSCP_REG_VSCP_VERSION_MAJOR);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[4], VSCP_CORE_VERSION_MAJOR);
 
     return;
