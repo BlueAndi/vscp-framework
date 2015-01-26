@@ -101,6 +101,7 @@ typedef struct
     char const *        daemonUser;     /**< User name for daemon ip access */
     char const *        daemonPassword; /**< Password for daemon ip access */
     BOOL                verbose;        /**< Verbose information */
+    BOOL                showHelp;       /**< Show help to the user */
     VSCP_TP_ADAPTER_LVL lvl;            /**< Network level */
     
 } main_CmdLineArgs;
@@ -123,6 +124,7 @@ static MAIN_RET main_init(void);
 static void main_deInit(void);
 static MAIN_RET main_setupVscpThread(void);
 static MAIN_RET main_getCmdLineArgs(main_CmdLineArgs * const cmdLineArgs, int argc, char ** const argv);
+static void main_showHelp(char const * const progName);
 static void main_showKeyTable(void);
 static void* main_vscpThread(void* par);
 static void main_dumpEEPROM(void);
@@ -191,6 +193,7 @@ static const char*      main_psUserFriendlyName[]   =
 int main(int argc, char* argv[])
 {
     int                 status          = 0;
+    BOOL                abort           = FALSE;
     main_CmdLineArgs    cmdLineArgs;
     
     printf("\nVirtual VSCP level 1 node\n");
@@ -202,7 +205,7 @@ int main(int argc, char* argv[])
     /* Parse command line arguments */
     if (MAIN_RET_OK != main_getCmdLineArgs(&cmdLineArgs, argc, argv))
     {
-        status = 1;
+        abort = TRUE;
     }
     else
     {
@@ -214,96 +217,104 @@ int main(int argc, char* argv[])
         }
     }
     
-    /* Abort program? */
-    if (0 != status)
+    /* Show help? */
+    if (TRUE == cmdLineArgs.showHelp)
     {
-        /* Abort now */
+        main_showHelp(cmdLineArgs.progName);
     }
-    /* Initialize all modules */
-    else if (MAIN_RET_OK != main_init())
+    /* Abort because of a invalid program argument or continue? */
+    else if (FALSE == status)
     {
-        status = 1;
-    }
-    else
-    {
-        /* Show the user which keys can be used. */
-        main_showKeyTable();
-        printf("\n");
-    
-        /* Shall a connection to a VSCP daemon be established? */
-        if (NULL != cmdLineArgs.daemonAddr)
+        if (MAIN_RET_OK != main_init())
         {
-            VSCP_TP_ADAPTER_RET ret = VSCP_TP_ADAPTER_RET_OK;
+            abort = TRUE;
+        }
+        else
+        {
+            /* Show the user which keys can be used. */
+            main_showKeyTable();
+            printf("\n");
         
-            ret = vscp_tp_adapter_connect(  cmdLineArgs.daemonAddr,
-                                            cmdLineArgs.daemonUser,
-                                            cmdLineArgs.daemonPassword,
-                                            cmdLineArgs.lvl);
-            
-            if (VSCP_TP_ADAPTER_RET_OK != ret)
+            /* Shall a connection to a VSCP daemon be established? */
+            if (NULL != cmdLineArgs.daemonAddr)
             {
-                printf("Failed to connect to %s.\n", cmdLineArgs.daemonAddr);
+                VSCP_TP_ADAPTER_RET ret = VSCP_TP_ADAPTER_RET_OK;
+            
+                ret = vscp_tp_adapter_connect(  cmdLineArgs.daemonAddr,
+                                                cmdLineArgs.daemonUser,
+                                                cmdLineArgs.daemonPassword,
+                                                cmdLineArgs.lvl);
                 
-                if (VSCP_TP_ADAPTER_RET_INVALID_USER == ret)
+                if (VSCP_TP_ADAPTER_RET_OK != ret)
                 {
-                    printf("Invalid user.\n");
+                    printf("Failed to connect to %s.\n", cmdLineArgs.daemonAddr);
+                    
+                    if (VSCP_TP_ADAPTER_RET_INVALID_USER == ret)
+                    {
+                        printf("Invalid user.\n");
+                    }
+                    else if (VSCP_TP_ADAPTER_RET_INVALID_PASSWORD == ret)
+                    {
+                        printf("Invalid password.\n");
+                    }
+                    else if (VSCP_TP_ADAPTER_RET_TIMEOUT == ret)
+                    {
+                        printf("Connection timeout.\n");
+                    }
+                    
+                    abort = TRUE;
                 }
-                else if (VSCP_TP_ADAPTER_RET_INVALID_PASSWORD == ret)
+            }
+            
+            /* No error? */
+            if (FALSE == abort)
+            {
+                /* Start VSCP thread */
+                if (MAIN_RET_OK != main_setupVscpThread())
                 {
-                    printf("Invalid password.\n");
+                    abort = TRUE;
                 }
-                else if (VSCP_TP_ADAPTER_RET_TIMEOUT == ret)
-                {
-                    printf("Connection timeout.\n");
-                }
+            }
+            
+            /* If no error happened, start main loop. */
+            if (FALSE == abort)
+            {
+                main_loop();
+            }
+            
+            /* Is VSCP thread running? */
+            if (0 == main_vscpThreadData.status)
+            {
+                (void)pthread_mutex_lock(&main_vscpThreadData.mutex);
+                main_vscpThreadData.quitFlag = TRUE;
+                (void)pthread_mutex_unlock(&main_vscpThreadData.mutex);
                 
-                status = 1;
+                /* Wait for the VSCP thread until its finished. */
+                printf("Please wait ...\n");
+                (void)pthread_join(main_vscpThreadData.id, NULL);
+                
+                (void)pthread_mutex_destroy(&main_vscpThreadData.mutex);
+            }
+            
+            /* Shall a connection to a VSCP daemon be disconnected? */
+            if (NULL != cmdLineArgs.daemonAddr)
+            {
+                vscp_tp_adapter_disconnect();
             }
         }
         
-        /* No error? */
-        if (0 == status)
-        {
-            /* Start VSCP thread */
-            if (MAIN_RET_OK != main_setupVscpThread())
-            {
-                status = 1;
-            }
-        }
-        
-        /* If no error happened, start main loop. */
-        if (0 == status)
-        {
-            main_loop();
-        }
-        
-        /* Is VSCP thread running? */
-        if (0 == main_vscpThreadData.status)
-        {
-            (void)pthread_mutex_lock(&main_vscpThreadData.mutex);
-            main_vscpThreadData.quitFlag = TRUE;
-            (void)pthread_mutex_unlock(&main_vscpThreadData.mutex);
-            
-            /* Wait for the VSCP thread until its finished. */
-            printf("Please wait ...\n");
-            (void)pthread_join(main_vscpThreadData.id, NULL);
-            
-            (void)pthread_mutex_destroy(&main_vscpThreadData.mutex);
-        }
-        
-        /* Shall a connection to a VSCP daemon be disconnected? */
-        if (NULL != cmdLineArgs.daemonAddr)
-        {
-            vscp_tp_adapter_disconnect();
-        }
+        main_deInit();
     }
     
-    if (0 != status)
+    if (TRUE == abort)
     {
         printf("\nAborted.\n");
+        
+        if (0 == status)
+        {
+            status = 1;
+        }
     }
-    
-    main_deInit();
 
     return status;
 }
@@ -411,7 +422,12 @@ static MAIN_RET main_getCmdLineArgs(main_CmdLineArgs * const cmdLineArgs, int ar
     memset(cmdLineArgs, 0, sizeof(main_CmdLineArgs));
     
     /* Determine program file name */
-    cmdLineArgs->progName = strrchr(argv[0], '\\');
+    cmdLineArgs->progName = strrchr(argv[0], '/');
+    
+    if (NULL == cmdLineArgs->progName)
+    {
+        cmdLineArgs->progName = strrchr(argv[0], '\\');
+    }
     
     if (NULL == cmdLineArgs->progName)
     {
@@ -437,19 +453,7 @@ static MAIN_RET main_getCmdLineArgs(main_CmdLineArgs * const cmdLineArgs, int ar
             if ((0 == strcmp(argv[index], "-h")) ||
                 (0 == strcmp(argv[index], "--help")))
             {
-                printf("%s <options> [<daemon ip address>[:<port>]]\n\n", cmdLineArgs->progName);
-                printf("General options:\n");
-                printf("-h        Show help\n");
-                printf("--help    Show help\n");
-                printf("-v        Increase verbose level\n");
-                printf("\n");
-                printf("Options only for daemon connection:\n");
-                printf("-l<level>  1: Support L1 events\n");
-                printf("          12: Support L1 and L1 over L2 events (default)\n");
-                printf("-u<user>  User name for VSCP daemon access\n");
-                printf("-p<pass>  Password for VSCP daemon access\n");
-                
-                abort = TRUE;
+                cmdLineArgs->showHelp = TRUE;
             }
             /* Increase verbose level? */
             else if (0 == strcmp(argv[index], "-v"))
@@ -518,6 +522,28 @@ static MAIN_RET main_getCmdLineArgs(main_CmdLineArgs * const cmdLineArgs, int ar
     }
     
     return status;
+}
+
+/**
+ * This function prints the help to the console.
+ *
+ * @param[in] progName  Program name
+ */
+static void main_showHelp(char const * const progName)
+{
+    printf("%s <options> [<daemon ip address>[:<port>]]\n\n", progName);
+    printf("General options:\n");
+    printf("-h        Show help\n");
+    printf("--help    Show help\n");
+    printf("-v        Increase verbose level\n");
+    printf("\n");
+    printf("Options only for daemon connection:\n");
+    printf("-l<level>  1: Support L1 events\n");
+    printf("          12: Support L1 and L1 over L2 events (default)\n");
+    printf("-u<user>  User name for VSCP daemon access\n");
+    printf("-p<pass>  Password for VSCP daemon access\n");
+                
+    return;
 }
 
 /**
