@@ -58,7 +58,8 @@ SOURCES= main.c \
 		vscp_user/vscp_ps_access.c \
 		vscp_user/vscp_tp_adapter.c \
 		vscp_user/vscp_timer.c \
-		vscp_user/dm_xml.c \
+		vscp_user/dm_std_xml.c \
+		vscp_user/dm_ext_xml.c \
 		../../vscp/vscp_core.c \
 		../../vscp/vscp_data_coding.c \
 		../../vscp/vscp_dev_data.c \

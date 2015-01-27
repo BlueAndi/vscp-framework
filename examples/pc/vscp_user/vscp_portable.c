@@ -55,7 +55,8 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 #include <stdio.h>
 #include "eeprom.h"
 #include "log.h"
-#include "dm_xml.h"
+#include "dm_std_xml.h"
+#include "dm_ext_xml.h"
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -134,7 +135,13 @@ static uint8_t	vscp_portable_ruleSet[] =
 extern void vscp_portable_init(void)
 {
     /* Initialize the decision matrix xml load functionality */
-    dm_xml_init();
+#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM )
+    dm_std_xml_init();
+#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM ) */
+
+#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM_EXTENSION )
+    dm_ext_xml_init();
+#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM_EXTENSION ) */
     
     return;
 }
@@ -328,7 +335,7 @@ extern void vscp_portable_provideEvent(vscp_RxMessage const * const msg)
 static void vscp_portable_loadDMStd(void)
 {
     uint8_t*            ps      = eeprom_getBase(NULL);
-    DM_XML_RET          ret     = DM_XML_RET_OK;
+    DM_STD_XML_RET      ret     = DM_STD_XML_RET_OK;
     vscp_dm_MatrixRow*  dm      = NULL;
     
     if (NULL == ps)
@@ -344,13 +351,13 @@ static void vscp_portable_loadDMStd(void)
      *
      * Otherwise the decision matrix will be empty.
      */
-    ret = dm_xml_loadStd("dmStd.xml", dm, VSCP_CONFIG_DM_ROWS);
+    ret = dm_std_xml_load("dmStd.xml", dm, VSCP_CONFIG_DM_ROWS);
     
-    if (ret == DM_XML_RET_EFILE)
+    if (ret == DM_STD_XML_RET_EFILE)
     {
         LOG_INFO("No standard decision matrix xml file found.");
     }
-    else if (ret != DM_XML_RET_OK)
+    else if (ret != DM_STD_XML_RET_OK)
     {
         LOG_ERROR("Standard decision matrix xml file is invalid.");
     }
@@ -374,7 +381,7 @@ static void vscp_portable_loadDMStd(void)
 static void vscp_portable_loadDMExt(void)
 {
     uint8_t*            ps      = eeprom_getBase(NULL);
-    DM_XML_RET          ret     = DM_XML_RET_OK;
+    DM_EXT_XML_RET      ret     = DM_EXT_XML_RET_OK;
     vscp_dm_MatrixRow*  dm      = NULL;
     vscp_dm_ExtRow*     dmExt   = NULL;
     
@@ -393,13 +400,13 @@ static void vscp_portable_loadDMExt(void)
      *
      * Otherwise the decision matrix will be empty.
      */
-    ret = dm_xml_loadExt("dmExt.xml", dm, dmExt, VSCP_CONFIG_DM_ROWS);
+    ret = dm_ext_xml_load("dmExt.xml", dm, dmExt, VSCP_CONFIG_DM_ROWS);
     
-    if (ret == DM_XML_RET_EFILE)
+    if (ret == DM_EXT_XML_RET_EFILE)
     {
         LOG_INFO("No extended decision matrix xml file found.");
     }
-    else if (ret != DM_XML_RET_OK)
+    else if (ret != DM_EXT_XML_RET_OK)
     {
         LOG_ERROR("Extended decision matrix xml file is invalid.");
     }

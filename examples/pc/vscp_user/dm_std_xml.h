@@ -28,22 +28,20 @@
     DESCRIPTION
 *******************************************************************************/
 /**
-@brief  Decision matrix XML loader
-@file   dm_xml.h
+@brief  Standard decision matrix XML parser
+@file   dm_std_xml.h
 @author Andreas Merkle, http://www.blue-andi.de
 
 @section desc Description
-This module contains function to load a standard decision matrix, a extended
-decision matrix and a decision matrix next generation from a xml file.
+This module contains an xml parser for a standard decision matrix format.
 
 @section svn Subversion
 $Author: amerkle $
 $Rev: 449 $
 $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
-/** @defgroup dm_xml Decision matrix XML loader
- * Load a standard decision matrix, a extended decision matrix or a decision
- * matrix next generation from a xml file.
+/** @defgroup dm_std_xml Standard decision matrix XML parser
+ * Parse a standard decision matrix XML format.
  *
  * @{
  */
@@ -53,14 +51,16 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
  * a correct module description.
  */
 
-#ifndef __DM_XML_H__
-#define __DM_XML_H__
+#ifndef __DM_STD_XML_H__
+#define __DM_STD_XML_H__
 
 /*******************************************************************************
     INCLUDES
 *******************************************************************************/
 #include <inttypes.h>
 #include "vscp_dm.h"
+
+#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM )
 
 #ifdef __cplusplus
 extern "C"
@@ -86,12 +86,12 @@ extern "C"
 /** This type defines the supported function return values. */
 typedef enum
 {
-    DM_XML_RET_OK = 0,  /**< Successful */
-    DM_XML_RET_ERROR,   /**< Failed */
-    DM_XML_RET_ENULL,   /**< Unexpected NULL pointer */
-    DM_XML_RET_EFILE    /**< File not found */
+    DM_STD_XML_RET_OK = 0,  /**< Successful */
+    DM_STD_XML_RET_ERROR,   /**< Failed */
+    DM_STD_XML_RET_ENULL,   /**< Unexpected NULL pointer */
+    DM_STD_XML_RET_EFILE    /**< File not found */
 
-} DM_XML_RET;
+} DM_STD_XML_RET;
 
 /*******************************************************************************
     VARIABLES
@@ -104,9 +104,7 @@ typedef enum
 /**
  * This function initializes this module.
  */
-extern void dm_xml_init(void);
-
-#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM )
+extern void dm_std_xml_init(void);
 
 /**
  * This function loads the content of a standard decision matrix xml file to the
@@ -117,41 +115,14 @@ extern void dm_xml_init(void);
  * @param[in]   rows        Max. number of decision matrix rows in the storage
  * @return Status
  */
-extern DM_XML_RET dm_xml_loadStd(char const * const fileName, vscp_dm_MatrixRow * const dm, uint8_t rows);
-
-#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM ) */
-
-#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM_EXTENSION )
-
-/**
- * This function loads the content of a extended decision matrix xml file to the
- * specified memory locations.
- *
- * @param[in]   fileName    Extended decision matrix xml file name
- * @param[out]  dm          Decision matrix storage
- * @param[out]  ext         Decision matrix extension storage
- * @param[in]   rows        Max. number of decision matrix rows in the storage
- * @return Status
- */
-extern DM_XML_RET dm_xml_loadExt(char const * const fileName, vscp_dm_MatrixRow * const dm, vscp_dm_ExtRow * const ext, uint8_t rows);
-
-#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM_EXTENSION ) */
-
-/**
- * This function loads the content of a decision matrix next generation xml file to the
- * specified memory location.
- *
- * @param[in]   fileName    Eecision matrix next generation xml file name
- * @param[out]  storage     Decision matrix next generation storage
- * @param[in]   size        Decision matrix next generation storage size in bytes
- * @return Status
- */
-extern DM_XML_RET dm_xml_loadNG(char const * const fileName, uint8_t* storage, uint8_t size);
+extern DM_STD_XML_RET dm_std_xml_load(char const * const fileName, vscp_dm_MatrixRow * const dm, uint8_t rows);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif  /* __DM_XML_H__ */
+#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM ) */
+
+#endif  /* __DM_STD_XML_H__ */
 
 /** @} */
