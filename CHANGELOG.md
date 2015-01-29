@@ -15,8 +15,10 @@ Bugfixes:
   - VSCP framework
     - GUID MSB/LSB problem fixed.
     - Extended page register read sent only one response back. Now it sends one ore more, dependend on the requested number of register reads.
+    - Node sub-zone address in the persistent memory fixed.
 
   - PC example
     - The EEPROM dump function of the pc example caused a segmentation fault.
+    - The EEPROM dump function knows now about the node zone and sub-zone too.
 
 ## 0.1.0 (initial release)
