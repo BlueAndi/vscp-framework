@@ -101,9 +101,9 @@ extern void vscp_app_reg_init(void)
  */
 extern void vscp_app_reg_restoreFactoryDefaultSettings(void)
 {
-    vscp_ps_writeNodeZone(0xff);
-    
-    vscp_ps_writeNodeSubZone(0xff);
+    /* Node zone and sub-zone are restored in the device data.
+     * No need to overwrite it here.
+     */
 
     return;
 }
