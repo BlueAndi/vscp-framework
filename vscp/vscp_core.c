@@ -382,6 +382,7 @@ extern void vscp_core_restoreFactoryDefaultSettings(void)
     vscp_core_regPageSelect     = 0;
     
     vscp_core_extPageReadData.page  = 0;
+    vscp_core_extPageReadData.addr  = 0;
     vscp_core_extPageReadData.count = 0;
     vscp_core_extPageReadData.seq   = 0;
     
