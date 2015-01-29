@@ -122,11 +122,12 @@ typedef struct
 
 static MAIN_RET main_init(void);
 static void main_deInit(void);
-static MAIN_RET main_setupVscpThread(void);
+static MAIN_RET main_setupVscpThreads(void);
 static MAIN_RET main_getCmdLineArgs(main_CmdLineArgs * const cmdLineArgs, int argc, char ** const argv);
 static void main_showHelp(char const * const progName);
 static void main_showKeyTable(void);
-static void* main_vscpThread(void* par);
+static void* main_vscpFrameworkThread(void* par);
+static void* main_vscpTimerThread(void* par);
 static void main_dumpEEPROM(void);
 static void main_loop(void);
 
@@ -134,8 +135,14 @@ static void main_loop(void);
     LOCAL VARIABLES
 *******************************************************************************/
 
-/** VSCP thread data */
-static main_ThreadData  main_vscpThreadData;
+/** Mutex used to protect VSCP framework thread, VSCP timer thread and main thread. */
+static pthread_mutex_t  main_vscpMutex              = PTHREAD_MUTEX_INITIALIZER;
+
+/** VSCP framework thread data */
+static main_ThreadData  main_vscpFrameworkThreadData;
+
+/** VSCP framework timer thread data */
+static main_ThreadData  main_vscpTimerThreadData;
 
 /** User friendly names for persistent memory elements */
 static const char*      main_psUserFriendlyName[]   =
@@ -147,6 +154,12 @@ static const char*      main_psUserFriendlyName[]   =
 #if (0 < VSCP_PS_SIZE_GUID)
     "GUID",
 #endif  /* (0 < VSCP_PS_SIZE_GUID) */
+#if (0 < VSCP_PS_SIZE_NODE_ZONE)
+    "Node zone",
+#endif  /* (0 < VSCP_PS_SIZE_NODE_ZONE) */
+#if (0 < VSCP_PS_SIZE_NODE_SUB_ZONE)
+    "Node sub-zone",
+#endif  /* (0 < VSCP_PS_SIZE_NODE_SUB_ZONE) */
 #if (0 < VSCP_PS_SIZE_MANUFACTURER_DEV_ID)
     "Manufacturer device id",
 #endif  /* (0 < VSCP_PS_SIZE_MANUFACTURER_DEV_ID) */
@@ -269,8 +282,8 @@ int main(int argc, char* argv[])
             /* No error? */
             if (FALSE == abort)
             {
-                /* Start VSCP thread */
-                if (MAIN_RET_OK != main_setupVscpThread())
+                /* Start VSCP threads */
+                if (MAIN_RET_OK != main_setupVscpThreads())
                 {
                     abort = TRUE;
                 }
@@ -282,19 +295,33 @@ int main(int argc, char* argv[])
                 main_loop();
             }
             
-            /* Is VSCP thread running? */
-            if (0 == main_vscpThreadData.status)
+            printf("Please wait ...");
+            
+            /* Is VSCP framework thread running? */
+            if (0 == main_vscpFrameworkThreadData.status)
             {
-                (void)pthread_mutex_lock(&main_vscpThreadData.mutex);
-                main_vscpThreadData.quitFlag = TRUE;
-                (void)pthread_mutex_unlock(&main_vscpThreadData.mutex);
+                (void)pthread_mutex_lock(&main_vscpFrameworkThreadData.mutex);
+                main_vscpFrameworkThreadData.quitFlag = TRUE;
+                (void)pthread_mutex_unlock(&main_vscpFrameworkThreadData.mutex);
                 
-                /* Wait for the VSCP thread until its finished. */
-                printf("Please wait ...\n");
-                (void)pthread_join(main_vscpThreadData.id, NULL);
-                
-                (void)pthread_mutex_destroy(&main_vscpThreadData.mutex);
+                /* Wait for the VSCP framework thread until its finished. */
+                printf(".");
+                (void)pthread_join(main_vscpFrameworkThreadData.id, NULL);
             }
+            
+            /* Is VSCP timer thread running? */
+            if (0 == main_vscpTimerThreadData.status)
+            {
+                (void)pthread_mutex_lock(&main_vscpTimerThreadData.mutex);
+                main_vscpTimerThreadData.quitFlag = TRUE;
+                (void)pthread_mutex_unlock(&main_vscpTimerThreadData.mutex);
+                
+                /* Wait for the VSCP timer thread until its finished. */
+                printf(".");
+                (void)pthread_join(main_vscpTimerThreadData.id, NULL);
+            }
+            
+            printf("\n");
             
             /* Shall a connection to a VSCP daemon be disconnected? */
             if (NULL != cmdLineArgs.daemonAddr)
@@ -305,6 +332,8 @@ int main(int argc, char* argv[])
         
         main_deInit();
     }
+    
+    (void)pthread_mutex_destroy(&main_vscpMutex);
     
     if (TRUE == abort)
     {
@@ -339,9 +368,13 @@ static MAIN_RET main_init(void)
     eeprom_init(VSCP_PS_ADDR_NEXT);
     eeprom_load(MAIN_EEPROM_FILENAME);
     
-    /* Initialize VSCP thread data */
-    memset(&main_vscpThreadData, 0, sizeof(main_vscpThreadData));
-    main_vscpThreadData.status = 1; /* Set to error value */
+    /* Initialize VSCP framework thread data */
+    memset(&main_vscpFrameworkThreadData, 0, sizeof(main_vscpFrameworkThreadData));
+    main_vscpFrameworkThreadData.status = 1; /* Set to error value */
+
+    /* Initialize VSCP timer thread data */
+    memset(&main_vscpTimerThreadData, 0, sizeof(main_vscpTimerThreadData));
+    main_vscpTimerThreadData.status = 1; /* Set to error value */
 
     /* Initialize the VSCP framework */
     if (VSCP_CORE_RET_OK != vscp_core_init())
@@ -367,32 +400,44 @@ static void main_deInit(void)
 }
 
 /**
- * This function setup the VSCP thread.
+ * This function setup the VSCP framework and timer thread.
  *
  * @return Status
  */
-static MAIN_RET main_setupVscpThread(void)
+static MAIN_RET main_setupVscpThreads(void)
 {
     MAIN_RET    status  = MAIN_RET_OK;
+        
+    /* Initialize VSCP framework and timer thread data */
+    main_vscpFrameworkThreadData.quitFlag   = FALSE;
+    main_vscpFrameworkThreadData.mutex      = main_vscpMutex;
     
-    /* Initialize VSCP thread data */
-    main_vscpThreadData.quitFlag = FALSE;
-    main_vscpThreadData.status   = pthread_mutex_init(&main_vscpThreadData.mutex, NULL);
+    main_vscpTimerThreadData.quitFlag       = FALSE;
+    main_vscpTimerThreadData.mutex          = main_vscpMutex;
     
-    if (0 != main_vscpThreadData.status)
+    /* Create vscp framework thread with default attributes */
+    main_vscpFrameworkThreadData.status = pthread_create(&main_vscpFrameworkThreadData.id, NULL, main_vscpFrameworkThread, (void*)&main_vscpFrameworkThreadData);
+    
+    if (0 != main_vscpFrameworkThreadData.status)
     {
-        LOG_FATAL_INT32("Couldn't initialize mutex.", main_vscpThreadData.status);
+        LOG_FATAL_INT32("Couldn't create vscp framework thread:", main_vscpFrameworkThreadData.status);
+        
         status = MAIN_RET_ERROR;
     }
     else
-    {   
-        /* Create thread with default attributes */
-        main_vscpThreadData.status = pthread_create(&main_vscpThreadData.id, NULL, main_vscpThread, (void*)&main_vscpThreadData);
-        if (0 != main_vscpThreadData.status)
+    {
+        /* Create vscp timer thread with default attributes */
+        main_vscpTimerThreadData.status = pthread_create(&main_vscpTimerThreadData.id, NULL, main_vscpTimerThread, (void*)&main_vscpTimerThreadData);
+        
+        if (0 != main_vscpTimerThreadData.status)
         {
-            LOG_FATAL_INT32("Couldn't create thread:", main_vscpThreadData.status);
+            LOG_FATAL_INT32("Couldn't create vscp timer thread:", main_vscpTimerThreadData.status);
             
-            (void)pthread_mutex_destroy(&main_vscpThreadData.mutex);
+            (void)pthread_mutex_lock(&main_vscpMutex);               
+            main_vscpFrameworkThreadData.quitFlag = TRUE;
+            (void)pthread_mutex_unlock(&main_vscpMutex);
+            
+            (void)pthread_join(main_vscpFrameworkThreadData.id, NULL);
             
             status = MAIN_RET_ERROR;
         }
@@ -567,7 +612,7 @@ static void main_showKeyTable(void)
  * @param[in]   par Thread parameters
  * @return  Not used
  */
-static void* main_vscpThread(void* par)
+static void* main_vscpFrameworkThread(void* par)
 {
     BOOL                quitFlag    = FALSE;
     main_ThreadData*    threadData  = (main_ThreadData*)par;
@@ -580,16 +625,48 @@ static void* main_vscpThread(void* par)
     {
         /* Process the whole VSCP framework */
         (void)pthread_mutex_lock(&threadData->mutex);
+        
         vscp_core_process();
+        
+        quitFlag = threadData->quitFlag;
+        
         (void)pthread_mutex_unlock(&threadData->mutex);
 
-        /* Wait 100ms */
-        platform_delay(100);
+        /* Give a other threads a minimal chance. */
+        platform_delay(1);
+    }
+    
+    pthread_exit(NULL);
+    
+    return NULL;
+}
+
+/**
+ * This thread process the VSCP framework.
+ *
+ * @param[in]   par Thread parameters
+ * @return  Not used
+ */
+static void* main_vscpTimerThread(void* par)
+{
+    BOOL                quitFlag    = FALSE;
+    main_ThreadData*    threadData  = (main_ThreadData*)par;
+    uint16_t            waitTime    = 100;
+    
+    (void)pthread_mutex_lock(&threadData->mutex);
+    quitFlag = threadData->quitFlag;
+    (void)pthread_mutex_unlock(&threadData->mutex);
+    
+    while(FALSE == quitFlag)
+    {
+        /* Wait a specific time, until the timers are processed again. */
+        platform_delay(waitTime);
 
         (void)pthread_mutex_lock(&threadData->mutex);
-
-        vscp_timer_process(100);
-
+        
+        /* Process the VSCP framework timers */
+        vscp_timer_process(waitTime);
+        
         quitFlag = threadData->quitFlag;
 
         (void)pthread_mutex_unlock(&threadData->mutex);
@@ -651,6 +728,18 @@ static void main_dumpEEPROM(void)
                 nextColor = TRUE;
             }
 #endif	/* (0 < VSCP_PS_SIZE_GUID) */
+#if (0 < VSCP_PS_SIZE_NODE_ZONE)
+            else if (VSCP_PS_ADDR_NODE_ZONE == index)
+            {
+                nextColor = TRUE;
+            }
+#endif  /* (0 < VSCP_PS_SIZE_NODE_ZONE) */
+#if (0 < VSCP_PS_SIZE_NODE_SUB_ZONE)
+            else if (VSCP_PS_ADDR_NODE_SUB_ZONE == index)
+            {
+                nextColor = TRUE;
+            }
+#endif  /* (0 < VSCP_PS_SIZE_NODE_SUB_ZONE) */
 #if (0 < VSCP_PS_SIZE_MANUFACTURER_DEV_ID)
             else if (VSCP_PS_ADDR_MANUFACTURER_DEV_ID == index)
             {
@@ -759,6 +848,18 @@ static void main_dumpEEPROM(void)
                 nextColor = TRUE;
             }
 #endif	/* (0 < VSCP_PS_SIZE_GUID) */
+#if (0 < VSCP_PS_SIZE_NODE_ZONE)
+            else if (VSCP_PS_ADDR_NODE_ZONE == index)
+            {
+                nextColor = TRUE;
+            }
+#endif  /* (0 < VSCP_PS_SIZE_NODE_ZONE) */
+#if (0 < VSCP_PS_SIZE_NODE_SUB_ZONE)
+            else if (VSCP_PS_ADDR_NODE_SUB_ZONE == index)
+            {
+                nextColor = TRUE;
+            }
+#endif  /* (0 < VSCP_PS_SIZE_NODE_SUB_ZONE) */
 #if (0 < VSCP_PS_SIZE_MANUFACTURER_DEV_ID)
             else if (VSCP_PS_ADDR_MANUFACTURER_DEV_ID == index)
             {
@@ -864,21 +965,21 @@ static void main_loop(void)
             /* Show keys */
             if ('?' == keyValue)
             {
-                (void)pthread_mutex_lock(&main_vscpThreadData.mutex);
+                (void)pthread_mutex_lock(&main_vscpMutex);
                 main_showKeyTable();
-                (void)pthread_mutex_unlock(&main_vscpThreadData.mutex);
+                (void)pthread_mutex_unlock(&main_vscpMutex);
             }
             /* Dump EEPROM */
             else if ('e' == keyValue)
             {
-                (void)pthread_mutex_lock(&main_vscpThreadData.mutex);
+                (void)pthread_mutex_lock(&main_vscpMutex);
                 main_dumpEEPROM();
-                (void)pthread_mutex_unlock(&main_vscpThreadData.mutex);
+                (void)pthread_mutex_unlock(&main_vscpMutex);
             }               
             /* Enable/Disable node hearbeat */
             else if ('h' == keyValue)
             {
-                (void)pthread_mutex_lock(&main_vscpThreadData.mutex);
+                (void)pthread_mutex_lock(&main_vscpMutex);
                 if (TRUE == nodeHeartbeat)
                 {
                     printf("Disable node heartbeat.\n");
@@ -890,22 +991,22 @@ static void main_loop(void)
                     nodeHeartbeat = TRUE;
                 }
                 vscp_core_enableHeartbeat(nodeHeartbeat);
-                (void)pthread_mutex_unlock(&main_vscpThreadData.mutex);
+                (void)pthread_mutex_unlock(&main_vscpMutex);
             }
             /* Start node segment initialization */
             else if ('i' == keyValue)
             {
-                (void)pthread_mutex_lock(&main_vscpThreadData.mutex);
+                (void)pthread_mutex_lock(&main_vscpMutex);
                 printf("Start node segment initialization.\n");
                 vscp_core_startNodeSegmentInit();
-                (void)pthread_mutex_unlock(&main_vscpThreadData.mutex);
+                (void)pthread_mutex_unlock(&main_vscpMutex);
             }
             /* Quit program */
             else if ('q' == keyValue)
             {
-                (void)pthread_mutex_lock(&main_vscpThreadData.mutex);
+                (void)pthread_mutex_lock(&main_vscpMutex);
                 printf("Quit.\n");
-                (void)pthread_mutex_unlock(&main_vscpThreadData.mutex);
+                (void)pthread_mutex_unlock(&main_vscpMutex);
             }
             /* Send a button message to the VSCP thread */
             else if (('0' <= keyValue) && ('9' >= keyValue))
@@ -925,9 +1026,9 @@ static void main_loop(void)
                 rxMsg.data[5]   = 0;
                 rxMsg.data[6]   = 0;
                 
-                (void)pthread_mutex_lock(&main_vscpThreadData.mutex);
+                (void)pthread_mutex_lock(&main_vscpMutex);
                 vscp_tp_adapter_simulateReceivedMessage(&rxMsg);
-                (void)pthread_mutex_unlock(&main_vscpThreadData.mutex);
+                (void)pthread_mutex_unlock(&main_vscpMutex);
             }
             
             platform_echoOff();
