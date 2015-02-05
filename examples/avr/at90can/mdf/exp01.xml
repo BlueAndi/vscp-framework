@@ -329,7 +329,7 @@ Bit 8 of the class filter is stored in bit 1 of the flag byte.</description>
   
             <level>1</level>					
             <start page="1" offset="0"/> 	
-            <rowcnt>2</rowcnt>
+            <rowcnt>10</rowcnt>
 					
             <action code="0x01">
                 <name lang="en">Enable status LED</name>
