@@ -62,6 +62,9 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 /** Size of the interface GUID in byte */
 #define VSCP_TP_ADAPTER_INTERFACE_GUID_SIZE 16
 
+/** Base class id of L2 events */
+#define VSCP_TP_ADAPTER_CLASS_L2_BASE       1024
+
 /*******************************************************************************
     MACROS
 *******************************************************************************/
@@ -172,7 +175,7 @@ extern BOOL vscp_tp_adapter_readMessage(vscp_RxMessage * const msg)
                         }
                     }
                     /* Level 1 over level 2 event? */
-                    else if (1024 > daemonEvent.vscp_class)
+                    else if (VSCP_TP_ADAPTER_CLASS_L2_BASE > daemonEvent.vscp_class)
                     {
                         if (FALSE == vscp_tp_adapter_handleL1OverL2Event(msg, &daemonEvent))
                         {
