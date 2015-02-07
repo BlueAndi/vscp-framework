@@ -204,7 +204,7 @@ extern BOOL hw_getBootJumperStatus(void)
     /* Note, the boot jumper is equal to the segment initialization button.
      * The boot jumper status is only used during power up of the hardware.
      */
-    return (0 == (PINC & PC4)) ? TRUE : FALSE;
+    return (0 == (PINC & _BV(PC4))) ? TRUE : FALSE;
 }
 
 /**
@@ -218,7 +218,7 @@ extern BOOL hw_getBootJumperStatus(void)
 extern BOOL hw_getSegInitButtonState(void)
 {
     /* Button is low active */
-    return (0 == (PINC & PC4)) ? TRUE : FALSE;
+    return (0 == (PINC & _BV(PC4))) ? TRUE : FALSE;
 }
 
 /*******************************************************************************
