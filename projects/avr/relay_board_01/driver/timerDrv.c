@@ -162,7 +162,7 @@ extern void timerDrv_init(void)
     timerDrv_intrCounter    = 0;
 
     /* Set prescaler */
-    TCCR0A = TIMERDRV_PRESCALER;
+    TCCR0B = TIMERDRV_PRESCALER;
 
     /* Clear counter */
     TCNT0 = TIMERDRV_PRELOAD_VALUE;
