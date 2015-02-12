@@ -9,6 +9,7 @@ Features:
   - PC example
     - The pc example loads the standard and extended decision matrix from a xml file.
     - L1 over L2 events are supported now.
+    - The node sends now periodically simulated temperature values.
   
 Bugfixes:
 
@@ -16,6 +17,7 @@ Bugfixes:
     - GUID MSB/LSB problem fixed.
     - Extended page register read sent only one response back. Now it sends one ore more, dependend on the requested number of register reads.
     - Node sub-zone address in the persistent memory fixed.
+    - Exponent type in all class MEASUREZONE events fixed.
 
   - PC example
     - The EEPROM dump function of the pc example caused a segmentation fault.
