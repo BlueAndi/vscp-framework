@@ -45,13 +45,16 @@ BIN= vscpExamplePc
 INCLUDES= -I. \
 		-Iinclude \
 		-Ivscp_user \
-		-I../../vscp
+		-I../../vscp \
+		-I../../vscp/events
 
 # Sources
 SOURCES= main.c \
 		eeprom.c \
 		log.c \
 		platform.c \
+		temperature_sim.c \
+		vscp_thread.c \
 		vscp_user/vscp_action.c \
 		vscp_user/vscp_app_reg.c \
 		vscp_user/vscp_portable.c \
