@@ -99,7 +99,7 @@ extern BOOL vscp_measurezone_sendUndefinedEvent(void);
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendCountEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendCountEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Meter.
@@ -116,7 +116,7 @@ extern BOOL vscp_measurezone_sendCountEvent(uint8_t index, uint8_t zone, uint8_t
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendLengthDistanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendLengthDistanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Kilogram.
@@ -133,7 +133,7 @@ extern BOOL vscp_measurezone_sendLengthDistanceEvent(uint8_t index, uint8_t zone
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendMassEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendMassEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Seconds.
@@ -151,7 +151,7 @@ extern BOOL vscp_measurezone_sendMassEvent(uint8_t index, uint8_t zone, uint8_t 
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendTimeEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendTimeEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Ampere.
@@ -168,7 +168,7 @@ extern BOOL vscp_measurezone_sendTimeEvent(uint8_t index, uint8_t zone, uint8_t 
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendElectricCurrentEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendElectricCurrentEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Kelvin.
@@ -187,7 +187,7 @@ extern BOOL vscp_measurezone_sendElectricCurrentEvent(uint8_t index, uint8_t zon
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendTemperatureEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendTemperatureEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Mole.
@@ -204,7 +204,7 @@ extern BOOL vscp_measurezone_sendTemperatureEvent(uint8_t index, uint8_t zone, u
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendAmountOfSubstanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendAmountOfSubstanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Candela.
@@ -221,7 +221,7 @@ extern BOOL vscp_measurezone_sendAmountOfSubstanceEvent(uint8_t index, uint8_t z
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendLuminousIntensityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendLuminousIntensityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Hertz.
@@ -238,7 +238,7 @@ extern BOOL vscp_measurezone_sendLuminousIntensityEvent(uint8_t index, uint8_t z
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendFrequencyEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendFrequencyEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Becquerel.
@@ -255,7 +255,7 @@ extern BOOL vscp_measurezone_sendFrequencyEvent(uint8_t index, uint8_t zone, uin
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendRadioactivityAndOtherRandomEventsEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendRadioactivityAndOtherRandomEventsEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Newton.
@@ -272,7 +272,7 @@ extern BOOL vscp_measurezone_sendRadioactivityAndOtherRandomEventsEvent(uint8_t 
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendForceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendForceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Pascal.
@@ -291,7 +291,7 @@ extern BOOL vscp_measurezone_sendForceEvent(uint8_t index, uint8_t zone, uint8_t
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendPressureEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendPressureEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Joule.
@@ -308,7 +308,7 @@ extern BOOL vscp_measurezone_sendPressureEvent(uint8_t index, uint8_t zone, uint
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendEnergyEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendEnergyEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Watt.
@@ -325,7 +325,7 @@ extern BOOL vscp_measurezone_sendEnergyEvent(uint8_t index, uint8_t zone, uint8_
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendPowerEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendPowerEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Coulomb.
@@ -342,7 +342,7 @@ extern BOOL vscp_measurezone_sendPowerEvent(uint8_t index, uint8_t zone, uint8_t
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendElectricalChargeEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendElectricalChargeEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Volt.
@@ -359,7 +359,7 @@ extern BOOL vscp_measurezone_sendElectricalChargeEvent(uint8_t index, uint8_t zo
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendElectricalPotentialEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendElectricalPotentialEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Farad.
@@ -376,7 +376,7 @@ extern BOOL vscp_measurezone_sendElectricalPotentialEvent(uint8_t index, uint8_t
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendElectricalCapacitanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendElectricalCapacitanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Ohm.
@@ -393,7 +393,7 @@ extern BOOL vscp_measurezone_sendElectricalCapacitanceEvent(uint8_t index, uint8
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendElectricalResistanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendElectricalResistanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Siemens.
@@ -410,7 +410,7 @@ extern BOOL vscp_measurezone_sendElectricalResistanceEvent(uint8_t index, uint8_
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendElectricalConductanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendElectricalConductanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Ampere meters.
@@ -427,7 +427,7 @@ extern BOOL vscp_measurezone_sendElectricalConductanceEvent(uint8_t index, uint8
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendMagneticFieldStrengthEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendMagneticFieldStrengthEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Weber.
@@ -444,7 +444,7 @@ extern BOOL vscp_measurezone_sendMagneticFieldStrengthEvent(uint8_t index, uint8
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendMagneticFluxEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendMagneticFluxEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Tesla.
@@ -462,7 +462,7 @@ extern BOOL vscp_measurezone_sendMagneticFluxEvent(uint8_t index, uint8_t zone, 
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendMagneticFluxDensityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendMagneticFluxDensityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Henry.
@@ -479,7 +479,7 @@ extern BOOL vscp_measurezone_sendMagneticFluxDensityEvent(uint8_t index, uint8_t
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendInductanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendInductanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Lumen (lm= cd * sr)
@@ -496,7 +496,7 @@ extern BOOL vscp_measurezone_sendInductanceEvent(uint8_t index, uint8_t zone, ui
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendLuminousFluxEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendLuminousFluxEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Lux ( lx = lm / m² )
@@ -514,7 +514,7 @@ extern BOOL vscp_measurezone_sendLuminousFluxEvent(uint8_t index, uint8_t zone, 
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendIlluminanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendIlluminanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Gray. Opt unit: Sievert.
@@ -531,7 +531,7 @@ extern BOOL vscp_measurezone_sendIlluminanceEvent(uint8_t index, uint8_t zone, u
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendRadiationDoseEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendRadiationDoseEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Katal.
@@ -548,7 +548,7 @@ extern BOOL vscp_measurezone_sendRadiationDoseEvent(uint8_t index, uint8_t zone,
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendCatalyticActivityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendCatalyticActivityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: cubic meter
@@ -567,7 +567,7 @@ extern BOOL vscp_measurezone_sendCatalyticActivityEvent(uint8_t index, uint8_t z
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendVolumeEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendVolumeEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Bel.
@@ -586,7 +586,7 @@ extern BOOL vscp_measurezone_sendVolumeEvent(uint8_t index, uint8_t zone, uint8_
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendSoundIntensityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendSoundIntensityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Radian (Plane angles). Opt Unit: Degree (1) Opt Unit: Arcminute (2) Opt Unit:
@@ -604,7 +604,7 @@ extern BOOL vscp_measurezone_sendSoundIntensityEvent(uint8_t index, uint8_t zone
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendAngleEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendAngleEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Longitude.
@@ -623,7 +623,7 @@ extern BOOL vscp_measurezone_sendAngleEvent(uint8_t index, uint8_t zone, uint8_t
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendPositionEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendPositionEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Meters per second.
@@ -640,7 +640,7 @@ extern BOOL vscp_measurezone_sendPositionEvent(uint8_t index, uint8_t zone, uint
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendSpeedEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendSpeedEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Meters per second/second.
@@ -657,7 +657,7 @@ extern BOOL vscp_measurezone_sendSpeedEvent(uint8_t index, uint8_t zone, uint8_t
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendAccelerationEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendAccelerationEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: N/m.
@@ -674,7 +674,7 @@ extern BOOL vscp_measurezone_sendAccelerationEvent(uint8_t index, uint8_t zone, 
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendTensionEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendTensionEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Relative percentage 0-100%.
@@ -691,7 +691,7 @@ extern BOOL vscp_measurezone_sendTensionEvent(uint8_t index, uint8_t zone, uint8
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendDampMoistEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendDampMoistEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Cubic meters/second. Opt Unit: Liter/Second.
@@ -708,7 +708,7 @@ extern BOOL vscp_measurezone_sendDampMoistEvent(uint8_t index, uint8_t zone, uin
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendFlowEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendFlowEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Thermal ohm K/W.
@@ -725,7 +725,7 @@ extern BOOL vscp_measurezone_sendFlowEvent(uint8_t index, uint8_t zone, uint8_t 
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendThermalResistanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendThermalResistanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Dioptre (dpt) m-1.
@@ -742,7 +742,7 @@ extern BOOL vscp_measurezone_sendThermalResistanceEvent(uint8_t index, uint8_t z
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendRefractivePowerEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendRefractivePowerEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Poiseuille (Pl) Pa . s.
@@ -759,7 +759,7 @@ extern BOOL vscp_measurezone_sendRefractivePowerEvent(uint8_t index, uint8_t zon
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendDynamicViscosityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendDynamicViscosityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Rayal Pa . s/m.
@@ -776,7 +776,7 @@ extern BOOL vscp_measurezone_sendDynamicViscosityEvent(uint8_t index, uint8_t zo
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendSoundImpedanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendSoundImpedanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Acoustic ohm Pa . s/ m³.
@@ -793,7 +793,7 @@ extern BOOL vscp_measurezone_sendSoundImpedanceEvent(uint8_t index, uint8_t zone
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendSoundResistanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendSoundResistanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Darag F-1.
@@ -810,7 +810,7 @@ extern BOOL vscp_measurezone_sendSoundResistanceEvent(uint8_t index, uint8_t zon
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendElectricElastanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendElectricElastanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Talbot ( tb = lm * s)
@@ -827,7 +827,7 @@ extern BOOL vscp_measurezone_sendElectricElastanceEvent(uint8_t index, uint8_t z
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendLuminousEnergyEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendLuminousEnergyEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Nit (nt = cd / m²)
@@ -844,7 +844,7 @@ extern BOOL vscp_measurezone_sendLuminousEnergyEvent(uint8_t index, uint8_t zone
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendLuminanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendLuminanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Molal mol/kg.
@@ -861,7 +861,7 @@ extern BOOL vscp_measurezone_sendLuminanceEvent(uint8_t index, uint8_t zone, uin
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendChemicalConcentrationEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendChemicalConcentrationEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Sievert J/Kg.
@@ -878,7 +878,7 @@ extern BOOL vscp_measurezone_sendChemicalConcentrationEvent(uint8_t index, uint8
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendDoseEquivalentEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendDoseEquivalentEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Kelvin.
@@ -897,7 +897,7 @@ extern BOOL vscp_measurezone_sendDoseEquivalentEvent(uint8_t index, uint8_t zone
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendDewPointEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendDewPointEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Relative value.
@@ -915,7 +915,7 @@ extern BOOL vscp_measurezone_sendDewPointEvent(uint8_t index, uint8_t zone, uint
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendRelativeLevelEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendRelativeLevelEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: Meter.
@@ -934,7 +934,7 @@ extern BOOL vscp_measurezone_sendRelativeLevelEvent(uint8_t index, uint8_t zone,
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendAltitude(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendAltitude(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: square meter (m²)
@@ -951,7 +951,7 @@ extern BOOL vscp_measurezone_sendAltitude(uint8_t index, uint8_t zone, uint8_t s
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendAreaEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendAreaEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: watt per steradian ( W / sr )
@@ -968,7 +968,7 @@ extern BOOL vscp_measurezone_sendAreaEvent(uint8_t index, uint8_t zone, uint8_t 
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendRadiantIntensityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendRadiantIntensityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: att per steradian per square metre ( W / (sr * m²) )
@@ -983,7 +983,7 @@ extern BOOL vscp_measurezone_sendRadiantIntensityEvent(uint8_t index, uint8_t zo
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendRadianceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendRadianceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: watt per square metre ( W / m² )
@@ -1000,7 +1000,7 @@ extern BOOL vscp_measurezone_sendRadianceEvent(uint8_t index, uint8_t zone, uint
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendIrradianceExitanceRadiosityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendIrradianceExitanceRadiosityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: watt per steradian per square metre per nm (W·sr-1·m-2·nm-1)
@@ -1018,7 +1018,7 @@ extern BOOL vscp_measurezone_sendIrradianceExitanceRadiosityEvent(uint8_t index,
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendSpectralRadianceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendSpectralRadianceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 /**
  * Default unit: watt per square metre per nm (W·m-2·nm-1)
@@ -1035,6 +1035,6 @@ extern BOOL vscp_measurezone_sendSpectralRadianceEvent(uint8_t index, uint8_t zo
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendSpectralIrradianceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp);
+extern BOOL vscp_measurezone_sendSpectralIrradianceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
 #endif /* __VSCP_MEASUREZONE_H__ */

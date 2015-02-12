@@ -116,7 +116,7 @@ extern BOOL vscp_measurezone_sendUndefinedEvent(void)
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendCountEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendCountEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -147,7 +147,7 @@ extern BOOL vscp_measurezone_sendCountEvent(uint8_t index, uint8_t zone, uint8_t
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendLengthDistanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendLengthDistanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -178,7 +178,7 @@ extern BOOL vscp_measurezone_sendLengthDistanceEvent(uint8_t index, uint8_t zone
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendMassEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendMassEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -210,7 +210,7 @@ extern BOOL vscp_measurezone_sendMassEvent(uint8_t index, uint8_t zone, uint8_t 
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendTimeEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendTimeEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -241,7 +241,7 @@ extern BOOL vscp_measurezone_sendTimeEvent(uint8_t index, uint8_t zone, uint8_t 
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendElectricCurrentEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendElectricCurrentEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -274,7 +274,7 @@ extern BOOL vscp_measurezone_sendElectricCurrentEvent(uint8_t index, uint8_t zon
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendTemperatureEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendTemperatureEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -305,7 +305,7 @@ extern BOOL vscp_measurezone_sendTemperatureEvent(uint8_t index, uint8_t zone, u
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendAmountOfSubstanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendAmountOfSubstanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -336,7 +336,7 @@ extern BOOL vscp_measurezone_sendAmountOfSubstanceEvent(uint8_t index, uint8_t z
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendLuminousIntensityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendLuminousIntensityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -367,7 +367,7 @@ extern BOOL vscp_measurezone_sendLuminousIntensityEvent(uint8_t index, uint8_t z
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendFrequencyEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendFrequencyEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -398,7 +398,7 @@ extern BOOL vscp_measurezone_sendFrequencyEvent(uint8_t index, uint8_t zone, uin
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendRadioactivityAndOtherRandomEventsEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendRadioactivityAndOtherRandomEventsEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -429,7 +429,7 @@ extern BOOL vscp_measurezone_sendRadioactivityAndOtherRandomEventsEvent(uint8_t 
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendForceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendForceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -462,7 +462,7 @@ extern BOOL vscp_measurezone_sendForceEvent(uint8_t index, uint8_t zone, uint8_t
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendPressureEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendPressureEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -493,7 +493,7 @@ extern BOOL vscp_measurezone_sendPressureEvent(uint8_t index, uint8_t zone, uint
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendEnergyEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendEnergyEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -524,7 +524,7 @@ extern BOOL vscp_measurezone_sendEnergyEvent(uint8_t index, uint8_t zone, uint8_
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendPowerEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendPowerEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -555,7 +555,7 @@ extern BOOL vscp_measurezone_sendPowerEvent(uint8_t index, uint8_t zone, uint8_t
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendElectricalChargeEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendElectricalChargeEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -586,7 +586,7 @@ extern BOOL vscp_measurezone_sendElectricalChargeEvent(uint8_t index, uint8_t zo
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendElectricalPotentialEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendElectricalPotentialEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -617,7 +617,7 @@ extern BOOL vscp_measurezone_sendElectricalPotentialEvent(uint8_t index, uint8_t
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendElectricalCapacitanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendElectricalCapacitanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -648,7 +648,7 @@ extern BOOL vscp_measurezone_sendElectricalCapacitanceEvent(uint8_t index, uint8
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendElectricalResistanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendElectricalResistanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -679,7 +679,7 @@ extern BOOL vscp_measurezone_sendElectricalResistanceEvent(uint8_t index, uint8_
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendElectricalConductanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendElectricalConductanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -710,7 +710,7 @@ extern BOOL vscp_measurezone_sendElectricalConductanceEvent(uint8_t index, uint8
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendMagneticFieldStrengthEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendMagneticFieldStrengthEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -741,7 +741,7 @@ extern BOOL vscp_measurezone_sendMagneticFieldStrengthEvent(uint8_t index, uint8
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendMagneticFluxEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendMagneticFluxEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -773,7 +773,7 @@ extern BOOL vscp_measurezone_sendMagneticFluxEvent(uint8_t index, uint8_t zone, 
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendMagneticFluxDensityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendMagneticFluxDensityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -804,7 +804,7 @@ extern BOOL vscp_measurezone_sendMagneticFluxDensityEvent(uint8_t index, uint8_t
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendInductanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendInductanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -835,7 +835,7 @@ extern BOOL vscp_measurezone_sendInductanceEvent(uint8_t index, uint8_t zone, ui
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendLuminousFluxEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendLuminousFluxEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -867,7 +867,7 @@ extern BOOL vscp_measurezone_sendLuminousFluxEvent(uint8_t index, uint8_t zone, 
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendIlluminanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendIlluminanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -898,7 +898,7 @@ extern BOOL vscp_measurezone_sendIlluminanceEvent(uint8_t index, uint8_t zone, u
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendRadiationDoseEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendRadiationDoseEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -929,7 +929,7 @@ extern BOOL vscp_measurezone_sendRadiationDoseEvent(uint8_t index, uint8_t zone,
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendCatalyticActivityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendCatalyticActivityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -962,7 +962,7 @@ extern BOOL vscp_measurezone_sendCatalyticActivityEvent(uint8_t index, uint8_t z
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendVolumeEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendVolumeEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -995,7 +995,7 @@ extern BOOL vscp_measurezone_sendVolumeEvent(uint8_t index, uint8_t zone, uint8_
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendSoundIntensityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendSoundIntensityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1027,7 +1027,7 @@ extern BOOL vscp_measurezone_sendSoundIntensityEvent(uint8_t index, uint8_t zone
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendAngleEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendAngleEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1060,7 +1060,7 @@ extern BOOL vscp_measurezone_sendAngleEvent(uint8_t index, uint8_t zone, uint8_t
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendPositionEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendPositionEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1091,7 +1091,7 @@ extern BOOL vscp_measurezone_sendPositionEvent(uint8_t index, uint8_t zone, uint
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendSpeedEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendSpeedEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1122,7 +1122,7 @@ extern BOOL vscp_measurezone_sendSpeedEvent(uint8_t index, uint8_t zone, uint8_t
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendAccelerationEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendAccelerationEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1153,7 +1153,7 @@ extern BOOL vscp_measurezone_sendAccelerationEvent(uint8_t index, uint8_t zone, 
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendTensionEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendTensionEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1184,7 +1184,7 @@ extern BOOL vscp_measurezone_sendTensionEvent(uint8_t index, uint8_t zone, uint8
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendDampMoistEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendDampMoistEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1215,7 +1215,7 @@ extern BOOL vscp_measurezone_sendDampMoistEvent(uint8_t index, uint8_t zone, uin
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendFlowEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendFlowEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1246,7 +1246,7 @@ extern BOOL vscp_measurezone_sendFlowEvent(uint8_t index, uint8_t zone, uint8_t 
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendThermalResistanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendThermalResistanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1277,7 +1277,7 @@ extern BOOL vscp_measurezone_sendThermalResistanceEvent(uint8_t index, uint8_t z
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendRefractivePowerEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendRefractivePowerEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1308,7 +1308,7 @@ extern BOOL vscp_measurezone_sendRefractivePowerEvent(uint8_t index, uint8_t zon
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendDynamicViscosityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendDynamicViscosityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1339,7 +1339,7 @@ extern BOOL vscp_measurezone_sendDynamicViscosityEvent(uint8_t index, uint8_t zo
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendSoundImpedanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendSoundImpedanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1370,7 +1370,7 @@ extern BOOL vscp_measurezone_sendSoundImpedanceEvent(uint8_t index, uint8_t zone
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendSoundResistanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendSoundResistanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1401,7 +1401,7 @@ extern BOOL vscp_measurezone_sendSoundResistanceEvent(uint8_t index, uint8_t zon
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendElectricElastanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendElectricElastanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1432,7 +1432,7 @@ extern BOOL vscp_measurezone_sendElectricElastanceEvent(uint8_t index, uint8_t z
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendLuminousEnergyEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendLuminousEnergyEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1463,7 +1463,7 @@ extern BOOL vscp_measurezone_sendLuminousEnergyEvent(uint8_t index, uint8_t zone
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendLuminanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendLuminanceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1494,7 +1494,7 @@ extern BOOL vscp_measurezone_sendLuminanceEvent(uint8_t index, uint8_t zone, uin
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendChemicalConcentrationEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendChemicalConcentrationEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1525,7 +1525,7 @@ extern BOOL vscp_measurezone_sendChemicalConcentrationEvent(uint8_t index, uint8
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendDoseEquivalentEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendDoseEquivalentEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1558,7 +1558,7 @@ extern BOOL vscp_measurezone_sendDoseEquivalentEvent(uint8_t index, uint8_t zone
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendDewPointEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendDewPointEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1590,7 +1590,7 @@ extern BOOL vscp_measurezone_sendDewPointEvent(uint8_t index, uint8_t zone, uint
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendRelativeLevelEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendRelativeLevelEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1623,7 +1623,7 @@ extern BOOL vscp_measurezone_sendRelativeLevelEvent(uint8_t index, uint8_t zone,
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendAltitude(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendAltitude(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1654,7 +1654,7 @@ extern BOOL vscp_measurezone_sendAltitude(uint8_t index, uint8_t zone, uint8_t s
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendAreaEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendAreaEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1685,7 +1685,7 @@ extern BOOL vscp_measurezone_sendAreaEvent(uint8_t index, uint8_t zone, uint8_t 
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendRadiantIntensityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendRadiantIntensityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1714,7 +1714,7 @@ extern BOOL vscp_measurezone_sendRadiantIntensityEvent(uint8_t index, uint8_t zo
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendRadianceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendRadianceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1745,7 +1745,7 @@ extern BOOL vscp_measurezone_sendRadianceEvent(uint8_t index, uint8_t zone, uint
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendIrradianceExitanceRadiosityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendIrradianceExitanceRadiosityEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1777,7 +1777,7 @@ extern BOOL vscp_measurezone_sendIrradianceExitanceRadiosityEvent(uint8_t index,
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendSpectralRadianceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendSpectralRadianceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
@@ -1808,7 +1808,7 @@ extern BOOL vscp_measurezone_sendSpectralRadianceEvent(uint8_t index, uint8_t zo
  * @retval TRUE  Event successul sent
  * 
  */
-extern BOOL vscp_measurezone_sendSpectralIrradianceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, uint8_t exp)
+extern BOOL vscp_measurezone_sendSpectralIrradianceEvent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
 {
     vscp_TxMessage txMsg;
 
