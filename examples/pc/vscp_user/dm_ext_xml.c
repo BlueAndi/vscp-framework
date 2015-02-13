@@ -1239,7 +1239,7 @@ static DM_EXT_XML_RET dm_ext_xml_handleFilterAttrClass(dm_ext_xml_Context* const
 
     if (0x1ff >= valueUL)
     {
-        con->dmStorage[con->index].classMask = (uint8_t)(valueUL & 0xff);
+        con->dmStorage[con->index].classFilter = (uint8_t)(valueUL & 0xff);
 
         if (0 != (valueUL & 0x100))
         {
