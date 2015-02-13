@@ -68,6 +68,9 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 	MACROS
 *******************************************************************************/
 
+/** Number of elements in a array */
+#define TEMPERATURE_SIM_ARRAY_NUM(__arr)    (sizeof(__arr) / sizeof((__arr)[0]))
+
 /*******************************************************************************
 	TYPES AND STRUCTURES
 *******************************************************************************/
@@ -100,7 +103,7 @@ static pthread_mutex_t          temperature_sim_mutex   = PTHREAD_MUTEX_INITIALI
 static temperature_sim_Context  temperature_sim_thrdData;
 
 /** Simple temperature average in 0,01 degree celsius over months for one year. */
-static uint16_t                 temperature_sim_temperatureAvgPerMonth[12] =
+static uint32_t                 temperature_sim_temperatureAvgPerMonth[12] =
 {
     800, 1000, 1300, 1650, 1920, 2100, 2100, 1920, 1650, 1300, 1000, 980
 };
@@ -206,7 +209,7 @@ static void* temperature_sim_thread(void* par)
         {
             int32_t temperatureC = temperature_sim_getTemperature();    /* [0,01 degree celsius] */
             int32_t temperatureK = 27315 + temperatureC;                /* [0,01 kelvin] */
-                   
+                        
             vscp_thread_lock();
             
             if (TRUE == vscp_core_isActive())
@@ -251,8 +254,12 @@ static uint32_t temperature_sim_getTemperature(void)
 {
     time_t      rawtime;
     struct tm * timeInfo;
-    uint32_t    temperature = 0;
-    uint8_t     monthIndex  = 0;
+    uint32_t    temperature     = 0;    /* Temperature this month */
+    uint32_t    temperaturePrev = 0;    /* Temperature previous month */
+    uint32_t    temperatureNext = 0;    /* Temperature next month */
+    uint8_t     monthIndex      = 0;
+    uint8_t     monthPrevIndex  = 0;
+    uint8_t     monthNextIndex  = 0;
     
     time(&rawtime);
     timeInfo = localtime(&rawtime);
@@ -261,14 +268,58 @@ static uint32_t temperature_sim_getTemperature(void)
      * Any weather frog who see the following calculation, please close both
      * eyes and forget it. :-)
      */
-
+     
     /* Get average temperature of the current month */
-    monthIndex = timeInfo->tm_mon - 1;
+    monthIndex = timeInfo->tm_mon;
     temperature = temperature_sim_temperatureAvgPerMonth[monthIndex];
 
-    /* Calculate average temperature of the day. */
-    temperature = (temperature * timeInfo->tm_mday) / 30;
+    /* Get average temperature of the previous month */
+    if (0 == monthIndex)
+    {
+        monthPrevIndex = TEMPERATURE_SIM_ARRAY_NUM(temperature_sim_temperatureAvgPerMonth);
+    }
+    else
+    {
+        monthPrevIndex = monthIndex - 1;
+    }
+    temperaturePrev = temperature_sim_temperatureAvgPerMonth[monthPrevIndex];
     
+    /* Get average temperature of the next month */
+    if (TEMPERATURE_SIM_ARRAY_NUM(temperature_sim_temperatureAvgPerMonth) == monthIndex)
+    {
+        monthNextIndex = 0;
+    }
+    else
+    {
+        monthNextIndex = monthIndex + 1;
+    }
+    temperatureNext = temperature_sim_temperatureAvgPerMonth[monthNextIndex];
+        
+    if (15 >= timeInfo->tm_mday)
+    {
+        /* Calculate average temperature of the day. */
+        if (temperature < temperaturePrev)
+        {
+            temperature -= ((temperaturePrev - temperature) * timeInfo->tm_mday) / 30;
+        }
+        else
+        {
+            temperature += ((temperature - temperaturePrev) * timeInfo->tm_mday) / 30;
+        }
+    }
+    else
+    {
+        /* Calculate average temperature of the day. */
+        if (temperature < temperatureNext)
+        {
+            temperature += ((temperatureNext - temperature) * timeInfo->tm_mday) / 30;
+        }
+        else
+        {
+            temperature -= ((temperature - temperatureNext) * timeInfo->tm_mday) / 30;
+        }
+    }
+        
     return temperature;
 }
 
