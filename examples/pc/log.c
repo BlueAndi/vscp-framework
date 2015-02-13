@@ -207,7 +207,7 @@ extern void log_printf(char const * const format, ...)
     
     printf("%04u-%02u-%02u %02u:%02u:%02u ", 
         timeInfo->tm_year + 1900,
-        timeInfo->tm_mon,
+        timeInfo->tm_mon + 1,
         timeInfo->tm_mday,
         timeInfo->tm_hour,
         timeInfo->tm_min,
