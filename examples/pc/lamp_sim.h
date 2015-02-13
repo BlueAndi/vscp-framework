@@ -25,25 +25,23 @@
  */
 
 /*******************************************************************************
-    DESCRIPTION
+	DESCRIPTION
 *******************************************************************************/
 /**
-@brief  VSCP configuration overwrite
-@file   vscp_config_overwrite.h
+@brief  Lamp simulation
+@file   lamp_sim.h
 @author Andreas Merkle, http://www.blue-andi.de
 
 @section desc Description
-This module contains the configuration preferred by the user. It overwrites the
-default configuration in vscp_config.h
+This module provides a lamp simulation.
 
 @section svn Subversion
 $Author: amerkle $
 $Rev: 449 $
 $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
-/** @defgroup vscp_config_overwrite VSCP configuration overwrite
- * This module contains the configuration preferred by the user. It overwrites the
- * default configuration in vscp_config.h
+/** @defgroup lamp_sim Lamp simulation
+ * Simulates several lamps in a house.
  * @{
  */
 
@@ -52,13 +50,14 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
  * a correct module description.
  */
 
-#ifndef __VSCP_CONFIG_OVERWRITE_H__
-#define __VSCP_CONFIG_OVERWRITE_H__
+#ifndef __LAMP_SIM_H__
+#define __LAMP_SIM_H__
 
 /*******************************************************************************
-    INCLUDES
+	INCLUDES
 *******************************************************************************/
 #include <stdint.h>
+#include "platform.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -66,92 +65,82 @@ extern "C"
 #endif
 
 /*******************************************************************************
-    COMPILER SWITCHES
-*******************************************************************************/
-
-/* ---------- Define here your preferred configuration setup. ---------- */
-
-#define VSCP_CONFIG_HEARTBEAT_NODE              VSCP_CONFIG_BASE_ENABLED
-
-#define VSCP_CONFIG_ENABLE_DM                   VSCP_CONFIG_BASE_ENABLED
-
-#define VSCP_CONFIG_ENABLE_DM_EXTENSION         VSCP_CONFIG_BASE_DISABLED
-
-#define VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION   VSCP_CONFIG_BASE_DISABLED
-
-/*
-#define VSCP_CONFIG_HARD_CODED_NODE             VSCP_CONFIG_BASE_DISABLED
-
-#define VSCP_CONFIG_HEARTBEAT_SUPPORT_SEGMENT   VSCP_CONFIG_BASE_DISABLED
-
-#define VSCP_CONFIG_HEARTBEAT_NODE              VSCP_CONFIG_BASE_DISABLED
-
-#define VSCP_CONFIG_IDLE_CALLOUT                VSCP_CONFIG_BASE_DISABLED
-
-#define VSCP_CONFIG_ERROR_CALLOUT               VSCP_CONFIG_BASE_DISABLED
-
-#define VSCP_CONFIG_BOOT_LOADER_SUPPORTED       VSCP_CONFIG_BASE_DISABLED
-
-#define VSCP_CONFIG_ENABLE_DM                   VSCP_CONFIG_BASE_ENABLED
-
-#define VSCP_CONFIG_DM_PAGED_FEATURE            VSCP_CONFIG_BASE_DISABLED
-
-#define VSCP_CONFIG_ENABLE_DM_EXTENSION         VSCP_CONFIG_BASE_DISABLED
-
-#define VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION   VSCP_CONFIG_BASE_DISABLED
-
-#define VSCP_CONFIG_ENABLE_LOOPBACK             VSCP_CONFIG_BASE_DISABLED
-
-*/
-
-/*******************************************************************************
-    CONSTANTS
-*******************************************************************************/
-
-/* ---------- Define here your preferred configuration setup. ---------- */
-
-/*
-
-#define VSCP_CONFIG_NODE_SEGMENT_INIT_TIMEOUT   ((uint16_t)5000)
-
-#define VSCP_CONFIG_PROBE_ACK_TIMEOUT           ((uint16_t)2000)
-
-#define VSCP_CONFIG_MULTI_MSG_TIMEOUT           ((uint16_t)1000)
-
-#define VSCP_CONFIG_HEARTBEAT_NODE_PERIOD       ((uint16_t)1000)
-
-#define VSCP_CONFIG_DM_PAGE                     1
-
-#define VSCP_CONFIG_DM_OFFSET                   0
-
-#define VSCP_CONFIG_DM_ROWS                     10
-
-#define VSCP_CONFIG_DM_NG_RULE_SET_SIZE         80
-
-#define VSCP_CONFIG_LOOPBACK_STORAGE_NUM        4
-
-*/
-
-/*******************************************************************************
-    MACROS
+	COMPILER SWITCHES
 *******************************************************************************/
 
 /*******************************************************************************
-    TYPES AND STRUCTURES
+	CONSTANTS
+*******************************************************************************/
+
+/** Number of lamps */
+#define LAMP_SIM_NUM    8
+
+/*******************************************************************************
+	MACROS
 *******************************************************************************/
 
 /*******************************************************************************
-    VARIABLES
+	TYPES AND STRUCTURES
 *******************************************************************************/
 
 /*******************************************************************************
-    FUNCTIONS
+	VARIABLES
 *******************************************************************************/
+
+/*******************************************************************************
+	FUNCTIONS
+*******************************************************************************/
+
+/**
+ * This function intializes the module.
+ */
+extern void lamp_sim_init(void);
+
+/**
+ * This function enables or disables a lamp.
+ *
+ * @param[in]   index       Lamp index [0-7]
+ * @param[in]   enableIt    Enable or disable lamp
+ */
+extern void lamp_sim_setState(uint8_t index, BOOL enableIt);
+
+/**
+ * This function returns the lamp state.
+ *
+ * @param[in]   index       Lamp index [0-7]
+ *
+ * @return Lamp state
+ * @retval FALSE    Lamp off
+ * @retval TRUE     Lamp on
+ */
+extern BOOL lamp_sim_getState(uint8_t index);
+
+/**
+ * This function set the brightness of a lamp.
+ *
+ * @param[in]   index       Lamp index [0-7]
+ * @param[in]   percentage  Brightness [0-100]
+ */
+extern void lamp_sim_setBrightness(uint8_t index, uint8_t brightness);
+
+/**
+ * This function returns the lamp brightness.
+ *
+ * @param[in]   index       Lamp index [0-7]
+ *
+ * @return Lamp brightness in percent [0-100]
+ */
+extern uint8_t lamp_sim_getBrightness(uint8_t index);
+
+/**
+ * This function shows the status of every simulated lamp to the user.
+ */
+extern void lamp_sim_show(void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif  /* __VSCP_CONFIG_OVERWRITE_H__ */
+#endif	/* __LAMP_SIM_H__ */
 
 /** @} */

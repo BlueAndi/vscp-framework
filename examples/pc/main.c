@@ -60,6 +60,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 #include "vscp_thread.h"
 #include "temperature_sim.h"
 #include "vscphelperlib.h"
+#include "lamp_sim.h"
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -189,7 +190,7 @@ int main(int argc, char* argv[])
     BOOL                abort           = FALSE;
     main_CmdLineArgs    cmdLineArgs;
     
-    printf("\nVirtual VSCP level 1 node\n");
+    printf("\nSimulated VSCP level 1 node\n");
     printf("Version: %s\n\n", VERSION);
 
     /* Set log level */
@@ -510,8 +511,9 @@ static void main_showKeyTable(void)
     printf("e       Dump EEPROM\n");
     printf("h       Enable/Disable node heartbeat\n");
     printf("i       Start node segment initialization\n");
+    printf("l       Show the state of all lamps\n");
     printf("q       Quit program\n");
-    printf("0-9     Send info button event\n");
+    printf("1-5     Send info button event\n");
 
     return;
 }
@@ -840,6 +842,15 @@ static void main_loop(void)
                 vscp_core_startNodeSegmentInit();
                 vscp_thread_unlock();
             }
+            /* Show the state of all lamps */
+            else if ('l' == keyValue)
+            {
+                printf("\n");
+                vscp_thread_lock();
+                lamp_sim_show();
+                vscp_thread_unlock();
+                printf("\n");
+            }
             /* Quit program */
             else if ('q' == keyValue)
             {
@@ -848,14 +859,14 @@ static void main_loop(void)
                 vscp_thread_unlock();
             }
             /* Send a button message to the VSCP thread */
-            else if (('0' <= keyValue) && ('9' >= keyValue))
+            else if (('1' <= keyValue) && ('5' >= keyValue))
             {
                 vscp_RxMessage  rxMsg;
                 
                 rxMsg.vscpClass = VSCP_CLASS_L1_INFORMATION;
                 rxMsg.vscpType  = VSCP_TYPE_INFORMATION_BUTTON;
                 rxMsg.priority  = VSCP_PRIORITY_3_NORMAL;
-                rxMsg.oAddr     = (uint8_t)(keyValue - '0') + 2;
+                rxMsg.oAddr     = (uint8_t)(keyValue - '0') + 1;
                 rxMsg.dataNum   = 7;
                 rxMsg.data[0]   = (uint8_t)(keyValue - '0');
                 rxMsg.data[1]   = 0xff;

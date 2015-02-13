@@ -45,7 +45,7 @@ $Date:  $
     <row enabled="true">
 
         <!-- Describe your rule here. -->
-        <description>If a information.button event from node 2 is received, the action 1 will be executed.</description>
+        <description>If a information.button event from node 2 is received, the lamp 1 will be toggled.</description>
     
         <!-- Set originating address to check or not -->
         <oaddr enabled="true">2</oaddr>
@@ -59,81 +59,7 @@ $Date:  $
         </mask>
 
         <!-- Filter to trigger row -->
-        <filter class="20" type="1">
-        </filter>
-
-        <!-- Check zone or not -->
-        <zone enabled="false">
-        </zone>
-
-        <!-- Check sub-zone or not -->
-        <subzone enabled="false">
-        </subzone>
-
-        <!-- Action code -->
-        <action>1</action>
-
-        <!-- Action parameter -->
-        <param>2</param>
-        
-    </row>
-
-    <!-- Enabled/Disabled row -->
-    <row enabled="true">
-
-        <!-- Describe your rule here. -->
-        <description>If a information.button event from node 3 is received, the action 2 will be executed.</description>
-    
-        <!-- Set originating address to check or not -->
-        <oaddr enabled="true">3</oaddr>
-    
-        <!-- Set hardcoded flag to check or not -->
-        <hardcoded enabled="false">
-        </hardcoded>
-    
-        <!-- Mask to trigger row -->
-        <mask class="0x1FF" type="0xFF">
-        </mask>
-
-        <!-- Filter to trigger row -->
-        <filter class="20" type="1">
-        </filter>
-
-        <!-- Check zone or not -->
-        <zone enabled="false">
-        </zone>
-
-        <!-- Check sub-zone or not -->
-        <subzone enabled="false">
-        </subzone>
-
-        <!-- Action code -->
-        <action>2</action>
-
-        <!-- Action parameter -->
-        <param>3</param>
-        
-    </row>
-    
-    <!-- Enabled/Disabled row -->
-    <row enabled="true">
-
-        <!-- Describe your rule here. -->
-        <description>If a information.button event from node 4 is received, the action 3 will be executed.</description>
-    
-        <!-- Set originating address to check or not -->
-        <oaddr enabled="true">4</oaddr>
-    
-        <!-- Set hardcoded flag to check or not -->
-        <hardcoded enabled="false">
-        </hardcoded>
-    
-        <!-- Mask to trigger row -->
-        <mask class="0x1FF" type="0xFF">
-        </mask>
-
-        <!-- Filter to trigger row -->
-        <filter class="20" type="1">
+        <filter class="0x14" type="0x01">
         </filter>
 
         <!-- Check zone or not -->
@@ -148,7 +74,44 @@ $Date:  $
         <action>3</action>
 
         <!-- Action parameter -->
-        <param>4</param>
+        <param>0x01</param>
+        
+    </row>
+
+    <!-- Enabled/Disabled row -->
+    <row enabled="true">
+
+        <!-- Describe your rule here. -->
+        <description>If a information.button event from node 3 is received, the lamp 2 and 3 will be enabled.</description>
+    
+        <!-- Set originating address to check or not -->
+        <oaddr enabled="true">3</oaddr>
+    
+        <!-- Set hardcoded flag to check or not -->
+        <hardcoded enabled="false">
+        </hardcoded>
+    
+        <!-- Mask to trigger row -->
+        <mask class="0x1FF" type="0xFF">
+        </mask>
+
+        <!-- Filter to trigger row -->
+        <filter class="0x14" type="0x01">
+        </filter>
+
+        <!-- Check zone or not -->
+        <zone enabled="false">
+        </zone>
+
+        <!-- Check sub-zone or not -->
+        <subzone enabled="false">
+        </subzone>
+
+        <!-- Action code -->
+        <action>1</action>
+
+        <!-- Action parameter -->
+        <param>0x06</param>
         
     </row>
     
@@ -156,7 +119,44 @@ $Date:  $
     <row enabled="true">
 
         <!-- Describe your rule here. -->
-        <description>If a information.button event from node 5 is received, the action 4 will be executed.</description>
+        <description>If a information.button event from node 4 is received, the lamp 2 and 3 will be disabled.</description>
+    
+        <!-- Set originating address to check or not -->
+        <oaddr enabled="true">4</oaddr>
+    
+        <!-- Set hardcoded flag to check or not -->
+        <hardcoded enabled="false">
+        </hardcoded>
+    
+        <!-- Mask to trigger row -->
+        <mask class="0x1FF" type="0xFF">
+        </mask>
+
+        <!-- Filter to trigger row -->
+        <filter class="0x14" type="0x01">
+        </filter>
+
+        <!-- Check zone or not -->
+        <zone enabled="false">
+        </zone>
+
+        <!-- Check sub-zone or not -->
+        <subzone enabled="false">
+        </subzone>
+
+        <!-- Action code -->
+        <action>2</action>
+
+        <!-- Action parameter -->
+        <param>0x06</param>
+        
+    </row>
+    
+    <!-- Enabled/Disabled row -->
+    <row enabled="true">
+
+        <!-- Describe your rule here. -->
+        <description>If a information.button event from node 5 is received, all lamps will be disabled.</description>
     
         <!-- Set originating address to check or not -->
         <oaddr enabled="true">5</oaddr>
@@ -170,7 +170,7 @@ $Date:  $
         </mask>
 
         <!-- Filter to trigger row -->
-        <filter class="20" type="1">
+        <filter class="0x14" type="0x01">
         </filter>
 
         <!-- Check zone or not -->
@@ -182,10 +182,10 @@ $Date:  $
         </subzone>
 
         <!-- Action code -->
-        <action>4</action>
+        <action>2</action>
 
         <!-- Action parameter -->
-        <param>5</param>
+        <param>0xff</param>
         
     </row>
     

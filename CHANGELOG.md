@@ -10,6 +10,7 @@ Features:
     - The pc example loads the standard and extended decision matrix from a xml file.
     - L1 over L2 events are supported now.
     - The node sends now periodically simulated temperature values.
+    - The node simulates 8 lamps, which can be controlled via decision matrix.
   
 Bugfixes:
 

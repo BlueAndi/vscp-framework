@@ -51,6 +51,7 @@ INCLUDES= -I. \
 # Sources
 SOURCES= main.c \
 		eeprom.c \
+		lamp_sim.c \
 		log.c \
 		platform.c \
 		temperature_sim.c \
