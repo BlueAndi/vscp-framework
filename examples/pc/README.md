@@ -12,7 +12,7 @@ id. Press 'i' to start it and look whats happen.
 If the node discovered its id, it will go to active state and starts sending its own heartbeat every second.
 You are able to switch that off and on via 'h'.
 
-Use the keys '0' to '9' to send some simulated events to the node.
+Use the keys '1' to '5' to send some simulated events to the node.
 If nothing happens, it looks like the decision matrix is empty, because the program didn't find the appropriate
 decision matrix xml files. They have to be in the working directory, where the program is called from!
 
