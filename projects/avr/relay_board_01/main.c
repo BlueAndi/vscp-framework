@@ -61,6 +61,7 @@ $Date: 2015-01-06 00:31:00 +0100 (Di, 06 Jan 2015) $
 #include "vscp_ps_user.h"
 #include "shutterDrv.h"
 #include "shutter.h"
+#include <util/delay.h>
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -162,6 +163,16 @@ int main(void)
     {
         /* Error */
         HALT();
+    }
+
+    /* Jump to bootloader? */
+    if (TRUE == hw_getBootJumperStatus())
+    {
+        _delay_ms(100);
+        if (TRUE == hw_getBootJumperStatus())
+        {
+            /* TODO */
+        }
     }
 
     /* ********** Run level 2 - interrupts enabled ********** */
