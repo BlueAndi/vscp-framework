@@ -134,7 +134,6 @@ extern BOOL vscp_tp_adapter_readMessage(vscp_RxMessage * const msg)
     if (NULL != msg)
     {
         vscp_tp_adapter_NetPar* client  = &vscp_tp_adapter_clientPar;
-        uint8_t                 index   = 0;
         
         /* Connected to a VSCP daemon? */
         if (0 != client->hSession)
@@ -197,6 +196,8 @@ extern BOOL vscp_tp_adapter_readMessage(vscp_RxMessage * const msg)
         
         if (FALSE != status)
         {
+            uint8_t index   = 0;
+            
             log_printf("Rx: class=0x%02X, type=0x%02X, prio=%2d, oAddr=0x%02X, %c, num=%u, data=",
                 msg->vscpClass,
                 msg->vscpType,

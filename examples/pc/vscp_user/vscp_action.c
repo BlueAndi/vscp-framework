@@ -189,11 +189,11 @@ static void vscp_action_enableLamp(uint8_t par, BOOL enableIt)
                 /* Send lamp state */
                 if (FALSE == lamp_sim_getState(index))
                 {
-                    vscp_information_sendOnEvent(index, 255, 255);
+                    (void)vscp_information_sendOnEvent(index, 255, 255);
                 }
                 else
                 {                   
-                    vscp_information_sendOffEvent(index, 255, 255);
+                    (void)vscp_information_sendOffEvent(index, 255, 255);
                 }
                 
                 /* Show the user the current lamp state */
@@ -255,11 +255,11 @@ static void vscp_action_toggleLamp(uint8_t par)
             /* Send lamp state */
             if (FALSE == lamp_sim_getState(index))
             {
-                vscp_information_sendOnEvent(index, 255, 255);
+                (void)vscp_information_sendOnEvent(index, 255, 255);
             }
             else
             {                   
-                vscp_information_sendOffEvent(index, 255, 255);
+                (void)vscp_information_sendOffEvent(index, 255, 255);
             }
             
             /* Show the user the current lamp state */
