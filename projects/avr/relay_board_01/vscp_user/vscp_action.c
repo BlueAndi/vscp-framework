@@ -268,7 +268,7 @@ extern void vscp_action_execute(uint8_t action, uint8_t par)
  * This function executes a relay action.
  *
  * @param[in]   par         Parameter, which contains the instance number
- * @param[in]   enableIt    Enable relay or disable it
+ * @param[in]   activate    Enable relay or disable it
  */
 static void vscp_action_activateRelay(uint8_t par, BOOL activate)
 {
