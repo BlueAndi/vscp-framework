@@ -42,10 +42,10 @@ $Date:  $
     xmlns:dmext="http://www.blue-andi.de/vscp/schema/vscp-dm-ext-schema">
 
     <!-- Enabled/Disabled row and decide to use the standard or the extension -->
-    <row enabled="true" type="ext">
+    <row enabled="true" type="std">
 
         <!-- Describe your rule here. -->
-        <description>If a information.button event from node 2 is received, the action 1 will be executed.</description>
+        <description>If a information.button event from node 2 is received, the lamp 1 will be toggled.</description>
     
         <!-- Set originating address to check or not -->
         <oaddr enabled="true">2</oaddr>
@@ -59,7 +59,7 @@ $Date:  $
         </mask>
 
         <!-- Filter to trigger row -->
-        <filter class="20" type="1">
+        <filter class="0x14" type="0x01">
         </filter>
 
         <!-- Set zone to check or not. The value is ignorred in case of standard row. -->
@@ -77,10 +77,10 @@ $Date:  $
         </data>
         
         <!-- Action code -->
-        <action>1</action>
+        <action>3</action>
 
         <!-- Action parameter -->
-        <param>2</param>
+        <param>0x01</param>
         
     </row>
 
@@ -88,7 +88,7 @@ $Date:  $
     <row enabled="true" type="std">
 
         <!-- Describe your rule here. -->
-        <description>If a information.button event from node 3 is received, the action 2 will be executed.</description>
+        <description>If a information.button event from node 3 is received, the lamp 2 and 3 will be enabled.</description>
     
         <!-- Set originating address to check or not -->
         <oaddr enabled="true">3</oaddr>
@@ -102,7 +102,50 @@ $Date:  $
         </mask>
 
         <!-- Filter to trigger row -->
-        <filter class="20" type="1">
+        <filter class="0x14" type="0x01">
+        </filter>
+
+        <!-- Set zone to check or not. The value is ignorred in case of standard row. -->
+        <zone enabled="false">255</zone>
+
+        <!-- Set sub-zone to check or not. The value is ignorred in case of standard row. -->
+        <subzone enabled="false">255</subzone>
+
+        <!-- Set data to check or not. The data is ignorred in case of standard row. -->
+        <data>
+            <byte id="0" enabled="false">0x00</byte>
+            <byte id="3" enabled="false">0x00</byte>
+            <byte id="4" enabled="false">0x00</byte>
+            <byte id="5" enabled="false">0x00</byte>
+        </data>
+        
+        <!-- Action code -->
+        <action>1</action>
+
+        <!-- Action parameter -->
+        <param>0x06</param>
+        
+    </row>
+    
+    <!-- Enabled/Disabled row and decide to use the standard or the extension -->
+    <row enabled="true" type="std">
+
+        <!-- Describe your rule here. -->
+        <description>If a information.button event from node 4 is received, the lamp 2 and 3 will be disabled.</description>
+    
+        <!-- Set originating address to check or not -->
+        <oaddr enabled="true">4</oaddr>
+    
+        <!-- Set hardcoded flag to check or not -->
+        <hardcoded enabled="false">
+        </hardcoded>
+    
+        <!-- Mask to trigger row -->
+        <mask class="0x1FF" type="0xFF">
+        </mask>
+
+        <!-- Filter to trigger row -->
+        <filter class="0x14" type="0x01">
         </filter>
 
         <!-- Set zone to check or not. The value is ignorred in case of standard row. -->
@@ -123,7 +166,136 @@ $Date:  $
         <action>2</action>
 
         <!-- Action parameter -->
-        <param>3</param>
+        <param>0x06</param>
+        
+    </row>
+    
+    <!-- Enabled/Disabled row and decide to use the standard or the extension -->
+    <row enabled="true" type="std">
+
+        <!-- Describe your rule here. -->
+        <description>If a information.button event from node 5 is received, all lamps will be disabled.</description>
+    
+        <!-- Set originating address to check or not -->
+        <oaddr enabled="true">5</oaddr>
+    
+        <!-- Set hardcoded flag to check or not -->
+        <hardcoded enabled="false">
+        </hardcoded>
+    
+        <!-- Mask to trigger row -->
+        <mask class="0x1FF" type="0xFF">
+        </mask>
+
+        <!-- Filter to trigger row -->
+        <filter class="0x14" type="0x01">
+        </filter>
+
+        <!-- Set zone to check or not. The value is ignorred in case of standard row. -->
+        <zone enabled="false">255</zone>
+
+        <!-- Set sub-zone to check or not. The value is ignorred in case of standard row. -->
+        <subzone enabled="false">255</subzone>
+
+        <!-- Set data to check or not. The data is ignorred in case of standard row. -->
+        <data>
+            <byte id="0" enabled="false">0x00</byte>
+            <byte id="3" enabled="false">0x00</byte>
+            <byte id="4" enabled="false">0x00</byte>
+            <byte id="5" enabled="false">0x00</byte>
+        </data>
+        
+        <!-- Action code -->
+        <action>2</action>
+
+        <!-- Action parameter -->
+        <param>0xff</param>
+        
+    </row>
+    
+    <!-- Enabled/Disabled row and decide to use the standard or the extension -->
+    <row enabled="true" type="ext">
+
+        <!-- Describe your rule here. -->
+        <description>If a control.turnOn event from zone 0 and sub-zone 0 is received, the lamp 4 will be enabled.</description>
+    
+        <!-- Set originating address to check or not -->
+        <oaddr enabled="false">1</oaddr>
+    
+        <!-- Set hardcoded flag to check or not -->
+        <hardcoded enabled="false">
+        </hardcoded>
+    
+        <!-- Mask to trigger row -->
+        <mask class="0x1FF" type="0xFF">
+        </mask>
+
+        <!-- Filter to trigger row -->
+        <filter class="0x14" type="0x01">
+        </filter>
+
+        <!-- Set zone to check or not. The value is ignorred in case of standard row. -->
+        <zone enabled="true">0</zone>
+
+        <!-- Set sub-zone to check or not. The value is ignorred in case of standard row. -->
+        <subzone enabled="true">0</subzone>
+
+        <!-- Set data to check or not. The data is ignorred in case of standard row. -->
+        <data>
+            <byte id="0" enabled="false">0x00</byte>
+            <byte id="3" enabled="false">0x00</byte>
+            <byte id="4" enabled="false">0x00</byte>
+            <byte id="5" enabled="false">0x00</byte>
+        </data>
+        
+        <!-- Action code -->
+        <action>1</action>
+
+        <!-- Action parameter -->
+        <param>0x08</param>
+        
+    </row>
+    
+    <!-- Enabled/Disabled row and decide to use the standard or the extension -->
+    <row enabled="true" type="ext">
+
+        <!-- Describe your rule here. -->
+        <description>If a control.turnOff event from zone 0 and sub-zone 0 is received, the lamp 4 will be disabled.</description>
+    
+        <!-- Set originating address to check or not -->
+        <oaddr enabled="false">1</oaddr>
+    
+        <!-- Set hardcoded flag to check or not -->
+        <hardcoded enabled="false">
+        </hardcoded>
+    
+        <!-- Mask to trigger row -->
+        <mask class="0x1FF" type="0xFF">
+        </mask>
+
+        <!-- Filter to trigger row -->
+        <filter class="0x14" type="0x01">
+        </filter>
+
+        <!-- Set zone to check or not. The value is ignorred in case of standard row. -->
+        <zone enabled="true">0</zone>
+
+        <!-- Set sub-zone to check or not. The value is ignorred in case of standard row. -->
+        <subzone enabled="true">0</subzone>
+
+        <!-- Set data to check or not. The data is ignorred in case of standard row. -->
+        <data>
+            <byte id="0" enabled="false">0x00</byte>
+            <byte id="3" enabled="false">0x00</byte>
+            <byte id="4" enabled="false">0x00</byte>
+            <byte id="5" enabled="false">0x00</byte>
+        </data>
+        
+        <!-- Action code -->
+        <action>2</action>
+
+        <!-- Action parameter -->
+        <param>0x08</param>
         
     </row>
     
