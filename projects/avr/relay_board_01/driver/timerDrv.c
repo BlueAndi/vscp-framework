@@ -162,7 +162,12 @@ extern void timerDrv_init(void)
     timerDrv_intrCounter    = 0;
 
     /* Set prescaler */
+
+#if defined(__AVR_AT90CAN32__) || defined(__AVR_AT90CAN64__) || defined (__AVR_AT90CAN128__)
+    TCCR0A = TIMERDRV_PRESCALER;
+#else
     TCCR0B = TIMERDRV_PRESCALER;
+#endif
 
     /* Clear counter */
     TCNT0 = TIMERDRV_PRELOAD_VALUE;
