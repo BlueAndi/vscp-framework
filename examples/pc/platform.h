@@ -80,6 +80,21 @@ extern "C"
     CONSTANTS
 *******************************************************************************/
 
+#ifndef BOOL
+/** Boolean type */
+#define BOOL    int
+#endif  /* BOOL */
+
+#ifndef FALSE
+/** Boolean false value */
+#define FALSE   (0)
+#endif  /* FALSE */
+
+#ifndef TRUE
+/** Boolean true value */
+#define TRUE    (!FALSE)
+#endif  /* FALSE */
+
 /*******************************************************************************
     MACROS
 *******************************************************************************/
@@ -204,6 +219,11 @@ extern void platform_setTextColor(PLATFORM_COLOR color);
  * @param[in] color Color
  */
 extern void platform_setTextBgColor(PLATFORM_BG_COLOR color);
+
+/**
+ * Restore the text and background color to the default.
+ */
+extern void platform_restoreColors(void);
 
 #ifdef __cplusplus
 }

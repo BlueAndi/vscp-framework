@@ -231,8 +231,7 @@ extern void lamp_sim_show(void)
     }
     
     /* Reset colors */
-    platform_setTextColor(PLATFORM_COLOR_GREY);
-    platform_setTextBgColor(PLATFORM_BG_COLOR_BLACK);
+    platform_restoreColors();
     
     printf("\n");
     
@@ -268,8 +267,7 @@ extern void lamp_sim_show(void)
     }
     
     /* Reset colors */
-    platform_setTextColor(PLATFORM_COLOR_GREY);
-    platform_setTextBgColor(PLATFORM_BG_COLOR_BLACK);
+    platform_restoreColors();
     
     printf("\n");
 

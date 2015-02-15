@@ -243,19 +243,10 @@ extern void platform_deInit(void)
 
     /* Restore terminal settings */
     (void)(void)tcsetattr(STDIN_FILENO, TCSANOW, &platform_terminalOld);
-
-    /* Restore console color */
-    printf("\033[0m");
     
 #endif  /* __linux__ */
 
-#ifdef _WIN32
-
-    /* Restore console color */
-    platform_win_setTextColor((platform_color >> 0)& 0x0f);
-    platform_win_setTextBgColor((platform_color >> 4) & 0x0f);
-
-#endif  /* _WIN32 */
+    platform_restoreColors();
     
     return;
 }
@@ -414,6 +405,29 @@ extern void platform_setTextBgColor(PLATFORM_BG_COLOR color)
     return platform_linux_setTextBgColor(color);
     
 #endif  /* __linux__ */
+
+    return;
+}
+
+/**
+ * Restore the text and background color to the default.
+ */
+extern void platform_restoreColors(void)
+{
+#ifdef __linux__
+
+    /* Restore console color */
+    printf("\033[0m");
+    
+#endif  /* __linux__ */
+
+#ifdef _WIN32
+
+    /* Restore console color */
+    platform_win_setTextColor((platform_color >> 0)& 0x0f);
+    platform_win_setTextBgColor((platform_color >> 4) & 0x0f);
+
+#endif  /* _WIN32 */
 
     return;
 }
