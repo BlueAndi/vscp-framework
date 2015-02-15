@@ -419,7 +419,7 @@ extern void platform_restoreTextColor(void)
 
     const uint8_t   defaultForegroundColor  = 39;
 
-    platform_linux_setTextColor(defaultForegroundColor);
+    printf("\033[%um", defaultForegroundColor);
     
 #endif  /* __linux__ */
 
@@ -441,7 +441,7 @@ extern void platform_restoreTextBgColor(void)
 
     const uint8_t   defaultBackgroundColor  = 49;
 
-    platform_linux_setTextBgColor(defaultBackgroundColor);
+    printf("\033[%um", defaultBackgroundColor);
     
 #endif  /* __linux__ */
 
