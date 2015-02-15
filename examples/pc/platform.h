@@ -103,7 +103,7 @@ extern "C"
     TYPES AND STRUCTURES
 *******************************************************************************/
 
-/** This type defines the supported text colors. */
+/** This type defines the supported colors. */
 typedef enum
 {
     PLATFORM_COLOR_BLACK = 0,
@@ -123,27 +123,6 @@ typedef enum
     PLATFORM_COLOR_WHITE
   
 } PLATFORM_COLOR;
-
-/** This type defines the supported background colors. */
-typedef enum
-{
-    PLATFORM_BG_COLOR_BLACK = 0,
-    PLATFORM_BG_COLOR_RED,
-    PLATFORM_BG_COLOR_GREEN,
-    PLATFORM_BG_COLOR_YELLOW,
-    PLATFORM_BG_COLOR_BLUE,
-    PLATFORM_BG_COLOR_MAGENTA,
-    PLATFORM_BG_COLOR_CYAN,
-    PLATFORM_BG_COLOR_GREY,
-    PLATFORM_BG_COLOR_LIGHT_RED,
-    PLATFORM_BG_COLOR_LIGHT_GREEN,
-    PLATFORM_BG_COLOR_LIGHT_YELLOW,
-    PLATFORM_BG_COLOR_LIGHT_BLUE,
-    PLATFORM_BG_COLOR_LIGHT_MAGENTA,
-    PLATFORM_BG_COLOR_LIGHT_CYAN,
-    PLATFORM_BG_COLOR_WHITE
-  
-} PLATFORM_BG_COLOR;
 
 /*******************************************************************************
     VARIABLES
@@ -218,12 +197,17 @@ extern void platform_setTextColor(PLATFORM_COLOR color);
  *
  * @param[in] color Color
  */
-extern void platform_setTextBgColor(PLATFORM_BG_COLOR color);
+extern void platform_setTextBgColor(PLATFORM_COLOR color);
 
 /**
- * Restore the text and background color to the default.
+ * Restore the text color to the default value.
  */
-extern void platform_restoreColors(void);
+extern void platform_restoreTextColor(void);
+
+/**
+ * Restore the text background color to the default value.
+ */
+extern void platform_restoreTextBgColor(void);
 
 #ifdef __cplusplus
 }

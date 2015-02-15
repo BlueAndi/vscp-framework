@@ -154,7 +154,7 @@ extern void vscp_action_execute(uint8_t action, uint8_t par)
     default:
         platform_setTextColor(PLATFORM_COLOR_LIGHT_RED);
         log_printf("Unknown action %u with parameter 0x%02X.\n", action, par);
-        platform_setTextColor(PLATFORM_COLOR_GREY);
+        platform_restoreTextColor();
         break;
     }
     
@@ -206,7 +206,7 @@ static void vscp_action_enableLamp(uint8_t par, BOOL enableIt)
                 {
                     log_printf("Lamp %u is %u%% on.\n", index + 1, lamp_sim_getBrightness(index));
                 }
-                platform_setTextColor(PLATFORM_COLOR_GREY);
+                platform_restoreTextColor();
                 
                 /* Set dirty flag */
                 anyChange = TRUE;
@@ -272,7 +272,7 @@ static void vscp_action_toggleLamp(uint8_t par)
             {
                 log_printf("Lamp %u is %u%% on.\n", index + 1, lamp_sim_getBrightness(index));
             }
-            platform_setTextColor(PLATFORM_COLOR_GREY);
+            platform_restoreTextColor();
             
             /* Set dirty flag */
             anyChange = TRUE;

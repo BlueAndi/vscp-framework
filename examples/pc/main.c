@@ -537,6 +537,8 @@ static void main_dumpEEPROM(void)
         PLATFORM_COLOR  newColor    = PLATFORM_COLOR_RED;
         BOOL            nextColor   = FALSE;
         uint8_t         elementId   = 0;
+        
+        platform_setTextBgColor(PLATFORM_COLOR_BLACK);
 
         for(index = 0; index < eepromSize; ++index)
         {
@@ -661,7 +663,8 @@ static void main_dumpEEPROM(void)
             }
         }
         
-        platform_setTextColor(PLATFORM_COLOR_GREY);
+        platform_restoreTextColor();
+        
         color       = PLATFORM_COLOR_RED;
         newColor    = PLATFORM_COLOR_RED;
         
@@ -776,7 +779,8 @@ static void main_dumpEEPROM(void)
             }
         }
         
-        platform_setTextColor(PLATFORM_COLOR_GREY);
+        platform_restoreTextColor();
+        platform_restoreTextBgColor();
     }
     
     return;

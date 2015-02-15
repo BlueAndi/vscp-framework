@@ -213,19 +213,19 @@ extern void vscp_portable_setLampState(VSCP_LAMP_STATE state)
         case VSCP_LAMP_STATE_OFF:
             platform_setTextColor(PLATFORM_COLOR_YELLOW);
             log_printf("Lamp off\n");
-            platform_setTextColor(PLATFORM_COLOR_GREY);
+            platform_restoreTextColor();
             break;
 
         case VSCP_LAMP_STATE_ON:
             platform_setTextColor(PLATFORM_COLOR_LIGHT_YELLOW);
             log_printf("Lamp on\n");
-            platform_setTextColor(PLATFORM_COLOR_GREY);
+            platform_restoreTextColor();
             break;
 
         case VSCP_LAMP_STATE_BLINK:
             platform_setTextColor(PLATFORM_COLOR_LIGHT_YELLOW);
             log_printf("Lamp blinking\n");
-            platform_setTextColor(PLATFORM_COLOR_GREY);
+            platform_restoreTextColor();
             break;
 
         default:

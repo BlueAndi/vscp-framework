@@ -89,7 +89,7 @@ static int platform_win_kbhit(void);
 static int platform_win_getch(void);
 static void platform_win_sleepMS(long valueMS);
 static void platform_win_setTextColor(PLATFORM_COLOR color);
-static void platform_win_setTextBgColor(PLATFORM_BG_COLOR color);
+static void platform_win_setTextBgColor(PLATFORM_COLOR color);
 static uint8_t  platform_win_getTextColor(void);
 
 #endif  /* _WIN32 */
@@ -102,7 +102,7 @@ static int platform_linux_kbhit(void);
 static int platform_linux_getch(void);
 static void platform_linux_sleepMS(long valueMS);
 static void platform_linux_setTextColor(PLATFORM_COLOR color);
-static void platform_linux_setTextBgColor(PLATFORM_BG_COLOR color);
+static void platform_linux_setTextBgColor(PLATFORM_COLOR color);
 
 #endif  /* __linux__ */
 
@@ -125,7 +125,7 @@ static const uint8_t  platform_linux_colors[] =
     34, /* Blue */
     35, /* Magenta */
     36, /* Cyan */
-    37, /* Grey */
+    37, /* Light grey */
     91, /* Light red */
     92, /* Light green */
     93, /* Light yellow */
@@ -145,7 +145,7 @@ static const uint8_t  platform_linux_bgColors[] =
     44,     /* Blue */
     45,     /* Magenta */
     46,     /* Cyan */
-    47,     /* Grey */
+    47,     /* Light grey */
     101,    /* Light red */
     102,    /* Light green */
     103,    /* Light yellow */
@@ -246,7 +246,8 @@ extern void platform_deInit(void)
     
 #endif  /* __linux__ */
 
-    platform_restoreColors();
+    platform_restoreTextColor();
+    platform_restoreTextBgColor();
     
     return;
 }
@@ -392,7 +393,7 @@ extern void platform_setTextColor(PLATFORM_COLOR color)
  *
  * @param[in] color Color
  */
-extern void platform_setTextBgColor(PLATFORM_BG_COLOR color)
+extern void platform_setTextBgColor(PLATFORM_COLOR color)
 {
 #ifdef _WIN32
 
@@ -410,21 +411,42 @@ extern void platform_setTextBgColor(PLATFORM_BG_COLOR color)
 }
 
 /**
- * Restore the text and background color to the default.
+ * Restore the text color to the default value.
  */
-extern void platform_restoreColors(void)
+extern void platform_restoreTextColor(void)
 {
 #ifdef __linux__
 
-    /* Restore console color */
-    printf("\033[0m");
+    const uint8_t   defaultForegroundColor  = 39;
+
+    platform_linux_setTextColor(defaultForegroundColor);
     
 #endif  /* __linux__ */
 
 #ifdef _WIN32
 
-    /* Restore console color */
     platform_win_setTextColor((platform_color >> 0)& 0x0f);
+
+#endif  /* _WIN32 */
+
+    return;
+}
+
+/**
+ * Restore the text background color to the default value.
+ */
+extern void platform_restoreTextBgColor(void)
+{
+#ifdef __linux__
+
+    const uint8_t   defaultBackgroundColor  = 49;
+
+    platform_linux_setTextBgColor(defaultBackgroundColor);
+    
+#endif  /* __linux__ */
+
+#ifdef _WIN32
+
     platform_win_setTextBgColor((platform_color >> 4) & 0x0f);
 
 #endif  /* _WIN32 */
@@ -528,9 +550,9 @@ static void platform_win_setTextColor(PLATFORM_COLOR color)
  *
  * @param[in] color Color
  */
-static void platform_win_setTextBgColor(PLATFORM_BG_COLOR color)
+static void platform_win_setTextBgColor(PLATFORM_COLOR color)
 {
-    if (PLATFORM_BG_COLOR_WHITE >= color)
+    if (PLATFORM_COLOR_WHITE >= color)
     {
         HANDLE  hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
         uint8_t foreground  = platform_win_getTextColor() & 0x0f;
@@ -690,9 +712,9 @@ static void platform_linux_setTextColor(PLATFORM_COLOR color)
  *
  * @param[in] color Color
  */
-static void platform_linux_setTextBgColor(PLATFORM_BG_COLOR color)
+static void platform_linux_setTextBgColor(PLATFORM_COLOR color)
 {
-    if (PLATFORM_BG_COLOR_WHITE >= color)
+    if (PLATFORM_COLOR_WHITE >= color)
     {
         printf("\033[%um", platform_linux_bgColors[color]);
     }

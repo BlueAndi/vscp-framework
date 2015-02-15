@@ -211,27 +211,28 @@ extern void lamp_sim_show(void)
         /* Lamp off? */
         if (0 == brightness)
         {
-            platform_setTextColor(PLATFORM_COLOR_GREY);
-            platform_setTextBgColor(PLATFORM_BG_COLOR_BLACK);
+            platform_restoreTextColor();
+            platform_restoreTextBgColor();
         }
         /* Lamp on with brightness lower than 50% ? */
         else if (50 > brightness)
         {
             platform_setTextColor(PLATFORM_COLOR_BLACK);
-            platform_setTextBgColor(PLATFORM_BG_COLOR_YELLOW);
+            platform_setTextBgColor(PLATFORM_COLOR_YELLOW);
         }
         /* Lamp on with brightness greater or equal than 50% */
         else
         {
             platform_setTextColor(PLATFORM_COLOR_BLACK);
-            platform_setTextBgColor(PLATFORM_BG_COLOR_LIGHT_YELLOW);
+            platform_setTextBgColor(PLATFORM_COLOR_LIGHT_YELLOW);
         }
     
         printf("   %u  ", index + 1);
     }
     
     /* Reset colors */
-    platform_restoreColors();
+    platform_restoreTextColor();
+    platform_restoreTextBgColor();
     
     printf("\n");
     
@@ -247,27 +248,28 @@ extern void lamp_sim_show(void)
         /* Lamp off? */
         if (0 == brightness)
         {
-            platform_setTextColor(PLATFORM_COLOR_GREY);
-            platform_setTextBgColor(PLATFORM_BG_COLOR_BLACK);
+            platform_restoreTextColor();
+            platform_restoreTextBgColor();
         }
         /* Lamp on with brightness lower than 50% ? */
         else if (50 > brightness)
         {
             platform_setTextColor(PLATFORM_COLOR_BLACK);
-            platform_setTextBgColor(PLATFORM_BG_COLOR_YELLOW);
+            platform_setTextBgColor(PLATFORM_COLOR_YELLOW);
         }
         /* Lamp on with brightness greater or equal than 50% */
         else
         {
             platform_setTextColor(PLATFORM_COLOR_BLACK);
-            platform_setTextBgColor(PLATFORM_BG_COLOR_LIGHT_YELLOW);
+            platform_setTextBgColor(PLATFORM_COLOR_LIGHT_YELLOW);
         }
     
         printf(" %03u%% ", brightness);
     }
     
     /* Reset colors */
-    platform_restoreColors();
+    platform_restoreTextColor();
+    platform_restoreTextBgColor();
     
     printf("\n");
 
