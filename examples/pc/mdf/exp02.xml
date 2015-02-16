@@ -1170,6 +1170,51 @@ Bit 8 of the class filter is stored in bit 1 of the flag byte.</description>
                 </param>
             </action>
 
+            <action code="0x04">
+                <name lang="en">Dim lamp</name>
+                <description lang="en">Dim one or more lamps. Please note that the action reacts only on class1.control dim lamp events!</description>
+                <param>
+                    <name>Parameter</name>
+                    <description lang="en">The action parameter.</description>
+                    <data offset="1">
+                        <name>Lamp instances</name>
+                        <description lang="en">The parameter is a bitfield, in which evey bit corresponds to a lamp.</description>
+                        <bit pos="0">
+                            <name lang="en">Lamp 1</name>
+                            <description lang="en">Lamp 1</description>
+                        </bit>
+                        <bit pos="1">
+                            <name lang="en">Lamp 2</name>
+                            <description lang="en">Lamp 2</description>
+                        </bit>
+                        <bit pos="2">
+                            <name lang="en">Lamp 3</name>
+                            <description lang="en">Lamp 3</description>
+                        </bit>
+                        <bit pos="3">
+                            <name lang="en">Lamp 4</name>
+                            <description lang="en">Lamp 4</description>
+                        </bit>
+                        <bit pos="4">
+                            <name lang="en">Lamp 5</name>
+                            <description lang="en">Lamp 5</description>
+                        </bit>
+                        <bit pos="5">
+                            <name lang="en">Lamp 6</name>
+                            <description lang="en">Lamp 6</description>
+                        </bit>
+                        <bit pos="6">
+                            <name lang="en">Lamp 7</name>
+                            <description lang="en">Lamp 7</description>
+                        </bit>
+                        <bit pos="7">
+                            <name lang="en">Lamp 8</name>
+                            <description lang="en">Lamp 8</description>
+                        </bit>
+                    </data>
+                </param>
+            </action>
+            
         </dmatrix>
 
         <events>

@@ -65,6 +65,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 #include <inttypes.h>
 #include "vscp_config.h"
+#include "vscp_types.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -107,8 +108,9 @@ extern void vscp_action_init(void);
  *
  * @param[in]   action  Action id
  * @param[in]   par     Action parameter
+ * @param[in]   msg     Received VSCP message which triggered the action
  */
-extern void vscp_action_execute(uint8_t action, uint8_t par);
+extern void vscp_action_execute(uint8_t action, uint8_t par, vscp_RxMessage const * const msg);
 
 #endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM ) || VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION ) */
 

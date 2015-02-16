@@ -28,28 +28,47 @@
     DESCRIPTION
 *******************************************************************************/
 /**
-@brief  VSCP actions
-@file   vscp_action.c
+@brief  VSCP platform specific stuff
+@file   vscp_platform.h
 @author Andreas Merkle, http://www.blue-andi.de
 
 @section desc Description
-@see vscp_action.h
+This header file contains platform specific header files, types and etc.
 
 @section svn Subversion
+$Author: amerkle $
 $Rev: 449 $
 $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
+/** @defgroup vscp_platform VSCP platform specific stuff
+ * This header file contains platform specific header files, types and etc.
+ * @{
+ */
+
+/*
+ * Don't forget to set JAVADOC_AUTOBRIEF to YES in the doxygen file to generate
+ * a correct module description.
+ */
+
+#ifndef __VSCP_PLATFORM_H__
+#define __VSCP_PLATFORM_H__
 
 /*******************************************************************************
     INCLUDES
 *******************************************************************************/
-#include "vscp_action.h"
+#ifdef _WIN32
 
-#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM ) || VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION )
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
 
-#include "hw.h"
-#include "vscp_information.h"
-#include "vscp_util.h"
+#endif  /* _WIN32 */
+
+#include <stdint.h>
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -59,11 +78,20 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
     CONSTANTS
 *******************************************************************************/
 
-/** Action 1: Enable the status LED */
-#define VSCP_ACTION_001_ENABLE_STATUS_LED   1
+#ifndef BOOL
+/** Boolean type */
+#define BOOL    int
+#endif  /* BOOL */
 
-/** Action 2: Disable the status LED */
-#define VSCP_ACTION_002_DISABLE_STATUS_LED  2
+#ifndef FALSE
+/** Boolean false value */
+#define FALSE   (0)
+#endif  /* FALSE */
+
+#ifndef TRUE
+/** Boolean true value */
+#define TRUE    (!FALSE)
+#endif  /* FALSE */
 
 /*******************************************************************************
     MACROS
@@ -74,66 +102,17 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 
 /*******************************************************************************
-    PROTOTYPES
+    VARIABLES
 *******************************************************************************/
 
 /*******************************************************************************
-    LOCAL VARIABLES
+    FUNCTIONS
 *******************************************************************************/
 
-/*******************************************************************************
-    GLOBAL VARIABLES
-*******************************************************************************/
-
-/*******************************************************************************
-    GLOBAL FUNCTIONS
-*******************************************************************************/
-
-/**
- * This function initializes the module.
- */
-extern void vscp_action_init(void)
-{
-    /* Implement your code here ... */
-
-    return;
+#ifdef __cplusplus
 }
+#endif
 
-/**
- * This function executes a action with the given parameter.
- *
- * @param[in]   action  Action id
- * @param[in]   par     Action parameter
- * @param[in]   msg     Received VSCP message which triggered the action
- */
-extern void vscp_action_execute(uint8_t action, uint8_t par, vscp_RxMessage const * const msg)
-{
-    VSCP_UTIL_UNUSED(par);
-    VSCP_UTIL_UNUSED(msg);
+#endif  /* __VSCP_PLATFORM_H__ */
 
-    switch(action)
-    {
-    /* Enable status LED, no parameter */
-    case VSCP_ACTION_001_ENABLE_STATUS_LED:
-        HW_ENABLE_STATUS_LED();
-        vscp_information_sendOnEvent(0, 0xff, 0xff);
-        break;
-    
-    /* Disable status LED, no parameter */    
-    case VSCP_ACTION_002_DISABLE_STATUS_LED:
-        HW_DISABLE_STATUS_LED();
-        vscp_information_sendOffEvent(0, 0xff, 0xff);
-        break;
-        
-    default:
-        break;
-    }
-
-    return;
-}
-
-/*******************************************************************************
-    LOCAL FUNCTIONS
-*******************************************************************************/
-
-#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM ) || VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION ) */
+/** @} */

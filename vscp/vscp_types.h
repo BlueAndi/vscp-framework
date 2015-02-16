@@ -57,6 +57,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 #include <inttypes.h>
 #include <stdlib.h>
+#include "vscp_platform.h"
 #include "vscp_config.h"
 
 #ifdef __cplusplus
@@ -261,21 +262,6 @@ extern "C"
 /*******************************************************************************
     MACROS
 *******************************************************************************/
-
-#ifndef BOOL
-/** Boolean type */
-#define BOOL    int
-#endif  /* BOOL */
-
-#ifndef FALSE
-/** Boolean false value */
-#define FALSE   (0)
-#endif  /* FALSE */
-
-#ifndef TRUE
-/** Boolean true value */
-#define TRUE    (!FALSE)
-#endif  /* FALSE */
 
 /*******************************************************************************
     TYPES AND STRUCTURES

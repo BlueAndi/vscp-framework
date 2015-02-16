@@ -262,7 +262,7 @@ extern void vscp_dm_ng_executeActions(vscp_RxMessage const * const rxMsg)
 
                 if (TRUE == decisionResult)
                 {
-                    vscp_action_execute(actionId, actionPar);
+                    vscp_action_execute(actionId, actionPar, rxMsg);
                 }
             }
         }

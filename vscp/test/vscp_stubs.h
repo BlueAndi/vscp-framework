@@ -114,7 +114,7 @@ extern void vscp_test_portableProvideEvent(vscp_RxMessage const * const msg);
 extern void vscp_test_portableSetLampState(VSCP_LAMP_STATE state);
 
 extern void vscp_test_actionInit(void);
-extern void vscp_test_actionExecute(uint8_t action, uint8_t par);
+extern void vscp_test_actionExecute(uint8_t action, uint8_t par, vscp_RxMessage const * const msg);
 
 #ifdef __cplusplus
 }

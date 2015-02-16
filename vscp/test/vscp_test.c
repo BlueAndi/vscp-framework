@@ -321,6 +321,9 @@ static uint8_t              vscp_test_action    = 0;
 /** Action parameter */
 static uint8_t              vscp_test_actionPar = 0;
 
+/** VSCP event which triggered the action */
+static vscp_RxMessage       vscp_test_actionTriggeredMsg;
+
 /** Lamp state */
 static VSCP_LAMP_STATE      vscp_test_lampState = VSCP_LAMP_STATE_OFF;
 
@@ -364,6 +367,9 @@ extern int  vscp_test_init(void)
 
     /* Reset decision matrix extension */
     memset(vscp_test_extStorage, 0, VSCP_PS_SIZE_DM_EXTENSION);
+    
+    /* Reset action triggered VSCP event */
+    memset(&vscp_test_actionTriggeredMsg, 0, sizeof(vscp_test_actionTriggeredMsg));
     
     return 0;
 }
@@ -3503,12 +3509,13 @@ extern void vscp_test_actionInit(void)
 	return;
 }
 
-extern void vscp_test_actionExecute(uint8_t action, uint8_t par)
+extern void vscp_test_actionExecute(uint8_t action, uint8_t par, vscp_RxMessage const * const msg)
 {
     ++vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_EXECUTE];
 
-    vscp_test_action    = action;
-    vscp_test_actionPar = par;
+    vscp_test_action                = action;
+    vscp_test_actionPar             = par;
+    vscp_test_actionTriggeredMsg    = *msg;
 
     return;
 }

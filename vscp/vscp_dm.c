@@ -560,18 +560,18 @@ extern void vscp_dm_executeActions(vscp_RxMessage const * const msg)
             }
             
             /* Execute action */
-            vscp_action_execute(extRow.action, extRow.actionPar);
+            vscp_action_execute(extRow.action, extRow.actionPar, msg);
         }
         else
         {
             /* Execute action */
-            vscp_action_execute(row.action, row.actionPar);
+            vscp_action_execute(row.action, row.actionPar, msg);
         }
 
 #else   /* VSCP_CONFIG_BASE_IS_DISABLED( VSCP_CONFIG_ENABLE_DM_EXTENSION ) */
         
         /* Execute action */
-        vscp_action_execute(row.action, row.actionPar);
+        vscp_action_execute(row.action, row.actionPar, msg);
         
 #endif  /* VSCP_CONFIG_BASE_IS_DISABLED( VSCP_CONFIG_ENABLE_DM_EXTENSION ) */
     }

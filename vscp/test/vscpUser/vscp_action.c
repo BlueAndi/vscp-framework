@@ -95,10 +95,11 @@ extern void vscp_action_init(void)
  *
  * @param[in]   action  Action id
  * @param[in]   par     Action parameter
+ * @param[in]   msg     Received VSCP message which triggered the action
  */
-extern void vscp_action_execute(uint8_t action, uint8_t par)
+extern void vscp_action_execute(uint8_t action, uint8_t par, vscp_RxMessage const * const msg)
 {
-    vscp_test_actionExecute(action, par);
+    vscp_test_actionExecute(action, par, msg);
 
     return;
 }
