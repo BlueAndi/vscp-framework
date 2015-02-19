@@ -172,6 +172,14 @@
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_information.h</Link>
     </Compile>
+    <Compile Include="..\..\..\..\..\vscp\events\vscp_measurement.c">
+      <SubType>compile</SubType>
+      <Link>vscp\events\vscp_measurement.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\events\vscp_measurement.h">
+      <SubType>compile</SubType>
+      <Link>vscp\events\vscp_measurement.h</Link>
+    </Compile>
     <Compile Include="..\..\..\..\..\vscp\events\vscp_measurezone.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_measurezone.c</Link>

@@ -51,6 +51,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 #include "platform.h"
 #include "vscp_thread.h"
 #include "vscp_core.h"
+#include "vscp_measurement.h"
 #include "vscp_measurezone.h"
 #include "vscp_data_coding.h"
 #include "vscp_class_l1.h"
@@ -214,18 +215,8 @@ static void* temperature_sim_thread(void* par)
             
             if (TRUE == vscp_core_isActive())
             {
-                vscp_TxMessage  txMsg;
-                
-                vscp_measurezone_sendTemperatureEvent(0, 255, 255, temperatureK, -2);
-                
-                vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_TEMPERATURE, VSCP_PRIORITY_3_NORMAL);
-                
-                txMsg.dataNum = 1;
-                txMsg.data[0] = vscp_data_coding_getFormatByte(VSCP_DATA_CODING_REPRESENTATION_NORMALIZED_INTEGER, 1, 0);
-                
-                txMsg.dataNum += vscp_data_coding_int32ToNormalizedInteger(temperatureC, -2, &txMsg.data[1], VSCP_L1_DATA_SIZE - txMsg.dataNum);
-                
-                (void)vscp_core_sendEvent(&txMsg);
+                (void)vscp_measurement_sendTemperatureEvent(0, 1, temperatureC, -2);
+                (void)vscp_measurezone_sendTemperatureEvent(0, 255, 255, temperatureK, -2);                
             }
             
             vscp_thread_unlock();

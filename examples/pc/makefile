@@ -75,6 +75,7 @@ SOURCES= main.c \
 		../../vscp/events/vscp_alarm.c \
 		../../vscp/events/vscp_control.c \
 		../../vscp/events/vscp_information.c \
+		../../vscp/events/vscp_measurement.c \
 		../../vscp/events/vscp_measurezone.c \
 		../../vscp/events/vscp_security.c \
 		../../vscp/events/vscp_weather.c \
