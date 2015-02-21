@@ -111,10 +111,10 @@ extern uint8_t pushButton_readStatus(void)
     inputPortB = PINB;
     inputPortD = PIND;
 
-    status  = ((inputPortD & (_BV(PD1) | _BV(PD0))) >> 0);
-    status |= ((inputPortD & (_BV(PD7) | _BV(PD6) | _BV(PD5) | _BV(PD4))) >> 2);
-    status |= (inputPortB & (_BV(PB0) << 6));
-    status |= (inputPortD & (_BV(PD3) << 4));
+    status  = (inputPortD & (_BV(PD1) | _BV(PD0))) >> 0;
+    status |= (inputPortD & (_BV(PD7) | _BV(PD6) | _BV(PD5) | _BV(PD4))) >> 2;
+    status |= (inputPortB & _BV(PB0)) << 6;
+    status |= (inputPortD & _BV(PD3)) << 4;
 
     /* Invert status, because the pushbuttons are low active. */
     status = (~status) & 0xff;
