@@ -58,7 +58,6 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 #include <inttypes.h>
 #include <stdlib.h>
 #include "vscp_platform.h"
-#include "vscp_config.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -74,58 +73,67 @@ extern "C"
 *******************************************************************************/
 
 /** Maximum number of data bytes per message. */
-#define VSCP_L1_DATA_SIZE               (8)
+#define VSCP_L1_DATA_SIZE                   (8)
 
 /** Reserved nickname id for the segment master. */
-#define VSCP_NICKNAME_SEGMENT_MASTER    (0x00)
+#define VSCP_NICKNAME_SEGMENT_MASTER        (0x00)
 
 /** Reserved nickname id for not initialized nodes. */
-#define VSCP_NICKNAME_NOT_INIT          (0xFF)
+#define VSCP_NICKNAME_NOT_INIT              (0xFF)
 
 /** Segment controller CRC value for not initialized nodes. */
-#define VSCP_SEGMENT_CRC_NOT_INIT       (0xFF)
+#define VSCP_SEGMENT_CRC_NOT_INIT           (0xFF)
 
 /** Node control flags default value. */
-#define VSCP_NODE_CONTROL_FLAGS_DEFAULT (0xA0)
+#define VSCP_NODE_CONTROL_FLAGS_DEFAULT     (0xA0)
+
+/** Boot flag: no application present */
+#define VSCP_BOOT_FLAG_NO_APPLICATION       (0xFF)
+
+/** Boot flag: destination bootloader */
+#define VSCP_BOOT_FLAG_BOOTLOADER           (0xBB)
+
+/** Boot flag: destination application */
+#define VSCP_BOOT_FLAG_APPLICATION          (0xAA)
 
 /** Application register start address (page 0) */
-#define VSCP_REGISTER_APP_START_ADDR    (0x00)
+#define VSCP_REGISTER_APP_START_ADDR        (0x00)
 
 /** Application register end address (page 0) */
-#define VSCP_REGISTER_APP_END_ADDR      (0x7F)
+#define VSCP_REGISTER_APP_END_ADDR          (0x7F)
 
 /** VSCP specific register start address (page 0) */
-#define VSCP_REGISTER_VSCP_START_ADDR   (0x80)
+#define VSCP_REGISTER_VSCP_START_ADDR       (0x80)
 
 /** VSCP specific register end address (page 0) */
-#define VSCP_REGISTER_VSCP_END_ADDR     (0xFF)
+#define VSCP_REGISTER_VSCP_END_ADDR         (0xFF)
 
 /** VSCP register: alarm status */
-#define VSCP_REG_ALARM_STATUS           (VSCP_REGISTER_VSCP_START_ADDR + 0)
+#define VSCP_REG_ALARM_STATUS               (VSCP_REGISTER_VSCP_START_ADDR + 0)
 
 /** VSCP register: major version number */
-#define VSCP_REG_VSCP_VERSION_MAJOR     (VSCP_REGISTER_VSCP_START_ADDR + 1)
+#define VSCP_REG_VSCP_VERSION_MAJOR         (VSCP_REGISTER_VSCP_START_ADDR + 1)
 
 /** VSCP register: minor version number */
-#define VSCP_REG_VSCP_VERSION_MINOR     (VSCP_REGISTER_VSCP_START_ADDR + 2)
+#define VSCP_REG_VSCP_VERSION_MINOR         (VSCP_REGISTER_VSCP_START_ADDR + 2)
 
 /** VSCP register: node control flags */
-#define VSCP_REG_NODE_CONTROL_FLAGS     (VSCP_REGISTER_VSCP_START_ADDR + 3)
+#define VSCP_REG_NODE_CONTROL_FLAGS         (VSCP_REGISTER_VSCP_START_ADDR + 3)
 
 /** VSCP register: user id byte 0 */
-#define VSCP_REG_USER_ID_0              (VSCP_REGISTER_VSCP_START_ADDR + 4)
+#define VSCP_REG_USER_ID_0                  (VSCP_REGISTER_VSCP_START_ADDR + 4)
 
 /** VSCP register: user id byte 1 */
-#define VSCP_REG_USER_ID_1              (VSCP_REGISTER_VSCP_START_ADDR + 5)
+#define VSCP_REG_USER_ID_1                  (VSCP_REGISTER_VSCP_START_ADDR + 5)
 
 /** VSCP register: user id byte 2 */
-#define VSCP_REG_USER_ID_2              (VSCP_REGISTER_VSCP_START_ADDR + 6)
+#define VSCP_REG_USER_ID_2                  (VSCP_REGISTER_VSCP_START_ADDR + 6)
 
 /** VSCP register: user id byte 3 */
-#define VSCP_REG_USER_ID_3              (VSCP_REGISTER_VSCP_START_ADDR + 7)
+#define VSCP_REG_USER_ID_3                  (VSCP_REGISTER_VSCP_START_ADDR + 7)
 
 /** VSCP register: user id byte 4 */
-#define VSCP_REG_USER_ID_4              (VSCP_REGISTER_VSCP_START_ADDR + 8)
+#define VSCP_REG_USER_ID_4                  (VSCP_REGISTER_VSCP_START_ADDR + 8)
 
 /** VSCP register: manufacturer device id byte 0 */
 #define VSCP_REG_MANUFACTURER_DEV_ID_0      (VSCP_REGISTER_VSCP_START_ADDR + 9)
