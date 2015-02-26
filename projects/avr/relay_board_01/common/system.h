@@ -71,8 +71,10 @@ extern "C"
 *******************************************************************************/
 
 #ifndef BOOL
-/** Boolean */
-#define BOOL    int
+/** The boolean type on a 8-bit microcontroller shall be 8-bit. Normally boolean
+ * has a int type, but this would lead to a 16-bit value.
+ */
+#define BOOL    char
 #endif  /* BOOL */
 
 #ifndef FALSE
