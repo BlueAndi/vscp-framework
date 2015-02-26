@@ -240,6 +240,11 @@ extern void timerDrv_sleep(uint8_t sleepTime)
  */
 ISR(TIMER0_OVF_vect)
 {
+    /* Preload counter immediately, so the time slot doesn't consider the
+	 * time during the interrupt service routine.
+	 */
+    TCNT0 = TIMERDRV_PRELOAD_VALUE;
+	
     ++timerDrv_intrCounter;
 
     if (TIMERDRV_THRESHOLD_VALUE <= timerDrv_intrCounter)
@@ -255,7 +260,4 @@ ISR(TIMER0_OVF_vect)
 
          timerDrv_intrCounter  = 0;
     }
-
-    /* Preload counter */
-    TCNT0 = TIMERDRV_PRELOAD_VALUE;
 }
