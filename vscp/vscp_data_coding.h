@@ -50,8 +50,8 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
  * a correct module description.
  */
 
-#ifndef __VSCP_UTIL_H__
-#define __VSCP_UTIL_H__
+#ifndef __VSCP_DATA_CODING_H__
+#define __VSCP_DATA_CODING_H__
 
 /*******************************************************************************
     INCLUDES
@@ -153,6 +153,6 @@ extern void vscp_data_coding_normalizedIntegerToInt32(uint8_t const * const code
 }
 #endif
 
-#endif  /* __VSCP_UTIL_H__ */
+#endif  /* __VSCP_DATA_CODING_H__ */
 
 /** @} */
