@@ -128,6 +128,9 @@ static void main_loop(void);
 /** User friendly names for persistent memory elements */
 static const char*      main_psUserFriendlyName[]   =
 {
+#if (0 < VSCP_PS_SIZE_BOOT_FLAG)
+    "Boot flag",
+#endif  /* (0 < VSCP_PS_SIZE_BOOT_FLAG) */
     "Nickname id",
     "Segment controller CRC",
     "Node control flags",
@@ -549,6 +552,13 @@ static void main_dumpEEPROM(void)
                 platform_setTextColor(color);
             }
 
+#if (0 < VSCP_PS_SIZE_BOOT_FLAG)
+            if (VSCP_PS_ADDR_BOOT_FLAG == index)
+            {
+                nextColor = TRUE;
+            }
+            else
+#endif  /* (0 < VSCP_PS_SIZE_BOOT_FLAG) */
             if (VSCP_PS_ADDR_NICKNAME == index)
             {
                 nextColor = TRUE;
@@ -670,6 +680,13 @@ static void main_dumpEEPROM(void)
         
         for(index = 0; index < eepromSize; ++index)
         {
+#if (0 < VSCP_PS_SIZE_BOOT_FLAG)
+            if (VSCP_PS_ADDR_BOOT_FLAG == index)
+            {
+                nextColor = TRUE;
+            }
+            else
+#endif  /* (0 < VSCP_PS_SIZE_BOOT_FLAG) */
             if (VSCP_PS_ADDR_NICKNAME == index)
             {
                 nextColor = TRUE;

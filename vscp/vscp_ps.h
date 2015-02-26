@@ -53,6 +53,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
  * memory, use ::VSCP_PS_ADDR_NEXT as base address them.
  *
  * Supported compile switches:
+ * - VSCP_CONFIG_BOOT_LOADER_SUPPORTED
  * - VSCP_CONFIG_HEARTBEAT_SUPPORT_SEGMENT
  * - VSCP_CONFIG_ENABLE_DM
  * - VSCP_CONFIG_ENABLE_DM_EXTENSION
@@ -99,13 +100,36 @@ extern "C"
     CONSTANTS
 *******************************************************************************/
 
-/* -------- VSCP data, which shall be modifiable (mandatory) ---------- */
-
 /** Base address of all VSCP related data in the persistent memory. */
 #define VSCP_PS_ADDR_BASE                   0
 
+/* ---------------------------------------------------------------------------- */
+/* -------- VSCP bootloader data, which can be modifiable (optional) ---------- */
+/* ---------------------------------------------------------------------------- */
+
+/** Address of the boot flag in the persistent memory.
+ * The VSCP specification specified it to position 0 in the persistent memory.
+ */
+#define VSCP_PS_ADDR_BOOT_FLAG              (VSCP_PS_ADDR_BASE + 0)
+
+#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_BOOT_LOADER_SUPPORTED )
+
+/** Size of the boot flag in byte */
+#define VSCP_PS_SIZE_BOOT_FLAG               1
+
+#else   /* VSCP_CONFIG_BASE_IS_DISABLED( VSCP_CONFIG_BOOT_LOADER_SUPPORTED ) */
+
+/** Boot flag is not located in the persistent memory */
+#define VSCP_PS_SIZE_BOOT_FLAG               0
+
+#endif  /* VSCP_CONFIG_BASE_IS_DISABLED( VSCP_CONFIG_BOOT_LOADER_SUPPORTED ) */
+
+/* -------------------------------------------------------------------- */
+/* -------- VSCP data, which shall be modifiable (mandatory) ---------- */
+/* -------------------------------------------------------------------- */
+
 /** Address of the nickname id in the persistent memory. */
-#define VSCP_PS_ADDR_NICKNAME               (VSCP_PS_ADDR_BASE + 0)
+#define VSCP_PS_ADDR_NICKNAME               (VSCP_PS_ADDR_BOOT_FLAG + VSCP_PS_SIZE_BOOT_FLAG)
 
 /** Size of nickname id in byte */
 #define VSCP_PS_SIZE_NICKNAME               1
@@ -128,7 +152,9 @@ extern "C"
 /** Size of user id in byte */
 #define VSCP_PS_SIZE_USER_ID                5
 
+/* ----------------------------------------------------------------- */
 /* -------- VSCP data, which can be modifiable (optional) ---------- */
+/* ----------------------------------------------------------------- */
 
 /** Address of the GUID in the persistent memory. */
 #define VSCP_PS_ADDR_GUID                   (VSCP_PS_ADDR_USER_ID + VSCP_PS_SIZE_USER_ID)
@@ -250,7 +276,9 @@ extern "C"
 
 #endif  /* VSCP_CONFIG_BASE_IS_DISABLED( VSCP_DEV_DATA_CONFIG_ENABLE_STD_DEV_TYPE_STORAGE_PS ) */
 
+/* --------------------------------------------------------------- */
 /* -------- VSCP decision matrix (standard + extension) ---------- */
+/* --------------------------------------------------------------- */
 
 /** Address of the decision matrix (standard) */
 #define VSCP_PS_ADDR_DM                     (VSCP_PS_ADDR_STD_DEV_TYPE + VSCP_PS_SIZE_STD_DEV_TYPE)
@@ -282,7 +310,9 @@ extern "C"
 
 #endif  /* VSCP_CONFIG_BASE_IS_DISABLED( VSCP_CONFIG_ENABLE_DM_EXTENSION ) */
 
+/* -------------------------------------------------------- */
 /* -------- VSCP decision matrix next generation ---------- */
+/* -------------------------------------------------------- */
 
 /** Address of the decision matrix next generation */
 #define VSCP_PS_ADDR_DM_NEXT_GENERATION     (VSCP_PS_ADDR_DM_EXTENSION + VSCP_PS_SIZE_DM_EXTENSION)
@@ -329,6 +359,24 @@ extern "C"
  * the module that read/write access is possible.
  */
 extern void vscp_ps_init(void);
+
+#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_BOOT_LOADER_SUPPORTED )
+
+/**
+ * This function reads the boot flag from persistent memory.
+ *
+ * @return  Boot flag
+ */
+extern uint8_t  vscp_ps_readBootFlag(void);
+
+/**
+ * This function writes the boot flag to persistent memory.
+ *
+ * @param[in]   bootFlag    Boot flag
+ */
+extern void vscp_ps_writeBootFlag(uint8_t bootFlag);
+
+#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_BOOT_LOADER_SUPPORTED ) */
 
 /**
  * This function reads the nickname id of the node form the persistent memory.

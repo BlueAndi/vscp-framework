@@ -91,6 +91,31 @@ extern void vscp_ps_init(void)
     return;
 }
 
+#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_BOOT_LOADER_SUPPORTED )
+
+/**
+ * This function reads the boot flag from persistent memory.
+ *
+ * @return  Boot flag
+ */
+extern uint8_t  vscp_ps_readBootFlag(void)
+{
+    return vscp_ps_access_read8(VSCP_PS_ADDR_BOOT_FLAG);
+}
+
+/**
+ * This function writes the boot flag to persistent memory.
+ *
+ * @param[in]   bootFlag    Boot flag
+ */
+extern void vscp_ps_writeBootFlag(uint8_t bootFlag)
+{
+    vscp_ps_access_write8(VSCP_PS_ADDR_BOOT_FLAG, bootFlag);
+    return;
+}
+
+#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_BOOT_LOADER_SUPPORTED ) */
+
 /**
  * This function reads the nickname id of the node form the persistent memory.
  *
