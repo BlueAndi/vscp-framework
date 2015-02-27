@@ -99,13 +99,15 @@ typedef enum
 /** This type contains the information from the command line arguments. */
 typedef struct
 {
-    char const *        progName;       /**< Program name without path */
-    char const *        daemonAddr;     /**< Daemon ip address */
-    char const *        daemonUser;     /**< User name for daemon ip access */
-    char const *        daemonPassword; /**< Password for daemon ip access */
-    BOOL                verbose;        /**< Verbose information */
-    BOOL                showHelp;       /**< Show help to the user */
-    VSCP_TP_ADAPTER_LVL lvl;            /**< Network level */
+    char const *        progName;           /**< Program name without path */
+    char const *        daemonAddr;         /**< Daemon ip address */
+    char const *        daemonUser;         /**< User name for daemon ip access */
+    char const *        daemonPassword;     /**< Password for daemon ip access */
+    BOOL                disableHeartbeat;   /**< Disable node heartbeat */
+    BOOL                disableTemperature; /**< Disable temperature simulation */
+    BOOL                verbose;            /**< Verbose information */
+    BOOL                showHelp;           /**< Show help to the user */
+    VSCP_TP_ADAPTER_LVL lvl;                /**< Network level */
     
 } main_CmdLineArgs;
 
@@ -236,6 +238,8 @@ int main(int argc, char* argv[])
             if (NULL != cmdLineArgs.daemonAddr)
             {
                 VSCP_TP_ADAPTER_RET ret = VSCP_TP_ADAPTER_RET_OK;
+                
+                printf("Connecting ...");
             
                 ret = vscp_tp_adapter_connect(  cmdLineArgs.daemonAddr,
                                                 cmdLineArgs.daemonUser,
@@ -261,20 +265,34 @@ int main(int argc, char* argv[])
                     
                     abort = TRUE;
                 }
+                else
+                {
+                    printf(" successful\n");
+                }
             }
             
             /* No error? */
             if (FALSE == abort)
             {
+                /* Shall the node heartbeat be disabled? */
+                if (TRUE == cmdLineArgs.disableHeartbeat)
+                {
+                    vscp_core_enableHeartbeat(FALSE);
+                }
+            
                 /* Start the whole VSCP framework */
                 if (VSCP_THREAD_RET_OK != vscp_thread_start())
                 {
                     abort = TRUE;
                 }
-                /* Start temperature simulation */
-                else if (TEMPERATURE_SIM_RET_OK != temperature_sim_start())
+                /* Shall the temperature simulation be started? */
+                else if (FALSE == cmdLineArgs.disableTemperature)
                 {
-                    LOG_ERROR("Temperature simulation failed.");
+                    /* Start temperature simulation */
+                    if (TEMPERATURE_SIM_RET_OK != temperature_sim_start())
+                    {
+                        LOG_ERROR("Temperature simulation failed.");
+                    }
                 }
             }
             
@@ -414,6 +432,16 @@ static MAIN_RET main_getCmdLineArgs(main_CmdLineArgs * const cmdLineArgs, int ar
             {
                 cmdLineArgs->showHelp = TRUE;
             }
+            /* Disable node heartbeat? */
+            else if (0 == strcmp(argv[index], "-dheart"))
+            {
+                cmdLineArgs->disableHeartbeat = TRUE;
+            }
+            /* Disable temperature simulation? */
+            else if (0 == strcmp(argv[index], "-dtemp"))
+            {
+                cmdLineArgs->disableTemperature = TRUE;
+            }
             /* Increase verbose level? */
             else if (0 == strcmp(argv[index], "-v"))
             {
@@ -494,6 +522,8 @@ static void main_showHelp(char const * const progName)
     printf("General options:\n");
     printf("-h        Show help\n");
     printf("--help    Show help\n");
+    printf("-dheart   Disable node heartbeat\n");
+    printf("-dtemp    Disable node temperature sim\n");
     printf("-v        Increase verbose level\n");
     printf("\n");
     printf("Options only for daemon connection:\n");
