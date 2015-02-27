@@ -104,7 +104,10 @@ extern void vscp_bl_adapter_init(void)
     
     log_printf("Bootloader entered.\n");
     
-    fd = fopen(VSCP_BL_ADAPTER_APP_SEC_FILENAME, "w+b");
+    /* Create a empty application section file.
+     * Empty means a file with 0xFF at any place.
+     */
+    fd = fopen(VSCP_BL_ADAPTER_APP_SEC_FILENAME, "wb");
     
     if (NULL == fd)
     {
@@ -112,9 +115,13 @@ extern void vscp_bl_adapter_init(void)
     }
     else
     {
+        uint32_t run    = 0;
         uint8_t data    = 0xff;
     
-        (void)fwrite(&data, sizeof(data), VSCP_BL_ADAPTER_APP_SEC_SIZE, fd);
+        for(run = 0; run < VSCP_BL_ADAPTER_APP_SEC_SIZE; ++run)
+        {
+            (void)fwrite(&data, sizeof(data), 1, fd);
+        }
         
         fclose(fd);
         fd = NULL;
