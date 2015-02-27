@@ -59,9 +59,6 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
     CONSTANTS
 *******************************************************************************/
 
-/** Memory type: program flash */
-#define VSCP_BOOTLOADER_MEMORY_TYPE_PROG_FLASH  0
-
 /** Node nickname id in case of no application is present. */
 #define VSCP_BOOTLOADER_NODE_NICKNAME_ID        (0xFE)
 
@@ -89,6 +86,16 @@ typedef enum
     VSCP_BOOTLOADER_ERROR_INVALID_MESSAGE                       /**< Invalid message */
 
 } VSCP_BOOTLOADER_ERROR;
+
+/** This type defines different memory types. */
+typedef enum
+{
+    VSCP_BOOTLOADER_MEM_TYPE_PROG_FLASH = 0,    /**< Program flash */
+    VSCP_BOOTLOADER_MEM_TYPE_DATA,              /**< Data (EEPROM, etc.) */
+    VSCP_BOOTLOADER_MEM_TYPE_CONFIG,            /**< Configuation (fuses, etc.) */
+    VSCP_BOOTLOADER_MEM_TYPE_RAM                /**< RAM */
+
+} VSCP_BOOTLOADER_MEM_TYPE;
 
 /** This type defines all necessary programming parameters. */
 typedef struct 
@@ -384,7 +391,7 @@ static BOOL vscp_bootloader_programmingProcedure(void)
 {
     BOOL                        abortFlag       = FALSE;
     BOOL						stopProgramming	= FALSE;	/* Stop programming procedure */
-	vscp_bootloader_ProgParam	progParam		= { vscp_bootloader_pageBuffer, 0, 0, 0, FALSE };
+	vscp_bootloader_ProgParam	progParam		= { vscp_bootloader_pageBuffer, 0, 0, 0, TRUE, 0 };
     vscp_RxMessage              rxMsg;
 
     /* Only with a "drop nickname/reset device" event we can leave. */
@@ -450,7 +457,7 @@ static void vscp_bootloader_handleProtocolStartBlockDataTransfer(vscp_RxMessage 
     }
     else
     {
-        uint8_t memoryType  = VSCP_BOOTLOADER_MEMORY_TYPE_PROG_FLASH;
+        uint8_t memoryType  = VSCP_BOOTLOADER_MEM_TYPE_PROG_FLASH;
         
 		/* Get block number */
 		progParam->blockNumber = VSCP_BOOTLOADER_BUILD_UINT32(rxMsg->data[0],
@@ -465,18 +472,18 @@ static void vscp_bootloader_handleProtocolStartBlockDataTransfer(vscp_RxMessage 
         }
         else
         {
-            memoryType = VSCP_BOOTLOADER_MEMORY_TYPE_PROG_FLASH;
+            memoryType = VSCP_BOOTLOADER_MEM_TYPE_PROG_FLASH;
         }
 
         /* Validate parameters:
             * - Only program flash is supported.
             * - Received block number shall be valid.
             */
-        if (VSCP_BOOTLOADER_MEMORY_TYPE_PROG_FLASH != memoryType)
+        if (VSCP_BOOTLOADER_MEM_TYPE_PROG_FLASH != memoryType)
         {
             vscp_bootloader_sendNakStartBlockDataTransfer();
         }
-        else if (VSCP_PLATFORM_FLASH_NUM_PAGES > progParam->blockNumber)
+        else if (VSCP_PLATFORM_FLASH_NUM_PAGES <= progParam->blockNumber)
         {
             vscp_bootloader_sendNakStartBlockDataTransfer();
         }
