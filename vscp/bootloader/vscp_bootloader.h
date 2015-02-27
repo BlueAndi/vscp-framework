@@ -155,7 +155,7 @@ extern "C"
  * programming tool determines with that id how the programming procedure
  * shall take place.
  */
-#define VSCP_BOOTLOADER_ALGORITHM	(0x11)
+#define VSCP_BOOTLOADER_ALGORITHM	(0x00)
 
 /*******************************************************************************
     MACROS
