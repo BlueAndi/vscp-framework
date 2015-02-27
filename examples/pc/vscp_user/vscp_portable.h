@@ -158,6 +158,13 @@ extern void vscp_portable_bootLoaderRequest(void);
 #endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_BOOT_LOADER_SUPPORTED ) */
 
 /**
+ * This function return the bootloader request flag.
+ *
+ * @return Bootloader mode requested or not
+ */
+extern BOOL vscp_portable_isBootloaderRequested(void);
+
+/**
  * This function provides received VSCP events, except the PROTOCOL class.
  *
  * @param[out]  msg Message

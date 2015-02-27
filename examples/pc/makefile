@@ -45,7 +45,9 @@ BIN= vscpExamplePc
 INCLUDES= -I. \
 		-Iinclude \
 		-Ivscp_user \
+		-I../../common \
 		-I../../vscp \
+		-I../../vscp/bootloader \
 		-I../../vscp/events
 
 # Sources
@@ -58,12 +60,14 @@ SOURCES= main.c \
 		vscp_thread.c \
 		vscp_user/vscp_action.c \
 		vscp_user/vscp_app_reg.c \
+		vscp_user/vscp_bl_adapter.c \
 		vscp_user/vscp_portable.c \
 		vscp_user/vscp_ps_access.c \
 		vscp_user/vscp_tp_adapter.c \
 		vscp_user/vscp_timer.c \
 		vscp_user/dm_std_xml.c \
 		vscp_user/dm_ext_xml.c \
+		../../common/crc16ccitt.c \
 		../../vscp/vscp_core.c \
 		../../vscp/vscp_data_coding.c \
 		../../vscp/vscp_dev_data.c \
@@ -72,6 +76,7 @@ SOURCES= main.c \
 		../../vscp/vscp_ps.c \
 		../../vscp/vscp_transport.c \
 		../../vscp/vscp_util.c \
+		../../vscp/bootloader/vscp_bootloader.c \
 		../../vscp/events/vscp_alarm.c \
 		../../vscp/events/vscp_control.c \
 		../../vscp/events/vscp_information.c \
@@ -82,7 +87,7 @@ SOURCES= main.c \
 		../../vscp/events/vscp_weather_forecast.c
 
 # Include all source pathes here like ../src1:../src2
-VPATH= ../../vscp:../../vscp/events:vscp_user
+VPATH= ../../common:../../vscp:../../vscp/events:vscp_user:../../vscp/bootloader
 		
 # Library search path (-L...)
 LIBPATH= -Llib/linux

@@ -50,6 +50,8 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 #include "platform.h"
 #include "vscp_core.h"
 #include "vscp_timer.h"
+#include "vscp_portable.h"
+#include "vscp_bootloader.h"
 
 /*******************************************************************************
 	COMPILER SWITCHES
@@ -248,8 +250,9 @@ extern void vscp_thread_unlock(void)
  */
 static void* vscp_thread_frameworkThread(void* par)
 {
-    BOOL                    quitFlag    = FALSE;
-    vscp_thread_Context*    threadData  = (vscp_thread_Context*)par;
+    BOOL                    quitFlag        = FALSE;
+    vscp_thread_Context*    threadData      = (vscp_thread_Context*)par;
+    BOOL                    bootloaderMode  = FALSE;
     
     vscp_thread_lock();
     quitFlag = threadData->quitFlag;
@@ -259,8 +262,24 @@ static void* vscp_thread_frameworkThread(void* par)
     {
         /* Process the whole VSCP framework */
         (void)pthread_mutex_lock(&threadData->mutex);
-        
-        vscp_core_process();
+
+        /* Application */
+        if (FALSE == bootloaderMode)
+        {
+            vscp_core_process();
+            
+            bootloaderMode = vscp_portable_isBootloaderRequested();
+        }
+        /* Bootloader */
+        else
+        {
+            vscp_bootloader_init();
+            vscp_bootloader_run();
+            bootloaderMode = FALSE;
+            
+            /* Simulate reboot */
+            vscp_core_init();
+        }
         
         quitFlag = threadData->quitFlag;
         

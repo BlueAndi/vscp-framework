@@ -57,6 +57,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 #include "log.h"
 #include "dm_std_xml.h"
 #include "dm_ext_xml.h"
+#include "vscp_bootloader.h"
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -120,6 +121,9 @@ static uint8_t	vscp_portable_ruleSet[] =
 };
 
 #endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION ) */
+
+/** Flag to signal that the bootloader mode is requested or not. */
+static BOOL vscp_portable_bootloaderRequested   = FALSE;
 
 /*******************************************************************************
     GLOBAL VARIABLES
@@ -288,11 +292,7 @@ extern void vscp_portable_resetRequest(void)
  */
 extern uint8_t  vscp_portable_getBootLoaderAlgorithm(void)
 {
-    uint8_t algorithm   = 0xFF;
-
-    /* Implement your code here ... */
-
-    return algorithm;
+    return VSCP_BOOTLOADER_ALGORITHM;
 }
 
 /**
@@ -302,12 +302,28 @@ extern uint8_t  vscp_portable_getBootLoaderAlgorithm(void)
  */
 extern void vscp_portable_bootLoaderRequest(void)
 {
-    /* Implement your code here ... */
+    log_printf("Bootloader mode requested.\n");
 
+    vscp_portable_bootloaderRequested = TRUE;
+    
     return;
 }
 
 #endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_BOOT_LOADER_SUPPORTED ) */
+
+/**
+ * This function return the bootloader request flag.
+ *
+ * @return Bootloader mode requested or not
+ */
+extern BOOL vscp_portable_isBootloaderRequested(void)
+{
+    BOOL    flag    = vscp_portable_bootloaderRequested;
+    
+    vscp_portable_bootloaderRequested = FALSE;
+
+    return flag;
+}
 
 /**
  * This function provides received VSCP events, except the PROTOCOL class.
