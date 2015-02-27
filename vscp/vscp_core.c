@@ -2175,6 +2175,9 @@ static inline void  vscp_core_handleProtocolEnterBootLoaderMode(void)
             {
                 /* Go idle and wait */
                 vscp_core_changeToStateIdle();
+                
+                /* Set boot flag to bootloader */
+                vscp_ps_writeBootFlag(VSCP_BOOT_FLAG_BOOTLOADER);
 
                 /* Request jump to boot loader */
                 vscp_portable_bootLoaderRequest();
