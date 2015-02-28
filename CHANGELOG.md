@@ -5,6 +5,7 @@ Features:
   - VSCP framework
     - More events can now be sent on a higher abstraction. See ./vscp/events folder.
     - L1 over L2 event classes added.
+    - Bootloader algorithm implemented. See ./vscp/bootloader folder.
     
   - PC example
     - The pc example loads the standard and extended decision matrix from a xml file.
