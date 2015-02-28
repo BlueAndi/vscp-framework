@@ -13,6 +13,10 @@ Features:
     - The node sends now periodically simulated temperature values.
     - The node simulates 8 lamps, which can be controlled via decision matrix.
   
+  - Bootloader Jumper is used for relay board 01 project in case of debugging purposes.
+  
+  - Bootloader VSCP is used for relay board 01 project in case of the VSCP bootloader algorithm.
+  
 Bugfixes:
 
   - VSCP framework
