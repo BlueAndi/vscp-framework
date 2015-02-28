@@ -4,8 +4,9 @@
 2. [Framework](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#framework)
 3. [Structure](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#structure)
 4. [Getting started](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#getting-started)
-5. [Mailing list](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#mailing-list)
-6. [Issues, Ideas and bugs](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#issues-ideas-and-bugs)
+5. [Bootloader](https://github.com/BlueAndi/vscp-framework/blob/master/vscp/bootloader/README.md)
+6. [Mailing list](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#mailing-list)
+7. [Issues, Ideas and bugs](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#issues-ideas-and-bugs)
 
 ##VSCP
 
