@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>6.2</ProjectVersion>
+    <ToolchainName>com.Atmel.AVRGCC8.C</ToolchainName>
+    <ProjectGuid>{d34b5109-fde4-4e23-95c7-a68e74f1474f}</ProjectGuid>
+    <avrdevice>ATmega328P</avrdevice>
+    <avrdeviceseries>none</avrdeviceseries>
+    <OutputType>StaticLibrary</OutputType>
+    <Language>C</Language>
+    <OutputFileName>lib$(MSBuildProjectName)</OutputFileName>
+    <OutputFileExtension>.a</OutputFileExtension>
+    <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
+    <AvrGccProjectExtensions>
+    </AvrGccProjectExtensions>
+    <AssemblyName>can</AssemblyName>
+    <Name>can</Name>
+    <RootNamespace>can</RootNamespace>
+    <ToolchainFlavour>Native</ToolchainFlavour>
+    <KeepTimersRunning>true</KeepTimersRunning>
+    <OverrideVtor>false</OverrideVtor>
+    <CacheFlash>true</CacheFlash>
+    <ProgFlashFromRam>true</ProgFlashFromRam>
+    <RamSnippetAddress />
+    <UncachedRange />
+    <preserveEEPROM>true</preserveEEPROM>
+    <OverrideVtorValue />
+    <BootSegment>2</BootSegment>
+    <eraseonlaunchrule>1</eraseonlaunchrule>
+    <AsfFrameworkConfig>
+      <framework-data xmlns="">
+  <options />
+  <configurations />
+  <files />
+  <documentation help="" />
+  <offline-documentation help="" />
+  <dependencies>
+    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.21.0" />
+  </dependencies>
+</framework-data>
+    </AsfFrameworkConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <ToolchainSettings>
+      <AvrGcc>
+  <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+  <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+  <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+  <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+  <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
+  <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+  <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+  <avrgcc.compiler.symbols.DefSymbols><ListValues>
+  <Value>F_CPU=16000000UL</Value>
+  <Value>NDEBUG</Value>
+</ListValues></avrgcc.compiler.symbols.DefSymbols>
+  <avrgcc.compiler.directories.IncludePaths><ListValues><Value>../../../../../../common/avr/can</Value><Value>../../../can_config</Value><Value>../../../../../../common/avr/can/src</Value></ListValues></avrgcc.compiler.directories.IncludePaths>
+  <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+  <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+  <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+  <avrgcc.linker.libraries.Libraries><ListValues><Value>libm</Value></ListValues></avrgcc.linker.libraries.Libraries>
+  <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
+</AvrGcc>
+    </ToolchainSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <ToolchainSettings>
+      <AvrGcc>
+  <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+  <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+  <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+  <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+  <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
+  <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+  <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+  <avrgcc.compiler.symbols.DefSymbols><ListValues>
+  <Value>F_CPU=16000000UL</Value>
+  <Value>DEBUG</Value>
+</ListValues></avrgcc.compiler.symbols.DefSymbols>
+  <avrgcc.compiler.directories.IncludePaths><ListValues><Value>../../../../../../common/avr/can</Value><Value>../../../can_config</Value><Value>../../../../../../common/avr/can/src</Value></ListValues></avrgcc.compiler.directories.IncludePaths>
+  <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+  <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+  <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+  <avrgcc.linker.libraries.Libraries><ListValues><Value>libm</Value></ListValues></avrgcc.linker.libraries.Libraries>
+  <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
+  <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
+  <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
+</AvrGcc>
+    </ToolchainSettings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="src" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\..\..\common\avr\can\can.h">
+      <SubType>compile</SubType>
+      <Link>can.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\at90can.c">
+      <SubType>compile</SubType>
+      <Link>src\at90can.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\at90can_buffer.c">
+      <SubType>compile</SubType>
+      <Link>src\at90can_buffer.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\at90can_disable_dyn_filter.c">
+      <SubType>compile</SubType>
+      <Link>src\at90can_disable_dyn_filter.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\at90can_error_register.c">
+      <SubType>compile</SubType>
+      <Link>src\at90can_error_register.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\at90can_get_buf_message.c">
+      <SubType>compile</SubType>
+      <Link>src\at90can_get_buf_message.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\at90can_get_dyn_filter.c">
+      <SubType>compile</SubType>
+      <Link>src\at90can_get_dyn_filter.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\at90can_get_message.c">
+      <SubType>compile</SubType>
+      <Link>src\at90can_get_message.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\at90can_private.h">
+      <SubType>compile</SubType>
+      <Link>src\at90can_private.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\at90can_send_buf_message.c">
+      <SubType>compile</SubType>
+      <Link>src\at90can_send_buf_message.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\at90can_send_message.c">
+      <SubType>compile</SubType>
+      <Link>src\at90can_send_message.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\at90can_set_dyn_filter.c">
+      <SubType>compile</SubType>
+      <Link>src\at90can_set_dyn_filter.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\at90can_set_mode.c">
+      <SubType>compile</SubType>
+      <Link>src\at90can_set_mode.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\can_buffer.c">
+      <SubType>compile</SubType>
+      <Link>src\can_buffer.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\can_buffer.h">
+      <SubType>compile</SubType>
+      <Link>src\can_buffer.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\can_private.h">
+      <SubType>compile</SubType>
+      <Link>src\can_private.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\mcp2515.c">
+      <SubType>compile</SubType>
+      <Link>src\mcp2515.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\mcp2515_buffer.c">
+      <SubType>compile</SubType>
+      <Link>src\mcp2515_buffer.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\mcp2515_defs.h">
+      <SubType>compile</SubType>
+      <Link>src\mcp2515_defs.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\mcp2515_error_register.c">
+      <SubType>compile</SubType>
+      <Link>src\mcp2515_error_register.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\mcp2515_get_dyn_filter.c">
+      <SubType>compile</SubType>
+      <Link>src\mcp2515_get_dyn_filter.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\mcp2515_get_message.c">
+      <SubType>compile</SubType>
+      <Link>src\mcp2515_get_message.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\mcp2515_private.h">
+      <SubType>compile</SubType>
+      <Link>src\mcp2515_private.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\mcp2515_read_id.c">
+      <SubType>compile</SubType>
+      <Link>src\mcp2515_read_id.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\mcp2515_regdump.c">
+      <SubType>compile</SubType>
+      <Link>src\mcp2515_regdump.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\mcp2515_send_message.c">
+      <SubType>compile</SubType>
+      <Link>src\mcp2515_send_message.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\mcp2515_set_dyn_filter.c">
+      <SubType>compile</SubType>
+      <Link>src\mcp2515_set_dyn_filter.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\mcp2515_set_mode.c">
+      <SubType>compile</SubType>
+      <Link>src\mcp2515_set_mode.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\mcp2515_sleep.c">
+      <SubType>compile</SubType>
+      <Link>src\mcp2515_sleep.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\mcp2515_static_filter.c">
+      <SubType>compile</SubType>
+      <Link>src\mcp2515_static_filter.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\mcp2515_write_id.c">
+      <SubType>compile</SubType>
+      <Link>src\mcp2515_write_id.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\sja1000.c">
+      <SubType>compile</SubType>
+      <Link>src\sja1000.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\sja1000_buffer.c">
+      <SubType>compile</SubType>
+      <Link>src\sja1000_buffer.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\sja1000_defs.h">
+      <SubType>compile</SubType>
+      <Link>src\sja1000_defs.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\sja1000_error_register.c">
+      <SubType>compile</SubType>
+      <Link>src\sja1000_error_register.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\sja1000_get_message.c">
+      <SubType>compile</SubType>
+      <Link>src\sja1000_get_message.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\sja1000_private.h">
+      <SubType>compile</SubType>
+      <Link>src\sja1000_private.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\sja1000_send_message.c">
+      <SubType>compile</SubType>
+      <Link>src\sja1000_send_message.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\sja1000_set_mode.c">
+      <SubType>compile</SubType>
+      <Link>src\sja1000_set_mode.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\spi.c">
+      <SubType>compile</SubType>
+      <Link>src\spi.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\spi.h">
+      <SubType>compile</SubType>
+      <Link>src\spi.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\common\avr\can\src\utils.h">
+      <SubType>compile</SubType>
+      <Link>src\utils.h</Link>
+    </Compile>
+    <Compile Include="..\..\can_config\config.h">
+      <SubType>compile</SubType>
+      <Link>config.h</Link>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
+</Project>
