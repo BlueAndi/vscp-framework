@@ -57,6 +57,9 @@ $Date: 2015-01-06 10:45:56 +0100 (Di, 06 Jan 2015) $
     CONSTANTS
 *******************************************************************************/
 
+/** Port where all relay related pins are connected to */
+#define RELAY_PORT		PORTC
+
 /** Shift register clear */
 #define RELAY_PIN_SCL   PC3
 
@@ -72,8 +75,15 @@ $Date: 2015-01-06 10:45:56 +0100 (Di, 06 Jan 2015) $
 /** PWM TOP value, calculated for a 20 kHz PWM */
 #define RELAY_PWM_TOP   400
 
-/** Time in 0,1 ms after changing from switching current to holding current */
-#define RELAY_DURATION  200
+/** Minimum PWM value, as specified in the datasheet */
+#define RELAY_PWM_MIN   3
+
+#if (RELAY_PWM_MIN > RELAY_PWM_TOP)
+#error The minimum resolution is 3.
+#endif	/* (3 > RELAY_PWM_TOP) */
+
+/** Time in 0,05 ms after changing from switching current to holding current */
+#define RELAY_DURATION  (200 * 20)
 
 /*******************************************************************************
     MACROS
@@ -95,14 +105,14 @@ static inline void relay_store(void);
     LOCAL VARIABLES
 *******************************************************************************/
 
-/** Bitwise activate/deactivate the relays. */
-static uint8_t          relay_active                = 0;
+/** Bitwise activate/deactivate the relays. Bit 0 corresponds to relay 1 and etc. */
+static uint8_t          relay_stateBitField         = 0;
 
 /** PWM value for switching a relay on */
 static uint16_t         relay_switchingPwm          = RELAY_PWM_TOP;
 
-/** PWM value for holding a relay on */
-static uint16_t         relay_holdingPwm            = RELAY_PWM_TOP;
+/** PWM value for holding a relay on (60% of switching PWM) */
+static uint16_t         relay_holdingPwm            = (relay_switchingPwm * 3) / 5;
 
 /** Change to switching current */
 static volatile BOOL    relay_enableSwitchingPwm    = FALSE;
@@ -125,6 +135,9 @@ extern void relay_init(void)
     relay_clearShiftRegister();
 
 #if (16000000UL == F_CPU)
+
+	/* Clear timer counter register */
+	TCNT1 = 0;
 
     /* Configure timer control register A */
     TCCR1A =    (1 << COM1A1) | /* Clear OC1A on compare match when counting up, set when counting down */
@@ -151,8 +164,11 @@ extern void relay_init(void)
      * f_pwm = 20 kHz
      */
 
-     /* Set switching current */
-     OCR1A = relay_switchingPwm;
+     /* Set holding current */
+     OCR1A = relay_holdingPwm;
+
+     /* Enable overflow interrupt */
+     TIMSK1 |= (1 << TOIE1);
 
 #else
 
@@ -173,43 +189,64 @@ extern void relay_activate(uint8_t index, BOOL activate)
 {
     if (RELAY_NUM > index)
     {
-        uint8_t index   = 0;
-        BOOL    flag    = FALSE;
+        uint8_t run		        = 0;
+        BOOL    enableSwitchingPwm  = FALSE;
+        BOOL    dirty               = FALSE;
 
         /* Deactivate a relay? */
         if (FALSE == activate)
         {
-            BIT_CLR(relay_active, index);
+            /* Is relay activated? */
+            if (0 != (relay_stateBitField & (1 << index)))
+            {
+                /* Deactivate relay */
+                BIT_CLR(relay_stateBitField, index);
+                
+                dirty = TRUE;
+            }
         }
         /* Activate a relay */
         else
         {
-            BIT_SET(relay_active, index);
-
-            /* Increase current to switching current */
-            flag = TRUE;
-        }
-
-        /* Shift from relay 1 to relay 8 */
-        for(index = 0; index < RELAY_NUM; ++index)
-        {
-            if (0 == (relay_active & (1 << index)))
+            /* Is relay deactivated? */
+            if (0 == (relay_stateBitField & (1 << index)))
             {
-                relay_setBit(0);
-            }
-            else
-            {
-                relay_setBit(1);
+                /* Activate relay */
+                BIT_SET(relay_stateBitField, index);
+                
+                dirty = TRUE;
+
+                /* Increase current to switching current */
+                enableSwitchingPwm = TRUE;
             }
         }
 
-        ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
+        /* Anything to change? */
+        if (TRUE == dirty)
         {
-            /* Latch the shift register to output */
-            relay_store();
+            /* Shift data from relay 1 to relay 8, depended on requested relay state. */
+            for(run = 0; run < RELAY_NUM; ++run)
+            {
+			    /* Relay disabled? */
+                if (0 == (relay_stateBitField & (1 << run)))
+                {
+                    relay_setBit(0);
+                }
+			    /* Relay enabled */
+                else
+                {
+                    relay_setBit(1);
+                }
+            }
 
-            /* Signal ISR to change to switching current */
-            relay_enableSwitchingPwm = flag;
+            ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
+            {
+                /* Latch the shift register to output */
+                relay_store();
+
+                /* Signal ISR to change to switching current */
+                relay_enableSwitchingPwm = enableSwitchingPwm;
+            }
         }
     }
 
@@ -229,7 +266,7 @@ extern BOOL relay_isActivated(uint8_t index)
 
     if (RELAY_NUM > index)
     {
-        if (0 != (relay_active & (1 << index)))
+        if (0 != (relay_stateBitField & (1 << index)))
         {
             status = TRUE;
         }
@@ -245,10 +282,15 @@ extern BOOL relay_isActivated(uint8_t index)
  */
 extern void relay_setSwitchingPwm(uint16_t value)
 {
-    /* Limit value to the TOP */
+    /* Limit value */
     if (RELAY_PWM_TOP < value)
     {
         value = RELAY_PWM_TOP;
+    }
+
+    if (RELAY_PWM_MIN > value)
+    {
+        value = RELAY_PWM_MIN;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
@@ -266,10 +308,15 @@ extern void relay_setSwitchingPwm(uint16_t value)
  */
 extern void relay_setHoldingPwm(uint16_t value)
 {
-    /* Limit value to the TOP */
+    /* Limit value */
     if (RELAY_PWM_TOP < value)
     {
         value = RELAY_PWM_TOP;
+    }
+
+    if (RELAY_PWM_MIN > value)
+    {
+        value = RELAY_PWM_MIN;
     }
 
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
@@ -290,15 +337,15 @@ extern void relay_setHoldingPwm(uint16_t value)
 static inline void relay_clearShiftRegister(void)
 {
     /* SCL is low active */
-    BIT_CLR(PORTC, RELAY_PIN_SCL);
+    BIT_CLR(RELAY_PORT, RELAY_PIN_SCL);
 
-    BIT_SET(PORTC, RELAY_PIN_SCK);
-    BIT_CLR(PORTC, RELAY_PIN_SCK);
+    BIT_SET(RELAY_PORT, RELAY_PIN_SCK);
+    BIT_CLR(RELAY_PORT, RELAY_PIN_SCK);
 
-    BIT_SET(PORTC, RELAY_PIN_RCK);
-    BIT_CLR(PORTC, RELAY_PIN_RCK);
+    BIT_SET(RELAY_PORT, RELAY_PIN_RCK);
+    BIT_CLR(RELAY_PORT, RELAY_PIN_RCK);
 
-    BIT_SET(PORTC, RELAY_PIN_SCL);
+    BIT_SET(RELAY_PORT, RELAY_PIN_SCL);
 
     return;
 }
@@ -312,15 +359,15 @@ static inline void relay_setBit(uint8_t bit)
 {
     if (0 == bit)
     {
-        BIT_CLR(PORTC, RELAY_PIN_SER);
+        BIT_CLR(RELAY_PORT, RELAY_PIN_SER);
     }
     else
     {
-        BIT_SET(PORTC, RELAY_PIN_SER);
+        BIT_SET(RELAY_PORT, RELAY_PIN_SER);
     }
 
-    BIT_SET(PORTC, RELAY_PIN_SCK);
-    BIT_CLR(PORTC, RELAY_PIN_SCK);
+    BIT_SET(RELAY_PORT, RELAY_PIN_SCK);
+    BIT_CLR(RELAY_PORT, RELAY_PIN_SCK);
 
     return;
 }
@@ -330,8 +377,8 @@ static inline void relay_setBit(uint8_t bit)
  */
 static inline void relay_store(void)
 {
-    BIT_SET(PORTC, RELAY_PIN_RCK);
-    BIT_CLR(PORTC, RELAY_PIN_RCK);
+    BIT_SET(RELAY_PORT, RELAY_PIN_RCK);
+    BIT_CLR(RELAY_PORT, RELAY_PIN_RCK);
 
     return;
 }
@@ -340,12 +387,12 @@ static inline void relay_store(void)
  * Interrupt service routine will be called if the timer counter is at the BOTTOM.
  * It is used to change the PWM value.
  *
- * Period: half PWM frequency
- * Example: 20 kHz PWM => ISR is called in a 10 kHz period (100 us)
+ * Period: PWM frequency
+ * ISR is called every 50 us
  */
 ISR(TIMER1_OVF_vect)
 {
-    static uint8_t  duration    = 0;
+    static uint16_t duration    = 0;
     static BOOL     once        = FALSE;
 
     /* Relay switching current requested? */

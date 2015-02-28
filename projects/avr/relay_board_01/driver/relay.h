@@ -36,10 +36,11 @@
 This module is the driver for the relays. It provides an interface to enable
 or disable a relay.
 
-The relays are controlled by a pulse width modulation.
+Because to switch a relay a higher current is necessary, than for holding a
+relay in its on state, the relay are powered with a pulse width modulation.
 
 Used periphery:
-* 8-bit timer 2
+* 8-bit timer 1 for PWM output
 
 @section svn Subversion
 $Author: amerkle $
