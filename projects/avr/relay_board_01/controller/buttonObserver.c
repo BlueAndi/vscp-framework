@@ -353,11 +353,11 @@ static void	buttonObserver_processButton(buttonObserver_Button * const button, B
             eventButtonState = 1;
         }
 
-        vscp_information_sendButtonEvent(   eventButtonState, 
-                                            vscp_ps_user_readButtonEventZone(buttonIndex), 
-                                            vscp_ps_user_readButtonEventSubZone(buttonIndex),
-                                            buttonIndex,
-                                            NULL);
+        (void)vscp_information_sendButtonEvent(	eventButtonState, 
+												vscp_ps_user_readButtonEventZone(buttonIndex), 
+												vscp_ps_user_readButtonEventSubZone(buttonIndex),
+												buttonIndex,
+												NULL);
 	}
 
 	return;
