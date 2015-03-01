@@ -13,7 +13,7 @@
  * VSCP (Very Simple Control Protocol) 
  * http://www.vscp.org
  *
- * Copyright (C) 1995-2014 Ake Hedman, 
+ * Copyright (C) 1995-2015 Ake Hedman, 
  * Grodans Paradis AB, <akhe@grodansparadis.com>
  *
  * This software is provided 'as-is', without any express or implied
@@ -50,12 +50,12 @@
 #define VSCP_CLASS1_CONTROL                             30
 #define VSCP_CLASS1_MULTIMEDIA                          40
 #define VSCP_CLASS1_AOL                                 50
-#define VSCP_CLASS1_MEASUREMENT64						60
-#define VSCP_CLASS1_MEASUREZONE							65
-#define VSCP_CLASS1_MEASUREMENT32						70
-#define VSCP_CLASS1_SETVALUEZONE						85
-#define VSCP_CLASS1_WEATHER						        90
-#define VSCP_CLASS1_WEATHER_FORECAST					95
+#define VSCP_CLASS1_MEASUREMENT64                       60
+#define VSCP_CLASS1_MEASUREZONE                         65
+#define VSCP_CLASS1_MEASUREMENT32                       70
+#define VSCP_CLASS1_SETVALUEZONE                        85
+#define VSCP_CLASS1_WEATHER                             90
+#define VSCP_CLASS1_WEATHER_FORECAST                    95
 #define VSCP_CLASS1_PHONE                               100
 #define VSCP_CLASS1_LIN                                 101
 #define VSCP_CLASS1_DISPLAY                             102

@@ -1,22 +1,28 @@
 // FILE: vscp.h 
 //
-// Copyright (C) 2000-2014 Ake Hedman akhe@grodansparadis.com 
+// This file is part of the VSCP (http://www.vscp.org) 
 //
-// This software is free software; you can redistribute it and/or
-// modify it under the terms of the GNU Lesser General Public
-// License as published by the Free Software Foundation; either
-// version 2 of the License, or (at your option) any later version.
-//
-// This library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// Library General Public License for more details.
-//
-// You should have received a copy of the GNU Library General Public
-// License along with this library; if not, write to the
-// Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-// Boston, MA 02111-1307, USA.
-//
+// The MIT License (MIT)
+// 
+// Copyright (c) 2000-2015 Ake Hedman, Grodans Paradis AB <info@grodansparadis.com>
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 // HISTORY:
 //		021107 - AKHE Started this file
@@ -26,22 +32,23 @@
 #ifndef _VSCP_H_
 #define _VSCP_H_
 
-#include "vscp_class.h"
-#include "vscp_type.h"
-#include "canal.h"
-#include "crc.h"
+#include <vscp_class.h>
+#include <vscp_type.h>
+#include <canal.h>
+#include <crc.h>
+#include <inttypes.h>
 
 #ifndef WIN32
-#include <stdint.h>
-#include <sys/types.h>
+//#include <stdint.h>
+//#include <sys/types.h>
 #endif
 
 // TODO should be moved to platform file.  /AKHE
-#define SIZEOF_CHAR         1
-#define SIZEOF_SHORT        2
-#define SIZEOF_INT          4
+#define SIZEOF_CHAR                         1
+#define SIZEOF_SHORT                        2
+#define SIZEOF_INT                          4
 //#ifndef _MSC_EXTENSIONS
-#define SIZEOF_LONG_LONG    8
+#define SIZEOF_LONG_LONG                    8
 //#endif
 
 
@@ -159,7 +166,6 @@ typedef unsigned short                      uint64_t;
 #define VSCPD_RECEIVE_OBJ_MUTEX             _("____VSCPD_RECEIVE_OBJ_MUTEX____")
 #define VSCPD_CLIENT_MUTEX                  _("____VSCPD_CLIENT_MUTEX____")
 
-
 #define	VSCP_LEVEL2_UDP_PORT                9598
 #define	VSCP_LEVEL2_TCP_PORT                9598
 
@@ -175,30 +181,30 @@ typedef unsigned short                      uint64_t;
 extern "C" {
 #endif
 
-//			* * * General structure for VSCP * * *
+    //			* * * General structure for VSCP * * *
 
-// This structure is for VSCP Level II
-// 
+    // This structure is for VSCP Level II
+    //
 
-typedef struct  {	
-	uint16_t crc;           // crc checksum - currently only used for UDP and RF
-	uint8_t  *pdata;        // Pointer to data. Max 487 (512- 25) bytes
-    // Following two are for daemon internal use
-	uint32_t obid;          // Used by driver for channel info etc.
-	uint32_t timestamp;     // Relative time stamp for package in microseconds
-    // ----- CRC should be calculated from here to end + datablock ----
-	uint16_t head;          // Bit 16   GUID is IP v.6 address.
-							// bit 765  priority, Priority 0-7 where 0 is highest.
+    typedef struct {
+        uint16_t crc;       // crc checksum - currently only used for UDP and RF
+        uint8_t *pdata;     // Pointer to data. Max 487 (512- 25) bytes
+        // Following two are for daemon internal use
+        uint32_t obid;      // Used by driver for channel info etc.
+        uint32_t timestamp; // Relative time stamp for package in microseconds
+        // ----- CRC should be calculated from here to end + datablock ----
+        uint16_t head;      // Bit 16   GUID is IP v.6 address.
+                            // bit 765  priority, Priority 0-7 where 0 is highest.
                             // bit 4 = hard coded, true for a hard coded device.
                             // bit 3 = Don't calculate CRC, false for CRC usage.
                             // bit 2 = Reserved.
                             // bit 1 = Reserved.
                             // bit 0 = Reserved.
-	uint16_t vscp_class;    // VSCP class
-	uint16_t vscp_type;     // VSCP type
-	uint8_t  GUID[ 16 ];    // Node globally unique id MSB(0) -> LSB(15)
-	uint16_t sizeData;      // Number of valid data bytes		
-} vscpEvent;
+        uint16_t vscp_class;// VSCP class
+        uint16_t vscp_type; // VSCP type
+        uint8_t GUID[ 16 ]; // Node globally unique id MSB(0) -> LSB(15)
+        uint16_t sizeData;  // Number of valid data bytes
+    } vscpEvent;
 
 
 typedef vscpEvent *PVSCPEVENT;
@@ -458,6 +464,17 @@ struct myNode {
 // 0xe0 - 0xff
 #define VSCP_STD_REGISTER_DEVICE_URL            0xE0
 
+// Level I Decision Matrix
+#define VSCP_LEVEL1_DM_ROW_SIZE                 8
+
+#define VSCP_LEVEL1_DM_OFFSET_OADDR             0
+#define VSCP_LEVEL1_DM_OFFSET_FLAGS             1
+#define VSCP_LEVEL1_DM_OFFSET_CLASS_MASK        2
+#define VSCP_LEVEL1_DM_OFFSET_CLASS_FILTER      3
+#define VSCP_LEVEL1_DM_OFFSET_TYPE_MASK         4
+#define VSCP_LEVEL1_DM_OFFSET_TYPE_FILTER       5
+#define VSCP_LEVEL1_DM_OFFSET_ACTION            6
+#define VSCP_LEVEL1_DM_OFFSET_ACTION_PARAM      7
 
 // Bits for VSCP server 16-bit capability code
 // used by CLASS1.PROTOCOL, HIGH END SERVER RESPONSE
@@ -504,6 +521,8 @@ struct myNode {
 #define VSCP_ERROR_PASSWORD                39      // Login error password
 #define VSCP_ERROR_CONNECTION              40      // Could not connect   
 #define VSCP_ERROR_INVALID_HANDLE          41      // The handle is not valid
+#define VSCP_ERROR_OPERATION_FAILED        42      // Opration failed for some reason
+
 
 #ifdef __cplusplus
 }
