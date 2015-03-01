@@ -248,7 +248,7 @@ int main(int argc, char* argv[])
                 
                 if (VSCP_TP_ADAPTER_RET_OK != ret)
                 {
-                    printf("Failed to connect to %s.\n", cmdLineArgs.daemonAddr);
+                    printf(" failed to %s.\n", cmdLineArgs.daemonAddr);
                     
                     if (VSCP_TP_ADAPTER_RET_INVALID_USER == ret)
                     {
@@ -267,7 +267,7 @@ int main(int argc, char* argv[])
                 }
                 else
                 {
-                    printf(" successful\n");
+                    printf(" successful.\n");
                 }
             }
             
