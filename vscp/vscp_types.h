@@ -96,6 +96,9 @@ extern "C"
 /** Boot flag: destination application */
 #define VSCP_BOOT_FLAG_APPLICATION          (0xAA)
 
+/** GUID size */
+#define VSCP_GUID_SIZE                      (16)
+
 /** Application register start address (page 0) */
 #define VSCP_REGISTER_APP_START_ADDR        (0x00)
 
