@@ -130,26 +130,31 @@ extern BOOL vscp_tp_adapter_readMessage(vscp_RxMessage * const msg)
         {
             can_t   canMsg; /* CAN message */
 
+            /* Get CAN frame */
             if (can_get_message(&canMsg))
             {
-                msg->vscpClass  = (canMsg.id >> 16) & 0x01FF;
-                msg->vscpType   = (canMsg.id >>  8) & 0x00FF;
-                msg->oAddr      = (canMsg.id >>  0) & 0x00FF;
-                msg->hardCoded  = (canMsg.id >> 25) & 0x0001;
-                msg->priority   = (uint16_t)( (canMsg.id >> 26) & 0x07 );
-                msg->dataNum    = canMsg.length;
-
-                if (0 < canMsg.length)
+                /* Extended CAN frame? */
+                if (0 != canMsg.flags.extended)
                 {
-                    uint8_t index   = 0;    /* Run variable */
-                    
-                    for(index = 0; index < canMsg.length; ++index)
-                    {
-                        msg->data[index] = canMsg.data[index];
-                    }
-                }
+                    msg->vscpClass  = (canMsg.id >> 16) & 0x01FF;
+                    msg->vscpType   = (canMsg.id >>  8) & 0x00FF;
+                    msg->oAddr      = (canMsg.id >>  0) & 0x00FF;
+                    msg->hardCoded  = (canMsg.id >> 25) & 0x0001;
+                    msg->priority   = (uint16_t)( (canMsg.id >> 26) & 0x07 );
+                    msg->dataNum    = canMsg.length;
 
-                status = TRUE;
+                    if (0 < canMsg.length)
+                    {
+                        uint8_t index   = 0;    /* Run variable */
+                        
+                        for(index = 0; index < canMsg.length; ++index)
+                        {
+                            msg->data[index] = canMsg.data[index];
+                        }
+                    }
+
+                    status = TRUE;
+                }
             }
         }
     }
