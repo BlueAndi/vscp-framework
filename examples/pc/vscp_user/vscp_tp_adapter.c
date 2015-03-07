@@ -101,6 +101,9 @@ static vscp_RxMessage           vscp_tp_adapter_rxMessage;
 /** Network client parameter */
 static vscp_tp_adapter_NetPar   vscp_tp_adapter_clientPar;
 
+/** Connected or not */
+static BOOL                     vscp_tp_adapter_isConnected     = FALSE;
+
 /*******************************************************************************
     GLOBAL VARIABLES
 *******************************************************************************/
@@ -142,10 +145,19 @@ extern BOOL vscp_tp_adapter_readMessage(vscp_RxMessage * const msg)
             vscpEventEx daemonEvent;
             int         vscphlpRet  = 0;
             
+            /* Disconnected? */
+            if (FALSE == vscp_tp_adapter_isConnected)
+            {
+                /* Nothing to do */
+                ;
+            }
             /* Check for available events. */
-            if (VSCP_ERROR_SUCCESS != (vscphlpRet = vscphlp_isDataAvailable(client->hSession, &count)))
+            else if (VSCP_ERROR_SUCCESS != (vscphlpRet = vscphlp_isDataAvailable(client->hSession, &count)))
             {
                 LOG_WARNING_INT32("Connection lost: ", vscphlpRet);
+
+                log_printf("Connection lost.\n");
+                vscp_tp_adapter_isConnected = FALSE;
             }
             /* Any event available? */
             else if (0 < count)
@@ -239,57 +251,63 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg)
     {
         vscp_tp_adapter_NetPar* client  = &vscp_tp_adapter_clientPar;
         uint8_t                 index   = 0;
-        
-        log_printf("Tx: class=0x%02X, type=0x%02X, prio=%2d, oAddr=0x%02X, %c, num=%u, data=",
-            msg->vscpClass,
-            msg->vscpType,
-            msg->priority,
-            msg->oAddr,
-            (FALSE == msg->hardCoded) ? '-' : 'h',
-            msg->dataNum);
-
-        for(index = 0; index < msg->dataNum; ++index)
-        {
-            printf("%02X", msg->data[index]);
-            
-            if ((index + 1) < msg->dataNum)
-            {
-                printf(" ");
-            }
-        }
-        printf("\n");
             
         /* Connected to a VSCP daemon? */
         if (0 != client->hSession)
         {
-            vscpEventEx daemonEvent;
-            int         vscphlpRet  = 0;
-            
-            memset(&daemonEvent, 0, sizeof(daemonEvent));
-            
-            /* Send always a level 1 event back, independent of the configured
-             * network level @see VSCP_TP_ADAPTER_LVL
-             */
-            daemonEvent.vscp_class  = msg->vscpClass;
-            daemonEvent.vscp_type   = msg->vscpType;
-            daemonEvent.head        = 0;
-            daemonEvent.head        |= (msg->priority & 0x07) << 5;
-            daemonEvent.head        |= (msg->hardCoded & 0x01) << 4;
-            daemonEvent.GUID[15]    = msg->oAddr; /* Node GUID LSB */
-            daemonEvent.sizeData    = msg->dataNum;
-            
-            for(index = 0; index < daemonEvent.sizeData; ++index)
+            /* Connected? */
+            if (TRUE == vscp_tp_adapter_isConnected)
             {
-                daemonEvent.data[index] = msg->data[index];
-            }
-            
-            if (VSCP_ERROR_SUCCESS != (vscphlpRet = vscphlp_sendEventEx(client->hSession, &daemonEvent)))
-            {
-                LOG_WARNING_INT32("Couldn't send event to daemon:", vscphlpRet);
+                vscpEventEx daemonEvent;
+                int         vscphlpRet  = 0;
+                
+                memset(&daemonEvent, 0, sizeof(daemonEvent));
+                
+                /* Send always a level 1 event back, independent of the configured
+                 * network level @see VSCP_TP_ADAPTER_LVL
+                 */
+                daemonEvent.vscp_class  = msg->vscpClass;
+                daemonEvent.vscp_type   = msg->vscpType;
+                daemonEvent.head        = 0;
+                daemonEvent.head        |= (msg->priority & 0x07) << 5;
+                daemonEvent.head        |= (msg->hardCoded & 0x01) << 4;
+                daemonEvent.GUID[15]    = msg->oAddr; /* Node GUID LSB */
+                daemonEvent.sizeData    = msg->dataNum;
+                
+                for(index = 0; index < daemonEvent.sizeData; ++index)
+                {
+                    daemonEvent.data[index] = msg->data[index];
+                }
+                
+                if (VSCP_ERROR_SUCCESS != (vscphlpRet = vscphlp_sendEventEx(client->hSession, &daemonEvent)))
+                {
+                    LOG_WARNING_INT32("Couldn't send event to daemon:", vscphlpRet);
+                }
+                else
+                {   
+                    log_printf("Tx: class=0x%02X, type=0x%02X, prio=%2d, oAddr=0x%02X, %c, num=%u, data=",
+                        msg->vscpClass,
+                        msg->vscpType,
+                        msg->priority,
+                        msg->oAddr,
+                        (FALSE == msg->hardCoded) ? '-' : 'h',
+                        msg->dataNum);
+
+                    for(index = 0; index < msg->dataNum; ++index)
+                    {
+                        printf("%02X", msg->data[index]);
+                        
+                        if ((index + 1) < msg->dataNum)
+                        {
+                            printf(" ");
+                        }
+                    }
+                    printf("\n");
+
+                    status = TRUE;
+                }
             }
         }
-
-        status = TRUE;
     }
 
     return status;
@@ -434,6 +452,8 @@ extern VSCP_TP_ADAPTER_RET vscp_tp_adapter_connect(char const * const ipAddr, ch
     else
     /* Successful connected */
     {
+        vscp_tp_adapter_isConnected = TRUE;
+
         LOG_INFO("Connected.");
     }
     
@@ -468,6 +488,8 @@ extern void vscp_tp_adapter_disconnect(void)
         
         LOG_INFO("Disconnected.");
     }
+
+    vscp_tp_adapter_isConnected = FALSE;
         
     return;
 }
