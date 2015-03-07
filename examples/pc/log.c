@@ -49,6 +49,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 #include <stdarg.h>
 #include <time.h>
 #include <string.h>
+#include <pthread.h>
 
 /*******************************************************************************
 	COMPILER SWITCHES
@@ -78,7 +79,10 @@ static const char * log_getFileNameOnly(char const * const fileName);
 *******************************************************************************/
 
 /** The current log level in the system. */
-static unsigned int log_logLevel    = 0;
+static unsigned int     log_logLevel    = 0;
+
+/** Mutex used to protect the log_printf() */
+static pthread_mutex_t  log_mutex       = PTHREAD_MUTEX_INITIALIZER;
 
 /*******************************************************************************
 	GLOBAL VARIABLES
@@ -204,6 +208,8 @@ extern void log_printf(char const * const format, ...)
     
     time(&rawtime);
     timeInfo = localtime(&rawtime);
+
+    (void)pthread_mutex_lock(&log_mutex);
     
     printf("%04u-%02u-%02u %02u:%02u:%02u ", 
         timeInfo->tm_year + 1900,
@@ -216,6 +222,8 @@ extern void log_printf(char const * const format, ...)
     va_start(args, format);
     vprintf(format, args);
     va_end(args);
+
+    (void)pthread_mutex_unlock(&log_mutex);
     
     return;
 }

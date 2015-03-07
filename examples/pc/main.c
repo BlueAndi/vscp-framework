@@ -239,7 +239,7 @@ int main(int argc, char* argv[])
             {
                 VSCP_TP_ADAPTER_RET ret = VSCP_TP_ADAPTER_RET_OK;
                 
-                printf("Connecting ...");
+                log_printf("Connecting ...");
             
                 ret = vscp_tp_adapter_connect(  cmdLineArgs.daemonAddr,
                                                 cmdLineArgs.daemonUser,
@@ -252,15 +252,15 @@ int main(int argc, char* argv[])
                     
                     if (VSCP_TP_ADAPTER_RET_INVALID_USER == ret)
                     {
-                        printf("Invalid user.\n");
+                        log_printf("Invalid user.\n");
                     }
                     else if (VSCP_TP_ADAPTER_RET_INVALID_PASSWORD == ret)
                     {
-                        printf("Invalid password.\n");
+                        log_printf("Invalid password.\n");
                     }
                     else if (VSCP_TP_ADAPTER_RET_TIMEOUT == ret)
                     {
-                        printf("Connection timeout.\n");
+                        log_printf("Connection timeout.\n");
                     }
                     
                     abort = TRUE;
