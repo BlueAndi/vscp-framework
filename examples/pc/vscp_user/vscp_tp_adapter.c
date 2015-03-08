@@ -285,28 +285,35 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg)
                 }
                 else
                 {   
-                    log_printf("Tx: class=0x%02X, type=0x%02X, prio=%2d, oAddr=0x%02X, %c, num=%u, data=",
-                        msg->vscpClass,
-                        msg->vscpType,
-                        msg->priority,
-                        msg->oAddr,
-                        (FALSE == msg->hardCoded) ? '-' : 'h',
-                        msg->dataNum);
-
-                    for(index = 0; index < msg->dataNum; ++index)
-                    {
-                        printf("%02X", msg->data[index]);
-                        
-                        if ((index + 1) < msg->dataNum)
-                        {
-                            printf(" ");
-                        }
-                    }
-                    printf("\n");
-
                     status = TRUE;
                 }
             }
+        }
+        else
+        {
+            status = TRUE;
+        }
+        
+        if (FALSE != status)
+        {
+            log_printf("Tx: class=0x%02X, type=0x%02X, prio=%2d, oAddr=0x%02X, %c, num=%u, data=",
+                msg->vscpClass,
+                msg->vscpType,
+                msg->priority,
+                msg->oAddr,
+                (FALSE == msg->hardCoded) ? '-' : 'h',
+                msg->dataNum);
+
+            for(index = 0; index < msg->dataNum; ++index)
+            {
+                printf("%02X", msg->data[index]);
+                
+                if ((index + 1) < msg->dataNum)
+                {
+                    printf(" ");
+                }
+            }
+            printf("\n");
         }
     }
 
