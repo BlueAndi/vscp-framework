@@ -694,6 +694,23 @@ static inline void  vscp_core_stateStartup(void)
      */
     if (VSCP_NICKNAME_NOT_INIT == vscp_core_nickname)
     {
+#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_SILENT_NODE )
+
+        /* Valid message? */
+        if (TRUE == vscp_core_rxMessageValid)
+        {
+            /* Be silent as long as someone request the initilization with a
+               CLASS1.PROTOCOL GUID drop nickname-ID / reset event.
+             */
+            if ((VSCP_CLASS_L1_PROTOCOL == vscp_core_rxMessage.vscpClass) &&
+                (VSCP_TYPE_PROTOCOL_GUID_DROP_NICKNAME_ID == vscp_core_rxMessage.vscpType))
+            {
+                vscp_core_handleProtocolGuidDropNickname();
+            }
+        }
+        
+#else   /* VSCP_CONFIG_BASE_IS_DISABLED( VSCP_CONFIG_SILENT_NODE ) */
+
         /* Check the start-up control.
          * 01b   : Start initialization immediately
          * others: Wait for initialization, until it is explicit triggered.
@@ -702,6 +719,13 @@ static inline void  vscp_core_stateStartup(void)
         {
             vscp_core_changeToStateInit();
         }
+        else
+        {
+            /* Wait until the user press the segment initialization button */
+            ;
+        }
+        
+#endif  /* VSCP_CONFIG_BASE_IS_DISABLED( VSCP_CONFIG_SILENT_NODE ) */
     }
     else
     {
@@ -2262,9 +2286,28 @@ static inline void  vscp_core_handleProtocolGuidDropNickname(void)
                 /* Reset status */
                 status = 0;
 
+#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_SILENT_NODE )
+
+                /* Start nickname discovery? */
+                if (STATE_STARTUP == vscp_core_state)
+                {
+                    vscp_core_startNodeSegmentInit();
+                }
+                else
+                /* Nickname already assigned */
+                {
+                    /* Drop nickname and reset */
+                    vscp_core_writeNicknameId(VSCP_NICKNAME_NOT_INIT);
+                    vscp_core_changeToStateReset(0);
+                }
+
+#else   /* VSCP_CONFIG_BASE_IS_DISABLED( VSCP_CONFIG_SILENT_NODE ) */
+                
                 /* Drop nickname and reset */
                 vscp_core_writeNicknameId(VSCP_NICKNAME_NOT_INIT);
                 vscp_core_changeToStateReset(0);
+                
+#endif  /* VSCP_CONFIG_BASE_IS_DISABLED( VSCP_CONFIG_SILENT_NODE ) */
             }
         }
     }
