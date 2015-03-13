@@ -72,10 +72,10 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 /** This type contains the necessary thread data. */
 typedef struct
 {
-    pthread_t       id;             /**< Thread id */
-    int             status;         /**< Thread creation status */
-    pthread_mutex_t mutex;          /**< Mutex to protect the thread data */
-    BOOL            quitFlag;       /**< Flag to signal the thread to quit */
+    pthread_t           id;             /**< Thread id */
+    int                 status;         /**< Thread creation status */
+    pthread_mutex_t*    mutex;          /**< Mutex to protect the thread data */
+    BOOL                quitFlag;       /**< Flag to signal the thread to quit */
 
 } vscp_thread_Context;
 
@@ -128,8 +128,8 @@ extern VSCP_THREAD_RET vscp_thread_init(void)
         memset(&vscp_thread_timerThrdData, 0, sizeof(vscp_thread_timerThrdData));
         
         /* Set mutex */
-        vscp_thread_frameworkThrdData.mutex = vscp_thread_mutex;
-        vscp_thread_timerThrdData.mutex     = vscp_thread_mutex;
+        vscp_thread_frameworkThrdData.mutex = &vscp_thread_mutex;
+        vscp_thread_timerThrdData.mutex     = &vscp_thread_mutex;
     }
 
     return status;
@@ -209,9 +209,9 @@ extern void vscp_thread_stop(void)
     /* Is VSCP timer thread running? */
     if (0 == vscp_thread_timerThrdData.status)
     {
-        (void)pthread_mutex_lock(&vscp_thread_timerThrdData.mutex);
+        (void)pthread_mutex_lock(vscp_thread_timerThrdData.mutex);
         vscp_thread_timerThrdData.quitFlag = TRUE;
-        (void)pthread_mutex_unlock(&vscp_thread_timerThrdData.mutex);
+        (void)pthread_mutex_unlock(vscp_thread_timerThrdData.mutex);
         
         /* Wait for the VSCP timer thread until its finished. */
         (void)pthread_join(vscp_thread_timerThrdData.id, NULL);
@@ -254,14 +254,14 @@ static void* vscp_thread_frameworkThread(void* par)
     vscp_thread_Context*    threadData      = (vscp_thread_Context*)par;
     BOOL                    bootloaderMode  = FALSE;
     
-    vscp_thread_lock();
+    (void)pthread_mutex_lock(threadData->mutex);
     quitFlag = threadData->quitFlag;
-    vscp_thread_unlock();
+    (void)pthread_mutex_unlock(threadData->mutex);
     
     while(FALSE == quitFlag)
     {
         /* Process the whole VSCP framework */
-        (void)pthread_mutex_lock(&threadData->mutex);
+        (void)pthread_mutex_lock(threadData->mutex);
 
         /* Application */
         if (FALSE == bootloaderMode)
@@ -283,7 +283,7 @@ static void* vscp_thread_frameworkThread(void* par)
         
         quitFlag = threadData->quitFlag;
         
-        (void)pthread_mutex_unlock(&threadData->mutex);
+        (void)pthread_mutex_unlock(threadData->mutex);
 
         /* Give a other threads a minimal chance. */
         platform_delay(1);
@@ -306,23 +306,23 @@ static void* vscp_thread_vscpTimerThread(void* par)
     vscp_thread_Context*    threadData  = (vscp_thread_Context*)par;
     uint16_t                waitTime    = 100;
     
-    (void)pthread_mutex_lock(&threadData->mutex);
+    (void)pthread_mutex_lock(threadData->mutex);
     quitFlag = threadData->quitFlag;
-    (void)pthread_mutex_unlock(&threadData->mutex);
+    (void)pthread_mutex_unlock(threadData->mutex);
     
     while(FALSE == quitFlag)
     {
         /* Wait a specific time, until the timers are processed again. */
         platform_delay(waitTime);
 
-        (void)pthread_mutex_lock(&threadData->mutex);
+        (void)pthread_mutex_lock(threadData->mutex);
         
         /* Process the VSCP framework timers */
         vscp_timer_process(waitTime);
         
         quitFlag = threadData->quitFlag;
         
-        (void)pthread_mutex_unlock(&threadData->mutex);
+        (void)pthread_mutex_unlock(threadData->mutex);
     }
     
     pthread_exit(NULL);

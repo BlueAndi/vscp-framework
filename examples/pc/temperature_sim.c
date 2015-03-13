@@ -79,10 +79,10 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 /** This type contains the necessary thread data. */
 typedef struct
 {
-    pthread_t       id;             /**< Thread id */
-    int             status;         /**< Thread creation status */
-    pthread_mutex_t mutex;          /**< Mutex to protect the thread data */
-    BOOL            quitFlag;       /**< Flag to signal the thread to quit */
+    pthread_t           id;             /**< Thread id */
+    int                 status;         /**< Thread creation status */
+    pthread_mutex_t*    mutex;          /**< Mutex to protect the thread data */
+    BOOL                quitFlag;       /**< Flag to signal the thread to quit */
 
 } temperature_sim_Context;
 
@@ -126,7 +126,7 @@ extern void temperature_sim_init(void)
     memset(&temperature_sim_thrdData, 0, sizeof(temperature_sim_thrdData));
     
     /* Set mutex */
-    temperature_sim_thrdData.mutex = temperature_sim_mutex;
+    temperature_sim_thrdData.mutex = &temperature_sim_mutex;
         
     return;
 }
@@ -196,15 +196,15 @@ static void* temperature_sim_thread(void* par)
     const uint32_t              period      = 5000; /* [ms] */
     uint32_t                    timeCnt     = 0;
     
-    (void)pthread_mutex_lock(&threadData->mutex);
+    (void)pthread_mutex_lock(threadData->mutex);
     quitFlag = threadData->quitFlag;
-    (void)pthread_mutex_unlock(&threadData->mutex);
+    (void)pthread_mutex_unlock(threadData->mutex);
     
     while(FALSE == quitFlag)
     {
-        (void)pthread_mutex_lock(&threadData->mutex);
+        (void)pthread_mutex_lock(threadData->mutex);
         quitFlag = threadData->quitFlag;
-        (void)pthread_mutex_unlock(&threadData->mutex);
+        (void)pthread_mutex_unlock(threadData->mutex);
 
         if (0 == timeCnt)
         {
