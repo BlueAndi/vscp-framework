@@ -328,6 +328,10 @@
       <SubType>compile</SubType>
       <Link>vscp\vscp_util.h</Link>
     </Compile>
+    <Compile Include="..\..\can_config\config.h">
+      <SubType>compile</SubType>
+      <Link>can_config\config.h</Link>
+    </Compile>
     <Compile Include="..\..\common\swTimer.c">
       <SubType>compile</SubType>
       <Link>common\swTimer.c</Link>
@@ -497,6 +501,7 @@
     <Folder Include="common\" />
     <Folder Include="driver\" />
     <Folder Include="controller" />
+    <Folder Include="can_config" />
     <Folder Include="vscp\" />
     <Folder Include="vscp\events\" />
     <Folder Include="vscp_user\" />
