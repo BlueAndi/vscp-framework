@@ -103,7 +103,10 @@ const uint8_t PROGMEM vscp_tp_adapter_canFilter[] =
 extern void vscp_tp_adapter_init(void)
 {
     /* Initialize CAN controller */
-    (void)can_init(BITRATE_125_KBPS);
+    if (FALSE == can_init(BITRATE_125_KBPS))
+    {
+        HALT();
+    }
 
     /* Load filters and masks */
     can_static_filter(vscp_tp_adapter_canFilter);
