@@ -112,7 +112,7 @@ static uint8_t          relay_stateBitField         = 0;
 static uint16_t         relay_switchingPwm          = RELAY_PWM_TOP;
 
 /** PWM value for holding a relay on (60% of switching PWM) */
-static uint16_t         relay_holdingPwm            = (relay_switchingPwm * 3) / 5;
+static uint16_t         relay_holdingPwm            = (RELAY_PWM_TOP * 3) / 5;
 
 /** Change to switching current */
 static volatile BOOL    relay_enableSwitchingPwm    = FALSE;
