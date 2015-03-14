@@ -87,7 +87,7 @@ typedef enum
 	SHUTTERDRV_STATE_POWER,		    /**< Shutter will be powered: phase 2 */
 	SHUTTERDRV_STATE_DRIVE,		    /**< Shutter drives */
 	SHUTTERDRV_STATE_REMOVE_POWER,	/**< Shutter will be stopped */
-	SHUTTERDRV_STATE_REMOVE_DIR	    /**< Relay will fall back to low current state. */
+	SHUTTERDRV_STATE_REMOVE_DIR	    /**< Relay will fall back to power-off state. */
 
 } SHUTTERDRV_STATE;
 
@@ -324,8 +324,8 @@ extern BOOL shutterDrv_process(void)
  */
 static void	shutterDrv_stateMachine(uint8_t nr)
 {
-    shutterDrv_Context* con            = NULL;
-	BOOL	            fastTransition	= FALSE;	/* Use it for a fast state transition */
+    shutterDrv_Context* con             = NULL;
+	BOOL	            fastTransition  = FALSE;	/* Use it for a fast state transition */
 
 	/* Invalid shutter instance */
 	if (SHUTTERDRV_NUM <= nr)

@@ -155,6 +155,7 @@ int main(void)
     uint8_t     swTimer1S               = MAIN_SWTIMER_1S_PERIOD;   /* Based on 250 ms software timer */
     MAIN_STATE  state                   = MAIN_STATE_START_UP;      /* Main loop state machine state */
     uint8_t     index                   = 0;
+    BOOL        anyShutterDriving       = FALSE;
 
     /* ********** Run level 1 - interrupts disabled ********** */
 
@@ -213,10 +214,13 @@ int main(void)
         if (TRUE == swTimer_getStatus(MAIN_SWTIMER_10MS_ID))
         {
             /* Process every 10ms the shutter module. */
-            (void)shutter_process();
+            anyShutterDriving = shutter_process();
 
             /* Process every 10ms the shutter control. */
-            (void)shutterDrv_process();
+            if (TRUE == shutterDrv_process())
+            {
+                anyShutterDriving = TRUE;
+            }
 
             swTimer10MSTriggered = TRUE;
         }
@@ -276,6 +280,12 @@ int main(void)
                     /* Observe the wind speed and send VSCP events. */
                     windObserver_process();
                 }
+
+                /* Enter power saving mode? */
+                if (FALSE == anyShutterDriving)
+                {
+                    /* TODO */
+                }
             }
             break;
 
@@ -320,10 +330,11 @@ int main(void)
  */
 static MAIN_RET main_initRunLevel1(void)
 {
-    MAIN_RET    status              = MAIN_RET_OK;
-    uint8_t     index               = 0;
-    uint16_t    switchingPwmValue   = 0;
-    uint16_t    holdingPwmValue     = 0;
+    MAIN_RET    status                  = MAIN_RET_OK;
+    uint8_t     index                   = 0;
+    uint16_t    switchingPwmValue       = 0;
+    uint16_t    holdingPwmValue         = 0;
+    uint8_t     shutterEnabledBitField  = 0;
 
     /* Initialize the hardware */
     hw_init();
@@ -376,7 +387,10 @@ static MAIN_RET main_initRunLevel1(void)
         windDrv_enable(TRUE);
     }
 
-    /* Configure relays */
+    /* Configure relays:
+     * - Switching current, 16-bit value, LSB first stored in persistent memory
+     * - Holding current, 16-bit value, LSB first stored in persistent memory
+     */
     switchingPwmValue  = ((uint16_t)vscp_ps_user_readRelayControl(0)) << 0;
     switchingPwmValue |= ((uint16_t)vscp_ps_user_readRelayControl(1)) << 8;
     relay_setSwitchingPwm(switchingPwmValue);
@@ -386,25 +400,33 @@ static MAIN_RET main_initRunLevel1(void)
     relay_setHoldingPwm(holdingPwmValue);
 
     /* Configure shutters */
+    shutterEnabledBitField = vscp_ps_user_readShutterEnable();
     for(index = 0; index < SHUTTER_NUM; ++index)
     {
         uint16_t    maxUpTime   = 0;
         uint16_t    maxDownTime = 0;
         uint16_t    turnTime    = 0;
 
+        /* Max. up time, 16-bit value, LSB first stored in persistent memory */
         maxUpTime  = (uint16_t)vscp_ps_user_readShutterMaxUpTime(index * 2 + 0);
         maxUpTime |= (uint16_t)vscp_ps_user_readShutterMaxUpTime(index * 2 + 1) << 8;
 
+        /* Max. down time, 16-bit value, LSB first stored in persistent memory */
         maxDownTime  = (uint16_t)vscp_ps_user_readShutterMaxDownTime(index * 2 + 0);
         maxDownTime |= (uint16_t)vscp_ps_user_readShutterMaxDownTime(index * 2 + 1) << 8;
 
+        /* Turn time, 16-bit value, LSB first stored in persistent memory */
         turnTime  = (uint16_t)vscp_ps_user_readShutterTurnTime(index * 2 + 0);
         turnTime |= (uint16_t)vscp_ps_user_readShutterTurnTime(index * 2 + 1) << 8;
 
+        /* Shutter N:
+         * - Relay (2 * N + 0) is used for power
+         * - Relay (2 * N + 1) is used for direction
+         */
         shutter_configure(index, index * 2, index * 2 + 1, maxUpTime, maxDownTime, turnTime);
 
         /* Disable shutter? */
-        if (0 == ((vscp_ps_user_readShutterEnable() >> index) & 0x01))
+        if (0 == ((shutterEnabledBitField >> index) & 0x01))
         {
             shutter_enable(index, FALSE);
         }
