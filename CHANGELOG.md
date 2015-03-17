@@ -5,7 +5,7 @@
 Bugfixes:
 
   - VSCP framework
-    - If the loopback is enabled, all messages will be written the it, except CLASS1.PROTOCOL. Because the VSCP core would interpret them.
+    - If the loopback is enabled, all messages will be written to it, except CLASS1.PROTOCOL. Because the VSCP core would interpret them.
 
 ## 0.2.1
 
