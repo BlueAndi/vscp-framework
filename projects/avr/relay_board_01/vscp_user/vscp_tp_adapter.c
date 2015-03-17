@@ -134,7 +134,7 @@ extern BOOL vscp_tp_adapter_readMessage(vscp_RxMessage * const msg)
             can_t   canMsg; /* CAN message */
 
             /* Get CAN frame */
-            if (can_get_message(&canMsg))
+            if (0 != can_get_message(&canMsg))
             {
                 /* Extended CAN frame? */
                 if (0 != canMsg.flags.extended)
@@ -202,7 +202,10 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg)
             }
         }
 
-        status = can_send_message(&canMsg);
+        if (0 != can_send_message(&canMsg))
+        {
+            status = TRUE;
+        }
     }
 
     return status;
