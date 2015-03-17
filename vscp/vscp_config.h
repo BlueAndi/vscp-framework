@@ -182,7 +182,7 @@ extern "C"
 #ifndef VSCP_CONFIG_NODE_SEGMENT_INIT_TIMEOUT
 
 /** Timeout in ms for the node segment initialization.
- * See VSCP v1.10.12, chapter 3.2.1, step 2
+ * See VSCP v1.10.15, chapter VSCP Level I Specifics, Node segment initialization. Dynamic nodes, Step 2
  */
 #define VSCP_CONFIG_NODE_SEGMENT_INIT_TIMEOUT   ((uint16_t)5000)
 
