@@ -131,9 +131,9 @@ extern "C"
 
 #define VSCP_DEV_DATA_CONFIG_VERSION_MAJOR                  0
 
-#define VSCP_DEV_DATA_CONFIG_VERSION_MINOR                  1
+#define VSCP_DEV_DATA_CONFIG_VERSION_MINOR                  2
 
-#define VSCP_DEV_DATA_CONFIG_VERSION_SUB_MINOR              0
+#define VSCP_DEV_DATA_CONFIG_VERSION_SUB_MINOR              2
 
 #define VSCP_DEV_DATA_CONFIG_STANDARD_DEVICE_FAMILY_CODE    ((uint32_t)0x00000000)
 
