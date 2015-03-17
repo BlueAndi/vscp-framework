@@ -48,6 +48,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 #include "vscp_tp_adapter.h"
 #include "vscp_config.h"
 #include "vscp_util.h"
+#include "vscp_class_l1.h"
 
 /*******************************************************************************
     COMPILER SWITCHES
