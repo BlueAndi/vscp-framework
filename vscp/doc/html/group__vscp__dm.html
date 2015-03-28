@@ -18,7 +18,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VSCP framework
-   &#160;<span id="projectnumber">v0.1.1</span>
+   &#160;<span id="projectnumber">v0.2.2</span>
    </div>
   </td>
  </tr>
@@ -130,7 +130,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 <tr class="memitem:ga466b9d0ac4946ff21cb7277342027af4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__dm.html#ga466b9d0ac4946ff21cb7277342027af4">vscp_dm_getMatrixOffset</a> (void)</td></tr>
 <tr class="memdesc:ga466b9d0ac4946ff21cb7277342027af4"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function get the offset of the decision matrix.  <a href="#ga466b9d0ac4946ff21cb7277342027af4">More...</a><br/></td></tr>
 <tr class="separator:ga466b9d0ac4946ff21cb7277342027af4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga029c66e3b8871b85be3a1b4df98e8492"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__vscp__core.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__dm.html#ga029c66e3b8871b85be3a1b4df98e8492">vscp_dm_isDecisionMatrix</a> (uint16_t page, uint8_t addr)</td></tr>
+<tr class="memitem:ga029c66e3b8871b85be3a1b4df98e8492"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__dm.html#ga029c66e3b8871b85be3a1b4df98e8492">vscp_dm_isDecisionMatrix</a> (uint16_t page, uint8_t addr)</td></tr>
 <tr class="memdesc:ga029c66e3b8871b85be3a1b4df98e8492"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function check if the given page and address are part of the decision matrix.  <a href="#ga029c66e3b8871b85be3a1b4df98e8492">More...</a><br/></td></tr>
 <tr class="separator:ga029c66e3b8871b85be3a1b4df98e8492"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf7e5e0bb09b724b799cd75c67f327458"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__dm.html#gaf7e5e0bb09b724b799cd75c67f327458">vscp_dm_readRegister</a> (uint16_t page, uint8_t addr)</td></tr>
@@ -154,7 +154,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 <li>VSCP_CONFIG_ENABLE_DM_EXTENSION</li>
 </ul>
 <p>If the decision matrix extension is enabled, it will be just behind the standard decision matrix in the persistent memory. Important is, that the decision matrix extension has the same number of rows and the same size in bytes as the standard decision matrix.</p>
-<p>Note that if the number rows in the decision matrix is requested with <a class="el" href="group__vscp__dm.html#ga1355ca4493450dd9eb64643cc1932328" title="This function get the number of rows in the decision matrix. ">vscp_dm_getMatrixRows</a>, always the number of rows of the standard decision matrix is returned. In case of the extension is enabled, too. This is, because VSCP specification v1.10.12 doesn't know anything about the decision matrix extension. </p>
+<p>Note that if the number rows in the decision matrix is requested with <a class="el" href="group__vscp__dm.html#ga1355ca4493450dd9eb64643cc1932328" title="This function get the number of rows in the decision matrix. ">vscp_dm_getMatrixRows</a>, always the number of rows of the standard decision matrix is returned. In case of the extension is enabled, too. This is, because VSCP specification v1.10.15 doesn't know anything about the decision matrix extension. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="ga4c78d67fb1845f482e8a82a7561a420c"></a>
 <div class="memitem">
@@ -339,7 +339,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__vscp__core.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> vscp_dm_isDecisionMatrix </td>
+          <td class="memname"><a class="el" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> vscp_dm_isDecisionMatrix </td>
           <td>(</td>
           <td class="paramtype">uint16_t&#160;</td>
           <td class="paramname"><em>page</em>, </td>
@@ -459,7 +459,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 25 2015 20:52:33 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Mar 28 2015 13:18:13 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

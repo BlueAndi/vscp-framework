@@ -18,7 +18,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VSCP framework
-   &#160;<span id="projectnumber">v0.1.1</span>
+   &#160;<span id="projectnumber">v0.2.2</span>
    </div>
   </td>
  </tr>
@@ -132,7 +132,7 @@
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="group__vscp__timer.html#gab395d85e4560c3d2bd67d19d9d630320">vscp_timer_stop</a>(uint8_t <span class="keywordtype">id</span>);</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="keyword">extern</span> <a class="code" href="group__vscp__core.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> <a class="code" href="group__vscp__timer.html#gad50f7c3e9a0f5d8af640195c742107e3">vscp_timer_getStatus</a>(uint8_t <span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="keyword">extern</span> <a class="code" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> <a class="code" href="group__vscp__timer.html#gad50f7c3e9a0f5d8af640195c742107e3">vscp_timer_getStatus</a>(uint8_t <span class="keywordtype">id</span>);</div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
 <div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="group__vscp__timer.html#ga39737fef1987eec20f7242d04e961987">vscp_timer_process</a>(uint16_t period);</div>
 <div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;</div>
@@ -146,14 +146,14 @@
 <div class="ttc" id="group__vscp__timer_html_ga22b6169213edfa1d868fc8bf06e801e8"><div class="ttname"><a href="group__vscp__timer.html#ga22b6169213edfa1d868fc8bf06e801e8">vscp_timer_start</a></div><div class="ttdeci">void vscp_timer_start(uint8_t id, uint16_t value)</div><div class="ttdoc">This function starts the timer of the given id. </div><div class="ttdef"><b>Definition:</b> vscp_timer.c:114</div></div>
 <div class="ttc" id="group__vscp__timer_html_gac651b481a57cf86bfb9d6bb4e3b5f981"><div class="ttname"><a href="group__vscp__timer.html#gac651b481a57cf86bfb9d6bb4e3b5f981">vscp_timer_init</a></div><div class="ttdeci">void vscp_timer_init(void)</div><div class="ttdoc">This function initializes the timer driver. </div><div class="ttdef"><b>Definition:</b> vscp_timer.c:84</div></div>
 <div class="ttc" id="group__vscp__timer_html_ga39737fef1987eec20f7242d04e961987"><div class="ttname"><a href="group__vscp__timer.html#ga39737fef1987eec20f7242d04e961987">vscp_timer_process</a></div><div class="ttdeci">void vscp_timer_process(uint16_t period)</div><div class="ttdoc">This function process all timers and has to be called cyclic. </div><div class="ttdef"><b>Definition:</b> vscp_timer.c:155</div></div>
+<div class="ttc" id="group__vscp__platform_html_gae4cc35dcc70810fa972cc8a5185a28fa"><div class="ttname"><a href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a></div><div class="ttdeci">#define BOOL</div><div class="ttdoc">Boolean type. </div><div class="ttdef"><b>Definition:</b> vscp_platform.h:76</div></div>
 <div class="ttc" id="group__vscp__timer_html_ga8c48bc708189185d3289427f66baa9e8"><div class="ttname"><a href="group__vscp__timer.html#ga8c48bc708189185d3289427f66baa9e8">vscp_timer_create</a></div><div class="ttdeci">uint8_t vscp_timer_create(void)</div><div class="ttdoc">This function creates a timer and returns its id. </div><div class="ttdef"><b>Definition:</b> vscp_timer.c:98</div></div>
-<div class="ttc" id="group__vscp__core_html_gae4cc35dcc70810fa972cc8a5185a28fa"><div class="ttname"><a href="group__vscp__core.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a></div><div class="ttdeci">#define BOOL</div><div class="ttdoc">Boolean type. </div><div class="ttdef"><b>Definition:</b> vscp_types.h:267</div></div>
 <div class="ttc" id="group__vscp__timer_html_gab395d85e4560c3d2bd67d19d9d630320"><div class="ttname"><a href="group__vscp__timer.html#gab395d85e4560c3d2bd67d19d9d630320">vscp_timer_stop</a></div><div class="ttdeci">void vscp_timer_stop(uint8_t id)</div><div class="ttdoc">This function stops a timer with the given id. </div><div class="ttdef"><b>Definition:</b> vscp_timer.c:126</div></div>
 <div class="ttc" id="vscp__types_8h_html"><div class="ttname"><a href="vscp__types_8h.html">vscp_types.h</a></div><div class="ttdoc">VSCP types and structures. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 25 2015 20:52:33 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Mar 28 2015 13:18:12 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

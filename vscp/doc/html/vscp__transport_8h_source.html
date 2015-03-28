@@ -18,7 +18,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VSCP framework
-   &#160;<span id="projectnumber">v0.1.1</span>
+   &#160;<span id="projectnumber">v0.2.2</span>
    </div>
   </td>
  </tr>
@@ -122,9 +122,9 @@
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="group__vscp__transport.html#ga2428ccd577381876143e2fce152ab8d9">vscp_transport_init</a>(<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="keyword">extern</span> <a class="code" href="group__vscp__core.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> <a class="code" href="group__vscp__transport.html#ga2493fa74a62c293347831932cb9bbe8f">vscp_transport_readMessage</a>(<a class="code" href="structvscp___message.html">vscp_RxMessage</a> * <span class="keyword">const</span> msg);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="keyword">extern</span> <a class="code" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> <a class="code" href="group__vscp__transport.html#ga2493fa74a62c293347831932cb9bbe8f">vscp_transport_readMessage</a>(<a class="code" href="structvscp___message.html">vscp_RxMessage</a> * <span class="keyword">const</span> msg);</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="keyword">extern</span> <a class="code" href="group__vscp__core.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> <a class="code" href="group__vscp__transport.html#gaee175df0b4337cf6ac6a5b6a95127147">vscp_transport_writeMessage</a>(<a class="code" href="structvscp___message.html">vscp_TxMessage</a> <span class="keyword">const</span> * <span class="keyword">const</span> msg);</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="keyword">extern</span> <a class="code" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> <a class="code" href="group__vscp__transport.html#gaee175df0b4337cf6ac6a5b6a95127147">vscp_transport_writeMessage</a>(<a class="code" href="structvscp___message.html">vscp_TxMessage</a> <span class="keyword">const</span> * <span class="keyword">const</span> msg);</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="keyword">extern</span> uint8_t  <a class="code" href="group__vscp__transport.html#gaef3e26ec203ab913d34557752bd76fdd">vscp_transport_getTransmitErrors</a>(<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
@@ -134,17 +134,17 @@
 <div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="preprocessor">#endif  </span><span class="comment">/* __VSCP_TRANSPORT_H__ */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="preprocessor"></span></div>
-<div class="ttc" id="structvscp___message_html"><div class="ttname"><a href="structvscp___message.html">vscp_Message</a></div><div class="ttdoc">This type defines a VSCP message. </div><div class="ttdef"><b>Definition:</b> vscp_types.h:299</div></div>
-<div class="ttc" id="group__vscp__transport_html_ga2493fa74a62c293347831932cb9bbe8f"><div class="ttname"><a href="group__vscp__transport.html#ga2493fa74a62c293347831932cb9bbe8f">vscp_transport_readMessage</a></div><div class="ttdeci">BOOL vscp_transport_readMessage(vscp_RxMessage *const msg)</div><div class="ttdoc">This function reads a message from the transport layer. </div><div class="ttdef"><b>Definition:</b> vscp_transport.c:126</div></div>
-<div class="ttc" id="group__vscp__transport_html_gaef3e26ec203ab913d34557752bd76fdd"><div class="ttname"><a href="group__vscp__transport.html#gaef3e26ec203ab913d34557752bd76fdd">vscp_transport_getTransmitErrors</a></div><div class="ttdeci">uint8_t vscp_transport_getTransmitErrors(void)</div><div class="ttdoc">This function returns the number of transmit errors. </div><div class="ttdef"><b>Definition:</b> vscp_transport.c:227</div></div>
-<div class="ttc" id="group__vscp__transport_html_ga2428ccd577381876143e2fce152ab8d9"><div class="ttname"><a href="group__vscp__transport.html#ga2428ccd577381876143e2fce152ab8d9">vscp_transport_init</a></div><div class="ttdeci">void vscp_transport_init(void)</div><div class="ttdoc">This function initializes the transport layer. </div><div class="ttdef"><b>Definition:</b> vscp_transport.c:100</div></div>
-<div class="ttc" id="group__vscp__transport_html_gaee175df0b4337cf6ac6a5b6a95127147"><div class="ttname"><a href="group__vscp__transport.html#gaee175df0b4337cf6ac6a5b6a95127147">vscp_transport_writeMessage</a></div><div class="ttdeci">BOOL vscp_transport_writeMessage(vscp_TxMessage const *const msg)</div><div class="ttdoc">This function writes a message to the transport layer. </div><div class="ttdef"><b>Definition:</b> vscp_transport.c:188</div></div>
-<div class="ttc" id="group__vscp__core_html_gae4cc35dcc70810fa972cc8a5185a28fa"><div class="ttname"><a href="group__vscp__core.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a></div><div class="ttdeci">#define BOOL</div><div class="ttdoc">Boolean type. </div><div class="ttdef"><b>Definition:</b> vscp_types.h:267</div></div>
+<div class="ttc" id="structvscp___message_html"><div class="ttname"><a href="structvscp___message.html">vscp_Message</a></div><div class="ttdoc">This type defines a VSCP message. </div><div class="ttdef"><b>Definition:</b> vscp_types.h:296</div></div>
+<div class="ttc" id="group__vscp__platform_html_gae4cc35dcc70810fa972cc8a5185a28fa"><div class="ttname"><a href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a></div><div class="ttdeci">#define BOOL</div><div class="ttdoc">Boolean type. </div><div class="ttdef"><b>Definition:</b> vscp_platform.h:76</div></div>
+<div class="ttc" id="group__vscp__transport_html_ga2493fa74a62c293347831932cb9bbe8f"><div class="ttname"><a href="group__vscp__transport.html#ga2493fa74a62c293347831932cb9bbe8f">vscp_transport_readMessage</a></div><div class="ttdeci">BOOL vscp_transport_readMessage(vscp_RxMessage *const msg)</div><div class="ttdoc">This function reads a message from the transport layer. </div><div class="ttdef"><b>Definition:</b> vscp_transport.c:127</div></div>
+<div class="ttc" id="group__vscp__transport_html_gaef3e26ec203ab913d34557752bd76fdd"><div class="ttname"><a href="group__vscp__transport.html#gaef3e26ec203ab913d34557752bd76fdd">vscp_transport_getTransmitErrors</a></div><div class="ttdeci">uint8_t vscp_transport_getTransmitErrors(void)</div><div class="ttdoc">This function returns the number of transmit errors. </div><div class="ttdef"><b>Definition:</b> vscp_transport.c:233</div></div>
+<div class="ttc" id="group__vscp__transport_html_ga2428ccd577381876143e2fce152ab8d9"><div class="ttname"><a href="group__vscp__transport.html#ga2428ccd577381876143e2fce152ab8d9">vscp_transport_init</a></div><div class="ttdeci">void vscp_transport_init(void)</div><div class="ttdoc">This function initializes the transport layer. </div><div class="ttdef"><b>Definition:</b> vscp_transport.c:101</div></div>
+<div class="ttc" id="group__vscp__transport_html_gaee175df0b4337cf6ac6a5b6a95127147"><div class="ttname"><a href="group__vscp__transport.html#gaee175df0b4337cf6ac6a5b6a95127147">vscp_transport_writeMessage</a></div><div class="ttdeci">BOOL vscp_transport_writeMessage(vscp_TxMessage const *const msg)</div><div class="ttdoc">This function writes a message to the transport layer. </div><div class="ttdef"><b>Definition:</b> vscp_transport.c:189</div></div>
 <div class="ttc" id="vscp__types_8h_html"><div class="ttname"><a href="vscp__types_8h.html">vscp_types.h</a></div><div class="ttdoc">VSCP types and structures. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 25 2015 20:52:33 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Mar 28 2015 13:18:12 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

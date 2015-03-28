@@ -18,7 +18,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VSCP framework
-   &#160;<span id="projectnumber">v0.1.1</span>
+   &#160;<span id="projectnumber">v0.2.2</span>
    </div>
   </td>
  </tr>
@@ -67,7 +67,14 @@ Macros</h2></td></tr>
 <tr class="memitem:gae3579a9f3ef364577af84c58263dffcc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__ps.html#gae3579a9f3ef364577af84c58263dffcc">VSCP_PS_ADDR_BASE</a>&#160;&#160;&#160;0</td></tr>
 <tr class="memdesc:gae3579a9f3ef364577af84c58263dffcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base address of all VSCP related data in the persistent memory.  <a href="group__vscp__ps.html#gae3579a9f3ef364577af84c58263dffcc">More...</a><br/></td></tr>
 <tr class="separator:gae3579a9f3ef364577af84c58263dffcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac3f4eb4c440ea1a5e1aeb3984a004939"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__ps.html#gac3f4eb4c440ea1a5e1aeb3984a004939">VSCP_PS_ADDR_NICKNAME</a>&#160;&#160;&#160;(<a class="el" href="group__vscp__ps.html#gae3579a9f3ef364577af84c58263dffcc">VSCP_PS_ADDR_BASE</a> + 0)</td></tr>
+<tr class="memitem:gaee97c34e3f0c49334cc3ea57bb75eae4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__ps.html#gaee97c34e3f0c49334cc3ea57bb75eae4">VSCP_PS_ADDR_BOOT_FLAG</a>&#160;&#160;&#160;(<a class="el" href="group__vscp__ps.html#gae3579a9f3ef364577af84c58263dffcc">VSCP_PS_ADDR_BASE</a> + 0)</td></tr>
+<tr class="memdesc:gaee97c34e3f0c49334cc3ea57bb75eae4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Address of the boot flag in the persistent memory.  <a href="group__vscp__ps.html#gaee97c34e3f0c49334cc3ea57bb75eae4">More...</a><br/></td></tr>
+<tr class="separator:gaee97c34e3f0c49334cc3ea57bb75eae4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0bc51e2c328bb27a5aec6b704b668bb1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0bc51e2c328bb27a5aec6b704b668bb1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__ps.html#ga0bc51e2c328bb27a5aec6b704b668bb1">VSCP_PS_SIZE_BOOT_FLAG</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:ga0bc51e2c328bb27a5aec6b704b668bb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the boot flag in byte. <br/></td></tr>
+<tr class="separator:ga0bc51e2c328bb27a5aec6b704b668bb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac3f4eb4c440ea1a5e1aeb3984a004939"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__ps.html#gac3f4eb4c440ea1a5e1aeb3984a004939">VSCP_PS_ADDR_NICKNAME</a>&#160;&#160;&#160;(<a class="el" href="group__vscp__ps.html#gaee97c34e3f0c49334cc3ea57bb75eae4">VSCP_PS_ADDR_BOOT_FLAG</a> + <a class="el" href="group__vscp__ps.html#ga0bc51e2c328bb27a5aec6b704b668bb1">VSCP_PS_SIZE_BOOT_FLAG</a>)</td></tr>
 <tr class="memdesc:gac3f4eb4c440ea1a5e1aeb3984a004939"><td class="mdescLeft">&#160;</td><td class="mdescRight">Address of the nickname id in the persistent memory.  <a href="group__vscp__ps.html#gac3f4eb4c440ea1a5e1aeb3984a004939">More...</a><br/></td></tr>
 <tr class="separator:gac3f4eb4c440ea1a5e1aeb3984a004939"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1698ff1026859414821c2160cda9ea47"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1698ff1026859414821c2160cda9ea47"></a>
@@ -99,7 +106,7 @@ Macros</h2></td></tr>
 <tr class="memdesc:ga811bef578affa56ba5ab2a879a940824"><td class="mdescLeft">&#160;</td><td class="mdescRight">Address of the GUID in the persistent memory.  <a href="group__vscp__ps.html#ga811bef578affa56ba5ab2a879a940824">More...</a><br/></td></tr>
 <tr class="separator:ga811bef578affa56ba5ab2a879a940824"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1a6d352df294500f74d2d67d98ddbd8f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1a6d352df294500f74d2d67d98ddbd8f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__ps.html#ga1a6d352df294500f74d2d67d98ddbd8f">VSCP_PS_SIZE_GUID</a>&#160;&#160;&#160;16</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__ps.html#ga1a6d352df294500f74d2d67d98ddbd8f">VSCP_PS_SIZE_GUID</a>&#160;&#160;&#160;<a class="el" href="group__vscp__core.html#gadffa30c9c919e07b5d52569658835c91">VSCP_GUID_SIZE</a></td></tr>
 <tr class="memdesc:ga1a6d352df294500f74d2d67d98ddbd8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the GUID in byte. <br/></td></tr>
 <tr class="separator:ga1a6d352df294500f74d2d67d98ddbd8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga99bcb7eefc06ba1b0161df25a3cc1228"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__ps.html#ga99bcb7eefc06ba1b0161df25a3cc1228">VSCP_PS_ADDR_NODE_ZONE</a>&#160;&#160;&#160;(<a class="el" href="group__vscp__ps.html#ga811bef578affa56ba5ab2a879a940824">VSCP_PS_ADDR_GUID</a> + <a class="el" href="group__vscp__ps.html#ga1a6d352df294500f74d2d67d98ddbd8f">VSCP_PS_SIZE_GUID</a>)</td></tr>
@@ -109,7 +116,7 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__ps.html#ga75a7fc5006bb1788d36932ba21649880">VSCP_PS_SIZE_NODE_ZONE</a>&#160;&#160;&#160;1</td></tr>
 <tr class="memdesc:ga75a7fc5006bb1788d36932ba21649880"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the node zone in byte. <br/></td></tr>
 <tr class="separator:ga75a7fc5006bb1788d36932ba21649880"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaee946a63db73c6abbf9f85986151b446"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__ps.html#gaee946a63db73c6abbf9f85986151b446">VSCP_PS_ADDR_NODE_SUB_ZONE</a>&#160;&#160;&#160;(<a class="el" href="group__vscp__ps.html#ga811bef578affa56ba5ab2a879a940824">VSCP_PS_ADDR_GUID</a> + <a class="el" href="group__vscp__ps.html#ga1a6d352df294500f74d2d67d98ddbd8f">VSCP_PS_SIZE_GUID</a>)</td></tr>
+<tr class="memitem:gaee946a63db73c6abbf9f85986151b446"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__ps.html#gaee946a63db73c6abbf9f85986151b446">VSCP_PS_ADDR_NODE_SUB_ZONE</a>&#160;&#160;&#160;(<a class="el" href="group__vscp__ps.html#ga99bcb7eefc06ba1b0161df25a3cc1228">VSCP_PS_ADDR_NODE_ZONE</a> + <a class="el" href="group__vscp__ps.html#ga75a7fc5006bb1788d36932ba21649880">VSCP_PS_SIZE_NODE_ZONE</a>)</td></tr>
 <tr class="memdesc:gaee946a63db73c6abbf9f85986151b446"><td class="mdescLeft">&#160;</td><td class="mdescRight">Address of the node sub zone in the persistent memory.  <a href="group__vscp__ps.html#gaee946a63db73c6abbf9f85986151b446">More...</a><br/></td></tr>
 <tr class="separator:gaee946a63db73c6abbf9f85986151b446"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga394743848cc86faf56ee5e87035a8cfb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga394743848cc86faf56ee5e87035a8cfb"></a>
@@ -184,6 +191,12 @@ Functions</h2></td></tr>
 <tr class="memitem:gacdd8b70bb2b5229ef4346bf1a02f29d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__ps.html#gacdd8b70bb2b5229ef4346bf1a02f29d6">vscp_ps_init</a> (void)</td></tr>
 <tr class="memdesc:gacdd8b70bb2b5229ef4346bf1a02f29d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function initializes the persistent memory access module.  <a href="group__vscp__ps.html#gacdd8b70bb2b5229ef4346bf1a02f29d6">More...</a><br/></td></tr>
 <tr class="separator:gacdd8b70bb2b5229ef4346bf1a02f29d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga321d7115b04ac2fae10b17edc4916916"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__ps.html#ga321d7115b04ac2fae10b17edc4916916">vscp_ps_readBootFlag</a> (void)</td></tr>
+<tr class="memdesc:ga321d7115b04ac2fae10b17edc4916916"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function reads the boot flag from persistent memory.  <a href="group__vscp__ps.html#ga321d7115b04ac2fae10b17edc4916916">More...</a><br/></td></tr>
+<tr class="separator:ga321d7115b04ac2fae10b17edc4916916"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga19c32a88873c322ef8c6ad26dbdb8276"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__ps.html#ga19c32a88873c322ef8c6ad26dbdb8276">vscp_ps_writeBootFlag</a> (uint8_t bootFlag)</td></tr>
+<tr class="memdesc:ga19c32a88873c322ef8c6ad26dbdb8276"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function writes the boot flag to persistent memory.  <a href="group__vscp__ps.html#ga19c32a88873c322ef8c6ad26dbdb8276">More...</a><br/></td></tr>
+<tr class="separator:ga19c32a88873c322ef8c6ad26dbdb8276"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad1fc964e607173718cc747e057726b79"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__ps.html#gad1fc964e607173718cc747e057726b79">vscp_ps_readNicknameId</a> (void)</td></tr>
 <tr class="memdesc:gad1fc964e607173718cc747e057726b79"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function reads the nickname id of the node form the persistent memory.  <a href="group__vscp__ps.html#gad1fc964e607173718cc747e057726b79">More...</a><br/></td></tr>
 <tr class="separator:gad1fc964e607173718cc747e057726b79"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -289,7 +302,7 @@ Subversion</h1>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 25 2015 20:52:33 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Mar 28 2015 13:18:13 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

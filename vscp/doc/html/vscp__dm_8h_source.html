@@ -18,7 +18,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VSCP framework
-   &#160;<span id="projectnumber">v0.1.1</span>
+   &#160;<span id="projectnumber">v0.2.2</span>
    </div>
   </td>
  </tr>
@@ -200,7 +200,7 @@
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;</div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="keyword">extern</span> uint8_t  <a class="code" href="group__vscp__dm.html#ga466b9d0ac4946ff21cb7277342027af4">vscp_dm_getMatrixOffset</a>(<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="keyword">extern</span> <a class="code" href="group__vscp__core.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> <a class="code" href="group__vscp__dm.html#ga029c66e3b8871b85be3a1b4df98e8492">vscp_dm_isDecisionMatrix</a>(uint16_t page, uint8_t addr);</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="keyword">extern</span> <a class="code" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> <a class="code" href="group__vscp__dm.html#ga029c66e3b8871b85be3a1b4df98e8492">vscp_dm_isDecisionMatrix</a>(uint16_t page, uint8_t addr);</div>
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;<span class="keyword">extern</span> uint8_t  <a class="code" href="group__vscp__dm.html#gaf7e5e0bb09b724b799cd75c67f327458">vscp_dm_readRegister</a>(uint16_t page, uint8_t addr);</div>
 <div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;</div>
@@ -216,7 +216,7 @@
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="preprocessor">#endif  </span><span class="comment">/* __VSCP_DM_H__ */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;<span class="preprocessor"></span></div>
-<div class="ttc" id="structvscp___message_html"><div class="ttname"><a href="structvscp___message.html">vscp_Message</a></div><div class="ttdoc">This type defines a VSCP message. </div><div class="ttdef"><b>Definition:</b> vscp_types.h:299</div></div>
+<div class="ttc" id="structvscp___message_html"><div class="ttname"><a href="structvscp___message.html">vscp_Message</a></div><div class="ttdoc">This type defines a VSCP message. </div><div class="ttdef"><b>Definition:</b> vscp_types.h:296</div></div>
 <div class="ttc" id="structvscp__dm___matrix_row_html_a6ae1d9f3adf204995e6b9e7918d76b9b"><div class="ttname"><a href="structvscp__dm___matrix_row.html#a6ae1d9f3adf204995e6b9e7918d76b9b">vscp_dm_MatrixRow::classMask</a></div><div class="ttdeci">uint8_t classMask</div><div class="ttdoc">Class mask. </div><div class="ttdef"><b>Definition:</b> vscp_dm.h:144</div></div>
 <div class="ttc" id="structvscp__dm___matrix_row_html_a437133d56ab2a77c50f64817e9015284"><div class="ttname"><a href="structvscp__dm___matrix_row.html#a437133d56ab2a77c50f64817e9015284">vscp_dm_MatrixRow::typeFilter</a></div><div class="ttdeci">uint8_t typeFilter</div><div class="ttdoc">Type filter. </div><div class="ttdef"><b>Definition:</b> vscp_dm.h:147</div></div>
 <div class="ttc" id="group__vscp__dm_html_ggabd5767b2d6ae065b44f85c75efd72068af6115b53defba85ea8ab5a41b4174ef9"><div class="ttname"><a href="group__vscp__dm.html#ggabd5767b2d6ae065b44f85c75efd72068af6115b53defba85ea8ab5a41b4174ef9">VSCP_DM_FLAG_RESERVED</a></div><div class="ttdoc">Reserved for future use. </div><div class="ttdef"><b>Definition:</b> vscp_dm.h:130</div></div>
@@ -230,6 +230,7 @@
 <div class="ttc" id="group__vscp__dm_html_gaf7e5e0bb09b724b799cd75c67f327458"><div class="ttname"><a href="group__vscp__dm.html#gaf7e5e0bb09b724b799cd75c67f327458">vscp_dm_readRegister</a></div><div class="ttdeci">uint8_t vscp_dm_readRegister(uint16_t page, uint8_t addr)</div><div class="ttdoc">Read register and return its value. </div><div class="ttdef"><b>Definition:</b> vscp_dm.c:289</div></div>
 <div class="ttc" id="group__vscp__dm_html_gga1ccd8c318a84a651fce51a45816d0280a07ed2f6db25261d7a3f06e5029626b53"><div class="ttname"><a href="group__vscp__dm.html#gga1ccd8c318a84a651fce51a45816d0280a07ed2f6db25261d7a3f06e5029626b53">VSCP_DM_EXTFLAG_MATCH_PAR_4</a></div><div class="ttdoc">Compare to event parameter byte 4. </div><div class="ttdef"><b>Definition:</b> vscp_dm.h:162</div></div>
 <div class="ttc" id="group__vscp__dm_html_gga1ccd8c318a84a651fce51a45816d0280a29fb71dca5a2bf06a7a7543dfc579a60"><div class="ttname"><a href="group__vscp__dm.html#gga1ccd8c318a84a651fce51a45816d0280a29fb71dca5a2bf06a7a7543dfc579a60">VSCP_DM_EXTFLAG_MATCH_PAR_3</a></div><div class="ttdoc">Compare to event parameter byte 3. </div><div class="ttdef"><b>Definition:</b> vscp_dm.h:161</div></div>
+<div class="ttc" id="group__vscp__platform_html_gae4cc35dcc70810fa972cc8a5185a28fa"><div class="ttname"><a href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a></div><div class="ttdeci">#define BOOL</div><div class="ttdoc">Boolean type. </div><div class="ttdef"><b>Definition:</b> vscp_platform.h:76</div></div>
 <div class="ttc" id="group__vscp__dm_html_ggabd5767b2d6ae065b44f85c75efd72068ae219d4eeffb3f88da6da10f5828660ef"><div class="ttname"><a href="group__vscp__dm.html#ggabd5767b2d6ae065b44f85c75efd72068ae219d4eeffb3f88da6da10f5828660ef">VSCP_DM_FLAG_MATCH_ZONE</a></div><div class="ttdoc">Match zone flag. </div><div class="ttdef"><b>Definition:</b> vscp_dm.h:132</div></div>
 <div class="ttc" id="structvscp__dm___ext_row_html"><div class="ttname"><a href="structvscp__dm___ext_row.html">vscp_dm_ExtRow</a></div><div class="ttdoc">This type defines a decision matrix extension row. </div><div class="ttdef"><b>Definition:</b> vscp_dm.h:172</div></div>
 <div class="ttc" id="group__vscp__dm_html_gga1ccd8c318a84a651fce51a45816d0280a73e752005a2f27e3167133bfcde696ca"><div class="ttname"><a href="group__vscp__dm.html#gga1ccd8c318a84a651fce51a45816d0280a73e752005a2f27e3167133bfcde696ca">VSCP_DM_EXTFLAG_RESERVED_2</a></div><div class="ttdoc">Reserved for future use. </div><div class="ttdef"><b>Definition:</b> vscp_dm.h:166</div></div>
@@ -260,7 +261,6 @@
 <div class="ttc" id="group__vscp__dm_html_ggabd5767b2d6ae065b44f85c75efd72068adda00a59fe33d7d4b45c83970a5a7eb8"><div class="ttname"><a href="group__vscp__dm.html#ggabd5767b2d6ae065b44f85c75efd72068adda00a59fe33d7d4b45c83970a5a7eb8">VSCP_DM_FLAG_HARDCODED</a></div><div class="ttdoc">Hardcoded node address. </div><div class="ttdef"><b>Definition:</b> vscp_dm.h:133</div></div>
 <div class="ttc" id="group__vscp__dm_html_ggabd5767b2d6ae065b44f85c75efd72068a11e347c0dfb4e896ff950c68874a5c43"><div class="ttname"><a href="group__vscp__dm.html#ggabd5767b2d6ae065b44f85c75efd72068a11e347c0dfb4e896ff950c68874a5c43">VSCP_DM_FLAG_ENABLE</a></div><div class="ttdoc">Enable decision matrix row. </div><div class="ttdef"><b>Definition:</b> vscp_dm.h:135</div></div>
 <div class="ttc" id="group__vscp__dm_html_gga1ccd8c318a84a651fce51a45816d0280a0f7215a6d211385c2ee3924b13e94b5e"><div class="ttname"><a href="group__vscp__dm.html#gga1ccd8c318a84a651fce51a45816d0280a0f7215a6d211385c2ee3924b13e94b5e">VSCP_DM_EXTFLAG_RESERVED_0</a></div><div class="ttdoc">Reserved for future use. </div><div class="ttdef"><b>Definition:</b> vscp_dm.h:164</div></div>
-<div class="ttc" id="group__vscp__core_html_gae4cc35dcc70810fa972cc8a5185a28fa"><div class="ttname"><a href="group__vscp__core.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a></div><div class="ttdeci">#define BOOL</div><div class="ttdoc">Boolean type. </div><div class="ttdef"><b>Definition:</b> vscp_types.h:267</div></div>
 <div class="ttc" id="structvscp__dm___ext_row_html_a8a32c1e4d1ebd554d08ef7b700096ea5"><div class="ttname"><a href="structvscp__dm___ext_row.html#a8a32c1e4d1ebd554d08ef7b700096ea5">vscp_dm_ExtRow::par5</a></div><div class="ttdeci">uint8_t par5</div><div class="ttdoc">Event parameter byte 5. </div><div class="ttdef"><b>Definition:</b> vscp_dm.h:179</div></div>
 <div class="ttc" id="group__vscp__dm_html_gabd5767b2d6ae065b44f85c75efd72068"><div class="ttname"><a href="group__vscp__dm.html#gabd5767b2d6ae065b44f85c75efd72068">VSCP_DM_FLAG</a></div><div class="ttdeci">VSCP_DM_FLAG</div><div class="ttdoc">This type defines the decision matrix row flags. </div><div class="ttdef"><b>Definition:</b> vscp_dm.h:126</div></div>
 <div class="ttc" id="structvscp__dm___ext_row_html_ac746c3d65092170bfaf5b0d9950d8438"><div class="ttname"><a href="structvscp__dm___ext_row.html#ac746c3d65092170bfaf5b0d9950d8438">vscp_dm_ExtRow::zone</a></div><div class="ttdeci">uint8_t zone</div><div class="ttdoc">Zone. </div><div class="ttdef"><b>Definition:</b> vscp_dm.h:174</div></div>
@@ -271,7 +271,7 @@
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 25 2015 20:52:33 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Mar 28 2015 13:18:12 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -18,7 +18,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VSCP framework
-   &#160;<span id="projectnumber">v0.1.1</span>
+   &#160;<span id="projectnumber">v0.2.2</span>
    </div>
   </td>
  </tr>
@@ -104,7 +104,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 <tr class="memitem:gac460f084cbe5c31290398eab621c2803"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__dm__ng.html#gac460f084cbe5c31290398eab621c2803">vscp_dm_ng_executeActions</a> (<a class="el" href="group__vscp__core.html#gaa400280c5e6e5564de1806a7949d36c5">vscp_RxMessage</a> const *const rxMsg)</td></tr>
 <tr class="memdesc:gac460f084cbe5c31290398eab621c2803"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function process all configured rules and if any action regarding the received message takes place, it will call the corresponding action.  <a href="group__vscp__dm__ng.html#gac460f084cbe5c31290398eab621c2803">More...</a><br/></td></tr>
 <tr class="separator:gac460f084cbe5c31290398eab621c2803"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6c1937d57892d87798f3039dee4936f9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__vscp__core.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__dm__ng.html#ga6c1937d57892d87798f3039dee4936f9">vscp_dm_ng_getError</a> (uint8_t *const rule, uint8_t *const pos)</td></tr>
+<tr class="memitem:ga6c1937d57892d87798f3039dee4936f9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__dm__ng.html#ga6c1937d57892d87798f3039dee4936f9">vscp_dm_ng_getError</a> (uint8_t *const rule, uint8_t *const pos)</td></tr>
 <tr class="memdesc:ga6c1937d57892d87798f3039dee4936f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get error information, if available.  <a href="group__vscp__dm__ng.html#ga6c1937d57892d87798f3039dee4936f9">More...</a><br/></td></tr>
 <tr class="separator:ga6c1937d57892d87798f3039dee4936f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -132,11 +132,11 @@ Subversion</h1>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span>{                                 \</div>
-<div class="line">        vscp_dm_ng_error = <a class="code" href="group__vscp__core.html#gaa93f0eb578d23995850d61f7d61c55c1">FALSE</a>;       \</div>
+<div class="line">        vscp_dm_ng_error = <a class="code" href="group__vscp__platform.html#gaa93f0eb578d23995850d61f7d61c55c1">FALSE</a>;       \</div>
 <div class="line">        vscp_dm_ng_errorRule = 0;       \</div>
 <div class="line">        vscp_dm_ng_errorPos = 0;        \</div>
 <div class="line">    }<span class="keywordflow">while</span>(0)</div>
-<div class="ttc" id="group__vscp__core_html_gaa93f0eb578d23995850d61f7d61c55c1"><div class="ttname"><a href="group__vscp__core.html#gaa93f0eb578d23995850d61f7d61c55c1">FALSE</a></div><div class="ttdeci">#define FALSE</div><div class="ttdoc">Boolean false value. </div><div class="ttdef"><b>Definition:</b> vscp_types.h:272</div></div>
+<div class="ttc" id="group__vscp__platform_html_gaa93f0eb578d23995850d61f7d61c55c1"><div class="ttname"><a href="group__vscp__platform.html#gaa93f0eb578d23995850d61f7d61c55c1">FALSE</a></div><div class="ttdeci">#define FALSE</div><div class="ttdoc">Boolean false value. </div><div class="ttdef"><b>Definition:</b> vscp_platform.h:81</div></div>
 </div><!-- fragment -->
 <p>Clear error. </p>
 
@@ -156,12 +156,12 @@ Subversion</h1>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span>{                                     \</div>
-<div class="line">        if (<a class="code" href="group__vscp__core.html#gaa93f0eb578d23995850d61f7d61c55c1">FALSE</a> == vscp_dm_ng_error)      \</div>
+<div class="line">        if (<a class="code" href="group__vscp__platform.html#gaa93f0eb578d23995850d61f7d61c55c1">FALSE</a> == vscp_dm_ng_error)      \</div>
 <div class="line">        {                                   \</div>
 <div class="line">            vscp_dm_ng_errorPos += (__pos); \</div>
 <div class="line">        }                                   \</div>
 <div class="line">    }<span class="keywordflow">while</span>(0);</div>
-<div class="ttc" id="group__vscp__core_html_gaa93f0eb578d23995850d61f7d61c55c1"><div class="ttname"><a href="group__vscp__core.html#gaa93f0eb578d23995850d61f7d61c55c1">FALSE</a></div><div class="ttdeci">#define FALSE</div><div class="ttdoc">Boolean false value. </div><div class="ttdef"><b>Definition:</b> vscp_types.h:272</div></div>
+<div class="ttc" id="group__vscp__platform_html_gaa93f0eb578d23995850d61f7d61c55c1"><div class="ttname"><a href="group__vscp__platform.html#gaa93f0eb578d23995850d61f7d61c55c1">FALSE</a></div><div class="ttdeci">#define FALSE</div><div class="ttdoc">Boolean false value. </div><div class="ttdef"><b>Definition:</b> vscp_platform.h:81</div></div>
 </div><!-- fragment -->
 <p>Increase the position in the current rule. </p>
 <p>If a error is set, the position won't be increased. </p>
@@ -181,12 +181,12 @@ Subversion</h1>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span>{                                 \</div>
-<div class="line">        if (<a class="code" href="group__vscp__core.html#gaa93f0eb578d23995850d61f7d61c55c1">FALSE</a> == vscp_dm_ng_error)  \</div>
+<div class="line">        if (<a class="code" href="group__vscp__platform.html#gaa93f0eb578d23995850d61f7d61c55c1">FALSE</a> == vscp_dm_ng_error)  \</div>
 <div class="line">        {                               \</div>
 <div class="line">            ++vscp_dm_ng_errorRule;     \</div>
 <div class="line">        }                               \</div>
 <div class="line">    }<span class="keywordflow">while</span>(0);</div>
-<div class="ttc" id="group__vscp__core_html_gaa93f0eb578d23995850d61f7d61c55c1"><div class="ttname"><a href="group__vscp__core.html#gaa93f0eb578d23995850d61f7d61c55c1">FALSE</a></div><div class="ttdeci">#define FALSE</div><div class="ttdoc">Boolean false value. </div><div class="ttdef"><b>Definition:</b> vscp_types.h:272</div></div>
+<div class="ttc" id="group__vscp__platform_html_gaa93f0eb578d23995850d61f7d61c55c1"><div class="ttname"><a href="group__vscp__platform.html#gaa93f0eb578d23995850d61f7d61c55c1">FALSE</a></div><div class="ttdeci">#define FALSE</div><div class="ttdoc">Boolean false value. </div><div class="ttdef"><b>Definition:</b> vscp_platform.h:81</div></div>
 </div><!-- fragment -->
 <p>Increase rule number. </p>
 <p>If a error is set, the rule won't be increased. </p>
@@ -206,9 +206,9 @@ Subversion</h1>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span>{                                 \</div>
-<div class="line">        vscp_dm_ng_error = <a class="code" href="group__vscp__core.html#gaa8cecfc5c5c054d2875c03e77b7be15d">TRUE</a>;        \</div>
+<div class="line">        vscp_dm_ng_error = <a class="code" href="group__vscp__platform.html#gaa8cecfc5c5c054d2875c03e77b7be15d">TRUE</a>;        \</div>
 <div class="line">    }<span class="keywordflow">while</span>(0)</div>
-<div class="ttc" id="group__vscp__core_html_gaa8cecfc5c5c054d2875c03e77b7be15d"><div class="ttname"><a href="group__vscp__core.html#gaa8cecfc5c5c054d2875c03e77b7be15d">TRUE</a></div><div class="ttdeci">#define TRUE</div><div class="ttdoc">Boolean true value. </div><div class="ttdef"><b>Definition:</b> vscp_types.h:277</div></div>
+<div class="ttc" id="group__vscp__platform_html_gaa8cecfc5c5c054d2875c03e77b7be15d"><div class="ttname"><a href="group__vscp__platform.html#gaa8cecfc5c5c054d2875c03e77b7be15d">TRUE</a></div><div class="ttdeci">#define TRUE</div><div class="ttdoc">Boolean true value. </div><div class="ttdef"><b>Definition:</b> vscp_platform.h:86</div></div>
 </div><!-- fragment -->
 <p>Set error. </p>
 
@@ -297,7 +297,7 @@ Subversion</h1>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 25 2015 20:52:33 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Mar 28 2015 13:18:13 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -18,7 +18,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VSCP framework
-   &#160;<span id="projectnumber">v0.1.1</span>
+   &#160;<span id="projectnumber">v0.2.2</span>
    </div>
   </td>
  </tr>
@@ -126,9 +126,9 @@
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="group__vscp__tp__adapter.html#ga6243f17655fb31fd18283f294859d9cb">vscp_tp_adapter_init</a>(<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="keyword">extern</span> <a class="code" href="group__vscp__core.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> <a class="code" href="group__vscp__tp__adapter.html#gae2ecc101912563696f91efae38efff2f">vscp_tp_adapter_readMessage</a>(<a class="code" href="structvscp___message.html">vscp_RxMessage</a> * <span class="keyword">const</span> msg);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="keyword">extern</span> <a class="code" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> <a class="code" href="group__vscp__tp__adapter.html#gae2ecc101912563696f91efae38efff2f">vscp_tp_adapter_readMessage</a>(<a class="code" href="structvscp___message.html">vscp_RxMessage</a> * <span class="keyword">const</span> msg);</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="keyword">extern</span> <a class="code" href="group__vscp__core.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> <a class="code" href="group__vscp__tp__adapter.html#ga1881e3e9a0ce904801fa140e07a744df">vscp_tp_adapter_writeMessage</a>(<a class="code" href="structvscp___message.html">vscp_TxMessage</a> <span class="keyword">const</span> * <span class="keyword">const</span> msg);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="keyword">extern</span> <a class="code" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> <a class="code" href="group__vscp__tp__adapter.html#ga1881e3e9a0ce904801fa140e07a744df">vscp_tp_adapter_writeMessage</a>(<a class="code" href="structvscp___message.html">vscp_TxMessage</a> <span class="keyword">const</span> * <span class="keyword">const</span> msg);</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="preprocessor"></span>}</div>
@@ -136,16 +136,16 @@
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="preprocessor">#endif  </span><span class="comment">/* __VSCP_TP_ADAPTER_H__ */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="preprocessor"></span></div>
-<div class="ttc" id="structvscp___message_html"><div class="ttname"><a href="structvscp___message.html">vscp_Message</a></div><div class="ttdoc">This type defines a VSCP message. </div><div class="ttdef"><b>Definition:</b> vscp_types.h:299</div></div>
+<div class="ttc" id="structvscp___message_html"><div class="ttname"><a href="structvscp___message.html">vscp_Message</a></div><div class="ttdoc">This type defines a VSCP message. </div><div class="ttdef"><b>Definition:</b> vscp_types.h:296</div></div>
 <div class="ttc" id="group__vscp__tp__adapter_html_ga1881e3e9a0ce904801fa140e07a744df"><div class="ttname"><a href="group__vscp__tp__adapter.html#ga1881e3e9a0ce904801fa140e07a744df">vscp_tp_adapter_writeMessage</a></div><div class="ttdeci">BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const *const msg)</div><div class="ttdoc">This function writes a message to the transport layer. </div><div class="ttdef"><b>Definition:</b> vscp_tp_adapter.c:120</div></div>
+<div class="ttc" id="group__vscp__platform_html_gae4cc35dcc70810fa972cc8a5185a28fa"><div class="ttname"><a href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a></div><div class="ttdeci">#define BOOL</div><div class="ttdoc">Boolean type. </div><div class="ttdef"><b>Definition:</b> vscp_platform.h:76</div></div>
 <div class="ttc" id="group__vscp__tp__adapter_html_ga6243f17655fb31fd18283f294859d9cb"><div class="ttname"><a href="group__vscp__tp__adapter.html#ga6243f17655fb31fd18283f294859d9cb">vscp_tp_adapter_init</a></div><div class="ttdeci">void vscp_tp_adapter_init(void)</div><div class="ttdoc">This function initializes the transport layer. </div><div class="ttdef"><b>Definition:</b> vscp_tp_adapter.c:84</div></div>
 <div class="ttc" id="group__vscp__tp__adapter_html_gae2ecc101912563696f91efae38efff2f"><div class="ttname"><a href="group__vscp__tp__adapter.html#gae2ecc101912563696f91efae38efff2f">vscp_tp_adapter_readMessage</a></div><div class="ttdeci">BOOL vscp_tp_adapter_readMessage(vscp_RxMessage *const msg)</div><div class="ttdoc">This function reads a message from the transport layer. </div><div class="ttdef"><b>Definition:</b> vscp_tp_adapter.c:99</div></div>
-<div class="ttc" id="group__vscp__core_html_gae4cc35dcc70810fa972cc8a5185a28fa"><div class="ttname"><a href="group__vscp__core.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a></div><div class="ttdeci">#define BOOL</div><div class="ttdoc">Boolean type. </div><div class="ttdef"><b>Definition:</b> vscp_types.h:267</div></div>
 <div class="ttc" id="vscp__types_8h_html"><div class="ttname"><a href="vscp__types_8h.html">vscp_types.h</a></div><div class="ttdoc">VSCP types and structures. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jan 25 2015 20:52:33 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Mar 28 2015 13:18:12 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
