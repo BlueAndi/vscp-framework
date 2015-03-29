@@ -129,7 +129,7 @@ extern BOOL vscp_tp_adapter_readMessage(vscp_RxMessage * const msg)
     if (NULL != msg)
     {
         /* New message received? */
-        if (can_check_message())
+        if (FALSE != can_check_message())
         {
             can_t   canMsg; /* CAN message */
 
