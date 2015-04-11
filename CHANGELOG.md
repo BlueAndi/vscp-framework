@@ -1,5 +1,13 @@
 ## 0.3.0 (unreleased)
 
+## 0.2.3
+
+Bugfixes:
+
+  - VSCP framework
+    - L1 over L2 class C-define name fixed.
+    - GUID check in the handling of enter boot loader mode event fixed.
+
 ## 0.2.2
 
 Bugfixes:
