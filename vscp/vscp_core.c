@@ -2148,10 +2148,10 @@ static inline void  vscp_core_handleProtocolEnterBootLoaderMode(void)
              */
             if ((0xFF == vscp_portable_getBootLoaderAlgorithm()) ||
                 (vscp_portable_getBootLoaderAlgorithm() != vscp_core_rxMessage.data[1]) ||
-                (vscp_dev_data_getGUID(0) != vscp_core_rxMessage.data[2]) ||
-                (vscp_dev_data_getGUID(3) != vscp_core_rxMessage.data[3]) ||
-                (vscp_dev_data_getGUID(5) != vscp_core_rxMessage.data[4]) ||
-                (vscp_dev_data_getGUID(7) != vscp_core_rxMessage.data[5]) ||
+                (vscp_dev_data_getGUID(15 - 0) != vscp_core_rxMessage.data[2]) ||
+                (vscp_dev_data_getGUID(15 - 3) != vscp_core_rxMessage.data[3]) ||
+                (vscp_dev_data_getGUID(15 - 5) != vscp_core_rxMessage.data[4]) ||
+                (vscp_dev_data_getGUID(15 - 7) != vscp_core_rxMessage.data[5]) ||
                 (vscp_core_regPageSelect != pageSelect))
             {
                 txMessage.vscpClass = VSCP_CLASS_L1_PROTOCOL;
