@@ -2,7 +2,7 @@
 
 ##VSCP standard boot loader algorithm
 
-![VSCP standard boot loader algorithm](https://github.com/BlueAndi/vscp-framework/vscp/bootloader/vscp_std_boot_loader_algorithm.png)
+![VSCP standard boot loader algorithm](https://github.com/BlueAndi/vscp-framework/blob/master/vscp/bootloader/vscp_std_boot_loader_algorithm.png)
 
 ##Description
 
