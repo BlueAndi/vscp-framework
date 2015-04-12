@@ -6,7 +6,8 @@
 
 ##Description
 
-The bootloader algorithm follows the standard VSCP bootloader algorithm.
+The bootloader algorithm follows the standard VSCP bootloader algorithm. The following
+description contains more details about how it proceeds.
 
 1. Determine whether
     a) the user force bootloader mode,

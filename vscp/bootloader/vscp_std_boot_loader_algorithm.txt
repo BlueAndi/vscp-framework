@@ -1,0 +1,16 @@
+title Software Update Procedure
+
+Master->Node: Enter boot loader mode\n(algorithm)
+Node->Master: Enter boot loader mode acknowledge\n(block size and number of blocks)
+loop Until all blocks are programmed
+    Master->Node: Start block data transfer\n(block number)
+    Node->Master: Start block data transfer acknowledge
+    loop Until a single block is complete
+        Master->Node: Block data\n(data = part of a single block)
+    end
+    Node->Master: Block data acknowledge
+    Master->Node: Program block\n(Block number)
+    Node->Master: Program block acknowledge\n(Block CRC)
+end
+Master->Node: Activate new image\n(CRC of all blocks)
+Node->Master: Activate new image acknowledge
