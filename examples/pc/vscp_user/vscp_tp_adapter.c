@@ -49,7 +49,9 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 #include <memory.h>
 #include "log.h"
 #include "vscphelperlib.h"
+#include "vscp_class_l1.h"
 #include "vscp_class_l1_l2.h"
+#include "vscp_util.h"
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -87,6 +89,7 @@ typedef struct
 
 static BOOL vscp_tp_adapter_handleL1Event(vscp_RxMessage * const msg, vscpEventEx const * const daemonEvent);
 static BOOL vscp_tp_adapter_handleL1OverL2Event(vscp_RxMessage * const msg, vscpEventEx const * const daemonEvent);
+static void vscp_tp_adapter_showMessage(vscp_Message const * const msg, BOOL isReceived);
 
 /*******************************************************************************
     LOCAL VARIABLES
@@ -103,6 +106,63 @@ static vscp_tp_adapter_NetPar   vscp_tp_adapter_clientPar;
 
 /** Connected or not */
 static BOOL                     vscp_tp_adapter_isConnected     = FALSE;
+
+/** User friendly strings for every CLASS Protocol type. */
+static const char*              vscp_tp_adapter_protocolTypes[] =
+{
+    /*  0 */ "Undefined",
+    /*  1 */ "Segment Controller Heartbeat",
+    /*  2 */ "New Node Online",
+    /*  3 */ "Probe ACK",
+    /*  4 */ "Reserved",
+    /*  5 */ "Reserved",
+    /*  6 */ "Set Nickname Id",
+    /*  7 */ "Nickname Id Accepted",
+    /*  8 */ "Drop Nickname Id",
+    /*  9 */ "Read Register",
+    /* 10 */ "Read/Write Response",
+    /* 11 */ "Write Register",
+    /* 12 */ "Enter Boot Loader Mode",
+    /* 13 */ "Enter Boot Loader Mode ACK",
+    /* 14 */ "Enter Boot Loader Mode NACK",
+    /* 15 */ "Start Block Data Transfer",
+    /* 16 */ "Block Data",
+    /* 17 */ "Block Data ACK",
+    /* 18 */ "Block Data NACK",
+    /* 19 */ "Program Data Block",
+    /* 20 */ "Program Data Block ACK",
+    /* 21 */ "Program Data Block NACK",
+    /* 22 */ "Activate New Image",
+    /* 23 */ "GUID Drop Nickname Id",
+    /* 24 */ "Page Read",
+    /* 25 */ "Page Write",
+    /* 26 */ "Page Read/Write Response",
+    /* 27 */ "High End Server Probe",
+    /* 28 */ "High End Server Response",
+    /* 29 */ "Increment Register",
+    /* 30 */ "Decrement Register",
+    /* 31 */ "Who Is There",
+    /* 32 */ "Who Is There Response",
+    /* 33 */ "Get Decision Matrix Info",
+    /* 34 */ "Get Decision Matrix Info Response",
+    /* 35 */ "Get Embedded MDF",
+    /* 36 */ "Get Embedded MDF Response",
+    /* 37 */ "Extended Page Read Register",
+    /* 38 */ "Extended Page Write Register",
+    /* 39 */ "Extended Page Read/Write Response",
+    /* 40 */ "Get Event Interest",
+    /* 41 */ "Get Event Interest Response",
+    /* 42 */ "Reserved",
+    /* 43 */ "Reserved",
+    /* 44 */ "Reserved",
+    /* 45 */ "Reserved",
+    /* 46 */ "Reserved",
+    /* 47 */ "Reserved",
+    /* 48 */ "Activate New Image ACK",
+    /* 49 */ "Activate New Image NACK",
+    /* 50 */ "Start Block Data Transfer ACK",
+    /* 51 */ "Start Block Data Transfer NACK"
+};
 
 /*******************************************************************************
     GLOBAL VARIABLES
@@ -208,26 +268,7 @@ extern BOOL vscp_tp_adapter_readMessage(vscp_RxMessage * const msg)
         
         if (FALSE != status)
         {
-            uint8_t index   = 0;
-            
-            log_printf("Rx: class=0x%02X, type=0x%02X, prio=%2d, oAddr=0x%02X, %c, num=%u, data=",
-                msg->vscpClass,
-                msg->vscpType,
-                msg->priority,
-                msg->oAddr,
-                (FALSE == msg->hardCoded) ? '-' : 'h',
-                msg->dataNum);
-
-            for(index = 0; index < msg->dataNum; ++index)
-            {
-                printf("%02X", msg->data[index]);
-
-                if ((index + 1) < msg->dataNum)
-                {
-                    printf(" ");
-                }
-            }
-            printf("\n");
+            vscp_tp_adapter_showMessage(msg, TRUE);
         }
     }
     
@@ -296,24 +337,7 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg)
         
         if (FALSE != status)
         {
-            log_printf("Tx: class=0x%02X, type=0x%02X, prio=%2d, oAddr=0x%02X, %c, num=%u, data=",
-                msg->vscpClass,
-                msg->vscpType,
-                msg->priority,
-                msg->oAddr,
-                (FALSE == msg->hardCoded) ? '-' : 'h',
-                msg->dataNum);
-
-            for(index = 0; index < msg->dataNum; ++index)
-            {
-                printf("%02X", msg->data[index]);
-                
-                if ((index + 1) < msg->dataNum)
-                {
-                    printf(" ");
-                }
-            }
-            printf("\n");
+            vscp_tp_adapter_showMessage(msg, FALSE);
         }
     }
 
@@ -626,4 +650,51 @@ static BOOL vscp_tp_adapter_handleL1OverL2Event(vscp_RxMessage * const msg, vscp
     }
     
     return isError;
+}
+
+/**
+ * This function prints a VSCP message to the screen.
+ *
+ * @param[in] msg           VSCP message
+ * @param[in] isReceived    Is message received or transmitted?
+ */
+static void vscp_tp_adapter_showMessage(vscp_Message const * const msg, BOOL isReceived)
+{
+    uint8_t index = 0;
+    
+    log_printf("%cx: class=0x%02X, type=0x%02X, prio=%2d, oAddr=0x%02X, %c, num=%u, data=",
+        (TRUE == isReceived) ? 'R' : 'T',
+        msg->vscpClass,
+        msg->vscpType,
+        msg->priority,
+        msg->oAddr,
+        (FALSE == msg->hardCoded) ? '-' : 'h',
+        msg->dataNum);
+
+    for(index = 0; index < msg->dataNum; ++index)
+    {
+        printf("%02X", msg->data[index]);
+        
+        if ((index + 1) < msg->dataNum)
+        {
+            printf(" ");
+        }
+    }
+    
+    if ((VSCP_CLASS_L1_PROTOCOL == msg->vscpClass) ||
+        (VSCP_CLASS_L1_L2_PROTOCOL == msg->vscpClass))
+    {
+        if (VSCP_UTIL_ARRAY_NUM(vscp_tp_adapter_protocolTypes) <= msg->vscpType)
+        {
+            printf(" ?");
+        }
+        else
+        {
+            printf(" %s", vscp_tp_adapter_protocolTypes[msg->vscpType]);
+        }
+    }
+    
+    printf("\n");
+    
+    return;
 }
