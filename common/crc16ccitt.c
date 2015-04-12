@@ -62,10 +62,8 @@ $Date: 2014-03-24 16:06:21 +0100 (Mo, 24 Mrz 2014) $
  * A 17 bit register is simulated by testing the MSB before shifting
  * the data, which affords us the luxury of specify the polynomial as a
  * 16 bit value, 0x1021.
- * Due to the way in which we process the CRC, the bits of the polynomial
- * are stored in reverse order. This makes the polynomial 0x8408.
  */
-#define CRC16CCITT_POLYNOM  (0x8408)
+#define CRC16CCITT_POLYNOM  (0x1021)
 
 /*******************************************************************************
     MACROS
@@ -259,38 +257,28 @@ static Crc16CCITT   crc16ccitt_updateFast(Crc16CCITT crc, const uint8_t *data, s
  */
 static Crc16CCITT   crc16ccitt_updateAlgo(Crc16CCITT crc, const uint8_t *data, size_t size)
 {
-    uint8_t     dataIndex   = 0;
-    uint8_t     bitIndex    = 0;
-    uint16_t    value       = 0;
+    uint8_t dataIndex   = 0;
+    uint8_t bitIndex    = 0;
         
     do
     {
-        value = data[dataIndex];
+        crc ^= ((uint16_t)data[dataIndex]) << 8;
 
         for (bitIndex = 0; bitIndex < 8; ++bitIndex)
         {
-            if ((crc & 0x0001) ^ (value & 0x0001))
+            if (crc & (1 << 15))
             {
-                crc = (crc >> 1) ^ CRC16CCITT_POLYNOM;
+                crc = (crc << 1) ^ CRC16CCITT_POLYNOM;
             }
             else
             {
-                crc >>= 1;
+                crc = crc << 1;
             }
-
-            value >>= 1;
         }
 
         ++dataIndex;
     }
     while(size > dataIndex);
-
-    /*    
-    crc = ~crc;
-    
-    data = crc;
-    crc = (crc << 8) | (data >> 8 & 0xFF);
-    */
     
     return crc;
 }
