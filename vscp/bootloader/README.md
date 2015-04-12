@@ -1,5 +1,9 @@
 #VSCP L1 Bootloader
 
+##VSCP standard boot loader algorithm
+
+![VSCP standard boot loader algorithm](https://github.com/BlueAndi/vscp-framework/vscp/bootloader/vscp_std_boot_loader_algorithm.png)
+
 ##Description
 
 The bootloader algorithm follows the standard VSCP bootloader algorithm.
