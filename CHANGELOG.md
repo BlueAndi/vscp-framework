@@ -1,12 +1,21 @@
 ## 0.3.0 (unreleased)
 
-## 0.2.3
+Features:
+
+  - PC example
+    - The type of every received and transmitted class1.protocol is shown as user friendly string. This helps for better understanding.
+
+Updates:
+
+  - PC example
+    - VSCP helper lib updated to VSCP v1.0.1 Neon release.
 
 Bugfixes:
 
   - VSCP framework
     - L1 over L2 class C-define name fixed.
     - GUID check in the handling of enter boot loader mode event fixed.
+    - CRC-CCITT calculation fixed, used by the boot loader.
 
 ## 0.2.2
 

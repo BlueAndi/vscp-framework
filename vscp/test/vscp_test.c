@@ -282,7 +282,7 @@ static vscp_test_RegTestLine    vscp_test_registerTestTable[]   =
     {   VSCP_REG_STD_DEV_TYPE_1,                VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_STD_DEVICE_TYPE >>  8) & 0xff,           "standard device type 1"        },
     {   VSCP_REG_STD_DEV_TYPE_0,                VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_STD_DEVICE_TYPE >>  0) & 0xff,           "standard device type 0"        },
     {	VSCP_REG_RESTORE_STD_CFG,				VSCP_TEST_REG_ACCESS_WRITE_ONLY,  vscp_test_getZero,		  0,												  "restore default settings"      },
-    {   VSCP_REG_GUID_15,                       VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_GUID_3 >> 24) & 0xff,                    "GUID 15"                       },
+    {   VSCP_REG_GUID_15,                       VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_GUID_3 >> 24) & 0xff,                    "GUID 15"                       }, /* MSB */
     {   VSCP_REG_GUID_14,                       VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_GUID_3 >> 16) & 0xff,                    "GUID 14"                       },
     {   VSCP_REG_GUID_13,                       VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_GUID_3 >>  8) & 0xff,                    "GUID 13"                       },
     {   VSCP_REG_GUID_12,                       VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_GUID_3 >>  0) & 0xff,                    "GUID 12"                       },
@@ -297,7 +297,7 @@ static vscp_test_RegTestLine    vscp_test_registerTestTable[]   =
     {   VSCP_REG_GUID_3,                        VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_GUID_0 >> 24) & 0xff,                    "GUID 3"                        },
     {   VSCP_REG_GUID_2,                        VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_GUID_0 >> 16) & 0xff,                    "GUID 2"                        },
     {   VSCP_REG_GUID_1,                        VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_GUID_0 >>  8) & 0xff,                    "GUID 1"                        },
-    {   VSCP_REG_GUID_0,                        VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_GUID_0 >>  0) & 0xff,                    "GUID 0"                        }
+    {   VSCP_REG_GUID_0,                        VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_GUID_0 >>  0) & 0xff,                    "GUID 0"                        } /* LSB */
 };
 
 /** Decision matrix */
@@ -1508,10 +1508,10 @@ extern void vscp_test_active16(void)
     vscp_test_rxMessage.dataNum 	= 8;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
     vscp_test_rxMessage.data[1]     = VSCP_TEST_BOOT_LOADER_ALGORITHM + 1;  /* Wrong algorithm */
-    vscp_test_rxMessage.data[2]     = (VSCP_TEST_GUID_0 >>  0) & 0xff;      /* Byte 0 */
-    vscp_test_rxMessage.data[3]     = (VSCP_TEST_GUID_0 >> 24) & 0xff;      /* Byte 3 */
-    vscp_test_rxMessage.data[4]     = (VSCP_TEST_GUID_1 >>  8) & 0xff;      /* Byte 5 */
-    vscp_test_rxMessage.data[5]     = (VSCP_TEST_GUID_1 >> 24) & 0xff;      /* Byte 7 */
+    vscp_test_rxMessage.data[2]     = (VSCP_TEST_GUID_3 >> 24) & 0xff;  /* Byte 0 */
+    vscp_test_rxMessage.data[3]     = (VSCP_TEST_GUID_3 >>  0) & 0xff;  /* Byte 3 */
+    vscp_test_rxMessage.data[4]     = (VSCP_TEST_GUID_2 >> 16) & 0xff;  /* Byte 5 */
+    vscp_test_rxMessage.data[5]     = (VSCP_TEST_GUID_2 >>  0) & 0xff;  /* Byte 7 */
     vscp_test_rxMessage.data[6]     = 0;
     vscp_test_rxMessage.data[7]     = 0;
 
@@ -1554,10 +1554,10 @@ extern void vscp_test_active17(void)
     vscp_test_rxMessage.dataNum 	= 8;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
     vscp_test_rxMessage.data[1]     = VSCP_TEST_BOOT_LOADER_ALGORITHM;
-    vscp_test_rxMessage.data[2]     = (VSCP_TEST_GUID_0 >>  0) & 0xff;  /* Byte 0 */
-    vscp_test_rxMessage.data[3]     = (VSCP_TEST_GUID_0 >> 24) & 0xff;  /* Byte 3 */
-    vscp_test_rxMessage.data[4]     = (VSCP_TEST_GUID_1 >>  8) & 0xff;  /* Byte 5 */
-    vscp_test_rxMessage.data[5]     = (VSCP_TEST_GUID_1 >> 24) & 0xff;  /* Byte 7 */
+    vscp_test_rxMessage.data[2]     = (VSCP_TEST_GUID_3 >> 24) & 0xff;  /* Byte 0 */
+    vscp_test_rxMessage.data[3]     = (VSCP_TEST_GUID_3 >>  0) & 0xff;  /* Byte 3 */
+    vscp_test_rxMessage.data[4]     = (VSCP_TEST_GUID_2 >> 16) & 0xff;  /* Byte 5 */
+    vscp_test_rxMessage.data[5]     = (VSCP_TEST_GUID_2 >>  0) & 0xff;  /* Byte 7 */
     vscp_test_rxMessage.data[6]     = 0;
     vscp_test_rxMessage.data[7]     = 0;
 
