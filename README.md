@@ -10,6 +10,10 @@
 
 ##VSCP
 
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Release](https://img.shields.io/github/release/BlueAndi/vscp-framework.svg)
+![Coverity Scan Build Status](https://scan.coverity.com/projects/4825/badge.svg")
+
 ![VSCP logo](http://vscp.org/images/vscp_logo.jpg)
 
 The Very Simple Control Protocol (VSCP), an open and free protocol for IoT/m2m automation tasks.
