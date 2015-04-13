@@ -2,7 +2,7 @@
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Release](https://img.shields.io/github/release/BlueAndi/vscp-framework.svg)
-![Coverity Scan Build Status](https://img.shields.io/coverity/scan/4825.svg")
+![Coverity Scan Build Status](https://img.shields.io/coverity/scan/4825.svg)
 
 1. [VSCP](https://github.com/BlueAndi/vscp-framework#vscp)
 2. [Framework](https://github.com/BlueAndi/vscp-framework#framework)
