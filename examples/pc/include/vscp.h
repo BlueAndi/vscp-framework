@@ -357,7 +357,7 @@ typedef  VSCPStatus * PVSCPSTATUS;
 */
 
 typedef struct structVSCPChannelInfo {
-	unsigned char channelType;      // Leve I, Level II etc from canal.h 
+	unsigned char channelType;      // Level I, Level II etc from canal.h 
 	unsigned short channel;         // daemon channel number
 	char GUID[ 16 ];                // Channel GUID id
 	
@@ -366,12 +366,12 @@ typedef struct structVSCPChannelInfo {
 typedef  VSCPChannelInfo	*PVSCPCHANNELINFO;
 
 // Bootloaders
-#define VSCP_BOOTLOADER_VSCP						0x00	// VSCP bootloader algorithm
-#define VSCP_BOOTLOADER_PIC1						0x01	// PIC algorithm 0
-#define VSCP_BOOTLOADER_AVR1						0x10	// AVR algorithm 0
-#define VSCP_BOOTLOADER_LPC1						0x20	// NXP/Philips LPC algorithm 0
-#define VSCP_BOOTLOADER_ST						    0x30	// ST STR algorithm 0
-#define VSCP_BOOTLOADER_NONE						0xff
+#define VSCP_BOOTLOADER_VSCP            0x00	// VSCP bootloader algorithm
+#define VSCP_BOOTLOADER_PIC1            0x01	// PIC algorithm 0
+#define VSCP_BOOTLOADER_AVR1            0x10	// AVR algorithm 0
+#define VSCP_BOOTLOADER_LPC1            0x20	// NXP/Philips LPC algorithm 0
+#define VSCP_BOOTLOADER_ST              0x30	// ST STR algorithm 0
+#define VSCP_BOOTLOADER_NONE            0xff
 
 
 //			* * * Data Coding for VSCP packets * * *
@@ -379,7 +379,7 @@ typedef  VSCPChannelInfo	*PVSCPCHANNELINFO;
 // Data format masks
 #define VSCP_MASK_DATACODING_TYPE       0xE0  // Bits 5,6,7
 #define VSCP_MASK_DATACODING_UNIT       0x18  // Bits 3,4
-#define VSCP_MASK_DATACODING_INDEX      0x03  // Bits 0,1,2
+#define VSCP_MASK_DATACODING_INDEX      0x07  // Bits 0,1,2
 
 // Theese bits are coded in the three MSB bytes of the first data byte
 // in a paket and tells the type of the data that follows.
@@ -458,8 +458,8 @@ struct myNode {
 #define VSCP_STD_REGISTER_BUFFER_SIZE           0x98
 #define VSCP_STD_REGISTER_PAGES_COUNT           0x99
 
-// 0xc0 - 0xcf
-#define VSCP_STD_REGISTER_GUID                  0xC0
+// 0xd0 - 0xdf
+#define VSCP_STD_REGISTER_GUID                  0xD0
 
 // 0xe0 - 0xff
 #define VSCP_STD_REGISTER_DEVICE_URL            0xE0
