@@ -1,8 +1,8 @@
 #VSCP L1 Framework
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Release](https://img.shields.io/github/release/BlueAndi/vscp-framework.svg)
-![Coverity Scan Build Status](https://img.shields.io/coverity/scan/4825.svg)
+![![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://choosealicense.com/licenses/mit/)
+![![Release](https://img.shields.io/github/release/BlueAndi/vscp-framework.svg)](https://github.com/BlueAndi/vscp-framework/releases)
+![![Coverity Scan Build Status](https://img.shields.io/coverity/scan/4825.svg)](https://scan.coverity.com/projects/4825?tab=overview)
 
 1. [VSCP](https://github.com/BlueAndi/vscp-framework#vscp)
 2. [Framework](https://github.com/BlueAndi/vscp-framework#framework)
@@ -11,6 +11,7 @@
 5. [Bootloader](https://github.com/BlueAndi/vscp-framework/tree/master/vscp/bootloader)
 6. [Mailing list](https://github.com/BlueAndi/vscp-framework#mailing-list)
 7. [Issues, Ideas and bugs](https://github.com/BlueAndi/vscp-framework#issues-ideas-and-bugs)
+8. [License](https://github.com/BlueAndi/vscp-framework#license)
 
 ##VSCP
 
