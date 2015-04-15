@@ -2034,7 +2034,7 @@ extern void vscp_test_active25(void)
             CU_ASSERT_EQUAL(vscp_test_txMessage[index].data[4], vscp_test_portableGetMdfUrl(29));
             CU_ASSERT_EQUAL(vscp_test_txMessage[index].data[5], vscp_test_portableGetMdfUrl(30));
             CU_ASSERT_EQUAL(vscp_test_txMessage[index].data[6], vscp_test_portableGetMdfUrl(31));
-            CU_ASSERT_EQUAL(vscp_test_txMessage[index].data[7], vscp_test_portableGetMdfUrl(32));
+            CU_ASSERT_EQUAL(vscp_test_txMessage[index].data[7], 0);
             break;
 
         default:
@@ -2152,7 +2152,7 @@ extern void vscp_test_active26(void)
             CU_ASSERT_EQUAL(vscp_test_txMessage[index].data[4], vscp_test_portableGetMdfUrl(29));
             CU_ASSERT_EQUAL(vscp_test_txMessage[index].data[5], vscp_test_portableGetMdfUrl(30));
             CU_ASSERT_EQUAL(vscp_test_txMessage[index].data[6], vscp_test_portableGetMdfUrl(31));
-            CU_ASSERT_EQUAL(vscp_test_txMessage[index].data[7], vscp_test_portableGetMdfUrl(32));
+            CU_ASSERT_EQUAL(vscp_test_txMessage[index].data[7], 0);
             break;
 
         default:
@@ -3211,13 +3211,19 @@ extern void vscp_test_psAccessInit(void)
 
 extern uint8_t  vscp_test_psAccessRead8(uint16_t addr)
 {
+    uint8_t value   = 0;
+
     /* Check address out of bounce. */
 	if (VSCP_TEST_ARRAY_NUM(vscp_test_persistentMemory) <= addr)
 	{
 		CU_ASSERT_FATAL(VSCP_TEST_ARRAY_NUM(vscp_test_persistentMemory) > addr);
 	}
-
-    return vscp_test_persistentMemory[addr];
+    else
+    {
+        value = vscp_test_persistentMemory[addr];
+    }
+    
+    return value;
 }
 
 extern void vscp_test_psAccessWrite8(uint16_t addr, uint8_t value)
@@ -3227,8 +3233,10 @@ extern void vscp_test_psAccessWrite8(uint16_t addr, uint8_t value)
     {
         CU_ASSERT_FATAL(VSCP_TEST_ARRAY_NUM(vscp_test_persistentMemory) > addr);
     }
-
-    vscp_test_persistentMemory[addr] = value;
+    else
+    {
+        vscp_test_persistentMemory[addr] = value;
+    }
 
     return;
 }
