@@ -1951,7 +1951,7 @@ static uint8_t  vscp_core_writeRegister(uint16_t page, uint8_t addr, uint8_t val
 
         case VSCP_REG_PAGE_SELECT_LSB:
             vscp_core_regPageSelect &= 0xFF00;
-            vscp_core_regPageSelect = ((uint16_t)value) << 0;
+            vscp_core_regPageSelect |= ((uint16_t)value) << 0;
             ret = VSCP_UTIL_WORD_LSB(vscp_core_regPageSelect);
             error = FALSE;
             break;
