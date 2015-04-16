@@ -16,6 +16,9 @@ Bugfixes:
     - L1 over L2 class C-define name fixed.
     - GUID check in the handling of enter boot loader mode event fixed.
     - CRC-CCITT calculation fixed, used by the boot loader.
+    
+  - PC example
+    - Sending events on linux failed, because the binary used packed structures, but the vscphelperlib.so not.
 
 ## 0.2.2
 
