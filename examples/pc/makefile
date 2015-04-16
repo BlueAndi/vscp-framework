@@ -110,11 +110,10 @@ PREPROC= -D_REENTRANT -DVERSION=\"$(VERSION)\"
 # General compiler flags independent of debug or release build
 # -Wall                : Enable all warnings
 # -ffunction-sections -fdata-sections : Remove unused functions
-# -fpack-struct        : Pack all structure members together without holes
 # -fshort-enums        : Allocate to an enum type only as many bytes as it needs for the declared range of possible values.
 # -std=gnu99           : Define the C standard
 # -funsigned-bitfields : Bitfields always unsigned
-CFLAGS= -Wall -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -std=gnu99 -funsigned-bitfields
+CFLAGS= -Wall -ffunction-sections -fdata-sections -fshort-enums -std=gnu99 -funsigned-bitfields
 
 # General linker flags independent of debug or release build
 # -Wall             : Enable all warnings
