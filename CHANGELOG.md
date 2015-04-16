@@ -2,6 +2,9 @@
 
 Features:
 
+  - VSCP framework
+    - Silent node behaviour is implemented, which is used for non-multimaster transport protocols, like RS-485. It can be enabled in the configuration.
+
   - PC example
     - The type of every received and transmitted class1.protocol is shown as user friendly string. This helps for better understanding.
 
