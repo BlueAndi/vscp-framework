@@ -253,15 +253,19 @@ extern void vscp_bl_adapter_programPage(uint16_t page, uint8_t *buffer)
 
 	log_printf("Program page 0x%04X.\n", page);
 	
-    fd = fopen(VSCP_BL_ADAPTER_APP_SEC_FILENAME, "w+b");
+    fd = fopen(VSCP_BL_ADAPTER_APP_SEC_FILENAME, "r+b");
     
     if (NULL == fd)
     {
-        LOG_ERROR("Couldn't open appcliation section file.");
+        LOG_ERROR("Couldn't open application section file.");
     }
     else
     {
-        (void)fwrite(buffer, sizeof(uint8_t), VSCP_PLATFORM_FLASH_PAGE_SIZE, fd);
+        /* Seek successful? */
+        if (0 == fseek(fd, page * VSCP_PLATFORM_FLASH_PAGE_SIZE, SEEK_SET))
+        {
+            (void)fwrite(buffer, sizeof(uint8_t), VSCP_PLATFORM_FLASH_PAGE_SIZE, fd);
+        }
         
         fclose(fd);
         fd = NULL;
@@ -285,8 +289,11 @@ extern uint8_t	vscp_bl_adapter_readProgMem(uint16_t address)
     
     if (NULL != fd)
     {
-        (void)fseek(fd, address, SEEK_SET);
-        (void)fread(&value, sizeof(value), 1, fd);
+        /* Seek successful? */
+        if (0 == fseek(fd, address, SEEK_SET))
+        {
+            (void)fread(&value, sizeof(value), 1, fd);
+        }
         
         fclose(fd);
         fd = NULL;
