@@ -1,3 +1,10 @@
+## 0.3.1 (unreleased)
+
+Bugfixes:
+
+  - PC example
+    - The L1 over L2 event to L1 event conversion missed to remove the interface GUID in case of 16 byte data.
+
 ## 0.3.0
 
 Features:
