@@ -636,7 +636,7 @@ static BOOL vscp_tp_adapter_handleL1OverL2Event(vscp_RxMessage * const msg, vscp
          * GUID size. Because all other level 1 events has a lower data size.
          */
         msg->dataNum    = (uint8_t)(daemonEvent->sizeData & 0xff);
-        if (VSCP_TP_ADAPTER_INTERFACE_GUID_SIZE < msg->dataNum)
+        if (VSCP_TP_ADAPTER_INTERFACE_GUID_SIZE <= msg->dataNum)
         {
             /* Overstep the interface GUID */
             msg->dataNum -= VSCP_TP_ADAPTER_INTERFACE_GUID_SIZE;
