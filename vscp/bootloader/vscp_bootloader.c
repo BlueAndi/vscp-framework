@@ -847,7 +847,7 @@ static void vscp_bootloader_waitForActivate(void)
                     crcCalculated = crc16ccitt_finalize(crcCalculated);
 
                     crcReceived  = ((uint16_t)rxMsg.data[0]) << 8u;
-                    crcReceived |= ((uint16_t)rxMsg.data[0]) << 0u;
+                    crcReceived |= ((uint16_t)rxMsg.data[1]) << 0u;
 
                     if (crcReceived != crcCalculated)
                     {
