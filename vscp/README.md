@@ -4,6 +4,8 @@
 
 Attention, the persistent memory contains all data in LSB first!
 
+
+<sub>
 | Id ( != address) | Size in byte | Enable flag | Description |
 | ---------------: | -----------: | :---------- | :---------- |
 |                1 |            1 | VSCP\_CONFIG\_BOOT\_LOADER\_SUPPORTED | Boot flag (jump to application or stay in bootloader) |
@@ -22,3 +24,4 @@ Attention, the persistent memory contains all data in LSB first!
 |               14 | VSCP\_CONFIG\_DM\_ROWS * VSCP\_DM\_ROW\_SIZE | VSCP\_CONFIG\_ENABLE\_DM | Standard decision matrix |
 |               15 | VSCP\_CONFIG\_DM\_ROWS * VSCP\_DM\_ROW\_SIZE | VSCP\_CONFIG\_ENABLE\_DM\_EXTENSION | Extended decision matrix |
 |               16 | VSCP\_CONFIG\_DM\_NG\_RULE\_SET\_SIZE | VSCP\_CONFIG\_ENABLE\_DM\_NEXT\_GENERATION | Decision matrix next generation |
+</sub>
