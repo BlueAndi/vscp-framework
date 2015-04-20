@@ -50,6 +50,9 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:ga14cbc97cd966dc05b2e4d2c3af8aa098"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__config.html#ga14cbc97cd966dc05b2e4d2c3af8aa098">VSCP_CONFIG_SILENT_NODE</a>&#160;&#160;&#160;<a class="el" href="group__vscp__config__base.html#ga7d576cfb370125b33e6237ffbb824e4f">VSCP_CONFIG_BASE_DISABLED</a></td></tr>
+<tr class="memdesc:ga14cbc97cd966dc05b2e4d2c3af8aa098"><td class="mdescLeft">&#160;</td><td class="mdescRight">Silent node configuration, which is used for e.  <a href="#ga14cbc97cd966dc05b2e4d2c3af8aa098">More...</a><br/></td></tr>
+<tr class="separator:ga14cbc97cd966dc05b2e4d2c3af8aa098"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6a30dceb700bb0a2536a3d105565253b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__config.html#ga6a30dceb700bb0a2536a3d105565253b">VSCP_CONFIG_HARD_CODED_NODE</a>&#160;&#160;&#160;<a class="el" href="group__vscp__config__base.html#ga7d576cfb370125b33e6237ffbb824e4f">VSCP_CONFIG_BASE_DISABLED</a></td></tr>
 <tr class="memdesc:ga6a30dceb700bb0a2536a3d105565253b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hard-coded node (fixed nickname id)  <a href="#ga6a30dceb700bb0a2536a3d105565253b">More...</a><br/></td></tr>
 <tr class="separator:ga6a30dceb700bb0a2536a3d105565253b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -354,10 +357,25 @@ Macros</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ga14cbc97cd966dc05b2e4d2c3af8aa098"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define VSCP_CONFIG_SILENT_NODE&#160;&#160;&#160;<a class="el" href="group__vscp__config__base.html#ga7d576cfb370125b33e6237ffbb824e4f">VSCP_CONFIG_BASE_DISABLED</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Silent node configuration, which is used for e. </p>
+<p>g. RS-485 connections. This type of nodes only listen to traffic before they get initialized by a host. In this case the nickname discovery process is not started for a node when it is powered up for the first time. This type on node instead starts to listen for the CLASS1.PROTOCOL, Type=23 (GUID drop nickname-ID / reset device.) event. When this series of events is received and the GUID is the same as for the module the module starts the nickname discovery procedure as of above. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 13 2015 20:25:19 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Apr 20 2015 21:35:06 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

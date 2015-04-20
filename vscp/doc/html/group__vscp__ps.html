@@ -294,8 +294,45 @@ Functions</h2></td></tr>
 <li>VSCP_DEV_DATA_CONFIG_ENABLE_MANUFACTURER_SUB_DEV_ID_STORAGE_PS</li>
 <li>VSCP_DEV_DATA_CONFIG_ENABLE_MDF_URL_STORAGE_PS</li>
 <li>VSCP_DEV_DATA_CONFIG_ENABLE_STD_DEV_FAMILY_CODE_STORAGE_PS</li>
-<li>VSCP_DEV_DATA_CONFIG_ENABLE_STD_DEV_TYPE_STORAGE_PS </li>
+<li>VSCP_DEV_DATA_CONFIG_ENABLE_STD_DEV_TYPE_STORAGE_PS</li>
 </ul>
+<p>Attention, the persistent memory contains all data in LSB first!</p>
+<table class="doxtable">
+<tr>
+<th align="right">Order </th><th align="right">Size in byte </th><th align="left">Enable flag </th><th align="left">Description  </th></tr>
+<tr>
+<td align="right">1 </td><td align="right">1 </td><td align="left">VSCP_CONFIG_BOOT_LOADER_SUPPORTED </td><td align="left">Boot flag (jump to application or stay in bootloader) </td></tr>
+<tr>
+<td align="right">2 </td><td align="right">1 </td><td align="left">- </td><td align="left">VSCP nickname id </td></tr>
+<tr>
+<td align="right">3 </td><td align="right">1 </td><td align="left">- </td><td align="left">Segment controller CRC </td></tr>
+<tr>
+<td align="right">4 </td><td align="right">1 </td><td align="left">- </td><td align="left">Node control flags </td></tr>
+<tr>
+<td align="right">5 </td><td align="right">5 </td><td align="left">- </td><td align="left">User id </td></tr>
+<tr>
+<td align="right">6 </td><td align="right">16 </td><td align="left">VSCP_DEV_DATA_CONFIG_ENABLE_GUID_STORAGE_PS </td><td align="left">GUID </td></tr>
+<tr>
+<td align="right">7 </td><td align="right">1 </td><td align="left">VSCP_DEV_DATA_CONFIG_ENABLE_NODE_ZONE_STORAGE_PS </td><td align="left">Node zone </td></tr>
+<tr>
+<td align="right">8 </td><td align="right">1 </td><td align="left">VSCP_DEV_DATA_CONFIG_ENABLE_NODE_SUB_ZONE_STORAGE_PS </td><td align="left">Node sub zone </td></tr>
+<tr>
+<td align="right">9 </td><td align="right">4 </td><td align="left">VSCP_DEV_DATA_CONFIG_ENABLE_MANUFACTURER_DEV_ID_STORAGE_PS </td><td align="left">Manufacturer device id </td></tr>
+<tr>
+<td align="right">10 </td><td align="right">4 </td><td align="left">VSCP_DEV_DATA_CONFIG_ENABLE_MANUFACTURER_SUB_DEV_ID_STORAGE_PS </td><td align="left">Manufacturer sub device id </td></tr>
+<tr>
+<td align="right">11 </td><td align="right">32 </td><td align="left">VSCP_DEV_DATA_CONFIG_ENABLE_MDF_URL_STORAGE_PS </td><td align="left">MDF URL </td></tr>
+<tr>
+<td align="right">12 </td><td align="right">4 </td><td align="left">VSCP_DEV_DATA_CONFIG_ENABLE_STD_DEV_FAMILY_CODE_STORAGE_PS </td><td align="left">Family code </td></tr>
+<tr>
+<td align="right">13 </td><td align="right">4 </td><td align="left">VSCP_DEV_DATA_CONFIG_ENABLE_STD_DEV_TYPE_STORAGE_PS </td><td align="left">Device type </td></tr>
+<tr>
+<td align="right">14 </td><td align="right">VSCP_CONFIG_DM_ROWS * VSCP_DM_ROW_SIZE </td><td align="left">VSCP_CONFIG_ENABLE_DM </td><td align="left">Standard decision matrix </td></tr>
+<tr>
+<td align="right">15 </td><td align="right">VSCP_CONFIG_DM_ROWS * VSCP_DM_ROW_SIZE </td><td align="left">VSCP_CONFIG_ENABLE_DM_EXTENSION </td><td align="left">Extended decision matrix </td></tr>
+<tr>
+<td align="right">16 </td><td align="right">VSCP_CONFIG_DM_NG_RULE_SET_SIZE </td><td align="left">VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION </td><td align="left">Decision matrix next generation </td></tr>
+</table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="gae3579a9f3ef364577af84c58263dffcc"></a>
 <div class="memitem">
@@ -1416,7 +1453,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 13 2015 20:25:19 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Apr 20 2015 21:35:06 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

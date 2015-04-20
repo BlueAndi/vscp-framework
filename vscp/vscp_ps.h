@@ -67,6 +67,27 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
  * - VSCP_DEV_DATA_CONFIG_ENABLE_STD_DEV_FAMILY_CODE_STORAGE_PS
  * - VSCP_DEV_DATA_CONFIG_ENABLE_STD_DEV_TYPE_STORAGE_PS
  *
+ *
+ * Attention, the persistent memory contains all data in LSB first!
+ * 
+ * | Order | Size in byte                           | Enable flag                                                    | Description |
+ * | ----: | -------------------------------------: | :------------------------------------------------------------- | :---------- |
+ * |     1 |                                      1 | VSCP_CONFIG_BOOT_LOADER_SUPPORTED                              | Boot flag (jump to application or stay in bootloader) |
+ * |     2 |                                      1 | -                                                              | VSCP nickname id |
+ * |     3 |                                      1 | -                                                              | Segment controller CRC |
+ * |     4 |                                      1 | -                                                              | Node control flags |
+ * |     5 |                                      5 | -                                                              | User id |
+ * |     6 |                                     16 | VSCP_DEV_DATA_CONFIG_ENABLE_GUID_STORAGE_PS                    | GUID |
+ * |     7 |                                      1 | VSCP_DEV_DATA_CONFIG_ENABLE_NODE_ZONE_STORAGE_PS               | Node zone |
+ * |     8 |                                      1 | VSCP_DEV_DATA_CONFIG_ENABLE_NODE_SUB_ZONE_STORAGE_PS           | Node sub zone |
+ * |     9 |                                      4 | VSCP_DEV_DATA_CONFIG_ENABLE_MANUFACTURER_DEV_ID_STORAGE_PS     | Manufacturer device id |
+ * |    10 |                                      4 | VSCP_DEV_DATA_CONFIG_ENABLE_MANUFACTURER_SUB_DEV_ID_STORAGE_PS | Manufacturer sub device id |
+ * |    11 |                                     32 | VSCP_DEV_DATA_CONFIG_ENABLE_MDF_URL_STORAGE_PS                 | MDF URL |
+ * |    12 |                                      4 | VSCP_DEV_DATA_CONFIG_ENABLE_STD_DEV_FAMILY_CODE_STORAGE_PS     | Family code |
+ * |    13 |                                      4 | VSCP_DEV_DATA_CONFIG_ENABLE_STD_DEV_TYPE_STORAGE_PS            | Device type |
+ * |    14 | VSCP_CONFIG_DM_ROWS * VSCP_DM_ROW_SIZE | VSCP_CONFIG_ENABLE_DM                                          | Standard decision matrix |
+ * |    15 | VSCP_CONFIG_DM_ROWS * VSCP_DM_ROW_SIZE | VSCP_CONFIG_ENABLE_DM_EXTENSION                                | Extended decision matrix |
+ * |    16 | VSCP_CONFIG_DM_NG_RULE_SET_SIZE        | VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION                          | Decision matrix next generation |
  * @{
  */
 
