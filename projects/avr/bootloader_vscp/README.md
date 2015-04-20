@@ -14,6 +14,15 @@ And provides additional the user specific adaptions, which are in the vscp\_user
 * The CAN controller MCP2515 is used and connected to the SPI.
 * The BOOTSZ is set to 0 which results in a 4096 bytes bootloader section.
 
+###Persistent memory layout
+
+This bootloader uses the following persistent memory layout:
+
+| Address  | Size in byte  | Description |
+| :------: | :-----------: | :---------: |
+| 0 | 1 | Boot flag (jump to application or stay in bootloader) |
+| 1 | 1 | VSCP nickname id |
+
 ##How to change the MCU?
 * Change the MCU in the AtmelStudio.
 * Change the BOOTSZ configuration in vscp\_platform.
