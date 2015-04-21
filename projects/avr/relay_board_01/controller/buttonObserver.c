@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +21,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
@@ -79,12 +79,12 @@ $Date: 2014-12-27 23:42:44 +0100 (Sa, 27 Dez 2014) $
 /** This type contains the parameter about a single pushbutton. */
 typedef struct
 {
-    uint8_t			        maxOnTime;	/**< Max. on time (pressed) for pulse detection */
-    uint8_t			        maxOffTime;	/**< Max. off time (released) for pulse detection */
-    BOOL			        isActive;	/**< A button is processed only in case of it is active. */
-    BUTTONOBSERVER_STATE    state;		/**< Current button state (pressed/released) */
-    uint8_t			        onOffTime;	/**< Current on/off time counter in 10ms per digit */
-    uint8_t			        numPulse;	/**< Current number of detected pulse */
+    uint8_t                 maxOnTime;  /**< Max. on time (pressed) for pulse detection */
+    uint8_t                 maxOffTime; /**< Max. off time (released) for pulse detection */
+    BOOL                    isActive;   /**< A button is processed only in case of it is active. */
+    BUTTONOBSERVER_STATE    state;      /**< Current button state (pressed/released) */
+    uint8_t                 onOffTime;  /**< Current on/off time counter in 10ms per digit */
+    uint8_t                 numPulse;   /**< Current number of detected pulse */
 
 } buttonObserver_Button;
 
@@ -92,7 +92,7 @@ typedef struct
     PROTOTYPES
 *******************************************************************************/
 
-static void	buttonObserver_processButton(buttonObserver_Button * const button, BUTTONOBSERVER_STATE state);
+static void buttonObserver_processButton(buttonObserver_Button * const button, BUTTONOBSERVER_STATE state);
 
 /*******************************************************************************
     LOCAL VARIABLES
@@ -122,18 +122,18 @@ extern void buttonObserver_init(void)
 
     memset(buttonObserver_buttons, 0, sizeof(buttonObserver_buttons));
 
-	/* Set default maximum times */
-	for(index = 0; index < BUTTONOBSERVER_NUM; ++index)
-	{
+    /* Set default maximum times */
+    for(index = 0; index < BUTTONOBSERVER_NUM; ++index)
+    {
         buttonObserver_Button   *button = &buttonObserver_buttons[index];
 
         button->state       = BUTTONOBSERVER_STATE_RELEASED;
-    	button->maxOffTime  = BUTTONOBSERVER_MAX_OFF_TIME;
-    	button->maxOnTime   = BUTTONOBSERVER_MAX_ON_TIME;
-	}
+        button->maxOffTime  = BUTTONOBSERVER_MAX_OFF_TIME;
+        button->maxOnTime   = BUTTONOBSERVER_MAX_ON_TIME;
+    }
 
-	/* Get current button status */
-	buttonObserver_status = pushButton_readStatus();
+    /* Get current button status */
+    buttonObserver_status = pushButton_readStatus();
 
     return;
 }
@@ -149,13 +149,13 @@ extern void buttonObserver_setFilter(uint8_t filter)
 {
     uint8_t index   = 0;
 
-	for(index = 0; index < BUTTONOBSERVER_NUM; ++index)
-	{
-    	buttonObserver_Button   *button = &buttonObserver_buttons[index];
-    	uint8_t                 mask    = (1 << index);
+    for(index = 0; index < BUTTONOBSERVER_NUM; ++index)
+    {
+        buttonObserver_Button   *button = &buttonObserver_buttons[index];
+        uint8_t                 mask    = (1 << index);
 
-    	/* Disable the button? */
-    	if (0 == (filter & mask))
+        /* Disable the button? */
+        if (0 == (filter & mask))
         {
             button->state = BUTTONOBSERVER_STATE_DISABLED;
         }
@@ -178,54 +178,54 @@ extern void buttonObserver_process(void)
     uint8_t stable  = 0;
     uint8_t status  = pushButton_readStatus();
 
-	/* Which buttons are stable?
-	 * Example:
-	 * status     = 1 <-- Current state
-	 * old status = 0 <-- Previous state
-	 * stable = 1 ^ 0 = 1 --> State not stable
-	 *
-	 * status     = 1
-	 * old status = 1
-	 * stable = 1 ^ 1 = 0 --> State is stable
-	 *
-	 * etc.
-	 *
-	 */
-	stable = status ^ buttonObserver_status;
+    /* Which buttons are stable?
+     * Example:
+     * status     = 1 <-- Current state
+     * old status = 0 <-- Previous state
+     * stable = 1 ^ 0 = 1 --> State not stable
+     *
+     * status     = 1
+     * old status = 1
+     * stable = 1 ^ 1 = 0 --> State is stable
+     *
+     * etc.
+     *
+     */
+    stable = status ^ buttonObserver_status;
 
     /* Remember the current status for debouncing. */
     buttonObserver_status = status;
 
-	/* Process all buttons */
-	for(index = 0; index < BUTTONOBSERVER_NUM; ++index)
-	{
+    /* Process all buttons */
+    for(index = 0; index < BUTTONOBSERVER_NUM; ++index)
+    {
         buttonObserver_Button   *button = &buttonObserver_buttons[index];
-    	uint8_t                 mask    = (1 << index);
+        uint8_t                 mask    = (1 << index);
 
         /* Button enabled? */
         if (BUTTONOBSERVER_STATE_DISABLED != button->state)
         {
-    	    /* Is the state of this button stable? */
-    	    if (0 == (stable & mask))
-    	    {
-        	    /* Is the button released? */
-        	    if (0 == (status & mask))
-        	    {
-            	    buttonObserver_processButton(button, BUTTONOBSERVER_STATE_RELEASED);
-        	    }
-        	    else
-        	    /* Button is pressed. */
-        	    {
+            /* Is the state of this button stable? */
+            if (0 == (stable & mask))
+            {
+                /* Is the button released? */
+                if (0 == (status & mask))
+                {
+                    buttonObserver_processButton(button, BUTTONOBSERVER_STATE_RELEASED);
+                }
+                else
+                /* Button is pressed. */
+                {
                     buttonObserver_processButton(button, BUTTONOBSERVER_STATE_PRESSED);
-        	    }
-    	    }
+                }
+            }
             /* Button state is not stable. Call it with the previous state. */
-    	    else
-    	    {
+            else
+            {
                 buttonObserver_processButton(button, button->state);
-    	    }
+            }
         }
-	}
+    }
 
     return;
 }
@@ -240,94 +240,94 @@ extern void buttonObserver_process(void)
  * @param[in]   button  Button context
  * @param[in]   state   Current state
  */
-static void	buttonObserver_processButton(buttonObserver_Button * const button, BUTTONOBSERVER_STATE state)
+static void buttonObserver_processButton(buttonObserver_Button * const button, BUTTONOBSERVER_STATE state)
 {
     BOOL    notify      = FALSE;
     uint8_t numPulse    = 0;
 
-	if (NULL == button)
-	{
-		return;
-	}
+    if (NULL == button)
+    {
+        return;
+    }
 
-	/* Button state changed? */
-	if (state != button->state)
-	{
-		/* Reset on/off time counter */
-		button->onOffTime = 0;
+    /* Button state changed? */
+    if (state != button->state)
+    {
+        /* Reset on/off time counter */
+        button->onOffTime = 0;
 
-		/* Changed to released? */
-		if (BUTTONOBSERVER_STATE_RELEASED == state)
-		{
-			/* If max. off time is not exceed, increase the number of detected pulse. */
-			if (TRUE == button->isActive)
-			{
-				++button->numPulse;
-			}
-			else
-			/* If max. on time is exceed, notify the off state of the button immediately. */
-			{
-				notify      = TRUE;
+        /* Changed to released? */
+        if (BUTTONOBSERVER_STATE_RELEASED == state)
+        {
+            /* If max. off time is not exceed, increase the number of detected pulse. */
+            if (TRUE == button->isActive)
+            {
+                ++button->numPulse;
+            }
+            else
+            /* If max. on time is exceed, notify the off state of the button immediately. */
+            {
+                notify      = TRUE;
                 numPulse    = 0;
-			}
-		}
+            }
+        }
 
-		/* Track the time? */
-		if (FALSE == notify)
-		{
-			/* Yes */
-			button->isActive = TRUE;
-		}
+        /* Track the time? */
+        if (FALSE == notify)
+        {
+            /* Yes */
+            button->isActive = TRUE;
+        }
 
-		/* Save current state */
-		button->state = state;
-	}
-	else
-	/* Active? */
-	if (TRUE == button->isActive)
-	{
-		/* Increase time counter */
-		++button->onOffTime;
+        /* Save current state */
+        button->state = state;
+    }
+    else
+    /* Active? */
+    if (TRUE == button->isActive)
+    {
+        /* Increase time counter */
+        ++button->onOffTime;
 
-		/* Verify the on time? */
-		if (BUTTONOBSERVER_STATE_PRESSED == button->state)
-		{
-			/* Greater than the max. on time? */
-			if (button->maxOnTime < button->onOffTime)
-			{
-				/* Notify */
-				notify      = TRUE;
+        /* Verify the on time? */
+        if (BUTTONOBSERVER_STATE_PRESSED == button->state)
+        {
+            /* Greater than the max. on time? */
+            if (button->maxOnTime < button->onOffTime)
+            {
+                /* Notify */
+                notify      = TRUE;
                 numPulse    = button->numPulse;
 
-				/* No further processing */
-				button->isActive = FALSE;
+                /* No further processing */
+                button->isActive = FALSE;
 
-				/* Reset */
-				button->numPulse = 0;
-			}
-		}
-		else
-		/* Verify off time */
-		{
-			/* Greater than the max. off time? */
-			if (button->maxOffTime < button->onOffTime)
-			{
-				/* Inform application */
-				notify      = TRUE;
-				numPulse    = button->numPulse;
+                /* Reset */
+                button->numPulse = 0;
+            }
+        }
+        else
+        /* Verify off time */
+        {
+            /* Greater than the max. off time? */
+            if (button->maxOffTime < button->onOffTime)
+            {
+                /* Inform application */
+                notify      = TRUE;
+                numPulse    = button->numPulse;
 
-				/* No further processing */
-				button->isActive = FALSE;
+                /* No further processing */
+                button->isActive = FALSE;
 
-				/* Reset */
-				button->numPulse = 0;
-			}
-		}
-	}
+                /* Reset */
+                button->numPulse = 0;
+            }
+        }
+    }
 
-	/* Notify? */
-	if (TRUE == notify)
-	{
+    /* Notify? */
+    if (TRUE == notify)
+    {
         uint8_t buttonIndex         = (uint8_t)(button - buttonObserver_buttons);   /* Calculate button index */
         uint8_t eventButtonState    = 0;
 
@@ -353,12 +353,12 @@ static void	buttonObserver_processButton(buttonObserver_Button * const button, B
             eventButtonState = 1;
         }
 
-        (void)vscp_information_sendButtonEvent(	eventButtonState, 
-												vscp_ps_user_readButtonEventZone(buttonIndex), 
-												vscp_ps_user_readButtonEventSubZone(buttonIndex),
-												buttonIndex,
-												NULL);
-	}
+        (void)vscp_information_sendButtonEvent( eventButtonState,
+                                                vscp_ps_user_readButtonEventZone(buttonIndex),
+                                                vscp_ps_user_readButtonEventSubZone(buttonIndex),
+                                                buttonIndex,
+                                                NULL);
+    }
 
-	return;
+    return;
 }

@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +21,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
@@ -162,11 +162,11 @@ extern void vscp_bl_adapter_jumpToApp(void)
 /**
  * This function enable or disable the initialization lamp.
  *
- * @param[in]   enableIt	Enable (true) or disable (false) lamp
+ * @param[in]   enableIt    Enable (true) or disable (false) lamp
  */
 extern void vscp_bl_adapter_enableLamp(BOOL enableIt)
 {
-	if (FALSE == enableIt)
+    if (FALSE == enableIt)
     {
         HW_DISABLE_STATUS_LED();
     }
@@ -174,8 +174,8 @@ extern void vscp_bl_adapter_enableLamp(BOOL enableIt)
     {
         HW_ENABLE_STATUS_LED();
     }
-	
-	return;
+
+    return;
 }
 
 /**
@@ -187,7 +187,7 @@ extern void vscp_bl_adapter_halt(void)
     /* Move interrupt vectors to application section */
     VSCP_BL_ADAPTER_ISR_VECTOR_TO_APP();
 
-	HALT();
+    HALT();
 
     return;
 }
@@ -200,7 +200,7 @@ extern void vscp_bl_adapter_reboot(void)
     /* Move interrupt vectors to application section */
     VSCP_BL_ADAPTER_ISR_VECTOR_TO_APP();
 
-	REBOOT();
+    REBOOT();
 
     return;
 }
@@ -209,12 +209,12 @@ extern void vscp_bl_adapter_reboot(void)
  * This function returns the state of the segment initialization button.
  *
  * @return State
- * @retval FALSE	Released
- * @retval TRUE		Pressed
+ * @retval FALSE    Released
+ * @retval TRUE     Pressed
  */
 extern BOOL vscp_bl_adapter_getSegInitButtonState(void)
 {
-	uint8_t index   = 0;
+    uint8_t index   = 0;
     BOOL    state   = hw_getSegInitButtonState();
 
     /* Simple debouncing */
@@ -231,7 +231,7 @@ extern BOOL vscp_bl_adapter_getSegInitButtonState(void)
         }
     }
     while(3 > index);
-	
+
     return state;
 }
 
@@ -248,11 +248,11 @@ extern uint8_t vscp_bl_adapter_readBootFlag(void)
 /**
  * This function writes the boot flag to persistent memory.
  *
- * @param[in]	bootFlag	Boot flag
+ * @param[in]   bootFlag    Boot flag
  */
 extern void vscp_bl_adapter_writeBootFlag(uint8_t bootFlag)
 {
-	eeprom_write_byte((uint8_t*)VSCP_BL_ADAPTER_PS_ADDR_BOOT_FLAG, bootFlag);
+    eeprom_write_byte((uint8_t*)VSCP_BL_ADAPTER_PS_ADDR_BOOT_FLAG, bootFlag);
     return;
 }
 
@@ -279,12 +279,12 @@ extern uint8_t  vscp_bl_adapter_readGUID(uint8_t index)
 /**
  * This function writes a complete page to the flash memory.
  *
- * @param[in]	page    Page which shall be written
- * @param[in]	buffer	Pointer to the buffer with the data
+ * @param[in]   page    Page which shall be written
+ * @param[in]   buffer  Pointer to the buffer with the data
  */
 extern void vscp_bl_adapter_programPage(uint16_t page, uint8_t *buffer)
 {
-	uint32_t    addr    = page * VSCP_PLATFORM_FLASH_PAGE_SIZE;
+    uint32_t    addr    = page * VSCP_PLATFORM_FLASH_PAGE_SIZE;
     uint16_t    index   = 0u;
     uint8_t     sreg    = 0;
 
@@ -296,32 +296,32 @@ extern void vscp_bl_adapter_programPage(uint16_t page, uint8_t *buffer)
     eeprom_busy_wait();
 
     /* Erase flash page */
-	boot_page_erase(addr);
+    boot_page_erase(addr);
 
     /* Wait until the memory is erased. */
-	boot_spm_busy_wait();
+    boot_spm_busy_wait();
 
-	for (index = 0u; index < VSCP_PLATFORM_FLASH_PAGE_SIZE; index += 2u)
-	{
-		/* Set up little-endian word. */
-		uint16_t leWord = *buffer;
+    for (index = 0u; index < VSCP_PLATFORM_FLASH_PAGE_SIZE; index += 2u)
+    {
+        /* Set up little-endian word. */
+        uint16_t leWord = *buffer;
         ++buffer;
         leWord += (*buffer) << 8u;
         ++buffer;
 
-		boot_page_fill(addr + index, leWord);
-	}
+        boot_page_fill(addr + index, leWord);
+    }
 
     /* Store buffer in flash page. */
-	boot_page_write(addr);
+    boot_page_write(addr);
 
     /* Wait until the memory is written. */
-	boot_spm_busy_wait();
+    boot_spm_busy_wait();
 
-	/* Re-enable RWW-section again. We need this if we want to jump back
-	 * to the application after the boot loader.
+    /* Re-enable RWW-section again. We need this if we want to jump back
+     * to the application after the boot loader.
      */
-	boot_rww_enable();
+    boot_rww_enable();
 
     /* Enable interrupts (if they were ever enabled). */
     SREG = sreg;
@@ -332,12 +332,12 @@ extern void vscp_bl_adapter_programPage(uint16_t page, uint8_t *buffer)
 /**
  * This function read a byte from program memory.
  *
- * @param[in] address	Program memory address
+ * @param[in] address   Program memory address
  * @return Value
  */
-extern uint8_t	vscp_bl_adapter_readProgMem(uint16_t address)
+extern uint8_t  vscp_bl_adapter_readProgMem(uint16_t address)
 {
-	return pgm_read_byte(address);
+    return pgm_read_byte(address);
 }
 
 /*******************************************************************************

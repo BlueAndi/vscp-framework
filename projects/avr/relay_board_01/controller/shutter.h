@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,11 +21,11 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
-	DESCRIPTION
+    DESCRIPTION
 *******************************************************************************/
 /**
 @brief  This module controls the shutter.
@@ -60,7 +60,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 #define __SHUTTER_H__
 
 /*******************************************************************************
-	INCLUDES
+    INCLUDES
 *******************************************************************************/
 #include "system.h"
 
@@ -70,51 +70,51 @@ extern "C"
 #endif
 
 /*******************************************************************************
-	COMPILER SWITCHES
+    COMPILER SWITCHES
 *******************************************************************************/
 
 /*******************************************************************************
-	CONSTANTS
+    CONSTANTS
 *******************************************************************************/
 
 /** Number of shutters */
 #define SHUTTER_NUM 4
 
 /*******************************************************************************
-	MACROS
+    MACROS
 *******************************************************************************/
 
 /*******************************************************************************
-	TYPES AND STRUCTURES
+    TYPES AND STRUCTURES
 *******************************************************************************/
 
 /** This type defines function return values. */
 typedef enum
 {
-	SHUTTER_RET_OK = 0,	/**< Execution successful */
-	SHUTTER_RET_ERROR,	/**< Execution failed (common error) */
-	SHUTTER_RET_ENULL,	/**< Unexpected NULL pointer */
-	SHUTTER_RET_EPAR	/**< Invalid parameter */
+    SHUTTER_RET_OK = 0, /**< Execution successful */
+    SHUTTER_RET_ERROR,  /**< Execution failed (common error) */
+    SHUTTER_RET_ENULL,  /**< Unexpected NULL pointer */
+    SHUTTER_RET_EPAR    /**< Invalid parameter */
 
 } SHUTTER_RET;
 
 /** This type defines the possible shutter directions. */
 typedef enum
 {
-	SHUTTER_DIR_STOP = 0,	/**< Stop */
-	SHUTTER_DIR_UP,			/**< Drive shutter up */
-	SHUTTER_DIR_DOWN,		/**< Drive shutter down */
-	SHUTTER_DIR_TOP,		/**< Drive to the top */
-	SHUTTER_DIR_BOTTOM		/**< Drive to the bottom */
+    SHUTTER_DIR_STOP = 0,   /**< Stop */
+    SHUTTER_DIR_UP,         /**< Drive shutter up */
+    SHUTTER_DIR_DOWN,       /**< Drive shutter down */
+    SHUTTER_DIR_TOP,        /**< Drive to the top */
+    SHUTTER_DIR_BOTTOM      /**< Drive to the bottom */
 
 } SHUTTER_DIR;
 
 /*******************************************************************************
-	VARIABLES
+    VARIABLES
 *******************************************************************************/
 
 /*******************************************************************************
-	FUNCTIONS
+    FUNCTIONS
 *******************************************************************************/
 
 /**
@@ -135,7 +135,7 @@ extern void shutter_init(void);
  * @param[in]   maxDown     Max. down-time (drive time from top to bottom) in 0.1s
  * @param[in]   maxTurn     Max. turn-time (turn 90°) in 0.1s
  */
-extern void	shutter_configure(uint8_t nr, uint8_t relayPower, uint8_t relayDir, uint16_t maxUp, uint16_t maxDown, uint16_t maxTurn);
+extern void shutter_configure(uint8_t nr, uint8_t relayPower, uint8_t relayDir, uint16_t maxUp, uint16_t maxDown, uint16_t maxTurn);
 
 /**
  * This function enables or disables a shutter instance. If the shutter
@@ -145,7 +145,7 @@ extern void	shutter_configure(uint8_t nr, uint8_t relayPower, uint8_t relayDir, 
  * @param[in]   nr          Shutter instance number
  * @param[in]   enableIt    TRUE: Enable it FALSE: Disable it
  */
-extern void	shutter_enable(uint8_t nr, BOOL enableIt);
+extern void shutter_enable(uint8_t nr, BOOL enableIt);
 
 /**
  * This functions returns the shutter enable status.
@@ -167,7 +167,7 @@ extern BOOL shutter_isEnabled(uint8_t nr);
  * @param[in]   dir         Shutter drive direction
  * @param[in]   duration    Drive duration (0: infinite) in 0.1s
  */
-extern void	shutter_drive(uint8_t nr, SHUTTER_DIR dir, uint16_t duration);
+extern void shutter_drive(uint8_t nr, SHUTTER_DIR dir, uint16_t duration);
 
 /**
  * This function drives the shutter to a absolute position.
@@ -180,7 +180,7 @@ extern void	shutter_drive(uint8_t nr, SHUTTER_DIR dir, uint16_t duration);
  * @param[in]   nr  Shutter instance number
  * @param[in]   pos Absolute position
  */
-extern void	shutter_driveAbs(uint8_t nr, uint8_t pos);
+extern void shutter_driveAbs(uint8_t nr, uint8_t pos);
 
 /**
  * This function drives set/reset the wind alert. If alert is set, the shutter
@@ -191,7 +191,7 @@ extern void	shutter_driveAbs(uint8_t nr, uint8_t pos);
  * @param[in]   nr      Shutter instance number
  * @param[in]   alert   Set or remove wind alert
  */
-extern void	shutter_windAlert(uint8_t nr, BOOL alert);
+extern void shutter_windAlert(uint8_t nr, BOOL alert);
 
 /**
  * This function turns the shutter the given angle. It is only interesting for
@@ -200,13 +200,13 @@ extern void	shutter_windAlert(uint8_t nr, BOOL alert);
  * @param[in]   nr      Shutter instance number
  * @param[in]   angle   Angle in degree [0;90]°
  */
-extern void	shutter_turn(uint8_t nr, uint8_t angle);
+extern void shutter_turn(uint8_t nr, uint8_t angle);
 
 /**
  * This function is called in an ISR to process the timers.
  * It shall be called every 100 ms.
  */
-extern void	shutter_processTimers(void);
+extern void shutter_processTimers(void);
 
 /**
  * This function controls the shutters according to their given commands.
@@ -216,10 +216,10 @@ extern void	shutter_processTimers(void);
  * @retval FALSE    Any shutter is driving
  * @retval TRUE     Idle, no shutter is driving
  */
-extern BOOL	shutter_process(void);
+extern BOOL shutter_process(void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif	/* __SHUTTER_H__ */
+#endif  /* __SHUTTER_H__ */

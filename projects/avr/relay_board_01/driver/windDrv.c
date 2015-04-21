@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +21,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
@@ -225,14 +225,14 @@ ISR(TIMER2_OVF_vect)
         {
             /* Calculate frequency = number of turns / delta time */
             uint16_t    frequency = (uint8_t)( ( 1000u * (uint16_t)windDrv_turnCnt ) / ( WINDDRV_SAMPLE_PERIOD / 10u ) );  /* [0,1 Hz] */
-            
+
             /* Calculate the wind speed = ( 10 dm/s * frequency ) / calibration frequency */
             windDrv_speed = (10u * frequency) / WINDDRV_CALIB_FREQ; /* [dm/s] */
         }
-        
+
         /* Reset turn counter */
         windDrv_turnCnt = 0;
-        
+
         /* Reset timer interrupt counter */
         windDrv_timerInterruptCnt = 0;
     }

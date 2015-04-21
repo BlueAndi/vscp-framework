@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +21,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
@@ -208,7 +208,7 @@ extern void vscp_action_execute(uint8_t action, uint8_t par, vscp_RxMessage cons
     case VSCP_ACTION_ENABLE_RELAY:
         vscp_action_activateRelay(par, TRUE);
         break;
-    
+
     case VSCP_ACTION_DISABLE_RELAY:
         vscp_action_activateRelay(par, FALSE);
         break;
@@ -216,7 +216,7 @@ extern void vscp_action_execute(uint8_t action, uint8_t par, vscp_RxMessage cons
     case VSCP_ACTION_STOP_SHUTTER:
         vscp_action_driveShutter(par, SHUTTER_DIR_STOP, 0);
         break;
-        
+
     case VSCP_ACTION_DRIVE_SHUTTER_UP:
         vscp_action_driveShutter(par, SHUTTER_DIR_UP, 0);
         break;
@@ -291,14 +291,14 @@ static void vscp_action_activateRelay(uint8_t par, BOOL activate)
                     {
                         if (FALSE == activate)
                         {
-                            vscp_information_sendOffEvent(  index, 
-                                                            vscp_ps_user_readRelayEventZone(index), 
+                            vscp_information_sendOffEvent(  index,
+                                                            vscp_ps_user_readRelayEventZone(index),
                                                             vscp_ps_user_readRelayEventSubZone(index));
                         }
                         else
                         {
-                            vscp_information_sendOnEvent(   index, 
-                                                            vscp_ps_user_readRelayEventZone(index), 
+                            vscp_information_sendOnEvent(   index,
+                                                            vscp_ps_user_readRelayEventZone(index),
                                                             vscp_ps_user_readRelayEventSubZone(index));
                         }
                     }

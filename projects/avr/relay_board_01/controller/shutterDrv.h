@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,11 +21,11 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
-	DESCRIPTION
+    DESCRIPTION
 *******************************************************************************/
 /**
 @brief  This module contains the shutter driver.
@@ -52,7 +52,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 #define __SHUTTERDRV_H__
 
 /*******************************************************************************
-	INCLUDES
+    INCLUDES
 *******************************************************************************/
 #include "system.h"
 
@@ -62,52 +62,52 @@ extern "C"
 #endif
 
 /*******************************************************************************
-	COMPILER SWITCHES
+    COMPILER SWITCHES
 *******************************************************************************/
 
 /*******************************************************************************
-	CONSTANTS
+    CONSTANTS
 *******************************************************************************/
 
 /** Number of shutters */
 #define SHUTTERDRV_NUM  4
 
 /*******************************************************************************
-	MACROS
+    MACROS
 *******************************************************************************/
 
 /*******************************************************************************
-	TYPES AND STRUCTURES
+    TYPES AND STRUCTURES
 *******************************************************************************/
 
 /** This type defines function return values. */
 typedef enum
 {
-	SHUTTERDRV_RET_OK = 0,	/**< Execution successful */
-	SHUTTERDRV_RET_ERROR,	/**< Execution failed (common error) */
-	SHUTTERDRV_RET_ENULL,	/**< Unexpected NULL pointer */
-	SHUTTERDRV_RET_EPAR	    /**< Invalid parameter */
+    SHUTTERDRV_RET_OK = 0,  /**< Execution successful */
+    SHUTTERDRV_RET_ERROR,   /**< Execution failed (common error) */
+    SHUTTERDRV_RET_ENULL,   /**< Unexpected NULL pointer */
+    SHUTTERDRV_RET_EPAR     /**< Invalid parameter */
 
 } SHUTTERDRV_RET;
 
 /** This type defines the possible shutter directions. */
 typedef enum
 {
-	SHUTTERDRV_DIR_STOP = 0,	/**< Stop */
-	SHUTTERDRV_DIR_UP,			/**< Drive shutter up */
-	SHUTTERDRV_DIR_DOWN		    /**< Drive shutter down */
+    SHUTTERDRV_DIR_STOP = 0,    /**< Stop */
+    SHUTTERDRV_DIR_UP,          /**< Drive shutter up */
+    SHUTTERDRV_DIR_DOWN         /**< Drive shutter down */
 
 } SHUTTERDRV_DIR;
 
 /** This type defines a shutter control callback. */
-typedef void	(*shutterDrv_CallBack)(uint8_t nr, SHUTTERDRV_DIR dir, BOOL isDriving, void * const userData);
+typedef void    (*shutterDrv_CallBack)(uint8_t nr, SHUTTERDRV_DIR dir, BOOL isDriving, void * const userData);
 
 /*******************************************************************************
-	VARIABLES
+    VARIABLES
 *******************************************************************************/
 
 /*******************************************************************************
-	FUNCTIONS
+    FUNCTIONS
 *******************************************************************************/
 
 /**
@@ -128,7 +128,7 @@ extern void shutterDrv_init(void);
  * @param[in]   userData    User specific data which comes via callback
  * @return Status
  */
-extern SHUTTERDRV_RET shutterDrv_configure(uint8_t nr, uint8_t relayPower, uint8_t relayDir,	shutterDrv_CallBack cb, void * const userData);
+extern SHUTTERDRV_RET shutterDrv_configure(uint8_t nr, uint8_t relayPower, uint8_t relayDir,    shutterDrv_CallBack cb, void * const userData);
 
 /**
  * This function enables or disables a shutter instance. If the shutter
@@ -138,7 +138,7 @@ extern SHUTTERDRV_RET shutterDrv_configure(uint8_t nr, uint8_t relayPower, uint8
  * @param[in]   nr          Shutter instance number
  * @param[in]   enableIt    TRUE: Enable it FALSE: Disable it
  */
-extern void	shutterDrv_enable(uint8_t nr, BOOL enableIt);
+extern void shutterDrv_enable(uint8_t nr, BOOL enableIt);
 
 /**
  * This function drives the shutter to the given direction.
@@ -146,13 +146,13 @@ extern void	shutterDrv_enable(uint8_t nr, BOOL enableIt);
  * @param[in]   nr          Shutter instance number
  * @param[in]   direction   Shutter drive direction
  */
-extern void	shutterDrv_drive(uint8_t nr, SHUTTERDRV_DIR direction);
+extern void shutterDrv_drive(uint8_t nr, SHUTTERDRV_DIR direction);
 
 /**
  * Get current drive direction of the shutter.
  *
  * @param[in]   nr  Shutter instance number
- * @return	Drive direction
+ * @return  Drive direction
  */
 extern SHUTTERDRV_DIR shutterDrv_getDriveDirection(uint8_t nr);
 
@@ -169,4 +169,4 @@ extern BOOL shutterDrv_process(void);
 }
 #endif
 
-#endif	/* __SHUTTERDRV_H__ */
+#endif  /* __SHUTTERDRV_H__ */

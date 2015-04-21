@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +21,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
@@ -58,7 +58,7 @@ $Date: 2015-01-06 10:45:56 +0100 (Di, 06 Jan 2015) $
 *******************************************************************************/
 
 /** Port where all relay related pins are connected to */
-#define RELAY_PORT		PORTC
+#define RELAY_PORT      PORTC
 
 /** Shift register clear */
 #define RELAY_PIN_SCL   PC3
@@ -80,7 +80,7 @@ $Date: 2015-01-06 10:45:56 +0100 (Di, 06 Jan 2015) $
 
 #if (RELAY_PWM_MIN > RELAY_PWM_TOP)
 #error The minimum resolution is 3.
-#endif	/* (3 > RELAY_PWM_TOP) */
+#endif  /* (3 > RELAY_PWM_TOP) */
 
 /** Time in 0,05 ms after changing from switching current to holding current */
 #define RELAY_DURATION  (200 * 20)
@@ -136,8 +136,8 @@ extern void relay_init(void)
 
 #if (16000000UL == F_CPU)
 
-	/* Clear timer counter register */
-	TCNT1 = 0;
+    /* Clear timer counter register */
+    TCNT1 = 0;
 
     /* Configure timer control register A */
     TCCR1A =    (1 << COM1A1) | /* Clear OC1A on compare match when counting up, set when counting down */
@@ -189,7 +189,7 @@ extern void relay_activate(uint8_t index, BOOL activate)
 {
     if (RELAY_NUM > index)
     {
-        uint8_t run		        = 0;
+        uint8_t run             = 0;
         BOOL    enableSwitchingPwm  = FALSE;
         BOOL    dirty               = FALSE;
 
@@ -201,7 +201,7 @@ extern void relay_activate(uint8_t index, BOOL activate)
             {
                 /* Deactivate relay */
                 BIT_CLR(relay_stateBitField, index);
-                
+
                 dirty = TRUE;
             }
         }
@@ -213,7 +213,7 @@ extern void relay_activate(uint8_t index, BOOL activate)
             {
                 /* Activate relay */
                 BIT_SET(relay_stateBitField, index);
-                
+
                 dirty = TRUE;
 
                 /* Increase current to switching current */
@@ -227,12 +227,12 @@ extern void relay_activate(uint8_t index, BOOL activate)
             /* Shift data from relay 1 to relay 8, depended on requested relay state. */
             for(run = 0; run < RELAY_NUM; ++run)
             {
-			    /* Relay disabled? */
+                /* Relay disabled? */
                 if (0 == (relay_stateBitField & (1 << run)))
                 {
                     relay_setBit(0);
                 }
-			    /* Relay enabled */
+                /* Relay enabled */
                 else
                 {
                     relay_setBit(1);
@@ -402,7 +402,7 @@ ISR(TIMER1_OVF_vect)
 
         relay_enableSwitchingPwm    = FALSE;
         once                        = TRUE;
-        
+
         OCR1A = relay_switchingPwm;
     }
     /* Count down? */

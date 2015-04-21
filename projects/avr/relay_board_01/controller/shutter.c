@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,11 +21,11 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
-	DESCRIPTION
+    DESCRIPTION
 *******************************************************************************/
 /**
 @brief  This module controls the shutter.
@@ -42,18 +42,18 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 
 /*******************************************************************************
-	INCLUDES
+    INCLUDES
 *******************************************************************************/
 #include "shutter.h"
 #include "shutterDrv.h"
 #include <string.h>
 
 /*******************************************************************************
-	COMPILER SWITCHES
+    COMPILER SWITCHES
 *******************************************************************************/
 
 /*******************************************************************************
-	CONSTANTS
+    CONSTANTS
 *******************************************************************************/
 
 /**
@@ -63,72 +63,72 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 #define SHUTTER_BALANCE_TIME    10
 
 /*******************************************************************************
-	MACROS
+    MACROS
 *******************************************************************************/
 
 /*******************************************************************************
-	TYPES AND STRUCTURES
+    TYPES AND STRUCTURES
 *******************************************************************************/
 
 /** This type defines the different position status. */
 typedef enum
 {
-	SHUTTER_POS_STATUS_INVALID = 0,		/**< Position is invalid */
-	SHUTTER_POS_STATUS_VALID_TOP,		/**< Position is valid to drive to the top. */
-	SHUTTER_POS_STATUS_VALID_BOTTOM		/**< Position is valid to drive to the bottom. */
+    SHUTTER_POS_STATUS_INVALID = 0,     /**< Position is invalid */
+    SHUTTER_POS_STATUS_VALID_TOP,       /**< Position is valid to drive to the top. */
+    SHUTTER_POS_STATUS_VALID_BOTTOM     /**< Position is valid to drive to the bottom. */
 
 } SHUTTER_POS_STATUS;
 
 /** This type defines a timer. */
 typedef struct
 {
-	BOOL		        isEnabled;	/**< Timer enabled or disabled */
-	volatile uint16_t	run;        /**< Timer value in 0.1s which is increased. Counts how long the shutter really drives. */
-	volatile uint16_t	duration;   /**< Drive duration timer value in 0.1s, which is decreased. Countdown until the shutter stops. */
+    BOOL                isEnabled;  /**< Timer enabled or disabled */
+    volatile uint16_t   run;        /**< Timer value in 0.1s which is increased. Counts how long the shutter really drives. */
+    volatile uint16_t   duration;   /**< Drive duration timer value in 0.1s, which is decreased. Countdown until the shutter stops. */
 
 } shutter_Timer;
 
 /** This type defines the parameter of a single shutter. */
 typedef struct
 {
-	/* Configuration parameters */
-	BOOL			isEnabled;	/**< TRUE: Configuration is enabled */
-	uint16_t		maxUp;		/**< Max. time which the shutter needs to drive from bottom to the top up */
-	uint16_t		maxDown;	/**< Max. time which the shutter needs to drive from the top to the bottom down */
-	uint16_t		maxTurn;	/**< Max. time which the shutter needs to turn 90°. Only for jalousie! */
+    /* Configuration parameters */
+    BOOL            isEnabled;  /**< TRUE: Configuration is enabled */
+    uint16_t        maxUp;      /**< Max. time which the shutter needs to drive from bottom to the top up */
+    uint16_t        maxDown;    /**< Max. time which the shutter needs to drive from the top to the bottom down */
+    uint16_t        maxTurn;    /**< Max. time which the shutter needs to turn 90°. Only for jalousie! */
 
-	/* Operative parameters */
-	shutter_Timer	timer;		/**< Shutter drive timer */
-	BOOL			isBlocked;	/**< Blocked by wind alert */
+    /* Operative parameters */
+    shutter_Timer   timer;      /**< Shutter drive timer */
+    BOOL            isBlocked;  /**< Blocked by wind alert */
 
-	/* Calibration parameters */
-	SHUTTER_POS_STATUS	posStatus;	/**< Position status */
-	uint16_t			pos;		/**< Current shutter position (only estimated) in 0.1s. 0 means shutter is at the top. */
+    /* Calibration parameters */
+    SHUTTER_POS_STATUS  posStatus;  /**< Position status */
+    uint16_t            pos;        /**< Current shutter position (only estimated) in 0.1s. 0 means shutter is at the top. */
 
 } shutter_Context;
 
 /*******************************************************************************
-	PROTOTYPES
+    PROTOTYPES
 *******************************************************************************/
 
-static void	shutter_driveCb(uint8_t nr, SHUTTERDRV_DIR direction, BOOL isDriving, void * const userData);
-static uint16_t	shutter_getTimeToTop(shutter_Context const * const con);
-static uint16_t	shutter_getTimeToBottom(shutter_Context const * const con);
-static uint16_t	shutter_calcPos(uint16_t pos, SHUTTER_POS_STATUS status, SHUTTER_POS_STATUS newStatus, uint16_t maxUp, uint16_t maxDown);
+static void shutter_driveCb(uint8_t nr, SHUTTERDRV_DIR direction, BOOL isDriving, void * const userData);
+static uint16_t shutter_getTimeToTop(shutter_Context const * const con);
+static uint16_t shutter_getTimeToBottom(shutter_Context const * const con);
+static uint16_t shutter_calcPos(uint16_t pos, SHUTTER_POS_STATUS status, SHUTTER_POS_STATUS newStatus, uint16_t maxUp, uint16_t maxDown);
 
 /*******************************************************************************
-	LOCALE VARIABLES
+    LOCALE VARIABLES
 *******************************************************************************/
 
 /** All shutter contexts */
-static shutter_Context	shutter_context[SHUTTER_NUM];
+static shutter_Context  shutter_context[SHUTTER_NUM];
 
 /*******************************************************************************
-	GLOBAL VARIABLES
+    GLOBAL VARIABLES
 *******************************************************************************/
 
 /******************************************************************************\
-	GLOBAL FUNCTIONS
+    GLOBAL FUNCTIONS
 *******************************************************************************/
 
 /**
@@ -137,10 +137,10 @@ static shutter_Context	shutter_context[SHUTTER_NUM];
  */
 extern void shutter_init(void)
 {
-	/* Initialize all shutter contexts */
-	memset(shutter_context, 0, sizeof(shutter_context));
+    /* Initialize all shutter contexts */
+    memset(shutter_context, 0, sizeof(shutter_context));
 
-	return;
+    return;
 }
 
 /**
@@ -155,28 +155,28 @@ extern void shutter_init(void)
  * @param[in]   maxDown     Max. down-time (drive time from top to bottom) in 0.1s
  * @param[in]   maxTurn     Max. turn-time (turn 90°) in 0.1s
  */
-extern void	shutter_configure(uint8_t nr, uint8_t relayPower, uint8_t relayDir, uint16_t maxUp, uint16_t maxDown, uint16_t maxTurn)
+extern void shutter_configure(uint8_t nr, uint8_t relayPower, uint8_t relayDir, uint16_t maxUp, uint16_t maxDown, uint16_t maxTurn)
 {
-	shutter_Context	*con    = NULL;
+    shutter_Context *con    = NULL;
 
-	/* Invalid shutter instance? */
-	if (SHUTTER_NUM <= nr)
-	{
-		return;
-	}
+    /* Invalid shutter instance? */
+    if (SHUTTER_NUM <= nr)
+    {
+        return;
+    }
 
     con = &shutter_context[nr];
 
-	if (SHUTTERDRV_RET_OK != shutterDrv_configure(nr, relayPower, relayDir, shutter_driveCb, con))
-	{
-		return;
-	}
+    if (SHUTTERDRV_RET_OK != shutterDrv_configure(nr, relayPower, relayDir, shutter_driveCb, con))
+    {
+        return;
+    }
 
-	con->maxUp      = maxUp;
-	con->maxDown    = maxDown;
-	con->maxTurn    = maxTurn;
+    con->maxUp      = maxUp;
+    con->maxDown    = maxDown;
+    con->maxTurn    = maxTurn;
 
-	return;
+    return;
 }
 
 /**
@@ -187,22 +187,22 @@ extern void	shutter_configure(uint8_t nr, uint8_t relayPower, uint8_t relayDir, 
  * @param[in]   nr          Shutter instance number
  * @param[in]   enableIt    TRUE: Enable it FALSE: Disable it
  */
-extern void	shutter_enable(uint8_t nr, BOOL enableIt)
+extern void shutter_enable(uint8_t nr, BOOL enableIt)
 {
-	shutter_Context	*con    = NULL;
+    shutter_Context *con    = NULL;
 
-	/* Invalid shutter instance? */
-	if (SHUTTER_NUM <= nr)
-	{
-		return;
-	}
+    /* Invalid shutter instance? */
+    if (SHUTTER_NUM <= nr)
+    {
+        return;
+    }
 
     con = &shutter_context[nr];
 
-	shutterDrv_enable(nr, enableIt);
-	con->isEnabled = enableIt;
+    shutterDrv_enable(nr, enableIt);
+    con->isEnabled = enableIt;
 
-	return;
+    return;
 }
 
 /**
@@ -215,15 +215,15 @@ extern void	shutter_enable(uint8_t nr, BOOL enableIt)
  */
 extern BOOL shutter_isEnabled(uint8_t nr)
 {
-	shutter_Context	*con    = NULL;
+    shutter_Context *con    = NULL;
 
-	/* Invalid shutter instance? */
-	if (SHUTTER_NUM <= nr)
-	{
-    	return FALSE;
-	}
+    /* Invalid shutter instance? */
+    if (SHUTTER_NUM <= nr)
+    {
+        return FALSE;
+    }
 
-	con = &shutter_context[nr];
+    con = &shutter_context[nr];
 
     return con->isEnabled;
 }
@@ -238,137 +238,137 @@ extern BOOL shutter_isEnabled(uint8_t nr)
  * @param[in]   dir         Shutter drive direction
  * @param[in]   duration    Drive duration (0: infinite) in 0.1s
  */
-extern void	shutter_drive(uint8_t nr, SHUTTER_DIR dir, uint16_t duration)
+extern void shutter_drive(uint8_t nr, SHUTTER_DIR dir, uint16_t duration)
 {
-	shutter_Context	*con            = NULL;
-	SHUTTERDRV_DIR	ctrlDirection	= SHUTTERDRV_DIR_STOP;
+    shutter_Context *con            = NULL;
+    SHUTTERDRV_DIR  ctrlDirection   = SHUTTERDRV_DIR_STOP;
 
-	/* Invalid shutter instance number? */
-	if (SHUTTER_NUM <= nr)
-	{
-		return;
-	}
+    /* Invalid shutter instance number? */
+    if (SHUTTER_NUM <= nr)
+    {
+        return;
+    }
 
     con = &shutter_context[nr];
 
-	/* If the shutter instance is disabled, we will return now. */
-	if (FALSE == con->isEnabled)
-	{
-		return;
-	}
+    /* If the shutter instance is disabled, we will return now. */
+    if (FALSE == con->isEnabled)
+    {
+        return;
+    }
 
-	/* If the shutter is blocked, we will return now. */
-	if (TRUE == con->isBlocked)
-	{
-		return;
-	}
+    /* If the shutter is blocked, we will return now. */
+    if (TRUE == con->isBlocked)
+    {
+        return;
+    }
 
-	switch(dir)
-	{
-	case SHUTTER_DIR_STOP:
-		ctrlDirection = SHUTTERDRV_DIR_STOP;
-		break;
+    switch(dir)
+    {
+    case SHUTTER_DIR_STOP:
+        ctrlDirection = SHUTTERDRV_DIR_STOP;
+        break;
 
-	case SHUTTER_DIR_UP:
-		ctrlDirection = SHUTTERDRV_DIR_UP;
-		break;
+    case SHUTTER_DIR_UP:
+        ctrlDirection = SHUTTERDRV_DIR_UP;
+        break;
 
-	case SHUTTER_DIR_DOWN:
-		ctrlDirection = SHUTTERDRV_DIR_DOWN;
-		break;
+    case SHUTTER_DIR_DOWN:
+        ctrlDirection = SHUTTERDRV_DIR_DOWN;
+        break;
 
-	case SHUTTER_DIR_TOP:
-		/* How many time is needed to be at the top? */
-		duration = shutter_getTimeToTop(con);
+    case SHUTTER_DIR_TOP:
+        /* How many time is needed to be at the top? */
+        duration = shutter_getTimeToTop(con);
 
-		/* Is the shutter already at the top? */
-		if (0 == duration)
-		{
-			ctrlDirection = SHUTTERDRV_DIR_STOP;
-		}
-		else
-		{
-			/* Add balance time to compensate tolerances. */
-			if ((0xffff - duration) < SHUTTER_BALANCE_TIME)
-			{
-				duration = 0xffff;
-			}
-			else
-			{
-				duration += SHUTTER_BALANCE_TIME;
-			}
+        /* Is the shutter already at the top? */
+        if (0 == duration)
+        {
+            ctrlDirection = SHUTTERDRV_DIR_STOP;
+        }
+        else
+        {
+            /* Add balance time to compensate tolerances. */
+            if ((0xffff - duration) < SHUTTER_BALANCE_TIME)
+            {
+                duration = 0xffff;
+            }
+            else
+            {
+                duration += SHUTTER_BALANCE_TIME;
+            }
 
-			ctrlDirection = SHUTTERDRV_DIR_UP;
-		}
-		break;
+            ctrlDirection = SHUTTERDRV_DIR_UP;
+        }
+        break;
 
-	case SHUTTER_DIR_BOTTOM:
-		/* How many time is needed to be at the bottom? */
-		duration = shutter_getTimeToBottom(con);
+    case SHUTTER_DIR_BOTTOM:
+        /* How many time is needed to be at the bottom? */
+        duration = shutter_getTimeToBottom(con);
 
-		/* Is the shutter already at the bottom? */
-		if (0 == duration)
-		{
-			ctrlDirection = SHUTTERDRV_DIR_STOP;
-		}
-		else
-		{
-			/* Add balance time to compensate tolerances. */
-			if ((0xffff - duration) < SHUTTER_BALANCE_TIME)
-			{
-				duration = 0xffff;
-			}
-			else
-			{
-				duration += SHUTTER_BALANCE_TIME;
-			}
+        /* Is the shutter already at the bottom? */
+        if (0 == duration)
+        {
+            ctrlDirection = SHUTTERDRV_DIR_STOP;
+        }
+        else
+        {
+            /* Add balance time to compensate tolerances. */
+            if ((0xffff - duration) < SHUTTER_BALANCE_TIME)
+            {
+                duration = 0xffff;
+            }
+            else
+            {
+                duration += SHUTTER_BALANCE_TIME;
+            }
 
-			ctrlDirection = SHUTTERDRV_DIR_DOWN;
-		}
-		break;
+            ctrlDirection = SHUTTERDRV_DIR_DOWN;
+        }
+        break;
 
-	default:
-		return;
-	}
+    default:
+        return;
+    }
 
-	/* If a drive command is already running and the new drive
-	 * command goes not into the opposite direction, the shutter
-	 * will be stopped.
-	 */
-	if (SHUTTERDRV_DIR_UP == shutterDrv_getDriveDirection(nr))
-	{
-		if (SHUTTERDRV_DIR_DOWN != ctrlDirection)
-		{
-			/* Stop shutter */
-			ctrlDirection	= SHUTTERDRV_DIR_STOP;
-			duration		= 0;
-		}
-	}
-	else
-	if (SHUTTERDRV_DIR_DOWN == shutterDrv_getDriveDirection(nr))
-	{
-		if (SHUTTERDRV_DIR_UP != ctrlDirection)
-		{
-			/* Stop shutter */
-			ctrlDirection	= SHUTTERDRV_DIR_STOP;
-			duration		= 0;
-		}
-	}
+    /* If a drive command is already running and the new drive
+     * command goes not into the opposite direction, the shutter
+     * will be stopped.
+     */
+    if (SHUTTERDRV_DIR_UP == shutterDrv_getDriveDirection(nr))
+    {
+        if (SHUTTERDRV_DIR_DOWN != ctrlDirection)
+        {
+            /* Stop shutter */
+            ctrlDirection   = SHUTTERDRV_DIR_STOP;
+            duration        = 0;
+        }
+    }
+    else
+    if (SHUTTERDRV_DIR_DOWN == shutterDrv_getDriveDirection(nr))
+    {
+        if (SHUTTERDRV_DIR_UP != ctrlDirection)
+        {
+            /* Stop shutter */
+            ctrlDirection   = SHUTTERDRV_DIR_STOP;
+            duration        = 0;
+        }
+    }
 
-	/* Set timer for drive duration. */
-	if (SHUTTERDRV_DIR_STOP == ctrlDirection)
-	{
-		con->timer.duration = 0;
-	}
-	else
-	{
-		con->timer.duration = duration;
-	}
+    /* Set timer for drive duration. */
+    if (SHUTTERDRV_DIR_STOP == ctrlDirection)
+    {
+        con->timer.duration = 0;
+    }
+    else
+    {
+        con->timer.duration = duration;
+    }
 
-	/* Drive the shutter */
-	shutterDrv_drive(nr, ctrlDirection);
+    /* Drive the shutter */
+    shutterDrv_drive(nr, ctrlDirection);
 
-	return;
+    return;
 }
 
 /**
@@ -382,100 +382,100 @@ extern void	shutter_drive(uint8_t nr, SHUTTER_DIR dir, uint16_t duration)
  * @param[in]   nr  Shutter instance number
  * @param[in]   pos Absolute position
  */
-extern void	shutter_driveAbs(uint8_t nr, uint8_t pos)
+extern void shutter_driveAbs(uint8_t nr, uint8_t pos)
 {
-	shutter_Context	*con		= NULL;
-	SHUTTER_DIR		dir			= SHUTTER_DIR_STOP;
-	uint16_t		duration	= 0;
+    shutter_Context *con        = NULL;
+    SHUTTER_DIR     dir         = SHUTTER_DIR_STOP;
+    uint16_t        duration    = 0;
 
-	/* Invalid shutter instance number? */
-	if (SHUTTER_NUM <= nr)
-	{
-		return;
-	}
+    /* Invalid shutter instance number? */
+    if (SHUTTER_NUM <= nr)
+    {
+        return;
+    }
 
     con = &shutter_context[nr];
 
-	/* If the shutter instance is disabled, we will return now. */
-	if (FALSE == con->isEnabled)
-	{
-		return;
-	}
+    /* If the shutter instance is disabled, we will return now. */
+    if (FALSE == con->isEnabled)
+    {
+        return;
+    }
 
-	/* Shutter position unknown? Calibration drive needed first? */
-	if ((SHUTTER_POS_STATUS_VALID_TOP != con->posStatus) &&
-		(SHUTTER_POS_STATUS_VALID_BOTTOM != con->posStatus))
-	{
-		dir			= SHUTTER_DIR_UP;
-		duration	= con->maxUp;
-	}
-	else
-	/* Shutter position is known. Calculate the difference and determine
-	 * the time duration and the direction to drive.
-	 */
-	{
-        uint16_t    oldPos 		= 0;
-        uint16_t    newPos		= 0;
-    
-		if (SHUTTER_POS_STATUS_VALID_TOP == con->posStatus)
-		{
-			newPos = (uint16_t)(((uint32_t)pos * (uint32_t)con->maxUp) / (uint32_t)255);
-		}
-		else
-		{
-			newPos = (uint16_t)(((uint32_t)pos * (uint32_t)con->maxDown) / (uint32_t)255);
-		}
+    /* Shutter position unknown? Calibration drive needed first? */
+    if ((SHUTTER_POS_STATUS_VALID_TOP != con->posStatus) &&
+        (SHUTTER_POS_STATUS_VALID_BOTTOM != con->posStatus))
+    {
+        dir         = SHUTTER_DIR_UP;
+        duration    = con->maxUp;
+    }
+    else
+    /* Shutter position is known. Calculate the difference and determine
+     * the time duration and the direction to drive.
+     */
+    {
+        uint16_t    oldPos      = 0;
+        uint16_t    newPos      = 0;
 
-		/* Shall shutter drive up? */
-		if (con->pos > newPos)
-		{
-			dir = SHUTTER_DIR_UP;
+        if (SHUTTER_POS_STATUS_VALID_TOP == con->posStatus)
+        {
+            newPos = (uint16_t)(((uint32_t)pos * (uint32_t)con->maxUp) / (uint32_t)255);
+        }
+        else
+        {
+            newPos = (uint16_t)(((uint32_t)pos * (uint32_t)con->maxDown) / (uint32_t)255);
+        }
 
-			oldPos = shutter_calcPos(	con->pos,
-										con->posStatus,
-										SHUTTER_POS_STATUS_VALID_TOP,
-										con->maxUp,
-										con->maxDown);
+        /* Shall shutter drive up? */
+        if (con->pos > newPos)
+        {
+            dir = SHUTTER_DIR_UP;
 
-			newPos = shutter_calcPos(	newPos,
-										con->posStatus,
-										SHUTTER_POS_STATUS_VALID_TOP,
-										con->maxUp,
-										con->maxDown);
+            oldPos = shutter_calcPos(   con->pos,
+                                        con->posStatus,
+                                        SHUTTER_POS_STATUS_VALID_TOP,
+                                        con->maxUp,
+                                        con->maxDown);
 
-			duration = oldPos - newPos;
-		}
-		else
-		/* Shall shutter drive down? */
-		if (con->pos < newPos)
-		{
-			dir = SHUTTER_DIR_DOWN;
+            newPos = shutter_calcPos(   newPos,
+                                        con->posStatus,
+                                        SHUTTER_POS_STATUS_VALID_TOP,
+                                        con->maxUp,
+                                        con->maxDown);
 
-			oldPos = shutter_calcPos(	con->pos,
-										con->posStatus,
-										SHUTTER_POS_STATUS_VALID_BOTTOM,
-										con->maxUp,
-										con->maxDown);
+            duration = oldPos - newPos;
+        }
+        else
+        /* Shall shutter drive down? */
+        if (con->pos < newPos)
+        {
+            dir = SHUTTER_DIR_DOWN;
 
-			newPos = shutter_calcPos(	newPos,
-										con->posStatus,
-										SHUTTER_POS_STATUS_VALID_BOTTOM,
-										con->maxUp,
-										con->maxDown);
+            oldPos = shutter_calcPos(   con->pos,
+                                        con->posStatus,
+                                        SHUTTER_POS_STATUS_VALID_BOTTOM,
+                                        con->maxUp,
+                                        con->maxDown);
 
-			duration = newPos - oldPos;
-		}
-		else
-		/* Requested position is equal to the current position. */
-		{
-			dir			= SHUTTER_DIR_STOP;
-			duration	= 0;
-		}
-	}
+            newPos = shutter_calcPos(   newPos,
+                                        con->posStatus,
+                                        SHUTTER_POS_STATUS_VALID_BOTTOM,
+                                        con->maxUp,
+                                        con->maxDown);
 
-	shutter_drive(nr, dir, duration);
+            duration = newPos - oldPos;
+        }
+        else
+        /* Requested position is equal to the current position. */
+        {
+            dir         = SHUTTER_DIR_STOP;
+            duration    = 0;
+        }
+    }
 
-	return;
+    shutter_drive(nr, dir, duration);
+
+    return;
 }
 
 /**
@@ -487,37 +487,37 @@ extern void	shutter_driveAbs(uint8_t nr, uint8_t pos)
  * @param[in]   nr      Shutter instance number
  * @param[in]   alert   Set or remove wind alert
  */
-extern void	shutter_windAlert(uint8_t nr, BOOL alert)
+extern void shutter_windAlert(uint8_t nr, BOOL alert)
 {
-	shutter_Context	*con	= NULL;
+    shutter_Context *con    = NULL;
 
-	/* Invalid shutter instance number? */
-	if (SHUTTER_NUM <= nr)
-	{
-		return;
-	}
+    /* Invalid shutter instance number? */
+    if (SHUTTER_NUM <= nr)
+    {
+        return;
+    }
 
     con = &shutter_context[nr];
 
-	/* Remove alert? */
-	if (FALSE == alert)
-	{
-		con->isBlocked = FALSE;
-	}
-	else
-	{
-		/* Shutter not blocked yet? */
-		if (FALSE == con->isBlocked)
-		{
-			/* Drive shutter up! */
-			shutter_drive(nr, SHUTTERDRV_DIR_STOP, 0);
-			shutter_drive(nr, SHUTTER_DIR_TOP, 0);
-		}
+    /* Remove alert? */
+    if (FALSE == alert)
+    {
+        con->isBlocked = FALSE;
+    }
+    else
+    {
+        /* Shutter not blocked yet? */
+        if (FALSE == con->isBlocked)
+        {
+            /* Drive shutter up! */
+            shutter_drive(nr, SHUTTERDRV_DIR_STOP, 0);
+            shutter_drive(nr, SHUTTER_DIR_TOP, 0);
+        }
 
-		con->isBlocked = TRUE;
-	}
+        con->isBlocked = TRUE;
+    }
 
-	return;
+    return;
 }
 
 /**
@@ -527,78 +527,78 @@ extern void	shutter_windAlert(uint8_t nr, BOOL alert)
  * @param[in]   nr      Shutter instance number
  * @param[in]   angle   Angle in degree [0;90]°
  */
-extern void	shutter_turn(uint8_t nr, uint8_t angle)
+extern void shutter_turn(uint8_t nr, uint8_t angle)
 {
-	shutter_Context	*con		= NULL;
-	uint16_t		duration	= 0;
+    shutter_Context *con        = NULL;
+    uint16_t        duration    = 0;
 
-	/* Invalid shutter instance number? */
-	if (SHUTTER_NUM <= nr)
-	{
-		return;
-	}
+    /* Invalid shutter instance number? */
+    if (SHUTTER_NUM <= nr)
+    {
+        return;
+    }
 
     con = &shutter_context[nr];
 
-	/* If the shutter instance is disabled, we will return now. */
-	if (FALSE == con->isEnabled)
-	{
-		return;
-	}
+    /* If the shutter instance is disabled, we will return now. */
+    if (FALSE == con->isEnabled)
+    {
+        return;
+    }
 
-	/* Angle greater than 90°? */
-	if (90u < angle)
-	{
-		return;
-	}
+    /* Angle greater than 90°? */
+    if (90u < angle)
+    {
+        return;
+    }
 
-	/* No turn time available? */
-	if (0 == con->maxTurn)
-	{
-		return;
-	}
+    /* No turn time available? */
+    if (0 == con->maxTurn)
+    {
+        return;
+    }
 
-	/* Calculate duration */
-	duration = con->maxTurn * angle / 90;
+    /* Calculate duration */
+    duration = con->maxTurn * angle / 90;
 
-	if (0 < duration)
-	{
-		shutter_drive(nr, SHUTTER_DIR_UP, duration);
-	}
+    if (0 < duration)
+    {
+        shutter_drive(nr, SHUTTER_DIR_UP, duration);
+    }
 
-	return;
+    return;
 }
 
 /**
  * This function is called in an ISR to process the timers.
  * It shall be called every 100 ms.
  */
-extern void	shutter_processTimers(void)
+extern void shutter_processTimers(void)
 {
-	uint8_t index   = 0;
+    uint8_t index   = 0;
 
-	for(index = 0; index < SHUTTER_NUM; ++index)
-	{
-        shutter_Context	*con	= &shutter_context[index];
+    for(index = 0; index < SHUTTER_NUM; ++index)
+    {
+        shutter_Context *con    = &shutter_context[index];
 
         /* Is the timer enabled? */
-		if (TRUE == con->timer.isEnabled)
-		{
+        if (TRUE == con->timer.isEnabled)
+        {
             /* No timeout happened right now? */
-			if (0 < con->timer.duration)
-			{
-				--con->timer.duration;
-			}
+            if (0 < con->timer.duration)
+            {
+                --con->timer.duration;
+            }
 
-			/* Count time up, independent of timeout. */
-			if (0xffff > con->timer.run)
-			{
-				++con->timer.run;
-			}
-		}
-	}
+            /* Count time up, independent of timeout. */
+            if (0xffff > con->timer.run)
+            {
+                ++con->timer.run;
+            }
+        }
+    }
 
-	return;
+    return;
 }
 
 /**
@@ -609,46 +609,46 @@ extern void	shutter_processTimers(void)
  * @retval FALSE    Any shutter is driving
  * @retval TRUE     Idle, no shutter is driving
  */
-extern BOOL	shutter_process(void)
+extern BOOL shutter_process(void)
 {
-	uint8_t index	= 0;
-	uint8_t idle	= 0;
+    uint8_t index   = 0;
+    uint8_t idle    = 0;
     BOOL    isIdle  = FALSE;
 
-	/* Run state machine for every shutter. */
-	for(index = 0; index < SHUTTER_NUM; ++index)
-	{
-        shutter_Context	*con	= &shutter_context[index];
+    /* Run state machine for every shutter. */
+    for(index = 0; index < SHUTTER_NUM; ++index)
+    {
+        shutter_Context *con    = &shutter_context[index];
 
-		/* Timer enabled? */
-		if (TRUE == con->timer.isEnabled)
-		{
-			/* Timeout? */
-			if (0 == con->timer.duration)
-			{
-				/* Stop shutter */
-				shutterDrv_drive(index, SHUTTERDRV_DIR_STOP);
-			}
-		}
+        /* Timer enabled? */
+        if (TRUE == con->timer.isEnabled)
+        {
+            /* Timeout? */
+            if (0 == con->timer.duration)
+            {
+                /* Stop shutter */
+                shutterDrv_drive(index, SHUTTERDRV_DIR_STOP);
+            }
+        }
 
-		/* Process idle counter */
-		if (SHUTTERDRV_DIR_STOP == shutterDrv_getDriveDirection(index))
-		{
-			++idle;
-		}
-	}
+        /* Process idle counter */
+        if (SHUTTERDRV_DIR_STOP == shutterDrv_getDriveDirection(index))
+        {
+            ++idle;
+        }
+    }
 
-	/* If all shutter instances are idle, the task can be suspended. */
-	if (SHUTTER_NUM == idle)
-	{
+    /* If all shutter instances are idle, the task can be suspended. */
+    if (SHUTTER_NUM == idle)
+    {
         isIdle = TRUE;
-	}
+    }
 
-	return isIdle;
+    return isIdle;
 }
 
 /*******************************************************************************
-	LOCAL FUNCTIONS
+    LOCAL FUNCTIONS
 *******************************************************************************/
 
 /**
@@ -660,20 +660,20 @@ extern BOOL	shutter_process(void)
  * @param[in]   isDriving   Shutter is driving or stopped
  * @param[in]   userData    User specific data
  */
-static void	shutter_driveCb(uint8_t nr, SHUTTERDRV_DIR direction, BOOL isDriving, void * const userData)
+static void shutter_driveCb(uint8_t nr, SHUTTERDRV_DIR direction, BOOL isDriving, void * const userData)
 {
-	shutter_Context * const con = (shutter_Context*)userData;
+    shutter_Context * const con = (shutter_Context*)userData;
 
-	if (NULL == userData)
-	{
-		return;
-	}
+    if (NULL == userData)
+    {
+        return;
+    }
 
-	/* Shutter stopped? */
-	if (FALSE == isDriving)
-	{
-		/* Stop counting the time the shutter runs. */
-		con->timer.isEnabled = FALSE;
+    /* Shutter stopped? */
+    if (FALSE == isDriving)
+    {
+        /* Stop counting the time the shutter runs. */
+        con->timer.isEnabled = FALSE;
 
         /* Do we know where the shutter position is (top or bottom)? */
         if ((SHUTTERDRV_DIR_UP == direction) &&
@@ -690,142 +690,142 @@ static void	shutter_driveCb(uint8_t nr, SHUTTERDRV_DIR direction, BOOL isDriving
             con->pos        = con->maxDown;
             con->posStatus  = SHUTTER_POS_STATUS_VALID_BOTTOM;
         }
-		else
-		/* Is the shutter already calibrated? */
-		if ((SHUTTER_POS_STATUS_VALID_TOP == con->posStatus) ||
-			(SHUTTER_POS_STATUS_VALID_BOTTOM == con->posStatus))
-		{
-			/* Calculate position */
-			if (SHUTTERDRV_DIR_UP == direction)
-			{
-				/* Position recalculation needed? */
-				if (SHUTTER_POS_STATUS_VALID_BOTTOM == con->posStatus)
-				{
-					con->pos 		= shutter_calcPos(	con->pos,
-														con->posStatus,
-														SHUTTER_POS_STATUS_VALID_TOP,
-														con->maxUp,
-														con->maxDown);
+        else
+        /* Is the shutter already calibrated? */
+        if ((SHUTTER_POS_STATUS_VALID_TOP == con->posStatus) ||
+            (SHUTTER_POS_STATUS_VALID_BOTTOM == con->posStatus))
+        {
+            /* Calculate position */
+            if (SHUTTERDRV_DIR_UP == direction)
+            {
+                /* Position recalculation needed? */
+                if (SHUTTER_POS_STATUS_VALID_BOTTOM == con->posStatus)
+                {
+                    con->pos        = shutter_calcPos(  con->pos,
+                                                        con->posStatus,
+                                                        SHUTTER_POS_STATUS_VALID_TOP,
+                                                        con->maxUp,
+                                                        con->maxDown);
 
-					con->posStatus	= SHUTTER_POS_STATUS_VALID_TOP;
-				}
+                    con->posStatus  = SHUTTER_POS_STATUS_VALID_TOP;
+                }
 
-				if (con->pos <= con->timer.run)
-				{
-					con->pos = 0;
-				}
-				else
-				{
-					con->pos -= con->timer.run;
-				}
-			}
-			else
-			/* Calculate position */
-			if (SHUTTERDRV_DIR_DOWN == direction)
-			{
-				/* Position recalculation needed? */
-				if (SHUTTER_POS_STATUS_VALID_TOP == con->posStatus)
-				{
-					con->pos 		= shutter_calcPos(	con->pos,
-														con->posStatus,
-														SHUTTER_POS_STATUS_VALID_BOTTOM,
-														con->maxUp,
-														con->maxDown);
+                if (con->pos <= con->timer.run)
+                {
+                    con->pos = 0;
+                }
+                else
+                {
+                    con->pos -= con->timer.run;
+                }
+            }
+            else
+            /* Calculate position */
+            if (SHUTTERDRV_DIR_DOWN == direction)
+            {
+                /* Position recalculation needed? */
+                if (SHUTTER_POS_STATUS_VALID_TOP == con->posStatus)
+                {
+                    con->pos        = shutter_calcPos(  con->pos,
+                                                        con->posStatus,
+                                                        SHUTTER_POS_STATUS_VALID_BOTTOM,
+                                                        con->maxUp,
+                                                        con->maxDown);
 
-					con->posStatus	= SHUTTER_POS_STATUS_VALID_BOTTOM;
-				}
+                    con->posStatus  = SHUTTER_POS_STATUS_VALID_BOTTOM;
+                }
 
-				if (con->maxDown <= con->timer.run)
-				{
-					con->pos = con->maxDown;
-				}
-				else
-				if ((con->maxDown - con->pos) <= con->timer.run)
-				{
-					con->pos = con->maxDown;
-				}
-				else
-				{
-					con->pos += con->timer.run;
-				}
-			}
-		}
-	}
-	else
-	/* Shutter started to drive */
-	{
-		/* Start to count the time the shutter runs.
+                if (con->maxDown <= con->timer.run)
+                {
+                    con->pos = con->maxDown;
+                }
+                else
+                if ((con->maxDown - con->pos) <= con->timer.run)
+                {
+                    con->pos = con->maxDown;
+                }
+                else
+                {
+                    con->pos += con->timer.run;
+                }
+            }
+        }
+    }
+    else
+    /* Shutter started to drive */
+    {
+        /* Start to count the time the shutter runs.
          * At this point the timer duration is already set.
          */
-		con->timer.run			= 0;
-		con->timer.isEnabled    = TRUE;
-	}
+        con->timer.run          = 0;
+        con->timer.isEnabled    = TRUE;
+    }
 
-	return;
+    return;
 }
 
 /**
  * Get the time which is needed to drive the shutter to the top.
  *
  * @param[in]   con Shutter context
- * @return	Duration time in 0.1s
+ * @return  Duration time in 0.1s
  */
-static uint16_t	shutter_getTimeToTop(shutter_Context const * const con)
+static uint16_t shutter_getTimeToTop(shutter_Context const * const con)
 {
-	uint16_t	duration	= 0;
+    uint16_t    duration    = 0;
 
     if (NULL != con)
     {
-	    /* Calibration drive needed first? */
-	    if ((SHUTTER_POS_STATUS_VALID_TOP != con->posStatus) &&
-		    (SHUTTER_POS_STATUS_VALID_BOTTOM != con->posStatus))
-	    {
-		    duration = con->maxUp;
-	    }
-	    else
-	    /* Shutter position is known. */
-	    {
-		    duration = shutter_calcPos(	con->pos,
-									    con->posStatus,
-									    SHUTTER_POS_STATUS_VALID_TOP,
-									    con->maxUp,
-									    con->maxDown);
-	    }
+        /* Calibration drive needed first? */
+        if ((SHUTTER_POS_STATUS_VALID_TOP != con->posStatus) &&
+            (SHUTTER_POS_STATUS_VALID_BOTTOM != con->posStatus))
+        {
+            duration = con->maxUp;
+        }
+        else
+        /* Shutter position is known. */
+        {
+            duration = shutter_calcPos( con->pos,
+                                        con->posStatus,
+                                        SHUTTER_POS_STATUS_VALID_TOP,
+                                        con->maxUp,
+                                        con->maxDown);
+        }
     }
 
-	return duration;
+    return duration;
 }
 
 /**
  * Get the time which is needed to drive the shutter to the bottom.
  *
  * @param[in]   con Shutter context
- * @return	Duration time in 0.1s
+ * @return  Duration time in 0.1s
  */
-static uint16_t	shutter_getTimeToBottom(shutter_Context const * const con)
+static uint16_t shutter_getTimeToBottom(shutter_Context const * const con)
 {
-	uint16_t	duration	= 0;
+    uint16_t    duration    = 0;
 
-	if (NULL != con)
+    if (NULL != con)
     {
-	    /* Calibration drive needed first? */
-	    if ((SHUTTER_POS_STATUS_VALID_TOP != con->posStatus) &&
-		    (SHUTTER_POS_STATUS_VALID_BOTTOM != con->posStatus))
-	    {
-		    duration = con->maxDown;
-	    }
-	    else
-	    /* Shutter position is known. */
-	    {
-		    duration = con->maxDown - shutter_calcPos(	con->pos,
-													    con->posStatus,
-													    SHUTTER_POS_STATUS_VALID_BOTTOM,
-													    con->maxUp,
-													    con->maxDown);
-	    }
+        /* Calibration drive needed first? */
+        if ((SHUTTER_POS_STATUS_VALID_TOP != con->posStatus) &&
+            (SHUTTER_POS_STATUS_VALID_BOTTOM != con->posStatus))
+        {
+            duration = con->maxDown;
+        }
+        else
+        /* Shutter position is known. */
+        {
+            duration = con->maxDown - shutter_calcPos(  con->pos,
+                                                        con->posStatus,
+                                                        SHUTTER_POS_STATUS_VALID_BOTTOM,
+                                                        con->maxUp,
+                                                        con->maxDown);
+        }
     }
 
-	return duration;
+    return duration;
 }
 
 /**
@@ -837,36 +837,36 @@ static uint16_t	shutter_getTimeToBottom(shutter_Context const * const con)
  * @param[in]   newStatus   New position status
  * @param[in]   maxUp       Max. time to the top in 0.1s
  * @param[in]   maxDown     Max. time to the bottom 0.1s
- * @return	Position
+ * @return  Position
  */
-static uint16_t	shutter_calcPos(uint16_t pos, SHUTTER_POS_STATUS status, SHUTTER_POS_STATUS newStatus, uint16_t maxUp, uint16_t maxDown)
+static uint16_t shutter_calcPos(uint16_t pos, SHUTTER_POS_STATUS status, SHUTTER_POS_STATUS newStatus, uint16_t maxUp, uint16_t maxDown)
 {
-	uint32_t	tmp	= pos;
+    uint32_t    tmp = pos;
 
-	if (status != newStatus)
-	{
-		if (SHUTTER_POS_STATUS_VALID_TOP == newStatus)
-		{
-			tmp *= maxUp;
-			tmp /= maxDown;
+    if (status != newStatus)
+    {
+        if (SHUTTER_POS_STATUS_VALID_TOP == newStatus)
+        {
+            tmp *= maxUp;
+            tmp /= maxDown;
 
-			if (maxUp < tmp)
-			{
-				tmp = maxUp;
-			}
-		}
-		else
-		if (SHUTTER_POS_STATUS_VALID_BOTTOM == newStatus)
-		{
-			tmp *= maxDown;
-			tmp /= maxUp;
+            if (maxUp < tmp)
+            {
+                tmp = maxUp;
+            }
+        }
+        else
+        if (SHUTTER_POS_STATUS_VALID_BOTTOM == newStatus)
+        {
+            tmp *= maxDown;
+            tmp /= maxUp;
 
-			if (maxDown < tmp)
-			{
-				tmp = maxDown;
-			}
-		}
-	}
+            if (maxDown < tmp)
+            {
+                tmp = maxDown;
+            }
+        }
+    }
 
-	return (uint16_t)tmp;
+    return (uint16_t)tmp;
 }

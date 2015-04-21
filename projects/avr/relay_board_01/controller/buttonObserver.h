@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +21,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
@@ -39,70 +39,70 @@ in case of button state changes.
 Differences between on and off with counted triggers:
 
 <pre>
-	Type 1
-	If the max. on time is exceed, the callback will inform
-	about on state with 0 pulse.
+    Type 1
+    If the max. on time is exceed, the callback will inform
+    about on state with 0 pulse.
 
-	      max. on time
-	     <------------>
-	     *-------------------------*
-	     |                         |
-	-----*                         *---------
-	                callback    callback
-	                (on, 0)     (off, 0)
+          max. on time
+         <------------>
+         *-------------------------*
+         |                         |
+    -----*                         *---------
+                    callback    callback
+                    (on, 0)     (off, 0)
                        |           |
-	-----------------------------------------
+    -----------------------------------------
 
-	Type 2
-	If the max. off time is exceed, the callback will inform
-	about off state with 0 pulse. Precondition is type 1.
+    Type 2
+    If the max. off time is exceed, the callback will inform
+    about off state with 0 pulse. Precondition is type 1.
 
-	      max. off time
-	     <------------>
-	-----*
-	     |
-	     *--------------------
+          max. off time
+         <------------>
+    -----*
+         |
+         *--------------------
 
-	                callback
+                    callback
                        |
-	-----------------------------------------
+    -----------------------------------------
 
 
-	Type 3
-	If on time is lower or equal to the max. on time, the callback will
-	inform about on state with 1 pulse.
+    Type 3
+    If on time is lower or equal to the max. on time, the callback will
+    inform about on state with 1 pulse.
 
-	             max. off time
-	            <------------>
-	      max. on time
-	     <------------>
-	     *------*
-	     |      |
-	-----*      *----------------------------
+                 max. off time
+                <------------>
+          max. on time
+         <------------>
+         *------*
+         |      |
+    -----*      *----------------------------
 
-	                       callback
+                           callback
                               |
-	-----------------------------------------
+    -----------------------------------------
 
 
-	Type 4
-	Only a example for 2 pulse.
+    Type 4
+    Only a example for 2 pulse.
 
-	                           max. off time
-	                          <------------>
-	                    max. on time
-	                   <------------>
-	             max. off time
-	            <------------>
-	      max. on time
-	     <------------>
-	     *------*      *------*
-	     |      |      |      |
-	-----*      *------*      *-----------------
+                               max. off time
+                              <------------>
+                        max. on time
+                       <------------>
+                 max. off time
+                <------------>
+          max. on time
+         <------------>
+         *------*      *------*
+         |      |      |      |
+    -----*      *------*      *-----------------
 
-	                                     callback
+                                         callback
                                             |
-	--------------------------------------------
+    --------------------------------------------
 </pre>
 
 @section svn Subversion
