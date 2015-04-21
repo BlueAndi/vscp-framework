@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +21,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
@@ -66,14 +66,14 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 /** This type contains the low and high byte for baudrate configuration. */
 typedef struct
 {
-    uint8_t	high;	/**< High byte */
-    uint8_t	low;	/**< Low byte */
-    uint8_t	u2x;	/**< Shall U2X be set? */
+    uint8_t high;   /**< High byte */
+    uint8_t low;    /**< Low byte */
+    uint8_t u2x;    /**< Shall U2X be set? */
 
 } serialDrv_UBRR;
 
 /** This type defines a cyclic buffer context. */
-typedef struct 
+typedef struct
 {
     uint8_t*            storage;    /**< Cyclic buffer storage */
     uint8_t             size;       /**< Size of the storage */
@@ -83,7 +83,7 @@ typedef struct
 } serialDrv_CyclicBuffer;
 
 /** This type defines a USART context. */
-typedef struct 
+typedef struct
 {
     serialDrv_CyclicBuffer  rxCyclicBuffer; /**< Cyclic buffer for receive data */
     serialDrv_CyclicBuffer  txCyclicBuffer; /**< Cyclic buffer to transmit data */
@@ -108,66 +108,66 @@ static uint8_t  serialDrv_writeCyclicBuffer(serialDrv_CyclicBuffer* cyclicBuffer
 static serialDrv_Usart  serialDrv_gUsart[SERIALDRV_USART_MAX];
 
 /** List with the UBRR register values for all supported baudrates. */
-static serialDrv_UBRR	serialDrv_ubbr_baudrate[SERIALDRV_BAUD_MAX]	=
+static serialDrv_UBRR   serialDrv_ubbr_baudrate[SERIALDRV_BAUD_MAX] =
 {
-#define BAUD	2400
+#define BAUD    2400
 #include <util/setbaud.h>
-	{	UBRRH_VALUE, UBRRL_VALUE, USE_2X	},
+    {   UBRRH_VALUE, UBRRL_VALUE, USE_2X    },
 #undef BAUD
 
-#define BAUD	4800
+#define BAUD    4800
 #include <util/setbaud.h>
-	{	UBRRH_VALUE, UBRRL_VALUE, USE_2X	},
+    {   UBRRH_VALUE, UBRRL_VALUE, USE_2X    },
 #undef BAUD
 
-#define BAUD	9600
+#define BAUD    9600
 #include <util/setbaud.h>
-	{	UBRRH_VALUE, UBRRL_VALUE, USE_2X	},
+    {   UBRRH_VALUE, UBRRL_VALUE, USE_2X    },
 #undef BAUD
 
-#define BAUD	14400
+#define BAUD    14400
 #include <util/setbaud.h>
-	{	UBRRH_VALUE, UBRRL_VALUE, USE_2X	},
+    {   UBRRH_VALUE, UBRRL_VALUE, USE_2X    },
 #undef BAUD
 
-#define BAUD	19200
+#define BAUD    19200
 #include <util/setbaud.h>
-	{	UBRRH_VALUE, UBRRL_VALUE, USE_2X	},
+    {   UBRRH_VALUE, UBRRL_VALUE, USE_2X    },
 #undef BAUD
 
-#define BAUD	28800
+#define BAUD    28800
 #include <util/setbaud.h>
-	{	UBRRH_VALUE, UBRRL_VALUE, USE_2X	},
+    {   UBRRH_VALUE, UBRRL_VALUE, USE_2X    },
 #undef BAUD
 
-#define BAUD	38400
+#define BAUD    38400
 #include <util/setbaud.h>
-	{	UBRRH_VALUE, UBRRL_VALUE, USE_2X	},
+    {   UBRRH_VALUE, UBRRL_VALUE, USE_2X    },
 #undef BAUD
 
-#define BAUD	57600
+#define BAUD    57600
 #include <util/setbaud.h>
-	{	UBRRH_VALUE, UBRRL_VALUE, USE_2X	},
+    {   UBRRH_VALUE, UBRRL_VALUE, USE_2X    },
 #undef BAUD
 
-#define BAUD	76800
+#define BAUD    76800
 #include <util/setbaud.h>
-	{	UBRRH_VALUE, UBRRL_VALUE, USE_2X	},
+    {   UBRRH_VALUE, UBRRL_VALUE, USE_2X    },
 #undef BAUD
 
-#define BAUD	115200
+#define BAUD    115200
 #include <util/setbaud.h>
-	{	UBRRH_VALUE, UBRRL_VALUE, USE_2X	},
+    {   UBRRH_VALUE, UBRRL_VALUE, USE_2X    },
 #undef BAUD
 
-#define BAUD	234000
+#define BAUD    234000
 #include <util/setbaud.h>
-	{	UBRRH_VALUE, UBRRL_VALUE, USE_2X	},
+    {   UBRRH_VALUE, UBRRL_VALUE, USE_2X    },
 #undef BAUD
 
-#define BAUD	250000
+#define BAUD    250000
 #include <util/setbaud.h>
-	{	UBRRH_VALUE, UBRRL_VALUE, USE_2X	},
+    {   UBRRH_VALUE, UBRRL_VALUE, USE_2X    },
 #undef BAUD
 
 };
@@ -252,10 +252,10 @@ extern void serialDrv_initUsart(serialDrv_Handle hSerial, uint8_t* const rxStora
 extern SERIALDRV_RET serialDrv_open(serialDrv_Handle hSerial, SERIALDRV_BAUD baudrate, SERIALDRV_DATA data, SERIALDRV_PARITY parity, SERIALDRV_STOPBIT stopBits)
 {
     serialDrv_Usart*    usart       = NULL;
-	uint8_t	            regUBRRH	= 0;
-	uint8_t	            regUBRRL	= 0;
-	uint8_t	            regUCSRC	= 0;
-	uint8_t	            regUCSRB	= 0;
+    uint8_t             regUBRRH    = 0;
+    uint8_t             regUBRRL    = 0;
+    uint8_t             regUCSRC    = 0;
+    uint8_t             regUCSRB    = 0;
 
     if (SERIALDRV_INVALID_HANDLE == hSerial)
     {
@@ -264,47 +264,47 @@ extern SERIALDRV_RET serialDrv_open(serialDrv_Handle hSerial, SERIALDRV_BAUD bau
 
     usart = (serialDrv_Usart*)hSerial;
 
-	/* Not initialized? */
+    /* Not initialized? */
     if ((NULL == usart->rxCyclicBuffer.storage) ||
         (NULL == usart->txCyclicBuffer.storage))
     {
         return SERIALDRV_RET_ERROR;
     }
 
-	/* Configure baudrate */
-	regUBRRH = serialDrv_ubbr_baudrate[baudrate].high;
-	regUBRRL = serialDrv_ubbr_baudrate[baudrate].low;
+    /* Configure baudrate */
+    regUBRRH = serialDrv_ubbr_baudrate[baudrate].high;
+    regUBRRL = serialDrv_ubbr_baudrate[baudrate].low;
 
-	/* Configure data format */
-	switch(data)
-	{
+    /* Configure data format */
+    switch(data)
+    {
     case SERIALDRV_DATA_5:
-    	regUCSRC |= (0 << UCSZ2) | (0 << UCSZ1) | (0 << UCSZ0);
-    	break;
+        regUCSRC |= (0 << UCSZ2) | (0 << UCSZ1) | (0 << UCSZ0);
+        break;
 
     case SERIALDRV_DATA_6:
-    	regUCSRC |= (0 << UCSZ2) | (0 << UCSZ1) | (1 << UCSZ0);
-    	break;
+        regUCSRC |= (0 << UCSZ2) | (0 << UCSZ1) | (1 << UCSZ0);
+        break;
 
     case SERIALDRV_DATA_7:
-    	regUCSRC |= (0 << UCSZ2) | (1 << UCSZ1) | (0 << UCSZ0);
-    	break;
+        regUCSRC |= (0 << UCSZ2) | (1 << UCSZ1) | (0 << UCSZ0);
+        break;
 
     case SERIALDRV_DATA_8:
-    	regUCSRC |= (0 << UCSZ2) | (1 << UCSZ1) | (1 << UCSZ0);
-    	break;
+        regUCSRC |= (0 << UCSZ2) | (1 << UCSZ1) | (1 << UCSZ0);
+        break;
 
     case SERIALDRV_DATA_9:
-    	regUCSRC |= (1 << UCSZ2) | (1 << UCSZ1) | (1 << UCSZ0);
-    	break;
+        regUCSRC |= (1 << UCSZ2) | (1 << UCSZ1) | (1 << UCSZ0);
+        break;
 
     default:
-    	return SERIALDRV_RET_ERROR;
-	}
+        return SERIALDRV_RET_ERROR;
+    }
 
-	/* Configure parity */
-	switch(parity)
-	{
+    /* Configure parity */
+    switch(parity)
+    {
     case SERIALDRV_PARITY_NONE:
         regUCSRC |= (0 << UPM1) | (0 << UPM0);
         break;
@@ -319,11 +319,11 @@ extern SERIALDRV_RET serialDrv_open(serialDrv_Handle hSerial, SERIALDRV_BAUD bau
 
     default:
         return SERIALDRV_RET_ERROR;
-	}
+    }
 
-	/* Configure number of stop bits */
-	switch(stopBits)
-	{
+    /* Configure number of stop bits */
+    switch(stopBits)
+    {
     case SERIALDRV_STOPBIT_1:
         regUCSRC |= (0 << USBS);
         break;
@@ -334,53 +334,53 @@ extern SERIALDRV_RET serialDrv_open(serialDrv_Handle hSerial, SERIALDRV_BAUD bau
 
     default:
         return SERIALDRV_RET_ERROR;
-	}
+    }
 
-	/* Enable receiver, transmitter and the receive interrupt */
-	regUCSRB = (1 << RXEN) | (1 << TXEN) | (1 << RXCIE);
+    /* Enable receiver, transmitter and the receive interrupt */
+    regUCSRB = (1 << RXEN) | (1 << TXEN) | (1 << RXCIE);
 
-	if (usart == &serialDrv_gUsart[SERIALDRV_USART_0])
-	{
-    	UBRR0H = regUBRRH;
-    	UBRR0L = regUBRRL;
+    if (usart == &serialDrv_gUsart[SERIALDRV_USART_0])
+    {
+        UBRR0H = regUBRRH;
+        UBRR0L = regUBRRL;
 
-    	/* Normal mode? */
-    	if (0 == serialDrv_ubbr_baudrate[baudrate].u2x)
-    	{
-        	UCSR0A &= ~_BV(U2X);
-    	}
-    	else
-    	{
-        	UCSR0A |= _BV(U2X);
-    	}
+        /* Normal mode? */
+        if (0 == serialDrv_ubbr_baudrate[baudrate].u2x)
+        {
+            UCSR0A &= ~_BV(U2X);
+        }
+        else
+        {
+            UCSR0A |= _BV(U2X);
+        }
 
-    	UCSR0C = regUCSRC;
-    	UCSR0B = regUCSRB;
-	}
-	else if (usart == &serialDrv_gUsart[SERIALDRV_USART_1])
-	{
-    	UBRR1H = regUBRRH;
-    	UBRR1L = regUBRRL;
+        UCSR0C = regUCSRC;
+        UCSR0B = regUCSRB;
+    }
+    else if (usart == &serialDrv_gUsart[SERIALDRV_USART_1])
+    {
+        UBRR1H = regUBRRH;
+        UBRR1L = regUBRRL;
 
-    	/* Normal mode? */
-    	if (0 == serialDrv_ubbr_baudrate[baudrate].u2x)
-    	{
-        	UCSR1A &= ~_BV(U2X);
-    	}
-    	else
-    	{
-        	UCSR1A |= _BV(U2X);
-    	}
+        /* Normal mode? */
+        if (0 == serialDrv_ubbr_baudrate[baudrate].u2x)
+        {
+            UCSR1A &= ~_BV(U2X);
+        }
+        else
+        {
+            UCSR1A |= _BV(U2X);
+        }
 
-    	UCSR1C = regUCSRC;
-    	UCSR1B = regUCSRB;
-	}
-	else
-	{
-    	return SERIALDRV_RET_ERROR;
-	}
+        UCSR1C = regUCSRC;
+        UCSR1B = regUCSRB;
+    }
+    else
+    {
+        return SERIALDRV_RET_ERROR;
+    }
 
-	return SERIALDRV_RET_OK;
+    return SERIALDRV_RET_OK;
 }
 
 /**
@@ -399,15 +399,15 @@ extern void serialDrv_close(serialDrv_Handle hSerial)
 
     usart = (serialDrv_Usart*)hSerial;
 
-	/* Disable interrupts */
-	if (usart == &serialDrv_gUsart[SERIALDRV_USART_0])
-	{
-    	UCSR0B &= ~((1 << RXCIE0) | (1 << TXCIE0));
-	}
-	else if (usart == &serialDrv_gUsart[SERIALDRV_USART_1])
-	{
-    	UCSR1B &= ~((1 << RXCIE1) | (1 << TXCIE1));
-	}
+    /* Disable interrupts */
+    if (usart == &serialDrv_gUsart[SERIALDRV_USART_0])
+    {
+        UCSR0B &= ~((1 << RXCIE0) | (1 << TXCIE0));
+    }
+    else if (usart == &serialDrv_gUsart[SERIALDRV_USART_1])
+    {
+        UCSR1B &= ~((1 << RXCIE1) | (1 << TXCIE1));
+    }
 
     return;
 }
@@ -454,14 +454,14 @@ extern uint8_t  serialDrv_write(serialDrv_Handle hSerial, uint8_t data)
 
     if (usart == &serialDrv_gUsart[SERIALDRV_USART_0])
     {
-		if (0 == (UCSR0B & (1 << TXCIE0)))
-		{
-    		/* Enable transmit interrupt */
-    		UCSR0B |= (1 << TXCIE0);
+        if (0 == (UCSR0B & (1 << TXCIE0)))
+        {
+            /* Enable transmit interrupt */
+            UCSR0B |= (1 << TXCIE0);
 
-    		/* Write data to transmit register. */
-    		UDR0 = data;
-		}
+            /* Write data to transmit register. */
+            UDR0 = data;
+        }
         else
         {
             count = serialDrv_writeCyclicBuffer(&usart->txCyclicBuffer, data);
@@ -469,14 +469,14 @@ extern uint8_t  serialDrv_write(serialDrv_Handle hSerial, uint8_t data)
     }
     else if (usart == &serialDrv_gUsart[SERIALDRV_USART_1])
     {
-		if (0 == (UCSR1B & (1 << TXCIE1)))
-		{
-    		/* Enable transmit interrupt */
-    		UCSR1B |= (1 << TXCIE1);
+        if (0 == (UCSR1B & (1 << TXCIE1)))
+        {
+            /* Enable transmit interrupt */
+            UCSR1B |= (1 << TXCIE1);
 
-    		/* Write data to transmit register. */
-    		UDR1 = data;
-		}
+            /* Write data to transmit register. */
+            UDR1 = data;
+        }
         else
         {
             count = serialDrv_writeCyclicBuffer(&usart->txCyclicBuffer, data);
@@ -624,16 +624,16 @@ static uint8_t  serialDrv_writeCyclicBuffer(serialDrv_CyclicBuffer* cyclicBuffer
  */
 ISR(USART0_RX_vect)
 {
-	uint8_t	            status	= UCSR0A;	/* Read status register (must be read before data register!) */
-	uint8_t	            data	= UDR0;		/* Read data register */
+    uint8_t             status  = UCSR0A;   /* Read status register (must be read before data register!) */
+    uint8_t             data    = UDR0;     /* Read data register */
     serialDrv_Usart*    usart   = &serialDrv_gUsart[SERIALDRV_USART_0];
 
-	/* Only error bits are interesting */
-	status &= (1 << FE0) | (1 << DOR0) | (1 << UPE0);
+    /* Only error bits are interesting */
+    status &= (1 << FE0) | (1 << DOR0) | (1 << UPE0);
     usart->rxStatus = status;
 
-	/* Put it to the serial driver */
-	if (1 != serialDrv_writeCyclicBuffer(&usart->rxCyclicBuffer, data))
+    /* Put it to the serial driver */
+    if (1 != serialDrv_writeCyclicBuffer(&usart->rxCyclicBuffer, data))
     {
         usart->rxOverflow = TRUE;
     }
@@ -644,19 +644,19 @@ ISR(USART0_RX_vect)
  */
 ISR(USART1_RX_vect)
 {
-	uint8_t	            status	= UCSR1A;	/* Read status register (must be read before data register!) */
-	uint8_t	            data	= UDR1;		/* Read data register */
+    uint8_t             status  = UCSR1A;   /* Read status register (must be read before data register!) */
+    uint8_t             data    = UDR1;     /* Read data register */
     serialDrv_Usart*    usart   = &serialDrv_gUsart[SERIALDRV_USART_1];
 
-	/* Only error bits are interesting */
-	status &= (1 << FE1) | (1 << DOR1) | (1 << UPE1);
+    /* Only error bits are interesting */
+    status &= (1 << FE1) | (1 << DOR1) | (1 << UPE1);
     usart->rxStatus = status;
 
-	/* Put it to the serial driver */
-	if (1 != serialDrv_writeCyclicBuffer(&usart->rxCyclicBuffer, data))
-	{
-    	usart->rxOverflow = TRUE;
-	}
+    /* Put it to the serial driver */
+    if (1 != serialDrv_writeCyclicBuffer(&usart->rxCyclicBuffer, data))
+    {
+        usart->rxOverflow = TRUE;
+    }
 }
 
 /**
@@ -664,20 +664,20 @@ ISR(USART1_RX_vect)
  */
 ISR(USART0_TX_vect)
 {
-	uint8_t	            data	= 0;
+    uint8_t             data    = 0;
     serialDrv_Usart*    usart   = &serialDrv_gUsart[SERIALDRV_USART_0];
 
-	/* Get data from the serial driver */
-	if (0 == serialDrv_readCyclicBuffer(&usart->txCyclicBuffer, &data))
-	{
-		/* Nothing to send, disable transmit interrupt */
-		UCSR0B &= ~(1 << TXCIE0);
-	}
-	else
-	{
-		/* Write data to data register */
-		UDR0 = data;
-	}
+    /* Get data from the serial driver */
+    if (0 == serialDrv_readCyclicBuffer(&usart->txCyclicBuffer, &data))
+    {
+        /* Nothing to send, disable transmit interrupt */
+        UCSR0B &= ~(1 << TXCIE0);
+    }
+    else
+    {
+        /* Write data to data register */
+        UDR0 = data;
+    }
 }
 
 /**
@@ -685,18 +685,18 @@ ISR(USART0_TX_vect)
  */
 ISR(USART1_TX_vect)
 {
-	uint8_t	            data	= 0;
+    uint8_t             data    = 0;
     serialDrv_Usart*    usart   = &serialDrv_gUsart[SERIALDRV_USART_1];
 
-	/* Get data from the serial driver */
-	if (0 == serialDrv_readCyclicBuffer(&usart->txCyclicBuffer, &data))
-	{
-		/* Nothing to send, disable transmit interrupt */
-		UCSR1B &= ~(1 << TXCIE1);
-	}
-	else
-	{
-		/* Write data to data register */
-		UDR1 = data;
-	}
+    /* Get data from the serial driver */
+    if (0 == serialDrv_readCyclicBuffer(&usart->txCyclicBuffer, &data))
+    {
+        /* Nothing to send, disable transmit interrupt */
+        UCSR1B &= ~(1 << TXCIE1);
+    }
+    else
+    {
+        /* Write data to data register */
+        UDR1 = data;
+    }
 }

@@ -29,29 +29,29 @@
 // ----------------------------------------------------------------------------
 
 #include "mcp2515_private.h"
-#ifdef	SUPPORT_FOR_MCP2515__
+#ifdef  SUPPORT_FOR_MCP2515__
 
 // ----------------------------------------------------------------------------
 void
 mcp2515_set_mode(can_mode_t mode)
 {
-	uint8_t reg = 0;
-	
-	if (mode == LISTEN_ONLY_MODE) {
-		reg = (1<<REQOP1)|(1<<REQOP0);
-	}
-	else if (mode == LOOPBACK_MODE) {
-		reg = (1<<REQOP1);
-	}
-	else if (mode == SLEEP_MODE) {
-		reg = (1<<REQOP0);
-	}
-		
-	// set the new mode
-	mcp2515_bit_modify(CANCTRL, (1<<REQOP2)|(1<<REQOP1)|(1<<REQOP0), reg);
-	while ((mcp2515_read_register(CANSTAT) & 0xe0) != reg) {
-		// wait for the new mode to become active
-	}
+    uint8_t reg = 0;
+
+    if (mode == LISTEN_ONLY_MODE) {
+        reg = (1<<REQOP1)|(1<<REQOP0);
+    }
+    else if (mode == LOOPBACK_MODE) {
+        reg = (1<<REQOP1);
+    }
+    else if (mode == SLEEP_MODE) {
+        reg = (1<<REQOP0);
+    }
+
+    // set the new mode
+    mcp2515_bit_modify(CANCTRL, (1<<REQOP2)|(1<<REQOP1)|(1<<REQOP0), reg);
+    while ((mcp2515_read_register(CANSTAT) & 0xe0) != reg) {
+        // wait for the new mode to become active
+    }
 }
 
-#endif	// SUPPORT_FOR_MCP2515__
+#endif  // SUPPORT_FOR_MCP2515__

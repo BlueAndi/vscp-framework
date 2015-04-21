@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +21,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
@@ -108,7 +108,7 @@ typedef struct
     BOOL                verbose;            /**< Verbose information */
     BOOL                showHelp;           /**< Show help to the user */
     VSCP_TP_ADAPTER_LVL lvl;                /**< Network level */
-    
+
 } main_CmdLineArgs;
 
 /*******************************************************************************
@@ -194,13 +194,13 @@ int main(int argc, char* argv[])
     int                 status          = 0;
     BOOL                abort           = FALSE;
     main_CmdLineArgs    cmdLineArgs;
-    
+
     printf("\nSimulated VSCP level 1 node\n");
     printf("Version: %s\n\n", VERSION);
 
     /* Set log level */
     log_setLevel(LOG_LEVEL_FATAL);
-    
+
     /* Parse command line arguments */
     if (MAIN_RET_OK != main_getCmdLineArgs(&cmdLineArgs, argc, argv))
     {
@@ -215,7 +215,7 @@ int main(int argc, char* argv[])
             log_setLevel(LOG_LEVEL_INFO | LOG_LEVEL_DEBUG | LOG_LEVEL_WARNING | LOG_LEVEL_ERROR | LOG_LEVEL_FATAL);
         }
     }
-    
+
     /* Show help? */
     if (TRUE == cmdLineArgs.showHelp)
     {
@@ -233,23 +233,23 @@ int main(int argc, char* argv[])
             /* Show the user which keys can be used. */
             main_showKeyTable();
             printf("\n");
-        
+
             /* Shall a connection to a VSCP daemon be established? */
             if (NULL != cmdLineArgs.daemonAddr)
             {
                 VSCP_TP_ADAPTER_RET ret = VSCP_TP_ADAPTER_RET_OK;
-                
+
                 log_printf("Connecting ...");
-            
+
                 ret = vscp_tp_adapter_connect(  cmdLineArgs.daemonAddr,
                                                 cmdLineArgs.daemonUser,
                                                 cmdLineArgs.daemonPassword,
                                                 cmdLineArgs.lvl);
-                
+
                 if (VSCP_TP_ADAPTER_RET_OK != ret)
                 {
                     printf(" failed to %s.\n", cmdLineArgs.daemonAddr);
-                    
+
                     if (VSCP_TP_ADAPTER_RET_INVALID_USER == ret)
                     {
                         log_printf("Invalid user.\n");
@@ -262,7 +262,7 @@ int main(int argc, char* argv[])
                     {
                         log_printf("Connection timeout.\n");
                     }
-                    
+
                     abort = TRUE;
                 }
                 else
@@ -270,7 +270,7 @@ int main(int argc, char* argv[])
                     printf(" successful.\n");
                 }
             }
-            
+
             /* No error? */
             if (FALSE == abort)
             {
@@ -279,7 +279,7 @@ int main(int argc, char* argv[])
                 {
                     vscp_core_enableHeartbeat(FALSE);
                 }
-            
+
                 /* Start the whole VSCP framework */
                 if (VSCP_THREAD_RET_OK != vscp_thread_start())
                 {
@@ -295,35 +295,35 @@ int main(int argc, char* argv[])
                     }
                 }
             }
-            
+
             /* If no error happened, start main loop. */
             if (FALSE == abort)
             {
                 main_loop();
             }
-            
+
             printf("Please wait ...\n");
-            
+
             /* Stop temperature simulation */
             temperature_sim_stop();
-            
+
             /* Stop the whole VSCP framework */
             vscp_thread_stop();
-            
+
             /* Shall a connection to a VSCP daemon be disconnected? */
             if (NULL != cmdLineArgs.daemonAddr)
             {
                 vscp_tp_adapter_disconnect();
             }
         }
-        
+
         main_deInit();
     }
-    
+
     if (TRUE == abort)
     {
         printf("\nAborted.\n");
-        
+
         if (0 == status)
         {
             status = 1;
@@ -345,23 +345,23 @@ int main(int argc, char* argv[])
 static MAIN_RET main_init(void)
 {
     MAIN_RET    status  = MAIN_RET_OK;
-    
+
     /* Initialize platform specific functions */
     platform_init();
 
     /* Initialize EEPROM simulation */
     eeprom_init(VSCP_PS_ADDR_NEXT);
     eeprom_load(MAIN_EEPROM_FILENAME);
-    
+
     /* Initialize the whole VSCP framework */
     if (VSCP_THREAD_RET_OK != vscp_thread_init())
     {
         status = MAIN_RET_ERROR;
     }
-    
+
     /* Initialize temperature simulation */
     temperature_sim_init();
-    
+
     return status;
 }
 
@@ -371,10 +371,10 @@ static MAIN_RET main_init(void)
 static void main_deInit(void)
 {
     platform_deInit();
-    
+
     eeprom_save(MAIN_EEPROM_FILENAME);
     eeprom_deInit();
-        
+
     return;
 }
 
@@ -389,23 +389,23 @@ static void main_deInit(void)
 static MAIN_RET main_getCmdLineArgs(main_CmdLineArgs * const cmdLineArgs, int argc, char ** const argv)
 {
     MAIN_RET    status  = MAIN_RET_OK;
-    
+
     if ((NULL == cmdLineArgs) ||
         (NULL == argv))
     {
         return MAIN_RET_ENULL;
     }
-    
+
     memset(cmdLineArgs, 0, sizeof(main_CmdLineArgs));
-    
+
     /* Determine program file name */
     cmdLineArgs->progName = strrchr(argv[0], '/');
-    
+
     if (NULL == cmdLineArgs->progName)
     {
         cmdLineArgs->progName = strrchr(argv[0], '\\');
     }
-    
+
     if (NULL == cmdLineArgs->progName)
     {
         cmdLineArgs->progName = argv[0];
@@ -414,16 +414,16 @@ static MAIN_RET main_getCmdLineArgs(main_CmdLineArgs * const cmdLineArgs, int ar
     {
         ++(cmdLineArgs->progName);
     }
-    
+
     /* Set network level default value */
     cmdLineArgs->lvl = VSCP_TP_ADAPTER_LVL_1_OVER_2;
-    
+
     /* Any further program argument available? */
     if (1 < argc)
     {
         uint32_t    index       = 0;
         BOOL        abort       = FALSE;
-        
+
         for(index = 1; index < argc; ++index)
         {
             /* Show help? */
@@ -461,7 +461,7 @@ static MAIN_RET main_getCmdLineArgs(main_CmdLineArgs * const cmdLineArgs, int ar
             else if (0 == strncmp(argv[index], "-u", 2))
             {
                 cmdLineArgs->daemonUser = &argv[index][2];
-                
+
                 if ('\0' == cmdLineArgs->daemonUser)
                 {
                     printf("User name missing.\n");
@@ -472,7 +472,7 @@ static MAIN_RET main_getCmdLineArgs(main_CmdLineArgs * const cmdLineArgs, int ar
             else if (0 == strncmp(argv[index], "-p", 2))
             {
                 cmdLineArgs->daemonPassword = &argv[index][2];
-                
+
                 if ('\0' == cmdLineArgs->daemonPassword)
                 {
                     printf("Password missing.\n");
@@ -495,19 +495,19 @@ static MAIN_RET main_getCmdLineArgs(main_CmdLineArgs * const cmdLineArgs, int ar
                 printf("Unknown option: %s\n", argv[index]);
                 abort = TRUE;
             }
-            
+
             if (FALSE != abort)
             {
                 break;
             }
         }
-        
+
         if (FALSE != abort)
         {
             status = MAIN_RET_ERROR;
         }
     }
-    
+
     return status;
 }
 
@@ -531,7 +531,7 @@ static void main_showHelp(char const * const progName)
     printf("          12: Support L1 and L1 over L2 events (default)\n");
     printf("-u<user>  User name for VSCP daemon access\n");
     printf("-p<pass>  Password for VSCP daemon access\n");
-                
+
     return;
 }
 
@@ -570,7 +570,7 @@ static void main_dumpEEPROM(void)
         PLATFORM_COLOR  newColor    = PLATFORM_COLOR_RED;
         BOOL            nextColor   = FALSE;
         uint8_t         elementId   = 0;
-        
+
         platform_setTextBgColor(PLATFORM_COLOR_BLACK);
 
         for(index = 0; index < eepromSize; ++index)
@@ -610,7 +610,7 @@ static void main_dumpEEPROM(void)
             {
                 nextColor = TRUE;
             }
-#endif	/* (0 < VSCP_PS_SIZE_GUID) */
+#endif  /* (0 < VSCP_PS_SIZE_GUID) */
 #if (0 < VSCP_PS_SIZE_NODE_ZONE)
             else if (VSCP_PS_ADDR_NODE_ZONE == index)
             {
@@ -628,43 +628,43 @@ static void main_dumpEEPROM(void)
             {
                 nextColor = TRUE;
             }
-#endif	/* (0 < VSCP_PS_SIZE_MANUFACTURER_DEV_ID) */
+#endif  /* (0 < VSCP_PS_SIZE_MANUFACTURER_DEV_ID) */
 #if (0 < VSCP_PS_SIZE_MANUFACTURER_SUB_DEV_ID)
             else if (VSCP_PS_ADDR_MANUFACTURER_SUB_DEV_ID == index)
             {
                 nextColor = TRUE;
             }
-#endif	/* (0 < VSCP_PS_SIZE_MANUFACTURER_SUB_DEV_ID) */
+#endif  /* (0 < VSCP_PS_SIZE_MANUFACTURER_SUB_DEV_ID) */
 #if (0 < VSCP_PS_SIZE_MDF_URL)
             else if (VSCP_PS_ADDR_MDF_URL == index)
             {
                 nextColor = TRUE;
             }
-#endif	/* (0 < VSCP_PS_SIZE_MDF_URL) */
+#endif  /* (0 < VSCP_PS_SIZE_MDF_URL) */
 #if (0 < VSCP_PS_SIZE_STD_DEV_FAMILY_CODE)
             else if (VSCP_PS_ADDR_STD_DEV_FAMILY_CODE == index)
             {
                 nextColor = TRUE;
             }
-#endif	/* (0 < VSCP_PS_SIZE_STD_DEV_FAMILY_CODE) */
+#endif  /* (0 < VSCP_PS_SIZE_STD_DEV_FAMILY_CODE) */
 #if (0 < VSCP_PS_SIZE_STD_DEV_TYPE)
             else if (VSCP_PS_ADDR_STD_DEV_TYPE == index)
             {
                 nextColor = TRUE;
             }
-#endif	/* (0 < VSCP_PS_SIZE_STD_DEV_TYPE) */
+#endif  /* (0 < VSCP_PS_SIZE_STD_DEV_TYPE) */
 #if (0 < VSCP_PS_SIZE_DM)
             else if (VSCP_PS_ADDR_DM == index)
             {
                 nextColor = TRUE;
             }
-#endif	/* (0 < VSCP_PS_SIZE_DM) */
+#endif  /* (0 < VSCP_PS_SIZE_DM) */
 #if (0 < VSCP_PS_SIZE_DM_EXTENSION)
             else if (VSCP_PS_ADDR_DM_EXTENSION == index)
             {
                 nextColor = TRUE;
             }
-#endif	/* (0 < VSCP_PS_SIZE_DM_EXTENSION) */
+#endif  /* (0 < VSCP_PS_SIZE_DM_EXTENSION) */
 #if (0 < VSCP_PS_SIZE_DM_NEXT_GENERATION)
             else if (VSCP_PS_ADDR_DM_NEXT_GENERATION == index)
             {
@@ -676,21 +676,21 @@ static void main_dumpEEPROM(void)
                 newColor = PLATFORM_COLOR_GREY;
                 nextColor = TRUE;
             }
-            
+
             if (TRUE == nextColor)
             {
                 color = newColor;
                 platform_setTextColor(color);
                 ++newColor;
-                
+
                 if (PLATFORM_COLOR_WHITE < newColor)
                 {
                     newColor = PLATFORM_COLOR_RED;
                 }
-                
+
                 nextColor = FALSE;
             }
-            
+
             printf("%02X", eepromBase[index]);
 
             if (0 != ((index + 1) % EEPROM_STORAGE_MULTIPLE))
@@ -702,12 +702,12 @@ static void main_dumpEEPROM(void)
                 printf("\r\n");
             }
         }
-        
+
         platform_restoreTextColor();
-        
+
         color       = PLATFORM_COLOR_RED;
         newColor    = PLATFORM_COLOR_RED;
-        
+
         for(index = 0; index < eepromSize; ++index)
         {
 #if (0 < VSCP_PS_SIZE_BOOT_FLAG)
@@ -738,7 +738,7 @@ static void main_dumpEEPROM(void)
             {
                 nextColor = TRUE;
             }
-#endif	/* (0 < VSCP_PS_SIZE_GUID) */
+#endif  /* (0 < VSCP_PS_SIZE_GUID) */
 #if (0 < VSCP_PS_SIZE_NODE_ZONE)
             else if (VSCP_PS_ADDR_NODE_ZONE == index)
             {
@@ -756,43 +756,43 @@ static void main_dumpEEPROM(void)
             {
                 nextColor = TRUE;
             }
-#endif	/* (0 < VSCP_PS_SIZE_MANUFACTURER_DEV_ID) */
+#endif  /* (0 < VSCP_PS_SIZE_MANUFACTURER_DEV_ID) */
 #if (0 < VSCP_PS_SIZE_MANUFACTURER_SUB_DEV_ID)
             else if (VSCP_PS_ADDR_MANUFACTURER_SUB_DEV_ID == index)
             {
                 nextColor = TRUE;
             }
-#endif	/* (0 < VSCP_PS_SIZE_MANUFACTURER_SUB_DEV_ID) */
+#endif  /* (0 < VSCP_PS_SIZE_MANUFACTURER_SUB_DEV_ID) */
 #if (0 < VSCP_PS_SIZE_MDF_URL)
             else if (VSCP_PS_ADDR_MDF_URL == index)
             {
                 nextColor = TRUE;
             }
-#endif	/* (0 < VSCP_PS_SIZE_MDF_URL) */
+#endif  /* (0 < VSCP_PS_SIZE_MDF_URL) */
 #if (0 < VSCP_PS_SIZE_STD_DEV_FAMILY_CODE)
             else if (VSCP_PS_ADDR_STD_DEV_FAMILY_CODE == index)
             {
                 nextColor = TRUE;
             }
-#endif	/* (0 < VSCP_PS_SIZE_STD_DEV_FAMILY_CODE) */
+#endif  /* (0 < VSCP_PS_SIZE_STD_DEV_FAMILY_CODE) */
 #if (0 < VSCP_PS_SIZE_STD_DEV_TYPE)
             else if (VSCP_PS_ADDR_STD_DEV_TYPE == index)
             {
                 nextColor = TRUE;
             }
-#endif	/* (0 < VSCP_PS_SIZE_STD_DEV_TYPE) */
+#endif  /* (0 < VSCP_PS_SIZE_STD_DEV_TYPE) */
 #if (0 < VSCP_PS_SIZE_DM)
             else if (VSCP_PS_ADDR_DM == index)
             {
                 nextColor = TRUE;
             }
-#endif	/* (0 < VSCP_PS_SIZE_DM) */
+#endif  /* (0 < VSCP_PS_SIZE_DM) */
 #if (0 < VSCP_PS_SIZE_DM_EXTENSION)
             else if (VSCP_PS_ADDR_DM_EXTENSION == index)
             {
                 nextColor = TRUE;
             }
-#endif	/* (0 < VSCP_PS_SIZE_DM_EXTENSION) */
+#endif  /* (0 < VSCP_PS_SIZE_DM_EXTENSION) */
 #if (0 < VSCP_PS_SIZE_DM_NEXT_GENERATION)
             else if (VSCP_PS_ADDR_DM_NEXT_GENERATION == index)
             {
@@ -804,32 +804,32 @@ static void main_dumpEEPROM(void)
                 newColor = PLATFORM_COLOR_GREY;
                 nextColor = TRUE;
             }
-            
+
             if (TRUE == nextColor)
             {
                 color = newColor;
                 platform_setTextColor(color);
                 ++newColor;
-                
+
                 if (MAIN_ARRAY_NUM(main_psUserFriendlyName) > elementId)
                 {
                     printf("- %s\n", main_psUserFriendlyName[elementId]);
                     ++elementId;
                 }
-                
+
                 if (PLATFORM_COLOR_WHITE < color)
                 {
                     color = PLATFORM_COLOR_RED;
                 }
-                
+
                 nextColor = FALSE;
             }
         }
-        
+
         platform_restoreTextColor();
         platform_restoreTextBgColor();
     }
-    
+
     return;
 }
 
@@ -841,9 +841,9 @@ static void main_loop(void)
 {
     int     keyValue        = 0;
     BOOL    nodeHeartbeat   = TRUE; /* Heartbeat is on per default */
-                
+
     platform_echoOff();
-    
+
     /* Execute simple terminal */
     while('q' != keyValue)
     {
@@ -853,7 +853,7 @@ static void main_loop(void)
             keyValue = platform_getch();
 
             platform_echoOn();
-            
+
             /* Show keys */
             if ('?' == keyValue)
             {
@@ -867,7 +867,7 @@ static void main_loop(void)
                 vscp_thread_lock();
                 main_dumpEEPROM();
                 vscp_thread_unlock();
-            }               
+            }
             /* Enable/Disable node hearbeat */
             else if ('h' == keyValue)
             {
@@ -913,7 +913,7 @@ static void main_loop(void)
             else if (('1' <= keyValue) && ('5' >= keyValue))
             {
                 vscp_RxMessage  rxMsg;
-                
+
                 rxMsg.vscpClass = VSCP_CLASS_L1_INFORMATION;
                 rxMsg.vscpType  = VSCP_TYPE_INFORMATION_BUTTON;
                 rxMsg.priority  = VSCP_PRIORITY_3_NORMAL;
@@ -926,12 +926,12 @@ static void main_loop(void)
                 rxMsg.data[4]   = 0;
                 rxMsg.data[5]   = 0;
                 rxMsg.data[6]   = 0;
-                
+
                 vscp_thread_lock();
                 vscp_tp_adapter_simulateReceivedMessage(&rxMsg);
                 vscp_thread_unlock();
             }
-            
+
             platform_echoOff();
         }
         else
@@ -940,7 +940,7 @@ static void main_loop(void)
             platform_delay(10);
         }
     }
-    
+
     platform_echoOn();
 
     return;

@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +21,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
@@ -223,14 +223,14 @@ extern void platform_init(void)
     (void)tcgetattr(STDIN_FILENO, &platform_terminalOld);
 
 #endif  /* __linux__ */
-    
+
 #ifdef _WIN32
 
     /* Remember the console color */
     platform_color = platform_win_getTextColor();
-    
+
 #endif  /* _WIN32 */
-    
+
     return;
 }
 
@@ -243,12 +243,12 @@ extern void platform_deInit(void)
 
     /* Restore terminal settings */
     (void)(void)tcsetattr(STDIN_FILENO, TCSANOW, &platform_terminalOld);
-    
+
 #endif  /* __linux__ */
 
     platform_restoreTextColor();
     platform_restoreTextBgColor();
-    
+
     return;
 }
 
@@ -260,13 +260,13 @@ extern void platform_echoOff(void)
 #ifdef _WIN32
 
     platform_win_echoOff();
-    
+
 #endif  /* _WIN32 */
 
 #ifdef __linux__
 
     platform_linux_echoOff();
-    
+
 #endif  /* __linux__ */
 
     return;
@@ -280,13 +280,13 @@ extern void platform_echoOn(void)
 #ifdef _WIN32
 
     platform_win_echoOn();
-    
+
 #endif  /* _WIN32 */
 
 #ifdef __linux__
 
     platform_linux_echoOn();
-    
+
 #endif  /* __linux__ */
 
     return;
@@ -296,7 +296,7 @@ extern void platform_echoOn(void)
  * This function is not defined as part of the ANSI C/C++ standard.
  * It is generally used by Borland's family of compilers. It returns a positive
  * non-zero integer if a key is in the keyboard buffer. It will not wait for a
- * key to be pressed. 
+ * key to be pressed.
  *
  * @return Status
  * @retval 0    No key pressed
@@ -308,13 +308,13 @@ extern int platform_kbhit(void)
 #ifdef _WIN32
 
     return platform_win_kbhit();
-    
+
 #endif  /* _WIN32 */
 
 #ifdef __linux__
 
     return platform_linux_kbhit();
-    
+
 #endif  /* __linux__ */
 }
 
@@ -333,13 +333,13 @@ extern int platform_getch(void)
 #ifdef _WIN32
 
     return platform_win_getch();
-    
+
 #endif  /* _WIN32 */
 
 #ifdef __linux__
 
     return platform_linux_getch();
-    
+
 #endif  /* __linux__ */
 }
 
@@ -354,15 +354,15 @@ extern void platform_delay(long valueMS)
 #ifdef _WIN32
 
     return platform_win_sleepMS(valueMS);
-    
+
 #endif  /* _WIN32 */
 
 #ifdef __linux__
 
     return platform_linux_sleepMS(valueMS);
-    
+
 #endif  /* __linux__ */
-    
+
     return;
 }
 
@@ -376,13 +376,13 @@ extern void platform_setTextColor(PLATFORM_COLOR color)
 #ifdef _WIN32
 
     return platform_win_setTextColor(color);
-    
+
 #endif  /* _WIN32 */
 
 #ifdef __linux__
 
     return platform_linux_setTextColor(color);
-    
+
 #endif  /* __linux__ */
 
     return;
@@ -398,13 +398,13 @@ extern void platform_setTextBgColor(PLATFORM_COLOR color)
 #ifdef _WIN32
 
     return platform_win_setTextBgColor(color);
-    
+
 #endif  /* _WIN32 */
 
 #ifdef __linux__
 
     return platform_linux_setTextBgColor(color);
-    
+
 #endif  /* __linux__ */
 
     return;
@@ -420,7 +420,7 @@ extern void platform_restoreTextColor(void)
     const uint8_t   defaultForegroundColor  = 39;
 
     printf("\033[%um", defaultForegroundColor);
-    
+
 #endif  /* __linux__ */
 
 #ifdef _WIN32
@@ -442,7 +442,7 @@ extern void platform_restoreTextBgColor(void)
     const uint8_t   defaultBackgroundColor  = 49;
 
     printf("\033[%um", defaultBackgroundColor);
-    
+
 #endif  /* __linux__ */
 
 #ifdef _WIN32
@@ -482,7 +482,7 @@ static void platform_win_echoOn(void)
  * This function is not defined as part of the ANSI C/C++ standard.
  * It is generally used by Borland's family of compilers. It returns a positive
  * non-zero integer if a key is in the keyboard buffer. It will not wait for a
- * key to be pressed. 
+ * key to be pressed.
  *
  * @return Status
  * @retval 0    No key pressed
@@ -533,7 +533,7 @@ static void platform_win_setTextColor(PLATFORM_COLOR color)
         HANDLE  hStdout     = GetStdHandle(STD_OUTPUT_HANDLE);
         uint8_t foreground  = platform_win_colors[color];
         uint8_t background  = platform_win_getTextColor() & 0xf0;
-        
+
         if (hStdout == INVALID_HANDLE_VALUE)
         {
             return;
@@ -557,7 +557,7 @@ static void platform_win_setTextBgColor(PLATFORM_COLOR color)
         HANDLE  hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
         uint8_t foreground  = platform_win_getTextColor() & 0x0f;
         uint8_t background  = platform_win_bgColors[color];
-        
+
         if (hStdout == INVALID_HANDLE_VALUE)
         {
             return;
@@ -579,17 +579,17 @@ static uint8_t  platform_win_getTextColor(void)
     uint8_t                     color   = 0;
     HANDLE                      hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_SCREEN_BUFFER_INFO  consoleScreenBufferInfo;
-    
+
     if (hStdout == INVALID_HANDLE_VALUE)
     {
         return 0;
     }
-    
+
     if (0 != GetConsoleScreenBufferInfo(hStdout, &consoleScreenBufferInfo))
     {
         color = (uint8_t)(consoleScreenBufferInfo.wAttributes & 0xff);
     }
-    
+
     return color;
 }
 
@@ -608,7 +608,7 @@ static void platform_linux_echoOff(void)
     terminal.c_lflag &= ~(ECHO | ICANON);   /* Disable echo and disable canonical mode */
     terminal.c_cc[VMIN]     = 1;            /* Always 1 byte */
     terminal.c_cc[VTIME]    = 0;            /* No timer */
-    
+
     (void)tcsetattr(STDIN_FILENO, TCSANOW, &terminal);
     return;
 }
@@ -626,7 +626,7 @@ static void platform_linux_echoOn(void)
  * This function is not defined as part of the ANSI C/C++ standard.
  * It is generally used by Borland's family of compilers. It returns a positive
  * non-zero integer if a key is in the keyboard buffer. It will not wait for a
- * key to be pressed. 
+ * key to be pressed.
  *
  * @return Status
  * @retval 0    No key pressed
@@ -638,17 +638,17 @@ static int platform_linux_kbhit(void)
     int             status = 0;
     fd_set          fdSet;
     struct timeval  timeout;
-        
+
     /* Watch STDIN to see when it has input */
     FD_ZERO(&fdSet);
     FD_SET(STDIN_FILENO, &fdSet);
-    
+
     /* Wait up to 100us */
     timeout.tv_sec  = 0;
     timeout.tv_usec = 100;
-    
+
     status = select(1, &fdSet, NULL, NULL, &timeout);
-        
+
     return status;
 }
 
@@ -665,12 +665,12 @@ static int platform_linux_kbhit(void)
 static int platform_linux_getch(void)
 {
     int keyValue    = 0;
-    
+
     if (1 == read(STDIN_FILENO, &keyValue, 1))
     {
         keyValue &= 0xff;
     }
-    
+
     return keyValue;
 }
 
@@ -686,9 +686,9 @@ static void platform_linux_sleepMS(long valueMS)
 
     timeout.tv_sec  = valueMS / 1000;
     timeout.tv_usec = (valueMS % 1000) * 1000;
-    
+
     (void)select(0, NULL, NULL, NULL, &timeout);
-    
+
     return;
 }
 
@@ -703,7 +703,7 @@ static void platform_linux_setTextColor(PLATFORM_COLOR color)
     {
         printf("\033[%um", platform_linux_colors[color]);
     }
-    
+
     return;
 }
 
@@ -718,7 +718,7 @@ static void platform_linux_setTextBgColor(PLATFORM_COLOR color)
     {
         printf("\033[%um", platform_linux_bgColors[color]);
     }
-    
+
     return;
 }
 

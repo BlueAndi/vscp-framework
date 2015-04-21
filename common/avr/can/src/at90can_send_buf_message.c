@@ -36,50 +36,50 @@
 // -----------------------------------------------------------------------------
 uint8_t at90can_send_buffered_message(const can_t *msg)
 {
-	// check if there is any free buffer left
-	#if CAN_FORCE_TX_ORDER
-	if (_transmission_in_progress)
-	#else
-	if (_find_free_mob() == 0xff)
-	#endif
-	{
-		can_t *buf = can_buffer_get_enqueue_ptr(&can_tx_buffer); 
-		
-		if (buf == NULL)
-			return 0;		// buffer full
-		
-		// copy message to the buffer
-		memcpy( buf, msg, sizeof(can_t) );
-		
-		// In the interrupt it is checked if there are any waiting messages
-		// in the queue, otherwise the interrupt will be disabled.
-		// So, if the transmission finished while we are in this routine the 
-		// message will be queued but not send.
-		// Therefore interrupts have to disabled while putting the message
-		// to the queue.
-		bool enqueued = false;
-		
-		ENTER_CRITICAL_SECTION;
-		if (_transmission_in_progress)
-		{
-			can_buffer_enqueue(&can_tx_buffer);
-			enqueued = true;
-		}
-		LEAVE_CRITICAL_SECTION;
-		
-		if (enqueued) {
-			return 1;
-		}
-		else {
-			// buffer gets free while we where preparing the message
-			// => send message directly
-			return at90can_send_message( msg );
-		}
-	}
-	else
-	{
-		return at90can_send_message( msg );
-	}
+    // check if there is any free buffer left
+    #if CAN_FORCE_TX_ORDER
+    if (_transmission_in_progress)
+    #else
+    if (_find_free_mob() == 0xff)
+    #endif
+    {
+        can_t *buf = can_buffer_get_enqueue_ptr(&can_tx_buffer);
+
+        if (buf == NULL)
+            return 0;       // buffer full
+
+        // copy message to the buffer
+        memcpy( buf, msg, sizeof(can_t) );
+
+        // In the interrupt it is checked if there are any waiting messages
+        // in the queue, otherwise the interrupt will be disabled.
+        // So, if the transmission finished while we are in this routine the
+        // message will be queued but not send.
+        // Therefore interrupts have to disabled while putting the message
+        // to the queue.
+        bool enqueued = false;
+
+        ENTER_CRITICAL_SECTION;
+        if (_transmission_in_progress)
+        {
+            can_buffer_enqueue(&can_tx_buffer);
+            enqueued = true;
+        }
+        LEAVE_CRITICAL_SECTION;
+
+        if (enqueued) {
+            return 1;
+        }
+        else {
+            // buffer gets free while we where preparing the message
+            // => send message directly
+            return at90can_send_message( msg );
+        }
+    }
+    else
+    {
+        return at90can_send_message( msg );
+    }
 }
 
-#endif	// SUPPORT_FOR_AT90CAN__
+#endif  // SUPPORT_FOR_AT90CAN__

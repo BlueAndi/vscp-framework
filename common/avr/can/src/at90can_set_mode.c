@@ -29,17 +29,17 @@
 // ----------------------------------------------------------------------------
 
 #include "at90can_private.h"
-#ifdef	SUPPORT_FOR_AT90CAN__
+#ifdef  SUPPORT_FOR_AT90CAN__
 
 // ----------------------------------------------------------------------------
 void at90can_set_mode(can_mode_t mode)
 {
-	if (mode == LISTEN_ONLY_MODE || mode == LOOPBACK_MODE) {
-		CANGCON |= (1<<LISTEN);
-	}
-	else {
-		CANGCON &= ~(1<<LISTEN);
-	}
+    if (mode == LISTEN_ONLY_MODE || mode == LOOPBACK_MODE) {
+        CANGCON |= (1<<LISTEN);
+    }
+    else {
+        CANGCON &= ~(1<<LISTEN);
+    }
 }
 
-#endif	// SUPPORT_FOR_AT90CAN__
+#endif  // SUPPORT_FOR_AT90CAN__

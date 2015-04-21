@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +21,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
@@ -102,7 +102,7 @@ static void vscp_portable_loadDMExt(void);
 #if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION )
 
 /** Decision matrix next generation rule set */
-static uint8_t	vscp_portable_ruleSet[] =
+static uint8_t  vscp_portable_ruleSet[] =
 {
     /* Number of rules */
     0x02,
@@ -146,7 +146,7 @@ extern void vscp_portable_init(void)
 #if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM_EXTENSION )
     dm_ext_xml_init();
 #endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM_EXTENSION ) */
-    
+
     return;
 }
 
@@ -180,24 +180,24 @@ extern void vscp_portable_restoreFactoryDefaultSettings(void)
     vscp_portable_loadDMExt();
 
 #endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM_EXTENSION ) */
-    
+
 #if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION )
-    
+
     if (NULL == ps)
     {
         LOG_ERROR("Couldn't get EEPROM base address.");
         return;
     }
-    
+
     dmNG = &ps[VSCP_PS_ADDR_DM_NEXT_GENERATION];
-    
+
     for(index = 0; index < sizeof(vscp_portable_ruleSet); ++index)
     {
         dmNG[index] = vscp_portable_ruleSet[index];
     }
-    
+
 #endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION ) */
-    
+
     return;
 }
 
@@ -264,7 +264,7 @@ extern void vscp_portable_idleStateEntered(void)
 extern void vscp_portable_errorStateEntered(void)
 {
     log_printf("Entered ERROR state.\n");
-    
+
     return;
 }
 
@@ -305,7 +305,7 @@ extern void vscp_portable_bootLoaderRequest(void)
     log_printf("Bootloader mode requested.\n");
 
     vscp_portable_bootloaderRequested = TRUE;
-    
+
     return;
 }
 
@@ -319,7 +319,7 @@ extern void vscp_portable_bootLoaderRequest(void)
 extern BOOL vscp_portable_isBootloaderRequested(void)
 {
     BOOL    flag    = vscp_portable_bootloaderRequested;
-    
+
     vscp_portable_bootloaderRequested = FALSE;
 
     return flag;
@@ -333,7 +333,7 @@ extern BOOL vscp_portable_isBootloaderRequested(void)
 extern void vscp_portable_provideEvent(vscp_RxMessage const * const msg)
 {
     /* Implement your code here ... */
-    
+
     return;
 }
 
@@ -353,22 +353,22 @@ static void vscp_portable_loadDMStd(void)
     uint8_t*            ps      = eeprom_getBase(NULL);
     DM_STD_XML_RET      ret     = DM_STD_XML_RET_OK;
     vscp_dm_MatrixRow*  dm      = NULL;
-    
+
     if (NULL == ps)
     {
         LOG_ERROR("Couldn't get EEPROM base address.");
         return;
     }
-    
+
     dm = (vscp_dm_MatrixRow*)&ps[VSCP_PS_ADDR_DM];
-    
+
     /* If a decision matrix file is available, load it and configure the internal
      * decision matrix with the content.
      *
      * Otherwise the decision matrix will be empty.
      */
     ret = dm_std_xml_load("dmStd.xml", dm, VSCP_CONFIG_DM_ROWS);
-    
+
     if (ret == DM_STD_XML_RET_EFILE)
     {
         LOG_INFO("No standard decision matrix xml file found.");
@@ -379,9 +379,9 @@ static void vscp_portable_loadDMStd(void)
     }
     else
     {
-        LOG_INFO("Standard decision matrix xml file successful loaded.");        
+        LOG_INFO("Standard decision matrix xml file successful loaded.");
     }
-    
+
     return;
 }
 
@@ -400,24 +400,24 @@ static void vscp_portable_loadDMExt(void)
     DM_EXT_XML_RET      ret     = DM_EXT_XML_RET_OK;
     vscp_dm_MatrixRow*  dm      = NULL;
     vscp_dm_ExtRow*     dmExt   = NULL;
-    
+
     if (NULL == ps)
     {
         LOG_ERROR("Couldn't get EEPROM base address.");
         return;
     }
-    
+
     dm = (vscp_dm_MatrixRow*)&ps[VSCP_PS_ADDR_DM];
-    
+
     dmExt = (vscp_dm_ExtRow*)&ps[VSCP_PS_ADDR_DM_EXTENSION];
-    
+
     /* If a extended decision matrix file is available, load it and configure the internal
      * decision matrix with the content.
      *
      * Otherwise the decision matrix will be empty.
      */
     ret = dm_ext_xml_load("dmExt.xml", dm, dmExt, VSCP_CONFIG_DM_ROWS);
-    
+
     if (ret == DM_EXT_XML_RET_EFILE)
     {
         LOG_INFO("No extended decision matrix xml file found.");
@@ -428,9 +428,9 @@ static void vscp_portable_loadDMExt(void)
     }
     else
     {
-        LOG_INFO("Extended decision matrix xml file successful loaded.");        
+        LOG_INFO("Extended decision matrix xml file successful loaded.");
     }
-    
+
     return;
 }
 

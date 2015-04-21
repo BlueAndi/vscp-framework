@@ -1,5 +1,5 @@
-#ifndef	CONFIG_H
-#define	CONFIG_H
+#ifndef CONFIG_H
+#define CONFIG_H
 
 // ----------------------------------------------------------------------------
 /* Global settings for building the can-lib and application program.
@@ -15,14 +15,14 @@
  *
  * Select if you want to use 29 bit identifiers.
  */
-#define	SUPPORT_EXTENDED_CANID	1
+#define SUPPORT_EXTENDED_CANID  1
 
 /* Select if you want to use timestamps.
  * Timestamps are sourced from a register internal to the AT90CAN.
  * Selecting them on any other controller will have no effect, they will
  * be 0 all the time.
  */
-#define	SUPPORT_TIMESTAMPS		0
+#define SUPPORT_TIMESTAMPS      0
 
 
-#endif	// CONFIG_H
+#endif  // CONFIG_H

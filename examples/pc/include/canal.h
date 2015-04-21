@@ -1,22 +1,22 @@
 ///////////////////////////////////////////////////////////////////////////////
 // canal.h
 //
-// This file is part of the VSCP (http://www.vscp.org) 
+// This file is part of the VSCP (http://www.vscp.org)
 //
 // The MIT License (MIT)
-// 
+//
 // Copyright (c) 2000-2015 Ake Hedman, Grodans Paradis AB <info@grodansparadis.com>
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -48,15 +48,15 @@
 #define WINAPI __stdcall
 #endif
 #else
- 
+
 #endif
 
 
-#define CAN_MAX_STANDARD_ID	                    0x7ff
-#define CAN_MAX_EXTENDED_ID		                0x1fffffff
+#define CAN_MAX_STANDARD_ID                     0x7ff
+#define CAN_MAX_EXTENDED_ID                     0x1fffffff
 
 
-// CANAL version 
+// CANAL version
 // =============
 // This value is steped for each new version when
 // the i/f is changed. This will hopefully not
@@ -68,9 +68,9 @@
 
 
 // Canal Levels
-#define CANAL_LEVEL_STANDARD                    1	// Level I driver
-#define CANAL_LEVEL_NO_TCPIP				    2	// Limited Level II Driver
-#define CANAL_LEVEL_USES_TCPIP                  3	// Full Level II Driver
+#define CANAL_LEVEL_STANDARD                    1   // Level I driver
+#define CANAL_LEVEL_NO_TCPIP                    2   // Limited Level II Driver
+#define CANAL_LEVEL_USES_TCPIP                  3   // Full Level II Driver
 
 // VSCP daemon version information positions
 #define POS_VSCPD_MAJOR_VERSION                 1
@@ -80,8 +80,8 @@
 
 // VSCP Daemon client Open types
 #define CANAL_COMMAND_OPEN_VSCP_LEVEL1          1   // VSCP Level I channel (CAN)
-#define CANAL_COMMAND_OPEN_VSCP_LEVEL2          2	// VSCP Level II channel
-#define CANAL_COMMAND_OPEN_VSCP_CONTROL         3	// Daemon Control channel
+#define CANAL_COMMAND_OPEN_VSCP_LEVEL2          2   // VSCP Level II channel
+#define CANAL_COMMAND_OPEN_VSCP_CONTROL         3   // Daemon Control channel
 
 /// Interprocess success/failure codes
 #define COMMAND_FAILURE                         0
@@ -105,9 +105,9 @@ extern "C" {
 /// * * * Data Structures
 
 /*!
-	CanalMsg
+    CanalMsg
 
-	This is the general message structure
+    This is the general message structure
 */
 
 typedef struct structCanalMsg {
@@ -115,7 +115,7 @@ typedef struct structCanalMsg {
     unsigned long obid;                 // Used by driver for channel info etc.
     unsigned long id;                   // CAN id (11-bit or 29-bit)
     unsigned char sizeData;             // Data size 0-8
-    unsigned char data[8];              // CAN Data	
+    unsigned char data[8];              // CAN Data
     unsigned long timestamp;            // Relative time stamp for package in microseconds
 } canalMsg;
 
@@ -123,16 +123,16 @@ typedef canalMsg * PCANALMSG;
 
 
 /*!
-	CanalStatistics
+    CanalStatistics
 
-	This is the general statistics structure
+    This is the general statistics structure
 */
 
 typedef struct structCanalStatistics {
     unsigned long cntReceiveFrames;             // # of receive frames
     unsigned long cntTransmitFrames;            // # of transmitted frames
     unsigned long cntReceiveData;               // # of received data bytes
-    unsigned long cntTransmitData;              // # of transmitted data bytes	
+    unsigned long cntTransmitData;              // # of transmitted data bytes
     unsigned long cntOverruns;                  // # of overruns
     unsigned long cntBusWarnings;               // # of bys warnings
     unsigned long cntBusOff;                    // # of bus off's
@@ -141,9 +141,9 @@ typedef struct structCanalStatistics {
 typedef  canalStatistics * PCANALSTATISTICS;
 
 /*!
-	CanalStatus
+    CanalStatus
 
-	This is the general channel state structure
+    This is the general channel state structure
 */
 
 typedef struct structCanalStatus {
@@ -168,11 +168,11 @@ typedef long CANHANDLE;
 
 // * * * Prototypes
 
-/*!		
-	Open a CANAL device and get a handle to it.
+/*!
+    Open a CANAL device and get a handle to it.
 
-	flags - Give extra info to the CANAL i/F
-    
+    flags - Give extra info to the CANAL i/F
+
   @param  pDevice Physical device to connect to.
   @return Handle of device or -1 if error.
 */
@@ -183,11 +183,11 @@ long CanalOpen( const char *pDevice, unsigned long flags );
 #endif
 
 
-/*! 
-	Close a CANAL chanel.
+/*!
+    Close a CANAL chanel.
 
-	@param handle - Handle to open physical CANAL channel.
-	@return zero on success or error-code on failure.
+    @param handle - Handle to open physical CANAL channel.
+    @return zero on success or error-code on failure.
 */
 #ifdef WIN32
 int WINAPI EXPORT CanalClose( long handle );
@@ -196,9 +196,9 @@ int CanalClose( long handle );
 #endif
 
 /*!
-	Get CANAL DLL supported level
+    Get CANAL DLL supported level
 
-	@return level for CANAL dll implemention.
+    @return level for CANAL dll implemention.
 */
 #ifdef WIN32
 unsigned long WINAPI EXPORT CanalGetLevel( long handle );
@@ -207,14 +207,14 @@ unsigned long CanalGetLevel( long handle );
 #endif
 
 /*!
-	Send a message on a CANAL channel.
+    Send a message on a CANAL channel.
 
-	The instruction should block if not instructed not to
-	do so when the interface was opened.
-	
-	@param handle - Handle to open physical CANAL channel.
-	@param pCanMsg - Message to send.
-	@return zero on success or error-code on failure.
+    The instruction should block if not instructed not to
+    do so when the interface was opened.
+
+    @param handle - Handle to open physical CANAL channel.
+    @param pCanMsg - Message to send.
+    @return zero on success or error-code on failure.
 */
 #ifdef WIN32
 int WINAPI EXPORT CanalSend( long handle, const PCANALMSG pCanalMsg );
@@ -224,15 +224,15 @@ int CanalSend( long handle, PCANALMSG pCanalMsg );
 
 
 /*!
-	Send a blocking message on a CANAL channel.
+    Send a blocking message on a CANAL channel.
 
-	The instruction should block if not instructed not to
-	do so when the interface was opened.
-	
-	@param handle - Handle to open physical CANAL channel.
-	@param pCanMsg - Message to send.
-	@param timeout - timout in ms. 0 is forever.
-	@return zero on success or error-code on failure.
+    The instruction should block if not instructed not to
+    do so when the interface was opened.
+
+    @param handle - Handle to open physical CANAL channel.
+    @param pCanMsg - Message to send.
+    @param timeout - timout in ms. 0 is forever.
+    @return zero on success or error-code on failure.
 */
 #ifdef WIN32
 int WINAPI EXPORT CanalBlockingSend( long handle, PCANALMSG pCanalMsg, unsigned long timeout );
@@ -241,17 +241,17 @@ int CanalBlockingSend( long handle, PCANALMSG pCanalMsg, unsigned long timeout )
 #endif
 
 /*!
-	Receieve a message on a CANAL channel.
+    Receieve a message on a CANAL channel.
 
-	The instruction should block if not instructed not to
-	do so when the interface was opened.
+    The instruction should block if not instructed not to
+    do so when the interface was opened.
 
-        :!: Note that if bit 2 in flags of the CANAL message is set and error status 
-        message is returned from the adapter. 
+        :!: Note that if bit 2 in flags of the CANAL message is set and error status
+        message is returned from the adapter.
 
-	@param handle - Handle to open physical CANAL channel.
-	@param pCanMsg - Message to send.
-	@return zero on success or error-code on failure.
+    @param handle - Handle to open physical CANAL channel.
+    @param pCanMsg - Message to send.
+    @return zero on success or error-code on failure.
 */
 #ifdef WIN32
 int WINAPI EXPORT CanalReceive( long handle, PCANALMSG pCanalMsg );
@@ -261,18 +261,18 @@ int CanalReceive( long handle, PCANALMSG pCanalMsg );
 
 
 /*!
-	Blocking receieve a message on a CANAL channel.
+    Blocking receieve a message on a CANAL channel.
 
-	The instruction should block if not instructed not to
-	do so when the interface was opened.
+    The instruction should block if not instructed not to
+    do so when the interface was opened.
 
-        Note that if bit 2 in flags of the CANAL message is set and error status 
-        message is returned from the adapter. 
+        Note that if bit 2 in flags of the CANAL message is set and error status
+        message is returned from the adapter.
 
-	@param handle - Handle to open physical CANAL channel.
-	@param pCanMsg - Message to send.
-	@param timeout - timout in ms. 0 is forever.
-	@return zero on success or error-code on failure.
+    @param handle - Handle to open physical CANAL channel.
+    @param pCanMsg - Message to send.
+    @param timeout - timout in ms. 0 is forever.
+    @return zero on success or error-code on failure.
 */
 #ifdef WIN32
 int WINAPI EXPORT CanalBlockingReceive( long handle, PCANALMSG pCanalMsg, unsigned long timeout );
@@ -281,11 +281,11 @@ int CanalBlockingReceive( long handle, PCANALMSG pCanalMsg, unsigned long timeou
 #endif
 
 /*!
-	Check a CANAL channel for message availability. 
+    Check a CANAL channel for message availability.
 
-	@param handle - Handle to open physical CANAL channel.
-	@return Zero if no message is available or the number of messages is
-	there are messages waiting to be received.
+    @param handle - Handle to open physical CANAL channel.
+    @return Zero if no message is available or the number of messages is
+    there are messages waiting to be received.
 */
 #ifdef WIN32
 int WINAPI EXPORT CanalDataAvailable( long handle );
@@ -294,12 +294,12 @@ int CanalDataAvailable( long handle );
 #endif
 
 /*!
-	Get status for a CANAL channel
-	
-	@param handle Handle to open physical CANAL channel.
-	@param pCanStatus Pointer to a CANAL status structure.
-	@return zero on success or error-code on failure.
-*/ 
+    Get status for a CANAL channel
+
+    @param handle Handle to open physical CANAL channel.
+    @param pCanStatus Pointer to a CANAL status structure.
+    @return zero on success or error-code on failure.
+*/
 #ifdef WIN32
 int WINAPI EXPORT CanalGetStatus( long handle, PCANALSTATUS pCanalStatus );
 #else
@@ -307,11 +307,11 @@ int CanalGetStatus( long handle, PCANALSTATUS pCanalStatus );
 #endif
 
 /*!
-	Get statistics for a CANAL channel
+    Get statistics for a CANAL channel
 
-	@param handle Handle to open physical CANAL channel.
-	@param pCanStatistics Pointer to a CANAL statistics structure.
-	@return zero on success or error-code on failure.
+    @param handle Handle to open physical CANAL channel.
+    @param pCanStatistics Pointer to a CANAL statistics structure.
+    @return zero on success or error-code on failure.
 */
 #ifdef WIN32
 int WINAPI EXPORT CanalGetStatistics( long handle, PCANALSTATISTICS pCanalStatistics  );
@@ -320,11 +320,11 @@ int CanalGetStatistics( long handle, PCANALSTATISTICS pCanalStatistics  );
 #endif
 
 /*!
-	Set the filter for a CANAL channel
+    Set the filter for a CANAL channel
 
-	@param handle Handle to open physical CANAL channel.
-	@param pCanStatistics Pointer to a CANAL statistics structure.
-	@return zero on success or error-code on failure.
+    @param handle Handle to open physical CANAL channel.
+    @param pCanStatistics Pointer to a CANAL statistics structure.
+    @return zero on success or error-code on failure.
 */
 #ifdef WIN32
 int WINAPI EXPORT CanalSetFilter( long handle, unsigned long filter );
@@ -333,11 +333,11 @@ int CanalSetFilter( long handle, unsigned long filter );
 #endif
 
 /*!
-	Set the mask for a CANAL channel
+    Set the mask for a CANAL channel
 
-	@param handle Handle to open physical CANAL channel.
-	@param mask for 
-	@return zero on success or error-code on failure.
+    @param handle Handle to open physical CANAL channel.
+    @param mask for
+    @return zero on success or error-code on failure.
 */
 #ifdef WIN32
 int WINAPI EXPORT CanalSetMask( long handle, unsigned long mask );
@@ -346,11 +346,11 @@ int CanalSetMask( long handle, unsigned long mask );
 #endif
 
 /*!
-	Set the baudrate for a CANAL channel
+    Set the baudrate for a CANAL channel
 
-	@param handle Handle to open physical CANAL channel.
-	@param baudrate Baudrate for the channel
-	@return zero on success or error-code on failure.
+    @param handle Handle to open physical CANAL channel.
+    @param baudrate Baudrate for the channel
+    @return zero on success or error-code on failure.
 */
 #ifdef WIN32
 int WINAPI EXPORT CanalSetBaudrate( long handle, unsigned long baudrate );
@@ -359,9 +359,9 @@ int CanalSetBaudrate( long handle, unsigned long baudrate );
 #endif
 
 /*!
-	Get CANAL version
+    Get CANAL version
 
-	@return version for CANAL i/f.
+    @return version for CANAL i/f.
 */
 #ifdef WIN32
 unsigned long WINAPI EXPORT CanalGetVersion( void );
@@ -370,9 +370,9 @@ unsigned long CanalGetVersion( void );
 #endif
 
 /*!
-	Get CANAL DLL version
+    Get CANAL DLL version
 
-	@return version for CANAL dll implemention.
+    @return version for CANAL dll implemention.
 */
 #ifdef WIN32
 unsigned long WINAPI EXPORT CanalGetDllVersion( void );
@@ -381,9 +381,9 @@ unsigned long CanalGetDllVersion( void );
 #endif
 
 /*!
-	Get CANAL vendor string
+    Get CANAL vendor string
 
-	@return version for CANAL dll implemention.
+    @return version for CANAL dll implemention.
 */
 #ifdef WIN32
 const char * WINAPI EXPORT CanalGetVendorString( void );
@@ -392,7 +392,7 @@ const char * CanalGetVendorString( void );
 #endif
 
 /*!
-	Get CANAL driver properties
+    Get CANAL driver properties
 */
 #ifdef WIN32
 const char * WINAPI EXPORT CanalGetDriverInfo( void );
@@ -403,7 +403,7 @@ const char * CanalGetDriverInfo( void );
 // * * * * Constants * * * *
 
 /// CANAL Open i/f flags
-#define CANAL_NONBLOCK						1			
+#define CANAL_NONBLOCK                      1
 
 
 // read/write are none blocking
@@ -425,14 +425,14 @@ const char * CanalGetDriverInfo( void );
 #define CANAL_BAUD_100                      6           // 100 Kbit
 #define CANAL_BAUD_50                       7           //  50 Kbit
 #define CANAL_BAUD_20                       8           //  20 Kbit
-#define CANAL_BAUD_10                       9           //  10 Kbit			
+#define CANAL_BAUD_10                       9           //  10 Kbit
 
 /// Status message codes ( in received message )
-#define CANAL_STATUSMSG_OK                  0x00    // Normal condition. 
-#define CANAL_STATUSMSG_OVERRUN             0x01    // Overrun occured when sending data to CAN bus. 
-#define CANAL_STATUSMSG_BUSLIGHT            0x02    // Error counter has reached 96. 
-#define CANAL_STATUSMSG_BUSHEAVY            0x03    // Error counter has reached 128. 
-#define CANAL_STATUSMSG_BUSOFF              0x04    // Device is in BUSOFF. CANAL_STATUS_OK is 
+#define CANAL_STATUSMSG_OK                  0x00    // Normal condition.
+#define CANAL_STATUSMSG_OVERRUN             0x01    // Overrun occured when sending data to CAN bus.
+#define CANAL_STATUSMSG_BUSLIGHT            0x02    // Error counter has reached 96.
+#define CANAL_STATUSMSG_BUSHEAVY            0x03    // Error counter has reached 128.
+#define CANAL_STATUSMSG_BUSOFF              0x04    // Device is in BUSOFF. CANAL_STATUS_OK is
                                                     //      sent when returning to operational mode.
 #define CANAL_STATUSMSG_STUFF               0x20    // Stuff Error.
 #define CANAL_STATUSMSG_FORM                0x21    // Form Error.
@@ -452,7 +452,7 @@ const char * CanalGetDriverInfo( void );
 #define CANAL_STATUS_PHY_L                  0x02000000
 #define CANAL_STATUS_SLEEPING               0x01000000
 #define CANAL_STATUS_STOPPED                0x00800000
-#define CANAL_STATUS_RECIVE_BUFFER_FULL	    0x00400000  // Drivers buffer
+#define CANAL_STATUS_RECIVE_BUFFER_FULL     0x00400000  // Drivers buffer
 #define CANAL_STATUS_TRANSMIT_BUFFER_FULL   0x00200000  // Drivers buffer
 
 /// Error Codes
@@ -467,11 +467,11 @@ const char * CanalGetDriverInfo( void );
 #define CANAL_ERROR_FIFO_EMPTY              8       // FIFO is empty
 #define CANAL_ERROR_FIFO_FULL               9       // FIFI is full
 #define CANAL_ERROR_FIFO_SIZE               10      // FIFO size error
-#define CANAL_ERROR_FIFO_WAIT               11      
+#define CANAL_ERROR_FIFO_WAIT               11
 #define CANAL_ERROR_GENERIC                 12      // Generic error
 #define CANAL_ERROR_HARDWARE                13      // Hardware error
 #define CANAL_ERROR_INIT_FAIL               14      // Initialization failed
-#define CANAL_ERROR_INIT_MISSING            15		
+#define CANAL_ERROR_INIT_MISSING            15
 #define CANAL_ERROR_INIT_READY              16
 #define CANAL_ERROR_NOT_SUPPORTED           17      // Not supported
 #define CANAL_ERROR_OVERRUN                 18      // Overrun
@@ -495,10 +495,10 @@ const char * CanalGetDriverInfo( void );
 #define CANAL_ERROR_INTERNAL                36      // Some kind of internal program error
 #define CANAL_ERROR_COMMUNICATION           37      // Some kind of communication error
 #define CANAL_ERROR_USER                    38      // Login error
- 
+
 // CANAL commands sent over the pipe interface (depricated)
 #define CANAL_COMMAND_NOOP                  0       // No command
-#define CANAL_COMMAND_OPEN                  1       // Open channel 
+#define CANAL_COMMAND_OPEN                  1       // Open channel
 #define CANAL_COMMAND_CLOSE                 2       // Close channel
 #define CANAL_COMMAND_SEND                  3       // Send message
 #define CANAL_COMMAND_RECEIVE               4       // Receive message
@@ -514,12 +514,12 @@ const char * CanalGetDriverInfo( void );
 #define CANAL_COMMAND_LEVEL                 14      // CANAL Level bitarray
 
 // CANAL responses sent over the pipe interface (depricated)
-#define CANAL_RESPONSE_NONE                 0       // 
+#define CANAL_RESPONSE_NONE                 0       //
 #define CANAL_RESPONSE_SUCCESS              1       // OK message
 #define CANAL_RESPONSE_ERROR                2       // ERROR message
 #define CANAL_RESPONSE_MESSAGE              3       // Response to read
 
-// CANAL error codes sent over the client interface 
+// CANAL error codes sent over the client interface
 // on error responses
 #define CANAL_IFERROR_GENERAL               128     // General error
 #define CANAL_IFERROR_UNKNOWN_COMMAND       129
@@ -530,7 +530,7 @@ const char * CanalGetDriverInfo( void );
 #define CANAL_IFERROR_BUFFER_EMPTY          134
 #define CANAL_IFERROR_BUFFER_FULL           135
 #define CANAL_IFERROR_READ_FAILURE          136
-#define CANAL_IFERROR_SEND_STORAGE          137 
+#define CANAL_IFERROR_SEND_STORAGE          137
 
 
 // * * * TCP/IP FAST mode interface constants
@@ -541,7 +541,7 @@ const char * CanalGetDriverInfo( void );
 #define CANAL_BINARY_FRAME_TYPE_COMMAND     2       // Command frame
 #define CANAL_BINARY_FRAME_TYPE_CAN         3       // CAN Frame
 
-#define CANAL_BINARY_COMMAND_NOOP           0       // No operation 
+#define CANAL_BINARY_COMMAND_NOOP           0       // No operation
 #define CANAL_BINARY_COMMAND_READ           1       // Read one frame
 #define CANAL_BINARY_COMMAND_CLOSE          2       // Close communication channel
 

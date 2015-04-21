@@ -29,36 +29,36 @@
 // ----------------------------------------------------------------------------
 
 #include "at90can_private.h"
-#ifdef	SUPPORT_FOR_AT90CAN__
+#ifdef  SUPPORT_FOR_AT90CAN__
 
 // ----------------------------------------------------------------------------
 // Checks if there is any waiting message in the registers
 
 bool at90can_check_message(void)
 {
-	#if CAN_RX_BUFFER_SIZE == 0
-	if (_messages_waiting > 0)
-		return true;
-	else
-		return false;
-	#else
-	return !can_buffer_empty( &can_rx_buffer );
-	#endif
+    #if CAN_RX_BUFFER_SIZE == 0
+    if (_messages_waiting > 0)
+        return true;
+    else
+        return false;
+    #else
+    return !can_buffer_empty( &can_rx_buffer );
+    #endif
 }
 
 // ----------------------------------------------------------------------------
 
 bool at90can_check_free_buffer(void)
 {
-	#if CAN_TX_BUFFER_SIZE == 0
-	// check if there is any free MOb
-	if (_free_buffer > 0)
-		return true;
-	else
-		return false;
-	#else
-	return !can_buffer_full( &can_tx_buffer );
-	#endif
+    #if CAN_TX_BUFFER_SIZE == 0
+    // check if there is any free MOb
+    if (_free_buffer > 0)
+        return true;
+    else
+        return false;
+    #else
+    return !can_buffer_full( &can_tx_buffer );
+    #endif
 }
 
-#endif	// SUPPORT_FOR_AT90CAN__
+#endif  // SUPPORT_FOR_AT90CAN__

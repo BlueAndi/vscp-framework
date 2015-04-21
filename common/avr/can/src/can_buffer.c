@@ -37,84 +37,84 @@
 // -----------------------------------------------------------------------------
 void can_buffer_init(can_buffer_t *buf, uint8_t size, can_t *list)
 {
-	ENTER_CRITICAL_SECTION;
-	buf->size = size;
-	buf->buf = list;
-	
-	buf->head = 0;
-	buf->tail = 0;
-	buf->used = 0;
-	LEAVE_CRITICAL_SECTION;
+    ENTER_CRITICAL_SECTION;
+    buf->size = size;
+    buf->buf = list;
+
+    buf->head = 0;
+    buf->tail = 0;
+    buf->used = 0;
+    LEAVE_CRITICAL_SECTION;
 }
 
 // -----------------------------------------------------------------------------
 bool can_buffer_empty(can_buffer_t *buf)
 {
-	uint8_t used;
-	
-	ENTER_CRITICAL_SECTION;
-	used = buf->used;
-	LEAVE_CRITICAL_SECTION;
-	
-	if (used == 0)
-		return true;
-	else
-		return false;
+    uint8_t used;
+
+    ENTER_CRITICAL_SECTION;
+    used = buf->used;
+    LEAVE_CRITICAL_SECTION;
+
+    if (used == 0)
+        return true;
+    else
+        return false;
 }
 
 // -----------------------------------------------------------------------------
 bool can_buffer_full(can_buffer_t *buf)
 {
-	uint8_t used;
-	uint8_t size;
-	
-	ENTER_CRITICAL_SECTION;
-	used = buf->used;
-	size = buf->size;
-	LEAVE_CRITICAL_SECTION;
-	
-	if (used >= size)
-		return true;
-	else
-		return false;
+    uint8_t used;
+    uint8_t size;
+
+    ENTER_CRITICAL_SECTION;
+    used = buf->used;
+    size = buf->size;
+    LEAVE_CRITICAL_SECTION;
+
+    if (used >= size)
+        return true;
+    else
+        return false;
 }
 
 // -----------------------------------------------------------------------------
 can_t *can_buffer_get_enqueue_ptr(can_buffer_t *buf)
 {
-	if (can_buffer_full( buf ))
-		return NULL;
-	
-	return &buf->buf[buf->head];
+    if (can_buffer_full( buf ))
+        return NULL;
+
+    return &buf->buf[buf->head];
 }
 
 // -----------------------------------------------------------------------------
 void can_buffer_enqueue(can_buffer_t *buf)
 {
-	ENTER_CRITICAL_SECTION;
-	buf->used ++;
-	if (++buf->head >= buf->size)
-		buf->head = 0;
-	LEAVE_CRITICAL_SECTION;
+    ENTER_CRITICAL_SECTION;
+    buf->used ++;
+    if (++buf->head >= buf->size)
+        buf->head = 0;
+    LEAVE_CRITICAL_SECTION;
 }
 
 // -----------------------------------------------------------------------------
 can_t *can_buffer_get_dequeue_ptr(can_buffer_t *buf)
 {
-	if (can_buffer_empty( buf ))
-		return NULL;
-	
-	return &buf->buf[buf->tail];
+    if (can_buffer_empty( buf ))
+        return NULL;
+
+    return &buf->buf[buf->tail];
 }
 
 // -----------------------------------------------------------------------------
 void can_buffer_dequeue(can_buffer_t *buf)
 {
-	ENTER_CRITICAL_SECTION;
-	buf->used --;
-	if (++buf->tail >= buf->size)
-		buf->tail = 0;
-	LEAVE_CRITICAL_SECTION;
+    ENTER_CRITICAL_SECTION;
+    buf->used --;
+    if (++buf->tail >= buf->size)
+        buf->tail = 0;
+    LEAVE_CRITICAL_SECTION;
 }
 
 #endif

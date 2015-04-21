@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +21,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
@@ -96,8 +96,8 @@ typedef enum
 typedef enum
 {
     SERIALDRV_USART_0 = 0,  /**< USART 0 */
-    SERIALDRV_USART_1,		/**< USART 1 */
-    SERIALDRV_USART_MAX		/**< Max. number of USARTs */
+    SERIALDRV_USART_1,      /**< USART 1 */
+    SERIALDRV_USART_MAX     /**< Max. number of USARTs */
 
 } SERIALDRV_USART;
 
@@ -105,30 +105,30 @@ typedef enum
 typedef enum
 {
     SERIALDRV_BAUD_2400 = 0,    /**< 2400 Baud */
-    SERIALDRV_BAUD_4800,		/**< 4800 Baud */
-    SERIALDRV_BAUD_9600,		/**< 9600 Baud */
-    SERIALDRV_BAUD_14400,		/**< 14400 Baud */
-    SERIALDRV_BAUD_19200,		/**< 19200 Baud */
-    SERIALDRV_BAUD_28800,		/**< 28800 Baud */
-    SERIALDRV_BAUD_38400,		/**< 38400 Baud */
-    SERIALDRV_BAUD_57600,		/**< 57600 Baud */
-    SERIALDRV_BAUD_76800,		/**< 76800 Baud */
-    SERIALDRV_BAUD_115200,	    /**< 115200 Baud */
-    SERIALDRV_BAUD_230400,	    /**< 230400 Baud */
-    SERIALDRV_BAUD_250000,	    /**< 250000 Baud */
-    SERIALDRV_BAUD_MAX		    /**< Max. number of baudrates */
+    SERIALDRV_BAUD_4800,        /**< 4800 Baud */
+    SERIALDRV_BAUD_9600,        /**< 9600 Baud */
+    SERIALDRV_BAUD_14400,       /**< 14400 Baud */
+    SERIALDRV_BAUD_19200,       /**< 19200 Baud */
+    SERIALDRV_BAUD_28800,       /**< 28800 Baud */
+    SERIALDRV_BAUD_38400,       /**< 38400 Baud */
+    SERIALDRV_BAUD_57600,       /**< 57600 Baud */
+    SERIALDRV_BAUD_76800,       /**< 76800 Baud */
+    SERIALDRV_BAUD_115200,      /**< 115200 Baud */
+    SERIALDRV_BAUD_230400,      /**< 230400 Baud */
+    SERIALDRV_BAUD_250000,      /**< 250000 Baud */
+    SERIALDRV_BAUD_MAX          /**< Max. number of baudrates */
 
 } SERIALDRV_BAUD;
 
 /** This type defines the different supported number of bits per data word. */
 typedef enum
 {
-   SERIALDRV_DATA_5 = 0,	/**< 5 bit per data word */
-   SERIALDRV_DATA_6,		/**< 6 bit per data word */
-   SERIALDRV_DATA_7,		/**< 7 bit per data word */
-   SERIALDRV_DATA_8,		/**< 8 bit per data word */
-   SERIALDRV_DATA_9,		/**< 9 bit per data word */
-   SERIALDRV_DATA_MAX	    /**< Max. number of different data words */
+   SERIALDRV_DATA_5 = 0,    /**< 5 bit per data word */
+   SERIALDRV_DATA_6,        /**< 6 bit per data word */
+   SERIALDRV_DATA_7,        /**< 7 bit per data word */
+   SERIALDRV_DATA_8,        /**< 8 bit per data word */
+   SERIALDRV_DATA_9,        /**< 9 bit per data word */
+   SERIALDRV_DATA_MAX       /**< Max. number of different data words */
 
 } SERIALDRV_DATA;
 
@@ -136,28 +136,28 @@ typedef enum
 typedef enum
 {
     SERIALDRV_PARITY_NONE = 0,  /**< None parity */
-    SERIALDRV_PARITY_EVEN,		/**< Even parity */
-    SERIALDRV_PARITY_ODD,		/**< Odd parity */
-    SERIALDRV_PARITY_MAX		/**< Max. number of parities */
+    SERIALDRV_PARITY_EVEN,      /**< Even parity */
+    SERIALDRV_PARITY_ODD,       /**< Odd parity */
+    SERIALDRV_PARITY_MAX        /**< Max. number of parities */
 
 } SERIALDRV_PARITY;
 
 /** This type defines the different supported number of stopbits. */
 typedef enum
 {
-    SERIALDRV_STOPBIT_1 = 0,	/**< 1 stopbit */
-    SERIALDRV_STOPBIT_2,		/**< 2 stopbit */
-    SERIALDRV_STOPBIT_MAX		/**< Max. number of stopbits */
+    SERIALDRV_STOPBIT_1 = 0,    /**< 1 stopbit */
+    SERIALDRV_STOPBIT_2,        /**< 2 stopbit */
+    SERIALDRV_STOPBIT_MAX       /**< Max. number of stopbits */
 
 } SERIALDRV_STOPBIT;
 
 /** This type defines the possible receive errors. */
 typedef enum
 {
-    SERIALDRV_ERROR_NO_ERROR		= 0x00,	/**< No error */
-    SERIALDRV_ERROR_PARITY_ERROR	= 0x01,	/**< Parity error */
-    SERIALDRV_ERROR_DATA_OVERRUN	= 0x02,	/**< Data overrun */
-    SERIALDRV_ERROR_FRAME_ERROR 	= 0x04	/**< Frame error */
+    SERIALDRV_ERROR_NO_ERROR        = 0x00, /**< No error */
+    SERIALDRV_ERROR_PARITY_ERROR    = 0x01, /**< Parity error */
+    SERIALDRV_ERROR_DATA_OVERRUN    = 0x02, /**< Data overrun */
+    SERIALDRV_ERROR_FRAME_ERROR     = 0x04  /**< Frame error */
 
 } SERIALDRV_ERROR;
 

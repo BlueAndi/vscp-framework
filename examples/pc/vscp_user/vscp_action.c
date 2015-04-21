@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +21,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
@@ -139,7 +139,7 @@ static void vscp_action_dimLamp(uint8_t par, vscp_RxMessage const * const msg);
 extern void vscp_action_init(void)
 {
     /* Nothing to do */
-    
+
     return;
 }
 
@@ -157,30 +157,30 @@ extern void vscp_action_execute(uint8_t action, uint8_t par, vscp_RxMessage cons
     case VSCP_ACTION_NO_OPERATION:
         /* Nothing to do */
         break;
-        
+
     case VSCP_ACTION_ENABLE_LAMP:
         vscp_action_enableLamp(par, TRUE);
         break;
-        
+
     case VSCP_ACTION_DISABLE_LAMP:
         vscp_action_enableLamp(par, FALSE);
         break;
-        
+
     case VSCP_ACTION_TOGGLE_LAMP:
         vscp_action_toggleLamp(par);
         break;
-        
+
     case VSCP_ACTION_DIM_LAMP:
         vscp_action_dimLamp(par, msg);
         break;
-        
+
     default:
         platform_setTextColor(PLATFORM_COLOR_LIGHT_RED);
         log_printf("Unknown action %u with parameter 0x%02X.\n", action, par);
         platform_restoreTextColor();
         break;
     }
-    
+
     return;
 }
 
@@ -208,17 +208,17 @@ static void vscp_action_enableLamp(uint8_t par, BOOL enableIt)
             if (lamp_sim_getState(index) != enableIt)
             {
                 lamp_sim_setState(index, enableIt);
-                
+
                 /* Send lamp state */
                 if (FALSE == lamp_sim_getState(index))
                 {
                     (void)vscp_information_sendOnEvent(index, 255, 255);
                 }
                 else
-                {                   
+                {
                     (void)vscp_information_sendOffEvent(index, 255, 255);
                 }
-                
+
                 /* Show the user the current lamp state */
                 platform_setTextColor(PLATFORM_COLOR_LIGHT_RED);
                 if (FALSE == lamp_sim_getState(index))
@@ -230,13 +230,13 @@ static void vscp_action_enableLamp(uint8_t par, BOOL enableIt)
                     log_printf("Lamp %u is %u%% on.\n", index + 1, lamp_sim_getBrightness(index));
                 }
                 platform_restoreTextColor();
-                
+
                 /* Set dirty flag */
                 anyChange = TRUE;
             }
         }
     }
-    
+
     if (TRUE == anyChange)
     {
         /* Show all lamps */
@@ -265,7 +265,7 @@ static void vscp_action_toggleLamp(uint8_t par)
         if (0 != executeBit)
         {
             BOOL state  = lamp_sim_getState(index);
-            
+
             if (FALSE == state)
             {
                 lamp_sim_setState(index, TRUE);
@@ -274,17 +274,17 @@ static void vscp_action_toggleLamp(uint8_t par)
             {
                 lamp_sim_setState(index, FALSE);
             }
-                        
+
             /* Send lamp state */
             if (FALSE == lamp_sim_getState(index))
             {
                 (void)vscp_information_sendOnEvent(index, 255, 255);
             }
             else
-            {                   
+            {
                 (void)vscp_information_sendOffEvent(index, 255, 255);
             }
-            
+
             /* Show the user the current lamp state */
             platform_setTextColor(PLATFORM_COLOR_LIGHT_RED);
             if (FALSE == lamp_sim_getState(index))
@@ -296,12 +296,12 @@ static void vscp_action_toggleLamp(uint8_t par)
                 log_printf("Lamp %u is %u%% on.\n", index + 1, lamp_sim_getBrightness(index));
             }
             platform_restoreTextColor();
-            
+
             /* Set dirty flag */
             anyChange = TRUE;
         }
     }
-    
+
     if (TRUE == anyChange)
     {
         /* Show all lamps */
@@ -322,12 +322,12 @@ static void vscp_action_dimLamp(uint8_t par, vscp_RxMessage const * const msg)
 {
     uint8_t index       = 0;
     BOOL    anyChange   = FALSE;
-    
+
     if (NULL == msg)
     {
         return;
     }
-    
+
     /* In case of class1.control dim lamp events, use the provided brightness
      * percentage value.
      * Any other event is not supported by this action.
@@ -338,7 +338,7 @@ static void vscp_action_dimLamp(uint8_t par, vscp_RxMessage const * const msg)
     {
         return;
     }
-    
+
     /* Validate event data for brightness */
     if (100 < msg->data[0])
     {
@@ -348,7 +348,7 @@ static void vscp_action_dimLamp(uint8_t par, vscp_RxMessage const * const msg)
             return;
         }
     }
-    
+
     for(index = 0; index < LAMP_SIM_NUM; ++index)
     {
         uint8_t executeBit  = (par >> index) & 0x01;
@@ -358,11 +358,11 @@ static void vscp_action_dimLamp(uint8_t par, vscp_RxMessage const * const msg)
             uint8_t brightness  = 0;
             BOOL    oldState    = lamp_sim_getState(index);
             BOOL    newState    = FALSE;
-            
+
             if (VSCP_ACTION_DIM_DOWN_ONE_STEP == msg->data[0])
             {
                 brightness = lamp_sim_getBrightness(index);
-                
+
                 if (VSCP_ACTION_DIM_STEP <= brightness)
                 {
                     brightness -= VSCP_ACTION_DIM_STEP;
@@ -375,7 +375,7 @@ static void vscp_action_dimLamp(uint8_t par, vscp_RxMessage const * const msg)
             else if (VSCP_ACTION_DIM_UP_ONE_STEP == msg->data[0])
             {
                 brightness = lamp_sim_getBrightness(index);
-                
+
                 if (90 >= brightness)
                 {
                     brightness += VSCP_ACTION_DIM_STEP;
@@ -389,14 +389,14 @@ static void vscp_action_dimLamp(uint8_t par, vscp_RxMessage const * const msg)
             {
                 brightness = msg->data[0];
             }
-            
+
             lamp_sim_setBrightness(index, brightness);
-        
+
             /* If the lamp changed from off to on or vice versa, a corresponding
              * event will be sent.
              */
             newState = lamp_sim_getState(index);
-            
+
             if (oldState != newState)
             {
                 /* Send lamp state */
@@ -405,10 +405,10 @@ static void vscp_action_dimLamp(uint8_t par, vscp_RxMessage const * const msg)
                     (void)vscp_information_sendOnEvent(index, 255, 255);
                 }
                 else
-                {                   
+                {
                     (void)vscp_information_sendOffEvent(index, 255, 255);
                 }
-                
+
                 /* Show the user the current lamp state */
                 platform_setTextColor(PLATFORM_COLOR_LIGHT_RED);
                 if (FALSE == lamp_sim_getState(index))
@@ -421,12 +421,12 @@ static void vscp_action_dimLamp(uint8_t par, vscp_RxMessage const * const msg)
                 }
                 platform_restoreTextColor();
             }
-            
+
             /* Set dirty flag */
             anyChange = TRUE;
         }
     }
-    
+
     if (TRUE == anyChange)
     {
         /* Show all lamps */

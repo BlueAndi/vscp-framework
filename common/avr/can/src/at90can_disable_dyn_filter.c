@@ -29,61 +29,61 @@
 // ----------------------------------------------------------------------------
 
 #include "at90can_private.h"
-#ifdef	SUPPORT_FOR_AT90CAN__
+#ifdef  SUPPORT_FOR_AT90CAN__
 
 // ----------------------------------------------------------------------------
 // disable mob
 
 bool at90can_disable_filter(uint8_t number)
 {
-	if (number > 14)
-	{
-		if (number == CAN_ALL_FILTER)
-		{
-			// disable interrupts
-			CANIE1 = 0;
-			CANIE2 = 0;
-			
-			// disable all MObs
-			for (uint8_t i = 0;i < 15;i++) {
-				CANPAGE = (i << 4);
-				
-				// disable MOb (read-write required)
-				CANCDMOB &= 0;
-				CANSTMOB &= 0;
-			}
-			
-			// mark all MObs as free
-			#if CAN_RX_BUFFER_SIZE == 0
-			_messages_waiting = 0;
-			#endif
-			
-			#if CAN_TX_BUFFER_SIZE == 0
-			_free_buffer = 15;
-			#endif
-			
-			return true;
-		}
-		
-		// it is only possible to serve a maximum of 15 filters
-		return false;
-	}
-	
-	// set CAN Controller to standby mode
-	_enter_standby_mode();
-	
-	CANPAGE = number << 4;
-	
-	// reset flags
-	CANSTMOB &= 0;
-	CANCDMOB = 0;
-	
-	_disable_mob_interrupt(number);
-	
-	// re-enable CAN Controller 
-	_leave_standby_mode();
-	
-	return true;
+    if (number > 14)
+    {
+        if (number == CAN_ALL_FILTER)
+        {
+            // disable interrupts
+            CANIE1 = 0;
+            CANIE2 = 0;
+
+            // disable all MObs
+            for (uint8_t i = 0;i < 15;i++) {
+                CANPAGE = (i << 4);
+
+                // disable MOb (read-write required)
+                CANCDMOB &= 0;
+                CANSTMOB &= 0;
+            }
+
+            // mark all MObs as free
+            #if CAN_RX_BUFFER_SIZE == 0
+            _messages_waiting = 0;
+            #endif
+
+            #if CAN_TX_BUFFER_SIZE == 0
+            _free_buffer = 15;
+            #endif
+
+            return true;
+        }
+
+        // it is only possible to serve a maximum of 15 filters
+        return false;
+    }
+
+    // set CAN Controller to standby mode
+    _enter_standby_mode();
+
+    CANPAGE = number << 4;
+
+    // reset flags
+    CANSTMOB &= 0;
+    CANCDMOB = 0;
+
+    _disable_mob_interrupt(number);
+
+    // re-enable CAN Controller
+    _leave_standby_mode();
+
+    return true;
 }
 
-#endif	// SUPPORT_FOR_AT90CAN__
+#endif  // SUPPORT_FOR_AT90CAN__

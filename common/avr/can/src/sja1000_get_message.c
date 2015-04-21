@@ -29,80 +29,80 @@
 // ----------------------------------------------------------------------------
 
 #include "sja1000_private.h"
-#ifdef	SUPPORT_FOR_SJA1000__
+#ifdef  SUPPORT_FOR_SJA1000__
 
 // ----------------------------------------------------------------------------
 
 uint8_t sja1000_get_message(can_t *msg)
 {
-	uint8_t frame_info;
-	uint8_t address;
-	
-	// check if there is actually a message in the buffers
-	if (!sja1000_check_message())
-		return FALSE;
-	
-	frame_info = sja1000_read(16);
-	msg->length = frame_info & 0x0f;
-	
-	if (frame_info & (1<<FF))
-	{
-		// read extended identifier
-		msg->flags.extended = 1;
-		
-		uint32_t tmp;
-		uint8_t *ptr = (uint8_t *) &tmp;
-		
-		*ptr       = sja1000_read(20);
-		*(ptr + 1) = sja1000_read(19);
-		*(ptr + 2) = sja1000_read(18);
-		*(ptr + 3) = sja1000_read(17);
-		
-		msg->id = tmp >> 3;
-		
-		/* equivalent to:
-		msg->id	 = sja1000_read(20) >> 3;
-		msg->id |= (uint16_t) sja1000_read(19) << 5;
-		msg->id |= (uint32_t) sja1000_read(18) << 13;
-		msg->id |= (uint32_t) sja1000_read(17) << 21;*/
-		
-		address = 21;
-	}
-	else
-	{
-		// read standard identifier
-		msg->flags.extended = 0;
-		
-		uint32_t *ptr32 = &msg->id;		// used to supress a compiler warning
-		uint16_t *ptr = (uint16_t *) ptr32;
-		
-		*(ptr + 1) = 0;
-		
-		*ptr  = sja1000_read(18) >> 5;
-		*ptr |= sja1000_read(17) << 3;
-		
-		address = 19;
-	}
-	
-	
-	if (frame_info & (1<<RTR)) {
-		msg->flags.rtr = 1;
-	}
-	else {
-		msg->flags.rtr = 0;
-		
-		// read data
-		for (uint8_t i = 0; i < msg->length; i++) {
-			msg->data[i] = sja1000_read(address + i);
-		}
-	}
-	
-	// release buffer
-	sja1000_write(CMR, (1<<RRB));
-	
-	CAN_INDICATE_RX_TRAFFIC_FUNCTION;
-	
-	return TRUE;
+    uint8_t frame_info;
+    uint8_t address;
+
+    // check if there is actually a message in the buffers
+    if (!sja1000_check_message())
+        return FALSE;
+
+    frame_info = sja1000_read(16);
+    msg->length = frame_info & 0x0f;
+
+    if (frame_info & (1<<FF))
+    {
+        // read extended identifier
+        msg->flags.extended = 1;
+
+        uint32_t tmp;
+        uint8_t *ptr = (uint8_t *) &tmp;
+
+        *ptr       = sja1000_read(20);
+        *(ptr + 1) = sja1000_read(19);
+        *(ptr + 2) = sja1000_read(18);
+        *(ptr + 3) = sja1000_read(17);
+
+        msg->id = tmp >> 3;
+
+        /* equivalent to:
+        msg->id  = sja1000_read(20) >> 3;
+        msg->id |= (uint16_t) sja1000_read(19) << 5;
+        msg->id |= (uint32_t) sja1000_read(18) << 13;
+        msg->id |= (uint32_t) sja1000_read(17) << 21;*/
+
+        address = 21;
+    }
+    else
+    {
+        // read standard identifier
+        msg->flags.extended = 0;
+
+        uint32_t *ptr32 = &msg->id;     // used to supress a compiler warning
+        uint16_t *ptr = (uint16_t *) ptr32;
+
+        *(ptr + 1) = 0;
+
+        *ptr  = sja1000_read(18) >> 5;
+        *ptr |= sja1000_read(17) << 3;
+
+        address = 19;
+    }
+
+
+    if (frame_info & (1<<RTR)) {
+        msg->flags.rtr = 1;
+    }
+    else {
+        msg->flags.rtr = 0;
+
+        // read data
+        for (uint8_t i = 0; i < msg->length; i++) {
+            msg->data[i] = sja1000_read(address + i);
+        }
+    }
+
+    // release buffer
+    sja1000_write(CMR, (1<<RRB));
+
+    CAN_INDICATE_RX_TRAFFIC_FUNCTION;
+
+    return TRUE;
 }
 
-#endif	// SUPPORT_FOR_SJA1000__
+#endif  // SUPPORT_FOR_SJA1000__

@@ -29,7 +29,7 @@
 // -----------------------------------------------------------------------------
 
 #include "mcp2515_private.h"
-#ifdef	SUPPORT_FOR_MCP2515__
+#ifdef  SUPPORT_FOR_MCP2515__
 
 #include <stdio.h>
 #include <avr/pgmspace.h>
@@ -37,25 +37,25 @@
 // -----------------------------------------------------------------------------
 void mcp2515_regdump(void)
 {
-	uint8_t mode = mcp2515_read_register( CANSTAT );
-	
-	// change to configuration mode
-	mcp2515_change_operation_mode( (1<<REQOP2) );
-	
-	printf_P("MCP2515 Regdump:\n");
-	uint8_t i;
-	for (i=0; i < 16; i++) {
-		printf_P("%3i: %02x   ", i, mcp2515_read_register(i));
-		printf_P("%3i: %02x   ", i+16*1, mcp2515_read_register(i+16*1));
-		printf_P("%3i: %02x   ", i+16*2, mcp2515_read_register(i+16*2));
-		printf_P("%3i: %02x   ", i+16*3, mcp2515_read_register(i+16*3));
-		printf_P("%3i: %02x   ", i+16*4, mcp2515_read_register(i+16*4));
-		printf_P("%3i: %02x   ", i+16*5, mcp2515_read_register(i+16*5));
-		printf_P("%3i: %02x   ", i+16*6, mcp2515_read_register(i+16*6));
-		printf_P("%3i: %02x\n", i+16*7, mcp2515_read_register(i+16*7));
-	}
-	
-	mcp2515_change_operation_mode( mode );
+    uint8_t mode = mcp2515_read_register( CANSTAT );
+
+    // change to configuration mode
+    mcp2515_change_operation_mode( (1<<REQOP2) );
+
+    printf_P("MCP2515 Regdump:\n");
+    uint8_t i;
+    for (i=0; i < 16; i++) {
+        printf_P("%3i: %02x   ", i, mcp2515_read_register(i));
+        printf_P("%3i: %02x   ", i+16*1, mcp2515_read_register(i+16*1));
+        printf_P("%3i: %02x   ", i+16*2, mcp2515_read_register(i+16*2));
+        printf_P("%3i: %02x   ", i+16*3, mcp2515_read_register(i+16*3));
+        printf_P("%3i: %02x   ", i+16*4, mcp2515_read_register(i+16*4));
+        printf_P("%3i: %02x   ", i+16*5, mcp2515_read_register(i+16*5));
+        printf_P("%3i: %02x   ", i+16*6, mcp2515_read_register(i+16*6));
+        printf_P("%3i: %02x\n", i+16*7, mcp2515_read_register(i+16*7));
+    }
+
+    mcp2515_change_operation_mode( mode );
 }
 
-#endif	// SUPPORT_FOR_MCP2515__
+#endif  // SUPPORT_FOR_MCP2515__

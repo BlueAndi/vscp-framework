@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,11 +21,11 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
-	DESCRIPTION
+    DESCRIPTION
 *******************************************************************************/
 /**
 @brief  VSCP threads
@@ -42,7 +42,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 
 /*******************************************************************************
-	INCLUDES
+    INCLUDES
 *******************************************************************************/
 #include "vscp_thread.h"
 #include <pthread.h>
@@ -54,19 +54,19 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 #include "vscp_bootloader.h"
 
 /*******************************************************************************
-	COMPILER SWITCHES
+    COMPILER SWITCHES
 *******************************************************************************/
 
 /*******************************************************************************
-	CONSTANTS
+    CONSTANTS
 *******************************************************************************/
 
 /*******************************************************************************
-	MACROS
+    MACROS
 *******************************************************************************/
 
 /*******************************************************************************
-	TYPES AND STRUCTURES
+    TYPES AND STRUCTURES
 *******************************************************************************/
 
 /** This type contains the necessary thread data. */
@@ -80,14 +80,14 @@ typedef struct
 } vscp_thread_Context;
 
 /*******************************************************************************
-	PROTOTYPES
+    PROTOTYPES
 *******************************************************************************/
 
 static void* vscp_thread_frameworkThread(void* par);
 static void* vscp_thread_vscpTimerThread(void* par);
 
 /*******************************************************************************
-	LOCAL VARIABLES
+    LOCAL VARIABLES
 *******************************************************************************/
 
 /** Mutex used to protect the whole VSCP framework against concurrent access. */
@@ -100,11 +100,11 @@ static vscp_thread_Context  vscp_thread_frameworkThrdData;
 static vscp_thread_Context  vscp_thread_timerThrdData;
 
 /*******************************************************************************
-	GLOBAL VARIABLES
+    GLOBAL VARIABLES
 *******************************************************************************/
 
 /*******************************************************************************
-	GLOBAL FUNCTIONS
+    GLOBAL FUNCTIONS
 *******************************************************************************/
 
 /**
@@ -115,7 +115,7 @@ static vscp_thread_Context  vscp_thread_timerThrdData;
 extern VSCP_THREAD_RET vscp_thread_init(void)
 {
     VSCP_THREAD_RET status  = VSCP_THREAD_RET_OK;
-    
+
     /* Initialize the VSCP framework */
     if (VSCP_CORE_RET_OK != vscp_core_init())
     {
@@ -126,7 +126,7 @@ extern VSCP_THREAD_RET vscp_thread_init(void)
         /* Clear thread data */
         memset(&vscp_thread_frameworkThrdData, 0, sizeof(vscp_thread_frameworkThrdData));
         memset(&vscp_thread_timerThrdData, 0, sizeof(vscp_thread_timerThrdData));
-        
+
         /* Set mutex */
         vscp_thread_frameworkThrdData.mutex = &vscp_thread_mutex;
         vscp_thread_timerThrdData.mutex     = &vscp_thread_mutex;
@@ -143,15 +143,15 @@ extern VSCP_THREAD_RET vscp_thread_init(void)
 extern VSCP_THREAD_RET vscp_thread_start(void)
 {
     VSCP_THREAD_RET status  = VSCP_THREAD_RET_OK;
-    
+
     /* ----- Start VSCP framework thread ----- */
-    
+
     /* Set error value */
     vscp_thread_frameworkThrdData.status      = 1;
-    
+
     /* Avoid that the thread stops immediately */
     vscp_thread_frameworkThrdData.quitFlag    = FALSE;
-    
+
     /* Create vscp framework thread with default attributes */
     vscp_thread_frameworkThrdData.status = pthread_create(&vscp_thread_frameworkThrdData.id, NULL, vscp_thread_frameworkThread, (void*)&vscp_thread_frameworkThrdData);
 
@@ -163,13 +163,13 @@ extern VSCP_THREAD_RET vscp_thread_start(void)
     else
     {
         /* ----- Start VSCP timer thread ----- */
-        
+
         /* Set error value */
         vscp_thread_timerThrdData.status      = 1;
-        
+
         /* Avoid that the thread stops immediately */
         vscp_thread_timerThrdData.quitFlag    = FALSE;
-        
+
         /* Create vscp framework thread with default attributes */
         vscp_thread_timerThrdData.status = pthread_create(&vscp_thread_timerThrdData.id, NULL, vscp_thread_vscpTimerThread, (void*)&vscp_thread_timerThrdData);
 
@@ -177,16 +177,16 @@ extern VSCP_THREAD_RET vscp_thread_start(void)
         if (0 != vscp_thread_timerThrdData.status)
         {
             status = VSCP_THREAD_RET_ERROR;
-            
+
             /* Stop framework thread */
             vscp_thread_lock();
             vscp_thread_frameworkThrdData.quitFlag = TRUE;
             vscp_thread_unlock();
-            
+
             (void)pthread_join(vscp_thread_frameworkThrdData.id, NULL);
         }
     }
-    
+
     return status;
 }
 
@@ -201,22 +201,22 @@ extern void vscp_thread_stop(void)
         vscp_thread_lock();
         vscp_thread_frameworkThrdData.quitFlag = TRUE;
         vscp_thread_unlock();
-        
+
         /* Wait for the VSCP framework thread until its finished. */
         (void)pthread_join(vscp_thread_frameworkThrdData.id, NULL);
     }
-    
+
     /* Is VSCP timer thread running? */
     if (0 == vscp_thread_timerThrdData.status)
     {
         (void)pthread_mutex_lock(vscp_thread_timerThrdData.mutex);
         vscp_thread_timerThrdData.quitFlag = TRUE;
         (void)pthread_mutex_unlock(vscp_thread_timerThrdData.mutex);
-        
+
         /* Wait for the VSCP timer thread until its finished. */
         (void)pthread_join(vscp_thread_timerThrdData.id, NULL);
     }
-            
+
     return;
 }
 
@@ -239,7 +239,7 @@ extern void vscp_thread_unlock(void)
 }
 
 /*******************************************************************************
-	LOCAL FUNCTIONS
+    LOCAL FUNCTIONS
 *******************************************************************************/
 
 /**
@@ -253,11 +253,11 @@ static void* vscp_thread_frameworkThread(void* par)
     BOOL                    quitFlag        = FALSE;
     vscp_thread_Context*    threadData      = (vscp_thread_Context*)par;
     BOOL                    bootloaderMode  = FALSE;
-    
+
     (void)pthread_mutex_lock(threadData->mutex);
     quitFlag = threadData->quitFlag;
     (void)pthread_mutex_unlock(threadData->mutex);
-    
+
     while(FALSE == quitFlag)
     {
         /* Process the whole VSCP framework */
@@ -267,7 +267,7 @@ static void* vscp_thread_frameworkThread(void* par)
         if (FALSE == bootloaderMode)
         {
             vscp_core_process();
-            
+
             bootloaderMode = vscp_portable_isBootloaderRequested();
         }
         /* Bootloader */
@@ -276,21 +276,21 @@ static void* vscp_thread_frameworkThread(void* par)
             vscp_bootloader_init();
             vscp_bootloader_run();
             bootloaderMode = FALSE;
-            
+
             /* Simulate reboot */
             vscp_core_init();
         }
-        
+
         quitFlag = threadData->quitFlag;
-        
+
         (void)pthread_mutex_unlock(threadData->mutex);
 
         /* Give a other threads a minimal chance. */
         platform_delay(1);
     }
-    
+
     pthread_exit(NULL);
-    
+
     return NULL;
 }
 
@@ -305,27 +305,27 @@ static void* vscp_thread_vscpTimerThread(void* par)
     BOOL                    quitFlag    = FALSE;
     vscp_thread_Context*    threadData  = (vscp_thread_Context*)par;
     uint16_t                waitTime    = 100;
-    
+
     (void)pthread_mutex_lock(threadData->mutex);
     quitFlag = threadData->quitFlag;
     (void)pthread_mutex_unlock(threadData->mutex);
-    
+
     while(FALSE == quitFlag)
     {
         /* Wait a specific time, until the timers are processed again. */
         platform_delay(waitTime);
 
         (void)pthread_mutex_lock(threadData->mutex);
-        
+
         /* Process the VSCP framework timers */
         vscp_timer_process(waitTime);
-        
+
         quitFlag = threadData->quitFlag;
-        
+
         (void)pthread_mutex_unlock(threadData->mutex);
     }
-    
+
     pthread_exit(NULL);
-    
+
     return NULL;
 }

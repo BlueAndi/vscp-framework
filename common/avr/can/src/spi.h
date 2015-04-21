@@ -29,8 +29,8 @@
  */
 // ----------------------------------------------------------------------------
 
-#ifndef	SPI_H
-#define	SPI_H
+#ifndef SPI_H
+#define SPI_H
 
 #include "can_private.h"
 
@@ -38,21 +38,21 @@
 // load some default values
 
 #ifndef SPI_PRESCALER
-	#define	SPI_PRESCALER			8
+    #define SPI_PRESCALER           8
 #endif
 
 // ----------------------------------------------------------------------------
 /**
- * \brief	Initialize SPI interface
+ * \brief   Initialize SPI interface
  */
 extern void mcp2515_spi_init(void);
 
 // ----------------------------------------------------------------------------
 /**
- * \brief	Write/read one byte of the SPI interface
+ * \brief   Write/read one byte of the SPI interface
  *
- * \param	data	Data to be written
- * \return	Data read from the slave
+ * \param   data    Data to be written
+ * \return  Data read from the slave
  */
 extern uint8_t spi_putc(uint8_t data);
 
@@ -62,27 +62,27 @@ extern uint8_t spi_putc(uint8_t data);
 static uint8_t usi_interface_spi_temp;
 
 extern __attribute__ ((gnu_inline)) inline void spi_start(uint8_t data) {
-	usi_interface_spi_temp = spi_putc(data);
+    usi_interface_spi_temp = spi_putc(data);
 }
 
 extern __attribute__ ((gnu_inline)) inline uint8_t spi_wait(void) {
-	return usi_interface_spi_temp;
+    return usi_interface_spi_temp;
 }
 
 #else
 
 extern __attribute__ ((gnu_inline)) inline void spi_start(uint8_t data) {
-	SPDR = data;
+    SPDR = data;
 }
 
 extern __attribute__ ((gnu_inline)) inline uint8_t spi_wait(void) {
-	// warten bis der vorherige Werte geschrieben wurde
-	while(!(SPSR & (1<<SPIF)))
-		;
-	
-	return SPDR;
+    // warten bis der vorherige Werte geschrieben wurde
+    while(!(SPSR & (1<<SPIF)))
+        ;
+
+    return SPDR;
 }
 
 #endif
 
-#endif	// SPI_H
+#endif  // SPI_H

@@ -29,36 +29,36 @@
 // ----------------------------------------------------------------------------
 
 #include "mcp2515_private.h"
-#ifdef	SUPPORT_FOR_MCP2515__
+#ifdef  SUPPORT_FOR_MCP2515__
 
 // ----------------------------------------------------------------------------
 void
 mcp2515_sleep(void)
 {
-	// put also the 2551 in standby mode
-	// for this, connect RX1BF to the RS pin of the 2551
-	mcp2515_bit_modify(BFPCTRL, (1<<B1BFS), (1<<B1BFS));
+    // put also the 2551 in standby mode
+    // for this, connect RX1BF to the RS pin of the 2551
+    mcp2515_bit_modify(BFPCTRL, (1<<B1BFS), (1<<B1BFS));
 
-	// put the 2515 in sleep more
-	mcp2515_set_mode(SLEEP_MODE);
+    // put the 2515 in sleep more
+    mcp2515_set_mode(SLEEP_MODE);
 
-	// enable generating an interrupt for wakeup when activity on bus
-	mcp2515_bit_modify(CANINTE, (1<<WAKIE), (1<<WAKIE));
+    // enable generating an interrupt for wakeup when activity on bus
+    mcp2515_bit_modify(CANINTE, (1<<WAKIE), (1<<WAKIE));
 }
 
 // ----------------------------------------------------------------------------
 void
 mcp2515_wakeup(void)
 {
-	// reset int enable and cancel the interrupt flag
-	mcp2515_bit_modify(CANINTE, (1<<WAKIE), 0);
-	mcp2515_bit_modify(CANINTF, (1<<WAKIF), 0);
+    // reset int enable and cancel the interrupt flag
+    mcp2515_bit_modify(CANINTE, (1<<WAKIE), 0);
+    mcp2515_bit_modify(CANINTF, (1<<WAKIF), 0);
 
-	// re-enable the 2551
-	mcp2515_bit_modify(BFPCTRL, (1<<B1BFS), 0);
+    // re-enable the 2551
+    mcp2515_bit_modify(BFPCTRL, (1<<B1BFS), 0);
 
-	// when we get up of sleep, we are in listen mode, return into normal mode
-	mcp2515_set_mode(NORMAL_MODE);
+    // when we get up of sleep, we are in listen mode, return into normal mode
+    mcp2515_set_mode(NORMAL_MODE);
 }
 
-#endif	// SUPPORT_FOR_MCP2515__
+#endif  // SUPPORT_FOR_MCP2515__

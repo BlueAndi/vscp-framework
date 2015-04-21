@@ -29,39 +29,39 @@
 // ----------------------------------------------------------------------------
 
 #include "mcp2515_private.h"
-#ifdef	SUPPORT_FOR_MCP2515__
+#ifdef  SUPPORT_FOR_MCP2515__
 
 // ----------------------------------------------------------------------------
 // Filter setzen
 
 void mcp2515_static_filter(const pg_uint8_t *filter)
 {
-	// change to configuration mode
-	mcp2515_bit_modify(CANCTRL, 0xe0, (1<<REQOP2));
-	while ((mcp2515_read_register(CANSTAT) & 0xe0) != (1<<REQOP2))
-		;
-	
-	mcp2515_write_register(RXB0CTRL, (1<<BUKT));
-	mcp2515_write_register(RXB1CTRL, 0);
-    
-	uint8_t i, j;
-	for (i = 0; i < 0x30; i += 0x10)
-	{
-		RESET(MCP2515_CS);
-		spi_putc(SPI_WRITE);
-		spi_putc(i);
-		
-		for (j = 0; j < 12; j++) 
-		{
-			if (i == 0x20 && j >= 0x08)
-				break;
-			
-			spi_putc(pgm_read_byte(filter++));
-		}
-		SET(MCP2515_CS);
-	}
-	
-	mcp2515_bit_modify(CANCTRL, 0xe0, 0);
+    // change to configuration mode
+    mcp2515_bit_modify(CANCTRL, 0xe0, (1<<REQOP2));
+    while ((mcp2515_read_register(CANSTAT) & 0xe0) != (1<<REQOP2))
+        ;
+
+    mcp2515_write_register(RXB0CTRL, (1<<BUKT));
+    mcp2515_write_register(RXB1CTRL, 0);
+
+    uint8_t i, j;
+    for (i = 0; i < 0x30; i += 0x10)
+    {
+        RESET(MCP2515_CS);
+        spi_putc(SPI_WRITE);
+        spi_putc(i);
+
+        for (j = 0; j < 12; j++)
+        {
+            if (i == 0x20 && j >= 0x08)
+                break;
+
+            spi_putc(pgm_read_byte(filter++));
+        }
+        SET(MCP2515_CS);
+    }
+
+    mcp2515_bit_modify(CANCTRL, 0xe0, 0);
 }
 
-#endif	// SUPPORT_FOR_MCP2515__
+#endif  // SUPPORT_FOR_MCP2515__

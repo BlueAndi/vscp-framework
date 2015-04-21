@@ -29,23 +29,23 @@
 // ----------------------------------------------------------------------------
 
 #include "sja1000_private.h"
-#ifdef	SUPPORT_FOR_SJA1000__
+#ifdef  SUPPORT_FOR_SJA1000__
 
 // ----------------------------------------------------------------------------
 // Checks if there is any waiting message in the registers
 
 bool sja1000_check_message(void)
 {
-	// wenn RBS bit gesetzt liegt eine empfangene Nachricht vor	
-	return ((sja1000_read(SR) & (1<<RBS)) ? true : false);
+    // wenn RBS bit gesetzt liegt eine empfangene Nachricht vor
+    return ((sja1000_read(SR) & (1<<RBS)) ? true : false);
 }
 
 // ----------------------------------------------------------------------------
 
 bool sja1000_check_free_buffer(void)
 {
-	// if the TBS bit is set the CPU may write a message into the transmit buffer
-	return ((sja1000_read(SR) & (1<<TBS)) ? true : false);
+    // if the TBS bit is set the CPU may write a message into the transmit buffer
+    return ((sja1000_read(SR) & (1<<TBS)) ? true : false);
 }
 
-#endif	// SUPPORT_FOR_SJA1000__
+#endif  // SUPPORT_FOR_SJA1000__

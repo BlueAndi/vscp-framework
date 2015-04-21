@@ -29,61 +29,61 @@
 // ----------------------------------------------------------------------------
 
 #include "sja1000_private.h"
-#ifdef	SUPPORT_FOR_SJA1000__
+#ifdef  SUPPORT_FOR_SJA1000__
 
 // ----------------------------------------------------------------------------
 
 uint8_t sja1000_send_message(const can_t *msg)
 {
-	uint8_t frame_info;
-	uint8_t address;
-	
-	if (!sja1000_check_free_buffer() || (msg->length > 8))
-		return FALSE;
-	
-	frame_info = msg->length | ((msg->flags.rtr) ? (1<<RTR) : 0);
-	
-	if (msg->flags.extended)
-	{
-		// write frame info
-		sja1000_write(TX_INFO, frame_info | (1<<FF));
-		
-		// write extended identifier
-		sja1000_write(20, msg->id << 3);
-		sja1000_write(19, msg->id >> 5);
-		sja1000_write(18, msg->id >> 13);
-		sja1000_write(17, msg->id >> 21);
-		
-		address = 21;
-	}
-	else
-	{
-		// write frame info
-		sja1000_write(TX_INFO, frame_info);
-		
-		const uint32_t *ptr32 = &msg->id;		// used to supress a compiler warning
-		uint16_t *ptr = (uint16_t *) ptr32;
-		
-		// write standard identifier
-		sja1000_write(18, *ptr << 5);
-		sja1000_write(17, *ptr >> 3);
-		
-		address = 19;
-	}
-	
-	if (!msg->flags.rtr)
-	{
-		for (uint8_t i = 0;i < msg->length; i++) {
-			sja1000_write(address + i, msg->data[i]);
-		}
-	}
-	
-	// send buffer
-	sja1000_write(CMR, (1<<TR));
-	
-	CAN_INDICATE_TX_TRAFFIC_FUNCTION;
-	
-	return TRUE;
+    uint8_t frame_info;
+    uint8_t address;
+
+    if (!sja1000_check_free_buffer() || (msg->length > 8))
+        return FALSE;
+
+    frame_info = msg->length | ((msg->flags.rtr) ? (1<<RTR) : 0);
+
+    if (msg->flags.extended)
+    {
+        // write frame info
+        sja1000_write(TX_INFO, frame_info | (1<<FF));
+
+        // write extended identifier
+        sja1000_write(20, msg->id << 3);
+        sja1000_write(19, msg->id >> 5);
+        sja1000_write(18, msg->id >> 13);
+        sja1000_write(17, msg->id >> 21);
+
+        address = 21;
+    }
+    else
+    {
+        // write frame info
+        sja1000_write(TX_INFO, frame_info);
+
+        const uint32_t *ptr32 = &msg->id;       // used to supress a compiler warning
+        uint16_t *ptr = (uint16_t *) ptr32;
+
+        // write standard identifier
+        sja1000_write(18, *ptr << 5);
+        sja1000_write(17, *ptr >> 3);
+
+        address = 19;
+    }
+
+    if (!msg->flags.rtr)
+    {
+        for (uint8_t i = 0;i < msg->length; i++) {
+            sja1000_write(address + i, msg->data[i]);
+        }
+    }
+
+    // send buffer
+    sja1000_write(CMR, (1<<TR));
+
+    CAN_INDICATE_TX_TRAFFIC_FUNCTION;
+
+    return TRUE;
 }
 
-#endif	// SUPPORT_FOR_SJA1000__
+#endif  // SUPPORT_FOR_SJA1000__

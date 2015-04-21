@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,11 +21,11 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
-	DESCRIPTION
+    DESCRIPTION
 *******************************************************************************/
 /**
 @brief  Lamp simulation
@@ -42,7 +42,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 
 /*******************************************************************************
-	INCLUDES
+    INCLUDES
 *******************************************************************************/
 #include "lamp_sim.h"
 #include <memory.h>
@@ -50,19 +50,19 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 #include "platform.h"
 
 /*******************************************************************************
-	COMPILER SWITCHES
+    COMPILER SWITCHES
 *******************************************************************************/
 
 /*******************************************************************************
-	CONSTANTS
+    CONSTANTS
 *******************************************************************************/
 
 /*******************************************************************************
-	MACROS
+    MACROS
 *******************************************************************************/
 
 /*******************************************************************************
-	TYPES AND STRUCTURES
+    TYPES AND STRUCTURES
 *******************************************************************************/
 
 /** This type defines the data of a single simulated lamp. */
@@ -74,22 +74,22 @@ typedef struct
 } lamp_sim_Lamp;
 
 /*******************************************************************************
-	PROTOTYPES
+    PROTOTYPES
 *******************************************************************************/
 
 /*******************************************************************************
-	LOCAL VARIABLES
+    LOCAL VARIABLES
 *******************************************************************************/
 
 /** Simulated lamps */
 static lamp_sim_Lamp    lamp_sim_context[LAMP_SIM_NUM];
 
 /*******************************************************************************
-	GLOBAL VARIABLES
+    GLOBAL VARIABLES
 *******************************************************************************/
 
 /*******************************************************************************
-	GLOBAL FUNCTIONS
+    GLOBAL FUNCTIONS
 *******************************************************************************/
 
 /**
@@ -99,7 +99,7 @@ extern void lamp_sim_init(void)
 {
     /* Initialize simulated lamp data */
     memset(lamp_sim_context, 0, sizeof(lamp_sim_context));
-        
+
     return;
 }
 
@@ -114,7 +114,7 @@ extern void lamp_sim_setState(uint8_t index, BOOL enableIt)
     if (LAMP_SIM_NUM > index)
     {
         lamp_sim_context[index].enabled = enableIt;
-        
+
         if (0 == lamp_sim_context[index].brightness)
         {
             lamp_sim_context[index].brightness = 100;
@@ -161,7 +161,7 @@ extern void lamp_sim_setBrightness(uint8_t index, uint8_t brightness)
         if (0 == lamp_sim_context[index].brightness)
         {
             lamp_sim_context[index].enabled = FALSE;
-        }        
+        }
         else if (0 < lamp_sim_context[index].brightness)
         {
             lamp_sim_context[index].enabled = TRUE;
@@ -196,18 +196,18 @@ extern uint8_t lamp_sim_getBrightness(uint8_t index)
 extern void lamp_sim_show(void)
 {
     uint8_t index   = 0;
-    
+
     printf("Lamps\n");
-    
+
     for(index = 0; index < LAMP_SIM_NUM; ++index)
     {
         uint8_t brightness  = lamp_sim_context[index].brightness;
-        
+
         if (FALSE == lamp_sim_context[index].enabled)
         {
             brightness = 0;
         }
-        
+
         /* Lamp off? */
         if (0 == brightness)
         {
@@ -226,25 +226,25 @@ extern void lamp_sim_show(void)
             platform_setTextColor(PLATFORM_COLOR_BLACK);
             platform_setTextBgColor(PLATFORM_COLOR_LIGHT_YELLOW);
         }
-    
+
         printf("   %u  ", index + 1);
     }
-    
+
     /* Reset colors */
     platform_restoreTextColor();
     platform_restoreTextBgColor();
-    
+
     printf("\n");
-    
+
     for(index = 0; index < LAMP_SIM_NUM; ++index)
     {
         uint8_t brightness  = lamp_sim_context[index].brightness;
-        
+
         if (FALSE == lamp_sim_context[index].enabled)
         {
             brightness = 0;
         }
-        
+
         /* Lamp off? */
         if (0 == brightness)
         {
@@ -263,14 +263,14 @@ extern void lamp_sim_show(void)
             platform_setTextColor(PLATFORM_COLOR_BLACK);
             platform_setTextBgColor(PLATFORM_COLOR_LIGHT_YELLOW);
         }
-    
+
         printf(" %03u%% ", brightness);
     }
-    
+
     /* Reset colors */
     platform_restoreTextColor();
     platform_restoreTextBgColor();
-    
+
     printf("\n");
 
     return;
@@ -278,5 +278,5 @@ extern void lamp_sim_show(void)
 
 
 /*******************************************************************************
-	LOCAL FUNCTIONS
+    LOCAL FUNCTIONS
 *******************************************************************************/

@@ -29,17 +29,17 @@
 // ----------------------------------------------------------------------------
 
 #include "at90can_private.h"
-#ifdef	SUPPORT_FOR_AT90CAN__
+#ifdef  SUPPORT_FOR_AT90CAN__
 
 // ----------------------------------------------------------------------------
 can_error_register_t at90can_read_error_register(void)
 {
-	can_error_register_t error;
-	
-	error.tx = CANTEC;
-	error.rx = CANREC;
-	
-	return error;
+    can_error_register_t error;
+
+    error.tx = CANTEC;
+    error.rx = CANREC;
+
+    return error;
 }
 
-#endif	// SUPPORT_FOR_AT90CAN__
+#endif  // SUPPORT_FOR_AT90CAN__

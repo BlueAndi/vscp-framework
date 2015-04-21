@@ -29,25 +29,25 @@
 // ----------------------------------------------------------------------------
 
 #include "mcp2515_private.h"
-#ifdef	SUPPORT_FOR_MCP2515__
+#ifdef  SUPPORT_FOR_MCP2515__
 
 // ----------------------------------------------------------------------------
 // check if there are any new messages waiting
 
 bool mcp2515_check_message(void)
 {
-	#if defined(MCP2515_INT)
-		return ((!IS_SET(MCP2515_INT)) ? true : false);
-	#else
-		#ifdef RXnBF_FUNKTION
-			if (!IS_SET(MCP2515_RX0BF) || !IS_SET(MCP2515_RX1BF))
-				return true;
-			else
-				return false;
-		#else
-			return ((mcp2515_read_status(SPI_RX_STATUS) & 0xC0) ? true : false);
-		#endif
-	#endif
+    #if defined(MCP2515_INT)
+        return ((!IS_SET(MCP2515_INT)) ? true : false);
+    #else
+        #ifdef RXnBF_FUNKTION
+            if (!IS_SET(MCP2515_RX0BF) || !IS_SET(MCP2515_RX1BF))
+                return true;
+            else
+                return false;
+        #else
+            return ((mcp2515_read_status(SPI_RX_STATUS) & 0xC0) ? true : false);
+        #endif
+    #endif
 }
 
 // ----------------------------------------------------------------------------
@@ -55,12 +55,12 @@ bool mcp2515_check_message(void)
 
 bool mcp2515_check_free_buffer(void)
 {
-	uint8_t status = mcp2515_read_status(SPI_READ_STATUS);
-	
-	if ((status & 0x54) == 0x54)
-		return false;		// all buffers used
-	else
-		return true;
+    uint8_t status = mcp2515_read_status(SPI_READ_STATUS);
+
+    if ((status & 0x54) == 0x54)
+        return false;       // all buffers used
+    else
+        return true;
 }
 
-#endif	// SUPPORT_FOR_MCP2515__
+#endif  // SUPPORT_FOR_MCP2515__

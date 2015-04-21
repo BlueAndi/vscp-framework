@@ -29,17 +29,17 @@
 // ----------------------------------------------------------------------------
 
 #include "mcp2515_private.h"
-#ifdef	SUPPORT_FOR_MCP2515__
+#ifdef  SUPPORT_FOR_MCP2515__
 
 // ----------------------------------------------------------------------------
 can_error_register_t mcp2515_read_error_register(void)
 {
-	can_error_register_t error;
-	
-	error.tx = mcp2515_read_register(TEC);
-	error.rx = mcp2515_read_register(REC);
-	
-	return error;
+    can_error_register_t error;
+
+    error.tx = mcp2515_read_register(TEC);
+    error.rx = mcp2515_read_register(REC);
+
+    return error;
 }
 
-#endif	// SUPPORT_FOR_MCP2515__
+#endif  // SUPPORT_FOR_MCP2515__

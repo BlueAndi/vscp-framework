@@ -28,8 +28,8 @@
  */
 // -----------------------------------------------------------------------------
 
-#ifndef	CAN_BUFFER_H
-#define	CAN_BUFFER_H
+#ifndef CAN_BUFFER_H
+#define CAN_BUFFER_H
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -37,12 +37,12 @@
 
 // -----------------------------------------------------------------------------
 typedef struct {
-	can_t *buf;
-	uint8_t size;
-	
-	uint8_t used;
-	uint8_t head;
-	uint8_t tail;
+    can_t *buf;
+    uint8_t size;
+
+    uint8_t used;
+    uint8_t head;
+    uint8_t tail;
 } can_buffer_t;
 
 // -----------------------------------------------------------------------------
@@ -59,8 +59,8 @@ extern can_t *can_buffer_get_enqueue_ptr(can_buffer_t *buf);
 
 // -----------------------------------------------------------------------------
 /**
- * 
- * \warning	
+ *
+ * \warning
  */
 extern void can_buffer_enqueue(can_buffer_t *buf);
 
@@ -69,9 +69,9 @@ extern can_t *can_buffer_get_dequeue_ptr(can_buffer_t *buf);
 
 // -----------------------------------------------------------------------------
 /**
- * 
- * \warning	
+ *
+ * \warning
  */
 extern void can_buffer_dequeue(can_buffer_t *buf);
 
-#endif	// CAN_BUFFER_H
+#endif  // CAN_BUFFER_H

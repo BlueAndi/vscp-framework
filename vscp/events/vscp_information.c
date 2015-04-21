@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +21,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
@@ -85,11 +85,11 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 
 /**
  * This is a general event of no special type.
- * 
+ *
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendUndefinedEvent(void)
 {
@@ -104,7 +104,7 @@ extern BOOL vscp_information_sendUndefinedEvent(void)
 
 /**
  * A button has been pressed/released.
- * 
+ *
  * @param[in] state Bits 0,1,2 If 0 the button has been released. If 1 the button is pressed. If equal
  * to 2 this is a key value (press followed by release). Bits 3-7 is repeats 0-32.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones
@@ -114,7 +114,7 @@ extern BOOL vscp_information_sendUndefinedEvent(void)
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendButtonEvent(uint8_t state, uint8_t zone, uint8_t subZone, uint16_t code, uint16_t const * const codePage)
 {
@@ -142,7 +142,7 @@ extern BOOL vscp_information_sendButtonEvent(uint8_t state, uint8_t zone, uint8_
 
 /**
  * A mouse movement has occurred.
- * 
+ *
  * @param[in] coordinateType If zero absolute coordinates follow. If equal to one relative coordinates
  * follow.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones
@@ -152,7 +152,7 @@ extern BOOL vscp_information_sendButtonEvent(uint8_t state, uint8_t zone, uint8_
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendMouseEvent(uint8_t coordinateType, uint8_t zone, uint8_t subZone, uint16_t xCoordinate, uint16_t yCoordinate)
 {
@@ -174,14 +174,14 @@ extern BOOL vscp_information_sendMouseEvent(uint8_t coordinateType, uint8_t zone
 
 /**
  * A node indicates that a condition is in its on state. Heater on, lights on are two examples.
- * 
+ *
  * @param[in] index Often used as an index for channels within a module.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendOnEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
@@ -199,14 +199,14 @@ extern BOOL vscp_information_sendOnEvent(uint8_t index, uint8_t zone, uint8_t su
 
 /**
  * A node indicates that a condition is in its off state. Heater off, lights off are two examples.
- * 
+ *
  * @param[in] index Index.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendOffEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
@@ -224,14 +224,14 @@ extern BOOL vscp_information_sendOffEvent(uint8_t index, uint8_t zone, uint8_t s
 
 /**
  * A node tells the world that it is alive.
- * 
+ *
  * @param[in] userData User specified.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendAliveEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -249,14 +249,14 @@ extern BOOL vscp_information_sendAliveEvent(uint8_t userData, uint8_t zone, uint
 
 /**
  * A node tells the world that it is terminating.
- * 
+ *
  * @param[in] userData User specified.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendTerminatingEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -274,14 +274,14 @@ extern BOOL vscp_information_sendTerminatingEvent(uint8_t userData, uint8_t zone
 
 /**
  * A node indicates that an open has occurred. This can be a door/window open, a modem line open etc.
- * 
+ *
  * @param[in] userData User specified.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendOpenedEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -300,14 +300,14 @@ extern BOOL vscp_information_sendOpenedEvent(uint8_t userData, uint8_t zone, uin
 /**
  * A node indicates that a close has occurred. This can be a door/window close, a modem line closure
  * etc.
- * 
+ *
  * @param[in] userData User specified.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendClosedEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -332,17 +332,17 @@ extern BOOL vscp_information_sendClosedEvent(uint8_t userData, uint8_t zone, uin
  * (CLASS1.PROTOCOL, Type=1) in order to provide a method of finding out what is connected to the
  * network. The data bytes from byte 3 and forward can be used to send a descriptive/user friendly
  * name if desired.
- * 
+ *
  *     Not mandatory but it is highly recommended that all nodes send this event on regular intervals.
  * A Level II node should not send this event but instead a Level II node heartbeat.
- * 
+ *
  * @param[in] userData User specified.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendNodeHeartbeatEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -360,13 +360,13 @@ extern BOOL vscp_information_sendNodeHeartbeatEvent(uint8_t userData, uint8_t zo
 
 /**
  * This indicates that the node has a condition that is below a configurable limit.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendBelowLimitEvent(uint8_t zone, uint8_t subZone)
 {
@@ -384,13 +384,13 @@ extern BOOL vscp_information_sendBelowLimitEvent(uint8_t zone, uint8_t subZone)
 
 /**
  * This indicates that the node has a condition that is above a configurable limit.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendAboveLimitEvent(uint8_t zone, uint8_t subZone)
 {
@@ -408,13 +408,13 @@ extern BOOL vscp_information_sendAboveLimitEvent(uint8_t zone, uint8_t subZone)
 
 /**
  * This can be used for slow pulse counts. This can be an S0-pulse interface or something similar.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendPulseEvent(uint8_t zone, uint8_t subZone)
 {
@@ -432,13 +432,13 @@ extern BOOL vscp_information_sendPulseEvent(uint8_t zone, uint8_t subZone)
 
 /**
  * A node indicates that an error occurred.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendErrorEvent(uint8_t zone, uint8_t subZone)
 {
@@ -456,13 +456,13 @@ extern BOOL vscp_information_sendErrorEvent(uint8_t zone, uint8_t subZone)
 
 /**
  * A node indicates that it has resumed operation.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendResumedEvent(uint8_t zone, uint8_t subZone)
 {
@@ -480,13 +480,13 @@ extern BOOL vscp_information_sendResumedEvent(uint8_t zone, uint8_t subZone)
 
 /**
  * A node indicates that it has paused.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendPausedEvent(uint8_t zone, uint8_t subZone)
 {
@@ -504,13 +504,13 @@ extern BOOL vscp_information_sendPausedEvent(uint8_t zone, uint8_t subZone)
 
 /**
  * A node indicates that it entered a sleeping state.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendSleepingEvent(uint8_t zone, uint8_t subZone)
 {
@@ -529,13 +529,13 @@ extern BOOL vscp_information_sendSleepingEvent(uint8_t zone, uint8_t subZone)
 /**
  * The system should enter its morning state. This can be a user pressing a button to set his/her
  * house to its morning state.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendGoodMorningEvent(uint8_t zone, uint8_t subZone)
 {
@@ -554,13 +554,13 @@ extern BOOL vscp_information_sendGoodMorningEvent(uint8_t zone, uint8_t subZone)
 /**
  * The system should enter its day state. This can be a user pressing a button to set his/her house to
  * its day state.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendGoodDayEvent(uint8_t zone, uint8_t subZone)
 {
@@ -579,13 +579,13 @@ extern BOOL vscp_information_sendGoodDayEvent(uint8_t zone, uint8_t subZone)
 /**
  * The system should enter its afternoon state. This can be a user pressing a button to set his/her
  * house to its afternoon state.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendGoodAfternoonEvent(uint8_t zone, uint8_t subZone)
 {
@@ -604,13 +604,13 @@ extern BOOL vscp_information_sendGoodAfternoonEvent(uint8_t zone, uint8_t subZon
 /**
  * The system should enter its evening state. This can be a user pressing a button to set his/her
  * house to its evening state.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendGoodEveningEvent(uint8_t zone, uint8_t subZone)
 {
@@ -629,13 +629,13 @@ extern BOOL vscp_information_sendGoodEveningEvent(uint8_t zone, uint8_t subZone)
 /**
  * The system should enter its night state. This can be a user pressing a button to set his/her house
  * to its night state.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendGoodNightEvent(uint8_t zone, uint8_t subZone)
 {
@@ -654,13 +654,13 @@ extern BOOL vscp_information_sendGoodNightEvent(uint8_t zone, uint8_t subZone)
 /**
  * The system should be on a temporary alert. This can be a user locking the door to go out to the
  * waste bin or similar situation. An alarm system should not be activated in this situation.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendSeeYouSoonEvent(uint8_t zone, uint8_t subZone)
 {
@@ -679,13 +679,13 @@ extern BOOL vscp_information_sendSeeYouSoonEvent(uint8_t zone, uint8_t subZone)
 /**
  * The system should be on a goodbye alert. This can be a user locking the door to go out for a days
  * work or similar situation. All alarm systems should be activated in this situation.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendGoodbyeEvent(uint8_t zone, uint8_t subZone)
 {
@@ -703,13 +703,13 @@ extern BOOL vscp_information_sendGoodbyeEvent(uint8_t zone, uint8_t subZone)
 
 /**
  * A node indicates that a stop event occurred. This can for example be a motor stopping.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendStopEvent(uint8_t zone, uint8_t subZone)
 {
@@ -727,13 +727,13 @@ extern BOOL vscp_information_sendStopEvent(uint8_t zone, uint8_t subZone)
 
 /**
  * A node indicates that a start event occurred. This can be a motor starting.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendStartEvent(uint8_t zone, uint8_t subZone)
 {
@@ -751,13 +751,13 @@ extern BOOL vscp_information_sendStartEvent(uint8_t zone, uint8_t subZone)
 
 /**
  * A node indicates that a reset occurred. This can be a node doing a warm start.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendResetCompletedEvent(uint8_t zone, uint8_t subZone)
 {
@@ -775,13 +775,13 @@ extern BOOL vscp_information_sendResetCompletedEvent(uint8_t zone, uint8_t subZo
 
 /**
  * A node indicates that a reset occurred. This can also be a node doing a warm start.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendInterruptedEvent(uint8_t zone, uint8_t subZone)
 {
@@ -799,13 +799,13 @@ extern BOOL vscp_information_sendInterruptedEvent(uint8_t zone, uint8_t subZone)
 
 /**
  * A node indicates that a sleep event occurred. This can be a node going to its inactive state.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendPreparingToSleepEvent(uint8_t zone, uint8_t subZone)
 {
@@ -823,13 +823,13 @@ extern BOOL vscp_information_sendPreparingToSleepEvent(uint8_t zone, uint8_t sub
 
 /**
  * A node indicates that a wakeup event occurred. This can be a node going to it awake state.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendWokenUpEvent(uint8_t zone, uint8_t subZone)
 {
@@ -847,13 +847,13 @@ extern BOOL vscp_information_sendWokenUpEvent(uint8_t zone, uint8_t subZone)
 
 /**
  * A node indicates that the system should enter its dusk state.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendDuskEvent(uint8_t zone, uint8_t subZone)
 {
@@ -871,13 +871,13 @@ extern BOOL vscp_information_sendDuskEvent(uint8_t zone, uint8_t subZone)
 
 /**
  * A node indicates that the system should enter its dawn state.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendDawnEvent(uint8_t zone, uint8_t subZone)
 {
@@ -895,13 +895,13 @@ extern BOOL vscp_information_sendDawnEvent(uint8_t zone, uint8_t subZone)
 
 /**
  * A node indicates that its active.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendActiveEvent(uint8_t zone, uint8_t subZone)
 {
@@ -919,13 +919,13 @@ extern BOOL vscp_information_sendActiveEvent(uint8_t zone, uint8_t subZone)
 
 /**
  * A node indicates that its inactive.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendInactiveEvent(uint8_t zone, uint8_t subZone)
 {
@@ -943,13 +943,13 @@ extern BOOL vscp_information_sendInactiveEvent(uint8_t zone, uint8_t subZone)
 
 /**
  * A node indicates that its busy.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendBusyEvent(uint8_t zone, uint8_t subZone)
 {
@@ -967,13 +967,13 @@ extern BOOL vscp_information_sendBusyEvent(uint8_t zone, uint8_t subZone)
 
 /**
  * A node indicates that its idle.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendIdleEvent(uint8_t zone, uint8_t subZone)
 {
@@ -992,7 +992,7 @@ extern BOOL vscp_information_sendIdleEvent(uint8_t zone, uint8_t subZone)
 /**
  * A steam of information from a node can be reported with this event. This can be a serial RS-232
  * channel or some other sequential stream.
- * 
+ *
  * @param[in] sequenceNumber Sequence number which is increased by one for every new event with stream
  * data. The sequence number is increased for every frame sent going from 0 - 255 and back to 0 and so
  * on if needed. A new stream starts with a sequence number of 0.
@@ -1001,7 +1001,7 @@ extern BOOL vscp_information_sendIdleEvent(uint8_t zone, uint8_t subZone)
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendStreamDataEvent(uint8_t sequenceNumber, uint8_t const * const data, uint8_t dataSize)
 {
@@ -1031,10 +1031,10 @@ extern BOOL vscp_information_sendStreamDataEvent(uint8_t sequenceNumber, uint8_t
  * This event is used for cards, RFID's, iButtons, GSM phones and other identification devices. The
  * event is generated when the token device is attached/detached to/from the system. Level II has a
  * counterpart to this event that can take more data. CLASS2.INFORMATION Type=1
- * 
+ *
  *     Depending on the Token device type a number of this event are sent on the segment with frame
  * index increase for each event. The total expected number can be deduced from the type.
- * 
+ *
  * @param[in] code Bit 0,1 - Event code. Bit 2-7 - Token device type code.
  * @param[in] zone Zone.
  * @param[in] subZone Sub-zone.
@@ -1045,7 +1045,7 @@ extern BOOL vscp_information_sendStreamDataEvent(uint8_t sequenceNumber, uint8_t
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendTokenActivityEvent(uint8_t code, uint8_t zone, uint8_t subZone, uint8_t index, uint8_t const * const tokenData, uint8_t tokenDataSize)
 {
@@ -1077,7 +1077,7 @@ extern BOOL vscp_information_sendTokenActivityEvent(uint8_t code, uint8_t zone, 
 /**
  * A steam of information from a node can be reported with this event. This can be a serial RS-232
  * channel or some other sequential stream.
- * 
+ *
  * @param[in] zone Zone.
  * @param[in] subZone Sub-zone.
  * @param[in] sequenceNumber Sequence number which is increased by one for every new event with stream
@@ -1088,7 +1088,7 @@ extern BOOL vscp_information_sendTokenActivityEvent(uint8_t code, uint8_t zone, 
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendStreamDataWithZoneEvent(uint8_t zone, uint8_t subZone, uint8_t sequenceNumber, uint8_t const * const data, uint8_t dataSize)
 {
@@ -1118,7 +1118,7 @@ extern BOOL vscp_information_sendStreamDataWithZoneEvent(uint8_t zone, uint8_t s
 
 /**
  * This event can be used as a general confirm event for zoned and stream data.
- * 
+ *
  * @param[in] zone Zone.
  * @param[in] subZone Sub-zone.
  * @param[in] sequenceNumberClass Sequence number byte 3 Class.
@@ -1126,7 +1126,7 @@ extern BOOL vscp_information_sendStreamDataWithZoneEvent(uint8_t zone, uint8_t s
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendConfirmEvent(uint8_t zone, uint8_t subZone, uint16_t sequenceNumberClass, uint16_t type)
 {
@@ -1148,14 +1148,14 @@ extern BOOL vscp_information_sendConfirmEvent(uint8_t zone, uint8_t subZone, uin
 /**
  * Response/confirmation from ex. a dimmer control after a dimmer command or some other unit that
  * change a level.
- * 
+ *
  * @param[in] levelType Relative or absolute level.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendLevelChangedEvent(uint8_t levelType, uint8_t zone, uint8_t subZone)
 {
@@ -1173,14 +1173,14 @@ extern BOOL vscp_information_sendLevelChangedEvent(uint8_t levelType, uint8_t zo
 
 /**
  * A node indicates that a warning condition occurred.
- * 
+ *
  * @param[in] levelType Relative or absolute level.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendWarningEvent(uint8_t levelType, uint8_t zone, uint8_t subZone)
 {
@@ -1199,7 +1199,7 @@ extern BOOL vscp_information_sendWarningEvent(uint8_t levelType, uint8_t zone, u
 /**
  * A node indicates that a state change has occurred. Th numerical ID for the current state and the
  * state that is about to become active is supplied.
- * 
+ *
  * @param[in] userData User specified.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
@@ -1208,7 +1208,7 @@ extern BOOL vscp_information_sendWarningEvent(uint8_t levelType, uint8_t zone, u
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendStateEvent(uint8_t userData, uint8_t zone, uint8_t subZone, uint8_t previousState, uint8_t currentState)
 {
@@ -1228,14 +1228,14 @@ extern BOOL vscp_information_sendStateEvent(uint8_t userData, uint8_t zone, uint
 
 /**
  * A node optionally indicates that an action has been triggered by this event.
- * 
+ *
  * @param[in] actionId Action ID.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendActionTriggerEvent(uint8_t actionId, uint8_t zone, uint8_t subZone)
 {
@@ -1253,14 +1253,14 @@ extern BOOL vscp_information_sendActionTriggerEvent(uint8_t actionId, uint8_t zo
 
 /**
  * A node indicates that sunrise is detected/calculated.
- * 
+ *
  * @param[in] userData User specified.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendSunriseEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -1278,14 +1278,14 @@ extern BOOL vscp_information_sendSunriseEvent(uint8_t userData, uint8_t zone, ui
 
 /**
  * A node indicates that sunset is detected/calculated.
- * 
+ *
  * @param[in] userData User specified.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendSunsetEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -1305,7 +1305,7 @@ extern BOOL vscp_information_sendSunsetEvent(uint8_t userData, uint8_t zone, uin
  * This event is used to mark the start of a multi-frame data transfer. This can typically be a GPS
  * received which sends a train of events from one GPS record. The index byte can be used to
  * distinguish record between each other.
- * 
+ *
  * @param[in] index Index for record.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
@@ -1313,7 +1313,7 @@ extern BOOL vscp_information_sendSunsetEvent(uint8_t userData, uint8_t zone, uin
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendStartOfRecordEvent(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t num)
 {
@@ -1333,14 +1333,14 @@ extern BOOL vscp_information_sendStartOfRecordEvent(uint8_t index, uint8_t zone,
 /**
  * This event is used to mark the end of a multi-frame data transfer. The index byte can be used to
  * distinguish record between each other.
- * 
+ *
  * @param[in] index Index for record.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendEndOfRecordEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
@@ -1359,14 +1359,14 @@ extern BOOL vscp_information_sendEndOfRecordEvent(uint8_t index, uint8_t zone, u
 /**
  * This event is used to tell the system that a pre-set configuration is active. Usually a response
  * from a node after a CLASS1.CONTROL, Type=28 has been received by a node.
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] code Code for pre-set that has been set.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendPresetActiveEvent(uint8_t zone, uint8_t subZone, uint8_t code)
 {
@@ -1385,14 +1385,14 @@ extern BOOL vscp_information_sendPresetActiveEvent(uint8_t zone, uint8_t subZone
 
 /**
  * This event is used to tell the system that a detection of some kind has occurred.
- * 
+ *
  * @param[in] index Index.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendDetectEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
@@ -1410,14 +1410,14 @@ extern BOOL vscp_information_sendDetectEvent(uint8_t index, uint8_t zone, uint8_
 
 /**
  * This event is used to tell the system that an overflow of some kind has occurred.
- * 
+ *
  * @param[in] index Index.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendOverflowEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
@@ -1435,7 +1435,7 @@ extern BOOL vscp_information_sendOverflowEvent(uint8_t index, uint8_t zone, uint
 
 /**
  * This is meant to be used as a confirmation event for CLASS1.CONTROL, Type=33 events.
- * 
+ *
  * @param[in] index Index.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
@@ -1445,7 +1445,7 @@ extern BOOL vscp_information_sendOverflowEvent(uint8_t index, uint8_t zone, uint
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendBigLevelChangedEvent(uint8_t index, uint8_t zone, uint8_t subZone, int8_t const * const level, uint8_t levelSize)
 {
@@ -1478,28 +1478,28 @@ extern BOOL vscp_information_sendBigLevelChangedEvent(uint8_t index, uint8_t zon
  * degrees below. The “Civil Twilight Starts” time is the dawn or civil dawn, with the center of the
  * Sun at exactly 6 degrees below the horizon. Equally, the “Civil Twilight Ends” time is dusk or
  * civil dusk, when the Sun is 6 degrees below the horizon in the evening.
- * 
+ *
  *     During civil twilight, the sky is still illuminated, and with clear weather it is brightest in
  * the direction of the Sun. The Moon and the brightest stars and planets may be visible. It is
  * usually bright enough for outdoor activities without additional lighting.
- * 
+ *
  *     Near the equator, where the Sun sets and rises in an almost vertical direction, the civil
  * twilight period can last only 21 minutes, a very fast nightfall compared to the much longer periods
  * at southern and northern latitudes. In regions north of 60°24' N or south of 60°24' S, there will
  * be at least one night when it does not get darker than this.
- * 
+ *
  *     Technically, the start and end times are when the true geocentric position of the Sun is 96
  * degrees from the zenith position.
- * 
+ *
  *     A node indicates that sunrise twilight time is detected/calculated.
- * 
+ *
  * @param[in] userData User specified.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendCivilSunriseTwilightTimeEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -1517,31 +1517,31 @@ extern BOOL vscp_information_sendCivilSunriseTwilightTimeEvent(uint8_t userData,
 
 /**
  * A node indicates that sunset twilight time is detected/calculated.
- * 
+ *
  *     Civil twilight is the period when the Sun is below the horizon but its center is less than 6
  * degrees below. The “Civil Twilight Starts” time is the dawn or civil dawn, with the center of the
  * Sun at exactly 6 degrees below the horizon. Equally, the “Civil Twilight Ends” time is dusk or
  * civil dusk, when the Sun is 6 degrees below the horizon in the evening.
- * 
+ *
  *     During civil twilight, the sky is still illuminated, and with clear weather it is brightest in
  * the direction of the Sun. The Moon and the brightest stars and planets may be visible. It is
  * usually bright enough for outdoor activities without additional lighting.
- * 
+ *
  *     Near the equator, where the Sun sets and rises in an almost vertical direction, the civil
  * twilight period can last only 21 minutes, a very fast nightfall compared to the much longer periods
  * at southern and northern latitudes. In regions north of 60°24' N or south of 60°24' S, there will
  * be at least one night when it does not get darker than this.
- * 
+ *
  *     Technically, the start and end times are when the true geocentric position of the Sun is 96
  * degrees from the zenith position.
- * 
+ *
  * @param[in] userData User specified.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendCivilSunsetTwilightTimeEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -1559,29 +1559,29 @@ extern BOOL vscp_information_sendCivilSunsetTwilightTimeEvent(uint8_t userData, 
 
 /**
  * A node indicates that nautical sunrise twilight time is detected/calculated.
- * 
+ *
  *     Nautical twilight is the period when the center of the Sun is between 6 and 12 degrees below
  * the horizon, when bright stars are still visible in clear weather and the horizon is becoming
  * visible. It is too dark to do outdoor activities without additional lighting.
- * 
+ *
  *     In the morning, nautical twilight starts at nautical dawn, when the Sun rises above 12 degrees
  * below the horizon; it ends when the Sun's center reaches 6 degrees below the horizon. In the
  * evening, nautical twilight begins when the Sun sinks below 6 degrees; it ends at nautical dusk,
  * when the Sun is lower than 12 degrees below the horizon.
- * 
+ *
  *     For locations north of 54°34' N or south of 54°34' S latitude, the Sun will never be lower than
  * 12 degrees below the horizon for a period in the summer.
- * 
+ *
  *     Technically, the start and end times are when the true geocentric position of the Sun is 102
  * degrees from the zenith position.
- * 
+ *
  * @param[in] userData User specified.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendNauticalSunriseTwilightTimeEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -1599,29 +1599,29 @@ extern BOOL vscp_information_sendNauticalSunriseTwilightTimeEvent(uint8_t userDa
 
 /**
  * A node indicates that nautical sunset twilight time is detected/calculated.
- * 
+ *
  *     Nautical twilight is the period when the center of the Sun is between 6 and 12 degrees below
  * the horizon, when bright stars are still visible in clear weather and the horizon is becoming
  * visible. It is too dark to do outdoor activities without additional lighting.
- * 
+ *
  *     In the morning, nautical twilight starts at nautical dawn, when the Sun rises above 12 degrees
  * below the horizon; it ends when the Sun's center reaches 6 degrees below the horizon. In the
  * evening, nautical twilight begins when the Sun sinks below 6 degrees; it ends at nautical dusk,
  * when the Sun is lower than 12 degrees below the horizon.
- * 
+ *
  *     For locations north of 54°34' N or south of 54°34' S latitude, the Sun will never be lower than
  * 12 degrees below the horizon for a period in the summer.
- * 
+ *
  *     Technically, the start and end times are when the true geocentric position of the Sun is 102
  * degrees from the zenith position.
- * 
+ *
  * @param[in] userData User specified.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendNauticalSunsetTwilightTimeEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -1639,7 +1639,7 @@ extern BOOL vscp_information_sendNauticalSunsetTwilightTimeEvent(uint8_t userDat
 
 /**
  * A node indicates that astronomical sunrise twilight time is detected/calculated.
- * 
+ *
  *     Astronomical twilight is the period when the center of the Sun is between 12 and 18 degrees
  * below the horizon. It starts at astronomical dawn, early in the morning when the Sun is higher than
  * 18 degrees below the horizon. From this point, it will be difficult to observe certain faint stars,
@@ -1648,20 +1648,20 @@ extern BOOL vscp_information_sendNauticalSunsetTwilightTimeEvent(uint8_t userDat
  * because the Sun is lower than 18 degrees below the horizon. In locations north of 48°24' N or south
  * of 48°24', it never gets darker than this near the middle of the summer solstice (June or
  * December).
- * 
+ *
  *     Technically, the start and end times are when the true geocentric position of the Sun is 108
  * degrees from the zenith position, or directly above the observer.
- * 
+ *
  *     Astronomical twilight is the period when the center of the Sun is between 12 and 18 degrees
  * below the horizon.
- * 
+ *
  * @param[in] userData User specified.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendAstronomicalSunriseTwilightTimeEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -1679,7 +1679,7 @@ extern BOOL vscp_information_sendAstronomicalSunriseTwilightTimeEvent(uint8_t us
 
 /**
  * A node indicates that astronomical sunset twilight time is detected/calculated.
- * 
+ *
  *     Astronomical twilight is the period when the center of the Sun is between 12 and 18 degrees
  * below the horizon. It starts at astronomical dawn, early in the morning when the Sun is higher than
  * 18 degrees below the horizon. From this point, it will be difficult to observe certain faint stars,
@@ -1688,20 +1688,20 @@ extern BOOL vscp_information_sendAstronomicalSunriseTwilightTimeEvent(uint8_t us
  * because the Sun is lower than 18 degrees below the horizon. In locations north of 48°24' N or south
  * of 48°24', it never gets darker than this near the middle of the summer solstice (June or
  * December).
- * 
+ *
  *     Technically, the start and end times are when the true geocentric position of the Sun is 108
  * degrees from the zenith position, or directly above the observer.
- * 
+ *
  *     Astronomical twilight is the period when the center of the Sun is between 12 and 18 degrees
  * below the horizon.
- * 
+ *
  * @param[in] userData User specified.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendAstronomicalSunsetTwilightTimeEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -1719,13 +1719,13 @@ extern BOOL vscp_information_sendAstronomicalSunsetTwilightTimeEvent(uint8_t use
 
 /**
  * This event is used for reporting of a calculated noon (real noon).
- * 
+ *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_information_sendCalculatedNoonEvent(uint8_t zone, uint8_t subZone)
 {

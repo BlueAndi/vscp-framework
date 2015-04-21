@@ -29,28 +29,28 @@
 // ----------------------------------------------------------------------------
 
 #include "sja1000_private.h"
-#ifdef	SUPPORT_FOR_SJA1000__
+#ifdef  SUPPORT_FOR_SJA1000__
 
 // ----------------------------------------------------------------------------
 void sja1000_set_mode(can_mode_t mode)
 {
-	uint8_t reg = 0;
-	
-	// enter reset mode
-	sja1000_write(MOD, (1<<AFM) | (1<<RM));
-	
-	if (mode == LISTEN_ONLY_MODE) {
-		reg = (1<<LOM);
-	}
-	else if (mode == LOOPBACK_MODE) {
-		reg = (1<<STM);
-	}
-	
-	// set new mode
-	sja1000_write(MOD, (1<<AFM) | (1<<RM) | reg);
-	
-	// leave reset mode
-	sja1000_write(MOD, (1<<AFM) | reg);
+    uint8_t reg = 0;
+
+    // enter reset mode
+    sja1000_write(MOD, (1<<AFM) | (1<<RM));
+
+    if (mode == LISTEN_ONLY_MODE) {
+        reg = (1<<LOM);
+    }
+    else if (mode == LOOPBACK_MODE) {
+        reg = (1<<STM);
+    }
+
+    // set new mode
+    sja1000_write(MOD, (1<<AFM) | (1<<RM) | reg);
+
+    // leave reset mode
+    sja1000_write(MOD, (1<<AFM) | reg);
 }
 
-#endif	// SUPPORT_FOR_SJA1000__
+#endif  // SUPPORT_FOR_SJA1000__

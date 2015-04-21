@@ -4,17 +4,17 @@
 // modify it under the terms of the GNU General Public License
 // as published by the Free Software Foundation; either version
 // 2 of the License, or (at your option) any later version.
-// 
-// This file is part of the VSCP (http://www.vscp.org) 
 //
-// Copyright (C) 2000-2015 Ake Hedman, 
+// This file is part of the VSCP (http://www.vscp.org)
+//
+// Copyright (C) 2000-2015 Ake Hedman,
 // Grodans Paradis AB,<akhe@grodansparadis.com>
-// 
+//
 // This file is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this file see the file COPYING.  If not, write to
 // the Free Software Foundation, 59 Temple Place - Suite 330,
@@ -28,7 +28,7 @@
 #define UNLOCK_MUTEX( x )       ( ReleaseMutex( x ) )
 #define SLEEP( x )              ( Sleep( x ) )
 #define SYSLOG( a, b )          ( wxLogError( b ) )
-#define BZERO( a )              ( memset( ( _u8* )&a, 0, sizeof( a ) ) )	
+#define BZERO( a )              ( memset( ( _u8* )&a, 0, sizeof( a ) ) )
 
 #else
 

@@ -36,19 +36,19 @@
 // ----------------------------------------------------------------------------
 uint8_t at90can_get_buffered_message(can_t *msg)
 {
-	// get pointer to the first buffered message
-	can_t *buf = can_buffer_get_dequeue_ptr(&can_rx_buffer);
-	
-	if (buf == NULL)
-		return 0;
-	
-	// copy the message
-	memcpy( msg, buf, sizeof(can_t) );
-	
-	// delete message from the queue
-	can_buffer_dequeue(&can_rx_buffer);
-	
-	return 0xff;
+    // get pointer to the first buffered message
+    can_t *buf = can_buffer_get_dequeue_ptr(&can_rx_buffer);
+
+    if (buf == NULL)
+        return 0;
+
+    // copy the message
+    memcpy( msg, buf, sizeof(can_t) );
+
+    // delete message from the queue
+    can_buffer_dequeue(&can_rx_buffer);
+
+    return 0xff;
 }
 
-#endif	// SUPPORT_FOR_AT90CAN__
+#endif  // SUPPORT_FOR_AT90CAN__

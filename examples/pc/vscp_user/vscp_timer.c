@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +21,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
@@ -110,15 +110,15 @@ static vscp_timer_Timer vscp_timer_context[VSCP_TIMER_NUM];
 extern void vscp_timer_init(void)
 {
     uint8_t index   = 0;
-    
+
     /* Reset all timers */
     memset(vscp_timer_context, 0, sizeof(vscp_timer_context));
-    
+
     for(index = 0; index < VSCP_TIMER_NUM; ++index)
     {
         vscp_timer_context[index].id = 0xFF;
     }
-    
+
     return;
 }
 
@@ -143,7 +143,7 @@ extern uint8_t  vscp_timer_create(void)
             /* Mark the timer as used */
             vscp_timer_context[index].id    = index;
             timerId                         = vscp_timer_context[index].id;
-            
+
             break;
         }
     }
@@ -194,7 +194,7 @@ extern void vscp_timer_stop(uint8_t id)
 extern BOOL vscp_timer_getStatus(uint8_t id)
 {
     BOOL    status  = FALSE;
-    
+
     if (VSCP_UTIL_ARRAY_NUM(vscp_timer_context) > id)
     {
         if (0 < vscp_timer_context[id].value)

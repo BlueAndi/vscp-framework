@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +21,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
@@ -101,14 +101,14 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 extern void vscp_bl_adapter_init(void)
 {
     FILE*   fd  = NULL;
-    
+
     log_printf("Bootloader entered.\n");
-    
+
     /* Create a empty application section file.
      * Empty means a file with 0xFF at any place.
      */
     fd = fopen(VSCP_BL_ADAPTER_APP_SEC_FILENAME, "wb");
-    
+
     if (NULL == fd)
     {
         LOG_ERROR("Couldn't create appcliation section file.");
@@ -117,12 +117,12 @@ extern void vscp_bl_adapter_init(void)
     {
         uint32_t run    = 0;
         uint8_t data    = 0xff;
-    
+
         for(run = 0; run < VSCP_BL_ADAPTER_APP_SEC_SIZE; ++run)
         {
             (void)fwrite(&data, sizeof(data), 1, fd);
         }
-        
+
         fclose(fd);
         fd = NULL;
     }
@@ -145,7 +145,7 @@ extern uint8_t  vscp_bl_adapter_readNicknameId(void)
  */
 extern void vscp_bl_adapter_jumpToApp(void)
 {
-	log_printf("Jump to application.\n");
+    log_printf("Jump to application.\n");
 
     return;
 }
@@ -153,7 +153,7 @@ extern void vscp_bl_adapter_jumpToApp(void)
 /**
  * This function enable or disable the initialization lamp.
  *
- * @param[in]   enableIt	Enable (true) or disable (false) lamp
+ * @param[in]   enableIt    Enable (true) or disable (false) lamp
  */
 extern void vscp_bl_adapter_enableLamp(BOOL enableIt)
 {
@@ -169,8 +169,8 @@ extern void vscp_bl_adapter_enableLamp(BOOL enableIt)
         log_printf("Lamp on\n");
         platform_restoreTextColor();
     }
-    
-	return;
+
+    return;
 }
 
 /**
@@ -179,7 +179,7 @@ extern void vscp_bl_adapter_enableLamp(BOOL enableIt)
  */
 extern void vscp_bl_adapter_halt(void)
 {
-	log_printf("HALT!\n");
+    log_printf("HALT!\n");
 
     return;
 }
@@ -189,7 +189,7 @@ extern void vscp_bl_adapter_halt(void)
  */
 extern void vscp_bl_adapter_reboot(void)
 {
-	log_printf("REBOOT!\n");
+    log_printf("REBOOT!\n");
 
     return;
 }
@@ -198,13 +198,13 @@ extern void vscp_bl_adapter_reboot(void)
  * This function returns the state of the segment initialization button.
  *
  * @return State
- * @retval FALSE	Released
- * @retval TRUE		Pressed
+ * @retval FALSE    Released
+ * @retval TRUE     Pressed
  */
 extern BOOL vscp_bl_adapter_getSegInitButtonState(void)
 {
-	BOOL	state	= FALSE;
-	
+    BOOL    state   = FALSE;
+
     return state;
 }
 
@@ -221,11 +221,11 @@ extern uint8_t vscp_bl_adapter_readBootFlag(void)
 /**
  * This function writes the boot flag to persistent memory.
  *
- * @param[in]	bootFlag	Boot flag
+ * @param[in]   bootFlag    Boot flag
  */
 extern void vscp_bl_adapter_writeBootFlag(uint8_t bootFlag)
 {
-	eeprom_write8(VSCP_BL_ADAPTER_PS_ADDR_BOOT_FLAG, bootFlag);
+    eeprom_write8(VSCP_BL_ADAPTER_PS_ADDR_BOOT_FLAG, bootFlag);
     return;
 }
 
@@ -244,17 +244,17 @@ extern uint8_t  vscp_bl_adapter_readGUID(uint8_t index)
 /**
  * This function writes a complete page to the flash memory.
  *
- * @param[in]	page    Page which shall be written
- * @param[in]	buffer	Pointer to the buffer with the data
+ * @param[in]   page    Page which shall be written
+ * @param[in]   buffer  Pointer to the buffer with the data
  */
 extern void vscp_bl_adapter_programPage(uint16_t page, uint8_t *buffer)
 {
     FILE*   fd  = NULL;
 
-	log_printf("Program page 0x%04X.\n", page);
-	
+    log_printf("Program page 0x%04X.\n", page);
+
     fd = fopen(VSCP_BL_ADAPTER_APP_SEC_FILENAME, "r+b");
-    
+
     if (NULL == fd)
     {
         LOG_ERROR("Couldn't open application section file.");
@@ -266,27 +266,27 @@ extern void vscp_bl_adapter_programPage(uint16_t page, uint8_t *buffer)
         {
             (void)fwrite(buffer, sizeof(uint8_t), VSCP_PLATFORM_FLASH_PAGE_SIZE, fd);
         }
-        
+
         fclose(fd);
         fd = NULL;
     }
-    
+
     return;
 }
 
 /**
  * This function read a byte from program memory.
  *
- * @param[in] address	Program memory address
+ * @param[in] address   Program memory address
  * @return Value
  */
-extern uint8_t	vscp_bl_adapter_readProgMem(uint16_t address)
+extern uint8_t  vscp_bl_adapter_readProgMem(uint16_t address)
 {
-	uint8_t	value = 0;
+    uint8_t value = 0;
     FILE*   fd  = NULL;
-	
+
     fd = fopen(VSCP_BL_ADAPTER_APP_SEC_FILENAME, "rb");
-    
+
     if (NULL != fd)
     {
         /* Seek successful? */
@@ -294,12 +294,12 @@ extern uint8_t	vscp_bl_adapter_readProgMem(uint16_t address)
         {
             (void)fread(&value, sizeof(value), 1, fd);
         }
-        
+
         fclose(fd);
         fd = NULL;
     }
-	
-	return value;
+
+    return value;
 }
 
 /*******************************************************************************

@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,11 +21,11 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
-	DESCRIPTION
+    DESCRIPTION
 *******************************************************************************/
 /**
 @brief  VSCP module tests
@@ -42,7 +42,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 
 /*******************************************************************************
-	INCLUDES
+    INCLUDES
 *******************************************************************************/
 #include "vscp_test.h"
 #include <stdint.h>
@@ -58,11 +58,11 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 #include "vscp_dm_ng.h"
 
 /*******************************************************************************
-	COMPILER SWITCHES
+    COMPILER SWITCHES
 *******************************************************************************/
 
 /*******************************************************************************
-	CONSTANTS
+    CONSTANTS
 *******************************************************************************/
 
 /** Size of the persistent memory in byte */
@@ -123,36 +123,36 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 #define VSCP_TEST_MDF_URL                       "www.blue-andi.de/vscp/test.mdf"
 
 /** Heartbeat zone */
-#define VSCP_TEST_HEARTBEAT_ZONE				(0xff)
+#define VSCP_TEST_HEARTBEAT_ZONE                (0xff)
 
 /** Heartbeat sub zone */
-#define VSCP_TEST_HEARTBEAT_SUB_ZONE			(0xff)
+#define VSCP_TEST_HEARTBEAT_SUB_ZONE            (0xff)
 
 /*******************************************************************************
-	MACROS
+    MACROS
 *******************************************************************************/
 
 /** Get number of elements in an array. */
 #define VSCP_TEST_ARRAY_NUM(__array)    (sizeof(__array)/sizeof((__array)[0]))
 
 /*******************************************************************************
-	TYPES AND STRUCTURES
+    TYPES AND STRUCTURES
 *******************************************************************************/
 
 /** Call counter indices for persistent memory. */
 typedef enum
 {
     VSCP_TEST_CALL_COUNTER_APP_RESTORE_FACTORY_DEFAULTS = 0,
-    
+
     VSCP_TEST_CALL_COUNTER_APP_REG_INIT,
-    
+
     VSCP_TEST_CALL_COUNTER_ACTION_INIT,
     VSCP_TEST_CALL_COUNTER_ACTION_EXECUTE,
-        
+
     VSCP_TEST_CALL_COUNTER_TP_ADAPTER_INIT,
     VSCP_TEST_CALL_COUNTER_TP_ADAPTER_READ_MESSAGE,
     VSCP_TEST_CALL_COUNTER_TP_ADAPTER_WRITE_MESSAGE,
-    
+
     VSCP_TEST_CALL_COUNTER_PORTABLE_INIT,
     VSCP_TEST_CALL_COUNTER_PORTABLE_CREATE_TIMER,
     VSCP_TEST_CALL_COUNTER_PORTABLE_START_TIMER,
@@ -163,11 +163,11 @@ typedef enum
     VSCP_TEST_CALL_COUNTER_PORTABLE_BOOT_LOADER_REQUEST,
     VSCP_TEST_CALL_COUNTER_PORTABLE_SET_LAMP_STATE,
     VSCP_TEST_CALL_COUNTER_PORTABLE_PROVIDE_EVENT,
-    
+
     VSCP_TEST_CALL_COUNTER_PS_ACCESS_INIT,
-    
+
     VSCP_TEST_CALL_COUNTER_TIMER_INIT,
-    
+
     VSCP_TEST_CALL_COUNTER_SIZE
 
 } VSCP_TEST_CALL_COUNTER;
@@ -187,25 +187,25 @@ typedef enum
 /** Register access types */
 typedef enum
 {
-	VSCP_TEST_REG_ACCESS_READ_WRITE = 0,
-	VSCP_TEST_REG_ACCESS_READ_ONLY,
-	VSCP_TEST_REG_ACCESS_WRITE_ONLY
+    VSCP_TEST_REG_ACCESS_READ_WRITE = 0,
+    VSCP_TEST_REG_ACCESS_READ_ONLY,
+    VSCP_TEST_REG_ACCESS_WRITE_ONLY
 
 } VSCP_TEST_REG_ACCESS;
 
 /** Register test table line */
 typedef struct
 {
-    uint8_t 				addr;                               /**< Register address */
-    VSCP_TEST_REG_ACCESS	access;                         	/**< Register access */
-    uint8_t 				(*getExpectedValue)(uint8_t par);   /**< Function to get the expected value */
-    uint8_t 				value;                              /**< Parameter for function or expected value */
-    char*   				description;                        /**< Description */
+    uint8_t                 addr;                               /**< Register address */
+    VSCP_TEST_REG_ACCESS    access;                             /**< Register access */
+    uint8_t                 (*getExpectedValue)(uint8_t par);   /**< Function to get the expected value */
+    uint8_t                 value;                              /**< Parameter for function or expected value */
+    char*                   description;                        /**< Description */
 
 } vscp_test_RegTestLine;
 
 /*******************************************************************************
-	PROTOTYPES
+    PROTOTYPES
 *******************************************************************************/
 
 static void vscp_test_initTestCase(void);
@@ -220,7 +220,7 @@ static uint8_t  vscp_test_getNicknameId(uint8_t value);
 static uint8_t  vscp_test_getZero(uint8_t value);
 
 /*******************************************************************************
-	LOCAL VARIABLES
+    LOCAL VARIABLES
 *******************************************************************************/
 
 /** Persistent memory storage */
@@ -236,13 +236,13 @@ static vscp_RxMessage   vscp_test_rxMessage;
 static vscp_TxMessage   vscp_test_txMessage[VSCP_TEST_TX_MSG_NUM];
 
 /** Transmit message counter */
-static uint8_t          vscp_test_txMessageCnt		= 0;
+static uint8_t          vscp_test_txMessageCnt      = 0;
 
 /** Timer values */
 static uint16_t         vscp_test_timerValues[VSCP_TEST_TIMER_SIZE];
 
 /** Number of timer instances. */
-static uint8_t          vscp_test_timerInstances	= 0;
+static uint8_t          vscp_test_timerInstances    = 0;
 
 /** Register test table */
 static vscp_test_RegTestLine    vscp_test_registerTestTable[]   =
@@ -281,7 +281,7 @@ static vscp_test_RegTestLine    vscp_test_registerTestTable[]   =
     {   VSCP_REG_STD_DEV_TYPE_2,                VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_STD_DEVICE_TYPE >> 16) & 0xff,           "standard device type 2"        },
     {   VSCP_REG_STD_DEV_TYPE_1,                VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_STD_DEVICE_TYPE >>  8) & 0xff,           "standard device type 1"        },
     {   VSCP_REG_STD_DEV_TYPE_0,                VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_STD_DEVICE_TYPE >>  0) & 0xff,           "standard device type 0"        },
-    {	VSCP_REG_RESTORE_STD_CFG,				VSCP_TEST_REG_ACCESS_WRITE_ONLY,  vscp_test_getZero,		  0,												  "restore default settings"      },
+    {   VSCP_REG_RESTORE_STD_CFG,               VSCP_TEST_REG_ACCESS_WRITE_ONLY,  vscp_test_getZero,          0,                                                  "restore default settings"      },
     {   VSCP_REG_GUID_15,                       VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_GUID_3 >> 24) & 0xff,                    "GUID 15"                       }, /* MSB */
     {   VSCP_REG_GUID_14,                       VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_GUID_3 >> 16) & 0xff,                    "GUID 14"                       },
     {   VSCP_REG_GUID_13,                       VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_GUID_3 >>  8) & 0xff,                    "GUID 13"                       },
@@ -304,20 +304,20 @@ static vscp_test_RegTestLine    vscp_test_registerTestTable[]   =
 static vscp_dm_MatrixRow*   vscp_test_dmStorage     = (vscp_dm_MatrixRow*)&vscp_test_persistentMemory[VSCP_PS_ADDR_DM];
 
 /** Decision matrix page */
-static uint16_t				vscp_test_dmPage	    = VSCP_CONFIG_DM_PAGE;
+static uint16_t             vscp_test_dmPage        = VSCP_CONFIG_DM_PAGE;
 
 /** Decision matrix offset */
-static uint8_t				vscp_test_dmOffset	    = VSCP_CONFIG_DM_OFFSET;
+static uint8_t              vscp_test_dmOffset      = VSCP_CONFIG_DM_OFFSET;
 
 /** Decision matrix extension */
 static vscp_dm_ExtRow*      vscp_test_extStorage    = (vscp_dm_ExtRow*)&vscp_test_persistentMemory[VSCP_PS_ADDR_DM_EXTENSION];
 
 /** Decision matrix next generation */
-static uint8_t*       		vscp_test_dmNG          = &vscp_test_persistentMemory[VSCP_PS_ADDR_DM_NEXT_GENERATION];
+static uint8_t*             vscp_test_dmNG          = &vscp_test_persistentMemory[VSCP_PS_ADDR_DM_NEXT_GENERATION];
 
 /** Action id */
 static uint8_t              vscp_test_action    = 0;
-    
+
 /** Action parameter */
 static uint8_t              vscp_test_actionPar = 0;
 
@@ -328,14 +328,14 @@ static vscp_RxMessage       vscp_test_actionTriggeredMsg;
 static VSCP_LAMP_STATE      vscp_test_lampState = VSCP_LAMP_STATE_OFF;
 
 /** Simulate no more timers available. */
-static BOOL					vscp_test_noMoreTimers	= FALSE;
+static BOOL                 vscp_test_noMoreTimers  = FALSE;
 
 /*******************************************************************************
-	GLOBAL VARIABLES
+    GLOBAL VARIABLES
 *******************************************************************************/
 
 /*******************************************************************************
-	GLOBAL FUNCTIONS
+    GLOBAL FUNCTIONS
 *******************************************************************************/
 
 /**
@@ -367,10 +367,10 @@ extern int  vscp_test_init(void)
 
     /* Reset decision matrix extension */
     memset(vscp_test_extStorage, 0, VSCP_PS_SIZE_DM_EXTENSION);
-    
+
     /* Reset action triggered VSCP event */
     memset(&vscp_test_actionTriggeredMsg, 0, sizeof(vscp_test_actionTriggeredMsg));
-    
+
     return 0;
 }
 
@@ -389,7 +389,7 @@ extern int  vscp_test_init(void)
 extern void vscp_test_initNodeTheFirstTime(void)
 {
     /* Initialize core */
-	CU_ASSERT_EQUAL(VSCP_CORE_RET_OK, vscp_core_init());
+    CU_ASSERT_EQUAL(VSCP_CORE_RET_OK, vscp_core_init());
 
     /* Persistent memory module shall be initialized. */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_PS_ACCESS_INIT], 1);
@@ -408,7 +408,7 @@ extern void vscp_test_initNodeTheFirstTime(void)
 
     /* Action module shall be initialized. */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_INIT], 1);
-    
+
     /* 4 timers shall be created, general timer, 2 multi-frame timers and heartbeat timer */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_PORTABLE_CREATE_TIMER], 4);
 
@@ -497,8 +497,8 @@ extern void vscp_test_finisheNicknameDiscovery(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_PROBE_ACK;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum		= 0;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 0;
 
     /* Process core */
     vscp_test_waitForTxMessage(1, 10);
@@ -514,8 +514,8 @@ extern void vscp_test_finisheNicknameDiscovery(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_SET_NICKNAME_ID;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_3_NORMAL;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum		= 2;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 2;
     vscp_test_rxMessage.data[0]     = VSCP_NICKNAME_NOT_INIT;
     vscp_test_rxMessage.data[1]     = VSCP_TEST_NICKNAME;
 
@@ -545,7 +545,7 @@ extern void vscp_test_finisheNicknameDiscovery(void)
 
     /* Node is in active state */
     CU_ASSERT_EQUAL(vscp_core_isActive(), TRUE);
-    
+
     /* Lamp shall be on */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_PORTABLE_SET_LAMP_STATE], 1);
     CU_ASSERT_EQUAL(vscp_test_lampState, VSCP_LAMP_STATE_ON);
@@ -574,8 +574,8 @@ extern void vscp_test_firstSegCtrlHeartBeat(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_SEGMENT_CONTROLLER_HEARTBEAT;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 5;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 5;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_SEGMENT_CRC;
     vscp_test_rxMessage.data[1]     = 0x00; /* Time since epoch */
     vscp_test_rxMessage.data[2]     = 0x00; /* Time since epoch */
@@ -617,8 +617,8 @@ extern void vscp_test_sendProbeAckInActiveState(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_PROBE_ACK;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_TEST_NICKNAME;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 0;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 0;
 
     /* Wait for at least 1 event */
     vscp_test_waitForTxMessage(1, 10);
@@ -681,8 +681,8 @@ extern void vscp_test_noSegmentMaster(void)
         vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_PROBE_ACK;
         vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
         vscp_test_rxMessage.oAddr       = id;
-        vscp_test_rxMessage.hardCoded	= FALSE;
-        vscp_test_rxMessage.dataNum 	= 0;
+        vscp_test_rxMessage.hardCoded   = FALSE;
+        vscp_test_rxMessage.dataNum     = 0;
 
         /* Next id */
         ++id;
@@ -718,7 +718,7 @@ extern void vscp_test_noSegmentMaster(void)
  */
 extern void vscp_test_init07(void)
 {
-	vscp_test_noMoreTimers = TRUE;
+    vscp_test_noMoreTimers = TRUE;
 
     /* Initialize core */
     CU_ASSERT_EQUAL(VSCP_CORE_RET_ERROR, vscp_core_init());
@@ -797,7 +797,7 @@ extern int  vscp_test_initActive(void)
 extern void vscp_test_active01(void)
 {
     /* Initialize core */
-	CU_ASSERT_EQUAL(VSCP_CORE_RET_OK, vscp_core_init());
+    CU_ASSERT_EQUAL(VSCP_CORE_RET_OK, vscp_core_init());
 
     /* Persistent memory module shall be initialized. */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_PS_ACCESS_INIT], 1);
@@ -816,7 +816,7 @@ extern void vscp_test_active01(void)
 
     /* Action module shall be initialized. */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_INIT], 1);
-        
+
     /* 4 timers shall be created, general timer, multi-frame timers and heartbeat timer */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_PORTABLE_CREATE_TIMER], 4);
 
@@ -860,8 +860,8 @@ extern void vscp_test_active02(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_SEGMENT_CONTROLLER_HEARTBEAT;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 5;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 5;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_SEGMENT_CRC;
     vscp_test_rxMessage.data[1]     = 0x00; /* Time since epoch */
     vscp_test_rxMessage.data[2]     = 0x00; /* Time since epoch */
@@ -901,8 +901,8 @@ extern void vscp_test_active03(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_SEGMENT_CONTROLLER_HEARTBEAT;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 5;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 5;
     vscp_test_rxMessage.data[0]     = 0x00;
     vscp_test_rxMessage.data[1]     = 0x00; /* Time since epoch */
     vscp_test_rxMessage.data[2]     = 0x00; /* Time since epoch */
@@ -951,8 +951,8 @@ extern void vscp_test_active04(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_PROBE_ACK;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 0;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 0;
 
     /* Process core */
     vscp_test_waitForTxMessage(1, 10);
@@ -968,8 +968,8 @@ extern void vscp_test_active04(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_SET_NICKNAME_ID;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_3_NORMAL;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 2;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 2;
     vscp_test_rxMessage.data[0]     = VSCP_NICKNAME_NOT_INIT;
     vscp_test_rxMessage.data[1]     = VSCP_TEST_NICKNAME;
 
@@ -1019,8 +1019,8 @@ extern void vscp_test_active05(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_NEW_NODE_ONLINE;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_TEST_NICKNAME;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 1;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 1;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
 
     vscp_test_waitForTxMessage(1, 10);
@@ -1055,8 +1055,8 @@ extern void vscp_test_active06(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_NEW_NODE_ONLINE;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_TEST_NICKNAME_REMOTE;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 1;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 1;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME_REMOTE;
 
     vscp_test_waitForTxMessage(1, 10);
@@ -1086,8 +1086,8 @@ extern void vscp_test_active07(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_PROBE_ACK;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_TEST_NICKNAME_REMOTE;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 0;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 0;
 
     vscp_test_waitForTxMessage(1, 10);
 
@@ -1116,8 +1116,8 @@ extern void vscp_test_active08(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_SET_NICKNAME_ID;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 2;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 2;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
     vscp_test_rxMessage.data[1]     = VSCP_TEST_NICKNAME_REMOTE;
 
@@ -1156,8 +1156,8 @@ extern void vscp_test_active09(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_SET_NICKNAME_ID;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 2;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 2;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME_REMOTE;
     vscp_test_rxMessage.data[1]     = VSCP_NICKNAME_SEGMENT_MASTER;
 
@@ -1191,8 +1191,8 @@ extern void vscp_test_active10(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_DROP_NICKNAME_ID;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 1;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 1;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME_REMOTE;
 
     vscp_test_waitForTxMessage(1, 10);
@@ -1228,8 +1228,8 @@ extern void vscp_test_active11(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_DROP_NICKNAME_ID;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 2;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 2;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
     vscp_test_rxMessage.data[1]     = 0x20;
 
@@ -1266,8 +1266,8 @@ extern void vscp_test_active12(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_DROP_NICKNAME_ID;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 2;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 2;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
     vscp_test_rxMessage.data[1]     = 0x80;
 
@@ -1308,8 +1308,8 @@ extern void vscp_test_active13(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_DROP_NICKNAME_ID;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 2;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 2;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
     vscp_test_rxMessage.data[1]     = 0x40;
 
@@ -1353,8 +1353,8 @@ extern void vscp_test_active14(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_DROP_NICKNAME_ID;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 3;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 3;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
     vscp_test_rxMessage.data[1]     = 0x20;
     vscp_test_rxMessage.data[2]     = 1;
@@ -1504,8 +1504,8 @@ extern void vscp_test_active16(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_ENTER_BOOT_LOADER_MODE;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 8;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 8;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
     vscp_test_rxMessage.data[1]     = VSCP_TEST_BOOT_LOADER_ALGORITHM + 1;  /* Wrong algorithm */
     vscp_test_rxMessage.data[2]     = (VSCP_TEST_GUID_3 >> 24) & 0xff;  /* Byte 0 */
@@ -1550,8 +1550,8 @@ extern void vscp_test_active17(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_ENTER_BOOT_LOADER_MODE;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 8;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 8;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
     vscp_test_rxMessage.data[1]     = VSCP_TEST_BOOT_LOADER_ALGORITHM;
     vscp_test_rxMessage.data[2]     = (VSCP_TEST_GUID_3 >> 24) & 0xff;  /* Byte 0 */
@@ -1592,8 +1592,8 @@ extern void vscp_test_active18(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_GUID_DROP_NICKNAME_ID;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 5;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 5;
     vscp_test_rxMessage.data[0]     = 0;
     vscp_test_rxMessage.data[1]     = (VSCP_TEST_GUID_3 >> 24) & 0xff;
     vscp_test_rxMessage.data[2]     = (VSCP_TEST_GUID_3 >> 16) & 0xff;
@@ -1606,8 +1606,8 @@ extern void vscp_test_active18(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_GUID_DROP_NICKNAME_ID;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 5;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 5;
     vscp_test_rxMessage.data[0]     = 1;
     vscp_test_rxMessage.data[1]     = (VSCP_TEST_GUID_2 >> 24) & 0xff;
     vscp_test_rxMessage.data[2]     = (VSCP_TEST_GUID_2 >> 16) & 0xff;
@@ -1620,8 +1620,8 @@ extern void vscp_test_active18(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_GUID_DROP_NICKNAME_ID;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 5;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 5;
     vscp_test_rxMessage.data[0]     = 2;
     vscp_test_rxMessage.data[1]     = (VSCP_TEST_GUID_1 >> 24) & 0xff;
     vscp_test_rxMessage.data[2]     = (VSCP_TEST_GUID_1 >> 16) & 0xff;
@@ -1634,8 +1634,8 @@ extern void vscp_test_active18(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_GUID_DROP_NICKNAME_ID;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 5;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 5;
     vscp_test_rxMessage.data[0]     = 3;
     vscp_test_rxMessage.data[1]     = (VSCP_TEST_GUID_0 >> 24) & 0xff;
     vscp_test_rxMessage.data[2]     = (VSCP_TEST_GUID_0 >> 16) & 0xff;
@@ -1674,8 +1674,8 @@ extern void vscp_test_active19(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_PAGE_READ;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 3;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 3;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
     vscp_test_rxMessage.data[1]     = VSCP_REG_MANUFACTURER_DEV_ID_0;
     vscp_test_rxMessage.data[2]     = 4;
@@ -1717,8 +1717,8 @@ extern void vscp_test_active20(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_PAGE_READ;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 3;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 3;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
     vscp_test_rxMessage.data[1]     = VSCP_REG_MANUFACTURER_DEV_ID_0;
     vscp_test_rxMessage.data[2]     = 7;
@@ -1763,8 +1763,8 @@ extern void vscp_test_active21(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_PAGE_READ;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 3;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 3;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
     vscp_test_rxMessage.data[1]     = VSCP_REG_MANUFACTURER_DEV_ID_0;
     vscp_test_rxMessage.data[2]     = 8;
@@ -1817,8 +1817,8 @@ extern void vscp_test_active22(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_PAGE_WRITE;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 6;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 6;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
     vscp_test_rxMessage.data[1]     = VSCP_REG_USER_ID_0;
     vscp_test_rxMessage.data[2]     = 0x21;
@@ -1865,8 +1865,8 @@ extern void vscp_test_active23(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_INCREMENT_REGISTER;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 2;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 2;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
     vscp_test_rxMessage.data[1]     = VSCP_REG_USER_ID_0;
 
@@ -1906,8 +1906,8 @@ extern void vscp_test_active24(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_DECREMENT_REGISTER;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 2;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 2;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
     vscp_test_rxMessage.data[1]     = VSCP_REG_USER_ID_0;
 
@@ -1947,8 +1947,8 @@ extern void vscp_test_active25(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_WHO_IS_THERE;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 1;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 1;
     vscp_test_rxMessage.data[0]     = 0xFF;
 
     vscp_test_waitForTxMessage(7, 10);
@@ -2065,8 +2065,8 @@ extern void vscp_test_active26(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_WHO_IS_THERE;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 1;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 1;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
 
     vscp_test_waitForTxMessage(7, 10);
@@ -2183,13 +2183,13 @@ extern void vscp_test_active28(void)
 
     /* Reset decision matrix extension */
     memset(vscp_test_extStorage, 0, VSCP_PS_SIZE_DM_EXTENSION);
-    
+
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_GET_DECISION_MATRIX_INFO;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 1;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 1;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
 
     vscp_test_waitForTxMessage(1, 10);
@@ -2232,8 +2232,8 @@ extern void vscp_test_active29(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_WRITE_REGISTER;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 3;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 3;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
     vscp_test_rxMessage.data[1]     = VSCP_REG_NODE_CONTROL_FLAGS;
     vscp_test_rxMessage.data[2]     = VSCP_NODE_CONTROL_FLAGS_DEFAULT | 0x20;
@@ -2243,38 +2243,38 @@ extern void vscp_test_active29(void)
 
     for(index = 0; index < 8; ++index)
     {
-    	if (0 == vscp_test_dmPage)
-    	{
-			vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-			vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_WRITE_REGISTER;
-			vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
-			vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-			vscp_test_rxMessage.hardCoded	= FALSE;
-			vscp_test_rxMessage.dataNum 	= 3;
-			vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
-			vscp_test_rxMessage.data[1]     = vscp_test_dmOffset + index;
-			vscp_test_rxMessage.data[2]     = index + 1;
-    	}
-    	else
-    	{
-    		uint16_t	page	= vscp_test_dmPage;
-    		uint16_t	offset	= (uint16_t)vscp_test_dmOffset + (uint16_t)index;
+        if (0 == vscp_test_dmPage)
+        {
+            vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
+            vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_WRITE_REGISTER;
+            vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
+            vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
+            vscp_test_rxMessage.hardCoded   = FALSE;
+            vscp_test_rxMessage.dataNum     = 3;
+            vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
+            vscp_test_rxMessage.data[1]     = vscp_test_dmOffset + index;
+            vscp_test_rxMessage.data[2]     = index + 1;
+        }
+        else
+        {
+            uint16_t    page    = vscp_test_dmPage;
+            uint16_t    offset  = (uint16_t)vscp_test_dmOffset + (uint16_t)index;
 
-    		page += offset / 256;
-    		offset %= 256;
+            page += offset / 256;
+            offset %= 256;
 
-			vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-			vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_WRITE_REGISTER;
-			vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
-			vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-			vscp_test_rxMessage.hardCoded	= FALSE;
-			vscp_test_rxMessage.dataNum 	= 5;
-			vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
-			vscp_test_rxMessage.data[1]     = (page >> 8) & 0xff;
-			vscp_test_rxMessage.data[2]     = (page >> 0) & 0xff;
-			vscp_test_rxMessage.data[3]     = offset & 0xff;
-			vscp_test_rxMessage.data[4]     = index + 1;
-    	}
+            vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
+            vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_WRITE_REGISTER;
+            vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
+            vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
+            vscp_test_rxMessage.hardCoded   = FALSE;
+            vscp_test_rxMessage.dataNum     = 5;
+            vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
+            vscp_test_rxMessage.data[1]     = (page >> 8) & 0xff;
+            vscp_test_rxMessage.data[2]     = (page >> 0) & 0xff;
+            vscp_test_rxMessage.data[3]     = offset & 0xff;
+            vscp_test_rxMessage.data[4]     = index + 1;
+        }
 
         vscp_test_waitForTxMessage(1, 10);
 
@@ -2283,32 +2283,32 @@ extern void vscp_test_active29(void)
 
         if (0 == vscp_test_dmPage)
         {
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_READ_WRITE_RESPONSE);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 2);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[0], vscp_test_dmOffset + index);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[1], index + 1);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_READ_WRITE_RESPONSE);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 2);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[0], vscp_test_dmOffset + index);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[1], index + 1);
         }
         else
         {
-    		uint16_t	page	= vscp_test_dmPage;
-    		uint16_t	offset	= (uint16_t)vscp_test_dmOffset + (uint16_t)index;
+            uint16_t    page    = vscp_test_dmPage;
+            uint16_t    offset  = (uint16_t)vscp_test_dmOffset + (uint16_t)index;
 
-    		page += offset / 256;
-    		offset %= 256;
+            page += offset / 256;
+            offset %= 256;
 
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_READ_WRITE_RESPONSE);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 5);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[0], 0);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[1], (page >> 8) & 0xff);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[2], (page >> 0) & 0xff);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[3], offset & 0xff);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[4], index + 1);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_READ_WRITE_RESPONSE);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 5);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[0], 0);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[1], (page >> 8) & 0xff);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[2], (page >> 0) & 0xff);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[3], offset & 0xff);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[4], index + 1);
         }
     }
 
@@ -2335,36 +2335,36 @@ extern void vscp_test_active30(void)
 
     for(index = 0; index < 8; ++index)
     {
-    	if (0 == vscp_test_dmPage)
-    	{
-			vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-			vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_READ_REGISTER;
-			vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
-			vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-			vscp_test_rxMessage.hardCoded	= FALSE;
-			vscp_test_rxMessage.dataNum 	= 2;
-			vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
-			vscp_test_rxMessage.data[1]     = vscp_test_dmOffset + index;
-    	}
-    	else
-    	{
-    		uint16_t	page	= vscp_test_dmPage;
-    		uint16_t	offset	= (uint16_t)vscp_test_dmOffset + (uint16_t)index;
+        if (0 == vscp_test_dmPage)
+        {
+            vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
+            vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_READ_REGISTER;
+            vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
+            vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
+            vscp_test_rxMessage.hardCoded   = FALSE;
+            vscp_test_rxMessage.dataNum     = 2;
+            vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
+            vscp_test_rxMessage.data[1]     = vscp_test_dmOffset + index;
+        }
+        else
+        {
+            uint16_t    page    = vscp_test_dmPage;
+            uint16_t    offset  = (uint16_t)vscp_test_dmOffset + (uint16_t)index;
 
-    		page += offset / 256;
-    		offset %= 256;
+            page += offset / 256;
+            offset %= 256;
 
-			vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-			vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_READ_REGISTER;
-			vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
-			vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-			vscp_test_rxMessage.hardCoded	= FALSE;
-			vscp_test_rxMessage.dataNum 	= 4;
-			vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
-			vscp_test_rxMessage.data[1]     = (page >> 8) & 0xff;
-			vscp_test_rxMessage.data[2]     = (page >> 0) & 0xff;
-			vscp_test_rxMessage.data[3]     = offset & 0xff;
-    	}
+            vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
+            vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_READ_REGISTER;
+            vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
+            vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
+            vscp_test_rxMessage.hardCoded   = FALSE;
+            vscp_test_rxMessage.dataNum     = 4;
+            vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
+            vscp_test_rxMessage.data[1]     = (page >> 8) & 0xff;
+            vscp_test_rxMessage.data[2]     = (page >> 0) & 0xff;
+            vscp_test_rxMessage.data[3]     = offset & 0xff;
+        }
 
         vscp_test_waitForTxMessage(1, 10);
 
@@ -2373,32 +2373,32 @@ extern void vscp_test_active30(void)
 
         if (0 == vscp_test_dmPage)
         {
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_READ_WRITE_RESPONSE);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 2);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[0], vscp_test_dmOffset + index);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[1], 1 + index);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_READ_WRITE_RESPONSE);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 2);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[0], vscp_test_dmOffset + index);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[1], 1 + index);
         }
         else
         {
-    		uint16_t	page	= vscp_test_dmPage;
-    		uint16_t	offset	= (uint16_t)vscp_test_dmOffset + (uint16_t)index;
+            uint16_t    page    = vscp_test_dmPage;
+            uint16_t    offset  = (uint16_t)vscp_test_dmOffset + (uint16_t)index;
 
-    		page += offset / 256;
-    		offset %= 256;
+            page += offset / 256;
+            offset %= 256;
 
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_READ_WRITE_RESPONSE);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 5);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[0], 0);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[1], (page >> 8) & 0xff);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[2], (page >> 0) & 0xff);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[3], offset & 0xff);
-			CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[4], index + 1);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_READ_WRITE_RESPONSE);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 5);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[0], 0);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[1], (page >> 8) & 0xff);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[2], (page >> 0) & 0xff);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[3], offset & 0xff);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[4], index + 1);
         }
     }
 
@@ -2411,12 +2411,12 @@ extern void vscp_test_active30(void)
 extern int vscp_test_initDM(void)
 {
     uint8_t index   = 0;
-    
+
     vscp_test_initTestCase();
 
     /* Reset decision matrix */
     memset(vscp_test_dmStorage, 0, VSCP_PS_SIZE_DM);
-    
+
     /* Reset decision matrix extension */
     memset(vscp_test_extStorage, 0, VSCP_PS_SIZE_DM_EXTENSION);
 
@@ -2432,7 +2432,7 @@ extern int vscp_test_initDM(void)
     vscp_test_dmStorage[index].actionPar    = index;
     vscp_test_dmStorage[index].flags        = VSCP_DM_FLAG_ENABLE | VSCP_DM_FLAG_HARDCODED;
     ++index;
-    
+
     /* Any event with class 0x1f5 triggers. */
     vscp_test_dmStorage[index].action       = index + 1;
     vscp_test_dmStorage[index].actionPar    = index;
@@ -2448,13 +2448,13 @@ extern int vscp_test_initDM(void)
     vscp_test_dmStorage[index].typeMask     = 0xff;
     vscp_test_dmStorage[index].typeFilter   = 0x12;
     ++index;
-    
+
     /* Any event for the node zone and sub-zone triggers. */
     vscp_test_dmStorage[index].action       = index + 1;
     vscp_test_dmStorage[index].actionPar    = index;
     vscp_test_dmStorage[index].flags        = VSCP_DM_FLAG_ENABLE | VSCP_DM_FLAG_MATCH_ZONE | VSCP_DM_FLAG_MATCH_SUB_ZONE;
     ++index;
-    
+
     /* Any class 0x14, type 0x01 event from node 0xbb triggers. */
     vscp_test_dmStorage[index].action       = index + 1;
     vscp_test_dmStorage[index].actionPar    = index;
@@ -2476,8 +2476,8 @@ extern int vscp_test_initDM(void)
     vscp_test_dmStorage[index].typeMask     = 0xff;
     vscp_test_dmStorage[index].typeFilter   = 0x01;
 
-    vscp_test_extStorage[index].zone		= 0x02;
-    vscp_test_extStorage[index].subZone		= 0x03;
+    vscp_test_extStorage[index].zone        = 0x02;
+    vscp_test_extStorage[index].subZone     = 0x03;
     vscp_test_extStorage[index].action      = index + 1;
     vscp_test_extStorage[index].actionPar   = index;
     ++index;
@@ -2492,16 +2492,16 @@ extern int vscp_test_initDM(void)
     vscp_test_dmStorage[index].typeMask     = 0xff;
     vscp_test_dmStorage[index].typeFilter   = 0x01;
 
-    vscp_test_extStorage[index].zone		= 0x03;
-    vscp_test_extStorage[index].subZone		= 0x04;
-    vscp_test_extStorage[index].par0		= 0x01;
-    vscp_test_extStorage[index].par3		= 0x04;
-    vscp_test_extStorage[index].par4		= 0x05;
-    vscp_test_extStorage[index].par5		= 0x06;
+    vscp_test_extStorage[index].zone        = 0x03;
+    vscp_test_extStorage[index].subZone     = 0x04;
+    vscp_test_extStorage[index].par0        = 0x01;
+    vscp_test_extStorage[index].par3        = 0x04;
+    vscp_test_extStorage[index].par4        = 0x05;
+    vscp_test_extStorage[index].par5        = 0x06;
     vscp_test_extStorage[index].action      = index + 1;
     vscp_test_extStorage[index].actionPar   = index;
     ++index;
-    
+
     return 0;
 }
 
@@ -2519,13 +2519,13 @@ extern int vscp_test_initDM(void)
 extern void vscp_test_dm01(void)
 {
     vscp_test_initTestCase();
-    
+
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_INFORMATION;
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_INFORMATION_BUTTON;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = 0xaa;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 7;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 7;
     vscp_test_rxMessage.data[0]     = 0;
     vscp_test_rxMessage.data[1]     = 1;
     vscp_test_rxMessage.data[2]     = 2;
@@ -2533,18 +2533,18 @@ extern void vscp_test_dm01(void)
     vscp_test_rxMessage.data[4]     = 0;
     vscp_test_rxMessage.data[5]     = 0;
     vscp_test_rxMessage.data[6]     = 0;
-    
+
     /* Process core */
     vscp_test_processTimers();
     vscp_core_process();
-    
+
     /* Only one action shall be executed */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_EXECUTE], 1);
-    
+
     /* Check action */
     CU_ASSERT_EQUAL(vscp_test_action, 1);
     CU_ASSERT_EQUAL(vscp_test_actionPar, 0);
-    
+
     return;
 }
 
@@ -2562,13 +2562,13 @@ extern void vscp_test_dm01(void)
 extern void vscp_test_dm02(void)
 {
     vscp_test_initTestCase();
-    
+
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_INFORMATION;
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_INFORMATION_BUTTON;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = 0xaa;
-    vscp_test_rxMessage.hardCoded	= TRUE;
-    vscp_test_rxMessage.dataNum 	= 7;
+    vscp_test_rxMessage.hardCoded   = TRUE;
+    vscp_test_rxMessage.dataNum     = 7;
     vscp_test_rxMessage.data[0]     = 0;
     vscp_test_rxMessage.data[1]     = 1;
     vscp_test_rxMessage.data[2]     = 2;
@@ -2576,18 +2576,18 @@ extern void vscp_test_dm02(void)
     vscp_test_rxMessage.data[4]     = 0;
     vscp_test_rxMessage.data[5]     = 0;
     vscp_test_rxMessage.data[6]     = 0;
-    
+
     /* Process core */
     vscp_test_processTimers();
     vscp_core_process();
-    
+
     /* Two actions shall be executed */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_EXECUTE], 2);
-    
+
     /* Check last action */
     CU_ASSERT_EQUAL(vscp_test_action, 2);
     CU_ASSERT_EQUAL(vscp_test_actionPar, 1);
-    
+
     return;
 }
 
@@ -2605,13 +2605,13 @@ extern void vscp_test_dm02(void)
 extern void vscp_test_dm03(void)
 {
     vscp_test_initTestCase();
-    
+
     vscp_test_rxMessage.vscpClass   = 0x1f5;
     vscp_test_rxMessage.vscpType    = 0x01;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = 0xaa;
-    vscp_test_rxMessage.hardCoded	= TRUE;
-    vscp_test_rxMessage.dataNum 	= 7;
+    vscp_test_rxMessage.hardCoded   = TRUE;
+    vscp_test_rxMessage.dataNum     = 7;
     vscp_test_rxMessage.data[0]     = 0;
     vscp_test_rxMessage.data[1]     = 1;
     vscp_test_rxMessage.data[2]     = 2;
@@ -2619,18 +2619,18 @@ extern void vscp_test_dm03(void)
     vscp_test_rxMessage.data[4]     = 0;
     vscp_test_rxMessage.data[5]     = 0;
     vscp_test_rxMessage.data[6]     = 0;
-    
+
     /* Process core */
     vscp_test_processTimers();
     vscp_core_process();
-    
+
     /* Three actions shall be executed */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_EXECUTE], 3);
-    
+
     /* Check last action */
     CU_ASSERT_EQUAL(vscp_test_action, 3);
     CU_ASSERT_EQUAL(vscp_test_actionPar, 2);
-    
+
     return;
 }
 
@@ -2648,13 +2648,13 @@ extern void vscp_test_dm03(void)
 extern void vscp_test_dm04(void)
 {
     vscp_test_initTestCase();
-    
+
     vscp_test_rxMessage.vscpClass   = 0x1f5;
     vscp_test_rxMessage.vscpType    = 0x012;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = 0xaa;
-    vscp_test_rxMessage.hardCoded	= TRUE;
-    vscp_test_rxMessage.dataNum 	= 7;
+    vscp_test_rxMessage.hardCoded   = TRUE;
+    vscp_test_rxMessage.dataNum     = 7;
     vscp_test_rxMessage.data[0]     = 0;
     vscp_test_rxMessage.data[1]     = 1;
     vscp_test_rxMessage.data[2]     = 2;
@@ -2662,18 +2662,18 @@ extern void vscp_test_dm04(void)
     vscp_test_rxMessage.data[4]     = 0;
     vscp_test_rxMessage.data[5]     = 0;
     vscp_test_rxMessage.data[6]     = 0;
-    
+
     /* Process core */
     vscp_test_processTimers();
     vscp_core_process();
-    
+
     /* Three actions shall be executed */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_EXECUTE], 4);
-    
+
     /* Check last action */
     CU_ASSERT_EQUAL(vscp_test_action, 4);
     CU_ASSERT_EQUAL(vscp_test_actionPar, 3);
-    
+
     return;
 }
 
@@ -2691,13 +2691,13 @@ extern void vscp_test_dm04(void)
 extern void vscp_test_dm05(void)
 {
     vscp_test_initTestCase();
-    
+
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_INFORMATION;
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_INFORMATION_BUTTON;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = 0xaa;
-    vscp_test_rxMessage.hardCoded	= TRUE;
-    vscp_test_rxMessage.dataNum 	= 7;
+    vscp_test_rxMessage.hardCoded   = TRUE;
+    vscp_test_rxMessage.dataNum     = 7;
     vscp_test_rxMessage.data[0]     = 0;
     vscp_test_rxMessage.data[1]     = VSCP_TEST_HEARTBEAT_ZONE;
     vscp_test_rxMessage.data[2]     = VSCP_TEST_HEARTBEAT_SUB_ZONE;
@@ -2705,18 +2705,18 @@ extern void vscp_test_dm05(void)
     vscp_test_rxMessage.data[4]     = 0;
     vscp_test_rxMessage.data[5]     = 0;
     vscp_test_rxMessage.data[6]     = 0;
-    
+
     /* Process core */
     vscp_test_processTimers();
     vscp_core_process();
-    
+
     /* Three actions shall be executed */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_EXECUTE], 3);
-    
+
     /* Check last action */
     CU_ASSERT_EQUAL(vscp_test_action, 5);
     CU_ASSERT_EQUAL(vscp_test_actionPar, 4);
-    
+
     return;
 }
 
@@ -2734,13 +2734,13 @@ extern void vscp_test_dm05(void)
 extern void vscp_test_dm06(void)
 {
     vscp_test_initTestCase();
-    
+
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_INFORMATION;
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_INFORMATION_BUTTON;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = 0xbb;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 7;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 7;
     vscp_test_rxMessage.data[0]     = 0;
     vscp_test_rxMessage.data[1]     = 1;
     vscp_test_rxMessage.data[2]     = 2;
@@ -2748,18 +2748,18 @@ extern void vscp_test_dm06(void)
     vscp_test_rxMessage.data[4]     = 0;
     vscp_test_rxMessage.data[5]     = 0;
     vscp_test_rxMessage.data[6]     = 0;
-    
+
     /* Process core */
     vscp_test_processTimers();
     vscp_core_process();
-    
+
     /* Three actions shall be executed */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_EXECUTE], 1);
-    
+
     /* Check last action */
     CU_ASSERT_EQUAL(vscp_test_action, 6);
     CU_ASSERT_EQUAL(vscp_test_actionPar, 5);
-    
+
     return;
 }
 
@@ -2782,8 +2782,8 @@ extern void vscp_test_dm07(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_INFORMATION_BUTTON;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = 0xdd;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 7;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 7;
     vscp_test_rxMessage.data[0]     = 0;
     vscp_test_rxMessage.data[1]     = 2;
     vscp_test_rxMessage.data[2]     = 3;
@@ -2825,8 +2825,8 @@ extern void vscp_test_dm08(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_INFORMATION_BUTTON;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = 0xdd;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 7;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 7;
     vscp_test_rxMessage.data[0]     = 1;
     vscp_test_rxMessage.data[1]     = 10;
     vscp_test_rxMessage.data[2]     = 10;
@@ -2890,7 +2890,7 @@ extern int vscp_test_initDMNG(void)
     {
         vscp_test_dmNG[index] = ruleSet[index];
     }
-    
+
     return 0;
 }
 
@@ -2907,8 +2907,8 @@ extern int vscp_test_initDMNG(void)
  */
 extern void vscp_test_dmNG01(void)
 {
-	uint8_t	rule	= 0;
-	uint8_t	pos		= 0;
+    uint8_t rule    = 0;
+    uint8_t pos     = 0;
 
     vscp_test_initTestCase();
 
@@ -2916,8 +2916,8 @@ extern void vscp_test_dmNG01(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_INFORMATION_BUTTON;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_TEST_NICKNAME;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 7;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 7;
     vscp_test_rxMessage.data[0]     = 0;
     vscp_test_rxMessage.data[1]     = 1;
     vscp_test_rxMessage.data[2]     = 2;
@@ -2935,7 +2935,7 @@ extern void vscp_test_dmNG01(void)
 
     if (FALSE != vscp_dm_ng_getError(&rule, &pos))
     {
-    	printf("\nError in rule %u, at position %u.\n", rule, pos);
+        printf("\nError in rule %u, at position %u.\n", rule, pos);
     }
 
     return;
@@ -2954,8 +2954,8 @@ extern void vscp_test_dmNG01(void)
  */
 extern void vscp_test_dmNG02(void)
 {
-	uint8_t	rule	= 0;
-	uint8_t	pos		= 0;
+    uint8_t rule    = 0;
+    uint8_t pos     = 0;
 
     vscp_test_initTestCase();
 
@@ -2963,8 +2963,8 @@ extern void vscp_test_dmNG02(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_INFORMATION_BUTTON;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_TEST_NICKNAME;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 7;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 7;
     vscp_test_rxMessage.data[0]     = 1;
     vscp_test_rxMessage.data[1]     = 1;
     vscp_test_rxMessage.data[2]     = 2;
@@ -2986,7 +2986,7 @@ extern void vscp_test_dmNG02(void)
 
     if (FALSE != vscp_dm_ng_getError(&rule, &pos))
     {
-    	printf("\nError in rule %u, at position %u.\n", rule, pos);
+        printf("\nError in rule %u, at position %u.\n", rule, pos);
     }
 
     return;
@@ -3011,8 +3011,8 @@ extern void vscp_test_active31(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_READ_REGISTER;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 5;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 5;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
     vscp_test_rxMessage.data[1]     = 0;
     vscp_test_rxMessage.data[2]     = 0;
@@ -3057,8 +3057,8 @@ extern void vscp_test_active32(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_WRITE_REGISTER;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 5;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 5;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
     vscp_test_rxMessage.data[1]     = 0;
     vscp_test_rxMessage.data[2]     = 0;
@@ -3129,7 +3129,7 @@ extern void vscp_test_active33(void)
  */
 extern void vscp_test_active34(void)
 {
-	vscp_TxMessage	txMessage;
+    vscp_TxMessage  txMessage;
 
     vscp_core_prepareTxMessage(&txMessage, VSCP_CLASS_L1_PROTOCOL, VSCP_TYPE_PROTOCOL_UNDEFINED, VSCP_PRIORITY_3_NORMAL);
 
@@ -3141,8 +3141,8 @@ extern void vscp_test_active34(void)
     CU_ASSERT_EQUAL(txMessage.dataNum, 0);
 
     txMessage.dataNum = 2;
-    txMessage.data[0]	= 0x12;
-    txMessage.data[1]	= 0x21;
+    txMessage.data[0]   = 0x12;
+    txMessage.data[1]   = 0x21;
 
     /* Clear transmit message buffers */
     memset(vscp_test_txMessage, 0, sizeof(vscp_test_txMessage));
@@ -3183,8 +3183,8 @@ extern void vscp_test_active35(void)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_INFORMATION_ALIVE;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_3_NORMAL;
     vscp_test_rxMessage.oAddr       = VSCP_TEST_NICKNAME_REMOTE;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 0;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 0;
 
     vscp_test_waitForTxMessage(1, 1);
 
@@ -3214,15 +3214,15 @@ extern uint8_t  vscp_test_psAccessRead8(uint16_t addr)
     uint8_t value   = 0;
 
     /* Check address out of bounce. */
-	if (VSCP_TEST_ARRAY_NUM(vscp_test_persistentMemory) <= addr)
-	{
-		CU_ASSERT_FATAL(VSCP_TEST_ARRAY_NUM(vscp_test_persistentMemory) > addr);
-	}
+    if (VSCP_TEST_ARRAY_NUM(vscp_test_persistentMemory) <= addr)
+    {
+        CU_ASSERT_FATAL(VSCP_TEST_ARRAY_NUM(vscp_test_persistentMemory) > addr);
+    }
     else
     {
         value = vscp_test_persistentMemory[addr];
     }
-    
+
     return value;
 }
 
@@ -3243,8 +3243,8 @@ extern void vscp_test_psAccessWrite8(uint16_t addr, uint8_t value)
 
 extern void vscp_test_appRegInit(void)
 {
-	++vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_APP_REG_INIT];
-	return;
+    ++vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_APP_REG_INIT];
+    return;
 }
 
 extern void vscp_test_tpAdatperInit(void)
@@ -3289,84 +3289,84 @@ extern void vscp_test_portableInit(void)
 
 extern void vscp_test_portableRestoreFactoryDefaultSettings(void)
 {
-	uint8_t	index	= 0;
-	uint8_t	part	= 0;
+    uint8_t index   = 0;
+    uint8_t part    = 0;
 
     vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_APP_RESTORE_FACTORY_DEFAULTS]++;
 
     /* Restore GUID */
     for(part = 0; part < 4; ++part)
     {
-    	uint32_t	guidPart	= 0;
+        uint32_t    guidPart    = 0;
 
-    	if (0 == part)
-    	{
-    		guidPart = VSCP_TEST_GUID_0;
-    	}
-    	else if (1 == part)
-    	{
-    		guidPart = VSCP_TEST_GUID_1;
-    	}
-    	else if (2 == part)
-    	{
-    		guidPart = VSCP_TEST_GUID_2;
-    	}
-    	else
-    	{
-    		guidPart = VSCP_TEST_GUID_3;
-    	}
+        if (0 == part)
+        {
+            guidPart = VSCP_TEST_GUID_0;
+        }
+        else if (1 == part)
+        {
+            guidPart = VSCP_TEST_GUID_1;
+        }
+        else if (2 == part)
+        {
+            guidPart = VSCP_TEST_GUID_2;
+        }
+        else
+        {
+            guidPart = VSCP_TEST_GUID_3;
+        }
 
-		for(index = 0; index < 4; ++index)
-		{
-			uint8_t		value	= ((uint8_t*)&guidPart)[index];
+        for(index = 0; index < 4; ++index)
+        {
+            uint8_t     value   = ((uint8_t*)&guidPart)[index];
 
-			vscp_ps_writeGUID((part * 4) + index, value);
-		}
+            vscp_ps_writeGUID((part * 4) + index, value);
+        }
     }
 
     /* Restore manufacturer device id */
-	for(index = 0; index < sizeof(VSCP_TEST_MANUFACTURER_DEV_ID); ++index)
-	{
-		uint32_t	manufacturerDevId	= VSCP_TEST_MANUFACTURER_DEV_ID;
-		uint8_t		value				= ((uint8_t*)&manufacturerDevId)[index];
+    for(index = 0; index < sizeof(VSCP_TEST_MANUFACTURER_DEV_ID); ++index)
+    {
+        uint32_t    manufacturerDevId   = VSCP_TEST_MANUFACTURER_DEV_ID;
+        uint8_t     value               = ((uint8_t*)&manufacturerDevId)[index];
 
-		vscp_ps_writeManufacturerDevId(index, value);
-	}
+        vscp_ps_writeManufacturerDevId(index, value);
+    }
 
     /* Restore manufacturer sub device id */
-	for(index = 0; index < sizeof(VSCP_TEST_MANUFACTURER_SUB_DEV_ID); ++index)
-	{
-		uint32_t	manufacturerSubDevId	= VSCP_TEST_MANUFACTURER_SUB_DEV_ID;
-		uint8_t		value					= ((uint8_t*)&manufacturerSubDevId)[index];
+    for(index = 0; index < sizeof(VSCP_TEST_MANUFACTURER_SUB_DEV_ID); ++index)
+    {
+        uint32_t    manufacturerSubDevId    = VSCP_TEST_MANUFACTURER_SUB_DEV_ID;
+        uint8_t     value                   = ((uint8_t*)&manufacturerSubDevId)[index];
 
-		vscp_ps_writeManufacturerSubDevId(index, value);
-	}
+        vscp_ps_writeManufacturerSubDevId(index, value);
+    }
 
     /* Restore standard device family code */
-	for(index = 0; index < 4; ++index)
-	{
-		uint32_t	stdDevFamilyCode	= VSCP_TEST_STD_DEVICE_FAMILY_CODE;
-		uint8_t		value				= ((uint8_t*)&stdDevFamilyCode)[index];
+    for(index = 0; index < 4; ++index)
+    {
+        uint32_t    stdDevFamilyCode    = VSCP_TEST_STD_DEVICE_FAMILY_CODE;
+        uint8_t     value               = ((uint8_t*)&stdDevFamilyCode)[index];
 
-		vscp_ps_writeStdDevFamilyCode(index, value);
-	}
+        vscp_ps_writeStdDevFamilyCode(index, value);
+    }
 
     /* Restore standard device type */
-	for(index = 0; index < 4; ++index)
-	{
-		uint32_t	stdDevType	= VSCP_TEST_STD_DEVICE_TYPE;
-		uint8_t		value		= ((uint8_t*)&stdDevType)[index];
+    for(index = 0; index < 4; ++index)
+    {
+        uint32_t    stdDevType  = VSCP_TEST_STD_DEVICE_TYPE;
+        uint8_t     value       = ((uint8_t*)&stdDevType)[index];
 
-		vscp_ps_writeStdDevType(index, value);
-	}
+        vscp_ps_writeStdDevType(index, value);
+    }
 
     return;
 }
 
-extern void	vscp_test_timerInit(void)
+extern void vscp_test_timerInit(void)
 {
-	++vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_TIMER_INIT];
-	return;
+    ++vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_TIMER_INIT];
+    return;
 }
 
 extern uint8_t  vscp_test_timerCreate(void)
@@ -3377,17 +3377,17 @@ extern uint8_t  vscp_test_timerCreate(void)
 
     if (TRUE == vscp_test_noMoreTimers)
     {
-    	id = 0xff;
+        id = 0xff;
     }
     else if (VSCP_TEST_ARRAY_NUM(vscp_test_timerValues) <= vscp_test_timerInstances)
     {
-    	CU_ASSERT_FATAL(VSCP_TEST_ARRAY_NUM(vscp_test_timerValues) > vscp_test_timerInstances);
+        CU_ASSERT_FATAL(VSCP_TEST_ARRAY_NUM(vscp_test_timerValues) > vscp_test_timerInstances);
 
-    	id = 0xff;
+        id = 0xff;
     }
     else
     {
-    	++vscp_test_timerInstances;
+        ++vscp_test_timerInstances;
     }
 
     return id;
@@ -3401,7 +3401,7 @@ extern void vscp_test_timerStart(uint8_t id, uint16_t value)
 
     if (vscp_test_timerInstances > id)
     {
-    	vscp_test_timerValues[id] = value;
+        vscp_test_timerValues[id] = value;
     }
 
     return;
@@ -3415,7 +3415,7 @@ extern void vscp_test_timerStop(uint8_t id)
 
     if (vscp_test_timerInstances > id)
     {
-    	vscp_test_timerValues[id] = 0;
+        vscp_test_timerValues[id] = 0;
     }
 
     return;
@@ -3429,7 +3429,7 @@ extern BOOL vscp_test_timerGetStatus(uint8_t id)
 
     if (vscp_test_timerInstances <= id)
     {
-    	status = FALSE;
+        status = FALSE;
     }
     else if (0 == vscp_test_timerValues[id])
     {
@@ -3497,9 +3497,9 @@ extern uint8_t  vscp_test_portableGetMdfUrl(uint8_t index)
 
 extern void vscp_test_portableProvideEvent(vscp_RxMessage const * const msg)
 {
-	++vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_PORTABLE_PROVIDE_EVENT];
+    ++vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_PORTABLE_PROVIDE_EVENT];
 
-	return;
+    return;
 }
 
 extern void vscp_test_portableSetLampState(VSCP_LAMP_STATE state)
@@ -3513,8 +3513,8 @@ extern void vscp_test_portableSetLampState(VSCP_LAMP_STATE state)
 
 extern void vscp_test_actionInit(void)
 {
-	++vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_INIT];
-	return;
+    ++vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_INIT];
+    return;
 }
 
 extern void vscp_test_actionExecute(uint8_t action, uint8_t par, vscp_RxMessage const * const msg)
@@ -3529,7 +3529,7 @@ extern void vscp_test_actionExecute(uint8_t action, uint8_t par, vscp_RxMessage 
 }
 
 /*******************************************************************************
-	LOCAL FUNCTIONS
+    LOCAL FUNCTIONS
 *******************************************************************************/
 
 static void vscp_test_initTestCase(void)
@@ -3584,8 +3584,8 @@ static uint8_t  vscp_test_readRegister(uint8_t addr)
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_READ_REGISTER;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 2;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 2;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
     vscp_test_rxMessage.data[1]     = addr;
 
@@ -3610,8 +3610,8 @@ static uint8_t  vscp_test_writeRegister(uint8_t addr, uint8_t value, BOOL readOn
     vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_WRITE_REGISTER;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
-    vscp_test_rxMessage.hardCoded	= FALSE;
-    vscp_test_rxMessage.dataNum 	= 3;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 3;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_NICKNAME;
     vscp_test_rxMessage.data[1]     = addr;
     vscp_test_rxMessage.data[2]     = value;

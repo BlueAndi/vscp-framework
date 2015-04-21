@@ -29,18 +29,18 @@
 // ----------------------------------------------------------------------------
 
 #include "sja1000_private.h"
-#ifdef	SUPPORT_FOR_SJA1000__
+#ifdef  SUPPORT_FOR_SJA1000__
 
 // ----------------------------------------------------------------------------
 
 can_error_register_t sja1000_read_error_register(void)
 {
-	can_error_register_t error;
-	
-	error.tx = sja1000_read(TXERR);
-	error.rx = sja1000_read(RXERR);
-	
-	return error;
+    can_error_register_t error;
+
+    error.tx = sja1000_read(TXERR);
+    error.rx = sja1000_read(RXERR);
+
+    return error;
 }
 
 // ----------------------------------------------------------------------------
@@ -48,14 +48,14 @@ can_error_register_t sja1000_read_error_register(void)
 
 bool sja1000_check_bus_off(void)
 {
-	return (sja1000_read(SR) & (1<<BS));
+    return (sja1000_read(SR) & (1<<BS));
 }
 
 // ----------------------------------------------------------------------------
 void sja1000_reset_bus_off(void)
 {
-	uint8_t status = sja1000_read(SR) & (1<<BS);
-	sja1000_write(SR, status & ~(1<<BS));
+    uint8_t status = sja1000_read(SR) & (1<<BS);
+    sja1000_write(SR, status & ~(1<<BS));
 }
 
-#endif	// SUPPORT_FOR_SJA1000__
+#endif  // SUPPORT_FOR_SJA1000__

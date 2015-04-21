@@ -1,21 +1,21 @@
-// FILE: vscp.h 
+// FILE: vscp.h
 //
-// This file is part of the VSCP (http://www.vscp.org) 
+// This file is part of the VSCP (http://www.vscp.org)
 //
 // The MIT License (MIT)
-// 
+//
 // Copyright (c) 2000-2015 Ake Hedman, Grodans Paradis AB <info@grodansparadis.com>
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -25,8 +25,8 @@
 // SOFTWARE.
 
 // HISTORY:
-//		021107 - AKHE Started this file
-//		120328 - AKHE All CAN references removed.
+//      021107 - AKHE Started this file
+//      120328 - AKHE All CAN references removed.
 //
 
 #ifndef _VSCP_H_
@@ -115,7 +115,7 @@ typedef signed char                         int16_t;
 //#endif
 
 
-#ifdef __LINUX__ 
+#ifdef __LINUX__
 
 
 #else
@@ -125,7 +125,7 @@ typedef unsigned long long                  uint64_t;
 typedef long long                           int64_t;
 // AKHE 2012-04-18 Changed due to problems on Linux 64-bit
 //typedef unsigned long int                  uint64_t;
-//typedef long int 			   int64_t;
+//typedef long int             int64_t;
 #elif defined(_MSC_EXTENSIONS)
 typedef unsigned _int64                     uint64_t;
 typedef _int64                              int64_t;
@@ -166,10 +166,10 @@ typedef unsigned short                      uint64_t;
 #define VSCPD_RECEIVE_OBJ_MUTEX             _("____VSCPD_RECEIVE_OBJ_MUTEX____")
 #define VSCPD_CLIENT_MUTEX                  _("____VSCPD_CLIENT_MUTEX____")
 
-#define	VSCP_LEVEL2_UDP_PORT                9598
-#define	VSCP_LEVEL2_TCP_PORT                9598
+#define VSCP_LEVEL2_UDP_PORT                9598
+#define VSCP_LEVEL2_TCP_PORT                9598
 
-#define VSCP_ADDRESS_SEGMENT_CONTROLLER	    0x00
+#define VSCP_ADDRESS_SEGMENT_CONTROLLER     0x00
 #define VSCP_ADDRESS_NEW_NODE               0xff
 
 #define VSCP_MAX_DATA                       (512-25)
@@ -181,7 +181,7 @@ typedef unsigned short                      uint64_t;
 extern "C" {
 #endif
 
-    //			* * * General structure for VSCP * * *
+    //          * * * General structure for VSCP * * *
 
     // This structure is for VSCP Level II
     //
@@ -212,26 +212,26 @@ typedef vscpEvent *PVSCPEVENT;
 
 
 // This structure is for VSCP Level II with data embedded which is used
-// for the TCP interface.// 
+// for the TCP interface.//
 
-typedef struct {	
-	uint16_t crc;                   // crc checksum
-	
-	// Following two are for daemon internal use
-	uint32_t obid;                  // Used by driver for channel info etc.
-	uint32_t timestamp;             // Relative time stamp for package in microseconds.
+typedef struct {
+    uint16_t crc;                   // crc checksum
+
+    // Following two are for daemon internal use
+    uint32_t obid;                  // Used by driver for channel info etc.
+    uint32_t timestamp;             // Relative time stamp for package in microseconds.
 // CRC should be calculated from
 // here to end + datablock
-	uint8_t head;                   // bit 7,6,5 prioriy => Priority 0-7 where 0 is highest.
+    uint8_t head;                   // bit 7,6,5 prioriy => Priority 0-7 where 0 is highest.
                                     // bit 4 = hardcoded, true for a hardcoded device.
                                     // bit 3 = Dont calculate CRC, Set to zero to use CRC.
                                     // bit 2 = Set means this is CAN message.
                                     // bit 1 = If bit 2 is set; Extended CAN message if set
                                     // bit 0 = If bit 2 is set: Remote frame if set
-	uint16_t vscp_class;            // VSCP class
-	uint16_t vscp_type;             // VSCP type
-	uint8_t  GUID[ 16 ];            // Node globally unique id MSB(0) -> LSB(15)
-	uint16_t sizeData;              // Number of valid data bytes		
+    uint16_t vscp_class;            // VSCP class
+    uint16_t vscp_type;             // VSCP type
+    uint8_t  GUID[ 16 ];            // Node globally unique id MSB(0) -> LSB(15)
+    uint16_t sizeData;              // Number of valid data bytes
 
     uint8_t  data[VSCP_MAX_DATA];   // Pointer to data. Max 487 (512- 25) bytes
 
@@ -241,7 +241,7 @@ typedef struct {
 typedef vscpEventEx *PVSCPEVENTEX;
 
 // Priorities in the header byte as or'in values
-// Priorities goes from 0-7 where 0 is highest 
+// Priorities goes from 0-7 where 0 is highest
 #define VSCP_PRIORITY_0             0x00
 #define VSCP_PRIORITY_1             0x20
 #define VSCP_PRIORITY_2             0x40
@@ -270,7 +270,7 @@ typedef vscpEventEx *PVSCPEVENTEX;
 #define VSCP_LEVEL1_MAXDATA         8
 #define VSCP_LEVEL2_MAXDATA         (512 - 25)
 
-#define VSCP_CAN_ID_HARD_CODED	    0x02000000  // Hard coded bit in CAN frame id
+#define VSCP_CAN_ID_HARD_CODED      0x02000000  // Hard coded bit in CAN frame id
 
 // GUID byte positions
 #define VSCP_GUID_MSB               0
@@ -282,18 +282,18 @@ typedef vscpEventEx *PVSCPEVENTEX;
 
 typedef struct  {
 
-	uint8_t filter_priority;        // Priority 
-	uint8_t mask_priority;
-									
-	uint16_t filter_class;          // VSCP class
-	uint16_t mask_class;
+    uint8_t filter_priority;        // Priority
+    uint8_t mask_priority;
 
-	uint16_t filter_type;           // VSCP type
-	uint16_t mask_type;
+    uint16_t filter_class;          // VSCP class
+    uint16_t mask_class;
 
-	uint8_t filter_GUID[ 16 ];      // Node address MSB -> LSB, LSB is node nickname id
-	uint8_t mask_GUID[ 16 ];        //		when interfacing the VSCP daemon.
-	
+    uint16_t filter_type;           // VSCP type
+    uint16_t mask_type;
+
+    uint8_t filter_GUID[ 16 ];      // Node address MSB -> LSB, LSB is node nickname id
+    uint8_t mask_GUID[ 16 ];        //      when interfacing the VSCP daemon.
+
 } vscpEventFilter;
 
 
@@ -301,29 +301,29 @@ typedef vscpEventFilter *PVSCPEVENTFILTER;
 
 
 /*!
-	Statistics
+    Statistics
 
-	This is the general statistics structure
+    This is the general statistics structure
 */
 
 typedef struct structVSCPStatistics {
     unsigned long cntReceiveFrames;             // # of receive frames
     unsigned long cntTransmitFrames;            // # of transmitted frames
     unsigned long cntReceiveData;               // # of received data bytes
-    unsigned long cntTransmitData;              // # of transmitted data bytes	
+    unsigned long cntTransmitData;              // # of transmitted data bytes
     unsigned long cntOverruns;                  // # of overruns
-    unsigned long x;                            // Currently undefined value 
-    unsigned long y;                            // Currently undefined value 
-    unsigned long z;                            // Currently undefined value 
+    unsigned long x;                            // Currently undefined value
+    unsigned long y;                            // Currently undefined value
+    unsigned long z;                            // Currently undefined value
 } VSCPStatistics;
 
 typedef  VSCPStatistics * PVSCPSTATISTICS;
 
 
 /*!
-	VSCPStatus
+    VSCPStatus
 
-	This is the general channel state structure
+    This is the general channel state structure
 */
 
 #define VSCP_STATUS_ERROR_STRING_SIZE   80
@@ -337,7 +337,7 @@ typedef struct structVSCPStatus {
 
 
 typedef  VSCPStatus * PVSCPSTATUS;
- 
+
 
 // VSCP LEVEL II UDP datagram offsets
 #define VSCP_UDP_POS_HEAD             0
@@ -351,30 +351,30 @@ typedef  VSCPStatus * PVSCPSTATUS;
 
 
 /*!
-	VSCP Channel Info
+    VSCP Channel Info
 
-	This is the channel VSCP Info structure
+    This is the channel VSCP Info structure
 */
 
 typedef struct structVSCPChannelInfo {
-	unsigned char channelType;      // Level I, Level II etc from canal.h 
-	unsigned short channel;         // daemon channel number
-	char GUID[ 16 ];                // Channel GUID id
-	
+    unsigned char channelType;      // Level I, Level II etc from canal.h
+    unsigned short channel;         // daemon channel number
+    char GUID[ 16 ];                // Channel GUID id
+
 } VSCPChannelInfo;
 
-typedef  VSCPChannelInfo	*PVSCPCHANNELINFO;
+typedef  VSCPChannelInfo    *PVSCPCHANNELINFO;
 
 // Bootloaders
-#define VSCP_BOOTLOADER_VSCP            0x00	// VSCP bootloader algorithm
-#define VSCP_BOOTLOADER_PIC1            0x01	// PIC algorithm 0
-#define VSCP_BOOTLOADER_AVR1            0x10	// AVR algorithm 0
-#define VSCP_BOOTLOADER_LPC1            0x20	// NXP/Philips LPC algorithm 0
-#define VSCP_BOOTLOADER_ST              0x30	// ST STR algorithm 0
+#define VSCP_BOOTLOADER_VSCP            0x00    // VSCP bootloader algorithm
+#define VSCP_BOOTLOADER_PIC1            0x01    // PIC algorithm 0
+#define VSCP_BOOTLOADER_AVR1            0x10    // AVR algorithm 0
+#define VSCP_BOOTLOADER_LPC1            0x20    // NXP/Philips LPC algorithm 0
+#define VSCP_BOOTLOADER_ST              0x30    // ST STR algorithm 0
 #define VSCP_BOOTLOADER_NONE            0xff
 
 
-//			* * * Data Coding for VSCP packets * * *
+//          * * * Data Coding for VSCP packets * * *
 
 // Data format masks
 #define VSCP_MASK_DATACODING_TYPE       0xE0  // Bits 5,6,7
@@ -388,13 +388,13 @@ typedef  VSCPChannelInfo	*PVSCPCHANNELINFO;
 #define VSCP_DATACODING_STRING          0x40
 #define VSCP_DATACODING_INTEGER         0x60
 #define VSCP_DATACODING_NORMALIZED      0x80
-#define VSCP_DATACODING_SINGLE          0xA0	// single precision float
+#define VSCP_DATACODING_SINGLE          0xA0    // single precision float
 #define VSCP_DATACODING_RESERVED1       0xC0
 #define VSCP_DATACODING_RESERVED2       0xE0
 
 // These bits are coded in the four least significant bits of the first data byte
 // in a paket and tells how the following data should be interpreted. For a flow sensor
-// the default format can be liters/minute. Other formats such as m3/second can be defined 
+// the default format can be liters/minute. Other formats such as m3/second can be defined
 // by the node if it which. However it must always be able to report in the defaultformat.
 #define VSCP_DATACODING_INTERPRETION_DEFAULT  0
 
@@ -420,11 +420,11 @@ typedef  VSCPChannelInfo	*PVSCPCHANNELINFO;
 #define VSCP_CRC32_REMINDER             0xFFFFFFFF
 
 
-// Node data - the required registers are fetched from this 
-//	structure
+// Node data - the required registers are fetched from this
+//  structure
 struct myNode {
-	unsigned char GUID[ 16 ];
-	unsigned char nicknameID;
+    unsigned char GUID[ 16 ];
+    unsigned char nicknameID;
 };
 
 // * * * Standard VSCP registers * * *
@@ -496,11 +496,11 @@ struct myNode {
 #define VSCP_ERROR_FIFO_EMPTY              8       // FIFO is empty
 #define VSCP_ERROR_FIFO_FULL               9       // FIFI is full
 #define VSCP_ERROR_FIFO_SIZE               10      // FIFO size error
-#define VSCP_ERROR_FIFO_WAIT               11      
+#define VSCP_ERROR_FIFO_WAIT               11
 #define VSCP_ERROR_GENERIC                 12      // Generic error
 #define VSCP_ERROR_HARDWARE                13      // Hardware error
 #define VSCP_ERROR_INIT_FAIL               14      // Initialization failed
-#define VSCP_ERROR_INIT_MISSING            15		
+#define VSCP_ERROR_INIT_MISSING            15
 #define VSCP_ERROR_INIT_READY              16
 #define VSCP_ERROR_NOT_SUPPORTED           17      // Not supported
 #define VSCP_ERROR_OVERRUN                 18      // Overrun
@@ -519,7 +519,7 @@ struct myNode {
 #define VSCP_ERROR_COMMUNICATION           37      // Some kind of communication error
 #define VSCP_ERROR_USER                    38      // Login error username
 #define VSCP_ERROR_PASSWORD                39      // Login error password
-#define VSCP_ERROR_CONNECTION              40      // Could not connect   
+#define VSCP_ERROR_CONNECTION              40      // Could not connect
 #define VSCP_ERROR_INVALID_HANDLE          41      // The handle is not valid
 #define VSCP_ERROR_OPERATION_FAILED        42      // Opration failed for some reason
 

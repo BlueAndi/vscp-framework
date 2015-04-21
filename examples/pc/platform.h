@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +21,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
@@ -121,7 +121,7 @@ typedef enum
     PLATFORM_COLOR_LIGHT_MAGENTA,
     PLATFORM_COLOR_LIGHT_CYAN,
     PLATFORM_COLOR_WHITE
-  
+
 } PLATFORM_COLOR;
 
 /*******************************************************************************
@@ -156,7 +156,7 @@ extern void platform_echoOn(void);
  * This function is not defined as part of the ANSI C/C++ standard.
  * It is generally used by Borland's family of compilers. It returns a positive
  * non-zero integer if a key is in the keyboard buffer. It will not wait for a
- * key to be pressed. 
+ * key to be pressed.
  *
  * @return Status
  * @retval 0    No key pressed

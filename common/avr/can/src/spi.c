@@ -29,46 +29,46 @@
 // ----------------------------------------------------------------------------
 
 #include "mcp2515_private.h"
-#ifdef	SUPPORT_FOR_MCP2515__
+#ifdef  SUPPORT_FOR_MCP2515__
 
 #include "spi.h"
 
-#ifdef	SPI_PRESCALER
-	#if (SPI_PRESCALER == 2) || (SPI_PRESCALER == 8) || (SPI_PRESCALER == 32) || (SPI_PRESCALER == 64)
-		#define	R_SPSR	(1<<SPI2X)
-		#define SPI_PRESCALER_ 	(SPI_PRESCALER * 2)
-	#else
-		#define	R_SPSR	0
-		#define	SPI_PRESCALER_	SPI_PRESCALER
-	#endif
-	
-	#define	SPI_CLOCK_RATE_BIT0		(1<<SPR0)
-	#define	SPI_CLOCK_RATE_BIT1		(1<<SPR1)
-	
-	#if (SPI_PRESCALER_ == 4)
-		#define	R_SPCR	0
-	#elif (SPI_PRESCALER_ == 16)
-		#define	R_SPCR	SPI_CLOCK_RATE_BIT0
-	#elif (SPI_PRESCALER_ == 64)
-		#define	R_SPCR	SPI_CLOCK_RATE_BIT1
-	#elif (SPI_PRESCALER_ == 128)
-		#define	R_SPCR	SPI_CLOCK_RATE_BIT1 | SPI_CLOCK_RATE_BIT0
-	#else
-		#error	 SPI_PRESCALER must be one of the values of 2^n with n = 1..7!
-	#endif
+#ifdef  SPI_PRESCALER
+    #if (SPI_PRESCALER == 2) || (SPI_PRESCALER == 8) || (SPI_PRESCALER == 32) || (SPI_PRESCALER == 64)
+        #define R_SPSR  (1<<SPI2X)
+        #define SPI_PRESCALER_  (SPI_PRESCALER * 2)
+    #else
+        #define R_SPSR  0
+        #define SPI_PRESCALER_  SPI_PRESCALER
+    #endif
+
+    #define SPI_CLOCK_RATE_BIT0     (1<<SPR0)
+    #define SPI_CLOCK_RATE_BIT1     (1<<SPR1)
+
+    #if (SPI_PRESCALER_ == 4)
+        #define R_SPCR  0
+    #elif (SPI_PRESCALER_ == 16)
+        #define R_SPCR  SPI_CLOCK_RATE_BIT0
+    #elif (SPI_PRESCALER_ == 64)
+        #define R_SPCR  SPI_CLOCK_RATE_BIT1
+    #elif (SPI_PRESCALER_ == 128)
+        #define R_SPCR  SPI_CLOCK_RATE_BIT1 | SPI_CLOCK_RATE_BIT0
+    #else
+        #error   SPI_PRESCALER must be one of the values of 2^n with n = 1..7!
+    #endif
 #else
-	#error	SPI_PRESCALER not defined!
+    #error  SPI_PRESCALER not defined!
 #endif
 
 
 // ----------------------------------------------------------------------------
 void mcp2515_spi_init(void)
 {
-	#ifndef USE_SOFTWARE_SPI
-		// Aktivieren des SPI Master Interfaces
-		SPCR = (1<<SPE)|(1<<MSTR) | R_SPCR;
-		SPSR = R_SPSR;
-	#endif
+    #ifndef USE_SOFTWARE_SPI
+        // Aktivieren des SPI Master Interfaces
+        SPCR = (1<<SPE)|(1<<MSTR) | R_SPCR;
+        SPSR = R_SPSR;
+    #endif
 }
 
 // ----------------------------------------------------------------------------
@@ -76,46 +76,46 @@ void mcp2515_spi_init(void)
 
 uint8_t spi_putc(uint8_t data)
 {
-	#ifdef	USE_SOFTWARE_SPI
-	
-	uint8_t data_in = 0;
-	
-	RESET(P_SCK);
-	for (uint8_t i=0;i<8;i++)
-	{
-		data_in <<= 1;
-		
-		if (data & 0x80)
-			SET(P_MOSI);
-		else
-			RESET(P_MOSI);
-		
-		SET(P_SCK);
-		_delay_us(2);
-		
-		if (IS_SET(P_MISO))
-			data_in |= 1;
-		
-		data <<= 1;
-		
-		RESET(P_SCK);
-		_delay_us(2);
-	}
-	
-	return data_in;
-	
-	#else
-	
-	// put byte in send-buffer
-	SPDR = data;
-	
-	// wait until byte was send
-	while( !( SPSR & (1<<SPIF) ) )
-		;
-	
-	return SPDR;
-	
-	#endif
+    #ifdef  USE_SOFTWARE_SPI
+
+    uint8_t data_in = 0;
+
+    RESET(P_SCK);
+    for (uint8_t i=0;i<8;i++)
+    {
+        data_in <<= 1;
+
+        if (data & 0x80)
+            SET(P_MOSI);
+        else
+            RESET(P_MOSI);
+
+        SET(P_SCK);
+        _delay_us(2);
+
+        if (IS_SET(P_MISO))
+            data_in |= 1;
+
+        data <<= 1;
+
+        RESET(P_SCK);
+        _delay_us(2);
+    }
+
+    return data_in;
+
+    #else
+
+    // put byte in send-buffer
+    SPDR = data;
+
+    // wait until byte was send
+    while( !( SPSR & (1<<SPIF) ) )
+        ;
+
+    return SPDR;
+
+    #endif
 }
 
-#endif	// SUPPORT_FOR_MCP2515__
+#endif  // SUPPORT_FOR_MCP2515__

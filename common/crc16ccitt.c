@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +21,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
@@ -144,7 +144,7 @@ static const Crc16CCITT crc_table[256] = {
  *
  * @return The initial crc value.
  */
-extern Crc16CCITT	crc16ccitt_init(void)
+extern Crc16CCITT   crc16ccitt_init(void)
 {
     return 0xffffu;
 }
@@ -166,7 +166,7 @@ extern Crc16CCITT   crc16ccitt_update(Crc16CCITT crc, const uint8_t *data, size_
 #else   /* Not defined CRC16CCITT_FAST */
 
     return crc16ccitt_updateAlgo(crc, data, size);
-    
+
 #endif  /* Not defined CRC16CCITT_FAST */
 }
 
@@ -259,7 +259,7 @@ static Crc16CCITT   crc16ccitt_updateAlgo(Crc16CCITT crc, const uint8_t *data, s
 {
     uint8_t dataIndex   = 0;
     uint8_t bitIndex    = 0;
-        
+
     do
     {
         crc ^= ((uint16_t)data[dataIndex]) << 8;
@@ -279,7 +279,7 @@ static Crc16CCITT   crc16ccitt_updateAlgo(Crc16CCITT crc, const uint8_t *data, s
         ++dataIndex;
     }
     while(size > dataIndex);
-    
+
     return crc;
 }
 

@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,11 +21,11 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
-	DESCRIPTION
+    DESCRIPTION
 *******************************************************************************/
 /**
 @brief  EEPROM simulation
@@ -42,7 +42,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 
 /*******************************************************************************
-	INCLUDES
+    INCLUDES
 *******************************************************************************/
 #include "eeprom.h"
 #include <stdio.h>
@@ -51,11 +51,11 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 #include "log.h"
 
 /*******************************************************************************
-	COMPILER SWITCHES
+    COMPILER SWITCHES
 *******************************************************************************/
 
 /*******************************************************************************
-	CONSTANTS
+    CONSTANTS
 *******************************************************************************/
 
 #ifndef BOOL
@@ -74,19 +74,19 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 #endif  /* Undefined TRUE */
 
 /*******************************************************************************
-	MACROS
+    MACROS
 *******************************************************************************/
 
 /*******************************************************************************
-	TYPES AND STRUCTURES
+    TYPES AND STRUCTURES
 *******************************************************************************/
 
 /*******************************************************************************
-	PROTOTYPES
+    PROTOTYPES
 *******************************************************************************/
 
 /*******************************************************************************
-	LOCAL VARIABLES
+    LOCAL VARIABLES
 *******************************************************************************/
 
 /** EEPROM size in bytes */
@@ -99,11 +99,11 @@ static uint8_t* eeprom_storage  = NULL;
 static BOOL     eeprom_dirty    = FALSE;
 
 /*******************************************************************************
-	GLOBAL VARIABLES
+    GLOBAL VARIABLES
 *******************************************************************************/
 
 /*******************************************************************************
-	GLOBAL FUNCTIONS
+    GLOBAL FUNCTIONS
 *******************************************************************************/
 
 /**
@@ -112,7 +112,7 @@ static BOOL     eeprom_dirty    = FALSE;
  * @param[in] size  EEPROM size in bytes
  */
 extern void eeprom_init(uint16_t size)
-{    
+{
     if ((0 < size) &&
         (NULL == eeprom_storage))
     {
@@ -120,13 +120,13 @@ extern void eeprom_init(uint16_t size)
         eeprom_size     = (size / EEPROM_STORAGE_MULTIPLE) * EEPROM_STORAGE_MULTIPLE;
         eeprom_size    += (0 < (size % EEPROM_STORAGE_MULTIPLE)) ? EEPROM_STORAGE_MULTIPLE : 0;
         eeprom_storage  = (uint8_t*) malloc(eeprom_size);
-        
+
         if (NULL == eeprom_storage)
         {
             eeprom_size = 0;
         }
     }
-        
+
     return;
 }
 
@@ -140,7 +140,7 @@ extern void eeprom_deInit(void)
         free(eeprom_storage);
         eeprom_storage = NULL;
     }
-    
+
     return;
 }
 
@@ -153,27 +153,27 @@ extern void eeprom_load(char* fileName)
 {
     FILE    *fd     = NULL;
     BOOL    psReset = FALSE;
-    
+
     if ((NULL == fileName) ||
         (NULL == eeprom_storage))
     {
         LOG_FATAL("Unexpected NULL pointer.");
         return;
     }
-    
+
     /* If a EEPROM file exists, it will be loaded. */
     fd = fopen(fileName, "rb");
-    
+
     if (NULL != fd)
     {
         long    fileSize    = 0;
         BOOL    error       = FALSE;
-        
+
         /* EEPROM file size in bytes. It depends on the used format in ASCII. */
         const long  calcFileSize    = ((eeprom_size / EEPROM_STORAGE_MULTIPLE) * (3 * EEPROM_STORAGE_MULTIPLE + 7));
-                
+
         LOG_INFO("EEPROM file found.");
-        
+
         /* Determine file size */
         if (0 != fseek(fd, 0L, SEEK_END))
         {
@@ -182,7 +182,7 @@ extern void eeprom_load(char* fileName)
         else
         {
             fileSize = ftell(fd);
-            
+
             if (0 != fseek(fd, 0L, SEEK_SET))
             {
                 error = TRUE;
@@ -192,13 +192,13 @@ extern void eeprom_load(char* fileName)
                 fileSize -= ftell(fd);
             }
         }
-        
+
         /* File will be loaded if no error happened and file size is correct. */
         if ((FALSE == error) &&
             (calcFileSize == fileSize))
         {
             uint16_t    index   = 0;
-        
+
             for(index = 0; index < eeprom_size; ++index)
             {
                 uint32_t    tmp = 0;
@@ -249,7 +249,7 @@ extern void eeprom_load(char* fileName)
                     break;
                 }
             }
-        
+
             if (FALSE == psReset)
             {
                 LOG_INFO("EEPROM file loaded.");
@@ -260,14 +260,14 @@ extern void eeprom_load(char* fileName)
             LOG_WARNING("EEPROM file corrupt.");
             psReset = TRUE;
         }
-        
+
         fclose(fd);
     }
     else
     {
         psReset = TRUE;
     }
-    
+
     if (TRUE == psReset)
     {
         /* Reset EEPROM. */
@@ -292,7 +292,7 @@ extern void eeprom_save(char* fileName)
         LOG_FATAL("Unexpected NULL pointer.");
         return;
     }
-    
+
     /* Save only, if something has changed in the persistent memory. */
     if (FALSE != eeprom_dirty)
     {
@@ -334,7 +334,7 @@ extern void eeprom_save(char* fileName)
             fclose(fd);
         }
     }
-    
+
     return;
 }
 
@@ -347,7 +347,7 @@ extern void eeprom_save(char* fileName)
 extern uint8_t  eeprom_read8(uint16_t addr)
 {
     uint8_t data    = 0;
-    
+
     if (eeprom_size > addr)
     {
         data = eeprom_storage[addr];
@@ -355,11 +355,11 @@ extern uint8_t  eeprom_read8(uint16_t addr)
     else
     {
         char    logBuffer[255];
-        
+
         snprintf(logBuffer, 255, "Address is out of bounce: %u", addr);
         LOG_ERROR(logBuffer);
     }
-    
+
     return data;
 }
 
@@ -380,11 +380,11 @@ extern void eeprom_write8(uint16_t addr, uint8_t value)
     else
     {
         char    logBuffer[255];
-        
+
         snprintf(logBuffer, 255, "Address is out of bounce: %u", addr);
         LOG_ERROR(logBuffer);
     }
-    
+
     return;
 }
 
@@ -400,7 +400,7 @@ extern uint8_t* eeprom_getBase(uint16_t* size)
     {
         *size = eeprom_size;
     }
-    
+
     return eeprom_storage;
 }
 
@@ -436,10 +436,10 @@ extern void eeprom_dump(void)
             }
         }
     }
-    
+
     return;
 }
 
 /*******************************************************************************
-	LOCAL FUNCTIONS
+    LOCAL FUNCTIONS
 *******************************************************************************/

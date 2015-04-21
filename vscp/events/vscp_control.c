@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +21,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
@@ -85,11 +85,11 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 
 /**
  * General control.
- * 
+ *
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendUndefinedEvent(void)
 {
@@ -104,14 +104,14 @@ extern BOOL vscp_control_sendUndefinedEvent(void)
 
 /**
  * Mute/Un-mute all sound generating nodes in a zone
- * 
+ *
  * @param[in] mute If equal to zero no mute else mute.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendMuteOnOffEvent(uint8_t mute, uint8_t zone, uint8_t subZone)
 {
@@ -129,14 +129,14 @@ extern BOOL vscp_control_sendMuteOnOffEvent(uint8_t mute, uint8_t zone, uint8_t 
 
 /**
  * Turn on/off lamps on nodes in zone.
- * 
+ *
  * @param[in] on If equal to zero off else on.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendLampOnOffEvent(uint8_t on, uint8_t zone, uint8_t subZone)
 {
@@ -154,14 +154,14 @@ extern BOOL vscp_control_sendLampOnOffEvent(uint8_t on, uint8_t zone, uint8_t su
 
 /**
  * Perform open on all nodes in zone.
- * 
+ *
  * @param[in] userData Optional byte that have a meaning given by the issuer of the event.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendOpenEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -179,14 +179,14 @@ extern BOOL vscp_control_sendOpenEvent(uint8_t userData, uint8_t zone, uint8_t s
 
 /**
  * Perform close on all nodes in zone.
- * 
+ *
  * @param[in] userData Optional byte that have a meaning given by the issuer of the event.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendCloseEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -204,14 +204,14 @@ extern BOOL vscp_control_sendCloseEvent(uint8_t userData, uint8_t zone, uint8_t 
 
 /**
  * Turn On a nodes in a zone/subzone.
- * 
+ *
  * @param[in] userData Optional byte that have a meaning given by the issuer of the event.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendTurnOnEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -229,14 +229,14 @@ extern BOOL vscp_control_sendTurnOnEvent(uint8_t userData, uint8_t zone, uint8_t
 
 /**
  * Turn Off a nodes in a zone/subzone.
- * 
+ *
  * @param[in] userData Optional byte that have a meaning given by the issuer of the event.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendTurnOffEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -254,14 +254,14 @@ extern BOOL vscp_control_sendTurnOffEvent(uint8_t userData, uint8_t zone, uint8_
 
 /**
  * Start all nodes in a zone.
- * 
+ *
  * @param[in] userData Optional byte that have a meaning given by the issuer of the event.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendStartEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -279,14 +279,14 @@ extern BOOL vscp_control_sendStartEvent(uint8_t userData, uint8_t zone, uint8_t 
 
 /**
  * Stop all nodes in zone.
- * 
+ *
  * @param[in] userData Optional byte that have a meaning given by the issuer of the event.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendStopEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -304,14 +304,14 @@ extern BOOL vscp_control_sendStopEvent(uint8_t userData, uint8_t zone, uint8_t s
 
 /**
  * Perform Reset on all nodes in zone.
- * 
+ *
  * @param[in] userData Optional byte that have a meaning given by the issuer of the event.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendResetEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -329,14 +329,14 @@ extern BOOL vscp_control_sendResetEvent(uint8_t userData, uint8_t zone, uint8_t 
 
 /**
  * Perform Interrupt on all nodes in zone.
- * 
+ *
  * @param[in] level Interrupt level. (0 – 255 , zero is lowest interrupt level. ).
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendInterruptEvent(uint8_t level, uint8_t zone, uint8_t subZone)
 {
@@ -354,14 +354,14 @@ extern BOOL vscp_control_sendInterruptEvent(uint8_t level, uint8_t zone, uint8_t
 
 /**
  * Perform Sleep on all nodes in zone.
- * 
+ *
  * @param[in] userData Optional byte that have a meaning given by the issuer of the event.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendSleepEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -379,14 +379,14 @@ extern BOOL vscp_control_sendSleepEvent(uint8_t userData, uint8_t zone, uint8_t 
 
 /**
  * Wakeup all nodes in zone.
- * 
+ *
  * @param[in] userData Optional byte that have a meaning given by the issuer of the event.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendWakeupEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -404,14 +404,14 @@ extern BOOL vscp_control_sendWakeupEvent(uint8_t userData, uint8_t zone, uint8_t
 
 /**
  * Resume all nodes in zone.
- * 
+ *
  * @param[in] userData Optional byte that have a meaning given by the issuer of the event.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendResumeEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -429,14 +429,14 @@ extern BOOL vscp_control_sendResumeEvent(uint8_t userData, uint8_t zone, uint8_t
 
 /**
  * Pause all nodes in zone.
- * 
+ *
  * @param[in] userData Optional byte that have a meaning given by the issuer of the event.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendPauseEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -454,14 +454,14 @@ extern BOOL vscp_control_sendPauseEvent(uint8_t userData, uint8_t zone, uint8_t 
 
 /**
  * Activate all nodes in zone.
- * 
+ *
  * @param[in] userData Optional byte that have a meaning given by the issuer of the event.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendActivateEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -479,14 +479,14 @@ extern BOOL vscp_control_sendActivateEvent(uint8_t userData, uint8_t zone, uint8
 
 /**
  * Deactivate all nodes in zone.
- * 
+ *
  * @param[in] userData Optional byte that have a meaning given by the issuer of the event.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendDeactivateEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -504,7 +504,7 @@ extern BOOL vscp_control_sendDeactivateEvent(uint8_t userData, uint8_t zone, uin
 
 /**
  * Dim all dimmer devices on a segment to a specified dim value.
- * 
+ *
  * @param[in] value Value (0 – 100) . 0 = off, 100 = full on. 254 dim down one step. 255 dim up one
  * step.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
@@ -512,7 +512,7 @@ extern BOOL vscp_control_sendDeactivateEvent(uint8_t userData, uint8_t zone, uin
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendDimLampEvent(uint8_t value, uint8_t zone, uint8_t subZone)
 {
@@ -530,7 +530,7 @@ extern BOOL vscp_control_sendDimLampEvent(uint8_t value, uint8_t zone, uint8_t s
 
 /**
  * This is typical for changing TV channels or for changing AV amp input source etc.
- * 
+ *
  * @param[in] value A value between 0 and 127 indicates the channel number. A value between 128 to 157
  * is change down by the specified number of channels. A value between 160 to 191 is change up by the
  * specified number of channels. A value of 255 means that this is an extended change channel event
@@ -540,7 +540,7 @@ extern BOOL vscp_control_sendDimLampEvent(uint8_t value, uint8_t zone, uint8_t s
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendChangeChannelEvent(uint8_t value, uint8_t zone, uint8_t subZone)
 {
@@ -558,14 +558,14 @@ extern BOOL vscp_control_sendChangeChannelEvent(uint8_t value, uint8_t zone, uin
 
 /**
  * Change an absolute level.
- * 
+ *
  * @param[in] level Absolute level.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendChangeLevelEvent(uint8_t level, uint8_t zone, uint8_t subZone)
 {
@@ -582,15 +582,15 @@ extern BOOL vscp_control_sendChangeLevelEvent(uint8_t level, uint8_t zone, uint8
 }
 
 /**
- * 
- * 
+ *
+ *
  * @param[in] level Relative level.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendRelativeChangeLevelEvent(uint8_t level, uint8_t zone, uint8_t subZone)
 {
@@ -607,8 +607,8 @@ extern BOOL vscp_control_sendRelativeChangeLevelEvent(uint8_t level, uint8_t zon
 }
 
 /**
- * 
- * 
+ *
+ *
  * @param[in] index Zero indicates all measurements supported by node should be sent (as separate
  * events). Non-zero indicates a node specific index specifying which measurement to send.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
@@ -616,7 +616,7 @@ extern BOOL vscp_control_sendRelativeChangeLevelEvent(uint8_t level, uint8_t zon
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendMeasurementRequestEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
@@ -633,15 +633,15 @@ extern BOOL vscp_control_sendMeasurementRequestEvent(uint8_t index, uint8_t zone
 }
 
 /**
- * 
- * 
+ *
+ *
  * @param[in] sequenceNumber Sequence number which is increase by one for each stream data event sent.
  * @param[in] data Stream data.
  * @param[in] dataSize Size in bytes (1-7)
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendStreamDataEvent(uint8_t sequenceNumber, uint8_t const * const data, uint8_t dataSize)
 {
@@ -669,14 +669,14 @@ extern BOOL vscp_control_sendStreamDataEvent(uint8_t sequenceNumber, uint8_t con
 
 /**
  * Synchronize events on a segment.
- * 
+ *
  * @param[in] index Index for subunits within modules. 255 is all subunits.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendSynchronizeEvent(uint8_t index, uint8_t zone, uint8_t subZone)
 {
@@ -693,8 +693,8 @@ extern BOOL vscp_control_sendSynchronizeEvent(uint8_t index, uint8_t zone, uint8
 }
 
 /**
- * 
- * 
+ *
+ *
  * @param[in] sequenceNumber Sequence number which is increase by one for each stream data event sent.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
@@ -703,7 +703,7 @@ extern BOOL vscp_control_sendSynchronizeEvent(uint8_t index, uint8_t zone, uint8
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendStreamDataWithZoneEvent(uint8_t sequenceNumber, uint8_t zone, uint8_t subZone, uint8_t const * const data, uint8_t dataSize)
 {
@@ -734,18 +734,18 @@ extern BOOL vscp_control_sendStreamDataWithZoneEvent(uint8_t sequenceNumber, uin
 /**
  * Some nodes may have pre-set configurations to choose from. With this event a pre-set can be set for
  * a zone/sub-zone.
- * 
+ *
  * A node that receive and act on this event send CLASS1.INFORMATION,
- * 
+ *
  * Type=48 as a response event.
- * 
+ *
  * @param[in] code Code for pre-set to set.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendSetPresetEvent(uint8_t code, uint8_t zone, uint8_t subZone)
 {
@@ -763,17 +763,17 @@ extern BOOL vscp_control_sendSetPresetEvent(uint8_t code, uint8_t zone, uint8_t 
 
 /**
  * Toggle the state of a node.
- * 
+ *
  * Note: This may be a bad design option as it often demands that the state should be known for the
  * node on beforehand.
- * 
+ *
  * @param[in] userData Optional byte that have a meaning given by the issuer of the event.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendToggleStateEvent(uint8_t userData, uint8_t zone, uint8_t subZone)
 {
@@ -791,7 +791,7 @@ extern BOOL vscp_control_sendToggleStateEvent(uint8_t userData, uint8_t zone, ui
 
 /**
  * With this event it is possible to generate a timed pulse that is on for a specified time.
- * 
+ *
  * @param[in] userData Optional byte that have a meaning given by the issuer of the event.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
@@ -801,7 +801,7 @@ extern BOOL vscp_control_sendToggleStateEvent(uint8_t userData, uint8_t zone, ui
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendTimedPulseOnEvent(uint8_t userData, uint8_t zone, uint8_t subZone, uint8_t d, uint8_t const * const e, uint8_t eSize)
 {
@@ -832,7 +832,7 @@ extern BOOL vscp_control_sendTimedPulseOnEvent(uint8_t userData, uint8_t zone, u
 
 /**
  * With this event it is possible to generate a timed pulse that is off for a specified time.
- * 
+ *
  * @param[in] userData Optional byte that have a meaning given by the issuer of the event.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
@@ -842,7 +842,7 @@ extern BOOL vscp_control_sendTimedPulseOnEvent(uint8_t userData, uint8_t zone, u
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendTimedPulseOffEvent(uint8_t userData, uint8_t zone, uint8_t subZone, uint8_t control, uint8_t const * const time, uint8_t timeSize)
 {
@@ -873,7 +873,7 @@ extern BOOL vscp_control_sendTimedPulseOffEvent(uint8_t userData, uint8_t zone, 
 
 /**
  * Set country language.
- * 
+ *
  * @param[in] countryCode Country/Language code.
  * @param[in] customCodedSystem Custom coded system
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
@@ -883,7 +883,7 @@ extern BOOL vscp_control_sendTimedPulseOffEvent(uint8_t userData, uint8_t zone, 
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendSetCountryLanguageEvent(uint8_t countryCode, uint8_t customCodedSystem, uint8_t zone, uint8_t subZone, uint8_t const * const countryCodeSpecific, uint8_t countryCodeSpecificSize)
 {
@@ -915,7 +915,7 @@ extern BOOL vscp_control_sendSetCountryLanguageEvent(uint8_t countryCode, uint8_
 /**
  * Big Change level can be used in situations when the one byte level of CLASS1.CONTROL, Type=22 is
  * not enough.
- * 
+ *
  * @param[in] index Index
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
@@ -925,7 +925,7 @@ extern BOOL vscp_control_sendSetCountryLanguageEvent(uint8_t countryCode, uint8_
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
- * 
+ *
  */
 extern BOOL vscp_control_sendBigChangeLevelEvent(uint8_t index, uint8_t zone, uint8_t subZone, int8_t const * const level, uint8_t levelSize)
 {

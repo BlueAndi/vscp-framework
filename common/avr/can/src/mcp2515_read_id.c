@@ -29,89 +29,89 @@
 // ----------------------------------------------------------------------------
 
 #include "mcp2515_private.h"
-#ifdef	SUPPORT_FOR_MCP2515__
+#ifdef  SUPPORT_FOR_MCP2515__
 
 // ----------------------------------------------------------------------------
 // Liest eine ID aus dem Registern des MCP2515 (siehe auch mcp2515_write_id())
 
-#if	SUPPORT_EXTENDED_CANID
+#if SUPPORT_EXTENDED_CANID
 
 uint8_t mcp2515_read_id(uint32_t *id)
 {
-	uint8_t first;
-	uint8_t tmp;
-	
-	first = spi_putc(0xff);
-	tmp   = spi_putc(0xff);
-	
-	if (tmp & (1 << IDE)) {
-		spi_start(0xff);
-		
-		*((uint16_t *) id + 1)  = (uint16_t) first << 5;
-		*((uint8_t *)  id + 1)  = spi_wait();
-		spi_start(0xff);
-		
-		*((uint8_t *)  id + 2) |= (tmp >> 3) & 0x1C;
-		*((uint8_t *)  id + 2) |=  tmp & 0x03;
-		
-		*((uint8_t *)  id)      = spi_wait();
-		
-		return TRUE;
-	}
-	else {
-		spi_start(0xff);
-		
-		*((uint8_t *)  id + 3) = 0;
-		*((uint8_t *)  id + 2) = 0;
-		
-		*((uint16_t *) id) = (uint16_t) first << 3;
-		
-		spi_wait();
-		spi_start(0xff);
-		
-		*((uint8_t *) id) |= tmp >> 5;
-		
-		spi_wait();
-		
-		return FALSE;
-	}
+    uint8_t first;
+    uint8_t tmp;
+
+    first = spi_putc(0xff);
+    tmp   = spi_putc(0xff);
+
+    if (tmp & (1 << IDE)) {
+        spi_start(0xff);
+
+        *((uint16_t *) id + 1)  = (uint16_t) first << 5;
+        *((uint8_t *)  id + 1)  = spi_wait();
+        spi_start(0xff);
+
+        *((uint8_t *)  id + 2) |= (tmp >> 3) & 0x1C;
+        *((uint8_t *)  id + 2) |=  tmp & 0x03;
+
+        *((uint8_t *)  id)      = spi_wait();
+
+        return TRUE;
+    }
+    else {
+        spi_start(0xff);
+
+        *((uint8_t *)  id + 3) = 0;
+        *((uint8_t *)  id + 2) = 0;
+
+        *((uint16_t *) id) = (uint16_t) first << 3;
+
+        spi_wait();
+        spi_start(0xff);
+
+        *((uint8_t *) id) |= tmp >> 5;
+
+        spi_wait();
+
+        return FALSE;
+    }
 }
 
 #else
 
 uint8_t mcp2515_read_id(uint16_t *id)
 {
-	uint8_t first;
-	uint8_t tmp;
-	
-	first = spi_putc(0xff);
-	tmp   = spi_putc(0xff);
-	
-	if (tmp & (1 << IDE)) {
-		spi_putc(0xff);
-		spi_putc(0xff);
-		
-		return 1;			// extended-frame
-	}
-	else {
-		spi_start(0xff);
-		
-		*id = (uint16_t) first << 3;
-		
-		spi_wait();
-		spi_start(0xff);
-		
-		*((uint8_t *) id) |= tmp >> 5;
-		
-		spi_wait();
-		
-		if (tmp & (1 << SRR))
-			return 2;		// RTR-frame
-		else
-			return 0;		// normal-frame
-	}
+    uint8_t first;
+    uint8_t tmp;
+
+    first = spi_putc(0xff);
+    tmp   = spi_putc(0xff);
+
+    if (tmp & (1 << IDE)) {
+        spi_putc(0xff);
+        spi_putc(0xff);
+
+        return 1;           // extended-frame
+    }
+    else {
+        spi_start(0xff);
+
+        *id = (uint16_t) first << 3;
+
+        spi_wait();
+        spi_start(0xff);
+
+        *((uint8_t *) id) |= tmp >> 5;
+
+        spi_wait();
+
+        if (tmp & (1 << SRR))
+            return 2;       // RTR-frame
+        else
+            return 0;       // normal-frame
+    }
 }
 
-#endif	// SUPPORT_EXTENDED_CANID
+#endif  // SUPPORT_EXTENDED_CANID
 
-#endif	// SUPPORT_FOR_MCP2515__
+#endif  // SUPPORT_FOR_MCP2515__

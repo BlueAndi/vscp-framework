@@ -29,7 +29,7 @@
 // ----------------------------------------------------------------------------
 
 #include "mcp2515_private.h"
-#ifdef	SUPPORT_FOR_MCP2515__
+#ifdef  SUPPORT_FOR_MCP2515__
 
 #include <util/delay.h>
 
@@ -38,103 +38,103 @@
 
 bool mcp2515_set_filter(uint8_t number, const can_filter_t *filter)
 {
-	uint8_t mask_address = 0;
-	uint8_t mode = mcp2515_read_register(CANSTAT);
-	
-	if (number > 5)
-		return false;
-	
-	// change to configuration mode
-	mcp2515_change_operation_mode( (1<<REQOP2) );
-	
-	// set filter mask
-	if (number == 0)
-	{
-		mask_address = RXM0SIDH;
-		
-		#if SUPPORT_EXTENDED_CANID
-			if (filter->flags.extended == 0x3) {
-				// only extended identifier
-				mcp2515_write_register(RXB0CTRL, (1<<RXM1));
-			}
-			else if (filter->flags.extended == 0x2) {
-				// only standard identifier
-				mcp2515_write_register(RXB0CTRL, (1<<RXM0));
-			}
-			else {
-				// receive all messages
-				mcp2515_write_register(RXB0CTRL, 0);
-			}
-		#else
-			// Buffer 0: Empfangen aller Nachrichten mit Standard Identifier 
-			// die den Filter Kriterien gengen
-			mcp2515_write_register(RXB0CTRL, (1<<RXM0));
-		#endif
-	}
-	else if (number == 2)
-	{
-		mask_address = RXM1SIDH;
-		
-		#if SUPPORT_EXTENDED_CANID
-			if (filter->flags.extended == 0x3) {
-				// only extended identifier
-				mcp2515_write_register(RXB1CTRL, (1<<RXM1));
-			}
-			else if (filter->flags.extended == 0x2) {
-				// only standard identifier
-				mcp2515_write_register(RXB1CTRL, (1<<RXM0));
-			}
-			else {
-				mcp2515_write_register(RXB1CTRL, 0);
-			}
-		#else
-			// Buffer 1: Empfangen aller Nachrichten mit Standard Identifier 
-			// die den Filter Kriterien gengen
-			mcp2515_write_register(RXB1CTRL, (1<<RXM0));
-		#endif
-	}
-	
-	if (mask_address)
-	{
-		RESET(MCP2515_CS);
-		spi_putc(SPI_WRITE);
-		spi_putc(mask_address);
-		#if SUPPORT_EXTENDED_CANID
-			mcp2515_write_id(&filter->mask, (filter->flags.extended == 0x2) ? 0 : 1);
-		#else
-			mcp2515_write_id(&filter->mask);
-		#endif
-		SET(MCP2515_CS);
-		
-		_delay_us(1);
-	}
-	
-	// write filter
-	uint8_t filter_address;
-	if (number >= 3) {
-		number -= 3;
-		filter_address = RXF3SIDH;
-	}
-	else {
-		filter_address = RXF0SIDH;
-	}
-	
-	RESET(MCP2515_CS);
-	spi_putc(SPI_WRITE);
-	spi_putc(filter_address | (number * 4));
-	#if SUPPORT_EXTENDED_CANID
-		mcp2515_write_id(&filter->id, (filter->flags.extended == 0x2) ? 0 : 1);
-	#else
-		mcp2515_write_id(&filter->id);
-	#endif
-	SET(MCP2515_CS);
-	
-	_delay_us(1);
-	
-	// restore previous mode
-	mcp2515_change_operation_mode( mode );
-	
-	return true;
+    uint8_t mask_address = 0;
+    uint8_t mode = mcp2515_read_register(CANSTAT);
+
+    if (number > 5)
+        return false;
+
+    // change to configuration mode
+    mcp2515_change_operation_mode( (1<<REQOP2) );
+
+    // set filter mask
+    if (number == 0)
+    {
+        mask_address = RXM0SIDH;
+
+        #if SUPPORT_EXTENDED_CANID
+            if (filter->flags.extended == 0x3) {
+                // only extended identifier
+                mcp2515_write_register(RXB0CTRL, (1<<RXM1));
+            }
+            else if (filter->flags.extended == 0x2) {
+                // only standard identifier
+                mcp2515_write_register(RXB0CTRL, (1<<RXM0));
+            }
+            else {
+                // receive all messages
+                mcp2515_write_register(RXB0CTRL, 0);
+            }
+        #else
+            // Buffer 0: Empfangen aller Nachrichten mit Standard Identifier
+            // die den Filter Kriterien gengen
+            mcp2515_write_register(RXB0CTRL, (1<<RXM0));
+        #endif
+    }
+    else if (number == 2)
+    {
+        mask_address = RXM1SIDH;
+
+        #if SUPPORT_EXTENDED_CANID
+            if (filter->flags.extended == 0x3) {
+                // only extended identifier
+                mcp2515_write_register(RXB1CTRL, (1<<RXM1));
+            }
+            else if (filter->flags.extended == 0x2) {
+                // only standard identifier
+                mcp2515_write_register(RXB1CTRL, (1<<RXM0));
+            }
+            else {
+                mcp2515_write_register(RXB1CTRL, 0);
+            }
+        #else
+            // Buffer 1: Empfangen aller Nachrichten mit Standard Identifier
+            // die den Filter Kriterien gengen
+            mcp2515_write_register(RXB1CTRL, (1<<RXM0));
+        #endif
+    }
+
+    if (mask_address)
+    {
+        RESET(MCP2515_CS);
+        spi_putc(SPI_WRITE);
+        spi_putc(mask_address);
+        #if SUPPORT_EXTENDED_CANID
+            mcp2515_write_id(&filter->mask, (filter->flags.extended == 0x2) ? 0 : 1);
+        #else
+            mcp2515_write_id(&filter->mask);
+        #endif
+        SET(MCP2515_CS);
+
+        _delay_us(1);
+    }
+
+    // write filter
+    uint8_t filter_address;
+    if (number >= 3) {
+        number -= 3;
+        filter_address = RXF3SIDH;
+    }
+    else {
+        filter_address = RXF0SIDH;
+    }
+
+    RESET(MCP2515_CS);
+    spi_putc(SPI_WRITE);
+    spi_putc(filter_address | (number * 4));
+    #if SUPPORT_EXTENDED_CANID
+        mcp2515_write_id(&filter->id, (filter->flags.extended == 0x2) ? 0 : 1);
+    #else
+        mcp2515_write_id(&filter->id);
+    #endif
+    SET(MCP2515_CS);
+
+    _delay_us(1);
+
+    // restore previous mode
+    mcp2515_change_operation_mode( mode );
+
+    return true;
 }
 
-#endif	// SUPPORT_FOR_MCP2515__
+#endif  // SUPPORT_FOR_MCP2515__

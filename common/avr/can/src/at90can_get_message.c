@@ -29,138 +29,138 @@
 // ----------------------------------------------------------------------------
 
 #include "at90can_private.h"
-#ifdef	SUPPORT_FOR_AT90CAN__
+#ifdef  SUPPORT_FOR_AT90CAN__
 
 void at90can_copy_mob_to_message(can_t *msg)
 {
-	// read status
-	uint8_t cancdmob = CANCDMOB;
-	
-	// read length
-	msg->length = cancdmob & 0x0f;
-	
-	#if SUPPORT_EXTENDED_CANID
-	
-	if (cancdmob & (1 << IDE))
-	{
-		// extended identifier
-		uint32_t tmp;
-		uint8_t *ptr = (uint8_t *) &tmp;
-		
-		*ptr       = CANIDT4;
-		*(ptr + 1) = CANIDT3;
-		*(ptr + 2) = CANIDT2;
-		*(ptr + 3) = CANIDT1;
-		
-		msg->id = tmp >> 3;
-		
-		/* equivalent to:
-		msg->id  = (uint8_t)  CANIDT4 >> 3;
-		msg->id |= (uint32_t) CANIDT3 << 5;
-		msg->id |= (uint32_t) CANIDT2 << 13;
-		msg->id |= (uint32_t) CANIDT1 << 21;
-		*/
-		
-		msg->flags.extended = 1;
-	}
-	else
-	{
-		// standard identifier
-		uint16_t id;
-		
-		id  = (uint8_t)  CANIDT2 >> 5;
-		id |= (uint16_t) CANIDT1 << 3;
-		
-		msg->id = (uint32_t) id;
-		msg->flags.extended = 0;
-	}
-	
-	#else
-	
-	if (cancdmob & (1 << IDE))
-	{
-		// mark message as processed
-		ENTER_CRITICAL_SECTION;
-		_messages_waiting--;
-		LEAVE_CRITICAL_SECTION;
-		
-		// clear flags
-		CANCDMOB = (1 << CONMOB1);
-		
-		return 0;
-	}
-	else
-	{
-		// standard identifier
-		msg->id  = (uint8_t)  CANIDT2 >> 5;
-		msg->id |= (uint16_t) CANIDT1 << 3;
-	}
-	
-	#endif
-	
-	if (CANIDT4 & (1 << RTRTAG)) {
-		msg->flags.rtr = 1;
-	}
-	else {
-		msg->flags.rtr = 0;
-		
-		// read data
-		uint8_t *p = msg->data;
-		for (uint8_t i = 0;i < msg->length;i++) {
-			*p++ = CANMSG;
-		}
-	}
-	
-	#if SUPPORT_TIMESTAMPS
-	msg->timestamp = CANSTM;
-	#endif
+    // read status
+    uint8_t cancdmob = CANCDMOB;
+
+    // read length
+    msg->length = cancdmob & 0x0f;
+
+    #if SUPPORT_EXTENDED_CANID
+
+    if (cancdmob & (1 << IDE))
+    {
+        // extended identifier
+        uint32_t tmp;
+        uint8_t *ptr = (uint8_t *) &tmp;
+
+        *ptr       = CANIDT4;
+        *(ptr + 1) = CANIDT3;
+        *(ptr + 2) = CANIDT2;
+        *(ptr + 3) = CANIDT1;
+
+        msg->id = tmp >> 3;
+
+        /* equivalent to:
+        msg->id  = (uint8_t)  CANIDT4 >> 3;
+        msg->id |= (uint32_t) CANIDT3 << 5;
+        msg->id |= (uint32_t) CANIDT2 << 13;
+        msg->id |= (uint32_t) CANIDT1 << 21;
+        */
+
+        msg->flags.extended = 1;
+    }
+    else
+    {
+        // standard identifier
+        uint16_t id;
+
+        id  = (uint8_t)  CANIDT2 >> 5;
+        id |= (uint16_t) CANIDT1 << 3;
+
+        msg->id = (uint32_t) id;
+        msg->flags.extended = 0;
+    }
+
+    #else
+
+    if (cancdmob & (1 << IDE))
+    {
+        // mark message as processed
+        ENTER_CRITICAL_SECTION;
+        _messages_waiting--;
+        LEAVE_CRITICAL_SECTION;
+
+        // clear flags
+        CANCDMOB = (1 << CONMOB1);
+
+        return 0;
+    }
+    else
+    {
+        // standard identifier
+        msg->id  = (uint8_t)  CANIDT2 >> 5;
+        msg->id |= (uint16_t) CANIDT1 << 3;
+    }
+
+    #endif
+
+    if (CANIDT4 & (1 << RTRTAG)) {
+        msg->flags.rtr = 1;
+    }
+    else {
+        msg->flags.rtr = 0;
+
+        // read data
+        uint8_t *p = msg->data;
+        for (uint8_t i = 0;i < msg->length;i++) {
+            *p++ = CANMSG;
+        }
+    }
+
+    #if SUPPORT_TIMESTAMPS
+    msg->timestamp = CANSTM;
+    #endif
 }
 
 // ----------------------------------------------------------------------------
 
 uint8_t at90can_get_message(can_t *msg)
 {
-	bool found = false;
-	uint8_t mob;
-	
-	// check if there is any waiting message
-	if (!at90can_check_message())
-		return 0;
-	
-	// find the MOb with the received message
-	for (mob = 0; mob < 15; mob++)
-	{
-		CANPAGE = mob << 4;
-		
-		if (CANSTMOB & (1<<RXOK))
-		{
-			found = true;
-			
-			// clear flags
-			CANSTMOB &= 0;
-			break;
-		}
-	}
-	
-	if (!found)
-		return 0;		// should never happen
+    bool found = false;
+    uint8_t mob;
 
-	at90can_copy_mob_to_message( msg );
-	
-	#if CAN_RX_BUFFER_SIZE == 0
-	// mark message as processed
-	ENTER_CRITICAL_SECTION;
-	_messages_waiting--;
-	LEAVE_CRITICAL_SECTION;
-	#endif
-	
-	// re-enable interrupts
-	_enable_mob_interrupt( mob );
-	
-	// clear flags
-	CANCDMOB = (1 << CONMOB1) | (CANCDMOB & (1 << IDE));
-	
-	return (mob + 1);
+    // check if there is any waiting message
+    if (!at90can_check_message())
+        return 0;
+
+    // find the MOb with the received message
+    for (mob = 0; mob < 15; mob++)
+    {
+        CANPAGE = mob << 4;
+
+        if (CANSTMOB & (1<<RXOK))
+        {
+            found = true;
+
+            // clear flags
+            CANSTMOB &= 0;
+            break;
+        }
+    }
+
+    if (!found)
+        return 0;       // should never happen
+
+    at90can_copy_mob_to_message( msg );
+
+    #if CAN_RX_BUFFER_SIZE == 0
+    // mark message as processed
+    ENTER_CRITICAL_SECTION;
+    _messages_waiting--;
+    LEAVE_CRITICAL_SECTION;
+    #endif
+
+    // re-enable interrupts
+    _enable_mob_interrupt( mob );
+
+    // clear flags
+    CANCDMOB = (1 << CONMOB1) | (CANCDMOB & (1 << IDE));
+
+    return (mob + 1);
 }
 
-#endif	// SUPPORT_FOR_AT90CAN__
+#endif  // SUPPORT_FOR_AT90CAN__

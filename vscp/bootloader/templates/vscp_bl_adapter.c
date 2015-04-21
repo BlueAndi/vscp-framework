@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +21,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
@@ -83,7 +83,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
  */
 extern void vscp_bl_adapter_init(void)
 {
-	/* Implement your code here ... */
+    /* Implement your code here ... */
 
     return;
 }
@@ -98,7 +98,7 @@ extern uint8_t  vscp_bl_adapter_readNicknameId(void)
     uint8_t nicknameId  = VSCP_NICKNAME_NOT_INIT;
 
     /* Implement your code here ... */
-    
+
     return nicknameId;
 }
 
@@ -107,7 +107,7 @@ extern uint8_t  vscp_bl_adapter_readNicknameId(void)
  */
 extern void vscp_bl_adapter_jumpToApp(void)
 {
-	/* Implement your code here ... */
+    /* Implement your code here ... */
 
     return;
 }
@@ -115,13 +115,13 @@ extern void vscp_bl_adapter_jumpToApp(void)
 /**
  * This function enable or disable the initialization lamp.
  *
- * @param[in]   enableIt	Enable (true) or disable (false) lamp
+ * @param[in]   enableIt    Enable (true) or disable (false) lamp
  */
 extern void vscp_bl_adapter_enableLamp(BOOL enableIt)
 {
-	/* Implement your code here ... */
-	
-	return;
+    /* Implement your code here ... */
+
+    return;
 }
 
 /**
@@ -130,7 +130,7 @@ extern void vscp_bl_adapter_enableLamp(BOOL enableIt)
  */
 extern void vscp_bl_adapter_halt(void)
 {
-	/* Implement your code here ... */
+    /* Implement your code here ... */
 
     return;
 }
@@ -140,7 +140,7 @@ extern void vscp_bl_adapter_halt(void)
  */
 extern void vscp_bl_adapter_reboot(void)
 {
-	/* Implement your code here ... */
+    /* Implement your code here ... */
 
     return;
 }
@@ -149,13 +149,13 @@ extern void vscp_bl_adapter_reboot(void)
  * This function returns the state of the segment initialization button.
  *
  * @return State
- * @retval FALSE	Released
- * @retval TRUE		Pressed
+ * @retval FALSE    Released
+ * @retval TRUE     Pressed
  */
 extern BOOL vscp_bl_adapter_getSegInitButtonState(void)
 {
-	BOOL	state	= FALSE;
-	
+    BOOL    state   = FALSE;
+
     return state;
 }
 
@@ -166,9 +166,9 @@ extern BOOL vscp_bl_adapter_getSegInitButtonState(void)
  */
 extern uint8_t vscp_bl_adapter_readBootFlag(void)
 {
-	uint8_t	bootFlag	= VSCP_BOOT_FLAG_NO_APPLICATION;
+    uint8_t bootFlag    = VSCP_BOOT_FLAG_NO_APPLICATION;
 
-	/* Implement your code here ... */
+    /* Implement your code here ... */
 
     return bootFlag;
 }
@@ -176,11 +176,11 @@ extern uint8_t vscp_bl_adapter_readBootFlag(void)
 /**
  * This function writes the boot flag to persistent memory.
  *
- * @param[in]	bootFlag	Boot flag
+ * @param[in]   bootFlag    Boot flag
  */
 extern void vscp_bl_adapter_writeBootFlag(uint8_t bootFlag)
 {
-	/* Implement your code here ... */
+    /* Implement your code here ... */
 
     return;
 }
@@ -195,8 +195,8 @@ extern void vscp_bl_adapter_writeBootFlag(uint8_t bootFlag)
 extern uint8_t  vscp_bl_adapter_readGUID(uint8_t index)
 {
     uint8_t data    = 0;
-	
-	/* Implement your code here ... */
+
+    /* Implement your code here ... */
 
     return data;
 }
@@ -204,29 +204,29 @@ extern uint8_t  vscp_bl_adapter_readGUID(uint8_t index)
 /**
  * This function writes a complete page to the flash memory.
  *
- * @param[in]	page    Page which shall be written
- * @param[in]	buffer	Pointer to the buffer with the data
+ * @param[in]   page    Page which shall be written
+ * @param[in]   buffer  Pointer to the buffer with the data
  */
 extern void vscp_bl_adapter_programPage(uint16_t page, uint8_t *buffer)
 {
-	/* Implement your code here ... */
-	
+    /* Implement your code here ... */
+
     return;
 }
 
 /**
  * This function read a byte from program memory.
  *
- * @param[in] address	Program memory address
+ * @param[in] address   Program memory address
  * @return Value
  */
-extern uint8_t	vscp_bl_adapter_readProgMem(uint16_t address)
+extern uint8_t  vscp_bl_adapter_readProgMem(uint16_t address)
 {
-	uint8_t	value = 0;
-	
-	/* Implement your code here ... */
-	
-	return value;
+    uint8_t value = 0;
+
+    /* Implement your code here ... */
+
+    return value;
 }
 
 /*******************************************************************************

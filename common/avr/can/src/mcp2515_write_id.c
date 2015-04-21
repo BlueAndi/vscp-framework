@@ -29,7 +29,7 @@
 // ----------------------------------------------------------------------------
 
 #include "mcp2515_private.h"
-#ifdef	SUPPORT_FOR_MCP2515__
+#ifdef  SUPPORT_FOR_MCP2515__
 
 // ----------------------------------------------------------------------------
 #ifdef USE_SOFTWARE_SPI
@@ -37,25 +37,25 @@
 static uint8_t usi_interface_spi_temp;
 
 static void spi_start(uint8_t data) {
-	usi_interface_spi_temp = spi_putc(data);
+    usi_interface_spi_temp = spi_putc(data);
 }
 
 static uint8_t spi_wait(void) {
-	return usi_interface_spi_temp;
+    return usi_interface_spi_temp;
 }
 
 #else
 
 static void spi_start(uint8_t data) {
-	SPDR = data;
+    SPDR = data;
 }
 
 static uint8_t spi_wait(void) {
-	// warten bis der vorherige Werte geschrieben wurde
-	while(!(SPSR & (1<<SPIF)))
-		;
-	
-	return SPDR;
+    // warten bis der vorherige Werte geschrieben wurde
+    while(!(SPSR & (1<<SPIF)))
+        ;
+
+    return SPDR;
 }
 
 #endif
@@ -68,77 +68,77 @@ static uint8_t spi_wait(void) {
  * Register des MCP2515.
  *
  * ACHTUNG: die Funktion wurde "optimiert", damit nicht ständig unnötige
- * 			32-Bit Operationen verwendet werden :)
+ *          32-Bit Operationen verwendet werden :)
  *
  * Funktionell aequivalent zu:
  *
- *	static void mcp2515_write_id(uint32_t *id, uint8_t extended)
- *	{
- *		if (extended) {
- *			spi_putc(*id >> 21);
- *			spi_putc(((*id >> 13) & 0xe0) | (1<<IDE) | ((*id >> 16) & 0x3));
- *			spi_putc(*id >> 8);
- *			spi_putc(*id);
- *		}
- *		else {
- *			spi_putc(*id >> 3);
- *			spi_putc(*id << 5);
- *			spi_putc(0);
- *			spi_putc(0);
- *		}
- *	}
+ *  static void mcp2515_write_id(uint32_t *id, uint8_t extended)
+ *  {
+ *      if (extended) {
+ *          spi_putc(*id >> 21);
+ *          spi_putc(((*id >> 13) & 0xe0) | (1<<IDE) | ((*id >> 16) & 0x3));
+ *          spi_putc(*id >> 8);
+ *          spi_putc(*id);
+ *      }
+ *      else {
+ *          spi_putc(*id >> 3);
+ *          spi_putc(*id << 5);
+ *          spi_putc(0);
+ *          spi_putc(0);
+ *      }
+ *  }
  */
 
 #if SUPPORT_EXTENDED_CANID
 
 void mcp2515_write_id(const uint32_t *id, uint8_t extended)
 {
-	uint8_t tmp;
-	
-	if (extended) {
-		spi_start(*((uint16_t *) id + 1) >> 5);
-		
-		// naechsten Werte berechnen
-		tmp  = (*((uint8_t *) id + 2) << 3) & 0xe0;
-		tmp |= (1 << IDE);
-		tmp |= (*((uint8_t *) id + 2)) & 0x03;
-		
-		// warten bis der vorherige Werte geschrieben wurde
-		spi_wait();
-		
-		// restliche Werte schreiben
-		spi_putc(tmp);
-		spi_putc(*((uint8_t *) id + 1));
-		spi_putc(*((uint8_t *) id));
-	}
-	else {
-		spi_start(*((uint16_t *) id) >> 3);
-		
-		// naechsten Werte berechnen
-		tmp = *((uint8_t *) id) << 5;
-		spi_wait();
-		
-		spi_putc(tmp);
-		spi_putc(0);
-		spi_putc(0);
-	}
+    uint8_t tmp;
+
+    if (extended) {
+        spi_start(*((uint16_t *) id + 1) >> 5);
+
+        // naechsten Werte berechnen
+        tmp  = (*((uint8_t *) id + 2) << 3) & 0xe0;
+        tmp |= (1 << IDE);
+        tmp |= (*((uint8_t *) id + 2)) & 0x03;
+
+        // warten bis der vorherige Werte geschrieben wurde
+        spi_wait();
+
+        // restliche Werte schreiben
+        spi_putc(tmp);
+        spi_putc(*((uint8_t *) id + 1));
+        spi_putc(*((uint8_t *) id));
+    }
+    else {
+        spi_start(*((uint16_t *) id) >> 3);
+
+        // naechsten Werte berechnen
+        tmp = *((uint8_t *) id) << 5;
+        spi_wait();
+
+        spi_putc(tmp);
+        spi_putc(0);
+        spi_putc(0);
+    }
 }
 
 #else
 
 void mcp2515_write_id(const uint16_t *id)
 {
-	uint8_t tmp;
-	
-	spi_start(*id >> 3);
-	tmp = *((uint8_t *) id) << 5;
-	spi_wait();
-	
-	spi_putc(tmp);
-	spi_putc(0);
-	spi_putc(0);
+    uint8_t tmp;
+
+    spi_start(*id >> 3);
+    tmp = *((uint8_t *) id) << 5;
+    spi_wait();
+
+    spi_putc(tmp);
+    spi_putc(0);
+    spi_putc(0);
 }
 
-#endif	// USE_EXTENDED_CANID
+#endif  // USE_EXTENDED_CANID
 
-#endif	// SUPPORT_FOR_MCP2515__
+#endif  // SUPPORT_FOR_MCP2515__

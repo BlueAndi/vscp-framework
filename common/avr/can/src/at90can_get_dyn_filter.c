@@ -29,108 +29,108 @@
 // ----------------------------------------------------------------------------
 
 #include "at90can_private.h"
-#ifdef	SUPPORT_FOR_AT90CAN__
+#ifdef  SUPPORT_FOR_AT90CAN__
 
 // ----------------------------------------------------------------------------
 
 uint8_t at90can_get_filter(uint8_t number, can_filter_t *filter)
 {
-	if (number > 14) {
-		// it is only possible to serve a maximum of 15 filters
-		return 0;
-	}
-	
-	// load corresponding MOb page
-	CANPAGE = number << 4;
-	
-	if ((CANCDMOB & 0xc0) == 0) {
-		// MOb is currently not used.
-		return 2;
-	}
-	else if ((CANCDMOB & 0xc0) == (1 << CONMOB1))
-	{
-		// MOb is configured to receive message => read filter.
-		if (CANIDM4 & (1 << RTRMSK))
-		{
-			if (CANIDT4 & (1 << RTRMSK))
-			{
-				// receive only messages with RTR-bit set
-				filter->flags.rtr = 0x3;
-			}
-			else {
-				filter->flags.rtr = 0x2;
-			}
-		}
-		else {
-			// receive all message, independent from RTR-bit
-			filter->flags.rtr = 0;
-		}
-		
-		#if SUPPORT_EXTENDED_CANID
-		
-		if ((CANIDM4 & (1 << IDEMSK)) && (CANCDMOB & (1 << IDE)))
-		{
-			filter->flags.extended = 0x3;
-			
-			// extended id
-			uint32_t mask;
-			mask  = (uint8_t)  CANIDM4 >> 3;
-			mask |= (uint16_t) CANIDM3 << 5;
-			mask |= (uint32_t) CANIDM2 << 13;
-			mask |= (uint32_t) CANIDM1 << 21;
-			
-			filter->mask = mask;
-			
-			uint32_t id;
-			id  = (uint8_t)  CANIDT4 >> 3;
-			id |= (uint16_t) CANIDT3 << 5;
-			id |= (uint32_t) CANIDT2 << 13;
-			id |= (uint32_t) CANIDT1 << 21;
-			
-			// only the bits set in the mask are vaild for the id
-			filter->id = id & mask;
-		}
-		else {
-			if (CANIDM4 & (1 << IDEMSK)) {
-				filter->flags.extended = 0x2;
-			} else {
-				filter->flags.extended = 0;
-			}
-			
-			uint16_t mask;
-			mask  = (uint8_t)  CANIDM2 >> 5;
-			mask |= (uint16_t) CANIDM1 << 3;
-			
-			filter->mask = mask;
-			
-			uint16_t id;
-			id  = (uint8_t)  CANIDT2 >> 5;
-			id |= (uint16_t) CANIDT1 << 3;
-			
-			filter->id = id & mask;
-		}
-		
-		#else
-		
-		uint16_t mask;
-		mask  = (uint8_t)  CANIDM2 >> 5;
-		mask |= (uint16_t) CANIDM1 << 3;
-		
-		filter->mask = mask;
-		
-		uint16_t id;
-		id  = (uint8_t)  CANIDT2 >> 5;
-		id |= (uint16_t) CANIDT1 << 3;
-		
-		filter->id = id & mask;
-		
-		#endif
-		
-		return 1;
-	}
-	
-	// MOb is currently used to transmit a message.
-	return 0xff;
+    if (number > 14) {
+        // it is only possible to serve a maximum of 15 filters
+        return 0;
+    }
+
+    // load corresponding MOb page
+    CANPAGE = number << 4;
+
+    if ((CANCDMOB & 0xc0) == 0) {
+        // MOb is currently not used.
+        return 2;
+    }
+    else if ((CANCDMOB & 0xc0) == (1 << CONMOB1))
+    {
+        // MOb is configured to receive message => read filter.
+        if (CANIDM4 & (1 << RTRMSK))
+        {
+            if (CANIDT4 & (1 << RTRMSK))
+            {
+                // receive only messages with RTR-bit set
+                filter->flags.rtr = 0x3;
+            }
+            else {
+                filter->flags.rtr = 0x2;
+            }
+        }
+        else {
+            // receive all message, independent from RTR-bit
+            filter->flags.rtr = 0;
+        }
+
+        #if SUPPORT_EXTENDED_CANID
+
+        if ((CANIDM4 & (1 << IDEMSK)) && (CANCDMOB & (1 << IDE)))
+        {
+            filter->flags.extended = 0x3;
+
+            // extended id
+            uint32_t mask;
+            mask  = (uint8_t)  CANIDM4 >> 3;
+            mask |= (uint16_t) CANIDM3 << 5;
+            mask |= (uint32_t) CANIDM2 << 13;
+            mask |= (uint32_t) CANIDM1 << 21;
+
+            filter->mask = mask;
+
+            uint32_t id;
+            id  = (uint8_t)  CANIDT4 >> 3;
+            id |= (uint16_t) CANIDT3 << 5;
+            id |= (uint32_t) CANIDT2 << 13;
+            id |= (uint32_t) CANIDT1 << 21;
+
+            // only the bits set in the mask are vaild for the id
+            filter->id = id & mask;
+        }
+        else {
+            if (CANIDM4 & (1 << IDEMSK)) {
+                filter->flags.extended = 0x2;
+            } else {
+                filter->flags.extended = 0;
+            }
+
+            uint16_t mask;
+            mask  = (uint8_t)  CANIDM2 >> 5;
+            mask |= (uint16_t) CANIDM1 << 3;
+
+            filter->mask = mask;
+
+            uint16_t id;
+            id  = (uint8_t)  CANIDT2 >> 5;
+            id |= (uint16_t) CANIDT1 << 3;
+
+            filter->id = id & mask;
+        }
+
+        #else
+
+        uint16_t mask;
+        mask  = (uint8_t)  CANIDM2 >> 5;
+        mask |= (uint16_t) CANIDM1 << 3;
+
+        filter->mask = mask;
+
+        uint16_t id;
+        id  = (uint8_t)  CANIDT2 >> 5;
+        id |= (uint16_t) CANIDT1 << 3;
+
+        filter->id = id & mask;
+
+        #endif
+
+        return 1;
+    }
+
+    // MOb is currently used to transmit a message.
+    return 0xff;
 }
 
-#endif	// SUPPORT_FOR_AT90CAN__
+#endif  // SUPPORT_FOR_AT90CAN__

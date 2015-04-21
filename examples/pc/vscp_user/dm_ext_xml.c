@@ -120,7 +120,7 @@ typedef struct _dm_ext_xml_Element
     dm_ext_xml_Attribute const *    attributes;
     struct _dm_ext_xml_Element*     parent;
     struct _dm_ext_xml_Element*     children;
-    
+
 } dm_ext_xml_Element;
 
 /*******************************************************************************
@@ -488,7 +488,7 @@ static char* dm_ext_xml_loadFileToMem(char const * const fileName)
 static int dm_ext_xml_strcmpi(char const * str1, char const * str2)
 {
     int result = 0;
-    
+
     if ((NULL == str1) && (NULL != str2))
     {
         result = -1;
@@ -503,7 +503,7 @@ static int dm_ext_xml_strcmpi(char const * str1, char const * str2)
         {
             const char character1 = tolower(*str1);
             const char character2 = tolower(*str2);
-            
+
             if (character1 < character2)
             {
                 result = -1;
@@ -519,7 +519,7 @@ static int dm_ext_xml_strcmpi(char const * str1, char const * str2)
             }
         }
     }
-    
+
     return result;
 }
 
@@ -648,7 +648,7 @@ static DM_EXT_XML_RET dm_ext_xml_parse(dm_ext_xml_Context* const con, char const
 
     /* Use the extended decision matrix tree for parsing */
     con->children = dm_ext_xml_elemRoot;
-    
+
     if (XML_STATUS_ERROR == XML_Parse(con->xmlParser, xml, strlen(xml), 1))
     {
         /* Parser error */
@@ -686,7 +686,7 @@ static void XMLCALL dm_ext_xml_startElement(void *userData, const XML_Char *name
     {
         return;
     }
-       
+
     /* Find this element in the childrens. */
     elem = con->children;
     while((NULL != elem) && (NULL != elem->name))
@@ -696,10 +696,10 @@ static void XMLCALL dm_ext_xml_startElement(void *userData, const XML_Char *name
         {
             break;
         }
-    
+
         ++elem;
     }
-    
+
     /* Bottom of parse tree reached? */
     if (NULL == elem)
     {
@@ -719,7 +719,7 @@ static void XMLCALL dm_ext_xml_startElement(void *userData, const XML_Char *name
 #if (1 == DM_EXT_XML_ENABLE_DEBUG_INFO)
         LOG_DEBUG_STR("Element start:", elem->name);
 #endif  /* (1 == DM_EXT_XML_ENABLE_DEBUG_INFO) */
-        
+
         /* Get element information */
         if (NULL != elem->startCallback)
         {
@@ -729,16 +729,16 @@ static void XMLCALL dm_ext_xml_startElement(void *userData, const XML_Char *name
                 abort = TRUE;
             }
         }
-        
+
         /* Handle all attributes of the known element */
         if (NULL != elem->attributes)
         {
             dm_ext_xml_Attribute const *    attr    = elem->attributes;
-            
+
             while(NULL != attr->name)
             {
                 char const *    attrValue = dm_ext_xml_getAttribute(atts, attr->name);
-                
+
                 /* Attribute not found? */
                 if (NULL == attrValue)
                 {
@@ -767,22 +767,22 @@ static void XMLCALL dm_ext_xml_startElement(void *userData, const XML_Char *name
                         }
                     }
                 }
-            
+
                 /* Next attribute in the list */
                 ++attr;
             }
         }
-        
+
         /* Next time handle the children of this element.
          * Remember the current element (parent) in the first child!
          */
         elem->children->parent = con->children;
         con->children = elem->children;
-        
+
         /* One step down in the tree */
         ++con->depth;
     }
-    
+
     /* Abort parsing? */
     if (TRUE == abort)
     {
@@ -791,7 +791,7 @@ static void XMLCALL dm_ext_xml_startElement(void *userData, const XML_Char *name
         XML_SetElementHandler(con->xmlParser, NULL, NULL);
         XML_SetCharacterDataHandler(con->xmlParser, NULL);
     }
-    
+
     return;
 }
 
@@ -812,7 +812,7 @@ static void XMLCALL dm_ext_xml_endElement(void *userData, const XML_Char *name)
     {
         return;
     }
-    
+
     /* Go back to the parent element and clear the parent pointer */
     elem = con->children;
     con->children = con->children->parent;
@@ -827,10 +827,10 @@ static void XMLCALL dm_ext_xml_endElement(void *userData, const XML_Char *name)
         {
             break;
         }
-    
+
         ++elem;
     }
-    
+
     /* Bottom of parse tree reached? */
     if (NULL == elem)
     {
@@ -860,14 +860,14 @@ static void XMLCALL dm_ext_xml_endElement(void *userData, const XML_Char *name)
                 abort = TRUE;
             }
         }
-        
+
         /* One step up in the tree */
         if (0 > con->depth)
         {
             --con->depth;
         }
     }
-    
+
     /* Abort parsing? */
     if (TRUE == abort)
     {
@@ -876,7 +876,7 @@ static void XMLCALL dm_ext_xml_endElement(void *userData, const XML_Char *name)
         XML_SetElementHandler(con->xmlParser, NULL, NULL);
         XML_SetCharacterDataHandler(con->xmlParser, NULL);
     }
-    
+
     return;
 }
 
@@ -895,16 +895,16 @@ static DM_EXT_XML_RET dm_ext_xml_handleDmAttrVersion(dm_ext_xml_Context* const c
     DM_EXT_XML_VALIDATE_PTR(con);
     DM_EXT_XML_VALIDATE_PTR(name);
     DM_EXT_XML_VALIDATE_PTR(value);
-    
+
     /* Check the version */
     if (0 != dm_ext_xml_strcmpi(value, DM_EXT_XML_VERSION))
     {
         /* Wrong xml version */
         LOG_ERROR("Wrong standard decision matrix file format version.");
-        
+
         ret = DM_EXT_XML_RET_ERROR;
     }
-    
+
     return ret;
 }
 
@@ -923,16 +923,16 @@ static DM_EXT_XML_RET dm_ext_xml_handleDmAttrLevel(dm_ext_xml_Context* const con
     DM_EXT_XML_VALIDATE_PTR(con);
     DM_EXT_XML_VALIDATE_PTR(name);
     DM_EXT_XML_VALIDATE_PTR(value);
-    
+
     /* Check the level */
     if (0 != dm_ext_xml_strcmpi(value, DM_EXT_XML_LEVEL))
     {
         /* Wrong decision matrix level */
         LOG_ERROR("Wrong decision matrix level.");
-        
+
         ret = DM_EXT_XML_RET_ERROR;
     }
-    
+
     return ret;
 }
 
@@ -951,16 +951,16 @@ static DM_EXT_XML_RET dm_ext_xml_handleDmAttrType(dm_ext_xml_Context* const con,
     DM_EXT_XML_VALIDATE_PTR(con);
     DM_EXT_XML_VALIDATE_PTR(name);
     DM_EXT_XML_VALIDATE_PTR(value);
-    
+
     /* Check the type */
     if (0 != dm_ext_xml_strcmpi(value, "ext"))
     {
         /* Wrong decision matrix type */
         LOG_ERROR("Wrong decision matrix type.");
-        
+
         ret = DM_EXT_XML_RET_ERROR;
     }
-    
+
     return ret;
 }
 
@@ -992,10 +992,10 @@ static DM_EXT_XML_RET dm_ext_xml_handleRowAttrType(dm_ext_xml_Context* const con
     else
     {
         LOG_ERROR_INT32("Attribute type is invalid line", XML_GetCurrentLineNumber(con->xmlParser));
-        
+
         ret = DM_EXT_XML_RET_ERROR;
     }
-    
+
     return ret;
 }
 
@@ -1026,10 +1026,10 @@ static DM_EXT_XML_RET dm_ext_xml_handleRowAttrEnabled(dm_ext_xml_Context* const 
     else
     {
         LOG_ERROR_INT32("Attribute value invalid at line", XML_GetCurrentLineNumber(con->xmlParser));
-        
+
         ret = DM_EXT_XML_RET_ERROR;
     }
-    
+
     return ret;
 }
 
@@ -1044,7 +1044,7 @@ static DM_EXT_XML_RET dm_ext_xml_handleRowStart(dm_ext_xml_Context* const con)
     DM_EXT_XML_RET ret = DM_EXT_XML_RET_OK;
 
     DM_EXT_XML_VALIDATE_PTR(con);
-    
+
     /* Clear decision matrix row */
     memset(&con->dmStorage[con->index], 0, sizeof(vscp_dm_MatrixRow));
     memset(&con->extStorage[con->index], 0, sizeof(vscp_dm_ExtRow));
@@ -1063,7 +1063,7 @@ static DM_EXT_XML_RET dm_ext_xml_handleRowEnd(dm_ext_xml_Context* const con)
     DM_EXT_XML_RET ret = DM_EXT_XML_RET_OK;
 
     DM_EXT_XML_VALIDATE_PTR(con);
-    
+
     /* Avoid decision matrix storage overflow by writing more rows than reserved for the decision matrix. */
     if (con->maxRows > con->index)
     {
@@ -1072,10 +1072,10 @@ static DM_EXT_XML_RET dm_ext_xml_handleRowEnd(dm_ext_xml_Context* const con)
     else
     {
         LOG_ERROR("DM XML file contains more rows, than max. possible.");
-        
+
         ret = DM_EXT_XML_RET_ERROR;
     }
-    
+
     return ret;
 }
 
@@ -1106,10 +1106,10 @@ static DM_EXT_XML_RET dm_ext_xml_handleOAddrAttrEnabled(dm_ext_xml_Context* cons
     else
     {
         LOG_ERROR_INT32("Attribute value invalid at line", XML_GetCurrentLineNumber(con->xmlParser));
-        
+
         ret = DM_EXT_XML_RET_ERROR;
     }
-    
+
     return ret;
 }
 
@@ -1140,10 +1140,10 @@ static DM_EXT_XML_RET dm_ext_xml_handleHardcodedAttrEnabled(dm_ext_xml_Context* 
     else
     {
         LOG_ERROR_INT32("Attribute value invalid at line", XML_GetCurrentLineNumber(con->xmlParser));
-        
+
         ret = DM_EXT_XML_RET_ERROR;
     }
-    
+
     return ret;
 }
 
@@ -1178,10 +1178,10 @@ static DM_EXT_XML_RET dm_ext_xml_handleMaskAttrClass(dm_ext_xml_Context* const c
     else
     {
         LOG_ERROR_INT32("Attribute class out of range at line", XML_GetCurrentLineNumber(con->xmlParser));
-        
+
         ret = DM_EXT_XML_RET_ERROR;
     }
-    
+
     return ret;
 }
 
@@ -1201,7 +1201,7 @@ static DM_EXT_XML_RET dm_ext_xml_handleMaskAttrType(dm_ext_xml_Context* const co
     DM_EXT_XML_VALIDATE_PTR(con);
     DM_EXT_XML_VALIDATE_PTR(name);
     DM_EXT_XML_VALIDATE_PTR(value);
-    
+
     valueUL = dm_ext_xml_getDataValue(value);
 
     if (0xff >= valueUL)
@@ -1211,10 +1211,10 @@ static DM_EXT_XML_RET dm_ext_xml_handleMaskAttrType(dm_ext_xml_Context* const co
     else
     {
         LOG_ERROR_INT32("Attribute type out of range at line", XML_GetCurrentLineNumber(con->xmlParser));
-        
+
         ret = DM_EXT_XML_RET_ERROR;
     }
-    
+
     return ret;
 }
 
@@ -1249,10 +1249,10 @@ static DM_EXT_XML_RET dm_ext_xml_handleFilterAttrClass(dm_ext_xml_Context* const
     else
     {
         LOG_ERROR_INT32("Attribute class out of range at line", XML_GetCurrentLineNumber(con->xmlParser));
-        
+
         ret = DM_EXT_XML_RET_ERROR;
     }
-    
+
     return ret;
 }
 
@@ -1272,7 +1272,7 @@ static DM_EXT_XML_RET dm_ext_xml_handleFilterAttrType(dm_ext_xml_Context* const 
     DM_EXT_XML_VALIDATE_PTR(con);
     DM_EXT_XML_VALIDATE_PTR(name);
     DM_EXT_XML_VALIDATE_PTR(value);
-    
+
     valueUL = dm_ext_xml_getDataValue(value);
 
     if (0xff >= valueUL)
@@ -1282,10 +1282,10 @@ static DM_EXT_XML_RET dm_ext_xml_handleFilterAttrType(dm_ext_xml_Context* const 
     else
     {
         LOG_ERROR_INT32("Attribute type out of range at line", XML_GetCurrentLineNumber(con->xmlParser));
-        
+
         ret = DM_EXT_XML_RET_ERROR;
     }
-    
+
     return ret;
 }
 
@@ -1316,10 +1316,10 @@ static DM_EXT_XML_RET dm_ext_xml_handleZoneAttrEnabled(dm_ext_xml_Context* const
     else
     {
         LOG_ERROR_INT32("Attribute value invalid at line", XML_GetCurrentLineNumber(con->xmlParser));
-        
+
         ret = DM_EXT_XML_RET_ERROR;
     }
-    
+
     return ret;
 }
 
@@ -1350,10 +1350,10 @@ static DM_EXT_XML_RET dm_ext_xml_handleSubZoneAttrEnabled(dm_ext_xml_Context* co
     else
     {
         LOG_ERROR_INT32("Attribute value invalid at line", XML_GetCurrentLineNumber(con->xmlParser));
-        
+
         ret = DM_EXT_XML_RET_ERROR;
     }
-    
+
     return ret;
 }
 
@@ -1368,7 +1368,7 @@ static DM_EXT_XML_RET dm_ext_xml_handleOAddrEnd(dm_ext_xml_Context* const con)
     DM_EXT_XML_RET ret = DM_EXT_XML_RET_OK;
 
     DM_EXT_XML_VALIDATE_PTR(con);
-    
+
     if (NULL != con->buffer)
     {
         unsigned long valueUL = dm_ext_xml_getDataValue(con->buffer);
@@ -1380,17 +1380,17 @@ static DM_EXT_XML_RET dm_ext_xml_handleOAddrEnd(dm_ext_xml_Context* const con)
         else
         {
             LOG_ERROR_INT32("Invalid oaddr value. Can only be in the range 0 - 255. Line", XML_GetCurrentLineNumber(con->xmlParser));
-            
+
             ret = DM_EXT_XML_RET_ERROR;
         }
     }
     else
     {
         LOG_ERROR_INT32("Missing oaddr value. Line", XML_GetCurrentLineNumber(con->xmlParser));
-        
+
         ret = DM_EXT_XML_RET_ERROR;
     }
-    
+
     return ret;
 }
 
@@ -1405,7 +1405,7 @@ static DM_EXT_XML_RET dm_ext_xml_handleZoneEnd(dm_ext_xml_Context* const con)
     DM_EXT_XML_RET ret = DM_EXT_XML_RET_OK;
 
     DM_EXT_XML_VALIDATE_PTR(con);
-    
+
     if (NULL != con->buffer)
     {
         if (VSCP_DM_ACTION_EXTENDED_DM == con->dmStorage[con->index].action)
@@ -1419,7 +1419,7 @@ static DM_EXT_XML_RET dm_ext_xml_handleZoneEnd(dm_ext_xml_Context* const con)
             else
             {
                 LOG_ERROR_INT32("Invalid zone value. Can only be in the range 0 - 255. Line", XML_GetCurrentLineNumber(con->xmlParser));
-                
+
                 ret = DM_EXT_XML_RET_ERROR;
             }
         }
@@ -1427,10 +1427,10 @@ static DM_EXT_XML_RET dm_ext_xml_handleZoneEnd(dm_ext_xml_Context* const con)
     else
     {
         LOG_ERROR_INT32("Missing zone value. Line", XML_GetCurrentLineNumber(con->xmlParser));
-        
+
         ret = DM_EXT_XML_RET_ERROR;
     }
-    
+
     return ret;
 }
 
@@ -1445,7 +1445,7 @@ static DM_EXT_XML_RET dm_ext_xml_handleSubZoneEnd(dm_ext_xml_Context* const con)
     DM_EXT_XML_RET ret = DM_EXT_XML_RET_OK;
 
     DM_EXT_XML_VALIDATE_PTR(con);
-    
+
     if (NULL != con->buffer)
     {
         if (VSCP_DM_ACTION_EXTENDED_DM == con->dmStorage[con->index].action)
@@ -1459,7 +1459,7 @@ static DM_EXT_XML_RET dm_ext_xml_handleSubZoneEnd(dm_ext_xml_Context* const con)
             else
             {
                 LOG_ERROR_INT32("Invalid sub-zone value. Can only be in the range 0 - 255. Line", XML_GetCurrentLineNumber(con->xmlParser));
-                
+
                 ret = DM_EXT_XML_RET_ERROR;
             }
         }
@@ -1467,10 +1467,10 @@ static DM_EXT_XML_RET dm_ext_xml_handleSubZoneEnd(dm_ext_xml_Context* const con)
     else
     {
         LOG_ERROR_INT32("Missing sub-zone value. Line", XML_GetCurrentLineNumber(con->xmlParser));
-        
+
         ret = DM_EXT_XML_RET_ERROR;
     }
-    
+
     return ret;
 }
 
@@ -1485,7 +1485,7 @@ static DM_EXT_XML_RET dm_ext_xml_handleActionEnd(dm_ext_xml_Context* const con)
     DM_EXT_XML_RET ret = DM_EXT_XML_RET_OK;
 
     DM_EXT_XML_VALIDATE_PTR(con);
-    
+
     if (NULL != con->buffer)
     {
         unsigned long valueUL = dm_ext_xml_getDataValue(con->buffer);
@@ -1506,17 +1506,17 @@ static DM_EXT_XML_RET dm_ext_xml_handleActionEnd(dm_ext_xml_Context* const con)
         else
         {
             LOG_ERROR_INT32("Invalid action value. Can only be in the range 0 - 255. Line", XML_GetCurrentLineNumber(con->xmlParser));
-            
+
             ret = DM_EXT_XML_RET_ERROR;
         }
     }
     else
     {
         LOG_ERROR_INT32("Missing action value. Line", XML_GetCurrentLineNumber(con->xmlParser));
-        
+
         ret = DM_EXT_XML_RET_ERROR;
     }
-    
+
     return ret;
 }
 
@@ -1531,7 +1531,7 @@ static DM_EXT_XML_RET dm_ext_xml_handleParamEnd(dm_ext_xml_Context* const con)
     DM_EXT_XML_RET ret = DM_EXT_XML_RET_OK;
 
     DM_EXT_XML_VALIDATE_PTR(con);
-    
+
     if (NULL != con->buffer)
     {
         unsigned long valueUL = dm_ext_xml_getDataValue(con->buffer);
@@ -1552,17 +1552,17 @@ static DM_EXT_XML_RET dm_ext_xml_handleParamEnd(dm_ext_xml_Context* const con)
         else
         {
             LOG_ERROR_INT32("Invalid param value. Can only be in the range 0 - 255. Line", XML_GetCurrentLineNumber(con->xmlParser));
-            
+
             ret = DM_EXT_XML_RET_ERROR;
         }
     }
     else
     {
         LOG_ERROR_INT32("Missing param value. Line", XML_GetCurrentLineNumber(con->xmlParser));
-        
+
         ret = DM_EXT_XML_RET_ERROR;
     }
-    
+
     return ret;
 }
 
@@ -1577,7 +1577,7 @@ static DM_EXT_XML_RET dm_ext_xml_handleByteEnd(dm_ext_xml_Context* const con)
     DM_EXT_XML_RET ret = DM_EXT_XML_RET_OK;
 
     DM_EXT_XML_VALIDATE_PTR(con);
-    
+
     if (NULL != con->buffer)
     {
         unsigned long valueUL = dm_ext_xml_getDataValue(con->buffer);
@@ -1603,24 +1603,24 @@ static DM_EXT_XML_RET dm_ext_xml_handleByteEnd(dm_ext_xml_Context* const con)
             else
             {
                 LOG_ERROR_INT32("Attribute id invalid at line", XML_GetCurrentLineNumber(con->xmlParser));
-            
+
                 ret = DM_EXT_XML_RET_ERROR;
             }
         }
         else
         {
             LOG_ERROR_INT32("Invalid BYTE value. Can only be in the range 0 - 255. Line", XML_GetCurrentLineNumber(con->xmlParser));
-            
+
             ret = DM_EXT_XML_RET_ERROR;
         }
     }
     else
     {
         LOG_ERROR_INT32("Missing BYTE value. Line", XML_GetCurrentLineNumber(con->xmlParser));
-        
+
         ret = DM_EXT_XML_RET_ERROR;
     }
-    
+
     return ret;
 }
 
@@ -1661,7 +1661,7 @@ static DM_EXT_XML_RET dm_ext_xml_handleByteAttrEnabled(dm_ext_xml_Context* const
         else
         {
             LOG_ERROR_INT32("Attribute id invalid at line", XML_GetCurrentLineNumber(con->xmlParser));
-        
+
             ret = DM_EXT_XML_RET_ERROR;
         }
     }
@@ -1686,17 +1686,17 @@ static DM_EXT_XML_RET dm_ext_xml_handleByteAttrEnabled(dm_ext_xml_Context* const
         else
         {
             LOG_ERROR_INT32("Attribute id invalid at line", XML_GetCurrentLineNumber(con->xmlParser));
-        
+
             ret = DM_EXT_XML_RET_ERROR;
         }
     }
     else
     {
         LOG_ERROR_INT32("Attribute value invalid at line", XML_GetCurrentLineNumber(con->xmlParser));
-        
+
         ret = DM_EXT_XML_RET_ERROR;
     }
-    
+
     return ret;
 }
 
@@ -1716,7 +1716,7 @@ static DM_EXT_XML_RET dm_ext_xml_handleByteAttrId(dm_ext_xml_Context* const con,
     DM_EXT_XML_VALIDATE_PTR(con);
     DM_EXT_XML_VALIDATE_PTR(name);
     DM_EXT_XML_VALIDATE_PTR(value);
-    
+
     valueUL = dm_ext_xml_getDataValue(value);
 
     if ((0 == valueUL) ||
@@ -1727,10 +1727,10 @@ static DM_EXT_XML_RET dm_ext_xml_handleByteAttrId(dm_ext_xml_Context* const con,
     else
     {
         LOG_ERROR_INT32("Attribute id out of range at line", XML_GetCurrentLineNumber(con->xmlParser));
-        
+
         ret = DM_EXT_XML_RET_ERROR;
     }
-    
+
     return ret;
 }
 

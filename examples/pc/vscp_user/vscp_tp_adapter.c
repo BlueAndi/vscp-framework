@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +21,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
@@ -178,7 +178,7 @@ static const char*              vscp_tp_adapter_protocolTypes[] =
 extern void vscp_tp_adapter_init(void)
 {
     /* Nothing to do */
-        
+
     return;
 }
 
@@ -193,18 +193,18 @@ extern void vscp_tp_adapter_init(void)
 extern BOOL vscp_tp_adapter_readMessage(vscp_RxMessage * const msg)
 {
     BOOL    status  = FALSE;
-    
+
     if (NULL != msg)
     {
         vscp_tp_adapter_NetPar* client  = &vscp_tp_adapter_clientPar;
-        
+
         /* Connected to a VSCP daemon? */
         if (0 != client->hSession)
         {
             uint32_t    count       = 0;
             vscpEventEx daemonEvent;
             int         vscphlpRet  = 0;
-            
+
             /* Disconnected? */
             if (FALSE == vscp_tp_adapter_isConnected)
             {
@@ -253,7 +253,7 @@ extern BOOL vscp_tp_adapter_readMessage(vscp_RxMessage * const msg)
                             status = TRUE;
                         }
                     }
-                }              
+                }
             }
         }
         /* Any simulated message available? */
@@ -265,13 +265,13 @@ extern BOOL vscp_tp_adapter_readMessage(vscp_RxMessage * const msg)
 
             status = TRUE;
         }
-        
+
         if (FALSE != status)
         {
             vscp_tp_adapter_showMessage(msg, TRUE);
         }
     }
-    
+
     return status;
 }
 
@@ -292,7 +292,7 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg)
     {
         vscp_tp_adapter_NetPar* client  = &vscp_tp_adapter_clientPar;
         uint8_t                 index   = 0;
-            
+
         /* Connected to a VSCP daemon? */
         if (0 != client->hSession)
         {
@@ -301,9 +301,9 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg)
             {
                 vscpEventEx daemonEvent;
                 int         vscphlpRet  = 0;
-                
+
                 memset(&daemonEvent, 0, sizeof(daemonEvent));
-                
+
                 /* Send always a level 1 event back, independent of the configured
                  * network level @see VSCP_TP_ADAPTER_LVL
                  */
@@ -314,18 +314,18 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg)
                 daemonEvent.head        |= (msg->hardCoded & 0x01) << 4;
                 daemonEvent.GUID[15]    = msg->oAddr; /* Node GUID LSB */
                 daemonEvent.sizeData    = msg->dataNum;
-                
+
                 for(index = 0; index < daemonEvent.sizeData; ++index)
                 {
                     daemonEvent.data[index] = msg->data[index];
                 }
-                
+
                 if (VSCP_ERROR_SUCCESS != (vscphlpRet = vscphlp_sendEventEx(client->hSession, &daemonEvent)))
                 {
                     LOG_WARNING_INT32("Couldn't send event to daemon:", vscphlpRet);
                 }
                 else
-                {   
+                {
                     status = TRUE;
                 }
             }
@@ -334,7 +334,7 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg)
         {
             status = TRUE;
         }
-        
+
         if (FALSE != status)
         {
             vscp_tp_adapter_showMessage(msg, FALSE);
@@ -362,32 +362,32 @@ extern VSCP_TP_ADAPTER_RET vscp_tp_adapter_connect(char const * const ipAddr, ch
     char const *            pPassword   = "";
     vscpEventFilter         filter;
     int                     vscphlpRet  = 0;
-    
+
     /* No daemon address given? */
     if (NULL == ipAddr)
     {
         return VSCP_TP_ADAPTER_RET_ENULL;
     }
-    
+
     /* Already a connection established? */
     if (0 != client->hSession)
     {
         return VSCP_TP_ADAPTER_RET_ERROR;
     }
-    
+
     if (NULL != user)
     {
         pUser = user;
     }
-    
+
     if (NULL != password)
     {
         pPassword = password;
     }
-    
+
     /* Set network level */
     client->lvl = lvl;
-    
+
     /* Set event filter for level 1 events only */
     if (VSCP_TP_ADAPTER_LVL_1 == client->lvl)
     {
@@ -417,13 +417,13 @@ extern VSCP_TP_ADAPTER_RET vscp_tp_adapter_connect(char const * const ipAddr, ch
     {
         return VSCP_TP_ADAPTER_RET_ERROR;
     }
-    
+
     /* Create a session */
     client->hSession = vscphlp_newSession();
-    
+
     /* No session handle? */
     if (0 == client->hSession)
-    {   
+    {
         LOG_ERROR("Couldn't get a session handle.");
         status = VSCP_TP_ADAPTER_RET_ERROR;
     }
@@ -487,7 +487,7 @@ extern VSCP_TP_ADAPTER_RET vscp_tp_adapter_connect(char const * const ipAddr, ch
 
         LOG_INFO("Connected.");
     }
-    
+
     /* Any error happened? */
     if (VSCP_TP_ADAPTER_RET_OK != status)
     {
@@ -499,7 +499,7 @@ extern VSCP_TP_ADAPTER_RET vscp_tp_adapter_connect(char const * const ipAddr, ch
             client->hSession = 0;
         }
     }
-    
+
     return status;
 }
 
@@ -509,19 +509,19 @@ extern VSCP_TP_ADAPTER_RET vscp_tp_adapter_connect(char const * const ipAddr, ch
 extern void vscp_tp_adapter_disconnect(void)
 {
     vscp_tp_adapter_NetPar* client  = &vscp_tp_adapter_clientPar;
-    
+
     /* If a session is opened, close it. */
     if (0 != client->hSession)
     {
         (void)vscphlp_close(client->hSession);
         vscphlp_closeSession(client->hSession);
         client->hSession = 0;
-        
+
         LOG_INFO("Disconnected.");
     }
 
     vscp_tp_adapter_isConnected = FALSE;
-        
+
     return;
 }
 
@@ -573,20 +573,20 @@ static BOOL vscp_tp_adapter_handleL1Event(vscp_RxMessage * const msg, vscpEventE
     else
     {
         uint8_t index   = 0;
-    
+
         msg->vscpClass  = daemonEvent->vscp_class;
         msg->vscpType   = (uint8_t)(daemonEvent->vscp_type & 0xff);
         msg->priority   = (daemonEvent->head >> 5) & 0x07;
         msg->oAddr      = daemonEvent->GUID[15]; /* Node GUID LSB */
         msg->hardCoded  = (daemonEvent->head >> 4) & 0x01;
         msg->dataNum    = (uint8_t)(daemonEvent->sizeData & 0xff);
-        
+
         for(index = 0; index < msg->dataNum; ++index)
         {
             msg->data[index] = daemonEvent->data[index];
         }
     }
-    
+
     return isError;
 }
 
@@ -624,13 +624,13 @@ static BOOL vscp_tp_adapter_handleL1OverL2Event(vscp_RxMessage * const msg, vscp
     {
         uint8_t index       = 0;
         uint8_t dataOffset  = 0;
-    
+
         msg->vscpClass  = daemonEvent->vscp_class - VSCP_CLASS_L1_L2_BASE;
         msg->vscpType   = (uint8_t)(daemonEvent->vscp_type & 0xff);
         msg->priority   = (daemonEvent->head >> 5) & 0x07;
         msg->oAddr      = daemonEvent->GUID[15]; /* Node GUID LSB */
         msg->hardCoded  = (daemonEvent->head >> 4) & 0x01;
-        
+
         /* Determine whether the event has the interface GUID in the payload or not.
          * This is done quite simple by checking for greater or equal the
          * GUID size. Because all other level 1 events has a lower data size.
@@ -642,13 +642,13 @@ static BOOL vscp_tp_adapter_handleL1OverL2Event(vscp_RxMessage * const msg, vscp
             msg->dataNum -= VSCP_TP_ADAPTER_INTERFACE_GUID_SIZE;
             dataOffset = VSCP_TP_ADAPTER_INTERFACE_GUID_SIZE;
         }
-        
+
         for(index = 0; index < msg->dataNum; ++index)
         {
             msg->data[index] = daemonEvent->data[index + dataOffset];
         }
     }
-    
+
     return isError;
 }
 
@@ -661,7 +661,7 @@ static BOOL vscp_tp_adapter_handleL1OverL2Event(vscp_RxMessage * const msg, vscp
 static void vscp_tp_adapter_showMessage(vscp_Message const * const msg, BOOL isReceived)
 {
     uint8_t index = 0;
-    
+
     log_printf("%cx: class=0x%02X, type=0x%02X, prio=%2d, oAddr=0x%02X, %c, num=%u, data=",
         (TRUE == isReceived) ? 'R' : 'T',
         msg->vscpClass,
@@ -674,13 +674,13 @@ static void vscp_tp_adapter_showMessage(vscp_Message const * const msg, BOOL isR
     for(index = 0; index < msg->dataNum; ++index)
     {
         printf("%02X", msg->data[index]);
-        
+
         if ((index + 1) < msg->dataNum)
         {
             printf(" ");
         }
     }
-    
+
     if ((VSCP_CLASS_L1_PROTOCOL == msg->vscpClass) ||
         (VSCP_CLASS_L1_L2_PROTOCOL == msg->vscpClass))
     {
@@ -693,8 +693,8 @@ static void vscp_tp_adapter_showMessage(vscp_Message const * const msg, BOOL isR
             printf(" %s", vscp_tp_adapter_protocolTypes[msg->vscpType]);
         }
     }
-    
+
     printf("\n");
-    
+
     return;
 }

@@ -1,19 +1,19 @@
 /* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,7 +21,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 /*******************************************************************************
@@ -84,26 +84,26 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 /**
  * Main entry point.
  */
-int	main(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
-	if (CUE_SUCCESS != CU_initialize_registry())
-	{
-		printf("Initialize of test registry failed.\n");
-	}
-	else
-	{
-		CU_pSuite	pSuite	= NULL;
+    if (CUE_SUCCESS != CU_initialize_registry())
+    {
+        printf("Initialize of test registry failed.\n");
+    }
+    else
+    {
+        CU_pSuite   pSuite  = NULL;
 
-		pSuite	= CU_add_suite("Initialization and nickname discovery", vscp_test_init, NULL);
-		(void)CU_add_test(pSuite, "Initialize the node the first time", vscp_test_initNodeTheFirstTime);
-		(void)CU_add_test(pSuite, "Process the node the first time", vscp_test_processNodeTheFirstTime);
-		(void)CU_add_test(pSuite, "Finish nickname discovery", vscp_test_finisheNicknameDiscovery);
-		(void)CU_add_test(pSuite, "First segment controller heartbeat", vscp_test_firstSegCtrlHeartBeat);
-		(void)CU_add_test(pSuite, "Send probe ack with same nickname", vscp_test_sendProbeAckInActiveState);
-		(void)CU_add_test(pSuite, "Segment master removed", vscp_test_noSegmentMaster);
+        pSuite  = CU_add_suite("Initialization and nickname discovery", vscp_test_init, NULL);
+        (void)CU_add_test(pSuite, "Initialize the node the first time", vscp_test_initNodeTheFirstTime);
+        (void)CU_add_test(pSuite, "Process the node the first time", vscp_test_processNodeTheFirstTime);
+        (void)CU_add_test(pSuite, "Finish nickname discovery", vscp_test_finisheNicknameDiscovery);
+        (void)CU_add_test(pSuite, "First segment controller heartbeat", vscp_test_firstSegCtrlHeartBeat);
+        (void)CU_add_test(pSuite, "Send probe ack with same nickname", vscp_test_sendProbeAckInActiveState);
+        (void)CU_add_test(pSuite, "Segment master removed", vscp_test_noSegmentMaster);
 
-		pSuite	= CU_add_suite("Force error state", vscp_test_init, NULL);
-		(void)CU_add_test(pSuite, "Limit number of available timers", vscp_test_init07);
+        pSuite  = CU_add_suite("Force error state", vscp_test_init, NULL);
+        (void)CU_add_test(pSuite, "Limit number of available timers", vscp_test_init07);
 
         pSuite  = CU_add_suite("Segment controller heartbeat tests", vscp_test_initActive, NULL);
         (void)CU_add_test(pSuite, "Start up", vscp_test_active01);
@@ -197,13 +197,13 @@ int	main(int argc, char* argv[])
         (void)CU_add_test(pSuite, "Send class information, type button event with parameter \"all released\".", vscp_test_dmNG01);
         (void)CU_add_test(pSuite, "Send class information, type button event with parameter \"pressed\".", vscp_test_dmNG02);
 
-		CU_basic_set_mode(CU_BRM_VERBOSE);
-		CU_basic_run_tests();
+        CU_basic_set_mode(CU_BRM_VERBOSE);
+        CU_basic_run_tests();
 
-		CU_cleanup_registry();
-	}
+        CU_cleanup_registry();
+    }
 
-	return 0;
+    return 0;
 }
 
 /*******************************************************************************
