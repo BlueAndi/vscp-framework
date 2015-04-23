@@ -47,7 +47,6 @@ $Date: 2015-01-06 00:31:00 +0100 (Di, 06 Jan 2015) $
 #include "system.h"
 #include <stdint.h>
 #include "hw.h"
-#include <util/delay.h>
 #include "vscp_bootloader.h"
 
 /*******************************************************************************
@@ -65,15 +64,6 @@ $Date: 2015-01-06 00:31:00 +0100 (Di, 06 Jan 2015) $
 /*******************************************************************************
     TYPES AND STRUCTURES
 *******************************************************************************/
-
-/** This type defines the supported function return values. */
-typedef enum
-{
-    MAIN_RET_OK = 0,    /**< Successful */
-    MAIN_RET_ERROR,     /**< Failed */
-    MAIN_RET_ENULL      /**< Unexpected NULL pointer */
-
-} MAIN_RET;
 
 /*******************************************************************************
     PROTOTYPES
