@@ -60,7 +60,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 
 /** Application section start address */
-#define VSCP_BL_ADAPTER_APPLICATION_START_ADDR  (0x0000u)
+#define VSCP_BL_ADAPTER_APPLICATION_START_ADDR  ((void*)0x0000u)
 
 /** Address of the boot flag in the persistent memory as defined by VSCP. */
 #define VSCP_BL_ADAPTER_PS_ADDR_BOOT_FLAG       0
