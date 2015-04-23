@@ -243,7 +243,7 @@ extern void vscp_bootloader_run(void)
  */
 static void vscp_bootloader_simApp(void)
 {
-    BOOL             success = FALSE;
+    BOOL            success = FALSE;
     vscp_RxMessage  rxMsg;
 
     /* Send an "new node online" event, so that the programming tool knows the node is available now.
@@ -523,7 +523,7 @@ static void vscp_bootloader_handleProtocolBlockData(vscp_RxMessage const * const
     else if (VSCP_PLATFORM_FLASH_PAGE_SIZE < (progParam->pageBufferIndex + rxMsg->dataNum))
     {
         vscp_bootloader_sendNakBlockData(VSCP_BOOTLOADER_ERROR_INVALID_MESSAGE,
-        progParam->blockNumber * VSCP_PLATFORM_FLASH_PAGE_SIZE);
+                                         progParam->blockNumber * VSCP_PLATFORM_FLASH_PAGE_SIZE);
     }
     else
     {
