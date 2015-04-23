@@ -27,7 +27,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ********************************************************************************
-This module description file (MDF) is for the VSCP framework example AT90CANxxx.
+This module description file (MDF) is for the relay board 01.
 
 $Author: amerkle $
 $Rev: 449 $
@@ -39,11 +39,11 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 
     <module>
     
-        <name>Example project AT90CANxxx</name>
+        <name>Relay Board 01</name>
         <model>A</model>
         <version>0.1.0</version>
-        <changed>2014-12-20</changed>
-        <description lang="en">The node contains a basic example for using VSCP.</description>
+        <changed>2015-04-23</changed>
+        <description lang="en">The relay board offers up to 8 digital inputs, controlling up to 8 relays or controlling up to 4 shutters.</description>
         <infourl></infourl>
         
         <!-- Max package size a node can receive -->
