@@ -62,6 +62,7 @@ $Date: 2015-01-06 00:31:00 +0100 (Di, 06 Jan 2015) $
 #include "shutterDrv.h"
 #include "shutter.h"
 #include <util/delay.h>
+#include "sys_sm.h"
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -92,6 +93,9 @@ $Date: 2015-01-06 00:31:00 +0100 (Di, 06 Jan 2015) $
 /** Shutter timer period in ms */
 #define MAIN_SHUTTER_TIMER_PERIOD   100
 
+/** Address of the bootloader (BOOTSZ = 0) */
+#define MAIN_BOOTLOADER_START_ADDR  ((void*)0x3800u)
+
 /*******************************************************************************
     MACROS
 *******************************************************************************/
@@ -109,16 +113,6 @@ typedef enum
 
 } MAIN_RET;
 
-/** This type defines the states of the main loop state machine. */
-typedef enum
-{
-    MAIN_STATE_START_UP = 0,    /**< VSCP framework starts up */
-    MAIN_STATE_ACTIVE,          /**< VSCP framework is active */
-    MAIN_STATE_SHUTDOWN,        /**< System shutdown */
-    MAIN_STATE_IDLE             /**< System is idle */
-
-} MAIN_STATE;
-
 /*******************************************************************************
     PROTOTYPES
 *******************************************************************************/
@@ -127,12 +121,13 @@ static MAIN_RET main_initRunLevel1(void);
 static MAIN_RET main_initRunLevel2(void);
 static void main_timerCb(void);
 static void main_processStatusLamp(void);
+static void main_checkSegInitButton(void);
 
 /*******************************************************************************
     LOCAL VARIABLES
 *******************************************************************************/
 
-/** Segment init button state */
+/** Segment initialization button state */
 static volatile BOOL    main_isInitButtonPressed    = FALSE;
 
 /*******************************************************************************
@@ -150,12 +145,11 @@ static volatile BOOL    main_isInitButtonPressed    = FALSE;
  */
 int main(void)
 {
-    BOOL        lastSegInitButtonState  = FALSE;                    /* Used for "raising edge" detection */
-    BOOL        swTimer10MSTriggered    = FALSE;                    /* Signals that the 10 ms software timer triggered */
-    uint8_t     swTimer1S               = MAIN_SWTIMER_1S_PERIOD;   /* Based on 250 ms software timer */
-    MAIN_STATE  state                   = MAIN_STATE_START_UP;      /* Main loop state machine state */
-    uint8_t     index                   = 0;
-    BOOL        anyShutterDriving       = FALSE;
+    void        (*jumpToBootloader)(void)   = MAIN_BOOTLOADER_START_ADDR;
+    BOOL        swTimer10MSTriggered        = FALSE;                    /* Signals that the 10 ms software timer triggered */
+    uint8_t     swTimer1S                   = MAIN_SWTIMER_1S_PERIOD;   /* Based on 250 ms software timer */
+    uint8_t     index                       = 0;
+    BOOL        anyShutterDriving           = FALSE;
 
     /* ********** Run level 1 - interrupts disabled ********** */
 
@@ -172,7 +166,8 @@ int main(void)
         _delay_ms(100);
         if (TRUE == hw_getBootJumperStatus())
         {
-            /* TODO */
+            jumpToBootloader();
+            /* This line will never be reached. */
         }
     }
 
@@ -193,26 +188,18 @@ int main(void)
     /* Main loop */
     for(;;)
     {
+        SYS_SM_ACTION   sysSmAction = SYS_SM_ACTION_NOTHING;
+
+        /* ----- System state independent jobs ----- */
+
         /* Process VSCP framework */
         vscp_core_process();
-
-        /* Initialize the VSCP segment, because user pressed the segment
-         * initialization button?
-         *
-         * If the user keeps the button pressed and it looks like the user never
-         * release it, the initialization will anyway take place only once.
-         */
-        if ((TRUE == main_isInitButtonPressed) &&
-            (FALSE == lastSegInitButtonState))
-        {
-            vscp_core_startNodeSegmentInit();
-        }
-
-        lastSegInitButtonState = main_isInitButtonPressed;
 
         /* 10 ms period */
         if (TRUE == swTimer_getStatus(MAIN_SWTIMER_10MS_ID))
         {
+            swTimer10MSTriggered = TRUE;
+
             /* Process every 10ms the shutter module. */
             anyShutterDriving = shutter_process();
 
@@ -221,8 +208,6 @@ int main(void)
             {
                 anyShutterDriving = TRUE;
             }
-
-            swTimer10MSTriggered = TRUE;
         }
 
         /* 250 ms period */
@@ -237,31 +222,37 @@ int main(void)
             /* Process the time */
             time_process(MAIN_SWTIMER_250MS_PERIOD);
 
-            /* Derive a 1 s timer */
+            /* Derive a 1 s timer, because this can't be done with a software timer. */
             if (0 < swTimer1S)
             {
                 --swTimer1S;
             }
         }
 
-        /* Main state machine */
-        switch(state)
+        /* ----- System state dependent jobs ----- */
+
+        switch(sys_sm_getState(&sysSmAction))
         {
         /* Node starts up and try to get online */
-        case MAIN_STATE_START_UP:
+        case SYS_SM_STATE_START_UP:
+            main_checkSegInitButton();
+
             /* Wait until node is online */
             if (TRUE == vscp_core_isActive())
             {
-                state = MAIN_STATE_ACTIVE;
+                sys_sm_requestState(SYS_SM_STATE_ACTIVE, SYS_SM_ACTION_NOTHING);
             }
+
             break;
 
         /* Node is online */
-        case MAIN_STATE_ACTIVE:
+        case SYS_SM_STATE_ACTIVE:
+            main_checkSegInitButton();
+
             /* If the node is offline, shutdown the system */
             if (FALSE == vscp_core_isActive())
             {
-                state = MAIN_STATE_SHUTDOWN;
+                sys_sm_requestState(SYS_SM_STATE_SHUTDOWN, SYS_SM_ACTION_HALT);
             }
             else
             {
@@ -287,10 +278,11 @@ int main(void)
                     /* TODO */
                 }
             }
+
             break;
 
         /* Node left online state and went offline */
-        case MAIN_STATE_SHUTDOWN:
+        case SYS_SM_STATE_SHUTDOWN:
             /* Stop all shutter */
             for(index = 0; index < SHUTTER_NUM; ++index)
             {
@@ -298,16 +290,46 @@ int main(void)
                 shutter_enable(index, FALSE);
             }
 
-            state = MAIN_STATE_IDLE;
+            sys_sm_requestState(SYS_SM_STATE_IDLE, SYS_SM_ACTION_KEEP);
+            break;
+
+        case SYS_SM_STATE_ERROR:
+            /* Stop all shutter */
+            for(index = 0; index < SHUTTER_NUM; ++index)
+            {
+                shutter_drive(index, SHUTTER_DIR_STOP, 0);
+                shutter_enable(index, FALSE);
+            }
+
+            sys_sm_requestState(SYS_SM_STATE_IDLE, SYS_SM_ACTION_KEEP);
             break;
 
         /* Node waits for a reset */
-        case MAIN_STATE_IDLE:
-            /* Nothing to do. */
+        case SYS_SM_STATE_IDLE:
+            
+            /* Wait until all shutters are stopped before any further action
+             * takes place.
+             */
+            if (FALSE == anyShutterDriving)
+            {
+                if (SYS_SM_ACTION_REBOOT == sysSmAction)
+                {
+                    REBOOT();
+                }
+                else if (SYS_SM_ACTION_HALT == sysSmAction)
+                {
+                    HALT();
+                }
+                else
+                {
+                    /* Nothing to do */
+                }
+            }
             break;
 
         default:
-            /* Should never happen. */
+            /* Should never happen */
+            sys_sm_requestState(SYS_SM_STATE_ERROR, SYS_SM_ACTION_REBOOT);
             break;
         }
 
@@ -338,6 +360,9 @@ static MAIN_RET main_initRunLevel1(void)
 
     /* Initialize the hardware */
     hw_init();
+
+    /* Initialize the system state machine */
+    sys_sm_init();
 
     /* Initialize a hardware timer */
     timerDrv_init();
@@ -527,6 +552,31 @@ static void main_processStatusLamp(void)
     default:
         break;
     }
+
+    return;
+}
+
+/**
+ * This function checks the segment initialization button.
+ * If the button is pressed, the segment initialization will be executed.
+ */
+static void main_checkSegInitButton(void)
+{
+    static BOOL lastSegInitButtonState  = FALSE;    /* Used for "raising edge" detection */
+
+    /* Initialize the VSCP segment, because user pressed the segment
+     * initialization button?
+     *
+     * If the user keeps the button pressed and it looks like the user never
+     * release it, the initialization will anyway take place only once.
+     */
+    if ((TRUE == main_isInitButtonPressed) &&
+        (FALSE == lastSegInitButtonState))
+    {
+        vscp_core_startNodeSegmentInit();
+    }
+
+    lastSegInitButtonState = main_isInitButtonPressed;
 
     return;
 }

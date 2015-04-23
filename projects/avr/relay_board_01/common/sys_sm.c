@@ -28,12 +28,12 @@
     DESCRIPTION
 *******************************************************************************/
 /**
-@brief  VSCP portable support package
-@file   vscp_portable.c
+@brief  System state machine
+@file   sys_sm.c
 @author Andreas Merkle, http://www.blue-andi.de
 
 @section desc Description
-@see vscp_portable.h
+@see sys_sm.h
 
 @section svn Subversion
 $Author: amerkle $
@@ -44,11 +44,8 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 /*******************************************************************************
     INCLUDES
 *******************************************************************************/
-#include "vscp_portable.h"
-#include "vscp_core.h"
-#include "hw.h"
-#include "vscp_bootloader.h"
 #include "sys_sm.h"
+#include <stddef.h>
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -74,21 +71,25 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
     LOCAL VARIABLES
 *******************************************************************************/
 
-/** Current lamp state */
-static VSCP_LAMP_STATE  vscp_portable_lampState = VSCP_LAMP_STATE_OFF;
+/** Current system state */
+static SYS_SM_STATE     sys_sm_state    = SYS_SM_STATE_START_UP;
+
+/** Current assigned action */
+static SYS_SM_ACTION    sys_sm_action   = SYS_SM_ACTION_NOTHING;
 
 /*******************************************************************************
     GLOBAL VARIABLES
 *******************************************************************************/
 
-/*******************************************************************************
+/******************************************************************************\
     GLOBAL FUNCTIONS
 *******************************************************************************/
 
 /**
- * This function initializes this module.
+ * This function initialize the module (static initialization). Don't call
+ * other functions before this function is executed.
  */
-extern void vscp_portable_init(void)
+extern void sys_sm_init(void)
 {
     /* Nothing to do */
 
@@ -96,119 +97,46 @@ extern void vscp_portable_init(void)
 }
 
 /**
- * Restore the application specific factory default settings.
- */
-extern void vscp_portable_restoreFactoryDefaultSettings(void)
-{
-    /* Nothing to do */
-
-    return;
-}
-
-/**
- * This function set the current lamp state.
+ * This function requests a system state transition.
  *
- * @param[in]   state   Lamp state to set
+ * @param[in] state Next system state
+ * @param[in] action If state is reached, this action will be executed (application specific).
  */
-extern void vscp_portable_setLampState(VSCP_LAMP_STATE state)
+extern void sys_sm_requestState(SYS_SM_STATE state, SYS_SM_ACTION action)
 {
-    vscp_portable_lampState = state;
+    /* System startup can not be requested. If the user wish to reboot the system,
+     * the user shall request the system shutdown with reboot action.
+     */
+    if (SYS_SM_STATE_START_UP != state)
+    {
+        sys_sm_state = state;
+
+        if (SYS_SM_ACTION_KEEP != action)
+        {
+            sys_sm_action = action;
+        }
+    }
 
     return;
 }
 
 /**
- * This function get the current lamp state.
+ * This function returns the current system state.
  *
- * @return Lamp state
- */
-extern VSCP_LAMP_STATE vscp_portable_getLampState(void)
-{
-    return vscp_portable_lampState;
-}
-
-#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_IDLE_CALLOUT )
-
-/**
- * If VSCP stops its work and enters idle state, this function will be called.
- */
-extern void vscp_portable_idleStateEntered(void)
-{
-    /* Not enabled */
-
-    return;
-}
-
-#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_IDLE_CALLOUT ) */
-
-#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ERROR_CALLOUT )
-
-/**
- * If VSCP stops its work and enters error state, this function will be called.
- */
-extern void vscp_portable_errorStateEntered(void)
-{
-    sys_sm_requestState(SYS_SM_STATE_ERROR, SYS_SM_ACTION_REBOOT);
-
-    return;
-}
-
-#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ERROR_CALLOUT ) */
-
-/**
- * This function requests a reset.
- * It requests it and doesn't expect that it will be immediately.
- * Because the application needs time to change to a safe state before.
- */
-extern void vscp_portable_resetRequest(void)
-{
-    sys_sm_requestState(SYS_SM_STATE_SHUTDOWN, SYS_SM_ACTION_REBOOT);
-
-    return;
-}
-
-#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_BOOT_LOADER_SUPPORTED )
-
-/**
- * This function returns the supported boot loader algorithm.
+ * @param[in,out] action    Current assigned action
  *
- * @return  Boot loader algorithm
- * @retval  0xFF    No boot loader supported
+ * @return Current system state
  */
-extern uint8_t  vscp_portable_getBootLoaderAlgorithm(void)
+extern SYS_SM_STATE sys_sm_getState(SYS_SM_ACTION * const action)
 {
-    return VSCP_BOOTLOADER_ALGORITHM;
-}
+    if (NULL != action)
+    {
+        *action = sys_sm_action;
+    }
 
-/**
- * This function requests a jump to the bootloader.
- * It requests it and doesn't expect that it will be immediately.
- * Because the application needs time to change to a safe state before.
- */
-extern void vscp_portable_bootLoaderRequest(void)
-{
-    sys_sm_requestState(SYS_SM_STATE_SHUTDOWN, SYS_SM_ACTION_REBOOT);
-
-    return;
-}
-
-#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_BOOT_LOADER_SUPPORTED ) */
-
-/**
- * This function provides received VSCP events, except the PROTOCOL class.
- *
- * @param[out]  msg Message
- */
-extern void vscp_portable_provideEvent(vscp_RxMessage const * const msg)
-{
-    NOT_USED(msg);
-
-    /* Nothing to do */
-
-    return;
+    return sys_sm_state;
 }
 
 /*******************************************************************************
     LOCAL FUNCTIONS
 *******************************************************************************/
-

@@ -28,36 +28,31 @@
     DESCRIPTION
 *******************************************************************************/
 /**
-@brief  VSCP configuration overwrite
-@file   vscp_config_overwrite.h
+@brief  System state machine
+@file   sys_sm.h
 @author Andreas Merkle, http://www.blue-andi.de
 
 @section desc Description
-This module contains the configuration preferred by the user. It overwrites the
-default configuration in vscp_config.h
+This module contains the system state machine.
 
 @section svn Subversion
 $Author: amerkle $
 $Rev: 449 $
 $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
-/** @defgroup vscp_config_overwrite VSCP configuration overwrite
- * This module contains the configuration preferred by the user. It overwrites the
- * default configuration in vscp_config.h
- * @{
- */
 
 /*
  * Don't forget to set JAVADOC_AUTOBRIEF to YES in the doxygen file to generate
  * a correct module description.
- */
+*/
 
-#ifndef __VSCP_CONFIG_OVERWRITE_H__
-#define __VSCP_CONFIG_OVERWRITE_H__
+#ifndef __SYS_SM_H__
+#define __SYS_SM_H__
 
 /*******************************************************************************
     INCLUDES
 *******************************************************************************/
+#include "system.h"
 #include <stdint.h>
 
 #ifdef __cplusplus
@@ -69,82 +64,9 @@ extern "C"
     COMPILER SWITCHES
 *******************************************************************************/
 
-#define VSCP_CONFIG_HEARTBEAT_NODE              VSCP_CONFIG_BASE_ENABLED
-
-#define VSCP_CONFIG_ENABLE_LOOPBACK             VSCP_CONFIG_BASE_ENABLED
-
-#define VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION   VSCP_CONFIG_BASE_ENABLED
-
-#define VSCP_CONFIG_ERROR_CALLOUT               VSCP_CONFIG_BASE_ENABLED
-
-#define VSCP_CONFIG_BOOT_LOADER_SUPPORTED       VSCP_CONFIG_BASE_ENABLED
-
-/* ---------- Define here your preferred configuration setup. ---------- */
-
-/*
-#define VSCP_CONFIG_SILENT_NODE                 VSCP_CONFIG_BASE_DISABLED
-
-#define VSCP_CONFIG_HARD_CODED_NODE             VSCP_CONFIG_BASE_DISABLED
-
-#define VSCP_CONFIG_HEARTBEAT_SUPPORT_SEGMENT   VSCP_CONFIG_BASE_DISABLED
-
-#define VSCP_CONFIG_HEARTBEAT_NODE              VSCP_CONFIG_BASE_DISABLED
-
-#define VSCP_CONFIG_IDLE_CALLOUT                VSCP_CONFIG_BASE_DISABLED
-
-#define VSCP_CONFIG_ERROR_CALLOUT               VSCP_CONFIG_BASE_DISABLED
-
-#define VSCP_CONFIG_BOOT_LOADER_SUPPORTED       VSCP_CONFIG_BASE_DISABLED
-
-#define VSCP_CONFIG_ENABLE_DM                   VSCP_CONFIG_BASE_ENABLED
-
-#define VSCP_CONFIG_DM_PAGED_FEATURE            VSCP_CONFIG_BASE_DISABLED
-
-#define VSCP_CONFIG_ENABLE_DM_EXTENSION         VSCP_CONFIG_BASE_DISABLED
-
-#define VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION   VSCP_CONFIG_BASE_DISABLED
-
-#define VSCP_CONFIG_ENABLE_LOOPBACK             VSCP_CONFIG_BASE_DISABLED
-
-*/
-
 /*******************************************************************************
     CONSTANTS
 *******************************************************************************/
-
-/* ---------- Define here your preferred configuration setup. ---------- */
-
-#define VSCP_CONFIG_DM_PAGE                     1
-
-#define VSCP_CONFIG_DM_OFFSET                   0
-
-#define VSCP_CONFIG_DM_ROWS                     2
-
-#define VSCP_CONFIG_DM_NG_RULE_SET_SIZE         80
-
-#define VSCP_CONFIG_LOOPBACK_STORAGE_NUM        4
-
-/*
-
-#define VSCP_CONFIG_NODE_SEGMENT_INIT_TIMEOUT   ((uint16_t)5000)
-
-#define VSCP_CONFIG_PROBE_ACK_TIMEOUT           ((uint16_t)2000)
-
-#define VSCP_CONFIG_MULTI_MSG_TIMEOUT           ((uint16_t)1000)
-
-#define VSCP_CONFIG_HEARTBEAT_NODE_PERIOD       ((uint16_t)1000)
-
-#define VSCP_CONFIG_DM_PAGE                     1
-
-#define VSCP_CONFIG_DM_OFFSET                   0
-
-#define VSCP_CONFIG_DM_ROWS                     10
-
-#define VSCP_CONFIG_DM_NG_RULE_SET_SIZE         80
-
-#define VSCP_CONFIG_LOOPBACK_STORAGE_NUM        4
-
-*/
 
 /*******************************************************************************
     MACROS
@@ -154,6 +76,27 @@ extern "C"
     TYPES AND STRUCTURES
 *******************************************************************************/
 
+/** This type defines the actions which are executed in the error or idle state. */
+typedef enum
+{
+    SYS_SM_ACTION_NOTHING = 0,  /**< Nothing to do */
+    SYS_SM_ACTION_KEEP,         /**< Keep current assigned action */
+    SYS_SM_ACTION_REBOOT,       /**< Reboot system */
+    SYS_SM_ACTION_HALT          /**< Halt system */
+
+} SYS_SM_ACTION;
+
+/** This type defines the system states. */
+typedef enum
+{
+    SYS_SM_STATE_START_UP = 0,  /**< System starts up (this state can not be requested) */
+    SYS_SM_STATE_ACTIVE,        /**< System is active (operating mode) */
+    SYS_SM_STATE_SHUTDOWN,      /**< System shutdown */
+    SYS_SM_STATE_ERROR,         /**< System is in error state */
+    SYS_SM_STATE_IDLE,          /**< System is idle (this state can not be requested) */
+
+} SYS_SM_STATE;
+
 /*******************************************************************************
     VARIABLES
 *******************************************************************************/
@@ -162,10 +105,31 @@ extern "C"
     FUNCTIONS
 *******************************************************************************/
 
+/**
+ * This function initialize the module (static initialization). Don't call
+ * other functions before this function is executed.
+ */
+extern void sys_sm_init(void);
+
+/**
+ * This function requests a system state transition.
+ *
+ * @param[in] state Next system state
+ * @param[in] action If state is reached, this action will be executed (application specific).
+ */
+extern void sys_sm_requestState(SYS_SM_STATE state, SYS_SM_ACTION action);
+
+/**
+ * This function returns the current system state.
+ *
+ * @param[in,out] action    Current assigned action
+ *
+ * @return Current system state
+ */
+extern SYS_SM_STATE sys_sm_getState(SYS_SM_ACTION * const action);
+
 #ifdef __cplusplus
 }
 #endif
 
-#endif  /* __VSCP_CONFIG_OVERWRITE_H__ */
-
-/** @} */
+#endif  /* __SYS_SM_H__ */
