@@ -5,10 +5,18 @@ Bugfixes:
   - VSCP framework
     - CRC of "activate new image" event was reconstructed wrong in the bootloader.
 
+  - AT90CAN32 example
+    - MDF updated
+    
   - PC example
     - The L1 over L2 event to L1 event conversion missed to remove the interface GUID in case of 16 byte data.
     - Bootloader adapter programmed the page wrong (simulated).
+    - MDF updated
 
+  - Project: Relay board 01
+    - Bootloader support enabled
+    - MDF updated
+    
 ## 0.3.0
 
 Features:

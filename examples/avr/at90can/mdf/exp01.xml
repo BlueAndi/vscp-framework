@@ -41,8 +41,8 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
     
         <name>Example project AT90CANxxx</name>
         <model>A</model>
-        <version>0.1.0</version>
-        <changed>2014-12-20</changed>
+        <version>0.2.2</version>
+        <changed>2015-04-23</changed>
         <description lang="en">The node contains a basic example for using VSCP.</description>
         <infourl></infourl>
         
@@ -74,7 +74,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 	
         <!-- Boot loader information -->
         <boot>
-            <algorithm>0</algorithm>
+            <algorithm>255</algorithm>
             <blocksize>0</blocksize>
             <blockcount>0</blockcount>
         </boot>

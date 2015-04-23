@@ -41,7 +41,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
     
         <name>Relay Board 01</name>
         <model>A</model>
-        <version>0.1.0</version>
+        <version>0.2.2</version>
         <changed>2015-04-23</changed>
         <description lang="en">The relay board offers up to 8 digital inputs, controlling up to 8 relays or controlling up to 4 shutters.</description>
         <infourl></infourl>
@@ -75,8 +75,8 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
         <!-- Boot loader information -->
         <boot>
             <algorithm>0</algorithm>
-            <blocksize>0</blocksize>
-            <blockcount>0</blockcount>
+            <blocksize>128</blocksize>
+            <blockcount>32</blockcount>
         </boot>
         
         <!-- Register space -->
