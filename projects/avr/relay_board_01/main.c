@@ -93,9 +93,6 @@ $Date: 2015-01-06 00:31:00 +0100 (Di, 06 Jan 2015) $
 /** Shutter timer period in ms */
 #define MAIN_SHUTTER_TIMER_PERIOD   100
 
-/** Address of the bootloader (BOOTSZ = 0) */
-#define MAIN_BOOTLOADER_START_ADDR  ((void*)0x3800u)
-
 /*******************************************************************************
     MACROS
 *******************************************************************************/
@@ -145,11 +142,10 @@ static volatile BOOL    main_isInitButtonPressed    = FALSE;
  */
 int main(void)
 {
-    void        (*jumpToBootloader)(void)   = MAIN_BOOTLOADER_START_ADDR;
-    BOOL        swTimer10MSTriggered        = FALSE;                    /* Signals that the 10 ms software timer triggered */
-    uint8_t     swTimer1S                   = MAIN_SWTIMER_1S_PERIOD;   /* Based on 250 ms software timer */
-    uint8_t     index                       = 0;
-    BOOL        anyShutterDriving           = FALSE;
+    BOOL    swTimer10MSTriggered    = FALSE;                    /* Signals that the 10 ms software timer triggered */
+    uint8_t swTimer1S               = MAIN_SWTIMER_1S_PERIOD;   /* Based on 250 ms software timer */
+    uint8_t index                   = 0;
+    BOOL    anyShutterDriving       = FALSE;
 
     /* ********** Run level 1 - interrupts disabled ********** */
 
@@ -158,17 +154,6 @@ int main(void)
     {
         /* Error */
         HALT();
-    }
-
-    /* Jump to bootloader? */
-    if (TRUE == hw_getBootJumperStatus())
-    {
-        _delay_ms(100);
-        if (TRUE == hw_getBootJumperStatus())
-        {
-            jumpToBootloader();
-            /* This line will never be reached. */
-        }
     }
 
     /* ********** Run level 2 - interrupts enabled ********** */
