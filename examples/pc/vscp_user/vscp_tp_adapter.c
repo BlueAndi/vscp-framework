@@ -90,6 +90,7 @@ typedef struct
 static BOOL vscp_tp_adapter_handleL1Event(vscp_RxMessage * const msg, vscpEventEx const * const daemonEvent);
 static BOOL vscp_tp_adapter_handleL1OverL2Event(vscp_RxMessage * const msg, vscpEventEx const * const daemonEvent);
 static void vscp_tp_adapter_showMessage(vscp_Message const * const msg, BOOL isReceived);
+static const char* vscp_tp_adapter_getErrorStr(int value);
 
 /*******************************************************************************
     LOCAL VARIABLES
@@ -164,6 +165,54 @@ static const char*              vscp_tp_adapter_protocolTypes[] =
     /* 51 */ "Start Block Data Transfer NACK"
 };
 
+/** User friendly strings for VSCP helper library function return status. */
+static const char*                  vscp_tp_adapter_errorStr[]  =
+{
+    /*  0 */ "Successful",
+    /*  1 */ "?",
+    /*  2 */ "?",
+    /*  3 */ "?",
+    /*  4 */ "?",
+    /*  5 */ "?",
+    /*  6 */ "?",
+    /*  7 */ "Invalid channel",
+    /*  8 */ "FIFO is empty",
+    /*  9 */ "FIFO is full",
+    /* 10 */ "FIFO size error",
+    /* 11 */ "FIFO wait",
+    /* 12 */ "Generic error",
+    /* 13 */ "Hardware error",
+    /* 14 */ "Initialization failed",
+    /* 15 */ "Initialization missing",
+    /* 16 */ "Initialization ready",
+    /* 17 */ "Not supported",
+    /* 18 */ "Overrun",
+    /* 19 */ "Receive buffer empty",
+    /* 20 */ "Register value error",
+    /* 21 */ "Transmit buffer full",
+    /* 22 */ "?",
+    /* 23 */ "?",
+    /* 24 */ "?",
+    /* 25 */ "?",
+    /* 26 */ "?",
+    /* 27 */ "?",
+    /* 28 */ "Unable to load library",
+    /* 29 */ "Unable to get library proc address",
+    /* 30 */ "Only one instance allowed",
+    /* 31 */ "Problem with sub driver call",
+    /* 32 */ "Timeout",
+    /* 33 */ "The device is not open",
+    /* 34 */ "A parameter is invalid",
+    /* 35 */ "Memory exhausted",
+    /* 36 */ "Some kind of internal program error",
+    /* 37 */ "Some kind of communication error",
+    /* 38 */ "Login error username",
+    /* 39 */ "Login error password",
+    /* 40 */ "Could not connect",
+    /* 41 */ "The handle is not valid",
+    /* 42 */ "Operation failed for some reason"
+};
+
 /*******************************************************************************
     GLOBAL VARIABLES
 *******************************************************************************/
@@ -214,7 +263,8 @@ extern BOOL vscp_tp_adapter_readMessage(vscp_RxMessage * const msg)
             /* Check for available events. */
             else if (VSCP_ERROR_SUCCESS != (vscphlpRet = vscphlp_isDataAvailable(client->hSession, &count)))
             {
-                LOG_WARNING_INT32("Connection lost: ", vscphlpRet);
+                LOG_ERROR_INT32("Couldn't check for available data: ", vscphlpRet);
+                LOG_ERROR_STR("vscphlp_isDataAvailable failed: ", vscp_tp_adapter_getErrorStr(vscphlpRet));
 
                 log_printf("Connection lost.\n");
                 vscp_tp_adapter_isConnected = FALSE;
@@ -224,7 +274,8 @@ extern BOOL vscp_tp_adapter_readMessage(vscp_RxMessage * const msg)
             {
                 if (VSCP_ERROR_SUCCESS != (vscphlpRet = vscphlp_receiveEventEx(client->hSession, &daemonEvent)))
                 {
-                    LOG_WARNING_INT32("Connection lost: ", vscphlpRet);
+                    LOG_WARNING_INT32("Couldn't receive event: ", vscphlpRet);
+                    LOG_WARNING_STR("vscphlp_receiveEventEx failed: ", vscp_tp_adapter_getErrorStr(vscphlpRet));
                 }
                 /* Handle all level 1 events? */
                 else if (VSCP_TP_ADAPTER_LVL_1 == client->lvl)
@@ -323,6 +374,7 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg)
                 if (VSCP_ERROR_SUCCESS != (vscphlpRet = vscphlp_sendEventEx(client->hSession, &daemonEvent)))
                 {
                     LOG_WARNING_INT32("Couldn't send event to daemon:", vscphlpRet);
+                    LOG_WARNING_STR("vscphlp_sendEventEx failed: ", vscp_tp_adapter_getErrorStr(vscphlpRet));
                 }
                 else
                 {
@@ -483,9 +535,33 @@ extern VSCP_TP_ADAPTER_RET vscp_tp_adapter_connect(char const * const ipAddr, ch
     else
     /* Successful connected */
     {
+        unsigned char   major       = 0;
+        unsigned char   minor       = 0;
+        unsigned char   subMinor    = 0;
+        unsigned long   dllVersion  = 0;
+        char            vendorStr[120];
+        
         vscp_tp_adapter_isConnected = TRUE;
 
         LOG_INFO("Connected.");
+        
+        /* Get version of remote VSCP daemon */
+        if (VSCP_ERROR_SUCCESS == vscphlp_getVersion(client->hSession, &major, &minor, &subMinor))
+        {
+            log_printf("Remote VSCP daemon v%u.%u.%u\n", major, minor, subMinor);
+        }
+        
+        /* Get dll version */
+        if (VSCP_ERROR_SUCCESS == vscphlp_getDLLVersion(client->hSession, &dllVersion))
+        {
+            log_printf("Used VSCP dll version 0x%08X\n", dllVersion);
+        }
+        
+        /* Get vendor from driver */
+        if (VSCP_ERROR_SUCCESS == vscphlp_getVendorString(client->hSession, vendorStr, sizeof(vendorStr)))
+        {
+            log_printf("Vendor of driver: %s\n", vendorStr);
+        }
     }
 
     /* Any error happened? */
@@ -698,3 +774,22 @@ static void vscp_tp_adapter_showMessage(vscp_Message const * const msg, BOOL isR
 
     return;
 }
+
+/**
+ * This function returns a error from the VSCP helper library as user friendly string.
+ *
+ * @param[in] value Error value
+ * @return User friendly description of the error value.
+ */
+static const char* vscp_tp_adapter_getErrorStr(int value)
+{
+    char const * str    = "!!Error unknown!!";
+
+    if (VSCP_UTIL_ARRAY_NUM(vscp_tp_adapter_errorStr) > value)
+    {
+        str = vscp_tp_adapter_errorStr[value];
+    }
+    
+    return str;
+}
+
