@@ -419,7 +419,7 @@ static long dm_ext_xml_getFileSize(FILE* fd)
     }
 
     /* Jump back to old position */
-    fseek(fd, oldPos, SEEK_SET);
+    (void)fseek(fd, oldPos, SEEK_SET);
 
     return fileSize;
 }
