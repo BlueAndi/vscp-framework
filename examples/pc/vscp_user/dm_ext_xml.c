@@ -862,7 +862,7 @@ static void XMLCALL dm_ext_xml_endElement(void *userData, const XML_Char *name)
         }
 
         /* One step up in the tree */
-        if (0 > con->depth)
+        if (0 < con->depth)
         {
             --con->depth;
         }
