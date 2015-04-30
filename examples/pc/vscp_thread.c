@@ -127,6 +127,12 @@ extern VSCP_THREAD_RET vscp_thread_init(void)
         memset(&vscp_thread_frameworkThrdData, 0, sizeof(vscp_thread_frameworkThrdData));
         memset(&vscp_thread_timerThrdData, 0, sizeof(vscp_thread_timerThrdData));
 
+        /* Set error value here, to be able to check if vscp_thread_start is called and 
+         * the threads are already started.
+         */
+        vscp_thread_frameworkThrdData.status    = 1;
+        vscp_thread_timerThrdData.status        = 1;
+
         /* Set mutex */
         vscp_thread_frameworkThrdData.mutex = &vscp_thread_mutex;
         vscp_thread_timerThrdData.mutex     = &vscp_thread_mutex;
@@ -146,44 +152,44 @@ extern VSCP_THREAD_RET vscp_thread_start(void)
 
     /* ----- Start VSCP framework thread ----- */
 
-    /* Set error value */
-    vscp_thread_frameworkThrdData.status      = 1;
-
-    /* Avoid that the thread stops immediately */
-    vscp_thread_frameworkThrdData.quitFlag    = FALSE;
-
-    /* Create vscp framework thread with default attributes */
-    vscp_thread_frameworkThrdData.status = pthread_create(&vscp_thread_frameworkThrdData.id, NULL, vscp_thread_frameworkThread, (void*)&vscp_thread_frameworkThrdData);
-
-    /* Failed to create the thread? */
     if (0 != vscp_thread_frameworkThrdData.status)
     {
-        status = VSCP_THREAD_RET_ERROR;
-    }
-    else
-    {
-        /* ----- Start VSCP timer thread ----- */
-
-        /* Set error value */
-        vscp_thread_timerThrdData.status      = 1;
-
         /* Avoid that the thread stops immediately */
-        vscp_thread_timerThrdData.quitFlag    = FALSE;
+        vscp_thread_frameworkThrdData.quitFlag    = FALSE;
 
         /* Create vscp framework thread with default attributes */
-        vscp_thread_timerThrdData.status = pthread_create(&vscp_thread_timerThrdData.id, NULL, vscp_thread_vscpTimerThread, (void*)&vscp_thread_timerThrdData);
+        vscp_thread_frameworkThrdData.status = pthread_create(&vscp_thread_frameworkThrdData.id, NULL, vscp_thread_frameworkThread, (void*)&vscp_thread_frameworkThrdData);
 
         /* Failed to create the thread? */
-        if (0 != vscp_thread_timerThrdData.status)
+        if (0 != vscp_thread_frameworkThrdData.status)
         {
             status = VSCP_THREAD_RET_ERROR;
+        }
+        else
+        {
+            /* ----- Start VSCP timer thread ----- */
 
-            /* Stop framework thread */
-            vscp_thread_lock();
-            vscp_thread_frameworkThrdData.quitFlag = TRUE;
-            vscp_thread_unlock();
+            if (0 != vscp_thread_timerThrdData.status)
+            {
+                /* Avoid that the thread stops immediately */
+                vscp_thread_timerThrdData.quitFlag    = FALSE;
 
-            (void)pthread_join(vscp_thread_frameworkThrdData.id, NULL);
+                /* Create vscp framework thread with default attributes */
+                vscp_thread_timerThrdData.status = pthread_create(&vscp_thread_timerThrdData.id, NULL, vscp_thread_vscpTimerThread, (void*)&vscp_thread_timerThrdData);
+
+                /* Failed to create the thread? */
+                if (0 != vscp_thread_timerThrdData.status)
+                {
+                    status = VSCP_THREAD_RET_ERROR;
+
+                    /* Stop framework thread */
+                    vscp_thread_lock();
+                    vscp_thread_frameworkThrdData.quitFlag = TRUE;
+                    vscp_thread_unlock();
+
+                    (void)pthread_join(vscp_thread_frameworkThrdData.id, NULL);
+                }
+            }
         }
     }
 
@@ -204,6 +210,11 @@ extern void vscp_thread_stop(void)
 
         /* Wait for the VSCP framework thread until its finished. */
         (void)pthread_join(vscp_thread_frameworkThrdData.id, NULL);
+        
+        /* Set error value here, to be able to check if vscp_thread_start is called and 
+         * the threads are already started.
+         */
+        vscp_thread_frameworkThrdData.status = 1;
     }
 
     /* Is VSCP timer thread running? */
@@ -215,6 +226,11 @@ extern void vscp_thread_stop(void)
 
         /* Wait for the VSCP timer thread until its finished. */
         (void)pthread_join(vscp_thread_timerThrdData.id, NULL);
+        
+        /* Set error value here, to be able to check if vscp_thread_start is called and 
+         * the threads are already started.
+         */
+        vscp_thread_timerThrdData.status = 1;
     }
 
     return;
