@@ -489,7 +489,11 @@ static int dm_ext_xml_strcmpi(char const * str1, char const * str2)
 {
     int result = 0;
 
-    if ((NULL == str1) && (NULL != str2))
+    if ((NULL == str1) && (NULL == str2))
+    {
+        result = 0;
+    }
+    else if ((NULL == str1) && (NULL != str2))
     {
         result = -1;
     }
