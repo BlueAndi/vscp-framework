@@ -12,6 +12,7 @@ Bugfixes:
     - The L1 over L2 event to L1 event conversion missed to remove the interface GUID in case of 16 byte data.
     - Bootloader adapter programmed the page wrong (simulated).
     - MDF updated
+    - Minor bugfixes
 
   - Project: Relay board 01
     - Bootloader support enabled
