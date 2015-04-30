@@ -292,7 +292,11 @@ extern uint8_t  vscp_bl_adapter_readProgMem(uint16_t address)
         /* Seek successful? */
         if (0 == fseek(fd, address, SEEK_SET))
         {
-            (void)fread(&value, sizeof(value), 1, fd);
+            /* Read failed? */
+            if (1 != fread(&value, sizeof(value), 1, fd))
+            {
+                value = 0;
+            }
         }
 
         fclose(fd);
