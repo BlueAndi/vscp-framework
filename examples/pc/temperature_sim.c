@@ -267,7 +267,7 @@ static uint32_t temperature_sim_getTemperature(void)
     /* Get average temperature of the previous month */
     if (0 == monthIndex)
     {
-        monthPrevIndex = TEMPERATURE_SIM_ARRAY_NUM(temperature_sim_temperatureAvgPerMonth);
+        monthPrevIndex = TEMPERATURE_SIM_ARRAY_NUM(temperature_sim_temperatureAvgPerMonth) - 1;
     }
     else
     {
