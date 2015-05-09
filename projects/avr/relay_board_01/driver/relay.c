@@ -89,6 +89,12 @@ $Date: 2015-01-06 10:45:56 +0100 (Di, 06 Jan 2015) $
     MACROS
 *******************************************************************************/
 
+/** This macro set the inverted duty cycle of the PWM, which is necessary
+ * because of the PWM output is connected to the low active output enable
+ * pin of the 74HC595 (serial to parallel shift register ic).
+ */
+#define RELAY_SET_DUTY_CYCLE(__dutyCycle)   do{ OCR1A = RELAY_PWM_TOP - (__dutyCycle); }while(0)
+
 /*******************************************************************************
     TYPES AND STRUCTURES
 *******************************************************************************/
@@ -165,7 +171,7 @@ extern void relay_init(void)
      */
 
      /* Set holding current */
-     OCR1A = relay_holdingPwm;
+     RELAY_SET_DUTY_CYCLE(relay_holdingPwm);
 
      /* Enable overflow interrupt */
      TIMSK1 |= (1 << TOIE1);
@@ -296,6 +302,9 @@ extern void relay_setSwitchingPwm(uint16_t value)
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
     {
         relay_switchingPwm = value;
+
+        /* Force changing the duty cycle */
+        relay_enableSwitchingPwm = TRUE;
     }
 
     return;
@@ -322,6 +331,9 @@ extern void relay_setHoldingPwm(uint16_t value)
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
     {
         relay_holdingPwm = value;
+
+        /* Force changing the duty cycle */
+        relay_enableSwitchingPwm = TRUE;
     }
 
     return;
@@ -403,7 +415,7 @@ ISR(TIMER1_OVF_vect)
         relay_enableSwitchingPwm    = FALSE;
         once                        = TRUE;
 
-        OCR1A = relay_switchingPwm;
+        RELAY_SET_DUTY_CYCLE(relay_switchingPwm);
     }
     /* Count down? */
     else if (0 < duration)
@@ -415,6 +427,6 @@ ISR(TIMER1_OVF_vect)
     {
         once = FALSE;
 
-        OCR1A = relay_holdingPwm;
+        RELAY_SET_DUTY_CYCLE(relay_holdingPwm);
     }
 }
