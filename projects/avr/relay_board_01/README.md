@@ -11,7 +11,7 @@
 * The pcb will be mounted in a closed din-rail housing.
 * Every relay is controlled by a PWM and differs between the duty cycle to switch a relay and the duty cycle to hold a relay switched.
 
-##Fuses
+##AVR Fuses
 
 * Brown-out detection set to 4,3V
 * Serial program downloading enabled
