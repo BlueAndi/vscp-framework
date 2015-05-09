@@ -1,8 +1,15 @@
 #Relay Board 01
 
+![Prototype](doc/images/prototype.jpg)
+
 ##Description
 
-...
+* Controls up to 8 external relays (mono stable).
+* Controls up to 4 shutters (per shutter two relays are used).
+* Connect up to 8 pushbuttons.
+* Connect a wind gauge to measure the wind speed and protect the shutters.
+* The pcb will be mounted in a closed din-rail housing.
+* Every relay is controlled by a PWM and differs between the duty cycle to switch a relay and the duty cycle to hold a relay switched.
 
 ##Fuses
 
