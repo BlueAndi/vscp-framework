@@ -238,10 +238,6 @@ extern void vscp_app_reg_restoreFactoryDefaultSettings(void)
         vscp_ps_user_writeRelayControl(index * 2 + 1, (((uint16_t)400) >> 8) & 0xff);
     }
 
-    vscp_ps_user_writeNodeZone(255);
-
-    vscp_ps_user_writeNodeSubZone(255);
-
     for(index = 0; index < VSCP_PS_USER_SIZE_BUTTON_EVENT_ZONE; ++index)
     {
         vscp_ps_user_writeButtonEventZone(index, 255);
@@ -372,11 +368,11 @@ extern uint8_t vscp_app_reg_readRegister(uint16_t page, uint8_t addr)
             }
             else if (VSCP_APP_REG_PAGE_0_OFFSET_NODE_ZONE == addr)
             {
-                value = vscp_ps_user_readNodeZone();
+                value = vscp_ps_readNodeZone();
             }
             else if (VSCP_APP_REG_PAGE_0_OFFSET_NODE_SUB_ZONE == addr)
             {
-                value = vscp_ps_user_readNodeSubZone();
+                value = vscp_ps_readNodeSubZone();
             }
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_EVENT_ZONE <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_EVENT_ZONE + 8) > addr))
@@ -510,13 +506,13 @@ extern uint8_t vscp_app_reg_writeRegister(uint16_t page, uint8_t addr, uint8_t v
             }
             else if (VSCP_APP_REG_PAGE_0_OFFSET_NODE_ZONE == addr)
             {
-                vscp_ps_user_writeNodeZone(value);
-                readBackValue = vscp_ps_user_readNodeZone();
+                vscp_ps_writeNodeZone(value);
+                readBackValue = vscp_ps_readNodeZone();
             }
             else if (VSCP_APP_REG_PAGE_0_OFFSET_NODE_SUB_ZONE == addr)
             {
-                vscp_ps_user_writeNodeSubZone(value);
-                readBackValue = vscp_ps_user_readNodeSubZone();
+                vscp_ps_writeNodeSubZone(value);
+                readBackValue = vscp_ps_readNodeSubZone();
             }
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_EVENT_ZONE <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_EVENT_ZONE + 8) > addr))

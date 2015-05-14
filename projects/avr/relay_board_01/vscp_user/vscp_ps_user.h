@@ -136,29 +136,9 @@ $Date:  $
 #define VSCP_PS_USER_SIZE_RELAY_CONTROL 4
 
 /**
- * Persistent memory address: node zone
- */
-#define VSCP_PS_USER_ADDR_NODE_ZONE (VSCP_PS_USER_BASE_ADDR + 10)
-
-/**
- * Persistent memory size of: node zone
- */
-#define VSCP_PS_USER_SIZE_NODE_ZONE 1
-
-/**
- * Persistent memory address: node sub zone
- */
-#define VSCP_PS_USER_ADDR_NODE_SUB_ZONE (VSCP_PS_USER_BASE_ADDR + 11)
-
-/**
- * Persistent memory size of: node sub zone
- */
-#define VSCP_PS_USER_SIZE_NODE_SUB_ZONE 1
-
-/**
  * Persistent memory address: button event zone
  */
-#define VSCP_PS_USER_ADDR_BUTTON_EVENT_ZONE (VSCP_PS_USER_BASE_ADDR + 12)
+#define VSCP_PS_USER_ADDR_BUTTON_EVENT_ZONE (VSCP_PS_USER_BASE_ADDR + 10)
 
 /**
  * Persistent memory size of: button event zone
@@ -168,7 +148,7 @@ $Date:  $
 /**
  * Persistent memory address: button event sub zone
  */
-#define VSCP_PS_USER_ADDR_BUTTON_EVENT_SUB_ZONE (VSCP_PS_USER_BASE_ADDR + 20)
+#define VSCP_PS_USER_ADDR_BUTTON_EVENT_SUB_ZONE (VSCP_PS_USER_BASE_ADDR + 18)
 
 /**
  * Persistent memory size of: button event sub zone
@@ -178,7 +158,7 @@ $Date:  $
 /**
  * Persistent memory address: relay event zone
  */
-#define VSCP_PS_USER_ADDR_RELAY_EVENT_ZONE  (VSCP_PS_USER_BASE_ADDR + 28)
+#define VSCP_PS_USER_ADDR_RELAY_EVENT_ZONE  (VSCP_PS_USER_BASE_ADDR + 26)
 
 /**
  * Persistent memory size of: relay event zone
@@ -188,7 +168,7 @@ $Date:  $
 /**
  * Persistent memory address: relay event sub zone
  */
-#define VSCP_PS_USER_ADDR_RELAY_EVENT_SUB_ZONE  (VSCP_PS_USER_BASE_ADDR + 36)
+#define VSCP_PS_USER_ADDR_RELAY_EVENT_SUB_ZONE  (VSCP_PS_USER_BASE_ADDR + 34)
 
 /**
  * Persistent memory size of: relay event sub zone
@@ -198,7 +178,7 @@ $Date:  $
 /**
  * Persistent memory address: shutter event zone
  */
-#define VSCP_PS_USER_ADDR_SHUTTER_EVENT_ZONE    (VSCP_PS_USER_BASE_ADDR + 44)
+#define VSCP_PS_USER_ADDR_SHUTTER_EVENT_ZONE    (VSCP_PS_USER_BASE_ADDR + 42)
 
 /**
  * Persistent memory size of: shutter event zone
@@ -208,7 +188,7 @@ $Date:  $
 /**
  * Persistent memory address: shutter event sub zone
  */
-#define VSCP_PS_USER_ADDR_SHUTTER_EVENT_SUB_ZONE    (VSCP_PS_USER_BASE_ADDR + 48)
+#define VSCP_PS_USER_ADDR_SHUTTER_EVENT_SUB_ZONE    (VSCP_PS_USER_BASE_ADDR + 46)
 
 /**
  * Persistent memory size of: shutter event sub zone
@@ -218,7 +198,7 @@ $Date:  $
 /**
  * Persistent memory address: wind event zone
  */
-#define VSCP_PS_USER_ADDR_WIND_EVENT_ZONE   (VSCP_PS_USER_BASE_ADDR + 52)
+#define VSCP_PS_USER_ADDR_WIND_EVENT_ZONE   (VSCP_PS_USER_BASE_ADDR + 50)
 
 /**
  * Persistent memory size of: wind event zone
@@ -228,7 +208,7 @@ $Date:  $
 /**
  * Persistent memory address: wind event sub zone
  */
-#define VSCP_PS_USER_ADDR_WIND_EVENT_SUB_ZONE   (VSCP_PS_USER_BASE_ADDR + 53)
+#define VSCP_PS_USER_ADDR_WIND_EVENT_SUB_ZONE   (VSCP_PS_USER_BASE_ADDR + 51)
 
 /**
  * Persistent memory size of: wind event sub zone
@@ -238,7 +218,7 @@ $Date:  $
 /**
  * Persistent memory address: wind speed medium
  */
-#define VSCP_PS_USER_ADDR_WIND_SPEED_MEDIUM (VSCP_PS_USER_BASE_ADDR + 54)
+#define VSCP_PS_USER_ADDR_WIND_SPEED_MEDIUM (VSCP_PS_USER_BASE_ADDR + 52)
 
 /**
  * Persistent memory size of: wind speed medium
@@ -248,7 +228,7 @@ $Date:  $
 /**
  * Persistent memory address: wind speed high
  */
-#define VSCP_PS_USER_ADDR_WIND_SPEED_HIGH   (VSCP_PS_USER_BASE_ADDR + 55)
+#define VSCP_PS_USER_ADDR_WIND_SPEED_HIGH   (VSCP_PS_USER_BASE_ADDR + 53)
 
 /**
  * Persistent memory size of: wind speed high
@@ -258,7 +238,7 @@ $Date:  $
 /**
  * Persistent memory address: wind speed very high
  */
-#define VSCP_PS_USER_ADDR_WIND_SPEED_VERY_HIGH  (VSCP_PS_USER_BASE_ADDR + 56)
+#define VSCP_PS_USER_ADDR_WIND_SPEED_VERY_HIGH  (VSCP_PS_USER_BASE_ADDR + 54)
 
 /**
  * Persistent memory size of: wind speed very high
@@ -268,7 +248,7 @@ $Date:  $
 /**
  * Persistent memory address: shutter max up time
  */
-#define VSCP_PS_USER_ADDR_SHUTTER_MAX_UP_TIME   (VSCP_PS_USER_BASE_ADDR + 57)
+#define VSCP_PS_USER_ADDR_SHUTTER_MAX_UP_TIME   (VSCP_PS_USER_BASE_ADDR + 55)
 
 /**
  * Persistent memory size of: shutter max up time
@@ -278,7 +258,7 @@ $Date:  $
 /**
  * Persistent memory address: shutter max down time
  */
-#define VSCP_PS_USER_ADDR_SHUTTER_MAX_DOWN_TIME (VSCP_PS_USER_BASE_ADDR + 65)
+#define VSCP_PS_USER_ADDR_SHUTTER_MAX_DOWN_TIME (VSCP_PS_USER_BASE_ADDR + 63)
 
 /**
  * Persistent memory size of: shutter max down time
@@ -288,7 +268,7 @@ $Date:  $
 /**
  * Persistent memory address: shutter turn time
  */
-#define VSCP_PS_USER_ADDR_SHUTTER_TURN_TIME (VSCP_PS_USER_BASE_ADDR + 73)
+#define VSCP_PS_USER_ADDR_SHUTTER_TURN_TIME (VSCP_PS_USER_BASE_ADDR + 71)
 
 /**
  * Persistent memory size of: shutter turn time
@@ -298,7 +278,7 @@ $Date:  $
 /**
  * Persistent memory address: dm ng
  */
-#define VSCP_PS_USER_ADDR_DM_NG (VSCP_PS_USER_BASE_ADDR + 0)
+#define VSCP_PS_USER_ADDR_DM_NG (VSCP_PS_USER_BASE_ADDR + 79)
 
 /**
  * Persistent memory size of: dm ng
@@ -482,37 +462,7 @@ extern uint8_t vscp_ps_user_readRelayControl(uint8_t index);
  */
 extern void vscp_ps_user_writeRelayControl(uint8_t index, uint8_t value);
 
-/**
- * This function reads the node zone from persistent storage.
- * The zone which the node belongs to.
- *
- * @return Value
- */
-extern uint8_t vscp_ps_user_readNodeZone(void);
 
-/**
- * This function writes the node zone to persistent storage.
- * The zone which the node belongs to.
- *
- * @param[in] value Value to write
- */
-extern void vscp_ps_user_writeNodeZone(uint8_t value);
-
-/**
- * This function reads the node sub zone from persistent storage.
- * The sub-zone which the node belongs to.
- *
- * @return Value
- */
-extern uint8_t vscp_ps_user_readNodeSubZone(void);
-
-/**
- * This function writes the node sub zone to persistent storage.
- * The sub-zone which the node belongs to.
- *
- * @param[in] value Value to write
- */
-extern void vscp_ps_user_writeNodeSubZone(uint8_t value);
 
 /**
  * This function reads the button event zone from persistent storage.

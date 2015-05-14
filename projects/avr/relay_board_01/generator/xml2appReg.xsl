@@ -198,19 +198,25 @@ $Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
             
             <!-- Page -->
             <xsl:variable name="page" select="ss:Cell[1]/ss:Data" />
-            <!-- Offset -->
+            <!-- Register offset -->
             <xsl:variable name="offset" select="ss:Cell[2]/ss:Data" />
+            <!-- Persistency offset -->
+            <xsl:variable name="persistencyOffset" select="ss:Cell[3]/ss:Data" />
             <!-- Number of elements -->
-            <xsl:variable name="numElements" select="ss:Cell[3]/ss:Data" />
+            <xsl:variable name="numElements" select="ss:Cell[4]/ss:Data" />
             <!-- Element size -->
-            <xsl:variable name="elementSize" select="ss:Cell[4]/ss:Data" />
+            <xsl:variable name="elementSize" select="ss:Cell[5]/ss:Data" />
             <!-- Short name -->
-            <xsl:variable name="shortName" select="ss:Cell[5]/ss:Data" />
+            <xsl:variable name="shortName" select="ss:Cell[6]/ss:Data" />
             <!-- Description -->
-            <xsl:variable name="description" select="ss:Cell[6]/ss:Data" />
+            <xsl:variable name="description" select="ss:Cell[7]/ss:Data" />
             <!-- Factory default setting -->
-            <xsl:variable name="default" select="ss:Cell[7]/ss:Data" />
-        
+            <xsl:variable name="default" select="ss:Cell[8]/ss:Data" />
+            <!-- User persistency read -->
+            <xsl:variable name="userPersistencyRead" select="ss:Cell[9]/ss:Data" />
+            <!-- User persistency write -->
+            <xsl:variable name="userPersistencyWrite" select="ss:Cell[10]/ss:Data" />
+            
             <xsl:if test="$page != '' and $offset != '' and $numElements != '' and $elementSize != '' and $shortName != '' and $description != '' and $default != ''">
             
                 <xsl:call-template name="ctools.define">
@@ -412,22 +418,28 @@ $Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
                     
                     <!-- Page -->
                     <xsl:variable name="page" select="ss:Cell[1]/ss:Data" />
-                    <!-- Offset -->
+                    <!-- Register offset -->
                     <xsl:variable name="offset" select="ss:Cell[2]/ss:Data" />
+                    <!-- Persistency offset -->
+                    <xsl:variable name="persistencyOffset" select="ss:Cell[3]/ss:Data" />
                     <!-- Number of elements -->
-                    <xsl:variable name="numElements" select="ss:Cell[3]/ss:Data" />
+                    <xsl:variable name="numElements" select="ss:Cell[4]/ss:Data" />
                     <!-- Element size -->
-                    <xsl:variable name="elementSize" select="ss:Cell[4]/ss:Data" />
+                    <xsl:variable name="elementSize" select="ss:Cell[5]/ss:Data" />
                     <!-- Short name -->
-                    <xsl:variable name="shortName" select="ss:Cell[5]/ss:Data" />
+                    <xsl:variable name="shortName" select="ss:Cell[6]/ss:Data" />
                     <!-- Description -->
-                    <xsl:variable name="description" select="ss:Cell[6]/ss:Data" />
+                    <xsl:variable name="description" select="ss:Cell[7]/ss:Data" />
                     <!-- Factory default setting -->
-                    <xsl:variable name="default" select="ss:Cell[7]/ss:Data" />
+                    <xsl:variable name="default" select="ss:Cell[8]/ss:Data" />
+                    <!-- User persistency read -->
+                    <xsl:variable name="userPersistencyRead" select="ss:Cell[9]/ss:Data" />
+                    <!-- User persistency write -->
+                    <xsl:variable name="userPersistencyWrite" select="ss:Cell[10]/ss:Data" />
                     <!-- Size -->
                     <xsl:variable name="size" select="$numElements * $elementSize" />
                 
-                    <xsl:if test="$page != '' and $offset != '' and $numElements != '' and $elementSize != '' and $shortName != '' and $description != '' and $default != ''">
+                    <xsl:if test="$page != '' and $offset != '' and $numElements != '' and $elementSize != '' and $shortName != '' and $description != '' and $default != '' and not($userPersistencyWrite)">
                         
                         <!-- Build #define name of size -->
                         <xsl:variable name="size.define.name">
@@ -587,18 +599,24 @@ $Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
                     
                     <!-- Page -->
                     <xsl:variable name="page" select="ss:Cell[1]/ss:Data" />
-                    <!-- Offset -->
+                    <!-- Register offset -->
                     <xsl:variable name="offset" select="ss:Cell[2]/ss:Data" />
+                    <!-- Persistency offset -->
+                    <xsl:variable name="persistencyOffset" select="ss:Cell[3]/ss:Data" />
                     <!-- Number of elements -->
-                    <xsl:variable name="numElements" select="ss:Cell[3]/ss:Data" />
+                    <xsl:variable name="numElements" select="ss:Cell[4]/ss:Data" />
                     <!-- Element size -->
-                    <xsl:variable name="elementSize" select="ss:Cell[4]/ss:Data" />
+                    <xsl:variable name="elementSize" select="ss:Cell[5]/ss:Data" />
                     <!-- Short name -->
-                    <xsl:variable name="shortName" select="ss:Cell[5]/ss:Data" />
+                    <xsl:variable name="shortName" select="ss:Cell[6]/ss:Data" />
                     <!-- Description -->
-                    <xsl:variable name="description" select="ss:Cell[6]/ss:Data" />
+                    <xsl:variable name="description" select="ss:Cell[7]/ss:Data" />
                     <!-- Factory default setting -->
-                    <xsl:variable name="default" select="ss:Cell[7]/ss:Data" />
+                    <xsl:variable name="default" select="ss:Cell[8]/ss:Data" />
+                    <!-- User persistency read -->
+                    <xsl:variable name="userPersistencyRead" select="ss:Cell[9]/ss:Data" />
+                    <!-- User persistency write -->
+                    <xsl:variable name="userPersistencyWrite" select="ss:Cell[10]/ss:Data" />
                     <!-- Size -->
                     <xsl:variable name="size" select="$numElements * $elementSize" />
                 
@@ -625,13 +643,20 @@ $Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
                         <!-- Build persistency access function name -->
                         <xsl:variable name="ps.user.read.name">
                         
-                            <xsl:text>vscp_ps_user_</xsl:text>
-                            <xsl:call-template name="ctools.hungarianForm">
-                                <xsl:with-param name="string">
-                                    <xsl:text>read </xsl:text>
-                                    <xsl:value-of select="$shortName" />
-                                </xsl:with-param>
-                            </xsl:call-template>
+                            <xsl:choose>
+                                <xsl:when test="not($userPersistencyRead)">
+                                    <xsl:text>vscp_ps_user_</xsl:text>
+                                    <xsl:call-template name="ctools.hungarianForm">
+                                        <xsl:with-param name="string">
+                                            <xsl:text>read </xsl:text>
+                                            <xsl:value-of select="$shortName" />
+                                        </xsl:with-param>
+                                    </xsl:call-template>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$userPersistencyRead" />
+                                </xsl:otherwise>
+                            </xsl:choose>
                         
                         </xsl:variable>
                         
@@ -704,20 +729,26 @@ $Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
                     <xsl:sort order="ascending" data-type="number" select="ss:Cell[1]/ss:Data" />
                     <xsl:sort order="ascending" data-type="number" select="ss:Cell[2]/ss:Data" />
                     
-                    <!-- Page -->
-                    <xsl:variable name="page" select="ss:Cell[1]/ss:Data" />
-                    <!-- Offset -->
-                    <xsl:variable name="offset" select="ss:Cell[2]/ss:Data" />
-                    <!-- Number of elements -->
-                    <xsl:variable name="numElements" select="ss:Cell[3]/ss:Data" />
-                    <!-- Element size -->
-                    <xsl:variable name="elementSize" select="ss:Cell[4]/ss:Data" />
-                    <!-- Short name -->
-                    <xsl:variable name="shortName" select="ss:Cell[5]/ss:Data" />
-                    <!-- Description -->
-                    <xsl:variable name="description" select="ss:Cell[6]/ss:Data" />
-                    <!-- Factory default setting -->
-                    <xsl:variable name="default" select="ss:Cell[7]/ss:Data" />
+                <!-- Page -->
+                <xsl:variable name="page" select="ss:Cell[1]/ss:Data" />
+                <!-- Register offset -->
+                <xsl:variable name="offset" select="ss:Cell[2]/ss:Data" />
+                <!-- Persistency offset -->
+                <xsl:variable name="persistencyOffset" select="ss:Cell[3]/ss:Data" />
+                <!-- Number of elements -->
+                <xsl:variable name="numElements" select="ss:Cell[4]/ss:Data" />
+                <!-- Element size -->
+                <xsl:variable name="elementSize" select="ss:Cell[5]/ss:Data" />
+                <!-- Short name -->
+                <xsl:variable name="shortName" select="ss:Cell[6]/ss:Data" />
+                <!-- Description -->
+                <xsl:variable name="description" select="ss:Cell[7]/ss:Data" />
+                <!-- Factory default setting -->
+                <xsl:variable name="default" select="ss:Cell[8]/ss:Data" />
+                <!-- User persistency read -->
+                <xsl:variable name="userPersistencyRead" select="ss:Cell[9]/ss:Data" />
+                <!-- User persistency write -->
+                <xsl:variable name="userPersistencyWrite" select="ss:Cell[10]/ss:Data" />
                     <!-- Size -->
                     <xsl:variable name="size" select="$numElements * $elementSize" />
                 
@@ -744,13 +775,20 @@ $Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
                         <!-- Build persistency access function name -->
                         <xsl:variable name="ps.user.read.name">
                         
-                            <xsl:text>vscp_ps_user_</xsl:text>
-                            <xsl:call-template name="ctools.hungarianForm">
-                                <xsl:with-param name="string">
-                                    <xsl:text>read </xsl:text>
-                                    <xsl:value-of select="$shortName" />
-                                </xsl:with-param>
-                            </xsl:call-template>
+                            <xsl:choose>
+                                <xsl:when test="not($userPersistencyRead)">
+                                    <xsl:text>vscp_ps_user_</xsl:text>
+                                    <xsl:call-template name="ctools.hungarianForm">
+                                        <xsl:with-param name="string">
+                                            <xsl:text>read </xsl:text>
+                                            <xsl:value-of select="$shortName" />
+                                        </xsl:with-param>
+                                    </xsl:call-template>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$userPersistencyRead" />
+                                </xsl:otherwise>
+                            </xsl:choose>
                         
                         </xsl:variable>
                         
@@ -876,20 +914,26 @@ $Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
                     <xsl:sort order="ascending" data-type="number" select="ss:Cell[1]/ss:Data" />
                     <xsl:sort order="ascending" data-type="number" select="ss:Cell[2]/ss:Data" />
                     
-                    <!-- Page -->
-                    <xsl:variable name="page" select="ss:Cell[1]/ss:Data" />
-                    <!-- Offset -->
-                    <xsl:variable name="offset" select="ss:Cell[2]/ss:Data" />
-                    <!-- Number of elements -->
-                    <xsl:variable name="numElements" select="ss:Cell[3]/ss:Data" />
-                    <!-- Element size -->
-                    <xsl:variable name="elementSize" select="ss:Cell[4]/ss:Data" />
-                    <!-- Short name -->
-                    <xsl:variable name="shortName" select="ss:Cell[5]/ss:Data" />
-                    <!-- Description -->
-                    <xsl:variable name="description" select="ss:Cell[6]/ss:Data" />
-                    <!-- Factory default setting -->
-                    <xsl:variable name="default" select="ss:Cell[7]/ss:Data" />
+                <!-- Page -->
+                <xsl:variable name="page" select="ss:Cell[1]/ss:Data" />
+                <!-- Register offset -->
+                <xsl:variable name="offset" select="ss:Cell[2]/ss:Data" />
+                <!-- Persistency offset -->
+                <xsl:variable name="persistencyOffset" select="ss:Cell[3]/ss:Data" />
+                <!-- Number of elements -->
+                <xsl:variable name="numElements" select="ss:Cell[4]/ss:Data" />
+                <!-- Element size -->
+                <xsl:variable name="elementSize" select="ss:Cell[5]/ss:Data" />
+                <!-- Short name -->
+                <xsl:variable name="shortName" select="ss:Cell[6]/ss:Data" />
+                <!-- Description -->
+                <xsl:variable name="description" select="ss:Cell[7]/ss:Data" />
+                <!-- Factory default setting -->
+                <xsl:variable name="default" select="ss:Cell[8]/ss:Data" />
+                <!-- User persistency read -->
+                <xsl:variable name="userPersistencyRead" select="ss:Cell[9]/ss:Data" />
+                <!-- User persistency write -->
+                <xsl:variable name="userPersistencyWrite" select="ss:Cell[10]/ss:Data" />
                     <!-- Size -->
                     <xsl:variable name="size" select="$numElements * $elementSize" />
                 
@@ -913,30 +957,44 @@ $Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
                             
                         </xsl:variable>
                         
-                        <!-- Build persistency read access function name -->
+                        <!-- Build persistency access function name -->
                         <xsl:variable name="ps.user.read.name">
                         
-                            <xsl:text>vscp_ps_user_</xsl:text>
-                            <xsl:call-template name="ctools.hungarianForm">
-                                <xsl:with-param name="string">
-                                    <xsl:text>read </xsl:text>
-                                    <xsl:value-of select="$shortName" />
-                                </xsl:with-param>
-                            </xsl:call-template>
+                            <xsl:choose>
+                                <xsl:when test="not($userPersistencyRead)">
+                                    <xsl:text>vscp_ps_user_</xsl:text>
+                                    <xsl:call-template name="ctools.hungarianForm">
+                                        <xsl:with-param name="string">
+                                            <xsl:text>read </xsl:text>
+                                            <xsl:value-of select="$shortName" />
+                                        </xsl:with-param>
+                                    </xsl:call-template>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$userPersistencyRead" />
+                                </xsl:otherwise>
+                            </xsl:choose>
                         
                         </xsl:variable>
                         
                         <!-- Build persistency write access function name -->
                         <xsl:variable name="ps.user.write.name">
                         
-                            <xsl:text>vscp_ps_user_</xsl:text>
-                            <xsl:call-template name="ctools.hungarianForm">
-                                <xsl:with-param name="string">
-                                    <xsl:text>write </xsl:text>
-                                    <xsl:value-of select="$shortName" />
-                                </xsl:with-param>
-                            </xsl:call-template>
-                        
+                            <xsl:choose>
+                                <xsl:when test="not($userPersistencyWrite)">
+                                    <xsl:text>vscp_ps_user_</xsl:text>
+                                    <xsl:call-template name="ctools.hungarianForm">
+                                        <xsl:with-param name="string">
+                                            <xsl:text>write </xsl:text>
+                                            <xsl:value-of select="$shortName" />
+                                        </xsl:with-param>
+                                    </xsl:call-template>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$userPersistencyWrite" />
+                                </xsl:otherwise>
+                            </xsl:choose>
+
                         </xsl:variable>
                         
                         <xsl:choose>
@@ -1016,20 +1074,26 @@ $Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
                     <xsl:sort order="ascending" data-type="number" select="ss:Cell[1]/ss:Data" />
                     <xsl:sort order="ascending" data-type="number" select="ss:Cell[2]/ss:Data" />
                     
-                    <!-- Page -->
-                    <xsl:variable name="page" select="ss:Cell[1]/ss:Data" />
-                    <!-- Offset -->
-                    <xsl:variable name="offset" select="ss:Cell[2]/ss:Data" />
-                    <!-- Number of elements -->
-                    <xsl:variable name="numElements" select="ss:Cell[3]/ss:Data" />
-                    <!-- Element size -->
-                    <xsl:variable name="elementSize" select="ss:Cell[4]/ss:Data" />
-                    <!-- Short name -->
-                    <xsl:variable name="shortName" select="ss:Cell[5]/ss:Data" />
-                    <!-- Description -->
-                    <xsl:variable name="description" select="ss:Cell[6]/ss:Data" />
-                    <!-- Factory default setting -->
-                    <xsl:variable name="default" select="ss:Cell[7]/ss:Data" />
+                <!-- Page -->
+                <xsl:variable name="page" select="ss:Cell[1]/ss:Data" />
+                <!-- Register offset -->
+                <xsl:variable name="offset" select="ss:Cell[2]/ss:Data" />
+                <!-- Persistency offset -->
+                <xsl:variable name="persistencyOffset" select="ss:Cell[3]/ss:Data" />
+                <!-- Number of elements -->
+                <xsl:variable name="numElements" select="ss:Cell[4]/ss:Data" />
+                <!-- Element size -->
+                <xsl:variable name="elementSize" select="ss:Cell[5]/ss:Data" />
+                <!-- Short name -->
+                <xsl:variable name="shortName" select="ss:Cell[6]/ss:Data" />
+                <!-- Description -->
+                <xsl:variable name="description" select="ss:Cell[7]/ss:Data" />
+                <!-- Factory default setting -->
+                <xsl:variable name="default" select="ss:Cell[8]/ss:Data" />
+                <!-- User persistency read -->
+                <xsl:variable name="userPersistencyRead" select="ss:Cell[9]/ss:Data" />
+                <!-- User persistency write -->
+                <xsl:variable name="userPersistencyWrite" select="ss:Cell[10]/ss:Data" />
                     <!-- Size -->
                     <xsl:variable name="size" select="$numElements * $elementSize" />
                 
@@ -1053,30 +1117,44 @@ $Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
                             
                         </xsl:variable>
                         
-                        <!-- Build persistency read access function name -->
+                        <!-- Build persistency access function name -->
                         <xsl:variable name="ps.user.read.name">
                         
-                            <xsl:text>vscp_ps_user_</xsl:text>
-                            <xsl:call-template name="ctools.hungarianForm">
-                                <xsl:with-param name="string">
-                                    <xsl:text>read </xsl:text>
-                                    <xsl:value-of select="$shortName" />
-                                </xsl:with-param>
-                            </xsl:call-template>
+                            <xsl:choose>
+                                <xsl:when test="not($userPersistencyRead)">
+                                    <xsl:text>vscp_ps_user_</xsl:text>
+                                    <xsl:call-template name="ctools.hungarianForm">
+                                        <xsl:with-param name="string">
+                                            <xsl:text>read </xsl:text>
+                                            <xsl:value-of select="$shortName" />
+                                        </xsl:with-param>
+                                    </xsl:call-template>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$userPersistencyRead" />
+                                </xsl:otherwise>
+                            </xsl:choose>
                         
                         </xsl:variable>
                         
                         <!-- Build persistency write access function name -->
                         <xsl:variable name="ps.user.write.name">
                         
-                            <xsl:text>vscp_ps_user_</xsl:text>
-                            <xsl:call-template name="ctools.hungarianForm">
-                                <xsl:with-param name="string">
-                                    <xsl:text>write </xsl:text>
-                                    <xsl:value-of select="$shortName" />
-                                </xsl:with-param>
-                            </xsl:call-template>
-                        
+                            <xsl:choose>
+                                <xsl:when test="not($userPersistencyWrite)">
+                                    <xsl:text>vscp_ps_user_</xsl:text>
+                                    <xsl:call-template name="ctools.hungarianForm">
+                                        <xsl:with-param name="string">
+                                            <xsl:text>write </xsl:text>
+                                            <xsl:value-of select="$shortName" />
+                                        </xsl:with-param>
+                                    </xsl:call-template>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="$userPersistencyWrite" />
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            
                         </xsl:variable>
                         
                         <xsl:choose>

@@ -230,60 +230,70 @@ $Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
             
             <!-- Page -->
             <xsl:variable name="page" select="ss:Cell[1]/ss:Data" />
-            <!-- Offset -->
+            <!-- Register offset -->
             <xsl:variable name="offset" select="ss:Cell[2]/ss:Data" />
+            <!-- Persistency offset -->
+            <xsl:variable name="persistencyOffset" select="ss:Cell[3]/ss:Data" />
             <!-- Number of elements -->
-            <xsl:variable name="numElements" select="ss:Cell[3]/ss:Data" />
+            <xsl:variable name="numElements" select="ss:Cell[4]/ss:Data" />
             <!-- Element size -->
-            <xsl:variable name="elementSize" select="ss:Cell[4]/ss:Data" />
+            <xsl:variable name="elementSize" select="ss:Cell[5]/ss:Data" />
             <!-- Short name -->
-            <xsl:variable name="shortName" select="ss:Cell[5]/ss:Data" />
+            <xsl:variable name="shortName" select="ss:Cell[6]/ss:Data" />
             <!-- Description -->
-            <xsl:variable name="description" select="ss:Cell[6]/ss:Data" />
+            <xsl:variable name="description" select="ss:Cell[7]/ss:Data" />
+            <!-- User persistency read -->
+            <xsl:variable name="userPersistencyRead" select="ss:Cell[9]/ss:Data" />
+            <!-- User persistency write -->
+            <xsl:variable name="userPersistencyWrite" select="ss:Cell[10]/ss:Data" />
             <!-- Size -->
             <xsl:variable name="size" select="$numElements * $elementSize" />
         
-            <xsl:if test="$page != '' and $offset != '' and $numElements != '' and $elementSize != '' and $shortName != ''">
+            <xsl:if test="$page != '' and $offset != '' and $persistencyOffset != '' and $numElements != '' and $elementSize != '' and $shortName != ''">
 
-                <!-- Generate #define for the address -->
-                <xsl:call-template name="ctools.define">
-                    <xsl:with-param name="comment">
-                        <xsl:text>Persistent memory address: </xsl:text>
-                        <xsl:value-of select="$shortName" />
-                    </xsl:with-param>
-                    <xsl:with-param name="moduleName">
-                        <xsl:value-of select="$global.moduleName" />
-                    </xsl:with-param>
-                    <xsl:with-param name="name">
-                        <xsl:text>ADDR </xsl:text>
-                        <xsl:value-of select="$shortName" />
-                    </xsl:with-param>
-                    <xsl:with-param name="value">
-                        <xsl:text>(VSCP_PS_USER_BASE_ADDR + </xsl:text>
-                        <xsl:value-of select="$offset" />
-                        <xsl:text>)</xsl:text>
-                    </xsl:with-param>
-                </xsl:call-template>
-                <xsl:text>&LF;</xsl:text>
-            
-                <!-- Generate #define for the size -->
-                <xsl:call-template name="ctools.define">
-                    <xsl:with-param name="comment">
-                        <xsl:text>Persistent memory size of: </xsl:text>
-                        <xsl:value-of select="$shortName" />
-                    </xsl:with-param>
-                    <xsl:with-param name="moduleName">
-                        <xsl:value-of select="$global.moduleName" />
-                    </xsl:with-param>
-                    <xsl:with-param name="name">
-                        <xsl:text>SIZE </xsl:text>
-                        <xsl:value-of select="$shortName" />
-                    </xsl:with-param>
-                    <xsl:with-param name="value">
-                        <xsl:value-of select="$numElements * $elementSize" />
-                    </xsl:with-param>
-                </xsl:call-template>
-                <xsl:text>&LF;</xsl:text>
+                <xsl:if test="not($userPersistencyRead)">
+                    <!-- Generate #define for the address -->
+                    <xsl:call-template name="ctools.define">
+                        <xsl:with-param name="comment">
+                            <xsl:text>Persistent memory address: </xsl:text>
+                            <xsl:value-of select="$shortName" />
+                        </xsl:with-param>
+                        <xsl:with-param name="moduleName">
+                            <xsl:value-of select="$global.moduleName" />
+                        </xsl:with-param>
+                        <xsl:with-param name="name">
+                            <xsl:text>ADDR </xsl:text>
+                            <xsl:value-of select="$shortName" />
+                        </xsl:with-param>
+                        <xsl:with-param name="value">
+                            <xsl:text>(VSCP_PS_USER_BASE_ADDR + </xsl:text>
+                            <xsl:value-of select="$persistencyOffset" />
+                            <xsl:text>)</xsl:text>
+                        </xsl:with-param>
+                    </xsl:call-template>
+                    <xsl:text>&LF;</xsl:text>
+                </xsl:if>
+                            
+                <xsl:if test="not($userPersistencyWrite)">
+                    <!-- Generate #define for the size -->
+                    <xsl:call-template name="ctools.define">
+                        <xsl:with-param name="comment">
+                            <xsl:text>Persistent memory size of: </xsl:text>
+                            <xsl:value-of select="$shortName" />
+                        </xsl:with-param>
+                        <xsl:with-param name="moduleName">
+                            <xsl:value-of select="$global.moduleName" />
+                        </xsl:with-param>
+                        <xsl:with-param name="name">
+                            <xsl:text>SIZE </xsl:text>
+                            <xsl:value-of select="$shortName" />
+                        </xsl:with-param>
+                        <xsl:with-param name="value">
+                            <xsl:value-of select="$numElements * $elementSize" />
+                        </xsl:with-param>
+                    </xsl:call-template>
+                    <xsl:text>&LF;</xsl:text>
+                </xsl:if>
             
             </xsl:if>
         
@@ -365,138 +375,156 @@ $Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
             
             <!-- Page -->
             <xsl:variable name="page" select="ss:Cell[1]/ss:Data" />
-            <!-- Offset -->
+            <!-- Register offset -->
             <xsl:variable name="offset" select="ss:Cell[2]/ss:Data" />
+            <!-- Persistency offset -->
+            <xsl:variable name="persistencyOffset" select="ss:Cell[3]/ss:Data" />
             <!-- Number of elements -->
-            <xsl:variable name="numElements" select="ss:Cell[3]/ss:Data" />
+            <xsl:variable name="numElements" select="ss:Cell[4]/ss:Data" />
             <!-- Element size -->
-            <xsl:variable name="elementSize" select="ss:Cell[4]/ss:Data" />
+            <xsl:variable name="elementSize" select="ss:Cell[5]/ss:Data" />
             <!-- Short name -->
-            <xsl:variable name="shortName" select="ss:Cell[5]/ss:Data" />
+            <xsl:variable name="shortName" select="ss:Cell[6]/ss:Data" />
             <!-- Description -->
-            <xsl:variable name="description" select="ss:Cell[6]/ss:Data" />
+            <xsl:variable name="description" select="ss:Cell[7]/ss:Data" />
+            <!-- User persistency read -->
+            <xsl:variable name="userPersistencyRead" select="ss:Cell[9]/ss:Data" />
+            <!-- User persistency write -->
+            <xsl:variable name="userPersistencyWrite" select="ss:Cell[10]/ss:Data" />
             <!-- Size -->
             <xsl:variable name="size" select="$numElements * $elementSize" />
         
-            <xsl:if test="$page != '' and $offset != '' and $numElements != '' and $elementSize != '' and $shortName != ''">
+            <xsl:if test="$page != '' and $offset != '' and $persistencyOffset != '' and $numElements != '' and $elementSize != '' and $shortName != ''">
                 
                 <xsl:choose>
                     <!-- Number of elements is 1 -->
                     <xsl:when test="$size = 1">
                         
-                        <!-- Read function -->
-                        <xsl:call-template name="ctools.function">
-                            <xsl:with-param name="comment">
-                                <xsl:text>This function reads the </xsl:text>
-                                <xsl:value-of select="$shortName" />
-                                <xsl:text> from persistent storage.&LF;</xsl:text>
-                                <xsl:value-of select="$description" />
-                                <xsl:text>&LF;</xsl:text>
-                                <xsl:text>&LF;</xsl:text>
-                                <xsl:text>@return Value</xsl:text>
-                            </xsl:with-param>
-                            <xsl:with-param name="returnType">
-                                <xsl:text>extern uint8_t</xsl:text>
-                            </xsl:with-param>
-                            <xsl:with-param name="moduleName">
-                                <xsl:value-of select="$global.moduleName" />
-                            </xsl:with-param>
-                            <xsl:with-param name="name">
-                                <xsl:text>read </xsl:text>
-                                <xsl:value-of select="$shortName" />
-                            </xsl:with-param>
-                            <xsl:with-param name="parameter">
-                                <xsl:text>void</xsl:text>
-                            </xsl:with-param>
-                        </xsl:call-template>
+                        <xsl:if test="not($userPersistencyRead)">
+                            <!-- Read function -->
+                            <xsl:call-template name="ctools.function">
+                                <xsl:with-param name="comment">
+                                    <xsl:text>This function reads the </xsl:text>
+                                    <xsl:value-of select="$shortName" />
+                                    <xsl:text> from persistent storage.&LF;</xsl:text>
+                                    <xsl:value-of select="$description" />
+                                    <xsl:text>&LF;</xsl:text>
+                                    <xsl:text>&LF;</xsl:text>
+                                    <xsl:text>@return Value</xsl:text>
+                                </xsl:with-param>
+                                <xsl:with-param name="returnType">
+                                    <xsl:text>extern uint8_t</xsl:text>
+                                </xsl:with-param>
+                                <xsl:with-param name="moduleName">
+                                    <xsl:value-of select="$global.moduleName" />
+                                </xsl:with-param>
+                                <xsl:with-param name="name">
+                                    <xsl:text>read </xsl:text>
+                                    <xsl:value-of select="$shortName" />
+                                </xsl:with-param>
+                                <xsl:with-param name="parameter">
+                                    <xsl:text>void</xsl:text>
+                                </xsl:with-param>
+                            </xsl:call-template>
+                        </xsl:if>
                         
-                        <xsl:text>&LF;</xsl:text>
+                        <xsl:if test="not($userPersistencyRead) and not($userPersistencyWrite)">
+                            <xsl:text>&LF;</xsl:text>
+                        </xsl:if>
 
-                        <!-- Write function -->
-                        <xsl:call-template name="ctools.function">
-                            <xsl:with-param name="comment">
-                                <xsl:text>This function writes the </xsl:text>
-                                <xsl:value-of select="$shortName" />
-                                <xsl:text> to persistent storage.&LF;</xsl:text>
-                                <xsl:value-of select="$description" />
-                                <xsl:text>&LF;</xsl:text>
-                                <xsl:text>&LF;</xsl:text>
-                                <xsl:text>@param[in] value Value to write</xsl:text>
-                            </xsl:with-param>
-                            <xsl:with-param name="returnType">
-                                <xsl:text>extern void</xsl:text>
-                            </xsl:with-param>
-                            <xsl:with-param name="moduleName">
-                                <xsl:value-of select="$global.moduleName" />
-                            </xsl:with-param>
-                            <xsl:with-param name="name">
-                                <xsl:text>write </xsl:text>
-                                <xsl:value-of select="$shortName" />
-                            </xsl:with-param>
-                            <xsl:with-param name="parameter">
-                                <xsl:text>uint8_t value</xsl:text>
-                            </xsl:with-param>
-                        </xsl:call-template>
+                        <xsl:if test="not($userPersistencyWrite)">
+                            <!-- Write function -->
+                            <xsl:call-template name="ctools.function">
+                                <xsl:with-param name="comment">
+                                    <xsl:text>This function writes the </xsl:text>
+                                    <xsl:value-of select="$shortName" />
+                                    <xsl:text> to persistent storage.&LF;</xsl:text>
+                                    <xsl:value-of select="$description" />
+                                    <xsl:text>&LF;</xsl:text>
+                                    <xsl:text>&LF;</xsl:text>
+                                    <xsl:text>@param[in] value Value to write</xsl:text>
+                                </xsl:with-param>
+                                <xsl:with-param name="returnType">
+                                    <xsl:text>extern void</xsl:text>
+                                </xsl:with-param>
+                                <xsl:with-param name="moduleName">
+                                    <xsl:value-of select="$global.moduleName" />
+                                </xsl:with-param>
+                                <xsl:with-param name="name">
+                                    <xsl:text>write </xsl:text>
+                                    <xsl:value-of select="$shortName" />
+                                </xsl:with-param>
+                                <xsl:with-param name="parameter">
+                                    <xsl:text>uint8_t value</xsl:text>
+                                </xsl:with-param>
+                            </xsl:call-template>
+                        </xsl:if>
                         
                     </xsl:when>
                     <!-- Number of elements are greater than 1 -->
                     <xsl:otherwise>
                     
-                        <!-- Read function -->
-                        <xsl:call-template name="ctools.function">
-                            <xsl:with-param name="comment">
-                                <xsl:text>This function reads the </xsl:text>
-                                <xsl:value-of select="$shortName" />
-                                <xsl:text> from persistent storage.&LF;</xsl:text>
-                                <xsl:value-of select="$description" />
-                                <xsl:text>&LF;</xsl:text>
-                                <xsl:text>&LF;</xsl:text>
-                                <xsl:text>@param[in] index Index&LF;</xsl:text>
-                                <xsl:text>@return Value</xsl:text>
-                            </xsl:with-param>
-                            <xsl:with-param name="returnType">
-                                <xsl:text>extern uint8_t</xsl:text>
-                            </xsl:with-param>
-                            <xsl:with-param name="moduleName">
-                                <xsl:value-of select="$global.moduleName" />
-                            </xsl:with-param>
-                            <xsl:with-param name="name">
-                                <xsl:text>read </xsl:text>
-                                <xsl:value-of select="$shortName" />
-                            </xsl:with-param>
-                            <xsl:with-param name="parameter">
-                                <xsl:text>uint8_t index</xsl:text>
-                            </xsl:with-param>
-                        </xsl:call-template>
+                        <xsl:if test="not($userPersistencyRead)">
+                            <!-- Read function -->
+                            <xsl:call-template name="ctools.function">
+                                <xsl:with-param name="comment">
+                                    <xsl:text>This function reads the </xsl:text>
+                                    <xsl:value-of select="$shortName" />
+                                    <xsl:text> from persistent storage.&LF;</xsl:text>
+                                    <xsl:value-of select="$description" />
+                                    <xsl:text>&LF;</xsl:text>
+                                    <xsl:text>&LF;</xsl:text>
+                                    <xsl:text>@param[in] index Index&LF;</xsl:text>
+                                    <xsl:text>@return Value</xsl:text>
+                                </xsl:with-param>
+                                <xsl:with-param name="returnType">
+                                    <xsl:text>extern uint8_t</xsl:text>
+                                </xsl:with-param>
+                                <xsl:with-param name="moduleName">
+                                    <xsl:value-of select="$global.moduleName" />
+                                </xsl:with-param>
+                                <xsl:with-param name="name">
+                                    <xsl:text>read </xsl:text>
+                                    <xsl:value-of select="$shortName" />
+                                </xsl:with-param>
+                                <xsl:with-param name="parameter">
+                                    <xsl:text>uint8_t index</xsl:text>
+                                </xsl:with-param>
+                            </xsl:call-template>
+                        </xsl:if>
                         
-                        <xsl:text>&LF;</xsl:text>
+                        <xsl:if test="not($userPersistencyRead) and not($userPersistencyWrite)">
+                            <xsl:text>&LF;</xsl:text>
+                        </xsl:if>
                     
-                        <!-- Write function -->
-                        <xsl:call-template name="ctools.function">
-                            <xsl:with-param name="comment">
-                                <xsl:text>This function writes the </xsl:text>
-                                <xsl:value-of select="$shortName" />
-                                <xsl:text> to persistent storage.&LF;</xsl:text>
-                                <xsl:value-of select="$description" />
-                                <xsl:text>&LF;</xsl:text>
-                                <xsl:text>&LF;</xsl:text>
-                                <xsl:text>@param[in] index Index&LF;</xsl:text>
-                                <xsl:text>@param[in] value Value to write</xsl:text>
-                            </xsl:with-param>
-                            <xsl:with-param name="returnType">
-                                <xsl:text>extern void</xsl:text>
-                            </xsl:with-param>
-                            <xsl:with-param name="moduleName">
-                                <xsl:value-of select="$global.moduleName" />
-                            </xsl:with-param>
-                            <xsl:with-param name="name">
-                                <xsl:text>write </xsl:text>
-                                <xsl:value-of select="$shortName" />
-                            </xsl:with-param>
-                            <xsl:with-param name="parameter">
-                                <xsl:text>uint8_t index, uint8_t value</xsl:text>
-                            </xsl:with-param>
-                        </xsl:call-template>
+                        <xsl:if test="not($userPersistencyWrite)">
+                            <!-- Write function -->
+                            <xsl:call-template name="ctools.function">
+                                <xsl:with-param name="comment">
+                                    <xsl:text>This function writes the </xsl:text>
+                                    <xsl:value-of select="$shortName" />
+                                    <xsl:text> to persistent storage.&LF;</xsl:text>
+                                    <xsl:value-of select="$description" />
+                                    <xsl:text>&LF;</xsl:text>
+                                    <xsl:text>&LF;</xsl:text>
+                                    <xsl:text>@param[in] index Index&LF;</xsl:text>
+                                    <xsl:text>@param[in] value Value to write</xsl:text>
+                                </xsl:with-param>
+                                <xsl:with-param name="returnType">
+                                    <xsl:text>extern void</xsl:text>
+                                </xsl:with-param>
+                                <xsl:with-param name="moduleName">
+                                    <xsl:value-of select="$global.moduleName" />
+                                </xsl:with-param>
+                                <xsl:with-param name="name">
+                                    <xsl:text>write </xsl:text>
+                                    <xsl:value-of select="$shortName" />
+                                </xsl:with-param>
+                                <xsl:with-param name="parameter">
+                                    <xsl:text>uint8_t index, uint8_t value</xsl:text>
+                                </xsl:with-param>
+                            </xsl:call-template>
+                        </xsl:if>
                     
                     </xsl:otherwise>
                 </xsl:choose>
@@ -700,20 +728,26 @@ $Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
             
             <!-- Page -->
             <xsl:variable name="page" select="ss:Cell[1]/ss:Data" />
-            <!-- Offset -->
+            <!-- Register offset -->
             <xsl:variable name="offset" select="ss:Cell[2]/ss:Data" />
+            <!-- Persistency offset -->
+            <xsl:variable name="persistencyOffset" select="ss:Cell[3]/ss:Data" />
             <!-- Number of elements -->
-            <xsl:variable name="numElements" select="ss:Cell[3]/ss:Data" />
+            <xsl:variable name="numElements" select="ss:Cell[4]/ss:Data" />
             <!-- Element size -->
-            <xsl:variable name="elementSize" select="ss:Cell[4]/ss:Data" />
+            <xsl:variable name="elementSize" select="ss:Cell[5]/ss:Data" />
             <!-- Short name -->
-            <xsl:variable name="shortName" select="ss:Cell[5]/ss:Data" />
+            <xsl:variable name="shortName" select="ss:Cell[6]/ss:Data" />
             <!-- Description -->
-            <xsl:variable name="description" select="ss:Cell[6]/ss:Data" />
+            <xsl:variable name="description" select="ss:Cell[7]/ss:Data" />
+            <!-- User persistency read -->
+            <xsl:variable name="userPersistencyRead" select="ss:Cell[9]/ss:Data" />
+            <!-- User persistency write -->
+            <xsl:variable name="userPersistencyWrite" select="ss:Cell[10]/ss:Data" />
             <!-- Size -->
             <xsl:variable name="size" select="$numElements * $elementSize" />
         
-            <xsl:if test="$page != '' and $offset != '' and $numElements != '' and $elementSize != '' and $shortName != ''">
+            <xsl:if test="$page != '' and $offset != '' and $persistencyOffset != '' and $numElements != '' and $elementSize != '' and $shortName != ''">
                 
                 <!-- Build persistency access function name -->
                 <xsl:variable name="ps.user.read.name">
@@ -762,157 +796,169 @@ $Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
                     <!-- Number of elements is 1 -->
                     <xsl:when test="$size = 1">
                         
-                        <!-- Read function -->
-                        <xsl:call-template name="ctools.function">
-                            <xsl:with-param name="comment">
-                                <xsl:text>This function reads the </xsl:text>
-                                <xsl:value-of select="$shortName" />
-                                <xsl:text> from persistent storage.&LF;</xsl:text>
-                                <xsl:value-of select="$description" />
-                                <xsl:text>&LF;</xsl:text>
-                                <xsl:text>&LF;</xsl:text>
-                                <xsl:text>@return Value</xsl:text>
-                            </xsl:with-param>
-                            <xsl:with-param name="returnType">
-                                <xsl:text>extern uint8_t</xsl:text>
-                            </xsl:with-param>
-                            <xsl:with-param name="moduleName">
-                                <xsl:value-of select="$global.moduleName" />
-                            </xsl:with-param>
-                            <xsl:with-param name="name">
-                                <xsl:text>read </xsl:text>
-                                <xsl:value-of select="$shortName" />
-                            </xsl:with-param>
-                            <xsl:with-param name="parameter">
-                                <xsl:text>void</xsl:text>
-                            </xsl:with-param>
-                            <xsl:with-param name="body">
-                                <xsl:text>&TAB;return vscp_ps_access_read8(</xsl:text>
-                                <xsl:value-of select="$addr.define.name" />
-                                <xsl:text>);&LF;</xsl:text>
-                            </xsl:with-param>
-                        </xsl:call-template>
+                        <xsl:if test="not($userPersistencyRead)">
+                            <!-- Read function -->
+                            <xsl:call-template name="ctools.function">
+                                <xsl:with-param name="comment">
+                                    <xsl:text>This function reads the </xsl:text>
+                                    <xsl:value-of select="$shortName" />
+                                    <xsl:text> from persistent storage.&LF;</xsl:text>
+                                    <xsl:value-of select="$description" />
+                                    <xsl:text>&LF;</xsl:text>
+                                    <xsl:text>&LF;</xsl:text>
+                                    <xsl:text>@return Value</xsl:text>
+                                </xsl:with-param>
+                                <xsl:with-param name="returnType">
+                                    <xsl:text>extern uint8_t</xsl:text>
+                                </xsl:with-param>
+                                <xsl:with-param name="moduleName">
+                                    <xsl:value-of select="$global.moduleName" />
+                                </xsl:with-param>
+                                <xsl:with-param name="name">
+                                    <xsl:text>read </xsl:text>
+                                    <xsl:value-of select="$shortName" />
+                                </xsl:with-param>
+                                <xsl:with-param name="parameter">
+                                    <xsl:text>void</xsl:text>
+                                </xsl:with-param>
+                                <xsl:with-param name="body">
+                                    <xsl:text>&TAB;return vscp_ps_access_read8(</xsl:text>
+                                    <xsl:value-of select="$addr.define.name" />
+                                    <xsl:text>);&LF;</xsl:text>
+                                </xsl:with-param>
+                            </xsl:call-template>
+                        </xsl:if>
                         
-                        <xsl:text>&LF;</xsl:text>
+                        <xsl:if test="not($userPersistencyRead) and not($userPersistencyWrite)">
+                            <xsl:text>&LF;</xsl:text>
+                        </xsl:if>
 
-                        <!-- Write function -->
-                        <xsl:call-template name="ctools.function">
-                            <xsl:with-param name="comment">
-                                <xsl:text>This function writes the </xsl:text>
-                                <xsl:value-of select="$shortName" />
-                                <xsl:text> to persistent storage.&LF;</xsl:text>
-                                <xsl:value-of select="$description" />
-                                <xsl:text>&LF;</xsl:text>
-                                <xsl:text>&LF;</xsl:text>
-                                <xsl:text>@param[in] value Value to write</xsl:text>
-                            </xsl:with-param>
-                            <xsl:with-param name="returnType">
-                                <xsl:text>extern void</xsl:text>
-                            </xsl:with-param>
-                            <xsl:with-param name="moduleName">
-                                <xsl:value-of select="$global.moduleName" />
-                            </xsl:with-param>
-                            <xsl:with-param name="name">
-                                <xsl:text>write </xsl:text>
-                                <xsl:value-of select="$shortName" />
-                            </xsl:with-param>
-                            <xsl:with-param name="parameter">
-                                <xsl:text>uint8_t value</xsl:text>
-                            </xsl:with-param>
-                            <xsl:with-param name="body">
-                                <xsl:text>&TAB;vscp_ps_access_write8(</xsl:text>
-                                <xsl:value-of select="$addr.define.name" />
-                                <xsl:text>, value);&LF;</xsl:text>
-                                <xsl:text>&LF;</xsl:text>
-                                <xsl:text>&TAB;return;&LF;</xsl:text>
-                            </xsl:with-param>
-                        </xsl:call-template>
+                        <xsl:if test="not($userPersistencyWrite)">
+                            <!-- Write function -->
+                            <xsl:call-template name="ctools.function">
+                                <xsl:with-param name="comment">
+                                    <xsl:text>This function writes the </xsl:text>
+                                    <xsl:value-of select="$shortName" />
+                                    <xsl:text> to persistent storage.&LF;</xsl:text>
+                                    <xsl:value-of select="$description" />
+                                    <xsl:text>&LF;</xsl:text>
+                                    <xsl:text>&LF;</xsl:text>
+                                    <xsl:text>@param[in] value Value to write</xsl:text>
+                                </xsl:with-param>
+                                <xsl:with-param name="returnType">
+                                    <xsl:text>extern void</xsl:text>
+                                </xsl:with-param>
+                                <xsl:with-param name="moduleName">
+                                    <xsl:value-of select="$global.moduleName" />
+                                </xsl:with-param>
+                                <xsl:with-param name="name">
+                                    <xsl:text>write </xsl:text>
+                                    <xsl:value-of select="$shortName" />
+                                </xsl:with-param>
+                                <xsl:with-param name="parameter">
+                                    <xsl:text>uint8_t value</xsl:text>
+                                </xsl:with-param>
+                                <xsl:with-param name="body">
+                                    <xsl:text>&TAB;vscp_ps_access_write8(</xsl:text>
+                                    <xsl:value-of select="$addr.define.name" />
+                                    <xsl:text>, value);&LF;</xsl:text>
+                                    <xsl:text>&LF;</xsl:text>
+                                    <xsl:text>&TAB;return;&LF;</xsl:text>
+                                </xsl:with-param>
+                            </xsl:call-template>
+                        </xsl:if>
                         
                     </xsl:when>
                     <!-- Number of elements are greater than 1 -->
                     <xsl:otherwise>
                     
-                        <!-- Read function -->
-                        <xsl:call-template name="ctools.function">
-                            <xsl:with-param name="comment">
-                                <xsl:text>This function reads the </xsl:text>
-                                <xsl:value-of select="$shortName" />
-                                <xsl:text> from persistent storage.&LF;</xsl:text>
-                                <xsl:value-of select="$description" />
-                                <xsl:text>&LF;</xsl:text>
-                                <xsl:text>&LF;</xsl:text>
-                                <xsl:text>@param[in] index Index&LF;</xsl:text>
-                                <xsl:text>@return Value</xsl:text>
-                            </xsl:with-param>
-                            <xsl:with-param name="returnType">
-                                <xsl:text>extern uint8_t</xsl:text>
-                            </xsl:with-param>
-                            <xsl:with-param name="moduleName">
-                                <xsl:value-of select="$global.moduleName" />
-                            </xsl:with-param>
-                            <xsl:with-param name="name">
-                                <xsl:text>read </xsl:text>
-                                <xsl:value-of select="$shortName" />
-                            </xsl:with-param>
-                            <xsl:with-param name="parameter">
-                                <xsl:text>uint8_t index</xsl:text>
-                            </xsl:with-param>
-                            <xsl:with-param name="body">
-                                <xsl:text>&TAB;uint8_t&TAB;value = 0;&LF;</xsl:text>
-                                <xsl:text>&LF;</xsl:text>
-                                <xsl:text>&TAB;if (</xsl:text>
-                                <xsl:value-of select="$size.define.name" />
-                                <xsl:text> &gt; index)&LF;</xsl:text>
-                                <xsl:text>&TAB;{&LF;</xsl:text>
-                                <xsl:text>&TAB;&TAB; value = vscp_ps_access_read8(</xsl:text>
-                                <xsl:value-of select="$addr.define.name" />
-                                <xsl:text> + index);&LF;</xsl:text>
-                                <xsl:text>&TAB;}&LF;</xsl:text>
-                                <xsl:text>&LF;</xsl:text>
-                                <xsl:text>&TAB;return value;&LF;</xsl:text>
-                            </xsl:with-param>
-                        </xsl:call-template>
+                        <xsl:if test="not($userPersistencyRead)">
+                            <!-- Read function -->
+                            <xsl:call-template name="ctools.function">
+                                <xsl:with-param name="comment">
+                                    <xsl:text>This function reads the </xsl:text>
+                                    <xsl:value-of select="$shortName" />
+                                    <xsl:text> from persistent storage.&LF;</xsl:text>
+                                    <xsl:value-of select="$description" />
+                                    <xsl:text>&LF;</xsl:text>
+                                    <xsl:text>&LF;</xsl:text>
+                                    <xsl:text>@param[in] index Index&LF;</xsl:text>
+                                    <xsl:text>@return Value</xsl:text>
+                                </xsl:with-param>
+                                <xsl:with-param name="returnType">
+                                    <xsl:text>extern uint8_t</xsl:text>
+                                </xsl:with-param>
+                                <xsl:with-param name="moduleName">
+                                    <xsl:value-of select="$global.moduleName" />
+                                </xsl:with-param>
+                                <xsl:with-param name="name">
+                                    <xsl:text>read </xsl:text>
+                                    <xsl:value-of select="$shortName" />
+                                </xsl:with-param>
+                                <xsl:with-param name="parameter">
+                                    <xsl:text>uint8_t index</xsl:text>
+                                </xsl:with-param>
+                                <xsl:with-param name="body">
+                                    <xsl:text>&TAB;uint8_t&TAB;value = 0;&LF;</xsl:text>
+                                    <xsl:text>&LF;</xsl:text>
+                                    <xsl:text>&TAB;if (</xsl:text>
+                                    <xsl:value-of select="$size.define.name" />
+                                    <xsl:text> &gt; index)&LF;</xsl:text>
+                                    <xsl:text>&TAB;{&LF;</xsl:text>
+                                    <xsl:text>&TAB;&TAB; value = vscp_ps_access_read8(</xsl:text>
+                                    <xsl:value-of select="$addr.define.name" />
+                                    <xsl:text> + index);&LF;</xsl:text>
+                                    <xsl:text>&TAB;}&LF;</xsl:text>
+                                    <xsl:text>&LF;</xsl:text>
+                                    <xsl:text>&TAB;return value;&LF;</xsl:text>
+                                </xsl:with-param>
+                            </xsl:call-template>
+                        </xsl:if>
                         
-                        <xsl:text>&LF;</xsl:text>
+                        <xsl:if test="not($userPersistencyRead) and not($userPersistencyWrite)">
+                            <xsl:text>&LF;</xsl:text>
+                        </xsl:if>
                     
-                        <!-- Write function -->
-                        <xsl:call-template name="ctools.function">
-                            <xsl:with-param name="comment">
-                                <xsl:text>This function writes the </xsl:text>
-                                <xsl:value-of select="$shortName" />
-                                <xsl:text> to persistent storage.&LF;</xsl:text>
-                                <xsl:value-of select="$description" />
-                                <xsl:text>&LF;</xsl:text>
-                                <xsl:text>&LF;</xsl:text>
-                                <xsl:text>@param[in] index Index&LF;</xsl:text>
-                                <xsl:text>@param[in] value Value to write</xsl:text>
-                            </xsl:with-param>
-                            <xsl:with-param name="returnType">
-                                <xsl:text>extern void</xsl:text>
-                            </xsl:with-param>
-                            <xsl:with-param name="moduleName">
-                                <xsl:value-of select="$global.moduleName" />
-                            </xsl:with-param>
-                            <xsl:with-param name="name">
-                                <xsl:text>write </xsl:text>
-                                <xsl:value-of select="$shortName" />
-                            </xsl:with-param>
-                            <xsl:with-param name="parameter">
-                                <xsl:text>uint8_t index, uint8_t value</xsl:text>
-                            </xsl:with-param>
-                            <xsl:with-param name="body">
-                                <xsl:text>&TAB;if (</xsl:text>
-                                <xsl:value-of select="$size.define.name" />
-                                <xsl:text> &gt; index)&LF;</xsl:text>
-                                <xsl:text>&TAB;{&LF;</xsl:text>
-                                <xsl:text>&TAB;&TAB;vscp_ps_access_write8(</xsl:text>
-                                <xsl:value-of select="$addr.define.name" />
-                                <xsl:text> + index, value);&LF;</xsl:text>
-                                <xsl:text>&TAB;}&LF;</xsl:text>
-                                <xsl:text>&LF;</xsl:text>
-                                <xsl:text>&TAB;return;&LF;</xsl:text>
-                            </xsl:with-param>
-                        </xsl:call-template>
+                        <xsl:if test="not($userPersistencyWrite)">
+                            <!-- Write function -->
+                            <xsl:call-template name="ctools.function">
+                                <xsl:with-param name="comment">
+                                    <xsl:text>This function writes the </xsl:text>
+                                    <xsl:value-of select="$shortName" />
+                                    <xsl:text> to persistent storage.&LF;</xsl:text>
+                                    <xsl:value-of select="$description" />
+                                    <xsl:text>&LF;</xsl:text>
+                                    <xsl:text>&LF;</xsl:text>
+                                    <xsl:text>@param[in] index Index&LF;</xsl:text>
+                                    <xsl:text>@param[in] value Value to write</xsl:text>
+                                </xsl:with-param>
+                                <xsl:with-param name="returnType">
+                                    <xsl:text>extern void</xsl:text>
+                                </xsl:with-param>
+                                <xsl:with-param name="moduleName">
+                                    <xsl:value-of select="$global.moduleName" />
+                                </xsl:with-param>
+                                <xsl:with-param name="name">
+                                    <xsl:text>write </xsl:text>
+                                    <xsl:value-of select="$shortName" />
+                                </xsl:with-param>
+                                <xsl:with-param name="parameter">
+                                    <xsl:text>uint8_t index, uint8_t value</xsl:text>
+                                </xsl:with-param>
+                                <xsl:with-param name="body">
+                                    <xsl:text>&TAB;if (</xsl:text>
+                                    <xsl:value-of select="$size.define.name" />
+                                    <xsl:text> &gt; index)&LF;</xsl:text>
+                                    <xsl:text>&TAB;{&LF;</xsl:text>
+                                    <xsl:text>&TAB;&TAB;vscp_ps_access_write8(</xsl:text>
+                                    <xsl:value-of select="$addr.define.name" />
+                                    <xsl:text> + index, value);&LF;</xsl:text>
+                                    <xsl:text>&TAB;}&LF;</xsl:text>
+                                    <xsl:text>&LF;</xsl:text>
+                                    <xsl:text>&TAB;return;&LF;</xsl:text>
+                                </xsl:with-param>
+                            </xsl:call-template>
+                        </xsl:if>
                     
                     </xsl:otherwise>
                 </xsl:choose>

@@ -314,53 +314,7 @@ extern void vscp_ps_user_writeRelayControl(uint8_t index, uint8_t value)
     return;
 }
 
-/**
- * This function reads the node zone from persistent storage.
- * The zone which the node belongs to.
- *
- * @return Value
- */
-extern uint8_t vscp_ps_user_readNodeZone(void)
-{
-    return vscp_ps_access_read8(VSCP_PS_USER_ADDR_NODE_ZONE);
-}
 
-/**
- * This function writes the node zone to persistent storage.
- * The zone which the node belongs to.
- *
- * @param[in] value Value to write
- */
-extern void vscp_ps_user_writeNodeZone(uint8_t value)
-{
-    vscp_ps_access_write8(VSCP_PS_USER_ADDR_NODE_ZONE, value);
-
-    return;
-}
-
-/**
- * This function reads the node sub zone from persistent storage.
- * The sub-zone which the node belongs to.
- *
- * @return Value
- */
-extern uint8_t vscp_ps_user_readNodeSubZone(void)
-{
-    return vscp_ps_access_read8(VSCP_PS_USER_ADDR_NODE_SUB_ZONE);
-}
-
-/**
- * This function writes the node sub zone to persistent storage.
- * The sub-zone which the node belongs to.
- *
- * @param[in] value Value to write
- */
-extern void vscp_ps_user_writeNodeSubZone(uint8_t value)
-{
-    vscp_ps_access_write8(VSCP_PS_USER_ADDR_NODE_SUB_ZONE, value);
-
-    return;
-}
 
 /**
  * This function reads the button event zone from persistent storage.
