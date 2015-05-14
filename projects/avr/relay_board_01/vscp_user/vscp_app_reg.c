@@ -89,9 +89,14 @@ $Date:  $
 #define VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_EVENT_CONFIG 5
 
 /**
- * Application register offset of page 0 of relay control.
+ * Application register offset of page 0 of relay switching duty cycle.
  */
-#define VSCP_APP_REG_PAGE_0_OFFSET_RELAY_CONTROL    6
+#define VSCP_APP_REG_PAGE_0_OFFSET_RELAY_SWITCHING_DUTY_CYCLE   6
+
+/**
+ * Application register offset of page 0 of relay holding duty cycle.
+ */
+#define VSCP_APP_REG_PAGE_0_OFFSET_RELAY_HOLDING_DUTY_CYCLE 8
 
 /**
  * Application register offset of page 0 of node zone.
@@ -232,10 +237,16 @@ extern void vscp_app_reg_restoreFactoryDefaultSettings(void)
 
     vscp_ps_user_writeShutterEventConfig(0);
 
-    for(index = 0; index < 2; ++index)
+    for(index = 0; index < 1; ++index)
     {
-        vscp_ps_user_writeRelayControl(index * 2 + 0, (((uint16_t)400) >> 0) & 0xff);
-        vscp_ps_user_writeRelayControl(index * 2 + 1, (((uint16_t)400) >> 8) & 0xff);
+        vscp_ps_user_writeRelaySwitchingDutyCycle(index * 2 + 0, (((uint16_t)400) >> 0) & 0xff);
+        vscp_ps_user_writeRelaySwitchingDutyCycle(index * 2 + 1, (((uint16_t)400) >> 8) & 0xff);
+    }
+
+    for(index = 0; index < 1; ++index)
+    {
+        vscp_ps_user_writeRelayHoldingDutyCycle(index * 2 + 0, (((uint16_t)240) >> 0) & 0xff);
+        vscp_ps_user_writeRelayHoldingDutyCycle(index * 2 + 1, (((uint16_t)240) >> 8) & 0xff);
     }
 
     for(index = 0; index < VSCP_PS_USER_SIZE_BUTTON_EVENT_ZONE; ++index)
@@ -361,10 +372,15 @@ extern uint8_t vscp_app_reg_readRegister(uint16_t page, uint8_t addr)
             {
                 value = vscp_ps_user_readShutterEventConfig();
             }
-            else if ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_CONTROL <= addr) &&
-                     ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_CONTROL + 4) > addr))
+            else if ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_SWITCHING_DUTY_CYCLE <= addr) &&
+                     ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_SWITCHING_DUTY_CYCLE + 2) > addr))
             {
-                value = vscp_ps_user_readRelayControl(addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_CONTROL);
+                value = vscp_ps_user_readRelaySwitchingDutyCycle(addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_SWITCHING_DUTY_CYCLE);
+                }
+            else if ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_HOLDING_DUTY_CYCLE <= addr) &&
+                     ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_HOLDING_DUTY_CYCLE + 2) > addr))
+            {
+                value = vscp_ps_user_readRelayHoldingDutyCycle(addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_HOLDING_DUTY_CYCLE);
             }
             else if (VSCP_APP_REG_PAGE_0_OFFSET_NODE_ZONE == addr)
             {
@@ -498,11 +514,17 @@ extern uint8_t vscp_app_reg_writeRegister(uint16_t page, uint8_t addr, uint8_t v
                 vscp_ps_user_writeShutterEventConfig(value);
                 readBackValue = vscp_ps_user_readShutterEventConfig();
             }
-            else if ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_CONTROL <= addr) &&
-                     ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_CONTROL + 4) > addr))
+            else if ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_SWITCHING_DUTY_CYCLE <= addr) &&
+                     ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_SWITCHING_DUTY_CYCLE + 2) > addr))
             {
-                vscp_ps_user_writeRelayControl(addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_CONTROL, value);
-                readBackValue = vscp_ps_user_readRelayControl(addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_CONTROL);
+                vscp_ps_user_writeRelaySwitchingDutyCycle(addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_SWITCHING_DUTY_CYCLE, value);
+                readBackValue = vscp_ps_user_readRelaySwitchingDutyCycle(addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_SWITCHING_DUTY_CYCLE);
+            }
+            else if ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_HOLDING_DUTY_CYCLE <= addr) &&
+                     ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_HOLDING_DUTY_CYCLE + 2) > addr))
+            {
+                vscp_ps_user_writeRelayHoldingDutyCycle(addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_HOLDING_DUTY_CYCLE, value);
+                readBackValue = vscp_ps_user_readRelayHoldingDutyCycle(addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_HOLDING_DUTY_CYCLE);
             }
             else if (VSCP_APP_REG_PAGE_0_OFFSET_NODE_ZONE == addr)
             {

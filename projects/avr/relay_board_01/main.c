@@ -412,12 +412,12 @@ static MAIN_RET main_initRunLevel1(void)
      * - Switching current, 16-bit value, LSB first stored in persistent memory
      * - Holding current, 16-bit value, LSB first stored in persistent memory
      */
-    switchingPwmValue  = ((uint16_t)vscp_ps_user_readRelayControl(0)) << 0;
-    switchingPwmValue |= ((uint16_t)vscp_ps_user_readRelayControl(1)) << 8;
+    switchingPwmValue  = ((uint16_t)vscp_ps_user_readRelaySwitchingDutyCycle(0)) << 0;
+    switchingPwmValue |= ((uint16_t)vscp_ps_user_readRelaySwitchingDutyCycle(1)) << 8;
     relay_setSwitchingPwm(switchingPwmValue);
 
-    holdingPwmValue  = ((uint16_t)vscp_ps_user_readRelayControl(2)) << 0;
-    holdingPwmValue |= ((uint16_t)vscp_ps_user_readRelayControl(3)) << 8;
+    holdingPwmValue  = ((uint16_t)vscp_ps_user_readRelayHoldingDutyCycle(0)) << 0;
+    holdingPwmValue |= ((uint16_t)vscp_ps_user_readRelayHoldingDutyCycle(1)) << 8;
     relay_setHoldingPwm(holdingPwmValue);
 
     relayEnableMask = vscp_ps_user_readRelayEnable();

@@ -277,38 +277,76 @@ extern void vscp_ps_user_writeShutterEventConfig(uint8_t value)
 }
 
 /**
- * This function reads the relay control from persistent storage.
- * A monostable relay is configured by a switching current and a holding current.
- * Both values are given as a pwm duty cycle value (3-400).
+ * This function reads the relay switching duty cycle from persistent storage.
+ * A monostable relay is activated by using the switching current.
+ * The value is given as pwm duty cycle value (3-400).
  *
  * @param[in] index Index
  * @return Value
  */
-extern uint8_t vscp_ps_user_readRelayControl(uint8_t index)
+extern uint8_t vscp_ps_user_readRelaySwitchingDutyCycle(uint8_t index)
 {
     uint8_t value = 0;
 
-    if (VSCP_PS_USER_SIZE_RELAY_CONTROL > index)
+    if (VSCP_PS_USER_SIZE_RELAY_SWITCHING_DUTY_CYCLE > index)
     {
-         value = vscp_ps_access_read8(VSCP_PS_USER_ADDR_RELAY_CONTROL + index);
+         value = vscp_ps_access_read8(VSCP_PS_USER_ADDR_RELAY_SWITCHING_DUTY_CYCLE + index);
     }
 
     return value;
 }
 
 /**
- * This function writes the relay control to persistent storage.
- * A monostable relay is configured by a switching current and a holding current.
- * Both values are given as a pwm duty cycle value (3-400).
+ * This function writes the relay switching duty cycle to persistent storage.
+ * A monostable relay is activated by using the switching current.
+ * The value is given as pwm duty cycle value (3-400).
  *
  * @param[in] index Index
  * @param[in] value Value to write
  */
-extern void vscp_ps_user_writeRelayControl(uint8_t index, uint8_t value)
+extern void vscp_ps_user_writeRelaySwitchingDutyCycle(uint8_t index, uint8_t value)
 {
-    if (VSCP_PS_USER_SIZE_RELAY_CONTROL > index)
+    if (VSCP_PS_USER_SIZE_RELAY_SWITCHING_DUTY_CYCLE > index)
     {
-        vscp_ps_access_write8(VSCP_PS_USER_ADDR_RELAY_CONTROL + index, value);
+        vscp_ps_access_write8(VSCP_PS_USER_ADDR_RELAY_SWITCHING_DUTY_CYCLE + index, value);
+    }
+
+    return;
+}
+
+/**
+ * This function reads the relay holding duty cycle from persistent storage.
+ * A monostable relay is holded in active state by using the holding current.
+ * The value is given as pwm duty cycle value (3-400).
+ *
+ * @param[in] index Index
+ * @return Value
+ */
+extern uint8_t vscp_ps_user_readRelayHoldingDutyCycle(uint8_t index)
+{
+    uint8_t value = 0;
+
+    if (VSCP_PS_USER_SIZE_RELAY_HOLDING_DUTY_CYCLE > index)
+    {
+         value = vscp_ps_access_read8(VSCP_PS_USER_ADDR_RELAY_HOLDING_DUTY_CYCLE + index);
+    }
+
+    return value;
+}
+
+/**
+ * This function writes the relay holding duty cycle to persistent storage.
+ * A monostable relay is holded in active state by using the holding current.
+ * The value is given as pwm duty cycle value (3-400).
+ *
+ * @param[in] index Index
+ * @param[in] value Value to write
+ */
+extern void vscp_ps_user_writeRelayHoldingDutyCycle(uint8_t index, uint8_t value)
+{
+    if (VSCP_PS_USER_SIZE_RELAY_HOLDING_DUTY_CYCLE > index)
+    {
+        vscp_ps_access_write8(VSCP_PS_USER_ADDR_RELAY_HOLDING_DUTY_CYCLE + index, value);
     }
 
     return;
