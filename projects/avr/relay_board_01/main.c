@@ -341,8 +341,9 @@ static MAIN_RET main_initRunLevel1(void)
     uint8_t     index                   = 0;
     uint16_t    switchingPwmValue       = 0;
     uint16_t    holdingPwmValue         = 0;
-    uint8_t     shutterEnabledBitField  = 0;
+    uint8_t     shutterEnableMask       = 0;
     uint8_t     buttonFilter            = 0;
+    uint8_t     relayEnableMask         = 0;
 
     /* Initialize the hardware */
     hw_init();
@@ -419,13 +420,28 @@ static MAIN_RET main_initRunLevel1(void)
     holdingPwmValue |= ((uint16_t)vscp_ps_user_readRelayControl(3)) << 8;
     relay_setHoldingPwm(holdingPwmValue);
 
+    relayEnableMask = vscp_ps_user_readRelayEnable();
+    for(index = 0; index < RELAY_NUM; ++index)
+    {
+        if (0 == (relayEnableMask & (1 << index)))
+        {
+            relay_enable(index, FALSE);
+        }
+        else
+        {
+            relay_enable(index, TRUE);
+        }
+    }
+
     /* Configure shutters */
-    shutterEnabledBitField = vscp_ps_user_readShutterEnable();
+    shutterEnableMask = vscp_ps_user_readShutterEnable();
     for(index = 0; index < SHUTTER_NUM; ++index)
     {
-        uint16_t    maxUpTime   = 0;
-        uint16_t    maxDownTime = 0;
-        uint16_t    turnTime    = 0;
+        uint16_t    maxUpTime       = 0;
+        uint16_t    maxDownTime     = 0;
+        uint16_t    turnTime        = 0;
+        uint8_t     relayPowIndex   = index * 2 + 0;    /* Relay which handles the power */
+        uint8_t     relayDirIndex   = index * 2 + 1;    /* Relay which sets the drive direction */
 
         /* Max. up time, 16-bit value, LSB first stored in persistent memory */
         maxUpTime  = (uint16_t)vscp_ps_user_readShutterMaxUpTime(index * 2 + 0);
@@ -439,14 +455,11 @@ static MAIN_RET main_initRunLevel1(void)
         turnTime  = (uint16_t)vscp_ps_user_readShutterTurnTime(index * 2 + 0);
         turnTime |= (uint16_t)vscp_ps_user_readShutterTurnTime(index * 2 + 1) << 8;
 
-        /* Shutter N:
-         * - Relay (2 * N + 0) is used for power
-         * - Relay (2 * N + 1) is used for direction
-         */
-        shutter_configure(index, index * 2, index * 2 + 1, maxUpTime, maxDownTime, turnTime);
+        /* Configure shutter */
+        shutter_configure(index, relayPowIndex, relayDirIndex, maxUpTime, maxDownTime, turnTime);
 
         /* Disable shutter? */
-        if (0 == ((shutterEnabledBitField >> index) & 0x01))
+        if (0 == (shutterEnableMask & (1 << index)))
         {
             shutter_enable(index, FALSE);
         }
@@ -454,6 +467,10 @@ static MAIN_RET main_initRunLevel1(void)
         else
         {
             shutter_enable(index, TRUE);
+
+            /* Go sure that the necessary relays are enabled */
+            relay_enable(relayPowIndex, TRUE);
+            relay_enable(relayDirIndex, TRUE);
         }
     }
 

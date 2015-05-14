@@ -123,6 +123,9 @@ static uint16_t         relay_holdingPwm            = (RELAY_PWM_TOP * 3) / 5;
 /** Change to switching current */
 static volatile BOOL    relay_enableSwitchingPwm    = FALSE;
 
+/** Relay filter mask. A 1 means the relay is enabled, a 0 the relay is disabled */
+static uint8_t          relay_filterMask            = 0xff;
+
 /*******************************************************************************
     GLOBAL VARIABLES
 *******************************************************************************/
@@ -186,6 +189,46 @@ extern void relay_init(void)
 }
 
 /**
+ * Enable/Disable a relay.
+ *
+ * @param[in]   index       Index of the relay
+ * @param[in]   enableIt    Enable/Disable it
+ */
+ void relay_enable(uint8_t index, BOOL enableIt)
+ {
+    if (RELAY_NUM > index)
+    {
+        if (FALSE == enableIt)
+        {
+            BIT_CLR(relay_filterMask, index);
+        }
+        else
+        {
+            BIT_SET(relay_filterMask, index);
+        }
+    }
+
+    return;
+ }
+
+/**
+ * This function returns the relay enable/disable status.
+ *
+ * @return Relay is enabled (TRUE) or not (FALSE)
+ */
+extern BOOL relay_isEnabled(uint8_t index)
+{
+    BOOL    status  = FALSE;
+
+    if (0 != (relay_filterMask & (1 << index)))
+    {
+        status = TRUE;
+    }
+
+    return status;
+}
+
+/**
  * Activate or deactivate a relay.
  *
  * @param[in]   index       Index of the relay
@@ -193,7 +236,9 @@ extern void relay_init(void)
  */
 extern void relay_activate(uint8_t index, BOOL activate)
 {
-    if (RELAY_NUM > index)
+    /* The index must be valid and the relay must be enabled. */
+    if ((RELAY_NUM > index) &&
+        (TRUE == relay_isEnabled(index)))
     {
         uint8_t run             = 0;
         BOOL    enableSwitchingPwm  = FALSE;

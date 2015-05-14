@@ -100,6 +100,21 @@ extern "C"
 extern void relay_init(void);
 
 /**
+ * Enable/Disable a relay.
+ *
+ * @param[in]   index       Index of the relay
+ * @param[in]   enableIt    Enable/Disable it
+ */
+ void relay_enable(uint8_t index, BOOL enableIt);
+
+ /**
+ * This function returns the relay enable/disable status.
+ *
+ * @return Relay is enabled (TRUE) or not (FALSE)
+ */
+extern BOOL relay_isEnabled(uint8_t index);
+
+/**
  * Activate or deactivate a relay.
  *
  * @param[in]   index       Index of the relay
