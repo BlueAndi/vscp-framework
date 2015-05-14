@@ -342,6 +342,7 @@ static MAIN_RET main_initRunLevel1(void)
     uint16_t    switchingPwmValue       = 0;
     uint16_t    holdingPwmValue         = 0;
     uint8_t     shutterEnabledBitField  = 0;
+    uint8_t     buttonFilter            = 0;
 
     /* Initialize the hardware */
     hw_init();
@@ -390,12 +391,21 @@ static MAIN_RET main_initRunLevel1(void)
     swTimer_start(MAIN_SWTIMER_10MS_ID, MAIN_SWTIMER_10MS_PERIOD, FALSE);
     swTimer_start(MAIN_SWTIMER_250MS_ID, MAIN_SWTIMER_250MS_PERIOD, FALSE);
 
+    /* Get button filter */
+    buttonFilter = vscp_ps_user_readButtonEnable();
+
     /* Configure wind measurement */
     if (1 == vscp_ps_user_readWindEnable())
     {
-        buttonObserver_setFilter(0x7f); /* Disable observation of button 8 */
+        /* Disable observation of button 8 */
+        BIT_CLR(buttonFilter, 8);
+        
+        /* Enable wind measurement */
         windDrv_enable(TRUE);
     }
+
+    /* Set button observation filter */
+    buttonObserver_setFilter(buttonFilter);
 
     /* Configure relays:
      * - Switching current, 16-bit value, LSB first stored in persistent memory
