@@ -729,26 +729,26 @@ $Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
                     <xsl:sort order="ascending" data-type="number" select="ss:Cell[1]/ss:Data" />
                     <xsl:sort order="ascending" data-type="number" select="ss:Cell[2]/ss:Data" />
                     
-                <!-- Page -->
-                <xsl:variable name="page" select="ss:Cell[1]/ss:Data" />
-                <!-- Register offset -->
-                <xsl:variable name="offset" select="ss:Cell[2]/ss:Data" />
-                <!-- Persistency offset -->
-                <xsl:variable name="persistencyOffset" select="ss:Cell[3]/ss:Data" />
-                <!-- Number of elements -->
-                <xsl:variable name="numElements" select="ss:Cell[4]/ss:Data" />
-                <!-- Element size -->
-                <xsl:variable name="elementSize" select="ss:Cell[5]/ss:Data" />
-                <!-- Short name -->
-                <xsl:variable name="shortName" select="ss:Cell[6]/ss:Data" />
-                <!-- Description -->
-                <xsl:variable name="description" select="ss:Cell[7]/ss:Data" />
-                <!-- Factory default setting -->
-                <xsl:variable name="default" select="ss:Cell[8]/ss:Data" />
-                <!-- User persistency read -->
-                <xsl:variable name="userPersistencyRead" select="ss:Cell[9]/ss:Data" />
-                <!-- User persistency write -->
-                <xsl:variable name="userPersistencyWrite" select="ss:Cell[10]/ss:Data" />
+                    <!-- Page -->
+                    <xsl:variable name="page" select="ss:Cell[1]/ss:Data" />
+                    <!-- Register offset -->
+                    <xsl:variable name="offset" select="ss:Cell[2]/ss:Data" />
+                    <!-- Persistency offset -->
+                    <xsl:variable name="persistencyOffset" select="ss:Cell[3]/ss:Data" />
+                    <!-- Number of elements -->
+                    <xsl:variable name="numElements" select="ss:Cell[4]/ss:Data" />
+                    <!-- Element size -->
+                    <xsl:variable name="elementSize" select="ss:Cell[5]/ss:Data" />
+                    <!-- Short name -->
+                    <xsl:variable name="shortName" select="ss:Cell[6]/ss:Data" />
+                    <!-- Description -->
+                    <xsl:variable name="description" select="ss:Cell[7]/ss:Data" />
+                    <!-- Factory default setting -->
+                    <xsl:variable name="default" select="ss:Cell[8]/ss:Data" />
+                    <!-- User persistency read -->
+                    <xsl:variable name="userPersistencyRead" select="ss:Cell[9]/ss:Data" />
+                    <!-- User persistency write -->
+                    <xsl:variable name="userPersistencyWrite" select="ss:Cell[10]/ss:Data" />
                     <!-- Size -->
                     <xsl:variable name="size" select="$numElements * $elementSize" />
                 
@@ -800,7 +800,7 @@ $Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
                                 <xsl:text>&TAB;{&LF;</xsl:text>
                             </xsl:when>
                             <xsl:when test="preceding-sibling::ss:Row[1]/ss:Cell[1]/ss:Data != $page">
-                                <xsl:text>&TAB;}&LF;</xsl:text>
+                                <xsl:text>}&LF;</xsl:text>
                                 <xsl:text>&TAB;else if (</xsl:text>
                                 <xsl:value-of select="$page" />
                                 <xsl:text> == page)&LF;</xsl:text>

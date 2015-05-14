@@ -376,7 +376,7 @@ extern uint8_t vscp_app_reg_readRegister(uint16_t page, uint8_t addr)
                      ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_SWITCHING_DUTY_CYCLE + 2) > addr))
             {
                 value = vscp_ps_user_readRelaySwitchingDutyCycle(addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_SWITCHING_DUTY_CYCLE);
-                }
+            }
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_HOLDING_DUTY_CYCLE <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_HOLDING_DUTY_CYCLE + 2) > addr))
             {
