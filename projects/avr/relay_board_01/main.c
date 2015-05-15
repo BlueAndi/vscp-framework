@@ -395,18 +395,28 @@ static MAIN_RET main_initRunLevel1(void)
     /* Get button filter */
     buttonFilter = vscp_ps_user_readButtonEnable();
 
-    /* Configure wind measurement */
-    if (1 == vscp_ps_user_readWindEnable())
+    /* If the wind measurement is enabled, disable the button which uses the same pin. */
+    if ((1 == vscp_ps_user_readWindEnable()) &&
+        (TRUE == IS_BIT_SET(buttonFilter, WINDDRV_BUTTON_INDEX)))
     {
-        /* Disable observation of button 8 */
-        BIT_CLR(buttonFilter, 8);
-        
-        /* Enable wind measurement */
-        windDrv_enable(TRUE);
+        BIT_CLR(buttonFilter, WINDDRV_BUTTON_INDEX);
+        vscp_ps_user_writeButtonEnable(buttonFilter);
     }
 
     /* Set button observation filter */
     buttonObserver_setFilter(buttonFilter);
+
+    /* Configure wind measurement */
+    if (0 == vscp_ps_user_readWindEnable())
+    {        
+        /* Disable wind measurement */
+        windDrv_enable(FALSE);
+    }
+    else
+    {
+        /* Enable wind measurement */
+        windDrv_enable(TRUE);
+    }
 
     /* Configure relays:
      * - Switching current, 16-bit value, LSB first stored in persistent memory
@@ -423,7 +433,7 @@ static MAIN_RET main_initRunLevel1(void)
     relayEnableMask = vscp_ps_user_readRelayEnable();
     for(index = 0; index < RELAY_NUM; ++index)
     {
-        if (0 == (relayEnableMask & (1 << index)))
+        if (FALSE == IS_BIT_SET(relayEnableMask, index))
         {
             relay_enable(index, FALSE);
         }
@@ -459,7 +469,7 @@ static MAIN_RET main_initRunLevel1(void)
         shutter_configure(index, relayPowIndex, relayDirIndex, maxUpTime, maxDownTime, turnTime);
 
         /* Disable shutter? */
-        if (0 == (shutterEnableMask & (1 << index)))
+        if (FALSE == IS_BIT_SET(shutterEnableMask, index))
         {
             shutter_enable(index, FALSE);
         }

@@ -49,6 +49,8 @@ $Date:  $
 #include "vscp_app_reg.h"
 #include "vscp_types.h"
 #include "vscp_ps_user.h"
+#include "buttonObserver.h"
+#include "windDrv.h"
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -486,13 +488,45 @@ extern uint8_t vscp_app_reg_writeRegister(uint16_t page, uint8_t addr, uint8_t v
         {
             if (VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_ENABLE == addr)
             {
+                /* If the wind measurement is enabled, disable the button which uses the same pin. */
+                if (1 == vscp_ps_user_readWindEnable())
+                {
+                    /* Disable observation of button */
+                    BIT_CLR(value, WINDDRV_BUTTON_INDEX);
+                }
+
                 vscp_ps_user_writeButtonEnable(value);
                 readBackValue = vscp_ps_user_readButtonEnable();
+                
+                /* Set button observation filter to apply changes now. */
+                buttonObserver_setFilter(readBackValue);
             }
             else if (VSCP_APP_REG_PAGE_0_OFFSET_WIND_ENABLE == addr)
             {
+                value &= 0x01;
                 vscp_ps_user_writeWindEnable(value);
                 readBackValue = vscp_ps_user_readWindEnable();
+
+                /* Apply changes now to the wind measurement */
+                if (0 == readBackValue)
+                {
+                    windDrv_enable(FALSE);
+                }
+                else
+                {
+                    uint8_t buttonEnableMask    = vscp_ps_user_readButtonEnable();
+
+                    /* If the wind measurement is enabled, disable the button which uses the same pin. */
+                    if (TRUE == IS_BIT_SET(buttonEnableMask, WINDDRV_BUTTON_INDEX))
+                    {
+                        /* Disable observation of button */
+                        BIT_CLR(buttonEnableMask, WINDDRV_BUTTON_INDEX);
+                        vscp_ps_user_writeButtonEnable(buttonEnableMask);
+                        buttonObserver_setFilter(buttonEnableMask);
+                    }
+
+                    windDrv_enable(TRUE);
+                }
             }
             else if (VSCP_APP_REG_PAGE_0_OFFSET_RELAY_ENABLE == addr)
             {
@@ -501,6 +535,7 @@ extern uint8_t vscp_app_reg_writeRegister(uint16_t page, uint8_t addr, uint8_t v
             }
             else if (VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_ENABLE == addr)
             {
+                value &= 0x0f;
                 vscp_ps_user_writeShutterEnable(value);
                 readBackValue = vscp_ps_user_readShutterEnable();
             }
@@ -511,6 +546,7 @@ extern uint8_t vscp_app_reg_writeRegister(uint16_t page, uint8_t addr, uint8_t v
             }
             else if (VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_EVENT_CONFIG == addr)
             {
+                value &= 0x0f;
                 vscp_ps_user_writeShutterEventConfig(value);
                 readBackValue = vscp_ps_user_readShutterEventConfig();
             }

@@ -152,10 +152,9 @@ extern void buttonObserver_setFilter(uint8_t filter)
     for(index = 0; index < BUTTONOBSERVER_NUM; ++index)
     {
         buttonObserver_Button   *button = &buttonObserver_buttons[index];
-        uint8_t                 mask    = (1 << index);
 
         /* Disable the button? */
-        if (0 == (filter & mask))
+        if (FALSE == IS_BIT_SET(filter, index))
         {
             button->state = BUTTONOBSERVER_STATE_DISABLED;
         }
@@ -200,16 +199,15 @@ extern void buttonObserver_process(void)
     for(index = 0; index < BUTTONOBSERVER_NUM; ++index)
     {
         buttonObserver_Button   *button = &buttonObserver_buttons[index];
-        uint8_t                 mask    = (1 << index);
 
         /* Button enabled? */
         if (BUTTONOBSERVER_STATE_DISABLED != button->state)
         {
             /* Is the state of this button stable? */
-            if (0 == (stable & mask))
+            if (FALSE == IS_BIT_SET(stable, index))
             {
                 /* Is the button released? */
-                if (0 == (status & mask))
+                if (FALSE == IS_BIT_SET(status, index))
                 {
                     buttonObserver_processButton(button, BUTTONOBSERVER_STATE_RELEASED);
                 }
