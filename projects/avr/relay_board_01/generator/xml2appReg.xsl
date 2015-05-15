@@ -660,6 +660,21 @@ $Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
                         
                         </xsl:variable>
                         
+                        <!-- Build #define name of size -->
+                        <xsl:variable name="size.define.name">
+                        
+                            <xsl:call-template name="ctools.define.name">
+                                <xsl:with-param name="moduleName">
+                                    <xsl:value-of select="'vscp_ps_user'" />
+                                </xsl:with-param>
+                                <xsl:with-param name="name">
+                                    <xsl:text>SIZE </xsl:text>
+                                    <xsl:value-of select="$shortName" />
+                                </xsl:with-param>
+                            </xsl:call-template>
+                            
+                        </xsl:variable>
+                        
                         <xsl:choose>
                             <xsl:when test="fn:position() = 1">
                                 <xsl:text>&TAB;&TAB;&TAB;if (</xsl:text>
@@ -708,10 +723,12 @@ $Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
                             
                                 <xsl:text>&TAB;&TAB;&TAB;&TAB;value = </xsl:text>
                                 <xsl:value-of select="$ps.user.read.name" />
-                                <xsl:text>(addr - </xsl:text>
+                                <xsl:text>((</xsl:text>
+                                <xsl:value-of select="$size.define.name" />
+                                <xsl:text> - (addr - </xsl:text>
                                 <xsl:value-of select="$addr.define.name" />
-                                <xsl:text>);&LF;</xsl:text>
-                            
+                                <xsl:text>)) - 1);&LF;</xsl:text>
+                                                        
                             </xsl:otherwise>
                         </xsl:choose>
                         
@@ -956,6 +973,21 @@ $Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
                             </xsl:call-template>
                             
                         </xsl:variable>
+
+                        <!-- Build #define name of size -->
+                        <xsl:variable name="size.define.name">
+                        
+                            <xsl:call-template name="ctools.define.name">
+                                <xsl:with-param name="moduleName">
+                                    <xsl:value-of select="'vscp_ps_user'" />
+                                </xsl:with-param>
+                                <xsl:with-param name="name">
+                                    <xsl:text>SIZE </xsl:text>
+                                    <xsl:value-of select="$shortName" />
+                                </xsl:with-param>
+                            </xsl:call-template>
+                            
+                        </xsl:variable>
                         
                         <!-- Build persistency access function name -->
                         <xsl:variable name="ps.user.read.name">
@@ -1048,14 +1080,18 @@ $Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
                             
                                 <xsl:text>&TAB;&TAB;&TAB;&TAB;</xsl:text>
                                 <xsl:value-of select="$ps.user.write.name" />
-                                <xsl:text>(addr - </xsl:text>
+                                <xsl:text>((</xsl:text>
+                                <xsl:value-of select="$size.define.name" />
+                                <xsl:text> - (addr - </xsl:text>
                                 <xsl:value-of select="$addr.define.name" />
-                                <xsl:text>, value);&LF;</xsl:text>
+                                <xsl:text>)) - 1), value);&LF;</xsl:text>
                                 <xsl:text>&TAB;&TAB;&TAB;&TAB;readBackValue = </xsl:text>
                                 <xsl:value-of select="$ps.user.read.name" />
-                                <xsl:text>(addr - </xsl:text>
+                                <xsl:text>((</xsl:text>
+                                <xsl:value-of select="$size.define.name" />
+                                <xsl:text> - (addr - </xsl:text>
                                 <xsl:value-of select="$addr.define.name" />
-                                <xsl:text>);&LF;</xsl:text>
+                                <xsl:text>)) - 1);&LF;</xsl:text>
                             
                             </xsl:otherwise>
                         </xsl:choose>

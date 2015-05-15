@@ -375,12 +375,12 @@ extern uint8_t vscp_app_reg_readRegister(uint16_t page, uint8_t addr)
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_SWITCHING_DUTY_CYCLE <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_SWITCHING_DUTY_CYCLE + 2) > addr))
             {
-                value = vscp_ps_user_readRelaySwitchingDutyCycle(addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_SWITCHING_DUTY_CYCLE);
+                value = vscp_ps_user_readRelaySwitchingDutyCycle((VSCP_PS_USER_SIZE_RELAY_SWITCHING_DUTY_CYCLE - (addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_SWITCHING_DUTY_CYCLE)) - 1);
             }
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_HOLDING_DUTY_CYCLE <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_HOLDING_DUTY_CYCLE + 2) > addr))
             {
-                value = vscp_ps_user_readRelayHoldingDutyCycle(addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_HOLDING_DUTY_CYCLE);
+                value = vscp_ps_user_readRelayHoldingDutyCycle((VSCP_PS_USER_SIZE_RELAY_HOLDING_DUTY_CYCLE - (addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_HOLDING_DUTY_CYCLE)) - 1);
             }
             else if (VSCP_APP_REG_PAGE_0_OFFSET_NODE_ZONE == addr)
             {
@@ -393,32 +393,32 @@ extern uint8_t vscp_app_reg_readRegister(uint16_t page, uint8_t addr)
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_EVENT_ZONE <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_EVENT_ZONE + 8) > addr))
             {
-                value = vscp_ps_user_readButtonEventZone(addr - VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_EVENT_ZONE);
+                value = vscp_ps_user_readButtonEventZone((VSCP_PS_USER_SIZE_BUTTON_EVENT_ZONE - (addr - VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_EVENT_ZONE)) - 1);
             }
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_EVENT_SUB_ZONE <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_EVENT_SUB_ZONE + 8) > addr))
             {
-                value = vscp_ps_user_readButtonEventSubZone(addr - VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_EVENT_SUB_ZONE);
+                value = vscp_ps_user_readButtonEventSubZone((VSCP_PS_USER_SIZE_BUTTON_EVENT_SUB_ZONE - (addr - VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_EVENT_SUB_ZONE)) - 1);
             }
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_EVENT_ZONE <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_EVENT_ZONE + 8) > addr))
             {
-                value = vscp_ps_user_readRelayEventZone(addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_EVENT_ZONE);
+                value = vscp_ps_user_readRelayEventZone((VSCP_PS_USER_SIZE_RELAY_EVENT_ZONE - (addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_EVENT_ZONE)) - 1);
             }
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_EVENT_SUB_ZONE <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_EVENT_SUB_ZONE + 8) > addr))
             {
-                value = vscp_ps_user_readRelayEventSubZone(addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_EVENT_SUB_ZONE);
+                value = vscp_ps_user_readRelayEventSubZone((VSCP_PS_USER_SIZE_RELAY_EVENT_SUB_ZONE - (addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_EVENT_SUB_ZONE)) - 1);
             }
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_EVENT_ZONE <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_EVENT_ZONE + 4) > addr))
             {
-                value = vscp_ps_user_readShutterEventZone(addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_EVENT_ZONE);
+                value = vscp_ps_user_readShutterEventZone((VSCP_PS_USER_SIZE_SHUTTER_EVENT_ZONE - (addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_EVENT_ZONE)) - 1);
             }
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_EVENT_SUB_ZONE <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_EVENT_SUB_ZONE + 4) > addr))
             {
-                value = vscp_ps_user_readShutterEventSubZone(addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_EVENT_SUB_ZONE);
+                value = vscp_ps_user_readShutterEventSubZone((VSCP_PS_USER_SIZE_SHUTTER_EVENT_SUB_ZONE - (addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_EVENT_SUB_ZONE)) - 1);
             }
             else if (VSCP_APP_REG_PAGE_0_OFFSET_WIND_EVENT_ZONE == addr)
             {
@@ -443,17 +443,17 @@ extern uint8_t vscp_app_reg_readRegister(uint16_t page, uint8_t addr)
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_MAX_UP_TIME <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_MAX_UP_TIME + 8) > addr))
             {
-                value = vscp_ps_user_readShutterMaxUpTime(addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_MAX_UP_TIME);
+                value = vscp_ps_user_readShutterMaxUpTime((VSCP_PS_USER_SIZE_SHUTTER_MAX_UP_TIME - (addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_MAX_UP_TIME)) - 1);
             }
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_MAX_DOWN_TIME <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_MAX_DOWN_TIME + 8) > addr))
             {
-                value = vscp_ps_user_readShutterMaxDownTime(addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_MAX_DOWN_TIME);
+                value = vscp_ps_user_readShutterMaxDownTime((VSCP_PS_USER_SIZE_SHUTTER_MAX_DOWN_TIME - (addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_MAX_DOWN_TIME)) - 1);
             }
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_TURN_TIME <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_TURN_TIME + 8) > addr))
             {
-                value = vscp_ps_user_readShutterTurnTime(addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_TURN_TIME);
+                value = vscp_ps_user_readShutterTurnTime((VSCP_PS_USER_SIZE_SHUTTER_TURN_TIME - (addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_TURN_TIME)) - 1);
             }
         }
     }
@@ -517,14 +517,14 @@ extern uint8_t vscp_app_reg_writeRegister(uint16_t page, uint8_t addr, uint8_t v
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_SWITCHING_DUTY_CYCLE <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_SWITCHING_DUTY_CYCLE + 2) > addr))
             {
-                vscp_ps_user_writeRelaySwitchingDutyCycle(addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_SWITCHING_DUTY_CYCLE, value);
-                readBackValue = vscp_ps_user_readRelaySwitchingDutyCycle(addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_SWITCHING_DUTY_CYCLE);
+                vscp_ps_user_writeRelaySwitchingDutyCycle((VSCP_PS_USER_SIZE_RELAY_SWITCHING_DUTY_CYCLE - (addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_SWITCHING_DUTY_CYCLE)) - 1), value);
+                readBackValue = vscp_ps_user_readRelaySwitchingDutyCycle((VSCP_PS_USER_SIZE_RELAY_SWITCHING_DUTY_CYCLE - (addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_SWITCHING_DUTY_CYCLE)) - 1);
             }
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_HOLDING_DUTY_CYCLE <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_HOLDING_DUTY_CYCLE + 2) > addr))
             {
-                vscp_ps_user_writeRelayHoldingDutyCycle(addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_HOLDING_DUTY_CYCLE, value);
-                readBackValue = vscp_ps_user_readRelayHoldingDutyCycle(addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_HOLDING_DUTY_CYCLE);
+                vscp_ps_user_writeRelayHoldingDutyCycle((VSCP_PS_USER_SIZE_RELAY_HOLDING_DUTY_CYCLE - (addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_HOLDING_DUTY_CYCLE)) - 1), value);
+                readBackValue = vscp_ps_user_readRelayHoldingDutyCycle((VSCP_PS_USER_SIZE_RELAY_HOLDING_DUTY_CYCLE - (addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_HOLDING_DUTY_CYCLE)) - 1);
             }
             else if (VSCP_APP_REG_PAGE_0_OFFSET_NODE_ZONE == addr)
             {
@@ -539,38 +539,38 @@ extern uint8_t vscp_app_reg_writeRegister(uint16_t page, uint8_t addr, uint8_t v
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_EVENT_ZONE <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_EVENT_ZONE + 8) > addr))
             {
-                vscp_ps_user_writeButtonEventZone(addr - VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_EVENT_ZONE, value);
-                readBackValue = vscp_ps_user_readButtonEventZone(addr - VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_EVENT_ZONE);
+                vscp_ps_user_writeButtonEventZone((VSCP_PS_USER_SIZE_BUTTON_EVENT_ZONE - (addr - VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_EVENT_ZONE)) - 1), value);
+                readBackValue = vscp_ps_user_readButtonEventZone((VSCP_PS_USER_SIZE_BUTTON_EVENT_ZONE - (addr - VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_EVENT_ZONE)) - 1);
             }
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_EVENT_SUB_ZONE <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_EVENT_SUB_ZONE + 8) > addr))
             {
-                vscp_ps_user_writeButtonEventSubZone(addr - VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_EVENT_SUB_ZONE, value);
-                readBackValue = vscp_ps_user_readButtonEventSubZone(addr - VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_EVENT_SUB_ZONE);
+                vscp_ps_user_writeButtonEventSubZone((VSCP_PS_USER_SIZE_BUTTON_EVENT_SUB_ZONE - (addr - VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_EVENT_SUB_ZONE)) - 1), value);
+                readBackValue = vscp_ps_user_readButtonEventSubZone((VSCP_PS_USER_SIZE_BUTTON_EVENT_SUB_ZONE - (addr - VSCP_APP_REG_PAGE_0_OFFSET_BUTTON_EVENT_SUB_ZONE)) - 1);
             }
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_EVENT_ZONE <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_EVENT_ZONE + 8) > addr))
             {
-                vscp_ps_user_writeRelayEventZone(addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_EVENT_ZONE, value);
-                readBackValue = vscp_ps_user_readRelayEventZone(addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_EVENT_ZONE);
+                vscp_ps_user_writeRelayEventZone((VSCP_PS_USER_SIZE_RELAY_EVENT_ZONE - (addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_EVENT_ZONE)) - 1), value);
+                readBackValue = vscp_ps_user_readRelayEventZone((VSCP_PS_USER_SIZE_RELAY_EVENT_ZONE - (addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_EVENT_ZONE)) - 1);
             }
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_EVENT_SUB_ZONE <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_RELAY_EVENT_SUB_ZONE + 8) > addr))
             {
-                vscp_ps_user_writeRelayEventSubZone(addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_EVENT_SUB_ZONE, value);
-                readBackValue = vscp_ps_user_readRelayEventSubZone(addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_EVENT_SUB_ZONE);
+                vscp_ps_user_writeRelayEventSubZone((VSCP_PS_USER_SIZE_RELAY_EVENT_SUB_ZONE - (addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_EVENT_SUB_ZONE)) - 1), value);
+                readBackValue = vscp_ps_user_readRelayEventSubZone((VSCP_PS_USER_SIZE_RELAY_EVENT_SUB_ZONE - (addr - VSCP_APP_REG_PAGE_0_OFFSET_RELAY_EVENT_SUB_ZONE)) - 1);
             }
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_EVENT_ZONE <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_EVENT_ZONE + 4) > addr))
             {
-                vscp_ps_user_writeShutterEventZone(addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_EVENT_ZONE, value);
-                readBackValue = vscp_ps_user_readShutterEventZone(addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_EVENT_ZONE);
+                vscp_ps_user_writeShutterEventZone((VSCP_PS_USER_SIZE_SHUTTER_EVENT_ZONE - (addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_EVENT_ZONE)) - 1), value);
+                readBackValue = vscp_ps_user_readShutterEventZone((VSCP_PS_USER_SIZE_SHUTTER_EVENT_ZONE - (addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_EVENT_ZONE)) - 1);
             }
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_EVENT_SUB_ZONE <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_EVENT_SUB_ZONE + 4) > addr))
             {
-                vscp_ps_user_writeShutterEventSubZone(addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_EVENT_SUB_ZONE, value);
-                readBackValue = vscp_ps_user_readShutterEventSubZone(addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_EVENT_SUB_ZONE);
+                vscp_ps_user_writeShutterEventSubZone((VSCP_PS_USER_SIZE_SHUTTER_EVENT_SUB_ZONE - (addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_EVENT_SUB_ZONE)) - 1), value);
+                readBackValue = vscp_ps_user_readShutterEventSubZone((VSCP_PS_USER_SIZE_SHUTTER_EVENT_SUB_ZONE - (addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_EVENT_SUB_ZONE)) - 1);
             }
             else if (VSCP_APP_REG_PAGE_0_OFFSET_WIND_EVENT_ZONE == addr)
             {
@@ -600,20 +600,20 @@ extern uint8_t vscp_app_reg_writeRegister(uint16_t page, uint8_t addr, uint8_t v
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_MAX_UP_TIME <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_MAX_UP_TIME + 8) > addr))
             {
-                vscp_ps_user_writeShutterMaxUpTime(addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_MAX_UP_TIME, value);
-                readBackValue = vscp_ps_user_readShutterMaxUpTime(addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_MAX_UP_TIME);
+                vscp_ps_user_writeShutterMaxUpTime((VSCP_PS_USER_SIZE_SHUTTER_MAX_UP_TIME - (addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_MAX_UP_TIME)) - 1), value);
+                readBackValue = vscp_ps_user_readShutterMaxUpTime((VSCP_PS_USER_SIZE_SHUTTER_MAX_UP_TIME - (addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_MAX_UP_TIME)) - 1);
             }
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_MAX_DOWN_TIME <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_MAX_DOWN_TIME + 8) > addr))
             {
-                vscp_ps_user_writeShutterMaxDownTime(addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_MAX_DOWN_TIME, value);
-                readBackValue = vscp_ps_user_readShutterMaxDownTime(addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_MAX_DOWN_TIME);
+                vscp_ps_user_writeShutterMaxDownTime((VSCP_PS_USER_SIZE_SHUTTER_MAX_DOWN_TIME - (addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_MAX_DOWN_TIME)) - 1), value);
+                readBackValue = vscp_ps_user_readShutterMaxDownTime((VSCP_PS_USER_SIZE_SHUTTER_MAX_DOWN_TIME - (addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_MAX_DOWN_TIME)) - 1);
             }
             else if ((VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_TURN_TIME <= addr) &&
                      ((VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_TURN_TIME + 8) > addr))
             {
-                vscp_ps_user_writeShutterTurnTime(addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_TURN_TIME, value);
-                readBackValue = vscp_ps_user_readShutterTurnTime(addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_TURN_TIME);
+                vscp_ps_user_writeShutterTurnTime((VSCP_PS_USER_SIZE_SHUTTER_TURN_TIME - (addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_TURN_TIME)) - 1), value);
+                readBackValue = vscp_ps_user_readShutterTurnTime((VSCP_PS_USER_SIZE_SHUTTER_TURN_TIME - (addr - VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_TURN_TIME)) - 1);
             }
         }
     }
