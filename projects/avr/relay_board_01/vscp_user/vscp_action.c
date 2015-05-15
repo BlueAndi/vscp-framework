@@ -277,15 +277,18 @@ static void vscp_action_activateRelay(uint8_t par, BOOL activate)
 
     for(index = 0; index < RELAY_NUM; ++index)
     {
-        uint8_t executeBit  = (par >> index) & 0x01;
-
-        if (0 != executeBit)
+        /* Relay masked? */
+        if (TRUE == IS_BIT_SET(par, index))
         {
             /* Control the relay only in case that no enabled shutter use it. */
             if (FALSE == shutter_isEnabled(index / 2))
             {
-                if (relay_isActivated(index) != activate)
+                /* Change relay state only if relay is enabled and relay state is different. */
+                if ((TRUE == relay_isEnabled(index)) &&
+                    (relay_isActivated(index) != activate))
                 {
+                    relay_activate(index, activate);
+
                     /* If enabled, send a VSCP event for any relay state change. */
                     if (0 != ((vscp_ps_user_readRelayEventConfig() >> index) & 0x01))
                     {
@@ -302,8 +305,6 @@ static void vscp_action_activateRelay(uint8_t par, BOOL activate)
                                                             vscp_ps_user_readRelayEventSubZone(index));
                         }
                     }
-
-                    relay_activate(index, activate);
                 }
             }
         }
@@ -326,9 +327,8 @@ static void vscp_action_driveShutter(uint8_t par, SHUTTER_DIR dir, uint16_t dura
 
     for(index = 0; index < SHUTTER_NUM; ++index)
     {
-        uint8_t executeBit  = (instances >> index) & 0x01;
-
-        if (0 != executeBit)
+        /* Shutter masked? */
+        if (TRUE == IS_BIT_SET(instances, index))
         {
             shutter_drive(index, dir, duration);
         }
@@ -350,9 +350,8 @@ static void vscp_action_alertShutter(uint8_t par, BOOL alert)
 
     for(index = 0; index < SHUTTER_NUM; ++index)
     {
-        uint8_t executeBit  = (instances >> index) & 0x01;
-
-        if (0 != executeBit)
+        /* Shutter masked? */
+        if (TRUE == IS_BIT_SET(instances, index))
         {
             shutter_windAlert(index, alert);
         }
@@ -374,9 +373,8 @@ static void vscp_action_driveAbsShutter(uint8_t par, uint8_t pos)
 
     for(index = 0; index < SHUTTER_NUM; ++index)
     {
-        uint8_t executeBit  = (instances >> index) & 0x01;
-
-        if (0 != executeBit)
+        /* Shutter masked? */
+        if (TRUE == IS_BIT_SET(instances, index))
         {
             shutter_driveAbs(index, pos);
         }
@@ -399,9 +397,8 @@ static void vscp_action_turnShutter(uint8_t par)
 
     for(index = 0; index < SHUTTER_NUM; ++index)
     {
-        uint8_t executeBit  = (instances >> index) & 0x01;
-
-        if (0 != executeBit)
+        /* Shutter masked? */
+        if (TRUE == IS_BIT_SET(instances, index))
         {
             shutter_turn(index, angle);
         }
