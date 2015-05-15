@@ -5,6 +5,11 @@ Features:
   - VSCP framework
     - Segment initialization lamp handling improved: If the node starts up without nickname id, the lamp blinks slow. If the node enters nickname discovery, the lamp blinks fast. If the node discovered a nickname successfully, the lamp stays on.
 
+  - Project: Relay board 01
+    - CAN is monitored and any error stored in the VSCP alarm bitfield. See MDF for more information about each bit.
+    - Scheduler is monitored by watchdog.
+    - Several minor improvements.
+    
 Bugfixes:
 
   - VSCP framework

@@ -1348,13 +1348,13 @@ Both values are given as a pwm duty cycle value (3-400).</description>
             </bit>
 
             <bit pos="1">
-                <name lang="en">Not used</name>
-                <description lang="en">Not used.</description>
+                <name lang="en">CAN bus-off</name>
+                <description lang="en">The node detected CAN bus-off state.</description>
             </bit>
 
             <bit pos="0">
-                <name lang="en">Not used</name>
-                <description lang="en">Not used.</description>
+                <name lang="en">CAN error-passive</name>
+                <description lang="en">The node detected CAN error-passive state.</description>
             </bit>
 
         </alarm>

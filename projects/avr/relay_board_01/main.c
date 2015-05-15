@@ -64,6 +64,7 @@ $Date: 2015-01-06 00:31:00 +0100 (Di, 06 Jan 2015) $
 #include <util/delay.h>
 #include "sys_sm.h"
 #include "watchdog.h"
+#include "can_monitor.h"
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -111,6 +112,14 @@ typedef enum
 
 } MAIN_RET;
 
+/**< This type defines the alarm bits. */
+typedef enum
+{
+    MAIN_ALARM_CAN_ERR_PASSIVE = 0x01,  /**< CAN bus error-passive detected */
+    MAIN_ALARM_CAN_BUS_OFF     = 0x02   /**< CAN bus-off detected */
+
+} MAIN_ALARM;
+
 /*******************************************************************************
     PROTOTYPES
 *******************************************************************************/
@@ -143,10 +152,11 @@ static volatile BOOL    main_isInitButtonPressed    = FALSE;
  */
 int main(void)
 {
-    BOOL    swTimer10MSTriggered    = FALSE;                    /* Signals that the 10 ms software timer triggered */
-    uint8_t swTimer1S               = MAIN_SWTIMER_1S_PERIOD;   /* Based on 250 ms software timer */
-    uint8_t index                   = 0;
-    BOOL    anyShutterDriving       = FALSE;
+    BOOL                swTimer10MSTriggered    = FALSE;                    /* Signals that the 10 ms software timer triggered */
+    uint8_t             swTimer1S               = MAIN_SWTIMER_1S_PERIOD;   /* Based on 250 ms software timer */
+    uint8_t             index                   = 0;
+    BOOL                anyShutterDriving       = FALSE;
+    CAN_MONITOR_STATE   canBusState             = CAN_MONITOR_STATE_ERR_ACTIVE;
 
     /* ********** Run level 1 - interrupts disabled ********** */
 
@@ -199,6 +209,17 @@ int main(void)
             if (TRUE == shutterDrv_process())
             {
                 anyShutterDriving = TRUE;
+            }
+
+            /* Check the CAN bus and set alarms if necessary. */
+            canBusState = can_monitor_getState();
+            if (CAN_MONITOR_STATE_ERR_PASSIVE == canBusState)
+            {
+                vscp_core_setAlarm(MAIN_ALARM_CAN_ERR_PASSIVE);
+            }
+            else if (CAN_MONITOR_STATE_BUS_OFF == canBusState)
+            {
+                vscp_core_setAlarm(MAIN_ALARM_CAN_BUS_OFF);
             }
         }
 
@@ -379,6 +400,9 @@ static MAIN_RET main_initRunLevel1(void)
     {
         status = MAIN_RET_ERROR;
     }
+
+    /* Initialize CAN monitor */
+    can_monitor_init();
 
     /* Initialize software timer */
     swTimer_init();
