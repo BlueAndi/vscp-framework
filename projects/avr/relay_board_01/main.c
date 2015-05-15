@@ -556,6 +556,7 @@ static void main_timerCb(void)
 static void main_processStatusLamp(void)
 {
     VSCP_LAMP_STATE state   = vscp_portable_getLampState();
+    static uint8_t  slowCnt = 0;
 
     switch(state)
     {
@@ -567,12 +568,29 @@ static void main_processStatusLamp(void)
         HW_ENABLE_STATUS_LED();
         break;
 
-    case VSCP_LAMP_STATE_BLINK:
+    case VSCP_LAMP_STATE_BLINK_SLOW:
+        if (0 == (slowCnt % 4))
+        {
+            HW_TOGGLE_STATUS_LED();
+        }
+        break;
+
+    case VSCP_LAMP_STATE_BLINK_FAST:
         HW_TOGGLE_STATUS_LED();
         break;
 
     default:
         break;
+    }
+
+    /* Reset counter for slow blinking */
+    if (VSCP_LAMP_STATE_BLINK_SLOW != state)
+    {
+        slowCnt = 0;
+    }
+    else
+    {
+        ++slowCnt;
     }
 
     return;

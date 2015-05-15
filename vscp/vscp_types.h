@@ -317,7 +317,8 @@ typedef enum
 {
     VSCP_LAMP_STATE_OFF = 0,    /**< Lamp is off */
     VSCP_LAMP_STATE_ON,         /**< Lamp is on */
-    VSCP_LAMP_STATE_BLINK       /**< Lamp is blinking */
+    VSCP_LAMP_STATE_BLINK_SLOW, /**< Lamp is slow blinking */
+    VSCP_LAMP_STATE_BLINK_FAST  /**< Lamp is fast blinking */
 
 } VSCP_LAMP_STATE;
 

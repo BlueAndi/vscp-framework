@@ -309,7 +309,7 @@ extern VSCP_CORE_RET vscp_core_init(void)
     vscp_core_rxMessageValid        = FALSE;
 
     /* Show the user that the node starts up. */
-    vscp_portable_setLampState(VSCP_LAMP_STATE_BLINK);
+    vscp_portable_setLampState(VSCP_LAMP_STATE_BLINK_SLOW);
 
     /* Create a timer for common timing issues */
     vscp_core_timerId = vscp_timer_create();
@@ -745,7 +745,7 @@ static inline void  vscp_core_changeToStateInit(void)
     if (STATE_INIT != vscp_core_state)
     {
         /* Show the user that the node enters initialization state by blinking lamp. */
-        vscp_portable_setLampState(VSCP_LAMP_STATE_BLINK);
+        vscp_portable_setLampState(VSCP_LAMP_STATE_BLINK_FAST);
 
         vscp_core_state     = STATE_INIT;
         vscp_core_initState = INIT_STATE_PROBE_MASTER;

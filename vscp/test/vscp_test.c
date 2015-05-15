@@ -420,9 +420,9 @@ extern void vscp_test_initNodeTheFirstTime(void)
     /* Nickname id value shall be set for not initialized nodes. */
     CU_ASSERT_EQUAL(vscp_core_readNicknameId(), VSCP_NICKNAME_NOT_INIT);
 
-    /* Lamp shall blink */
+    /* Lamp shall blink slow */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_PORTABLE_SET_LAMP_STATE], 1);
-    CU_ASSERT_EQUAL(vscp_test_lampState, VSCP_LAMP_STATE_BLINK);
+    CU_ASSERT_EQUAL(vscp_test_lampState, VSCP_LAMP_STATE_BLINK_SLOW);
 
     return;
 }
@@ -470,8 +470,8 @@ extern void vscp_test_processNodeTheFirstTime(void)
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_PORTABLE_START_TIMER], 1);
     CU_ASSERT_EQUAL(vscp_test_timerValues[VSCP_TEST_TIMER_0], VSCP_CONFIG_NODE_SEGMENT_INIT_TIMEOUT);
 
-    /* Lamp shall blink */
-    CU_ASSERT_EQUAL(vscp_test_lampState, VSCP_LAMP_STATE_BLINK);
+    /* Lamp shall blink fast */
+    CU_ASSERT_EQUAL(vscp_test_lampState, VSCP_LAMP_STATE_BLINK_FAST);
 
     return;
 }
@@ -638,9 +638,9 @@ extern void vscp_test_sendProbeAckInActiveState(void)
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 1);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[0], VSCP_NICKNAME_SEGMENT_MASTER);
 
-    /* Lamp shall blink */
+    /* Lamp shall blink fast */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_PORTABLE_SET_LAMP_STATE], 1);
-    CU_ASSERT_EQUAL(vscp_test_lampState, VSCP_LAMP_STATE_BLINK);
+    CU_ASSERT_EQUAL(vscp_test_lampState, VSCP_LAMP_STATE_BLINK_FAST);
 
     return;
 }

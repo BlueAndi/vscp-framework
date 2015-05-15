@@ -116,7 +116,11 @@ extern void vscp_portable_setLampState(VSCP_LAMP_STATE state)
         /* Implement your code here ... */
         break;
 
-    case VSCP_LAMP_STATE_BLINK:
+    case VSCP_LAMP_STATE_BLINK_SLOW:
+        /* Implement your code here ... */
+        break;
+
+    case VSCP_LAMP_STATE_BLINK_FAST:
         /* Implement your code here ... */
         break;
 

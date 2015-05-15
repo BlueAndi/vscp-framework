@@ -1,4 +1,9 @@
-## 0.3.1 (unreleased)
+## 0.4.0 (unreleased)
+
+Features:
+
+  - VSCP framework
+    - Segment initialization lamp handling improved: If the node starts up without nickname id, the lamp blinks slow. If the node enters nickname discovery, the lamp blinks fast. If the node discovered a nickname successfully, the lamp stays on.
 
 Bugfixes:
 
