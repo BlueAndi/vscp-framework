@@ -63,6 +63,7 @@ $Date: 2015-01-06 00:31:00 +0100 (Di, 06 Jan 2015) $
 #include "shutter.h"
 #include <util/delay.h>
 #include "sys_sm.h"
+#include "watchdog.h"
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -170,12 +171,18 @@ int main(void)
 
     /* ********** Run level 3 - main loop starts ********** */
 
+    /* Enable watchdog monitoring */
+    watchdog_enable(TRUE);
+
     /* Main loop */
     for(;;)
     {
         SYS_SM_ACTION   sysSmAction = SYS_SM_ACTION_NOTHING;
 
         /* ----- System state independent jobs ----- */
+
+        /* Process watchdog */
+        watchdog_process();
 
         /* Process VSCP framework */
         vscp_core_process();
@@ -347,6 +354,9 @@ static MAIN_RET main_initRunLevel1(void)
 
     /* Initialize the hardware */
     hw_init();
+
+    /* Initialize watchdog */
+    watchdog_init();
 
     /* Initialize the system state machine */
     sys_sm_init();
