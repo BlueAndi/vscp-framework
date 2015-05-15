@@ -193,7 +193,7 @@ static void vscp_action_turnShutter(uint8_t par);
  */
 extern void vscp_action_init(void)
 {
-    /* Implement your code here ... */
+    /* Nothing to do */
 
     return;
 }
@@ -207,6 +207,8 @@ extern void vscp_action_init(void)
  */
 extern void vscp_action_execute(uint8_t action, uint8_t par, vscp_RxMessage const * const msg)
 {
+    NOT_USED(msg);
+
     switch(action)
     {
     case VSCP_ACTION_NO_OPERATION:
