@@ -123,8 +123,8 @@ static uint16_t         relay_holdingPwm            = (RELAY_PWM_TOP * 3) / 5;
 /** Change to switching current */
 static volatile BOOL    relay_enableSwitchingPwm    = FALSE;
 
-/** Relay filter mask. A 1 means the relay is enabled, a 0 the relay is disabled */
-static uint8_t          relay_filterMask            = 0xff;
+/** Relay enable mask. A 1 means the relay is enabled, a 0 the relay is disabled */
+static uint8_t          relay_enableMask            = 0xff;
 
 /*******************************************************************************
     GLOBAL VARIABLES
@@ -200,11 +200,11 @@ extern void relay_init(void)
     {
         if (FALSE == enableIt)
         {
-            BIT_CLR(relay_filterMask, index);
+            BIT_CLR(relay_enableMask, index);
         }
         else
         {
-            BIT_SET(relay_filterMask, index);
+            BIT_SET(relay_enableMask, index);
         }
     }
 
@@ -218,11 +218,11 @@ extern void relay_init(void)
  */
 extern BOOL relay_isEnabled(uint8_t index)
 {
-    BOOL    status  = FALSE;
+    BOOL status = FALSE;
 
-    if (0 != (relay_filterMask & (1 << index)))
+    if (RELAY_NUM > index)
     {
-        status = TRUE;
+        status = IS_BIT_SET(relay_enableMask, index);
     }
 
     return status;
@@ -240,7 +240,7 @@ extern void relay_activate(uint8_t index, BOOL activate)
     if ((RELAY_NUM > index) &&
         (TRUE == relay_isEnabled(index)))
     {
-        uint8_t run             = 0;
+        uint8_t run                 = 0;
         BOOL    enableSwitchingPwm  = FALSE;
         BOOL    dirty               = FALSE;
 
@@ -248,7 +248,7 @@ extern void relay_activate(uint8_t index, BOOL activate)
         if (FALSE == activate)
         {
             /* Is relay activated? */
-            if (0 != (relay_stateBitField & (1 << index)))
+            if (TRUE == IS_BIT_SET(relay_stateBitField, index))
             {
                 /* Deactivate relay */
                 BIT_CLR(relay_stateBitField, index);
@@ -260,7 +260,7 @@ extern void relay_activate(uint8_t index, BOOL activate)
         else
         {
             /* Is relay deactivated? */
-            if (0 == (relay_stateBitField & (1 << index)))
+            if (FALSE == IS_BIT_SET(relay_stateBitField, index))
             {
                 /* Activate relay */
                 BIT_SET(relay_stateBitField, index);
@@ -279,7 +279,7 @@ extern void relay_activate(uint8_t index, BOOL activate)
             for(run = 0; run < RELAY_NUM; ++run)
             {
                 /* Relay disabled? */
-                if (0 == (relay_stateBitField & (1 << run)))
+                if (FALSE == IS_BIT_SET(relay_stateBitField, run))
                 {
                     relay_setBit(0);
                 }
@@ -317,10 +317,7 @@ extern BOOL relay_isActivated(uint8_t index)
 
     if (RELAY_NUM > index)
     {
-        if (0 != (relay_stateBitField & (1 << index)))
-        {
-            status = TRUE;
-        }
+        status = IS_BIT_SET(relay_stateBitField, index);
     }
 
     return status;
