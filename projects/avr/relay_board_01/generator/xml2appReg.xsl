@@ -1084,7 +1084,7 @@ $Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
                                 <xsl:value-of select="$size.define.name" />
                                 <xsl:text> - (addr - </xsl:text>
                                 <xsl:value-of select="$addr.define.name" />
-                                <xsl:text>)) - 1), value);&LF;</xsl:text>
+                                <xsl:text>)) - 1, value);&LF;</xsl:text>
                                 <xsl:text>&TAB;&TAB;&TAB;&TAB;readBackValue = </xsl:text>
                                 <xsl:value-of select="$ps.user.read.name" />
                                 <xsl:text>((</xsl:text>
