@@ -646,39 +646,39 @@ The zone/sub-zone must match the one of the event to trigger the DM row.</descri
                 </bit>												
             </reg>		
             
-            <reg page="0" offset="2" >
+            <reg page="1" offset="2" >
                 <name lang="en">Decision matrix row 1: Class mask (low 8 bits) </name>
                 <description lang="en">The lowest 8 bits of the class mask that defines the events that should trigger the action of this decision matrix row.
 Bit 8 of the class mask is stored in bit 1 of the flag byte.</description>
                 <access>rw</access>
             </reg>
             
-            <reg page="0" offset="3" >
+            <reg page="1" offset="3" >
                 <name lang="en">Decision matrix row 1: Class filter (low 8 bits)</name>
                 <description lang="en">The lowest 8 bits of the class filter that defines the events that should trigger the action of this decision matrix row.
 Bit 8 of the class filter is stored in bit 1 of the flag byte.</description>
                 <access>rw</access>
             </reg>
             
-            <reg page="0" offset="4" >
+            <reg page="1" offset="4" >
                 <name lang="en">Decision matrix row 1: Type mask</name>
                 <description lang="en">Type mask that defines the events that should trigger the action of this decision matrix row.</description>
                 <access>rw</access>
             </reg>
             
-            <reg page="0" offset="5" >
+            <reg page="1" offset="5" >
                 <name lang="en">Decision matrix row 1: Type filter</name>
                 <description lang="en">Type filter that defines the events that should trigger the action of this decision matrix row.</description>
                 <access>rw</access>
             </reg>	
             
-            <reg page="0" offset="6" >
+            <reg page="1" offset="6" >
                 <name lang="en">Decision matrix row 1: Action</name>
                 <description lang="en">This is the action or operation that should be performed if the filtering is satisfied. Only action code 0×00 is predefined and means No-Operation. All other codes are application specific and typical application defined codes could do measurement, send predefined event etc.</description>
                 <access>rw</access>
             </reg>
             
-            <reg page="0" offset="7" >
+            <reg page="1" offset="7" >
                 <name lang="en">Decision matrix row 1: Action parameter</name>
                 <description lang="en">A numeric action parameter can be set and its meaning is application specific.</description>
                 <access>rw</access>
@@ -734,39 +734,39 @@ The zone/sub-zone must match the one of the event to trigger the DM row.</descri
                 </bit>												
             </reg>		
             
-            <reg page="0" offset="10" >
+            <reg page="1" offset="10" >
                 <name lang="en">Decision matrix row 2: Class mask (low 8 bits) </name>
                 <description lang="en">The lowest 8 bits of the class mask that defines the events that should trigger the action of this decision matrix row.
 Bit 8 of the class mask is stored in bit 1 of the flag byte.</description>
                 <access>rw</access>
             </reg>
             
-            <reg page="0" offset="11" >
+            <reg page="1" offset="11" >
                 <name lang="en">Decision matrix row 2: Class filter (low 8 bits)</name>
                 <description lang="en">The lowest 8 bits of the class filter that defines the events that should trigger the action of this decision matrix row.
 Bit 8 of the class filter is stored in bit 1 of the flag byte.</description>
                 <access>rw</access>
             </reg>
             
-            <reg page="0" offset="12" >
+            <reg page="1" offset="12" >
                 <name lang="en">Decision matrix row 2: Type mask</name>
                 <description lang="en">Type mask that defines the events that should trigger the action of this decision matrix row.</description>
                 <access>rw</access>
             </reg>
             
-            <reg page="0" offset="13" >
+            <reg page="1" offset="13" >
                 <name lang="en">Decision matrix row 2: Type filter</name>
                 <description lang="en">Type filter that defines the events that should trigger the action of this decision matrix row.</description>
                 <access>rw</access>
             </reg>	
             
-            <reg page="0" offset="14" >
+            <reg page="1" offset="14" >
                 <name lang="en">Decision matrix row 2: Action</name>
                 <description lang="en">This is the action or operation that should be performed if the filtering is satisfied. Only action code 0×00 is predefined and means No-Operation. All other codes are application specific and typical application defined codes could do measurement, send predefined event etc.</description>
                 <access>rw</access>
             </reg>
             
-            <reg page="0" offset="15" >
+            <reg page="1" offset="15" >
                 <name lang="en">Decision matrix row 2: Action parameter</name>
                 <description lang="en">A numeric action parameter can be set and its meaning is application specific.</description>
                 <access>rw</access>
