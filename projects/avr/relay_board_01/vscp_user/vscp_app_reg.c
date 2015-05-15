@@ -181,9 +181,9 @@ $Date:  $
 #define VSCP_APP_REG_PAGE_0_OFFSET_SHUTTER_TURN_TIME    73
 
 /**
- * Application register offset of page 1 of dm ng.
+ * Application register offset of page 2 of dm ng.
  */
-#define VSCP_APP_REG_PAGE_1_OFFSET_DM_NG    0
+#define VSCP_APP_REG_PAGE_2_OFFSET_DM_NG    0
 
 /*******************************************************************************
     MACROS
@@ -329,8 +329,10 @@ extern uint8_t vscp_app_reg_getPagesUsed(void)
 {
     uint8_t pagesUsed = 1;  /* At least one page, which is mandatory. */
 
-    /* DM is at page 1 */
-    ++pagesUsed;
+    /* DM is at page 1 and
+     * DM NG is at page 2
+     */
+    pagesUsed += 2;
 
     return pagesUsed;
 }
@@ -459,12 +461,12 @@ extern uint8_t vscp_app_reg_readRegister(uint16_t page, uint8_t addr)
             }
         }
     }
-    else if (1 == page)
+    else if (2 == page)
     {
-        if ((VSCP_APP_REG_PAGE_1_OFFSET_DM_NG <= addr) &&
-            ((VSCP_APP_REG_PAGE_1_OFFSET_DM_NG + 80) > addr))
+        if ((VSCP_APP_REG_PAGE_2_OFFSET_DM_NG <= addr) &&
+            ((VSCP_APP_REG_PAGE_2_OFFSET_DM_NG + 80) > addr))
         {
-            value = vscp_ps_user_readDmNg(addr - VSCP_APP_REG_PAGE_1_OFFSET_DM_NG);
+            value = vscp_ps_user_readDmNg(addr - VSCP_APP_REG_PAGE_2_OFFSET_DM_NG);
         }
     }
 
@@ -653,13 +655,13 @@ extern uint8_t vscp_app_reg_writeRegister(uint16_t page, uint8_t addr, uint8_t v
             }
         }
     }
-    else if (1 == page)
+    else if (2 == page)
     {
-        if ((VSCP_APP_REG_PAGE_1_OFFSET_DM_NG <= addr) &&
-            ((VSCP_APP_REG_PAGE_1_OFFSET_DM_NG + 80) > addr))
+        if ((VSCP_APP_REG_PAGE_2_OFFSET_DM_NG <= addr) &&
+            ((VSCP_APP_REG_PAGE_2_OFFSET_DM_NG + 80) > addr))
         {
-            vscp_ps_user_writeDmNg(addr - VSCP_APP_REG_PAGE_1_OFFSET_DM_NG, value);
-            readBackValue = vscp_ps_user_readDmNg(addr - VSCP_APP_REG_PAGE_1_OFFSET_DM_NG);
+            vscp_ps_user_writeDmNg(addr - VSCP_APP_REG_PAGE_2_OFFSET_DM_NG, value);
+            readBackValue = vscp_ps_user_readDmNg(addr - VSCP_APP_REG_PAGE_2_OFFSET_DM_NG);
         }
     }
 
