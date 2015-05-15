@@ -81,74 +81,81 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 #define VSCP_ACTION_DISABLE_RELAY           2
 
 /**
+ * Action: Toggle relay
+ * Parameter: Bit 0 is relay 0 and etc.
+ * Note, a 1 toggles a relay, a 0 doesn't care.
+ */
+#define VSCP_ACTION_TOGGLE_RELAY            3
+
+/**
  * Action: Stop shutter
  * Parameter: Bit 0 is shutter 0 and etc.
  * Note, a 1 stops a shutter, a 0 does nothing.
  */
-#define VSCP_ACTION_STOP_SHUTTER            3
+#define VSCP_ACTION_STOP_SHUTTER            4
 
 /**
  * Action: Drive shutter up
  * Parameter: Bit 0 is shutter 0 and etc.
  * Note, a 1 drives a shutter, a 0 does nothing.
  */
-#define VSCP_ACTION_DRIVE_SHUTTER_UP        4
+#define VSCP_ACTION_DRIVE_SHUTTER_UP        5
 
 /**
  * Action: Drive shutter down
  * Parameter: Bit 0 is shutter 0 and etc.
  * Note, a 1 drives a shutter, a 0 does nothing.
  */
-#define VSCP_ACTION_DRIVE_SHUTTER_DOWN      5
+#define VSCP_ACTION_DRIVE_SHUTTER_DOWN      6
 
 /**
  * Action: Drive shutter to top
  * Parameter: Bit 0 is shutter 0 and etc.
  * Note, a 1 drives a shutter, a 0 does nothing.
  */
-#define VSCP_ACTION_DRIVE_SHUTTER_TOP       6
+#define VSCP_ACTION_DRIVE_SHUTTER_TOP       7
 
 /**
  * Action: Drive shutter to bottom
  * Parameter: Bit 0 is shutter 0 and etc.
  * Note, a 1 drives a shutter, a 0 does nothing.
  */
-#define VSCP_ACTION_DRIVE_SHUTTER_BOTTOM    7
+#define VSCP_ACTION_DRIVE_SHUTTER_BOTTOM    8
 
 /**
  * Action: Calibration drive of the shutter
  * Parameter: Bit 0 is shutter 0 and etc.
  * Note, a 1 drives a shutter, a 0 does nothing.
  */
-#define VSCP_ACTION_CALIBRATE_SHUTTER       8
+#define VSCP_ACTION_CALIBRATE_SHUTTER       9
 
 /**
  * Action: Alert shutter about high wind speed
  * Parameter: Bit 0 is shutter 0 and etc.
  * Note, a 1 alerts a shutter, a 0 does nothing.
  */
-#define VSCP_ACTION_ALERT_SHUTTER           9
+#define VSCP_ACTION_ALERT_SHUTTER           10
 
 /**
  * Action: Remove a shutter shutter alert about high wind speed
  * Parameter: Bit 0 is shutter 0 and etc.
  * Note, a 1 removes the shutter alert, a 0 does nothing.
  */
-#define VSCP_ACTION_REMOVE_SHUTTER_ALERT    10
+#define VSCP_ACTION_REMOVE_SHUTTER_ALERT    11
 
 /**
  * Action: Drive shutter to shade position
  * Parameter: Bit 0 is shutter 0 and etc.
  * Note, a 1 drives a shutter, a 0 does nothing.
  */
-#define VSCP_ACTION_DRIVE_SHUTTER_SHADE     11
+#define VSCP_ACTION_DRIVE_SHUTTER_SHADE     12
 
 /**
  * Action: Turn shutter (jalousie)
  * Parameter: Bit 0-3 are shutter 1-4, bit 4-7 are used for angle.
  * Note, a 1 drives a shutter, a 0 does nothing.
  */
-#define VSCP_ACTION_TURN_SHUTTER            12
+#define VSCP_ACTION_TURN_SHUTTER            13
 
 /*******************************************************************************
     MACROS
@@ -163,6 +170,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 
 static void vscp_action_activateRelay(uint8_t par, BOOL activate);
+static void vscp_action_toggleRelay(uint8_t par);
 static void vscp_action_driveShutter(uint8_t par, SHUTTER_DIR dir, uint16_t duration);
 static void vscp_action_alertShutter(uint8_t par, BOOL alert);
 static void vscp_action_driveAbsShutter(uint8_t par, uint8_t pos);
@@ -211,6 +219,10 @@ extern void vscp_action_execute(uint8_t action, uint8_t par, vscp_RxMessage cons
 
     case VSCP_ACTION_DISABLE_RELAY:
         vscp_action_activateRelay(par, FALSE);
+        break;
+
+    case VSCP_ACTION_TOGGLE_RELAY:
+        vscp_action_toggleRelay(par);
         break;
 
     case VSCP_ACTION_STOP_SHUTTER:
@@ -293,6 +305,61 @@ static void vscp_action_activateRelay(uint8_t par, BOOL activate)
                     if (0 != ((vscp_ps_user_readRelayEventConfig() >> index) & 0x01))
                     {
                         if (FALSE == activate)
+                        {
+                            vscp_information_sendOffEvent(  index,
+                                                            vscp_ps_user_readRelayEventZone(index),
+                                                            vscp_ps_user_readRelayEventSubZone(index));
+                        }
+                        else
+                        {
+                            vscp_information_sendOnEvent(   index,
+                                                            vscp_ps_user_readRelayEventZone(index),
+                                                            vscp_ps_user_readRelayEventSubZone(index));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return;
+}
+
+/**
+ * This function executes a relay action.
+ *
+ * @param[in]   par         Parameter, which contains the instance number
+ */
+static void vscp_action_toggleRelay(uint8_t par)
+{
+    uint8_t index   = 0;
+
+    for(index = 0; index < RELAY_NUM; ++index)
+    {
+        /* Relay masked? */
+        if (TRUE == IS_BIT_SET(par, index))
+        {
+            /* Control the relay only in case that no enabled shutter use it. */
+            if (FALSE == shutter_isEnabled(index / 2))
+            {
+                /* Change relay state only if relay is enabled. */
+                if (TRUE == relay_isEnabled(index))
+                {
+                    BOOL isActive = relay_isActivated(index);
+
+                    if (FALSE == isActive)
+                    {
+                        relay_activate(index, TRUE);
+                    }
+                    else
+                    {
+                        relay_activate(index, FALSE);
+                    }
+
+                    /* If enabled, send a VSCP event for any relay state change. */
+                    if (0 != ((vscp_ps_user_readRelayEventConfig() >> index) & 0x01))
+                    {
+                        if (FALSE == isActive)
                         {
                             vscp_information_sendOffEvent(  index,
                                                             vscp_ps_user_readRelayEventZone(index),
