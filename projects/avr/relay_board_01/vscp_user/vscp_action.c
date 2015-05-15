@@ -359,7 +359,7 @@ static void vscp_action_toggleRelay(uint8_t par)
                     /* If enabled, send a VSCP event for any relay state change. */
                     if (0 != ((vscp_ps_user_readRelayEventConfig() >> index) & 0x01))
                     {
-                        if (FALSE == isActive)
+                        if (TRUE == isActive)
                         {
                             vscp_information_sendOffEvent(  index,
                                                             vscp_ps_user_readRelayEventZone(index),
