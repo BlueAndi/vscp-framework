@@ -21,7 +21,8 @@ The VSCP software framework for level 1 devices provides several layers accordin
 
 More information can be found on the main site http://www.vscp.org
 
-@image html vscp_modules.jpg
+@image html vscp_modules_color_legend.png
+@image html vscp_modules.png
 
   - The core functionality which has a built-in state machine to handle different use cases of the protocol and etc. (@ref vscp_core). Right now it supports every mandatory event and some minor optional ones.
   - The decision matrix is handled separately (@ref vscp_dm). It contains the standard decision matrix, as described in the VSCP specification and contains an additional extension.

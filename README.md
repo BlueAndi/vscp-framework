@@ -24,7 +24,8 @@ More information can be found on the main site http://www.vscp.org
 ##Framework
 The VSCP software framework for level 1 devices provides several layers according to the [VSCP specification](http://www.vscp.org/docs/vscpspec/doku.php).
 
-![overview-diagram](https://github.com/BlueAndi/vscp-framework/blob/master/vscp_modules.jpg)
+![color-legend](https://github.com/BlueAndi/vscp-framework/blob/master/vscp_modules_color_legend.png)
+![overview-diagram](https://github.com/BlueAndi/vscp-framework/blob/master/vscp_modules.png)
 
 * The core functionality which has a built-in state machine to handle different use cases of the protocol and etc. (vscp\_core.[ch]). Right now it supports every mandatory event and some minor optional ones.
 * The decision matrix is handled separately (vscp\_dm.[ch]). It contains the standard decision matrix, as described in the VSCP specification and contains an additional extension.
