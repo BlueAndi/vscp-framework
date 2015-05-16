@@ -24,7 +24,7 @@ More information can be found on the main site http://www.vscp.org
 ##Framework
 The VSCP software framework for level 1 devices provides several layers according to the [VSCP specification](http://www.vscp.org/docs/vscpspec/doku.php).
 
-![color-legend](https://github.com/BlueAndi/vscp-framework/blob/master/vscp/doc/doxfiles/vscp_modules.png)
+![color-legend](https://github.com/BlueAndi/vscp-framework/blob/master/vscp/doc/doxfiles/vscp_modules_color_legend.png)
 ![overview-diagram](https://github.com/BlueAndi/vscp-framework/blob/master/vscp/doc/doxfiles/vscp_modules.png)
 
 * The core functionality which has a built-in state machine to handle different use cases of the protocol and etc. (vscp\_core.[ch]). Right now it supports every mandatory event and some minor optional ones.
