@@ -195,10 +195,12 @@ extern BOOL vscp_transport_writeMessage(vscp_TxMessage const * const msg)
     if ((NULL != msg) &&                        /* Message shall exists */
         (VSCP_L1_DATA_SIZE >= msg->dataNum))    /* Number of data bytes is limited */
     {
-        /* Write all messages to loopback, except CLASS1.PROTOCOL. Because the core
-         * would interpret them.
+        /* Write all messages to loopback, except:
+         * - CLASS1.PROTOCOL: The core would interpret them.
+         * - CLASS1.LOG     : Make no sense.
          */
-        if (VSCP_CLASS_L1_PROTOCOL != msg->vscpClass)
+        if ((VSCP_CLASS_L1_PROTOCOL != msg->vscpClass) &&
+            (VSCP_CLASS_L1_LOG != msg->vscpClass))
         {
             (void)vscp_util_cyclicBufferWrite(&vscp_transport_loopBackCyclicBuffer, msg, 1);
         }

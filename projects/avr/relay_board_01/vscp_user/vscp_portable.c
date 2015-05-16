@@ -49,6 +49,9 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 #include "hw.h"
 #include "vscp_bootloader.h"
 #include "sys_sm.h"
+#include "vscp_logger.h"
+#include "vscp_class_l1.h"
+#include "vscp_type_log.h"
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -201,9 +204,35 @@ extern void vscp_portable_bootLoaderRequest(void)
  */
 extern void vscp_portable_provideEvent(vscp_RxMessage const * const msg)
 {
-    NOT_USED(msg);
+    if (NULL == msg)
+    {
+        return;
+    }
 
-    /* Nothing to do */
+    /* Set log level */
+    if (VSCP_CLASS_L1_LOG == msg->vscpClass)
+    {
+        if (VSCP_TYPE_LOG_LOG_START == msg->vscpType)
+        {
+            if (1 == msg->dataNum)
+            {
+                uint8_t logLevel = vscp_logger_getLogLevel();
+
+                logLevel |= msg->data[0];
+                vscp_logger_setLogLevel(logLevel);
+            }
+        }
+        else if (VSCP_TYPE_LOG_LOG_STOP == msg->vscpType)
+        {
+            if (1 == msg->dataNum)
+            {
+                uint8_t logLevel = vscp_logger_getLogLevel();
+
+                logLevel &= ~(msg->data[0]);
+                vscp_logger_setLogLevel(msg->data[0]);
+            }
+        }
+    }
 
     return;
 }

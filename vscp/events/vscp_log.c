@@ -123,7 +123,7 @@ extern BOOL vscp_log_sendLogEvent(uint8_t id, uint8_t level, uint8_t const * con
     uint8_t         eventIndex  = 0;
     uint8_t         msgIndex    = 0;
     BOOL            status      = FALSE;
-
+    
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_LOG, VSCP_TYPE_LOG_LOG_EVENT, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 8;
@@ -137,27 +137,27 @@ extern BOOL vscp_log_sendLogEvent(uint8_t id, uint8_t level, uint8_t const * con
         txMsg.data[2] = eventIndex;
 
         /* Defragment the log message */
-        for(index = 3; index < 7; ++index)
+        for(index = 3; index < VSCP_L1_DATA_SIZE; ++index)
         {
-            if (0 < size)
+            if ((NULL != msg) &&
+                (0 < size))
             {
                 txMsg.data[index] = msg[msgIndex];
                 ++msgIndex;
+                --size;
             }
             /* Fill the rest of the log event with zeros. */
             else
             {
                 txMsg.data[index] = 0;
             }
-            
-            --size;
         }
         
         status = vscp_core_sendEvent(&txMsg);
         
         ++eventIndex;
     }
-    while((0 < size) && (TRUE == status));
+    while((NULL != msg) && (0 < size) && (TRUE == status));
     
     return status;
 }

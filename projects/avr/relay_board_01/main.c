@@ -51,6 +51,7 @@ $Date: 2015-01-06 00:31:00 +0100 (Di, 06 Jan 2015) $
 #include "vscp_core.h"
 #include "vscp_timer.h"
 #include "vscp_portable.h"
+#include "vscp_logger.h"
 #include "swTimer.h"
 #include "time.h"
 #include "pushButton.h"
@@ -400,6 +401,9 @@ static MAIN_RET main_initRunLevel1(void)
     {
         status = MAIN_RET_ERROR;
     }
+    
+    /* Initialize VSCP logger */
+    vscp_logger_init();
 
     /* Initialize CAN monitor */
     can_monitor_init();

@@ -282,6 +282,14 @@
       <SubType>compile</SubType>
       <Link>vscp\vscp_dm_ng.h</Link>
     </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_logger.c">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_logger.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_logger.h">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_logger.h</Link>
+    </Compile>
     <Compile Include="..\..\..\..\..\vscp\vscp_ps.c">
       <SubType>compile</SubType>
       <Link>vscp\vscp_ps.c</Link>
