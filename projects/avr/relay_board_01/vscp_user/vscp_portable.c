@@ -229,7 +229,7 @@ extern void vscp_portable_provideEvent(vscp_RxMessage const * const msg)
                 uint8_t logLevel = vscp_logger_getLogLevel();
 
                 logLevel &= ~(msg->data[0]);
-                vscp_logger_setLogLevel(msg->data[0]);
+                vscp_logger_setLogLevel(logLevel);
             }
         }
     }
