@@ -98,34 +98,34 @@ extern "C"
 #define LOG_FATAL(__id)     vscp_logger_log((__id), VSCP_LOGGER_LVL_FATAL, NULL, 0)
 
 /** Log INFO message with id and 32-bit unsigned integer value. */
-#define LOG_INFO_UINT32(__id, __value)      do{ uint32_t _tmp = (__value); vscp_logger_log((__id), VSCP_LOGGER_LVL_INFO, &_tmp, sizeof(_tmp)); )while(0)
+#define LOG_INFO_UINT32(__id, __value)      do{ vscp_logger_logUInt32((__id), VSCP_LOGGER_LVL_INFO, (__value)); }while(0)
 
 /** Log DEBUG message with id and 32-bit unsigned integer value. */
-#define LOG_DEBUG_UINT32(__id, __value)     do{ uint32_t _tmp = (__value); vscp_logger_log((__id), VSCP_LOGGER_LVL_DEBUG, &_tmp, sizeof(_tmp)); )while(0)
+#define LOG_DEBUG_UINT32(__id, __value)     do{ vscp_logger_logUInt32((__id), VSCP_LOGGER_LVL_DEBUG, (__value)); }while(0)
 
 /** Log WARNING message with id and 32-bit unsigned integer value. */
-#define LOG_WARNING_UINT32(__id, __value)   do{ uint32_t _tmp = (__value); vscp_logger_log((__id), VSCP_LOGGER_LVL_WARNING, &_tmp, sizeof(_tmp)); )while(0)
+#define LOG_WARNING_UINT32(__id, __value)   do{ vscp_logger_logUInt32((__id), VSCP_LOGGER_LVL_WARNING, (__value)); }while(0)
 
 /** Log ERROR message with id and 32-bit unsigned integer value. */
-#define LOG_ERROR_UINT32(__id, __value)     do{ uint32_t _tmp = (__value); vscp_logger_log((__id), VSCP_LOGGER_LVL_ERROR, &_tmp, sizeof(_tmp)); )while(0)
+#define LOG_ERROR_UINT32(__id, __value)     do{ vscp_logger_logUInt32((__id), VSCP_LOGGER_LVL_ERROR, (__value)); }while(0)
 
 /** Log FATAL message with id and 32-bit unsigned integer value. */
-#define LOG_FATAL_UINT32(__id, __value)     do{ uint32_t _tmp = (__value); vscp_logger_log((__id), VSCP_LOGGER_LVL_FATAL, &_tmp, sizeof(_tmp)); )while(0)
+#define LOG_FATAL_UINT32(__id, __value)     do{ vscp_logger_logUInt32((__id), VSCP_LOGGER_LVL_FATAL, (__value)); }while(0)
 
 /** Log INFO message with id and 32-bit signed integer value. */
-#define LOG_INFO_INT32(__id, __value)       do{ int32_t _tmp = (__value); vscp_logger_log((__id), VSCP_LOGGER_LVL_INFO, &_tmp, sizeof(_tmp)); )while(0)
+#define LOG_INFO_INT32(__id, __value)       do{ vscp_logger_logUInt32((__id), VSCP_LOGGER_LVL_INFO, (uint32_t)(__value)); }while(0)
 
 /** Log DEBUG message with id and 32-bit signed integer value. */
-#define LOG_DEBUG_INT32(__id, __value)      do{ int32_t _tmp = (__value); vscp_logger_log((__id), VSCP_LOGGER_LVL_DEBUG, &_tmp, sizeof(_tmp)); )while(0)
+#define LOG_DEBUG_INT32(__id, __value)      do{ vscp_logger_logUInt32((__id), VSCP_LOGGER_LVL_DEBUG, (uint32_t)(__value)); }while(0)
 
 /** Log WARNING message with id and 32-bit signed integer value. */
-#define LOG_WARNING_INT32(__id, __value)    do{ int32_t _tmp = (__value); vscp_logger_log((__id), VSCP_LOGGER_LVL_WARNING, &_tmp, sizeof(_tmp)); )while(0)
+#define LOG_WARNING_INT32(__id, __value)    do{ vscp_logger_logUInt32((__id), VSCP_LOGGER_LVL_WARNING, (uint32_t)(__value)); }while(0)
 
 /** Log ERROR message with id and 32-bit signed integer value. */
-#define LOG_ERROR_INT32(__id, __value)      do{ int32_t _tmp = (__value); vscp_logger_log((__id), VSCP_LOGGER_LVL_ERROR, &_tmp, sizeof(_tmp)); )while(0)
+#define LOG_ERROR_INT32(__id, __value)      do{ vscp_logger_logUInt32((__id), VSCP_LOGGER_LVL_ERROR, (uint32_t)(__value)); }while(0)
 
 /** Log FATAL message with id and 32-bit signed integer value. */
-#define LOG_FATAL_INT32(__id, __value)      do{ int32_t _tmp = (__value); vscp_logger_log((__id), VSCP_LOGGER_LVL_FATAL, &_tmp, sizeof(_tmp)); )while(0)
+#define LOG_FATAL_INT32(__id, __value)      do{ vscp_logger_logUInt32((__id), VSCP_LOGGER_LVL_FATAL, (uint32_t)(__value)); }while(0)
 
 /*******************************************************************************
     TYPES AND STRUCTURES
@@ -181,6 +181,15 @@ extern void vscp_logger_setLogLevel(uint8_t level);
  * @param[in] size  Message size in bytes
  */
 extern void vscp_logger_log(uint8_t id, VSCP_LOGGER_LVL level, uint8_t const * const msg, uint8_t size);
+
+/**
+ * This function sends a log message, dependend on the active log level.
+ *
+ * @param[in] id    Message id
+ * @param[in] level Log level
+ * @param[in] value Value
+ */
+extern void vscp_logger_logUInt32(uint8_t id, VSCP_LOGGER_LVL level, uint32_t value);
 
 #ifdef __cplusplus
 }

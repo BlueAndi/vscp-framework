@@ -131,6 +131,23 @@ extern void vscp_logger_log(uint8_t id, VSCP_LOGGER_LVL level, uint8_t const * c
     return;
 }
 
+/**
+ * This function sends a log message, dependend on the active log level.
+ *
+ * @param[in] id    Message id
+ * @param[in] level Log level
+ * @param[in] value Value
+ */
+extern void vscp_logger_logUInt32(uint8_t id, VSCP_LOGGER_LVL level, uint32_t value)
+{
+    /* Value will be logged MSB first. */
+    uint8_t buffer[4] = { ((uint8_t*)&value)[3], ((uint8_t*)&value)[2], ((uint8_t*)&value)[1], ((uint8_t*)&value)[0] };
+
+    vscp_logger_log(id, level, buffer, sizeof(buffer));
+
+    return;
+}
+
 /*******************************************************************************
     LOCAL FUNCTIONS
 *******************************************************************************/
