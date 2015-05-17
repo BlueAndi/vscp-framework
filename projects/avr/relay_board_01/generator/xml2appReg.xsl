@@ -379,8 +379,10 @@ $Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
             <xsl:with-param name="body">
                 <xsl:text>&TAB;uint8_t&TAB;pagesUsed = 1;&TAB;/* At least one page, which is mandatory. */&LF;</xsl:text>
                 <xsl:text>&LF;</xsl:text>
-                <xsl:text>&TAB;/* DM is at page 1 */&LF;</xsl:text>
-                <xsl:text>&TAB;++pagesUsed;&LF;</xsl:text>
+                <xsl:text>&TAB;/* DM is at page 1&LF;</xsl:text>
+                <xsl:text>&TAB; * DM NG is at page 2&LF;</xsl:text>
+                <xsl:text>&TAB; */&LF;</xsl:text>
+                <xsl:text>&TAB;pagesUsed += 2;&LF;</xsl:text>
                 <xsl:text>&LF;</xsl:text>
                 <xsl:text>&TAB;return pagesUsed;&LF;</xsl:text>
             </xsl:with-param>
