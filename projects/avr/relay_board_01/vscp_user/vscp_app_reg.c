@@ -309,11 +309,6 @@ extern void vscp_app_reg_restoreFactoryDefaultSettings(void)
         vscp_ps_user_writeShutterTurnTime(index * 2 + 1, (((uint16_t)0) >> 8) & 0xff);
     }
 
-    for(index = 0; index < VSCP_PS_USER_SIZE_DM_NG; ++index)
-    {
-        vscp_ps_user_writeDmNg(index, 0);
-    }
-
     return;
 }
 
@@ -466,7 +461,7 @@ extern uint8_t vscp_app_reg_readRegister(uint16_t page, uint8_t addr)
         if ((VSCP_APP_REG_PAGE_2_OFFSET_DM_NG <= addr) &&
             ((VSCP_APP_REG_PAGE_2_OFFSET_DM_NG + 80) > addr))
         {
-            value = vscp_ps_user_readDmNg(addr - VSCP_APP_REG_PAGE_2_OFFSET_DM_NG);
+            value = vscp_ps_readDMNextGeneration(addr - VSCP_APP_REG_PAGE_2_OFFSET_DM_NG);
         }
     }
 
@@ -660,8 +655,8 @@ extern uint8_t vscp_app_reg_writeRegister(uint16_t page, uint8_t addr, uint8_t v
         if ((VSCP_APP_REG_PAGE_2_OFFSET_DM_NG <= addr) &&
             ((VSCP_APP_REG_PAGE_2_OFFSET_DM_NG + 80) > addr))
         {
-            vscp_ps_user_writeDmNg(addr - VSCP_APP_REG_PAGE_2_OFFSET_DM_NG, value);
-            readBackValue = vscp_ps_user_readDmNg(addr - VSCP_APP_REG_PAGE_2_OFFSET_DM_NG);
+            vscp_ps_writeDMNextGeneration(addr - VSCP_APP_REG_PAGE_2_OFFSET_DM_NG, value);
+            readBackValue = vscp_ps_readDMNextGeneration(addr - VSCP_APP_REG_PAGE_2_OFFSET_DM_NG);
         }
     }
 

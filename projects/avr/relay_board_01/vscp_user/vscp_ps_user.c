@@ -804,41 +804,6 @@ extern void vscp_ps_user_writeShutterTurnTime(uint8_t index, uint8_t value)
     return;
 }
 
-/**
- * This function reads the dm ng from persistent storage.
- * Decision matrix next generation
- *
- * @param[in] index Index
- * @return Value
- */
-extern uint8_t vscp_ps_user_readDmNg(uint8_t index)
-{
-    uint8_t value = 0;
-
-    if (VSCP_PS_USER_SIZE_DM_NG > index)
-    {
-         value = vscp_ps_access_read8(VSCP_PS_USER_ADDR_DM_NG + index);
-    }
-
-    return value;
-}
-
-/**
- * This function writes the dm ng to persistent storage.
- * Decision matrix next generation
- *
- * @param[in] index Index
- * @param[in] value Value to write
- */
-extern void vscp_ps_user_writeDmNg(uint8_t index, uint8_t value)
-{
-    if (VSCP_PS_USER_SIZE_DM_NG > index)
-    {
-        vscp_ps_access_write8(VSCP_PS_USER_ADDR_DM_NG + index, value);
-    }
-
-    return;
-}
 
 /*******************************************************************************
     LOCAL FUNCTIONS

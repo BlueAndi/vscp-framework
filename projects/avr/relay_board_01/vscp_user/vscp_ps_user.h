@@ -285,16 +285,6 @@ $Date:  $
  */
 #define VSCP_PS_USER_SIZE_SHUTTER_TURN_TIME 8
 
-/**
- * Persistent memory address: dm ng
- */
-#define VSCP_PS_USER_ADDR_DM_NG (VSCP_PS_USER_BASE_ADDR + 79)
-
-/**
- * Persistent memory size of: dm ng
- */
-#define VSCP_PS_USER_SIZE_DM_NG 80
-
 /*******************************************************************************
     MACROS
 *******************************************************************************/
@@ -742,22 +732,5 @@ extern uint8_t vscp_ps_user_readShutterTurnTime(uint8_t index);
  */
 extern void vscp_ps_user_writeShutterTurnTime(uint8_t index, uint8_t value);
 
-/**
- * This function reads the dm ng from persistent storage.
- * Decision matrix next generation
- *
- * @param[in] index Index
- * @return Value
- */
-extern uint8_t vscp_ps_user_readDmNg(uint8_t index);
-
-/**
- * This function writes the dm ng to persistent storage.
- * Decision matrix next generation
- *
- * @param[in] index Index
- * @param[in] value Value to write
- */
-extern void vscp_ps_user_writeDmNg(uint8_t index, uint8_t value);
 
 #endif /* __VSCP_PS_USER_H__ */
