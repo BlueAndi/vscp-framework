@@ -1,0 +1,8 @@
+title Logging
+
+PC-nodeSet log id (CLASS1.Protocol.WriteRegister)
+PC-nodeSet log level (CLASS1.Log.SetLogLevel)
+PC-nodeStart log with log id (CLASS1.Log.LogStart)
+opt If received log id is equal to the stored log id in the register
+    node-PCLog message (CLASS1.Log.LogEvent)
+end
