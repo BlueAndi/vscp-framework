@@ -49,6 +49,9 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
  * Parts of a message means, if the message is defragmented in several VSCP
  * events, it can happen that a event will be lost.
  *
+ * Supported compile switches:
+ * - VSCP_CONFIG_ENABLE_LOGGER
+ *
  * @{
  */
 
@@ -64,6 +67,8 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
     INCLUDES
 *******************************************************************************/
 #include <inttypes.h>
+#include "vscp_config.h"
+#include "vscp_types.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -81,6 +86,8 @@ extern "C"
 /*******************************************************************************
     MACROS
 *******************************************************************************/
+
+#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_LOGGER )
 
 /** Log INFO message with id. */
 #define LOG_INFO(__id)      vscp_logger_log((__id), VSCP_LOGGER_LVL_INFO, NULL, 0)
@@ -127,6 +134,55 @@ extern "C"
 /** Log FATAL message with id and 32-bit signed integer value. */
 #define LOG_FATAL_INT32(__id, __value)      do{ vscp_logger_logUInt32((__id), VSCP_LOGGER_LVL_FATAL, (uint32_t)(__value)); }while(0)
 
+#else   /* VSCP_CONFIG_BASE_IS_DISABLED( VSCP_CONFIG_ENABLE_LOGGER ) */
+
+/** Log INFO message with id. */
+#define LOG_INFO(__id)
+
+/** Log DEBUG message with id. */
+#define LOG_DEBUG(__id)
+
+/** Log WARNING message with id. */
+#define LOG_WARNING(__id)
+
+/** Log ERROR message with id. */
+#define LOG_ERROR(__id)
+
+/** Log FATAL message with id. */
+#define LOG_FATAL(__id)
+
+/** Log INFO message with id and 32-bit unsigned integer value. */
+#define LOG_INFO_UINT32(__id, __value)
+
+/** Log DEBUG message with id and 32-bit unsigned integer value. */
+#define LOG_DEBUG_UINT32(__id, __value)
+
+/** Log WARNING message with id and 32-bit unsigned integer value. */
+#define LOG_WARNING_UINT32(__id, __value)
+
+/** Log ERROR message with id and 32-bit unsigned integer value. */
+#define LOG_ERROR_UINT32(__id, __value)
+
+/** Log FATAL message with id and 32-bit unsigned integer value. */
+#define LOG_FATAL_UINT32(__id, __value)
+
+/** Log INFO message with id and 32-bit signed integer value. */
+#define LOG_INFO_INT32(__id, __value)
+
+/** Log DEBUG message with id and 32-bit signed integer value. */
+#define LOG_DEBUG_INT32(__id, __value)
+
+/** Log WARNING message with id and 32-bit signed integer value. */
+#define LOG_WARNING_INT32(__id, __value)
+
+/** Log ERROR message with id and 32-bit signed integer value. */
+#define LOG_ERROR_INT32(__id, __value)
+
+/** Log FATAL message with id and 32-bit signed integer value. */
+#define LOG_FATAL_INT32(__id, __value)
+
+#endif  /* VSCP_CONFIG_BASE_IS_DISABLED( VSCP_CONFIG_ENABLE_LOGGER ) */
+
 /*******************************************************************************
     TYPES AND STRUCTURES
 *******************************************************************************/
@@ -153,6 +209,8 @@ typedef enum
     FUNCTIONS
 *******************************************************************************/
 
+#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_LOGGER )
+
 /**
  * This function initializes the logger module.
  */
@@ -173,7 +231,7 @@ extern uint8_t vscp_logger_getLogLevel(void);
 extern void vscp_logger_setLogLevel(uint8_t level);
 
 /**
- * This function sends a log message, dependend on the active log level.
+ * This function sends a log message, depended on the active log level.
  *
  * @param[in] id    Message id
  * @param[in] level Log level
@@ -183,13 +241,23 @@ extern void vscp_logger_setLogLevel(uint8_t level);
 extern void vscp_logger_log(uint8_t id, VSCP_LOGGER_LVL level, uint8_t const * const msg, uint8_t size);
 
 /**
- * This function sends a log message, dependend on the active log level.
+ * This function sends a log message, depended on the active log level.
  *
  * @param[in] id    Message id
  * @param[in] level Log level
  * @param[in] value Value
  */
 extern void vscp_logger_logUInt32(uint8_t id, VSCP_LOGGER_LVL level, uint32_t value);
+
+/**
+ * This function handles all CLASS1.Log events, which controls the logging functionality.
+ * It will be called by the VSCP core.
+ *
+ * @param[in] msg   Received event message
+ */
+extern void vscp_logger_handleEvent(vscp_RxMessage const * const msg);
+
+#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_LOGGER ) */
 
 #ifdef __cplusplus
 }

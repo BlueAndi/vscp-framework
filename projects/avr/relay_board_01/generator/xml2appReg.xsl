@@ -381,8 +381,9 @@ $Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
                 <xsl:text>&LF;</xsl:text>
                 <xsl:text>&TAB;/* DM is at page 1&LF;</xsl:text>
                 <xsl:text>&TAB; * DM NG is at page 2&LF;</xsl:text>
+                <xsl:text>&TAB; * Debugging stuff is at page 3&LF;</xsl:text>
                 <xsl:text>&TAB; */&LF;</xsl:text>
-                <xsl:text>&TAB;pagesUsed += 2;&LF;</xsl:text>
+                <xsl:text>&TAB;pagesUsed += 3;&LF;</xsl:text>
                 <xsl:text>&LF;</xsl:text>
                 <xsl:text>&TAB;return pagesUsed;&LF;</xsl:text>
             </xsl:with-param>

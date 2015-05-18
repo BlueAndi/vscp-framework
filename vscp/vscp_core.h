@@ -52,6 +52,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
  * - Silent nodes are not supported.
  *
  * Supported compile switches:
+ * - VSCP_CONFIG_ENABLE_LOGGER
  * - VSCP_CONFIG_SILENT_NODE
  * - VSCP_CONFIG_HARD_CODED_NODE
  * - VSCP_CONFIG_HEARTBEAT_SUPPORT_SEGMENT

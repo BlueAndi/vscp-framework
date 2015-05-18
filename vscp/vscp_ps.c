@@ -508,6 +508,31 @@ extern void vscp_ps_writeStdDevType(uint8_t index, uint8_t value)
 
 #endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_DEV_DATA_CONFIG_ENABLE_STD_DEV_TYPE_STORAGE_PS ) */
 
+#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_LOGGER )
+
+/**
+ * Read the log id (stream id) from persistent memory.
+ *
+ * @return  Log id
+ */
+extern uint8_t  vscp_ps_readLogId(void)
+{
+    return vscp_ps_access_read8(VSCP_PS_ADDR_LOG_ID);
+}
+
+/**
+ * Write the log id (stream id) to persistent memory.
+ *
+ * @param[in]   value   Log id
+ */
+extern void vscp_ps_writeLogId(uint8_t value)
+{
+    vscp_ps_access_write8(VSCP_PS_ADDR_LOG_ID, value);
+    return;
+}
+
+#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_LOGGER ) */
+
 #if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM )
 
 /**

@@ -86,7 +86,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
  *
  * @return Status
  * @retval FALSE Failed to send the event
- * @retval TRUE  Event successul sent
+ * @retval TRUE  Event successful sent
  *
  */
 extern BOOL vscp_log_sendUndefinedEvent(void);
@@ -102,7 +102,7 @@ extern BOOL vscp_log_sendUndefinedEvent(void);
  * @param[in] size Message size in bytes.
  * @return Status
  * @retval FALSE Failed to send the event
- * @retval TRUE  Event successul sent
+ * @retval TRUE  Event successful sent
  *
  */
 extern BOOL vscp_log_sendLogEvent(uint8_t id, uint8_t level, uint8_t const * const msg, uint8_t size);
@@ -110,10 +110,10 @@ extern BOOL vscp_log_sendLogEvent(uint8_t id, uint8_t level, uint8_t const * con
 /**
  * Start logging.
  *
- * @param[in] id ID for log.
+ * @param[in] id ID for log (stream).
  * @return Status
  * @retval FALSE Failed to send the event
- * @retval TRUE  Event successul sent
+ * @retval TRUE  Event successful sent
  *
  */
 extern BOOL vscp_log_sendLogStartEvent(uint8_t id);
@@ -121,13 +121,24 @@ extern BOOL vscp_log_sendLogStartEvent(uint8_t id);
 /**
  * Stop logging.
  *
- * @param[in] id ID for log.
+ * @param[in] id ID for log (stream).
  * @return Status
  * @retval FALSE Failed to send the event
- * @retval TRUE  Event successul sent
+ * @retval TRUE  Event successful sent
  *
  */
 extern BOOL vscp_log_sendLogStopEvent(uint8_t id);
+
+/**
+ * Set level for logging.
+ *
+ * @param[in] level Log level
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successful sent
+ *
+ */
+extern BOOL vscp_log_sendLogLevelEvent(uint8_t level);
 
 #endif /* __VSCP_LOG_H__ */
 

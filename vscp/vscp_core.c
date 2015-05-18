@@ -58,6 +58,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 #include "vscp_dm_ng.h"
 #include "vscp_util.h"
 #include "vscp_action.h"
+#include "vscp_logger.h"
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -293,6 +294,13 @@ extern VSCP_CORE_RET vscp_core_init(void)
 
 #endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM ) || VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION ) */
 
+#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_LOGGER )
+
+    /* Initialize logger module */
+    vscp_logger_init();
+
+#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_LOGGER ) */
+
     /* Initialize utilities module */
     vscp_util_init();
 
@@ -444,6 +452,13 @@ extern void vscp_core_process(void)
      */
     vscp_core_rxMessageValid = vscp_transport_readMessage(&vscp_core_rxMessage);
 
+#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_LOGGER )
+
+    /* Handle early as possible any kind of log control messages. */
+    vscp_logger_handleEvent(&vscp_core_rxMessage);
+
+#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_LOGGER ) */
+    
     /* State machine */
     switch(vscp_core_state)
     {

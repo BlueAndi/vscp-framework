@@ -732,5 +732,4 @@ extern uint8_t vscp_ps_user_readShutterTurnTime(uint8_t index);
  */
 extern void vscp_ps_user_writeShutterTurnTime(uint8_t index, uint8_t value);
 
-
 #endif /* __VSCP_PS_USER_H__ */

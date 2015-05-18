@@ -66,6 +66,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
  * - VSCP_DEV_DATA_CONFIG_ENABLE_MDF_URL_STORAGE_PS
  * - VSCP_DEV_DATA_CONFIG_ENABLE_STD_DEV_FAMILY_CODE_STORAGE_PS
  * - VSCP_DEV_DATA_CONFIG_ENABLE_STD_DEV_TYPE_STORAGE_PS
+ * - VSCP_CONFIG_ENABLE_LOGGER
  *
  *
  * Attention, the persistent memory contains all data in LSB first!
@@ -85,9 +86,10 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
  * |    11 |                                     32 | VSCP_DEV_DATA_CONFIG_ENABLE_MDF_URL_STORAGE_PS                 | MDF URL |
  * |    12 |                                      4 | VSCP_DEV_DATA_CONFIG_ENABLE_STD_DEV_FAMILY_CODE_STORAGE_PS     | Family code |
  * |    13 |                                      4 | VSCP_DEV_DATA_CONFIG_ENABLE_STD_DEV_TYPE_STORAGE_PS            | Device type |
- * |    14 | VSCP_CONFIG_DM_ROWS * VSCP_DM_ROW_SIZE | VSCP_CONFIG_ENABLE_DM                                          | Standard decision matrix |
- * |    15 | VSCP_CONFIG_DM_ROWS * VSCP_DM_ROW_SIZE | VSCP_CONFIG_ENABLE_DM_EXTENSION                                | Extended decision matrix |
- * |    16 | VSCP_CONFIG_DM_NG_RULE_SET_SIZE        | VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION                          | Decision matrix next generation |
+ * |    14 |                                      1 | VSCP_CONFIG_ENABLE_LOGGER                                      | Log id (stream) |
+ * |    15 | VSCP_CONFIG_DM_ROWS * VSCP_DM_ROW_SIZE | VSCP_CONFIG_ENABLE_DM                                          | Standard decision matrix |
+ * |    16 | VSCP_CONFIG_DM_ROWS * VSCP_DM_ROW_SIZE | VSCP_CONFIG_ENABLE_DM_EXTENSION                                | Extended decision matrix |
+ * |    17 | VSCP_CONFIG_DM_NG_RULE_SET_SIZE        | VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION                          | Decision matrix next generation |
  * @{
  */
 
@@ -297,12 +299,27 @@ extern "C"
 
 #endif  /* VSCP_CONFIG_BASE_IS_DISABLED( VSCP_DEV_DATA_CONFIG_ENABLE_STD_DEV_TYPE_STORAGE_PS ) */
 
+/** Address of the log id (stream id), used by the VSCP logger */
+#define VSCP_PS_ADDR_LOG_ID                 (VSCP_PS_ADDR_STD_DEV_TYPE + VSCP_PS_SIZE_STD_DEV_TYPE)
+
+#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_LOGGER )
+
+/** Size of the log id (stream id) in byte */
+#define VSCP_PS_SIZE_LOG_ID                 1
+
+#else   /* VSCP_CONFIG_BASE_IS_DISABLED( VSCP_CONFIG_ENABLE_LOGGER ) */
+
+/** Log id (stream id) is not available */
+#define VSCP_PS_SIZE_LOG_ID                 0
+
+#endif  /* VSCP_CONFIG_BASE_IS_DISABLED( VSCP_CONFIG_ENABLE_LOGGER ) */
+
 /* --------------------------------------------------------------- */
 /* -------- VSCP decision matrix (standard + extension) ---------- */
 /* --------------------------------------------------------------- */
 
 /** Address of the decision matrix (standard) */
-#define VSCP_PS_ADDR_DM                     (VSCP_PS_ADDR_STD_DEV_TYPE + VSCP_PS_SIZE_STD_DEV_TYPE)
+#define VSCP_PS_ADDR_DM                     (VSCP_PS_ADDR_LOG_ID + VSCP_PS_SIZE_LOG_ID)
 
 #if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM )
 
@@ -629,6 +646,24 @@ extern uint8_t  vscp_ps_readStdDevType(uint8_t index);
 extern void vscp_ps_writeStdDevType(uint8_t index, uint8_t value);
 
 #endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_DEV_DATA_CONFIG_ENABLE_STD_DEV_TYPE_STORAGE_PS ) */
+
+#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_LOGGER )
+
+/**
+ * Read the log id (stream id) from persistent memory.
+ *
+ * @return  Log id
+ */
+extern uint8_t  vscp_ps_readLogId(void);
+
+/**
+ * Write the log id (stream id) to persistent memory.
+ *
+ * @param[in]   value   Log id
+ */
+extern void vscp_ps_writeLogId(uint8_t value);
+
+#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_LOGGER ) */
 
 #if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM )
 

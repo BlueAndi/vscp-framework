@@ -6,6 +6,7 @@ Features:
     - Segment initialization lamp handling improved: If the node starts up without nickname id, the lamp blinks slow. If the node enters nickname discovery, the lamp blinks fast. If the node discovered a nickname successfully, the lamp stays on.
     - Log events added.
     - Logger module added for easier logging during development phase or further. See the vscp\_loggger.h macros for more information.
+    - Logger is integrated in VSCP core. Enable the VSCP\_CONFIG\_ENABLE\_LOGGER compiler switch to enable the log functionality.
 
   - Project: Relay board 01
     - CAN is monitored and any error stored in the VSCP alarm bitfield. See MDF for more information about each bit.

@@ -45,6 +45,11 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 #include "vscp_logger.h"
 #include "vscp_log.h"
+#include "vscp_class_l1.h"
+#include "vscp_type_log.h"
+#include "vscp_ps.h"
+
+#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_LOGGER )
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -69,6 +74,9 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 /*******************************************************************************
     LOCAL VARIABLES
 *******************************************************************************/
+
+/** Logging enabled or not */
+static BOOL     vscp_logger_isEnabled   = FALSE;
 
 /** Current log level bitfield */
 static uint8_t  vscp_logger_logLevel    = 0;
@@ -114,7 +122,7 @@ extern void vscp_logger_setLogLevel(uint8_t level)
 }
 
 /**
- * This function sends a log message, dependend on the active log level.
+ * This function sends a log message, depended on the active log level.
  *
  * @param[in] id    Message id
  * @param[in] level Log level
@@ -123,16 +131,19 @@ extern void vscp_logger_setLogLevel(uint8_t level)
  */
 extern void vscp_logger_log(uint8_t id, VSCP_LOGGER_LVL level, uint8_t const * const msg, uint8_t size)
 {   
-    if (0 != (vscp_logger_logLevel & (1 << level)))
+    if (TRUE == vscp_logger_isEnabled)
     {
-        (void)vscp_log_sendLogEvent(id, level, msg, size);
+        if (0 != (vscp_logger_logLevel & (1 << level)))
+        {
+            (void)vscp_log_sendLogEvent(id, level, msg, size);
+        }
     }
 
     return;
 }
 
 /**
- * This function sends a log message, dependend on the active log level.
+ * This function sends a log message, depended on the active log level.
  *
  * @param[in] id    Message id
  * @param[in] level Log level
@@ -148,6 +159,63 @@ extern void vscp_logger_logUInt32(uint8_t id, VSCP_LOGGER_LVL level, uint32_t va
     return;
 }
 
+/**
+ * This function handles all CLASS1.Log events, which controls the logging functionality.
+ * It will be called by the VSCP core.
+ *
+ * @param[in] msg   Received event message
+ */
+extern void vscp_logger_handleEvent(vscp_RxMessage const * const msg)
+{
+    if (NULL == msg)
+    {
+        return;
+    }
+
+    /* Handle only CLASS1.Log events */
+    if (VSCP_CLASS_L1_LOG == msg->vscpClass)
+    {
+        /* Start logging? */
+        if (VSCP_TYPE_LOG_LOG_START == msg->vscpType)
+        {
+            if (1 == msg->dataNum)
+            {
+                if (vscp_ps_readLogId() == msg->data[0])
+                {
+                    vscp_logger_isEnabled = TRUE;
+                }
+            }
+        }
+        /* Stop logging? */
+        else if (VSCP_TYPE_LOG_LOG_STOP == msg->vscpType)
+        {
+            if (1 == msg->dataNum)
+            {
+                if (vscp_ps_readLogId() == msg->data[0])
+                {
+                    vscp_logger_isEnabled = FALSE;
+                }
+            }
+        }
+        /* Set log level? */
+        else if (VSCP_TYPE_LOG_LOG_LEVEL == msg->vscpType)
+        {
+            if (1 == msg->dataNum)
+            {
+                vscp_logger_logLevel = msg->data[0];
+            }
+        }
+        else
+        {
+            ;
+        }
+    }
+
+    return;
+}
+
 /*******************************************************************************
     LOCAL FUNCTIONS
 *******************************************************************************/
+
+#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_LOGGER ) */

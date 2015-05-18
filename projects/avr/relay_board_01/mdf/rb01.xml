@@ -951,6 +951,15 @@ Bit 8 of the class filter is stored in bit 1 of the flag byte.</description>
                 <access>rw</access>
             </reg>
             
+            <!-- ********** Page 3 ********** -->
+
+            <reg page="3" offset="0" >
+                <name lang="en">Log id (stream id)</name>
+                <description lang="en">The log id (stream id) is used for debugging purposes.
+If you want to enable the log message stream, start logging (CLASS1.Log.LogStart) with this log id.</description>
+                <access>rw</access>
+            </reg>
+            
         </registers>
 
         <abstractions>
@@ -1421,6 +1430,19 @@ Any change in this register will be applied after a reset.</description>
                 <access>rw</access>
             </abstraction>
 
+            <!-- ********** Page 1 ********** -->
+            
+            <!-- ********** Page 2 ********** -->
+            
+            <!-- ********** Page 3 ********** -->
+
+            <abstraction type="uint8_t" default="0xff" page="3" offset="0">
+                <name lang="en">Log id (stream id)</name>
+                <description lang="en">The log id (stream id) is used for debugging purposes.
+If you want to enable the log message stream, start logging (CLASS1.Log.LogStart) with this log id.</description>
+                <access>rw</access>
+            </abstraction>
+            
         </abstractions>
 
         <alarm>

@@ -161,6 +161,9 @@ static const char*      main_psUserFriendlyName[]   =
 #if (0 < VSCP_PS_SIZE_STD_DEV_TYPE)
     "Standard device type",
 #endif  /* (0 < VSCP_PS_SIZE_STD_DEV_TYPE) */
+#if (0 < VSCP_PS_SIZE_LOG_ID)
+    "Log id",
+#endif  /* (0 < VSCP_PS_SIZE_LOG_ID) */
 #if (0 < VSCP_PS_SIZE_DM)
     "Decision matrix",
 #endif  /* (0 < VSCP_PS_SIZE_DM) */
@@ -653,6 +656,12 @@ static void main_dumpEEPROM(void)
                 nextColor = TRUE;
             }
 #endif  /* (0 < VSCP_PS_SIZE_STD_DEV_TYPE) */
+#if (0 < VSCP_PS_SIZE_LOG_ID)
+            else if (VSCP_PS_ADDR_LOG_ID == index)
+            {
+                nextColor = TRUE;
+            }
+#endif  /* (0 < VSCP_PS_SIZE_LOG_ID) */
 #if (0 < VSCP_PS_SIZE_DM)
             else if (VSCP_PS_ADDR_DM == index)
             {
@@ -781,6 +790,12 @@ static void main_dumpEEPROM(void)
                 nextColor = TRUE;
             }
 #endif  /* (0 < VSCP_PS_SIZE_STD_DEV_TYPE) */
+#if (0 < VSCP_PS_SIZE_LOG_ID)
+            else if (VSCP_PS_ADDR_LOG_ID == index)
+            {
+                nextColor = TRUE;
+            }
+#endif  /* (0 < VSCP_PS_SIZE_LOG_ID) */
 #if (0 < VSCP_PS_SIZE_DM)
             else if (VSCP_PS_ADDR_DM == index)
             {

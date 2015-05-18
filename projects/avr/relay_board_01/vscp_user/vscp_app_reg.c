@@ -185,6 +185,11 @@ $Date:  $
  */
 #define VSCP_APP_REG_PAGE_2_OFFSET_DM_NG    0
 
+/**
+ * Application register offset of page 3 of log id.
+ */
+#define VSCP_APP_REG_PAGE_3_OFFSET_LOG_ID   0
+
 /*******************************************************************************
     MACROS
 *******************************************************************************/
@@ -324,10 +329,11 @@ extern uint8_t vscp_app_reg_getPagesUsed(void)
 {
     uint8_t pagesUsed = 1;  /* At least one page, which is mandatory. */
 
-    /* DM is at page 1 and
+    /* DM is at page 1
      * DM NG is at page 2
+     * Debugging stuff is at page 3
      */
-    pagesUsed += 2;
+    pagesUsed += 3;
 
     return pagesUsed;
 }
@@ -462,6 +468,13 @@ extern uint8_t vscp_app_reg_readRegister(uint16_t page, uint8_t addr)
             ((VSCP_APP_REG_PAGE_2_OFFSET_DM_NG + 80) > addr))
         {
             value = vscp_ps_readDMNextGeneration(addr - VSCP_APP_REG_PAGE_2_OFFSET_DM_NG);
+        }
+}
+    else if (3 == page)
+    {
+        if (VSCP_APP_REG_PAGE_3_OFFSET_LOG_ID == addr)
+        {
+            value = vscp_ps_readLogId();
         }
     }
 
@@ -657,6 +670,14 @@ extern uint8_t vscp_app_reg_writeRegister(uint16_t page, uint8_t addr, uint8_t v
         {
             vscp_ps_writeDMNextGeneration(addr - VSCP_APP_REG_PAGE_2_OFFSET_DM_NG, value);
             readBackValue = vscp_ps_readDMNextGeneration(addr - VSCP_APP_REG_PAGE_2_OFFSET_DM_NG);
+        }
+    }
+    else if (3 == page)
+    {
+        if (VSCP_APP_REG_PAGE_3_OFFSET_LOG_ID == addr)
+        {
+            vscp_ps_writeLogId(value);
+            readBackValue = vscp_ps_readLogId();
         }
     }
 

@@ -44,6 +44,7 @@ BIN= vscp_test
 # Includes
 INCLUDES= -I. \
 		-I.. \
+		-I../events \
 		-Icunit/include \
 		-IvscpUser
 
@@ -60,12 +61,14 @@ SOURCES= main.c \
 		../vscp_dev_data.c \
 		../vscp_dm.c \
 		../vscp_dm_ng.c \
+		../vscp_logger.c \
 		../vscp_ps.c \
 		../vscp_transport.c \
-		../vscp_util.c
+		../vscp_util.c \
+		../events/vscp_log.c
 
 # Include all source pathes here like ../src1:../src2
-VPATH= ..:vscpUser
+VPATH= ..:vscpUser:../events
 		
 # Library search path
 LIBPATH= -Lcunit/lib

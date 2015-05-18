@@ -74,6 +74,15 @@ extern "C"
     COMPILER SWITCHES
 *******************************************************************************/
 
+#ifndef VSCP_CONFIG_ENABLE_LOGGER
+
+/** Enable log functionality (CLASS1.Log). Use the macros in vscp_logger.h to
+ * send log messages.
+ */
+#define VSCP_CONFIG_ENABLE_LOGGER               VSCP_CONFIG_BASE_DISABLED
+
+#endif  /* VSCP_CONFIG_ENABLE_LOGGER */
+
 #ifndef VSCP_CONFIG_SILENT_NODE
 
 /** Silent node configuration, which is used for e. g. RS-485 connections.

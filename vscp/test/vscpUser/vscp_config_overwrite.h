@@ -71,6 +71,8 @@ extern "C"
 
 /* ---------- Define here your prefered configuration setup. ---------- */
 
+#define VSCP_CONFIG_ENABLE_LOGGER               VSCP_CONFIG_BASE_ENABLED
+
 #define VSCP_CONFIG_SILENT_NODE                 VSCP_CONFIG_BASE_DISABLED
 
 #define VSCP_CONFIG_HARD_CODED_NODE             VSCP_CONFIG_BASE_DISABLED
@@ -96,6 +98,8 @@ extern "C"
 #define VSCP_CONFIG_ENABLE_LOOPBACK             VSCP_CONFIG_BASE_DISABLED
 
 /*
+#define VSCP_CONFIG_ENABLE_LOGGER               VSCP_CONFIG_BASE_DISABLED
+
 #define VSCP_CONFIG_SILENT_NODE                 VSCP_CONFIG_BASE_DISABLED
 
 #define VSCP_CONFIG_HARD_CODED_NODE             VSCP_CONFIG_BASE_DISABLED
