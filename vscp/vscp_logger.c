@@ -44,7 +44,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
     INCLUDES
 *******************************************************************************/
 #include "vscp_logger.h"
-#include "vscp_log.h"
+#include "vscp_core.h"
 #include "vscp_class_l1.h"
 #include "vscp_type_log.h"
 #include "vscp_ps.h"
@@ -135,7 +135,7 @@ extern void vscp_logger_log(uint8_t id, VSCP_LOGGER_LVL level, uint8_t const * c
     {
         if (0 != (vscp_logger_logLevel & (1 << level)))
         {
-            (void)vscp_log_sendLogEvent(id, level, msg, size);
+            (void)vscp_logger_sendLogEvent(id, level, msg, size);
         }
     }
 
@@ -214,8 +214,68 @@ extern void vscp_logger_handleEvent(vscp_RxMessage const * const msg)
     return;
 }
 
+#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_LOGGER ) */
+
+/**
+ * Message for Log. Several frames have to be sent for a event that take up more the
+ * five bytes which is the maximum for each frame. In this case the zero based index
+ * (byte 2) should be increased for each frame.
+ *
+ * @param[in] id ID for event.
+ * @param[in] level Log level for message.
+ * @param[in] msg Message.
+ * @param[in] size Message size in bytes.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successful sent
+ *
+ */
+extern BOOL vscp_logger_sendLogEvent(uint8_t id, uint8_t level, uint8_t const * const msg, uint8_t size)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         index       = 0;
+    uint8_t         eventIndex  = 0;
+    uint8_t         msgIndex    = 0;
+    BOOL            status      = FALSE;
+    
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_LOG, VSCP_TYPE_LOG_LOG_EVENT, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 8;
+    txMsg.data[0] = id;
+    txMsg.data[1] = level;
+    
+    /* If necessary, send several log events for a single log message. */
+    do
+    {
+        /* Log event index, later needed to reassemble the log message */
+        txMsg.data[2] = eventIndex;
+
+        /* Defragment the log message */
+        for(index = 3; index < VSCP_L1_DATA_SIZE; ++index)
+        {
+            if ((NULL != msg) &&
+                (0 < size))
+            {
+                txMsg.data[index] = msg[msgIndex];
+                ++msgIndex;
+                --size;
+            }
+            /* Fill the rest of the log event with zeros. */
+            else
+            {
+                txMsg.data[index] = 0;
+            }
+        }
+        
+        status = vscp_core_sendEvent(&txMsg);
+        
+        ++eventIndex;
+    }
+    while((NULL != msg) && (0 < size) && (TRUE == status));
+    
+    return status;
+}
+
 /*******************************************************************************
     LOCAL FUNCTIONS
 *******************************************************************************/
-
-#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_LOGGER ) */

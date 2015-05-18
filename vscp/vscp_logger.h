@@ -259,6 +259,22 @@ extern void vscp_logger_handleEvent(vscp_RxMessage const * const msg);
 
 #endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_LOGGER ) */
 
+/**
+ * Message for Log. Several frames have to be sent for a event that take up more the
+ * five bytes which is the maximum for each frame. In this case the zero based index
+ * (byte 2) should be increased for each frame.
+ *
+ * @param[in] id ID for event.
+ * @param[in] level Log level for message.
+ * @param[in] msg Message.
+ * @param[in] size Message size in bytes.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successful sent
+ *
+ */
+extern BOOL vscp_logger_sendLogEvent(uint8_t id, uint8_t level, uint8_t const * const msg, uint8_t size);
+
 #ifdef __cplusplus
 }
 #endif

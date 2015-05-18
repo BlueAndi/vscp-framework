@@ -50,6 +50,7 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 #include "vscp_core.h"
 #include "vscp_class_l1.h"
 #include "vscp_type_log.h"
+#include "vscp_logger.h"
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -118,48 +119,7 @@ extern BOOL vscp_log_sendUndefinedEvent(void)
  */
 extern BOOL vscp_log_sendLogEvent(uint8_t id, uint8_t level, uint8_t const * const msg, uint8_t size)
 {
-    vscp_TxMessage  txMsg;
-    uint8_t         index       = 0;
-    uint8_t         eventIndex  = 0;
-    uint8_t         msgIndex    = 0;
-    BOOL            status      = FALSE;
-    
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_LOG, VSCP_TYPE_LOG_LOG_EVENT, VSCP_PRIORITY_3_NORMAL);
-
-    txMsg.dataNum = 8;
-    txMsg.data[0] = id;
-    txMsg.data[1] = level;
-    
-    /* If necessary, send several log events for a single log message. */
-    do
-    {
-        /* Log event index, later needed to reassemble the log message */
-        txMsg.data[2] = eventIndex;
-
-        /* Defragment the log message */
-        for(index = 3; index < VSCP_L1_DATA_SIZE; ++index)
-        {
-            if ((NULL != msg) &&
-                (0 < size))
-            {
-                txMsg.data[index] = msg[msgIndex];
-                ++msgIndex;
-                --size;
-            }
-            /* Fill the rest of the log event with zeros. */
-            else
-            {
-                txMsg.data[index] = 0;
-            }
-        }
-        
-        status = vscp_core_sendEvent(&txMsg);
-        
-        ++eventIndex;
-    }
-    while((NULL != msg) && (0 < size) && (TRUE == status));
-    
-    return status;
+    return vscp_logger_sendLogEvent(id, level, msg, size);
 }
 
 /**

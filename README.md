@@ -24,8 +24,9 @@ More information can be found on the main site http://www.vscp.org
 ##Framework
 The VSCP software framework for level 1 devices provides several layers according to the [VSCP specification](http://www.vscp.org/docs/vscpspec/doku.php).
 
+##Core
+![core-diagram](https://github.com/BlueAndi/vscp-framework/blob/master/vscp/doc/doxfiles/vscp_modules.png)
 ![color-legend](https://github.com/BlueAndi/vscp-framework/blob/master/vscp/doc/doxfiles/vscp_modules_color_legend.png)
-![overview-diagram](https://github.com/BlueAndi/vscp-framework/blob/master/vscp/doc/doxfiles/vscp_modules.png)
 
 * The core functionality which has a built-in state machine to handle different use cases of the protocol and etc. (vscp\_core.[ch]). Right now it supports every mandatory event and some minor optional ones.
 * The decision matrix is handled separately (vscp\_dm.[ch]). It contains the standard decision matrix, as described in the VSCP specification and contains an additional extension.
@@ -36,7 +37,8 @@ The VSCP software framework for level 1 devices provides several layers accordin
     This can be configured for each data (vscp\_dev\_data_config.[ch]), except the firmware version.
 * Functionality can be configured for your needs (vscp_config.[ch]).
 * Some utility functions are separated (vscp\_util.[ch]) and used by different core modules or are maybe interested for the application too.
-  
+* Log functionaly is provided for debugging purposes (vscp\_logger.[ch]).
+
 The framework is independent of the hardware and the used operating system. To achieve independence all of the following
 layers have to be adapted to the system. This is supported by templates, which contains all necessary functions with nearly empty
 bodys.
@@ -51,6 +53,12 @@ how VSCP is integrated into your software:
 * Callout functions, lamp handling and etc. (vscp\_portable.c)
 
 Templates exists for all of them, which makes it much easier to adapt it and less time. See in the templates folder.
+
+##Event abstraction
+![core-diagram](https://github.com/BlueAndi/vscp-framework/blob/master/vscp/doc/doxfiles/vscp_event_modules.png)
+
+Using only the core, you have to assemble the VSCP events by yourself. If you want to deal only with parameter, which are
+VSCP independent, use the next upper layer, the event abstraction modules.
 
 ##Structure
 

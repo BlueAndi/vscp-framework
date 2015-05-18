@@ -73,6 +73,7 @@ SOURCES= main.c \
 		../../vscp/vscp_dev_data.c \
 		../../vscp/vscp_dm.c \
 		../../vscp/vscp_dm_ng.c \
+		../../vscp/vscp_logger.c \
 		../../vscp/vscp_ps.c \
 		../../vscp/vscp_transport.c \
 		../../vscp/vscp_util.c \
