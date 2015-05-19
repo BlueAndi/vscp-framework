@@ -100,6 +100,15 @@ extern void vscp_logger_init(void)
 }
 
 /**
+ * This function enables/disables the logging, independent of CLASS1.Log.LogStart.
+ */
+extern void vscp_logger_enable(BOOL enableIt)
+{
+    vscp_logger_isEnabled = enableIt;
+    return;
+}
+
+/**
  * This function gets the current log level(s).
  *
  * @return Current log level(s) (bitfield)
