@@ -70,8 +70,14 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
     CONSTANTS
 *******************************************************************************/
 
+/** Copyright */
+#define MAIN_COPYRIGHT          "(c) 2014-2015 Andreas Merkle"
+
 /** Persistent memory filename */
 #define MAIN_EEPROM_FILENAME    "eeprom.asc"
+
+/** Default log level */
+#define MAIN_LOG_LEVEL_DEFAULT  (LOG_LEVEL_FATAL)
 
 /*******************************************************************************
     MACROS
@@ -198,11 +204,12 @@ int main(int argc, char* argv[])
     BOOL                abort           = FALSE;
     main_CmdLineArgs    cmdLineArgs;
 
-    printf("\nSimulated VSCP level 1 node\n");
-    printf("Version: %s\n\n", VERSION);
+    printf("\nVSCP level 1 node\n");
+    printf("Version: %s\n", VERSION);
+    printf("%s\n\n", MAIN_COPYRIGHT);
 
     /* Set log level */
-    log_setLevel(LOG_LEVEL_FATAL);
+    log_setLevel(MAIN_LOG_LEVEL_DEFAULT);
 
     /* Parse command line arguments */
     if (MAIN_RET_OK != main_getCmdLineArgs(&cmdLineArgs, argc, argv))
@@ -225,18 +232,19 @@ int main(int argc, char* argv[])
         main_showHelp(cmdLineArgs.progName);
     }
     /* Abort because of a invalid program argument or continue? */
-    else if (FALSE == status)
+    else if (FALSE == abort)
     {
+        /* Show the user which keys can be used. */
+        main_showKeyTable();
+        printf("\n");
+            
+        /* Initialize all modules */
         if (MAIN_RET_OK != main_init())
         {
             abort = TRUE;
         }
         else
         {
-            /* Show the user which keys can be used. */
-            main_showKeyTable();
-            printf("\n");
-
             /* Shall a connection to a VSCP daemon be established? */
             if (NULL != cmdLineArgs.daemonAddr)
             {
@@ -543,6 +551,7 @@ static void main_showHelp(char const * const progName)
  */
 static void main_showKeyTable(void)
 {
+    printf("Keys:\n");
     printf("?       Show this key table\n");
     printf("e       Dump EEPROM\n");
     printf("h       Enable/Disable node heartbeat\n");
