@@ -1,0 +1,14 @@
+title Shutter behavior
+
+participant Relay\nat port X
+participant Relay\nat port X + 1
+participant Node
+participant Communication Bus
+
+Communication Bus->Node: Event
+note over Node: Forward to decision matrix
+note over Relay\nat port X,Relay\nat port X + 1: Two relays are necessary to drive a shutter.\nOne which controls the drive direction\nand one which is used to power the shutter.
+opt If event match with decision matrix row, a action will be executed.
+    Node->Relay\nat port X + 1: Enable/Disable (drive up/down)
+    Node->Relay\nat port X: Enable/Disable (power on/off)
+end

@@ -14,6 +14,20 @@
   * The scheduler is monitored by internal watchdog.
   * The CAN bus is monitored.
 
+##Behavior
+
+###Pushbuttons
+
+![Pushbutton Behavior](doc/images/pushbutton_behavior.jpg)
+
+###Relays
+
+![Relay Behavior](doc/images/relay_behavior.jpg)
+
+###Shutters
+
+![Shutter Behavior](doc/images/shutter_behavior.jpg)
+
 ##AVR Fuses
 
 * Brown-out detection set to 4,3V
