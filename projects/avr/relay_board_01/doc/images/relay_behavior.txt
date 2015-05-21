@@ -8,4 +8,7 @@ Communication Bus->Node: Event
 note over Node: Forward to decision matrix
 opt If event match with decision matrix row, a action will be executed.
     Node->Relay\nat port X: Enable/Disable/Toggle
+    opt If relay events are enabled
+        Node->Communication Bus: CLASS1.INFORMATION::On/Off
+    end
 end

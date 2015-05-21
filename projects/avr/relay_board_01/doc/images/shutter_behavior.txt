@@ -11,4 +11,7 @@ note over Relay\nat port X,Relay\nat port X + 1: Two relays are necessary to dri
 opt If event match with decision matrix row, a action will be executed.
     Node->Relay\nat port X + 1: Enable/Disable (drive up/down)
     Node->Relay\nat port X: Enable/Disable (power on/off)
+    opt If shutter events are enabled
+        Node->Communication Bus: CLASS1.INFORMATION::Up/Down/Top/Bottom
+    end
 end
