@@ -66,6 +66,7 @@ $Date: 2015-01-06 00:31:00 +0100 (Di, 06 Jan 2015) $
 #include "sys_sm.h"
 #include "watchdog.h"
 #include "can_monitor.h"
+#include "vscp_information.h"
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -129,10 +130,12 @@ typedef enum
 *******************************************************************************/
 
 static MAIN_RET main_initRunLevel1(void);
+static void main_loadConfiguration(void);
 static MAIN_RET main_initRunLevel2(void);
 static void main_timerCb(void);
 static void main_processStatusLamp(void);
 static void main_checkSegInitButton(void);
+static void main_shutterCb(uint8_t nr, SHUTTER_DIR dir, SHUTTER_POS pos);
 
 /*******************************************************************************
     LOCAL VARIABLES
@@ -369,13 +372,7 @@ int main(void)
  */
 static MAIN_RET main_initRunLevel1(void)
 {
-    MAIN_RET    status                  = MAIN_RET_OK;
-    uint8_t     index                   = 0;
-    uint16_t    switchingPwmValue       = 0;
-    uint16_t    holdingPwmValue         = 0;
-    uint8_t     shutterEnableMask       = 0;
-    uint8_t     buttonFilter            = 0;
-    uint8_t     relayEnableMask         = 0;
+    MAIN_RET    status  = MAIN_RET_OK;
 
     /* Initialize the hardware */
     hw_init();
@@ -429,9 +426,31 @@ static MAIN_RET main_initRunLevel1(void)
     /* Initialize the shutter module */
     shutter_init();
 
+    /* Register shutter info callback */
+    shutter_register(main_shutterCb, NULL);
+
     /* Configure all software timer */
     swTimer_start(MAIN_SWTIMER_10MS_ID, MAIN_SWTIMER_10MS_PERIOD, FALSE);
     swTimer_start(MAIN_SWTIMER_250MS_ID, MAIN_SWTIMER_250MS_PERIOD, FALSE);
+
+    /* Load configuration */
+    main_loadConfiguration();
+
+    return status;
+}
+
+/**
+ * This function loads the configuration from the persistent memory and configures
+ * all peripheries.
+ */
+static void main_loadConfiguration(void)
+{
+    uint8_t     index               = 0;
+    uint16_t    switchingPwmValue   = 0;
+    uint16_t    holdingPwmValue     = 0;
+    uint8_t     shutterEnableMask   = 0;
+    uint8_t     buttonFilter        = 0;
+    uint8_t     relayEnableMask     = 0;
 
     /* Get button filter */
     buttonFilter = vscp_ps_user_readButtonEnable();
@@ -525,7 +544,7 @@ static MAIN_RET main_initRunLevel1(void)
         }
     }
 
-    return status;
+    return;
 }
 
 /**
@@ -658,6 +677,60 @@ static void main_checkSegInitButton(void)
     }
 
     lastSegInitButtonState = main_isInitButtonPressed;
+
+    return;
+}
+
+/**
+ * This function informs about any shutter action.
+ *
+ * @param[in] nr    Shutter instance number
+ * @param[in] dir   Shutter direction
+ * @param[in] pos   Shutter position
+ */
+static void main_shutterCb(uint8_t nr, SHUTTER_DIR dir, SHUTTER_POS pos)
+{
+    /* Shutter event enabled? */
+    if (TRUE == IS_BIT_SET(vscp_ps_user_readShutterEventConfig(), nr))
+    {
+        if (SHUTTER_DIR_UP == dir)
+        {
+            (void)vscp_information_sendUpEvent(nr,
+                                               vscp_ps_user_readShutterEventZone(nr), 
+                                               vscp_ps_user_readShutterEventSubZone(nr));
+        }
+        else if (SHUTTER_DIR_DOWN == dir)
+        {
+            (void)vscp_information_sendDownEvent(nr,
+                                                 vscp_ps_user_readShutterEventZone(nr), 
+                                                 vscp_ps_user_readShutterEventSubZone(nr));
+        }
+        else if (SHUTTER_DIR_STOP == dir)
+        {
+            if (SHUTTER_POS_TOP == pos)
+            {
+                (void)vscp_information_sendTopEvent(nr,
+                                                    vscp_ps_user_readShutterEventZone(nr), 
+                                                    vscp_ps_user_readShutterEventSubZone(nr));
+            }
+            else if (SHUTTER_POS_BOTTOM == pos)
+            {
+                (void)vscp_information_sendBottomEvent(nr,
+                                                       vscp_ps_user_readShutterEventZone(nr), 
+                                                       vscp_ps_user_readShutterEventSubZone(nr));
+            }
+            else
+            {
+                (void)vscp_information_sendStopEvent(nr,
+                                                     vscp_ps_user_readShutterEventZone(nr), 
+                                                     vscp_ps_user_readShutterEventSubZone(nr));
+            }
+        }
+        else
+        {
+            ;
+        }
+    }
 
     return;
 }

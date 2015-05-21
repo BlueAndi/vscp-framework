@@ -110,6 +110,18 @@ typedef enum
 
 } SHUTTER_DIR;
 
+/** This type defines the possible shutter positions. */
+typedef enum
+{
+    SHUTTER_POS_UNKNOWN = 0,    /**< Position is unknown */
+    SHUTTER_POS_TOP,            /**< Position is at the top */
+    SHUTTER_POS_BOTTOM          /**< Position is at the bottom */
+
+} SHUTTER_POS;
+
+/** This type defines a shutter control callback. */
+typedef void    (*shutter_CallBack)(uint8_t nr, SHUTTER_DIR dir, SHUTTER_POS pos);
+
 /*******************************************************************************
     VARIABLES
 *******************************************************************************/
@@ -137,6 +149,14 @@ extern void shutter_init(void);
  * @param[in]   maxTurn     Max. turn-time (turn 90°) in 0.1s
  */
 extern void shutter_configure(uint8_t nr, uint8_t relayPower, uint8_t relayDir, uint16_t maxUp, uint16_t maxDown, uint16_t maxTurn);
+
+/**
+ * This function registers a callback, which will be informed for any kind of shutter action.
+ *
+ * @param[in]   cb          Callback
+ * @param[in]   userData    User specific data which will get back via callback
+ */
+extern void shutter_register(shutter_CallBack cb, void* userData);
 
 /**
  * This function enables or disables a shutter instance. If the shutter

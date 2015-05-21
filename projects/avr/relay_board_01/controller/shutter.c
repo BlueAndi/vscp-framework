@@ -135,6 +135,12 @@ static uint16_t shutter_calcPos(uint16_t pos, SHUTTER_POS_STATUS status, SHUTTER
 /** All shutter contexts */
 static shutter_Context  shutter_context[SHUTTER_NUM];
 
+/** Callback for any kind of shutter action */
+static shutter_CallBack shutter_infoCb          = NULL;
+
+/** User data used by the info callback */
+static void*            shutter_infoCbUserData  = NULL;
+
 /*******************************************************************************
     GLOBAL VARIABLES
 *******************************************************************************/
@@ -188,6 +194,19 @@ extern void shutter_configure(uint8_t nr, uint8_t relayPower, uint8_t relayDir, 
     con->maxDown    = maxDown;
     con->maxTurn    = maxTurn;
 
+    return;
+}
+
+/**
+ * This function registers a callback, which will be informed for any kind of shutter action.
+ *
+ * @param[in]   cb          Callback
+ * @param[in]   userData    User specific data which will get back via callback
+ */
+extern void shutter_register(shutter_CallBack cb, void* userData)
+{
+    shutter_infoCb          = cb;
+    shutter_infoCbUserData  = userData;
     return;
 }
 
@@ -841,14 +860,63 @@ static void shutter_driveCb(uint8_t nr, SHUTTERDRV_DIR direction, BOOL isDriving
             }
         }
     }
-    else
     /* Shutter started to drive */
+    else
     {
         /* Start to count the time the shutter runs.
          * At this point the timer duration is already set.
          */
         con->timer.run          = 0;
         con->timer.isEnabled    = TRUE;
+    }
+
+    /* Inform application? */
+    if (NULL != shutter_infoCb)
+    {
+        /* Shutter stopped? */
+        if (FALSE == isDriving)
+        {
+            SHUTTER_POS shutterPos = SHUTTER_POS_UNKNOWN;
+
+            /* Is shutter at the top? */
+            if ((0 == con->pos) &&
+                (SHUTTER_POS_STATUS_VALID_TOP == con->pos))
+            {
+                shutterPos = SHUTTER_POS_TOP;
+            }
+            /* Is shutter at the bottom? */
+            else if ((con->maxDown == con->pos) &&
+                     (SHUTTER_POS_STATUS_VALID_BOTTOM == con->pos))
+            {
+                shutterPos = SHUTTER_POS_BOTTOM;
+            }
+            else
+            {
+                shutterPos = SHUTTER_POS_UNKNOWN;
+            }
+
+            shutter_infoCb(nr, SHUTTER_DIR_STOP, shutterPos);
+        }
+        /* Shutter started to drive */
+        else
+        {
+            SHUTTER_DIR shutterDir = SHUTTER_DIR_STOP;
+
+            if (SHUTTERDRV_DIR_UP == direction)
+            {
+                shutterDir = SHUTTER_DIR_UP;
+            }
+            else if (SHUTTERDRV_DIR_DOWN == direction)
+            {
+                shutterDir = SHUTTER_DIR_DOWN;
+            }
+            else
+            {
+                shutterDir = SHUTTER_DIR_STOP;
+            }
+
+            shutter_infoCb(nr, shutterDir, SHUTTER_POS_UNKNOWN);
+        }
     }
 
     return;
