@@ -750,7 +750,7 @@ static void vscp_tp_adapter_showMessage(vscp_Message const * const msg, BOOL isR
 {
     uint8_t index = 0;
 
-    log_printf("%cx: class=0x%02X type=0x%02X prio=%2d oAddr=0x%02X %c num=%u data=",
+    log_printf("%cx: class=0x%04X type=0x%02X prio=%2d oAddr=0x%02X %c num=%u data=",
         (TRUE == isReceived) ? 'R' : 'T',
         msg->vscpClass,
         msg->vscpType,
