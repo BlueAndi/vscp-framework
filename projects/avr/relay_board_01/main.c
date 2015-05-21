@@ -96,6 +96,9 @@ $Date: 2015-01-06 00:31:00 +0100 (Di, 06 Jan 2015) $
 /** Shutter timer period in ms */
 #define MAIN_SHUTTER_TIMER_PERIOD   100
 
+/** VSCP logger default log level */
+#define MAIN_LOG_LEVEL_DEFAULT      VSCP_LOGGER_LVL_ERROR
+
 /*******************************************************************************
     MACROS
 *******************************************************************************/
@@ -402,8 +405,8 @@ static MAIN_RET main_initRunLevel1(void)
         status = MAIN_RET_ERROR;
     }
     
-    /* Initialize VSCP logger */
-    vscp_logger_init();
+    /* Set VSCP logger default log level */
+    vscp_logger_setLogLevel(MAIN_LOG_LEVEL_DEFAULT);
 
     /* Initialize CAN monitor */
     can_monitor_init();
