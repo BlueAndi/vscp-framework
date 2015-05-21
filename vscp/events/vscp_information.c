@@ -704,6 +704,7 @@ extern BOOL vscp_information_sendGoodbyeEvent(uint8_t zone, uint8_t subZone)
 /**
  * A node indicates that a stop event occurred. This can for example be a motor stopping.
  *
+ * @param[in] reserved Reserved for any kind of information
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
@@ -711,14 +712,14 @@ extern BOOL vscp_information_sendGoodbyeEvent(uint8_t zone, uint8_t subZone)
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_information_sendStopEvent(uint8_t zone, uint8_t subZone)
+extern BOOL vscp_information_sendStopEvent(uint8_t reserved, uint8_t zone, uint8_t subZone)
 {
     vscp_TxMessage txMsg;
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_STOP, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
-    txMsg.data[0] = 0;
+    txMsg.data[0] = reserved;
     txMsg.data[1] = zone;
     txMsg.data[2] = subZone;
 
@@ -1735,6 +1736,106 @@ extern BOOL vscp_information_sendCalculatedNoonEvent(uint8_t zone, uint8_t subZo
 
     txMsg.dataNum = 3;
     txMsg.data[0] = 0;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * A node indicates that something is driving up, e. g. shutter is driving up.
+ *
+ * @param[in] index Index
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendUpEvent(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_UP, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * A node indicates that something is driving down, e. g. shutter is driving down.
+ *
+ * @param[in] index Index
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendDownEvent(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_DOWN, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * A node indicates that something is at the top, e. g. shutter is at the top.
+ *
+ * @param[in] index Index
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendTopEvent(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_TOP, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * A node indicates that something is at the bottom, e. g. shutter is at the bottom.
+ *
+ * @param[in] index Index
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendBottomEvent(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_BOTTOM, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
     txMsg.data[1] = zone;
     txMsg.data[2] = subZone;
 

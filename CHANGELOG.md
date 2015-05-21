@@ -7,6 +7,7 @@ Features:
     - Log events added.
     - Logger module added for easier logging during development phase or further. See the vscp\_loggger.h macros for more information.
     - Logger is integrated in VSCP core. Enable the VSCP\_CONFIG\_ENABLE\_LOGGER compiler switch to enable the log functionality.
+    - CLASS1.INFORMATION::Up, ::Down, ::Top and ::Bottom events introduced.
 
   - Project: Relay board 01
     - CAN is monitored and any error stored in the VSCP alarm bitfield. See MDF for more information about each bit.

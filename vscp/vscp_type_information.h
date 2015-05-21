@@ -248,6 +248,18 @@ extern "C"
 /** VSCP class 1 information type: Calculated noon */
 #define VSCP_TYPE_INFORMATION_CALCULATED_NOON                       58
 
+/** VSCP class 1 information type: Up */
+#define VSCP_TYPE_INFORMATION_UP                                    59
+
+/** VSCP class 1 information type: Down */
+#define VSCP_TYPE_INFORMATION_DOWN                                  60
+
+/** VSCP class 1 information type: Top */
+#define VSCP_TYPE_INFORMATION_TOP                                   61
+
+/** VSCP class 1 information type: Bottom */
+#define VSCP_TYPE_INFORMATION_BOTTOM                                62
+
 /*******************************************************************************
     MACROS
 *******************************************************************************/
