@@ -128,7 +128,7 @@ extern void shutterDrv_init(void);
  * @param[in]   userData    User specific data which comes via callback
  * @return Status
  */
-extern SHUTTERDRV_RET shutterDrv_configure(uint8_t nr, uint8_t relayPower, uint8_t relayDir,    shutterDrv_CallBack cb, void * const userData);
+extern SHUTTERDRV_RET shutterDrv_configure(uint8_t nr, uint8_t relayPower, uint8_t relayDir, shutterDrv_CallBack cb, void * const userData);
 
 /**
  * This function enables or disables a shutter instance. If the shutter
