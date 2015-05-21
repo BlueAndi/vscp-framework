@@ -18,15 +18,15 @@
 
 ###Pushbuttons
 
-![Pushbutton Behavior](doc/images/pushbutton_behavior.jpg)
+![Pushbutton Behavior](doc/images/pushbutton_behavior.png)
 
 ###Relays
 
-![Relay Behavior](doc/images/relay_behavior.jpg)
+![Relay Behavior](doc/images/relay_behavior.png)
 
 ###Shutters
 
-![Shutter Behavior](doc/images/shutter_behavior.jpg)
+![Shutter Behavior](doc/images/shutter_behavior.png)
 
 ##AVR Fuses
 
