@@ -105,7 +105,8 @@ typedef enum
     SHUTTER_DIR_UP,         /**< Drive shutter up */
     SHUTTER_DIR_DOWN,       /**< Drive shutter down */
     SHUTTER_DIR_TOP,        /**< Drive to the top */
-    SHUTTER_DIR_BOTTOM      /**< Drive to the bottom */
+    SHUTTER_DIR_BOTTOM,     /**< Drive to the bottom */
+    SHUTTER_DIR_CALIBRATE   /**< Calibration drive */
 
 } SHUTTER_DIR;
 

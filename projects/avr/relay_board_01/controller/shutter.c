@@ -70,12 +70,23 @@ $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
     TYPES AND STRUCTURES
 *******************************************************************************/
 
+/** This type defines the shutter states. */
+typedef enum
+{
+    SHUTTER_STATE_NORMAL = 0,       /**< Normal state */
+    SHUTTER_STATE_BLOCKED,          /**< Shutter is blocked, because of wind alert. */
+    SHUTTER_STATE_CALIB_PREPARE,    /**< Calibration state, shutter drives up, until any other drive command */
+    SHUTTER_STATE_CALIB_DRIVE_DOWN, /**< Calibration state, shutter drives down and count the time, until any other drive command */
+    SHUTTER_STATE_CALIB_DRIVE_UP    /**< Calibration state, shutter drives up and count the time, until any other drive command */
+
+} SHUTTER_STATE;
+
 /** This type defines the different position status. */
 typedef enum
 {
-    SHUTTER_POS_STATUS_INVALID = 0,     /**< Position is invalid */
-    SHUTTER_POS_STATUS_VALID_TOP,       /**< Position is valid to drive to the top. */
-    SHUTTER_POS_STATUS_VALID_BOTTOM     /**< Position is valid to drive to the bottom. */
+    SHUTTER_POS_STATUS_INVALID = 0,     /**< Position is invalid (unknown) */
+    SHUTTER_POS_STATUS_VALID_TOP,       /**< Position is valid if shutter drives to the top. */
+    SHUTTER_POS_STATUS_VALID_BOTTOM     /**< Position is valid if shutter drives to the bottom. */
 
 } SHUTTER_POS_STATUS;
 
@@ -92,14 +103,15 @@ typedef struct
 typedef struct
 {
     /* Configuration parameters */
-    BOOL            isEnabled;  /**< TRUE: Configuration is enabled */
-    uint16_t        maxUp;      /**< Max. time which the shutter needs to drive from bottom to the top up */
-    uint16_t        maxDown;    /**< Max. time which the shutter needs to drive from the top to the bottom down */
-    uint16_t        maxTurn;    /**< Max. time which the shutter needs to turn 90°. Only for jalousie! */
+    BOOL                isEnabled;  /**< TRUE: Configuration is enabled */
+    BOOL                isUpdated;  /**< TRUE: Configuration updated by calibration drive */
+    uint16_t            maxUp;      /**< Max. time which the shutter needs to drive from bottom to the top */
+    uint16_t            maxDown;    /**< Max. time which the shutter needs to drive from the top to the bottom */
+    uint16_t            maxTurn;    /**< Max. time which the shutter needs to turn 90°. Only for jalousie! */
 
     /* Operative parameters */
-    shutter_Timer   timer;      /**< Shutter drive timer */
-    BOOL            isBlocked;  /**< Blocked by wind alert */
+    SHUTTER_STATE       state;      /**< Shutter state machine state */
+    shutter_Timer       timer;      /**< Shutter drive timer */
 
     /* Calibration parameters */
     SHUTTER_POS_STATUS  posStatus;  /**< Position status */
@@ -257,116 +269,187 @@ extern void shutter_drive(uint8_t nr, SHUTTER_DIR dir, uint16_t duration)
         return;
     }
 
-    /* If the shutter is blocked, we will return now. */
-    if (TRUE == con->isBlocked)
+    /* Handle state machine */
+    if (SHUTTER_STATE_NORMAL == con->state)
     {
-        return;
-    }
-
-    switch(dir)
-    {
-    case SHUTTER_DIR_STOP:
-        ctrlDirection = SHUTTERDRV_DIR_STOP;
-        break;
-
-    case SHUTTER_DIR_UP:
-        ctrlDirection = SHUTTERDRV_DIR_UP;
-        break;
-
-    case SHUTTER_DIR_DOWN:
-        ctrlDirection = SHUTTERDRV_DIR_DOWN;
-        break;
-
-    case SHUTTER_DIR_TOP:
-        /* How many time is needed to be at the top? */
-        duration = shutter_getTimeToTop(con);
-
-        /* Is the shutter already at the top? */
-        if (0 == duration)
+        switch(dir)
         {
+        case SHUTTER_DIR_STOP:
             ctrlDirection = SHUTTERDRV_DIR_STOP;
-        }
-        else
-        {
-            /* Add balance time to compensate tolerances. */
-            if ((0xffff - duration) < SHUTTER_BALANCE_TIME)
-            {
-                duration = 0xffff;
-            }
-            else
-            {
-                duration += SHUTTER_BALANCE_TIME;
-            }
+            break;
 
+        case SHUTTER_DIR_UP:
             ctrlDirection = SHUTTERDRV_DIR_UP;
-        }
-        break;
+            break;
 
-    case SHUTTER_DIR_BOTTOM:
-        /* How many time is needed to be at the bottom? */
-        duration = shutter_getTimeToBottom(con);
+        case SHUTTER_DIR_DOWN:
+            ctrlDirection = SHUTTERDRV_DIR_DOWN;
+            break;
 
-        /* Is the shutter already at the bottom? */
-        if (0 == duration)
-        {
-            ctrlDirection = SHUTTERDRV_DIR_STOP;
-        }
-        else
-        {
-            /* Add balance time to compensate tolerances. */
-            if ((0xffff - duration) < SHUTTER_BALANCE_TIME)
+        case SHUTTER_DIR_TOP:
+            /* How many time is needed to be at the top? */
+            duration = shutter_getTimeToTop(con);
+
+            /* Is the shutter already at the top? */
+            if (0 == duration)
             {
-                duration = 0xffff;
+                ctrlDirection = SHUTTERDRV_DIR_STOP;
             }
             else
             {
-                duration += SHUTTER_BALANCE_TIME;
+                /* Add balance time to compensate tolerances. */
+                if ((0xffff - duration) < SHUTTER_BALANCE_TIME)
+                {
+                    duration = 0xffff;
+                }
+                else
+                {
+                    duration += SHUTTER_BALANCE_TIME;
+                }
+
+                ctrlDirection = SHUTTERDRV_DIR_UP;
             }
+            break;
 
-            ctrlDirection = SHUTTERDRV_DIR_DOWN;
+        case SHUTTER_DIR_BOTTOM:
+            /* How many time is needed to be at the bottom? */
+            duration = shutter_getTimeToBottom(con);
+
+            /* Is the shutter already at the bottom? */
+            if (0 == duration)
+            {
+                ctrlDirection = SHUTTERDRV_DIR_STOP;
+            }
+            else
+            {
+                /* Add balance time to compensate tolerances. */
+                if ((0xffff - duration) < SHUTTER_BALANCE_TIME)
+                {
+                    duration = 0xffff;
+                }
+                else
+                {
+                    duration += SHUTTER_BALANCE_TIME;
+                }
+
+                ctrlDirection = SHUTTERDRV_DIR_DOWN;
+            }
+            break;
+
+        case SHUTTER_DIR_CALIBRATE:
+            /* If shutter is driving, stop it now. */
+            if (SHUTTERDRV_DIR_STOP != shutterDrv_getDriveDirection(nr))
+            {
+                ctrlDirection = SHUTTERDRV_DIR_STOP;
+            }
+            else
+            {
+                ctrlDirection   = SHUTTERDRV_DIR_UP;
+                con->state      = SHUTTER_STATE_CALIB_PREPARE;
+
+                /* Invalidate the position status */
+                con->posStatus  = SHUTTER_POS_STATUS_INVALID;
+            }
+            break;
+
+        default:
+            /* Shall never happen */
+            ctrlDirection = SHUTTERDRV_DIR_STOP;
+            break;
         }
-        break;
 
-    default:
-        return;
-    }
-
-    /* If a drive command is already running and the new drive
-     * command goes not into the opposite direction, the shutter
-     * will be stopped.
-     */
-    if (SHUTTERDRV_DIR_UP == shutterDrv_getDriveDirection(nr))
-    {
-        if (SHUTTERDRV_DIR_DOWN != ctrlDirection)
+        /* If a drive command is already running and the new drive
+         * command goes not into the opposite direction, the shutter
+         * will be stopped.
+         */
+        if (SHUTTERDRV_DIR_UP == shutterDrv_getDriveDirection(nr))
         {
-            /* Stop shutter */
-            ctrlDirection   = SHUTTERDRV_DIR_STOP;
-            duration        = 0;
+            if (SHUTTERDRV_DIR_DOWN != ctrlDirection)
+            {
+                /* Stop shutter */
+                ctrlDirection   = SHUTTERDRV_DIR_STOP;
+                duration        = 0;
+            }
         }
+        else
+        if (SHUTTERDRV_DIR_DOWN == shutterDrv_getDriveDirection(nr))
+        {
+            if (SHUTTERDRV_DIR_UP != ctrlDirection)
+            {
+                /* Stop shutter */
+                ctrlDirection   = SHUTTERDRV_DIR_STOP;
+                duration        = 0;
+            }
+        }
+    }
+    else if (SHUTTER_STATE_BLOCKED == con->state)
+    {
+        /* Nothing to do */
+    }
+    else if (SHUTTER_STATE_CALIB_PREPARE == con->state)
+    {
+        /* User notified that the shutter is at the top now.
+         * Drive down and count the time.
+         */
+        ctrlDirection   = SHUTTERDRV_DIR_DOWN;
+        duration        = 0xffff;   /* Set to maximum to avoid that the shutter stops before it is in end position. */
+        con->state      = SHUTTER_STATE_CALIB_DRIVE_DOWN;
+    }
+    else if (SHUTTER_STATE_CALIB_DRIVE_DOWN == con->state)
+    {
+        /* User notified that the shutter is at the bottom now.
+         * Drive up and count the time.
+         */
+        ctrlDirection   = SHUTTERDRV_DIR_UP;
+        duration        = 0xffff;   /* Set to maximum to avoid that the shutter stops before it is in end position. */
+        con->state      = SHUTTER_STATE_CALIB_DRIVE_UP;
+
+        /* Stop timer and store result */
+        con->timer.isEnabled    = FALSE;    /* Avoids that a ISR changes the run counter. */
+        con->maxDown            = con->timer.run;
+    }
+    else if (SHUTTER_STATE_CALIB_DRIVE_UP == con->state)
+    {
+        /* User notified that the shutter is at the top now.
+         * Store the up and down time in persistent memory.
+         */
+        ctrlDirection   = SHUTTERDRV_DIR_STOP;
+        con->state      = SHUTTER_STATE_NORMAL;
+
+        /* Stop timer and store result */
+        con->timer.isEnabled    = FALSE;    /* Avoids that a ISR changes the run counter. */
+        con->maxUp              = con->timer.run;
+
+        /* Shutter is now at the top */
+        con->pos        = 0;
+        con->posStatus  = SHUTTER_POS_STATUS_VALID_TOP;
+
+        /* Configuration is updated */
+        con->isUpdated = TRUE;
     }
     else
-    if (SHUTTERDRV_DIR_DOWN == shutterDrv_getDriveDirection(nr))
     {
-        if (SHUTTERDRV_DIR_UP != ctrlDirection)
+        /* Should never happen */
+        ctrlDirection   = SHUTTERDRV_DIR_STOP;
+        con->state      = SHUTTER_STATE_NORMAL;
+    }
+
+    /* Command the shutter driver only in case of no wind alert. */
+    if (SHUTTER_STATE_BLOCKED != con->state)
+    {
+        /* Set timer for drive duration. */
+        if (SHUTTERDRV_DIR_STOP == ctrlDirection)
         {
-            /* Stop shutter */
-            ctrlDirection   = SHUTTERDRV_DIR_STOP;
-            duration        = 0;
+            con->timer.duration = 0;
         }
-    }
+        else
+        {
+            con->timer.duration = duration;
+        }
 
-    /* Set timer for drive duration. */
-    if (SHUTTERDRV_DIR_STOP == ctrlDirection)
-    {
-        con->timer.duration = 0;
+        /* Drive the shutter */
+        shutterDrv_drive(nr, ctrlDirection);
     }
-    else
-    {
-        con->timer.duration = duration;
-    }
-
-    /* Drive the shutter */
-    shutterDrv_drive(nr, ctrlDirection);
 
     return;
 }
@@ -502,19 +585,22 @@ extern void shutter_windAlert(uint8_t nr, BOOL alert)
     /* Remove alert? */
     if (FALSE == alert)
     {
-        con->isBlocked = FALSE;
+        con->state = SHUTTER_STATE_NORMAL;
     }
     else
     {
         /* Shutter not blocked yet? */
-        if (FALSE == con->isBlocked)
+        if (SHUTTER_STATE_BLOCKED != con->state)
         {
+            /* If a calibration drive is running, it will be stopped. */
+            con->state = SHUTTER_STATE_NORMAL;
+
             /* Drive shutter up! */
             shutter_drive(nr, SHUTTERDRV_DIR_STOP, 0);
             shutter_drive(nr, SHUTTER_DIR_TOP, 0);
         }
 
-        con->isBlocked = TRUE;
+        con->state = SHUTTER_STATE_BLOCKED;
     }
 
     return;
@@ -547,7 +633,7 @@ extern void shutter_turn(uint8_t nr, uint8_t angle)
     }
 
     /* Angle greater than 90°? */
-    if (90u < angle)
+    if (90 < angle)
     {
         return;
     }
@@ -559,7 +645,7 @@ extern void shutter_turn(uint8_t nr, uint8_t angle)
     }
 
     /* Calculate duration */
-    duration = con->maxTurn * angle / 90;
+    duration = (con->maxTurn * angle) / 90;
 
     if (0 < duration)
     {
@@ -675,78 +761,82 @@ static void shutter_driveCb(uint8_t nr, SHUTTERDRV_DIR direction, BOOL isDriving
         /* Stop counting the time the shutter runs. */
         con->timer.isEnabled = FALSE;
 
-        /* Do we know where the shutter position is (top or bottom)? */
-        if ((SHUTTERDRV_DIR_UP == direction) &&
-            (con->maxUp <= con->timer.run))
+        if ((SHUTTER_STATE_NORMAL == con->state) ||
+            (SHUTTER_STATE_BLOCKED == con->state))
         {
-            /* At the top */
-            con->pos        = 0;
-            con->posStatus  = SHUTTER_POS_STATUS_VALID_TOP;
-        }
-        else if ((SHUTTERDRV_DIR_DOWN == direction) &&
-                 (con->maxDown <= con->timer.run))
-        {
-            /* At the bottom */
-            con->pos        = con->maxDown;
-            con->posStatus  = SHUTTER_POS_STATUS_VALID_BOTTOM;
-        }
-        else
-        /* Is the shutter already calibrated? */
-        if ((SHUTTER_POS_STATUS_VALID_TOP == con->posStatus) ||
-            (SHUTTER_POS_STATUS_VALID_BOTTOM == con->posStatus))
-        {
-            /* Calculate position */
-            if (SHUTTERDRV_DIR_UP == direction)
+            /* Do we know where the shutter position is (top or bottom)? */
+            if ((SHUTTERDRV_DIR_UP == direction) &&
+                (con->maxUp <= con->timer.run))
             {
-                /* Position recalculation needed? */
-                if (SHUTTER_POS_STATUS_VALID_BOTTOM == con->posStatus)
-                {
-                    con->pos        = shutter_calcPos(  con->pos,
-                                                        con->posStatus,
-                                                        SHUTTER_POS_STATUS_VALID_TOP,
-                                                        con->maxUp,
-                                                        con->maxDown);
-
-                    con->posStatus  = SHUTTER_POS_STATUS_VALID_TOP;
-                }
-
-                if (con->pos <= con->timer.run)
-                {
-                    con->pos = 0;
-                }
-                else
-                {
-                    con->pos -= con->timer.run;
-                }
+                /* At the top */
+                con->pos        = 0;
+                con->posStatus  = SHUTTER_POS_STATUS_VALID_TOP;
+            }
+            else if ((SHUTTERDRV_DIR_DOWN == direction) &&
+                     (con->maxDown <= con->timer.run))
+            {
+                /* At the bottom */
+                con->pos        = con->maxDown;
+                con->posStatus  = SHUTTER_POS_STATUS_VALID_BOTTOM;
             }
             else
-            /* Calculate position */
-            if (SHUTTERDRV_DIR_DOWN == direction)
+            /* Is the shutter already calibrated? */
+            if ((SHUTTER_POS_STATUS_VALID_TOP == con->posStatus) ||
+                (SHUTTER_POS_STATUS_VALID_BOTTOM == con->posStatus))
             {
-                /* Position recalculation needed? */
-                if (SHUTTER_POS_STATUS_VALID_TOP == con->posStatus)
+                /* Calculate position */
+                if (SHUTTERDRV_DIR_UP == direction)
                 {
-                    con->pos        = shutter_calcPos(  con->pos,
-                                                        con->posStatus,
-                                                        SHUTTER_POS_STATUS_VALID_BOTTOM,
-                                                        con->maxUp,
-                                                        con->maxDown);
+                    /* Position recalculation needed? */
+                    if (SHUTTER_POS_STATUS_VALID_BOTTOM == con->posStatus)
+                    {
+                        con->pos        = shutter_calcPos(  con->pos,
+                                                            con->posStatus,
+                                                            SHUTTER_POS_STATUS_VALID_TOP,
+                                                            con->maxUp,
+                                                            con->maxDown);
 
-                    con->posStatus  = SHUTTER_POS_STATUS_VALID_BOTTOM;
-                }
+                        con->posStatus  = SHUTTER_POS_STATUS_VALID_TOP;
+                    }
 
-                if (con->maxDown <= con->timer.run)
-                {
-                    con->pos = con->maxDown;
+                    if (con->pos <= con->timer.run)
+                    {
+                        con->pos = 0;
+                    }
+                    else
+                    {
+                        con->pos -= con->timer.run;
+                    }
                 }
                 else
-                if ((con->maxDown - con->pos) <= con->timer.run)
+                /* Calculate position */
+                if (SHUTTERDRV_DIR_DOWN == direction)
                 {
-                    con->pos = con->maxDown;
-                }
-                else
-                {
-                    con->pos += con->timer.run;
+                    /* Position recalculation needed? */
+                    if (SHUTTER_POS_STATUS_VALID_TOP == con->posStatus)
+                    {
+                        con->pos        = shutter_calcPos(  con->pos,
+                                                            con->posStatus,
+                                                            SHUTTER_POS_STATUS_VALID_BOTTOM,
+                                                            con->maxUp,
+                                                            con->maxDown);
+
+                        con->posStatus  = SHUTTER_POS_STATUS_VALID_BOTTOM;
+                    }
+
+                    if (con->maxDown <= con->timer.run)
+                    {
+                        con->pos = con->maxDown;
+                    }
+                    else
+                    if ((con->maxDown - con->pos) <= con->timer.run)
+                    {
+                        con->pos = con->maxDown;
+                    }
+                    else
+                    {
+                        con->pos += con->timer.run;
+                    }
                 }
             }
         }
