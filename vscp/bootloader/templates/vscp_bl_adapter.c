@@ -156,6 +156,8 @@ extern BOOL vscp_bl_adapter_getSegInitButtonState(void)
 {
     BOOL    state   = FALSE;
 
+    /* Implement your code here ... */
+    
     return state;
 }
 
