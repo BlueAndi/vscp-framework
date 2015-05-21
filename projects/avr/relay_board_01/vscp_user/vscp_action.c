@@ -248,7 +248,7 @@ extern void vscp_action_execute(uint8_t action, uint8_t par, vscp_RxMessage cons
         break;
 
     case VSCP_ACTION_CALIBRATE_SHUTTER:
-        /* TODO */
+        vscp_action_driveShutter(par, SHUTTER_DIR_CALIBRATE, 0);
         break;
 
     case VSCP_ACTION_ALERT_SHUTTER:
