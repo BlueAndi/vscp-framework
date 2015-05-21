@@ -90,9 +90,13 @@ Error codes:
 ##How to use?
 
 Include the following files to your project:
+* /common/crc16ccitt.h
+* /common/crc16ccitt.c
 * /vscp/bootloader/vscp\_bootloader.h
 * /vscp/bootloader/vscp\_bootloader.c
+* /vscp/vscp\_class\_l1.h
 * /vscp/vscp\_types.h
+* /vscp/vscp\_type_protocol.h
 
 Copy the templates to your project and adapt them to your needs:
 * /vscp/bootloader/templates/vscp\_bl\_adapter.h
