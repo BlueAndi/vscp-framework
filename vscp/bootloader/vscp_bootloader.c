@@ -647,8 +647,6 @@ static void vscp_bootloader_sendAckStartBlockDataTransfer(void)
 
 /**
  * This function sends a "NACK start block data transfer" event.
- *
- * @param[in]  errorCode   User defined error code
  */
 static void vscp_bootloader_sendNakStartBlockDataTransfer(void)
 {
