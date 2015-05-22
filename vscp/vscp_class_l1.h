@@ -35,9 +35,7 @@
 @section desc Description
 This header contains all VSCP level 1 classes.
 
-@section svn Subversion
 $Author: amerkle $
-$Rev: 449 $
 $Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 /** @defgroup vscp_class_l1 VSCP Level 1 classes
