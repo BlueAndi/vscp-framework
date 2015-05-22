@@ -36,10 +36,6 @@
 This module adapts the project specific underlying physical transport medium to
 the transport layer of VSCP.
 
-@section svn Subversion
-$Author: amerkle $
-$Rev: 449 $
-$Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 /** @defgroup vscp_tp_adapter Transport driver adapter
  * The transport layer adapter adapts the transport layer of VSCP to the

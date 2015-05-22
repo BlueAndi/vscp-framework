@@ -105,10 +105,6 @@ Differences between on and off with counted triggers:
     --------------------------------------------
 </pre>
 
-@section svn Subversion
-$Author: amerkle $
-$Rev: 401 $
-$Date: 2014-12-27 23:42:44 +0100 (Sa, 27 Dez 2014) $
 *******************************************************************************/
 
 /*

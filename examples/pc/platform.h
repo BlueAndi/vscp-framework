@@ -36,10 +36,6 @@
 This module provides utility functions which are platform specific. The module
 encapsulates the platform dependent code.
 
-@section svn Subversion
-$Author: amerkle $
-$Rev: 449 $
-$Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 /** @defgroup platform Platform specific utility functions.
  * This module provides utility functions which are platform specific. The module

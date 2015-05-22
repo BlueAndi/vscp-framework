@@ -1,9 +1,6 @@
 --------------------------------------------------------------------------------
 Author: Andreas Merkle, http://www.blue-andi.de
 
-$Author: amerkle $
-$Rev: 398 $
-$Date: 2014-12-27 18:10:02 +0100 (Sa, 27 Dez 2014) $
 --------------------------------------------------------------------------------
 
 The user specific persistent storage is generated, as well as the application register access.

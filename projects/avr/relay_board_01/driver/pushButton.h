@@ -36,10 +36,6 @@
 The pushbutton driver provides an easy function to read the current pushbutton
 states.
 
-@section svn Subversion
-$Author: amerkle $
-$Rev: 452 $
-$Date: 2015-01-06 10:45:56 +0100 (Di, 06 Jan 2015) $
 *******************************************************************************/
 
 /*

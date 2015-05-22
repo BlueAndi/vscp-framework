@@ -36,10 +36,6 @@
 This module contains the user specific decision matrix (standard, extension
 and next generation) actions.
 
-@section svn Subversion
-$Author: amerkle $
-$Rev: 449 $
-$Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 /** @defgroup vscp_action VSCP actions
  * This module contains the user specific decision matrix (standard, extension

@@ -30,9 +30,6 @@ SOFTWARE.
 This transformation script generates the application register interface of the
 VSCP framework.
 
-$Author: amerkle $
-$Rev: 455 $
-$Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
 ********************************************************************************
 -->
 

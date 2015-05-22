@@ -35,10 +35,6 @@
 @section desc Description
 This module contains the VSCP threads.
 
-@section svn Subversion
-$Author: amerkle $
-$Rev: 449 $
-$Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 /** @defgroup vscp_thread VSCP threads
  * Two threads will be created to process the VSCP framework and the VSCP timers.

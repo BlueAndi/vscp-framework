@@ -35,10 +35,6 @@
 @section desc Description
 This module provides device (node) specific data.
 
-@section svn Subversion
-$Author: amerkle $
-$Rev: 449 $
-$Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 /** @defgroup vscp_dev_data VSCP device data
  * This module contains device specific data access. The data itself can be set

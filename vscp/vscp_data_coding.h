@@ -35,10 +35,6 @@
 @section desc Description
 This module provides data coding functionality as specified by VSCP specification.
 
-@section svn Subversion
-$Author: amerkle $
-$Rev: 449 $
-$Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 /** @defgroup vscp_data_coding VSCP data coding
  * Data coding functionality as specified by VSCP specification.

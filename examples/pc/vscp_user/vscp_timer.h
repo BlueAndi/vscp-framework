@@ -35,10 +35,6 @@
 @section desc Description
 This module implements the VSCP timers.
 
-@section svn Subversion
-$Author: amerkle $
-$Rev: 449 $
-$Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 /** @defgroup vscp_timer Timer
  * The timer interface is used only by the core, except the processing function

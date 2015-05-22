@@ -36,10 +36,6 @@
 This module adapts the project specific environment according to the bootloader
 its needs.
 
-@section svn Subversion
-$Author: amerkle $
-$Rev: 449 $
-$Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 /** @defgroup vscp_bl_adapter VSCP bootloader adapter
  * This module adapts the project specific environment according to the bootloader

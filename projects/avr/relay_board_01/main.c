@@ -35,10 +35,6 @@
 @section desc Description
 This module contains the main entry point.
 
-@section svn Subversion
-$Author: amerkle $
-$Rev: 450 $
-$Date: 2015-01-06 00:31:00 +0100 (Di, 06 Jan 2015) $
 *******************************************************************************/
 
 /*******************************************************************************

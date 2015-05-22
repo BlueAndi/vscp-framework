@@ -36,10 +36,6 @@
 This module contains the device specific data configuration preferred by the
 user. It overwrites the default configuration in vscp_dev_data_config.h
 
-@section svn Subversion
-$Author: amerkle $
-$Rev: 449 $
-$Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 /** @defgroup vscp_dev_data_config_overwrite VSCP device data configuration overwrite
  * This module contains the device specific data configuration preferred by the

@@ -35,10 +35,6 @@
 @section desc Description
 This module provides the current wind speed.
 
-@section svn Subversion
-$Author: amerkle $
-$Rev: 452 $
-$Date: 2015-01-06 10:45:56 +0100 (Di, 06 Jan 2015) $
 *******************************************************************************/
 /** @defgroup windDrv Wind speed driver
  * The driver provides the wind speed, which is measured by a windmill.

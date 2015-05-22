@@ -35,10 +35,6 @@
 @section desc Description
 This module contains the CRC16-CCITT algorithm.
 
-@section svn Subversion
-$Author: amerkle $
-$Rev: 120 $
-$Date: 2014-03-24 16:06:21 +0100 (Mo, 24 Mrz 2014) $
 *******************************************************************************/
 
 /*

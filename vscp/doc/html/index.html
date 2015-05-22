@@ -62,8 +62,13 @@ Very Simple Control Protocol (VSCP)</h1>
 Framework</h1>
 <p>The VSCP software framework for level 1 devices provides several layers according to the VSCP specification (<a href="http://www.vscp.org/docs/vscpspec/doku.php">http://www.vscp.org/docs/vscpspec/doku.php</a>).</p>
 <p>More information can be found on the main site <a href="http://www.vscp.org">http://www.vscp.org</a></p>
+<h2><a class="anchor" id="core"></a>
+Core</h2>
 <div class="image">
-<img src="vscp_modules.jpg" alt="vscp_modules.jpg"/>
+<img src="vscp_modules.png" alt="vscp_modules.png"/>
+</div>
+ <div class="image">
+<img src="vscp_modules_color_legend.png" alt="vscp_modules_color_legend.png"/>
 </div>
 <ul>
 <li>The core functionality which has a built-in state machine to handle different use cases of the protocol and etc. (<a class="el" href="group__vscp__core.html">The VSCP core functionality.</a>). Right now it supports every mandatory event and some minor optional ones.</li>
@@ -74,6 +79,7 @@ Framework</h1>
 <li>The transport layer has the possibility to loop events back (<a class="el" href="group__vscp__transport.html">Transport layer</a>). This can be configured for each data (<a class="el" href="group__vscp__dev__data__config.html">Device default data configuration</a>), except the firmware version.</li>
 <li>Functionality can be configured for your needs (<a class="el" href="group__vscp__config.html">VSCP default configuration</a>).</li>
 <li>Some utility functions are separated (<a class="el" href="group__vscp__util.html">VSCP utilities</a>) and used by different core modules or are maybe interested for the application too.</li>
+<li>Log functionaly is provided for debugging purposes (<a class="el" href="group__vscp__logger.html">VSCP logger</a>).</li>
 </ul>
 <p>The framework is independent of the hardware and the used operating system. To achieve independence all of the following layers have to be adapted to the system. This is supported by templates, which contains all necessary functions with nearly empty bodys.</p>
 <p>The following modules have to be adapted for your needs, because it depends on the hardware, the operating system or how VSCP is integrated into your software:</p>
@@ -86,6 +92,12 @@ Framework</h1>
 <li>Callout functions, lamp handling and etc. (<a class="el" href="group__vscp__portable.html">Portable stuff</a>)</li>
 </ul>
 <p>Templates exists for all of them, which makes it much easier to adapt it and less time. See in the templates folder.</p>
+<h2><a class="anchor" id="eventAbstraction"></a>
+Event abstraction</h2>
+<div class="image">
+<img src="vscp_event_modules.png" alt="vscp_event_modules.png"/>
+</div>
+<p>Using only the core, you have to assemble the VSCP events by yourself. If you want to deal only with parameter, which are VSCP independent, use the next upper layer, the event abstraction modules.</p>
 <h1><a class="anchor" id="structure"></a>
 Structure</h1>
 <pre>
@@ -159,7 +171,7 @@ Ready to run</h2>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 20 2015 21:35:06 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri May 22 2015 16:38:51 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

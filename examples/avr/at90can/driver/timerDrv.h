@@ -35,10 +35,6 @@
 @section desc Description
 This module provides an 8-bit hardware timer.
 
-@section svn Subversion
-$Author: amerkle $
-$Rev: 449 $
-$Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 /** @defgroup timerDrv Hardware timer driver
  * A 8-bit hardware timer is provided with general functionality.

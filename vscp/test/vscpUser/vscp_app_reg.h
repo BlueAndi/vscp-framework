@@ -35,10 +35,6 @@
 @section desc Description
 This module contains the access to the application specific registers.
 
-@section svn Subversion
-$Author: amerkle $
-$Rev: 449 $
-$Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 /** @defgroup vscp_app_reg VSCP application registers
  * This module provides the access to the application registers.

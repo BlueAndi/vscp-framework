@@ -35,10 +35,6 @@
 @section desc Description
 This module handles VSCP related information in persistent memory.
 
-@section svn Subversion
-$Author: amerkle $
-$Rev: 449 $
-$Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 /** @defgroup vscp_ps Persistent memory driver
  * The core uses the persistent memory driver to store important data in

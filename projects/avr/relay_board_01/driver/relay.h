@@ -42,10 +42,6 @@ relay in its on state, the relay are powered with a pulse width modulation.
 Used periphery:
 * 8-bit timer 1 for PWM output
 
-@section svn Subversion
-$Author: amerkle $
-$Rev: 452 $
-$Date: 2015-01-06 10:45:56 +0100 (Di, 06 Jan 2015) $
 *******************************************************************************/
 
 /*

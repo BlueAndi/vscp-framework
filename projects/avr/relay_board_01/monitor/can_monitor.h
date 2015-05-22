@@ -35,10 +35,6 @@
 @section desc Description
 This module provides a CAN monitor which checks for CAN bus-off.
 
-@section svn Subversion
-$Author: amerkle $
-$Rev: 401 $
-$Date: 2014-12-27 23:42:44 +0100 (Sa, 27 Dez 2014) $
 *******************************************************************************/
 
 /*

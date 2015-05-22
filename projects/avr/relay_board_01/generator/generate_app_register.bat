@@ -2,10 +2,6 @@
 
 rem ********************************************************************************
 rem Author: Andreas Merkle, http://www.blue-andi.de
-rem
-rem $Author: amerkle $
-rem $Rev: 455 $
-rem $Date: 2015-01-06 20:30:09 +0100 (Di, 06 Jan 2015) $
 rem ********************************************************************************
 
 echo Generate application register access ...

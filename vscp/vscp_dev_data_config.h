@@ -35,10 +35,6 @@
 @section desc Description
 This module contains the device specific default data configuration.
 
-@section svn Subversion
-$Author: amerkle $
-$Rev: 449 $
-$Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 /** @defgroup vscp_dev_data_config Device default data configuration
  * The device default data configuration moves all device specific data to

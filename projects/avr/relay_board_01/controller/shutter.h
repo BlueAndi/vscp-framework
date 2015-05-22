@@ -45,10 +45,6 @@ position, a reference drive is needed. A reference drive means to drive the
 max. up-time up. Then we know the shutter is at the top and the position is
 known.
 
-@section svn Subversion
-$Author: amerkle $
-$Rev: 449 $
-$Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 
 /*

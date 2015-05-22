@@ -37,10 +37,6 @@ Each shutter works with two relays. The relay which is used to define the
 shutter drive direction and the relay which enables the power.
 Possible drive directions are stop, up and down.
 
-@section svn Subversion
-$Author: amerkle $
-$Rev: 449 $
-$Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 
 /*
