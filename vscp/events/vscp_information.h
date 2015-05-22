@@ -966,9 +966,9 @@ extern BOOL vscp_information_sendAstronomicalSunsetTwilightTimeEvent(uint8_t use
 extern BOOL vscp_information_sendCalculatedNoonEvent(uint8_t zone, uint8_t subZone);
 
 /**
- * A node indicates that something is driving up, e. g. shutter is driving up.
+ * Shutter is moving up.
  *
- * @param[in] index Index
+ * @param[in] reserved Reserved
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
@@ -976,12 +976,12 @@ extern BOOL vscp_information_sendCalculatedNoonEvent(uint8_t zone, uint8_t subZo
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_information_sendUpEvent(uint8_t index, uint8_t zone, uint8_t subZone);
+extern BOOL vscp_information_sendShutterUpEvent(uint8_t reserved, uint8_t zone, uint8_t subZone);
 
 /**
- * A node indicates that something is driving down, e. g. shutter is driving down.
+ * Shutter is moving down.
  *
- * @param[in] index Index
+ * @param[in] reserved Reserved
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
@@ -989,12 +989,12 @@ extern BOOL vscp_information_sendUpEvent(uint8_t index, uint8_t zone, uint8_t su
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_information_sendDownEvent(uint8_t index, uint8_t zone, uint8_t subZone);
+extern BOOL vscp_information_sendShutterDownEvent(uint8_t reserved, uint8_t zone, uint8_t subZone);
 
 /**
- * A node indicates that something is at the top, e. g. shutter is at the top.
+ * Shutter is moving left.
  *
- * @param[in] index Index
+ * @param[in] reserved Reserved
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
@@ -1002,12 +1002,12 @@ extern BOOL vscp_information_sendDownEvent(uint8_t index, uint8_t zone, uint8_t 
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_information_sendTopEvent(uint8_t index, uint8_t zone, uint8_t subZone);
+extern BOOL vscp_information_sendShutterLeftEvent(uint8_t reserved, uint8_t zone, uint8_t subZone);
 
 /**
- * A node indicates that something is at the bottom, e. g. shutter is at the bottom.
+ * Shutter is moving right.
  *
- * @param[in] index Index
+ * @param[in] reserved Reserved
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
@@ -1015,7 +1015,85 @@ extern BOOL vscp_information_sendTopEvent(uint8_t index, uint8_t zone, uint8_t s
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_information_sendBottomEvent(uint8_t index, uint8_t zone, uint8_t subZone);
+extern BOOL vscp_information_sendShutterRightEvent(uint8_t reserved, uint8_t zone, uint8_t subZone);
+
+/**
+ * Shutter reached top end.
+ *
+ * @param[in] reserved Reserved
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendShutterReachedTopEndEvent(uint8_t reserved, uint8_t zone, uint8_t subZone);
+
+/**
+ * Shutter reached bottom end.
+ *
+ * @param[in] reserved Reserved
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendShutterReachedBottomEndEvent(uint8_t reserved, uint8_t zone, uint8_t subZone);
+
+/**
+ * Shutter reached middle end.
+ *
+ * @param[in] reserved Reserved
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendShutterReachedMiddleEndEvent(uint8_t reserved, uint8_t zone, uint8_t subZone);
+
+/**
+ * Shutter reached preset end.
+ *
+ * @param[in] reserved Reserved
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendShutterReachedPresetEndEvent(uint8_t reserved, uint8_t zone, uint8_t subZone);
+
+/**
+ * Shutter reached preset left.
+ *
+ * @param[in] reserved Reserved
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendShutterReachedPresetLeftEvent(uint8_t reserved, uint8_t zone, uint8_t subZone);
+
+/**
+ * Shutter reached preset right.
+ *
+ * @param[in] reserved Reserved
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendShutterReachedPresetRightEvent(uint8_t reserved, uint8_t zone, uint8_t subZone);
 
 #endif /* __VSCP_INFORMATION_H__ */
 

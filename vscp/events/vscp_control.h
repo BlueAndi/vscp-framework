@@ -509,6 +509,71 @@ extern BOOL vscp_control_sendSetCountryLanguageEvent(uint8_t countryCode, uint8_
  */
 extern BOOL vscp_control_sendBigChangeLevelEvent(uint8_t index, uint8_t zone, uint8_t subZone, int8_t const * const level, uint8_t levelSize);
 
+/**
+ * Move shutter up.
+ *
+ * @param[in] index Index
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_control_sendMoveShutterUpEvent(uint8_t index, uint8_t zone, uint8_t subZone);
+
+/**
+ * Move shutter down.
+ *
+ * @param[in] index Index
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_control_sendMoveShutterDownEvent(uint8_t index, uint8_t zone, uint8_t subZone);
+
+/**
+ * Move shutter left.
+ *
+ * @param[in] index Index
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_control_sendMoveShutterLeftEvent(uint8_t index, uint8_t zone, uint8_t subZone);
+
+/**
+ * Move shutter right.
+ *
+ * @param[in] index Index
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_control_sendMoveShutterRightEvent(uint8_t index, uint8_t zone, uint8_t subZone);
+
+/**
+ * Move shutter to middle position.
+ *
+ * @param[in] index Index
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_control_sendMoveShutterMiddlePosEvent(uint8_t index, uint8_t zone, uint8_t subZone);
+
 #endif /* __VSCP_CONTROL_H__ */
 
 /** @} */

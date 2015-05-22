@@ -949,6 +949,158 @@ extern BOOL vscp_control_sendBigChangeLevelEvent(uint8_t index, uint8_t zone, ui
     return vscp_core_sendEvent(&txMsg);
 }
 
+/**
+ * Move shutter up.
+ *
+ * @param[in] index Index
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_control_sendMoveShutterUpEvent(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_MOVE_SHUTTER_UP, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Move shutter down.
+ *
+ * @param[in] index Index
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_control_sendMoveShutterDownEvent(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_MOVE_SHUTTER_DOWN, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Move shutter left.
+ *
+ * @param[in] index Index
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_control_sendMoveShutterLeftEvent(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_MOVE_SHUTTER_LEFT, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Move shutter right.
+ *
+ * @param[in] index Index
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_control_sendMoveShutterRightEvent(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_MOVE_SHUTTER_RIGHT, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Move shutter to middle position.
+ *
+ * @param[in] index Index
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_control_sendMoveShutterMiddlePosEvent(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_MOVE_SHUTTER_MIDDLE_POS, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Move shutter to preset position.
+ *
+ * @param[in] index Index
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @param[in] pos Position 0-100
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_control_sendMoveShutterPresetPosEvent(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t pos)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_MOVE_SHUTTER_PRESET_POS, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 4;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+    txMsg.data[3] = pos;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
 /*******************************************************************************
     LOCAL FUNCTIONS
 *******************************************************************************/

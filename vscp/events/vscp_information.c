@@ -1739,9 +1739,9 @@ extern BOOL vscp_information_sendCalculatedNoonEvent(uint8_t zone, uint8_t subZo
 }
 
 /**
- * A node indicates that something is driving up, e. g. shutter is driving up.
+ * Shutter is moving up.
  *
- * @param[in] index Index
+ * @param[in] reserved Reserved
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
@@ -1749,14 +1749,14 @@ extern BOOL vscp_information_sendCalculatedNoonEvent(uint8_t zone, uint8_t subZo
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_information_sendUpEvent(uint8_t index, uint8_t zone, uint8_t subZone)
+extern BOOL vscp_information_sendShutterUpEvent(uint8_t reserved, uint8_t zone, uint8_t subZone)
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_UP, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SHUTTER_UP, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
-    txMsg.data[0] = index;
+    txMsg.data[0] = reserved;
     txMsg.data[1] = zone;
     txMsg.data[2] = subZone;
 
@@ -1764,9 +1764,9 @@ extern BOOL vscp_information_sendUpEvent(uint8_t index, uint8_t zone, uint8_t su
 }
 
 /**
- * A node indicates that something is driving down, e. g. shutter is driving down.
+ * Shutter is moving down.
  *
- * @param[in] index Index
+ * @param[in] reserved Reserved
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
@@ -1774,14 +1774,14 @@ extern BOOL vscp_information_sendUpEvent(uint8_t index, uint8_t zone, uint8_t su
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_information_sendDownEvent(uint8_t index, uint8_t zone, uint8_t subZone)
+extern BOOL vscp_information_sendShutterDownEvent(uint8_t reserved, uint8_t zone, uint8_t subZone)
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_DOWN, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SHUTTER_DOWN, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
-    txMsg.data[0] = index;
+    txMsg.data[0] = reserved;
     txMsg.data[1] = zone;
     txMsg.data[2] = subZone;
 
@@ -1789,9 +1789,9 @@ extern BOOL vscp_information_sendDownEvent(uint8_t index, uint8_t zone, uint8_t 
 }
 
 /**
- * A node indicates that something is at the top, e. g. shutter is at the top.
+ * Shutter is moving left.
  *
- * @param[in] index Index
+ * @param[in] reserved Reserved
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
@@ -1799,14 +1799,14 @@ extern BOOL vscp_information_sendDownEvent(uint8_t index, uint8_t zone, uint8_t 
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_information_sendTopEvent(uint8_t index, uint8_t zone, uint8_t subZone)
+extern BOOL vscp_information_sendShutterLeftEvent(uint8_t reserved, uint8_t zone, uint8_t subZone)
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_TOP, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SHUTTER_LEFT, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
-    txMsg.data[0] = index;
+    txMsg.data[0] = reserved;
     txMsg.data[1] = zone;
     txMsg.data[2] = subZone;
 
@@ -1814,9 +1814,9 @@ extern BOOL vscp_information_sendTopEvent(uint8_t index, uint8_t zone, uint8_t s
 }
 
 /**
- * A node indicates that something is at the bottom, e. g. shutter is at the bottom.
+ * Shutter is moving right.
  *
- * @param[in] index Index
+ * @param[in] reserved Reserved
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
@@ -1824,14 +1824,164 @@ extern BOOL vscp_information_sendTopEvent(uint8_t index, uint8_t zone, uint8_t s
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_information_sendBottomEvent(uint8_t index, uint8_t zone, uint8_t subZone)
+extern BOOL vscp_information_sendShutterRightEvent(uint8_t reserved, uint8_t zone, uint8_t subZone)
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_BOTTOM, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SHUTTER_RIGHT, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
-    txMsg.data[0] = index;
+    txMsg.data[0] = reserved;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Shutter reached top end.
+ *
+ * @param[in] reserved Reserved
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendShutterReachedTopEndEvent(uint8_t reserved, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SHUTTER_REACHED_TOP_END, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = reserved;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Shutter reached bottom end.
+ *
+ * @param[in] reserved Reserved
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendShutterReachedBottomEndEvent(uint8_t reserved, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SHUTTER_REACHED_BOTTOM_END, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = reserved;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Shutter reached middle end.
+ *
+ * @param[in] reserved Reserved
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendShutterReachedMiddleEndEvent(uint8_t reserved, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SHUTTER_REACHED_MIDDLE_END, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = reserved;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Shutter reached preset end.
+ *
+ * @param[in] reserved Reserved
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendShutterReachedPresetEndEvent(uint8_t reserved, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SHUTTER_REACHED_PRESET_END, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = reserved;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Shutter reached preset left.
+ *
+ * @param[in] reserved Reserved
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendShutterReachedPresetLeftEvent(uint8_t reserved, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SHUTTER_REACHED_PRESET_LEFT, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = reserved;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Shutter reached preset right.
+ *
+ * @param[in] reserved Reserved
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendShutterReachedPresetRightEvent(uint8_t reserved, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SHUTTER_REACHED_PRESET_RIGHT, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = reserved;
     txMsg.data[1] = zone;
     txMsg.data[2] = subZone;
 

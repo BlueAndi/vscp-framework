@@ -691,29 +691,29 @@ static void main_shutterCb(uint8_t nr, SHUTTER_DIR dir, SHUTTER_POS pos)
     {
         if (SHUTTER_DIR_UP == dir)
         {
-            (void)vscp_information_sendUpEvent(nr,
-                                               vscp_ps_user_readShutterEventZone(nr),
-                                               vscp_ps_user_readShutterEventSubZone(nr));
+            (void)vscp_information_sendShutterUpEvent(nr,
+                                                     vscp_ps_user_readShutterEventZone(nr),
+                                                     vscp_ps_user_readShutterEventSubZone(nr));
         }
         else if (SHUTTER_DIR_DOWN == dir)
         {
-            (void)vscp_information_sendDownEvent(nr,
-                                                 vscp_ps_user_readShutterEventZone(nr),
-                                                 vscp_ps_user_readShutterEventSubZone(nr));
+            (void)vscp_information_sendShutterDownEvent(nr,
+                                                        vscp_ps_user_readShutterEventZone(nr),
+                                                        vscp_ps_user_readShutterEventSubZone(nr));
         }
         else if (SHUTTER_DIR_STOP == dir)
         {
             if (SHUTTER_POS_TOP == pos)
             {
-                (void)vscp_information_sendTopEvent(nr,
-                                                    vscp_ps_user_readShutterEventZone(nr),
-                                                    vscp_ps_user_readShutterEventSubZone(nr));
+                (void)vscp_information_sendShutterReachedTopEndEvent(nr,
+                                                                     vscp_ps_user_readShutterEventZone(nr),
+                                                                     vscp_ps_user_readShutterEventSubZone(nr));
             }
             else if (SHUTTER_POS_BOTTOM == pos)
             {
-                (void)vscp_information_sendBottomEvent(nr,
-                                                       vscp_ps_user_readShutterEventZone(nr),
-                                                       vscp_ps_user_readShutterEventSubZone(nr));
+                (void)vscp_information_sendShutterReachedBottomEndEvent(nr,
+                                                                        vscp_ps_user_readShutterEventZone(nr),
+                                                                        vscp_ps_user_readShutterEventSubZone(nr));
             }
             else
             {
