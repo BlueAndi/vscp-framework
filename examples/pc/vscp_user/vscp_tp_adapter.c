@@ -536,11 +536,11 @@ extern VSCP_TP_ADAPTER_RET vscp_tp_adapter_connect(char const * const ipAddr, ch
         unsigned char   subMinor    = 0;
         unsigned long   dllVersion  = 0;
         char            vendorStr[120];
-        
+
         vscp_tp_adapter_isConnected = TRUE;
 
         LOG_INFO("Connected.");
-        
+
         /* Get version of remote VSCP daemon */
         if (VSCP_ERROR_SUCCESS != (vscphlpRet = vscphlp_getVersion(client->hSession, &major, &minor, &subMinor)))
         {
@@ -550,7 +550,7 @@ extern VSCP_TP_ADAPTER_RET vscp_tp_adapter_connect(char const * const ipAddr, ch
         {
             log_printf("Remote VSCP daemon v%u.%u.%u\n", major, minor, subMinor);
         }
-        
+
         /* Get dll version */
         if (VSCP_ERROR_SUCCESS != (vscphlpRet = vscphlp_getDLLVersion(client->hSession, &dllVersion)))
         {
@@ -560,7 +560,7 @@ extern VSCP_TP_ADAPTER_RET vscp_tp_adapter_connect(char const * const ipAddr, ch
         {
             log_printf("Used VSCP dll version 0x%08lX\n", dllVersion);
         }
-        
+
         /* Get vendor from driver */
         if (VSCP_ERROR_SUCCESS != (vscphlpRet = vscphlp_getVendorString(client->hSession, vendorStr, sizeof(vendorStr))))
         {
@@ -797,7 +797,7 @@ static const char* vscp_tp_adapter_getErrorStr(int value)
     {
         str = vscp_tp_adapter_errorStr[value];
     }
-    
+
     return str;
 }
 

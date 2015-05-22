@@ -503,7 +503,7 @@ extern uint8_t vscp_app_reg_writeRegister(uint16_t page, uint8_t addr, uint8_t v
 
                 vscp_ps_user_writeButtonEnable(value);
                 readBackValue = vscp_ps_user_readButtonEnable();
-                
+
                 /* Set button observation filter to apply changes now. */
                 buttonObserver_setFilter(readBackValue);
             }

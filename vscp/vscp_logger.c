@@ -125,7 +125,7 @@ extern uint8_t vscp_logger_getLogLevel(void)
 extern void vscp_logger_setLogLevel(uint8_t level)
 {
     vscp_logger_logLevel = level;
-    
+
     return;
 }
 
@@ -138,7 +138,7 @@ extern void vscp_logger_setLogLevel(uint8_t level)
  * @param[in] size  Message size in bytes
  */
 extern void vscp_logger_log(uint8_t id, VSCP_LOGGER_LVL level, uint8_t const * const msg, uint8_t size)
-{   
+{
     if (TRUE == vscp_logger_isEnabled)
     {
         if (0 != (vscp_logger_logLevel & (1 << level)))
@@ -245,13 +245,13 @@ extern BOOL vscp_logger_sendLogEvent(uint8_t id, uint8_t level, uint8_t const * 
     uint8_t         eventIndex  = 0;
     uint8_t         msgIndex    = 0;
     BOOL            status      = FALSE;
-    
+
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_LOG, VSCP_TYPE_LOG_LOG_EVENT, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 8;
     txMsg.data[0] = id;
     txMsg.data[1] = level;
-    
+
     /* If necessary, send several log events for a single log message. */
     do
     {
@@ -274,13 +274,13 @@ extern BOOL vscp_logger_sendLogEvent(uint8_t id, uint8_t level, uint8_t const * 
                 txMsg.data[index] = 0;
             }
         }
-        
+
         status = vscp_core_sendEvent(&txMsg);
-        
+
         ++eventIndex;
     }
     while((NULL != msg) && (0 < size) && (TRUE == status));
-    
+
     return status;
 }
 

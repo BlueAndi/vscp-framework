@@ -233,7 +233,7 @@ int main(int argc, char* argv[])
         /* Show the user which keys can be used. */
         main_showKeyTable();
         printf("\n");
-            
+
         /* Initialize all modules */
         if (MAIN_RET_OK != main_init())
         {

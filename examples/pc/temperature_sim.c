@@ -120,8 +120,8 @@ extern void temperature_sim_init(void)
 {
     /* Clear thread data */
     memset(&temperature_sim_thrdData, 0, sizeof(temperature_sim_thrdData));
-    
-    /* Set error value here, to be able to check if temperature_sim_start is called and 
+
+    /* Set error value here, to be able to check if temperature_sim_start is called and
      * the thread is already started.
      */
     temperature_sim_thrdData.status = 1;
@@ -173,8 +173,8 @@ extern void temperature_sim_stop(void)
 
         /* Wait for the VSCP framework thread until its finished. */
         (void)pthread_join(temperature_sim_thrdData.id, NULL);
-        
-        /* Set error value here, to be able to check if temperature_sim_start is called and 
+
+        /* Set error value here, to be able to check if temperature_sim_start is called and
          * the thread is already started.
          */
         temperature_sim_thrdData.status = 1;

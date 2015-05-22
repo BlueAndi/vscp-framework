@@ -322,7 +322,7 @@ int main(void)
 
         /* Node waits for a reset */
         case SYS_SM_STATE_IDLE:
-            
+
             /* Wait until all shutters are stopped before any further action
              * takes place.
              */
@@ -397,7 +397,7 @@ static MAIN_RET main_initRunLevel1(void)
     {
         status = MAIN_RET_ERROR;
     }
-    
+
     /* Set VSCP logger default log level */
     vscp_logger_setLogLevel(MAIN_LOG_LEVEL_DEFAULT);
 
@@ -464,7 +464,7 @@ static void main_loadConfiguration(void)
 
     /* Configure wind measurement */
     if (0 == vscp_ps_user_readWindEnable())
-    {        
+    {
         /* Disable wind measurement */
         windDrv_enable(FALSE);
     }
@@ -692,13 +692,13 @@ static void main_shutterCb(uint8_t nr, SHUTTER_DIR dir, SHUTTER_POS pos)
         if (SHUTTER_DIR_UP == dir)
         {
             (void)vscp_information_sendUpEvent(nr,
-                                               vscp_ps_user_readShutterEventZone(nr), 
+                                               vscp_ps_user_readShutterEventZone(nr),
                                                vscp_ps_user_readShutterEventSubZone(nr));
         }
         else if (SHUTTER_DIR_DOWN == dir)
         {
             (void)vscp_information_sendDownEvent(nr,
-                                                 vscp_ps_user_readShutterEventZone(nr), 
+                                                 vscp_ps_user_readShutterEventZone(nr),
                                                  vscp_ps_user_readShutterEventSubZone(nr));
         }
         else if (SHUTTER_DIR_STOP == dir)
@@ -706,19 +706,19 @@ static void main_shutterCb(uint8_t nr, SHUTTER_DIR dir, SHUTTER_POS pos)
             if (SHUTTER_POS_TOP == pos)
             {
                 (void)vscp_information_sendTopEvent(nr,
-                                                    vscp_ps_user_readShutterEventZone(nr), 
+                                                    vscp_ps_user_readShutterEventZone(nr),
                                                     vscp_ps_user_readShutterEventSubZone(nr));
             }
             else if (SHUTTER_POS_BOTTOM == pos)
             {
                 (void)vscp_information_sendBottomEvent(nr,
-                                                       vscp_ps_user_readShutterEventZone(nr), 
+                                                       vscp_ps_user_readShutterEventZone(nr),
                                                        vscp_ps_user_readShutterEventSubZone(nr));
             }
             else
             {
                 (void)vscp_information_sendStopEvent(nr,
-                                                     vscp_ps_user_readShutterEventZone(nr), 
+                                                     vscp_ps_user_readShutterEventZone(nr),
                                                      vscp_ps_user_readShutterEventSubZone(nr));
             }
         }

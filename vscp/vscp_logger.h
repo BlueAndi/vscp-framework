@@ -194,7 +194,7 @@ typedef enum
     VSCP_LOGGER_LVL_USER1,      /**< User defined level 1 */
     VSCP_LOGGER_LVL_USER2,      /**< User defined level 2 */
     VSCP_LOGGER_LVL_USER3       /**< User defined level 3 */
-    
+
 } VSCP_LOGGER_LVL;
 
 /*******************************************************************************

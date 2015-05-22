@@ -233,7 +233,7 @@ extern void vscp_portable_setLampState(VSCP_LAMP_STATE state)
             log_printf("Lamp blinking fast\n");
             platform_restoreTextColor();
             break;
-            
+
         default:
             break;
         }

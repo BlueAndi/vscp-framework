@@ -135,7 +135,7 @@ extern BOOL vscp_log_sendLogStartEvent(uint8_t id)
 
     txMsg.dataNum = 1;
     txMsg.data[0] = id;
-    
+
     return vscp_core_sendEvent(&txMsg);
 }
 
@@ -156,7 +156,7 @@ extern BOOL vscp_log_sendLogStopEvent(uint8_t id)
 
     txMsg.dataNum = 1;
     txMsg.data[0] = id;
-    
+
     return vscp_core_sendEvent(&txMsg);
 }
 
@@ -177,7 +177,7 @@ extern BOOL vscp_log_sendLogLevelEvent(uint8_t level)
 
     txMsg.dataNum = 1;
     txMsg.data[0] = level;
-    
+
     return vscp_core_sendEvent(&txMsg);
 }
 

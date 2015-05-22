@@ -123,7 +123,7 @@ extern VSCP_THREAD_RET vscp_thread_init(void)
         memset(&vscp_thread_frameworkThrdData, 0, sizeof(vscp_thread_frameworkThrdData));
         memset(&vscp_thread_timerThrdData, 0, sizeof(vscp_thread_timerThrdData));
 
-        /* Set error value here, to be able to check if vscp_thread_start is called and 
+        /* Set error value here, to be able to check if vscp_thread_start is called and
          * the threads are already started.
          */
         vscp_thread_frameworkThrdData.status    = 1;
@@ -206,8 +206,8 @@ extern void vscp_thread_stop(void)
 
         /* Wait for the VSCP framework thread until its finished. */
         (void)pthread_join(vscp_thread_frameworkThrdData.id, NULL);
-        
-        /* Set error value here, to be able to check if vscp_thread_start is called and 
+
+        /* Set error value here, to be able to check if vscp_thread_start is called and
          * the threads are already started.
          */
         vscp_thread_frameworkThrdData.status = 1;
@@ -222,8 +222,8 @@ extern void vscp_thread_stop(void)
 
         /* Wait for the VSCP timer thread until its finished. */
         (void)pthread_join(vscp_thread_timerThrdData.id, NULL);
-        
-        /* Set error value here, to be able to check if vscp_thread_start is called and 
+
+        /* Set error value here, to be able to check if vscp_thread_start is called and
          * the threads are already started.
          */
         vscp_thread_timerThrdData.status = 1;

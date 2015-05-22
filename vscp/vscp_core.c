@@ -454,7 +454,7 @@ extern void vscp_core_process(void)
     vscp_logger_handleEvent(&vscp_core_rxMessage);
 
 #endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_LOGGER ) */
-    
+
     /* State machine */
     switch(vscp_core_state)
     {
