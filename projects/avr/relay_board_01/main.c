@@ -96,6 +96,9 @@ This module contains the main entry point.
 /** VSCP logger default log level */
 #define MAIN_LOG_LEVEL_DEFAULT      VSCP_LOGGER_LVL_ERROR
 
+/** VSCP log functionality is disabled by default */
+#define MAIN_LOGGER_ENABLED_DEFAULT FALSE
+
 /*******************************************************************************
     MACROS
 *******************************************************************************/
@@ -400,6 +403,7 @@ static MAIN_RET main_initRunLevel1(void)
 
     /* Set VSCP logger default log level */
     vscp_logger_setLogLevel(MAIN_LOG_LEVEL_DEFAULT);
+    vscp_logger_enable(MAIN_LOGGER_ENABLED_DEFAULT);
 
     /* Initialize CAN monitor */
     can_monitor_init();
