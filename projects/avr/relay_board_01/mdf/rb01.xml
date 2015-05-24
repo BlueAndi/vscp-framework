@@ -39,7 +39,7 @@ This module description file (MDF) is for the relay board 01.
         <name>Relay Board 01</name>
         <model>A</model>
         <version>0.3.0</version>
-        <changed>2015-09-15</changed>
+        <changed>2015-05-24</changed>
         <description lang="en">The relay board offers up to 8 digital inputs, controlling up to 8 relays or controlling up to 4 shutters.</description>
         <infourl></infourl>
 
@@ -956,6 +956,13 @@ Bit 8 of the class filter is stored in bit 1 of the flag byte.</description>
 If you want to enable the log message stream, start logging (CLASS1.Log.LogStart) with this log id.</description>
                 <access>rw</access>
             </reg>
+
+            <reg page="3" offset="1" >
+                <name lang="en">Transport transmit errors</name>
+                <description lang="en">Current number of transmit errors, counted in the VSCP-framework transport layer.
+The error counter is reset after reading.</description>
+                <access>r</access>
+            </reg>
             
         </registers>
 
@@ -1438,6 +1445,13 @@ Any change in this register will be applied after a reset.</description>
                 <description lang="en">The log id (stream id) is used for debugging purposes.
 If you want to enable the log message stream, start logging (CLASS1.Log.LogStart) with this log id.</description>
                 <access>rw</access>
+            </abstraction>
+            
+            <abstraction type="uint8_t" default="0xff" page="3" offset="1">
+                <name lang="en">Transport transmit errors</name>
+                <description lang="en">Current number of transmit errors, counted in the VSCP-framework transport layer.
+The error counter is reset after reading.</description>
+                <access>r</access>
             </abstraction>
             
         </abstractions>
