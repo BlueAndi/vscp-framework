@@ -10,6 +10,8 @@ Features:
     - CLASS1.INFORMATION type 59-68 events introduced.
     - CLASS1.CONTROL type 34-39 events introduced.
     - VSCP framework is now compliant to VSCP specification v1.10.16
+    - CLASS1.DIAGNOSTIC and .ERROR added.
+    - CLASS1.SECURITY event type 20 added.
 
   - Project: Relay board 01
     - CAN is monitored and any error stored in the VSCP alarm bitfield. See MDF for more information about each bit.

@@ -334,6 +334,19 @@ extern BOOL vscp_security_sendNoiseDetectedEvent(uint8_t userData, uint8_t zone,
  */
 extern BOOL vscp_security_sendHarmfulSoundLevelsDetectedEvent(uint8_t userData, uint8_t zone, uint8_t subZone);
 
+/**
+ * Tamper detected.
+ *
+ * @param[in] userData User defined data.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_security_sendTamperDetectedEvent(uint8_t userData, uint8_t zone, uint8_t subZone);
+
 #endif /* __VSCP_SECURITY_H__ */
 
 /** @} */
