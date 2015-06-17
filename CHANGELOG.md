@@ -12,6 +12,8 @@ Features:
     - VSCP framework is now compliant to VSCP specification v1.10.16
     - CLASS1.DIAGNOSTIC and .ERROR added.
     - CLASS1.SECURITY event type 20 added.
+    - Changed the priority for packet bursts of extended read responses to the lowest priority, so other frames win arbitration (e. g. on the CAN bus) when they are sent. This will help other events moving on the bus.
+    - Changed functionality for extended page read request with optional byte. If the optional byte is 0, 256 registers will be read now, instead of 1.
 
   - Project: Relay board 01
     - CAN is monitored and any error stored in the VSCP alarm bitfield. See MDF for more information about each bit.
