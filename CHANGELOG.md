@@ -21,6 +21,9 @@ Features:
     - Several minor improvements.
     - Logger module integrated for easier debugging.
     
+  - PC example
+    - The node GUID can now be set via command line too, e. g. -guid00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01
+    
 Bugfixes:
 
   - VSCP framework

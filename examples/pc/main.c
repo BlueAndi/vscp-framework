@@ -101,15 +101,17 @@ typedef enum
 /** This type contains the information from the command line arguments. */
 typedef struct
 {
-    char const *        progName;           /**< Program name without path */
-    char const *        daemonAddr;         /**< Daemon ip address */
-    char const *        daemonUser;         /**< User name for daemon ip access */
-    char const *        daemonPassword;     /**< Password for daemon ip access */
-    BOOL                disableHeartbeat;   /**< Disable node heartbeat */
-    BOOL                disableTemperature; /**< Disable temperature simulation */
-    BOOL                verbose;            /**< Verbose information */
-    BOOL                showHelp;           /**< Show help to the user */
-    VSCP_TP_ADAPTER_LVL lvl;                /**< Network level */
+    char const *        progName;                   /**< Program name without path */
+    char const *        daemonAddr;                 /**< Daemon ip address */
+    char const *        daemonUser;                 /**< User name for daemon ip access */
+    char const *        daemonPassword;             /**< Password for daemon ip access */
+    BOOL                disableHeartbeat;           /**< Disable node heartbeat */
+    BOOL                disableTemperature;         /**< Disable temperature simulation */
+    BOOL                verbose;                    /**< Verbose information */
+    BOOL                showHelp;                   /**< Show help to the user */
+    VSCP_TP_ADAPTER_LVL lvl;                        /**< Network level */
+    uint32_t            nodeGuid[VSCP_GUID_SIZE];   /**< Node GUID */
+    BOOL                setNodeGuid;                /**< Set node GUID or not */
 
 } main_CmdLineArgs;
 
@@ -199,6 +201,7 @@ int main(int argc, char* argv[])
     int                 status          = 0;
     BOOL                abort           = FALSE;
     main_CmdLineArgs    cmdLineArgs;
+    uint8_t             index           = 0;
 
     printf("\nVSCP level 1 node\n");
     printf("Version: %s\n", VERSION);
@@ -281,6 +284,15 @@ int main(int argc, char* argv[])
             /* No error? */
             if (FALSE == abort)
             {
+                /* Shall the node GUID be set? */
+                if (TRUE == cmdLineArgs.setNodeGuid )
+                {
+                    for(index = 0; index < MAIN_ARRAY_NUM(cmdLineArgs.nodeGuid); ++index)
+                    {
+                        vscp_ps_writeGUID(index, cmdLineArgs.nodeGuid[index]);
+                    }
+                }
+            
                 /* Shall the node heartbeat be disabled? */
                 if (TRUE == cmdLineArgs.disableHeartbeat)
                 {
@@ -433,9 +445,39 @@ static MAIN_RET main_getCmdLineArgs(main_CmdLineArgs * const cmdLineArgs, int ar
 
         for(index = 1; index < argc; ++index)
         {
+            /* Node GUID? */
+            if (0 == strncmp(argv[index], "-guid", 5))
+            {
+                if (16 != sscanf(&argv[index][5],
+                                 "%x:%x:%x:%x:%x:%x:%x:%x:%x:%x:%x:%x:%x:%x:%x:%x",
+                                 &cmdLineArgs->nodeGuid[15],
+                                 &cmdLineArgs->nodeGuid[14],
+                                 &cmdLineArgs->nodeGuid[13],
+                                 &cmdLineArgs->nodeGuid[12],
+                                 &cmdLineArgs->nodeGuid[11],
+                                 &cmdLineArgs->nodeGuid[10],
+                                 &cmdLineArgs->nodeGuid[9],
+                                 &cmdLineArgs->nodeGuid[8],
+                                 &cmdLineArgs->nodeGuid[7],
+                                 &cmdLineArgs->nodeGuid[6],
+                                 &cmdLineArgs->nodeGuid[5],
+                                 &cmdLineArgs->nodeGuid[4],
+                                 &cmdLineArgs->nodeGuid[3],
+                                 &cmdLineArgs->nodeGuid[2],
+                                 &cmdLineArgs->nodeGuid[1],
+                                 &cmdLineArgs->nodeGuid[0]))
+                {
+                    printf("Invalid GUID.\n");
+                    abort = TRUE;
+                }
+                else
+                {
+                    cmdLineArgs->setNodeGuid = TRUE;
+                }
+            }
             /* Show help? */
-            if ((0 == strcmp(argv[index], "-h")) ||
-                (0 == strcmp(argv[index], "--help")))
+            else if ((0 == strcmp(argv[index], "-h")) ||
+                     (0 == strcmp(argv[index], "--help")))
             {
                 cmdLineArgs->showHelp = TRUE;
             }
@@ -527,17 +569,18 @@ static void main_showHelp(char const * const progName)
 {
     printf("%s <options> [<daemon ip address>[:<port>]]\n\n", progName);
     printf("General options:\n");
-    printf("-h        Show help\n");
-    printf("--help    Show help\n");
-    printf("-dheart   Disable node heartbeat\n");
-    printf("-dtemp    Disable node temperature sim\n");
-    printf("-v        Increase verbose level\n");
+    printf("-dheart     Disable node heartbeat\n");
+    printf("-dtemp      Disable node temperature sim\n");
+    printf("-guid<guid> Set node GUID, given in hex\n");
+    printf("-h          Show help\n");
+    printf("--help      Show help\n");
+    printf("-v          Increase verbose level\n");
     printf("\n");
     printf("Options only for daemon connection:\n");
     printf("-l<level>  1: Support L1 events\n");
     printf("          12: Support L1 and L1 over L2 events (default)\n");
-    printf("-u<user>  User name for VSCP daemon access\n");
     printf("-p<pass>  Password for VSCP daemon access\n");
+    printf("-u<user>  User name for VSCP daemon access\n");
 
     return;
 }
