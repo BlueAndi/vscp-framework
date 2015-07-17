@@ -979,6 +979,114 @@ Bit 8 of the class filter is stored in bit 1 of the flag byte.</description>
 
         <abstractions>
 
+            <abstraction id="zone" type="uint8_t" default="255" page="0" offset="0" >
+                <name lang="en">Zone</name>
+                <description lang="en">Zone this module belongs to.</description>
+                <access>rw</access>
+            </abstraction>
+
+            <abstraction id="subZone" type="uint8_t" default="255" page="0" offset="1" >
+                <name lang="en">Sub-zone</name>
+                <description lang="en">Sub-zone this module belongs to.</description>
+                <access>rw</access>
+            </abstraction>
+        
+            <abstraction id="testString" type="string" size="5" page="3" offset="0" >
+                <name lang="en">Test string</name>
+                <description lang="en">Test string used for tests.</description>
+                <access>rw</access>
+            </abstraction>
+
+            <abstraction id="testBitfield" type="bitfield" page="3" offset="5" >
+                <name lang="en">Test bitfield</name>
+                <description lang="en">Test bitfield used for tests.</description>
+                <access>rw</access>
+            </abstraction>
+
+            <abstraction id="testBoolean" type="bitfield" page="3" offset="6" >
+                <name lang="en">Test boolean</name>
+                <description lang="en">Test boolean used for tests.</description>
+                <access>rw</access>
+            </abstraction>
+            
+            <abstraction id="testInt8" type="int8_t" page="3" offset="7" >
+                <name lang="en">Test int8_t</name>
+                <description lang="en">Test int8_t used for tests.</description>
+                <access>rw</access>
+            </abstraction>
+
+            <abstraction id="testUInt8" type="uint8_t" page="3" offset="8" >
+                <name lang="en">Test uint8_t</name>
+                <description lang="en">Test uint8_t used for tests.</description>
+                <access>rw</access>
+            </abstraction>
+
+            <abstraction id="testInt16" type="int16_t" page="3" offset="9" >
+                <name lang="en">Test int16_t</name>
+                <description lang="en">Test int16_t used for tests.</description>
+                <access>rw</access>
+            </abstraction>
+
+            <abstraction id="testUInt16" type="uint16_t" page="3" offset="11" >
+                <name lang="en">Test uint16_t</name>
+                <description lang="en">Test uint16_t used for tests.</description>
+                <access>rw</access>
+            </abstraction>
+            
+            <abstraction id="testInt32" type="int32_t" page="3" offset="13" >
+                <name lang="en">Test int32_t</name>
+                <description lang="en">Test int32_t used for tests.</description>
+                <access>rw</access>
+            </abstraction>
+
+            <abstraction id="testUInt32" type="uint32_t" page="3" offset="17" >
+                <name lang="en">Test uint32_t</name>
+                <description lang="en">Test uint32_t used for tests.</description>
+                <access>rw</access>
+            </abstraction>
+
+            <abstraction id="testInt64" type="int64_t" page="3" offset="21" >
+                <name lang="en">Test int64_t</name>
+                <description lang="en">Test int64_t used for tests.</description>
+                <access>rw</access>
+            </abstraction>
+
+            <abstraction id="testUInt64" type="uint64_t" page="3" offset="29" >
+                <name lang="en">Test uint64_t</name>
+                <description lang="en">Test uint64_t used for tests.</description>
+                <access>rw</access>
+            </abstraction>
+
+            <abstraction id="testFloat" type="float" page="3" offset="37" >
+                <name lang="en">Test float</name>
+                <description lang="en">Test float used for tests.</description>
+                <access>rw</access>
+            </abstraction>
+
+            <abstraction id="testDouble" type="double" page="3" offset="41" >
+                <name lang="en">Test double</name>
+                <description lang="en">Test double used for tests.</description>
+                <access>rw</access>
+            </abstraction>
+            
+            <abstraction id="testDate" type="date" page="3" offset="49" >
+                <name lang="en">Test date</name>
+                <description lang="en">Test date used for tests.</description>
+                <access>rw</access>
+            </abstraction>
+            
+            <abstraction id="testTime" type="time" page="3" offset="53" >
+                <name lang="en">Test time</name>
+                <description lang="en">Test time used for tests.</description>
+                <access>rw</access>
+            </abstraction>
+            
+            <abstraction id="testGuid" type="guid" page="3" offset="53" >
+                <name lang="en">Test GUID</name>
+                <description lang="en">Test GUID used for tests.</description>
+                <access>rw</access>
+            </abstraction>
+        
         </abstractions>
 
         <alarm>
