@@ -471,7 +471,7 @@ extern uint8_t vscp_app_reg_readRegister(uint16_t page, uint8_t addr)
         {
             value = vscp_ps_readDMNextGeneration(addr - VSCP_APP_REG_PAGE_2_OFFSET_DM_NG);
         }
-}
+    }
     else if (3 == page)
     {
         if (VSCP_APP_REG_PAGE_3_OFFSET_LOG_ID == addr)
