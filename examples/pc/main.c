@@ -125,7 +125,7 @@ static MAIN_RET main_getCmdLineArgs(main_CmdLineArgs * const cmdLineArgs, int ar
 static void main_showHelp(char const * const progName);
 static void main_showKeyTable(void);
 static void main_dumpEEPROM(void);
-static void main_loop(void);
+static void main_loop(main_CmdLineArgs *cmdLineArgs);
 
 /*******************************************************************************
     LOCAL VARIABLES
@@ -318,7 +318,7 @@ int main(int argc, char* argv[])
             /* If no error happened, start main loop. */
             if (FALSE == abort)
             {
-                main_loop();
+                main_loop(&cmdLineArgs);
             }
 
             printf("Please wait ...\n");
@@ -899,12 +899,24 @@ static void main_dumpEEPROM(void)
 /**
  * This function contains the main loop where every user key press is
  * interpreted.
+ *
+ * @param[in] cmdLineArgs   Command line arguments
  */
-static void main_loop(void)
+static void main_loop(main_CmdLineArgs *cmdLineArgs)
 {
-    int     keyValue        = 0;
-    BOOL    nodeHeartbeat   = TRUE; /* Heartbeat is on per default */
+    int     keyValue                = 0;
+    BOOL    isNodeHeartbeatEnabled  = TRUE;
 
+    if (NULL == cmdLineArgs)
+    {
+        return;
+    }
+    
+    if (TRUE == cmdLineArgs->disableHeartbeat)
+    {
+        isNodeHeartbeatEnabled = FALSE;
+    }
+    
     platform_echoOff();
 
     /* Execute simple terminal */
@@ -935,17 +947,17 @@ static void main_loop(void)
             else if ('h' == keyValue)
             {
                 vscp_thread_lock();
-                if (TRUE == nodeHeartbeat)
+                if (TRUE == isNodeHeartbeatEnabled)
                 {
                     printf("Disable node heartbeat.\n");
-                    nodeHeartbeat = FALSE;
+                    isNodeHeartbeatEnabled = FALSE;
                 }
                 else
                 {
                     printf("Enable node heartbeat.\n");
-                    nodeHeartbeat = TRUE;
+                    isNodeHeartbeatEnabled = TRUE;
                 }
-                vscp_core_enableHeartbeat(nodeHeartbeat);
+                vscp_core_enableHeartbeat(isNodeHeartbeatEnabled);
                 vscp_thread_unlock();
             }
             /* Start node segment initialization */
