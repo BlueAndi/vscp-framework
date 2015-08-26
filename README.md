@@ -130,7 +130,7 @@ period time in ms as parameter, e.g. vscp\_timer\_process(1000);
 
 Call the timer processing routine equal or lower than 1 s.
 
-Note, that never all vscp\_process() with a lower period, than vscp\_timer\_process(). Because vscp\_process() reacts
+Note, that never call vscp\_process() with a lower period, than vscp\_timer\_process(). Because vscp\_process() reacts
 on timer timeouts and vscp\_timer\_process() decrease only the timers, but doesn't do more.
 
 ###VSCP transport adaption
