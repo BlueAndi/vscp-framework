@@ -1,3 +1,8 @@
+## 0.4.1
+
+  - VSCP framework
+    - CLASS1_INFORMATION, Type = 9 (0x09) Node Heartbeat is now mandatory for all Level I nodes. Default period is set to 30s.
+
 ## 0.4.0
 
 Features:
