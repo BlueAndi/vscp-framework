@@ -18,7 +18,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VSCP framework
-   &#160;<span id="projectnumber">v0.3.0</span>
+   &#160;<span id="projectnumber">v0.4.1</span>
    </div>
   </td>
  </tr>
@@ -157,10 +157,10 @@
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="preprocessor">#endif  </span><span class="comment">/* __VSCP_UTIL_H__ */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="preprocessor"></span></div>
 <div class="ttc" id="group__vscp__util_html_ga7aa22bab84b286b60220eb3d6e549c24"><div class="ttname"><a href="group__vscp__util.html#ga7aa22bab84b286b60220eb3d6e549c24">vscp_util_init</a></div><div class="ttdeci">void vscp_util_init(void)</div><div class="ttdoc">This function initializes the utility module. </div><div class="ttdef"><b>Definition:</b> vscp_util.c:88</div></div>
-<div class="ttc" id="group__vscp__util_html_gad12d1a8090e5c41aafaab9801a0644d6"><div class="ttname"><a href="group__vscp__util.html#gad12d1a8090e5c41aafaab9801a0644d6">vscp_util_cyclicBufferRead</a></div><div class="ttdeci">uint8_t vscp_util_cyclicBufferRead(vscp_util_CyclicBuffer *const cbuffer, void *const elem, uint8_t maxNum)</div><div class="ttdoc">This function reads one or more elements from a cyclic buffer. </div><div class="ttdef"><b>Definition:</b> vscp_util.c:234</div></div>
-<div class="ttc" id="group__vscp__util_html_ga9ac42b7b82fedc4bc62f7f239072b5a1"><div class="ttname"><a href="group__vscp__util.html#ga9ac42b7b82fedc4bc62f7f239072b5a1">vscp_util_cyclicBufferInit</a></div><div class="ttdeci">void vscp_util_cyclicBufferInit(vscp_util_CyclicBuffer *const cbuffer, void *const storage, uint8_t size, uint8_t elemSize)</div><div class="ttdoc">This function initializes a cyclic buffer. </div><div class="ttdef"><b>Definition:</b> vscp_util.c:212</div></div>
+<div class="ttc" id="group__vscp__util_html_gad12d1a8090e5c41aafaab9801a0644d6"><div class="ttname"><a href="group__vscp__util.html#gad12d1a8090e5c41aafaab9801a0644d6">vscp_util_cyclicBufferRead</a></div><div class="ttdeci">uint8_t vscp_util_cyclicBufferRead(vscp_util_CyclicBuffer *const cbuffer, void *const elem, uint8_t maxNum)</div><div class="ttdoc">This function reads one or more elements from a cyclic buffer. </div><div class="ttdef"><b>Definition:</b> vscp_util.c:238</div></div>
+<div class="ttc" id="group__vscp__util_html_ga9ac42b7b82fedc4bc62f7f239072b5a1"><div class="ttname"><a href="group__vscp__util.html#ga9ac42b7b82fedc4bc62f7f239072b5a1">vscp_util_cyclicBufferInit</a></div><div class="ttdeci">void vscp_util_cyclicBufferInit(vscp_util_CyclicBuffer *const cbuffer, void *const storage, uint8_t size, uint8_t elemSize)</div><div class="ttdoc">This function initializes a cyclic buffer. </div><div class="ttdef"><b>Definition:</b> vscp_util.c:216</div></div>
 <div class="ttc" id="structvscp__util___cyclic_buffer_html_afb9a4da723a6896ffd08fb20384ab6d2"><div class="ttname"><a href="structvscp__util___cyclic_buffer.html#afb9a4da723a6896ffd08fb20384ab6d2">vscp_util_CyclicBuffer::writeIndex</a></div><div class="ttdeci">uint8_t writeIndex</div><div class="ttdoc">Write index. </div><div class="ttdef"><b>Definition:</b> vscp_util.h:103</div></div>
-<div class="ttc" id="group__vscp__util_html_gaae186a9234abba85974d9658238cd517"><div class="ttname"><a href="group__vscp__util.html#gaae186a9234abba85974d9658238cd517">vscp_util_cyclicBufferWrite</a></div><div class="ttdeci">uint8_t vscp_util_cyclicBufferWrite(vscp_util_CyclicBuffer *const cbuffer, void const *const elem, uint8_t maxNum)</div><div class="ttdoc">This function writes one or more elements to a cyclic buffer. </div><div class="ttdef"><b>Definition:</b> vscp_util.c:277</div></div>
+<div class="ttc" id="group__vscp__util_html_gaae186a9234abba85974d9658238cd517"><div class="ttname"><a href="group__vscp__util.html#gaae186a9234abba85974d9658238cd517">vscp_util_cyclicBufferWrite</a></div><div class="ttdeci">uint8_t vscp_util_cyclicBufferWrite(vscp_util_CyclicBuffer *const cbuffer, void const *const elem, uint8_t maxNum)</div><div class="ttdoc">This function writes one or more elements to a cyclic buffer. </div><div class="ttdef"><b>Definition:</b> vscp_util.c:281</div></div>
 <div class="ttc" id="group__vscp__util_html_ga16eb5ff6b90c6a6f2b7812e9694d7389"><div class="ttname"><a href="group__vscp__util.html#ga16eb5ff6b90c6a6f2b7812e9694d7389">vscp_util_getZoneIndex</a></div><div class="ttdeci">uint8_t vscp_util_getZoneIndex(uint16_t vscpClass, uint8_t vscpType)</div><div class="ttdoc">Get the index in the message data of the zone. </div><div class="ttdef"><b>Definition:</b> vscp_util.c:107</div></div>
 <div class="ttc" id="structvscp__util___cyclic_buffer_html_abea371f9030e15a5d2a4c181576833d8"><div class="ttname"><a href="structvscp__util___cyclic_buffer.html#abea371f9030e15a5d2a4c181576833d8">vscp_util_CyclicBuffer::num</a></div><div class="ttdeci">uint8_t num</div><div class="ttdoc">Number of elements in the storage. </div><div class="ttdef"><b>Definition:</b> vscp_util.h:101</div></div>
 <div class="ttc" id="structvscp__util___cyclic_buffer_html_adb8ffadf3120b8e952573b9169f835ae"><div class="ttname"><a href="structvscp__util___cyclic_buffer.html#adb8ffadf3120b8e952573b9169f835ae">vscp_util_CyclicBuffer::elemSize</a></div><div class="ttdeci">uint8_t elemSize</div><div class="ttdoc">Element size. </div><div class="ttdef"><b>Definition:</b> vscp_util.h:100</div></div>
@@ -171,7 +171,7 @@
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri May 22 2015 16:38:51 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 10 2015 22:19:52 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

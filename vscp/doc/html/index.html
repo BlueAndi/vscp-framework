@@ -18,7 +18,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VSCP framework
-   &#160;<span id="projectnumber">v0.3.0</span>
+   &#160;<span id="projectnumber">v0.4.1</span>
    </div>
   </td>
  </tr>
@@ -151,7 +151,7 @@ VSCP framework timer</h2>
 <p>The timer handling can be processed by calling <a class="el" href="group__vscp__timer.html#ga39737fef1987eec20f7242d04e961987" title="This function process all timers and has to be called cyclic. ">vscp_timer_process()</a> in the same or in a different task as <a class="el" href="group__vscp__core.html#ga908d6072c9422beb0f7c3987c80ab1d7" title="This function process the whole VSCP core stack. ">vscp_core_process()</a> is called. If a different task calls it, don't forget to make the timer functions reentrant!</p>
 <p>Because the VSCP timer module needs to know the period of processing the timers, you have to call it with the period time in ms as parameter, e.g. vscp_timer_process(1000);</p>
 <p>Call the timer processing routine equal or lower than 1 s.</p>
-<p>Note, that never all vscp_process() with a lower period, than <a class="el" href="group__vscp__timer.html#ga39737fef1987eec20f7242d04e961987" title="This function process all timers and has to be called cyclic. ">vscp_timer_process()</a>. Because vscp_process() reacts on timer timeouts and <a class="el" href="group__vscp__timer.html#ga39737fef1987eec20f7242d04e961987" title="This function process all timers and has to be called cyclic. ">vscp_timer_process()</a> decrease only the timers, but doesn't do more.</p>
+<p>Note, that never call vscp_process() with a lower period, than <a class="el" href="group__vscp__timer.html#ga39737fef1987eec20f7242d04e961987" title="This function process all timers and has to be called cyclic. ">vscp_timer_process()</a>. Because vscp_process() reacts on timer timeouts and <a class="el" href="group__vscp__timer.html#ga39737fef1987eec20f7242d04e961987" title="This function process all timers and has to be called cyclic. ">vscp_timer_process()</a> decrease only the timers, but doesn't do more.</p>
 <h2><a class="anchor" id="tp_adapter"></a>
 VSCP transport adaption</h2>
 <p>Now its time to connect the VSCP framework to the communication bus. This can be done by implementing the transport adapter in the <a class="el" href="vscp__tp__adapter_8c.html" title="VSCP transport layer adapter. ">vscp_tp_adapter.c</a> template file.</p>
@@ -171,7 +171,7 @@ Ready to run</h2>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri May 22 2015 16:38:51 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 10 2015 22:19:52 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

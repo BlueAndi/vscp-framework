@@ -18,7 +18,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VSCP framework
-   &#160;<span id="projectnumber">v0.3.0</span>
+   &#160;<span id="projectnumber">v0.4.1</span>
    </div>
   </td>
  </tr>
@@ -154,8 +154,10 @@
 <div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;</div>
 <div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;<span class="keyword">extern</span> <a class="code" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> <a class="code" href="group__vscp__security.html#ga86660e5e9cf4b6070e3575ae0ce4f3a7">vscp_security_sendHarmfulSoundLevelsDetectedEvent</a>(uint8_t userData, uint8_t zone, uint8_t subZone);</div>
 <div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* __VSCP_SECURITY_H__ */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;<span class="keyword">extern</span> <a class="code" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> <a class="code" href="group__vscp__security.html#ga232d1e24052db13ed8aa4a2876f889eb">vscp_security_sendTamperDetectedEvent</a>(uint8_t userData, uint8_t zone, uint8_t subZone);</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* __VSCP_SECURITY_H__ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;<span class="preprocessor"></span></div>
 <div class="ttc" id="group__vscp__security_html_ga19216aeb537d35ab81b7635400fcc4ad"><div class="ttname"><a href="group__vscp__security.html#ga19216aeb537d35ab81b7635400fcc4ad">vscp_security_sendNoiseDetectedEvent</a></div><div class="ttdeci">BOOL vscp_security_sendNoiseDetectedEvent(uint8_t userData, uint8_t zone, uint8_t subZone)</div><div class="ttdoc">Noise (sound) has been detected. </div><div class="ttdef"><b>Definition:</b> vscp_security.c:537</div></div>
 <div class="ttc" id="group__vscp__security_html_gab9d226d94ac5fc2a22e3bf4713623e51"><div class="ttname"><a href="group__vscp__security.html#gab9d226d94ac5fc2a22e3bf4713623e51">vscp_security_sendSmokeSensorEvent</a></div><div class="ttdeci">BOOL vscp_security_sendSmokeSensorEvent(uint8_t userData, uint8_t zone, uint8_t subZone)</div><div class="ttdoc">A smoke sensor event has been detected. </div><div class="ttdef"><b>Definition:</b> vscp_security.c:237</div></div>
 <div class="ttc" id="group__vscp__security_html_gab07439a8a2fbbaad22498cae2e5dec8b"><div class="ttname"><a href="group__vscp__security.html#gab07439a8a2fbbaad22498cae2e5dec8b">vscp_security_sendCondensationDetectedEvent</a></div><div class="ttdeci">BOOL vscp_security_sendCondensationDetectedEvent(uint8_t userData, uint8_t zone, uint8_t subZone)</div><div class="ttdoc">Condensation (humidity) detected. </div><div class="ttdef"><b>Definition:</b> vscp_security.c:512</div></div>
@@ -172,6 +174,7 @@
 <div class="ttc" id="group__vscp__security_html_gabb4892d3de370d91885d5d1d5f5ce035"><div class="ttname"><a href="group__vscp__security.html#gabb4892d3de370d91885d5d1d5f5ce035">vscp_security_sendMotionDetectEvent</a></div><div class="ttdeci">BOOL vscp_security_sendMotionDetectEvent(uint8_t userData, uint8_t zone, uint8_t subZone)</div><div class="ttdoc">A motion has been detected. </div><div class="ttdef"><b>Definition:</b> vscp_security.c:112</div></div>
 <div class="ttc" id="group__vscp__security_html_ga7be014d7fc71b2b65dbe338f592afa81"><div class="ttname"><a href="group__vscp__security.html#ga7be014d7fc71b2b65dbe338f592afa81">vscp_security_sendFlameDetectedEvent</a></div><div class="ttdeci">BOOL vscp_security_sendFlameDetectedEvent(uint8_t userData, uint8_t zone, uint8_t subZone)</div><div class="ttdoc">Flame is detected. </div><div class="ttdef"><b>Definition:</b> vscp_security.c:412</div></div>
 <div class="ttc" id="group__vscp__security_html_ga5672592f219040869e73567b7e5bbb63"><div class="ttname"><a href="group__vscp__security.html#ga5672592f219040869e73567b7e5bbb63">vscp_security_sendSensorTamperEvent</a></div><div class="ttdeci">BOOL vscp_security_sendSensorTamperEvent(uint8_t userData, uint8_t zone, uint8_t subZone)</div><div class="ttdoc">A sensor tamper has been detected. </div><div class="ttdef"><b>Definition:</b> vscp_security.c:187</div></div>
+<div class="ttc" id="group__vscp__security_html_ga232d1e24052db13ed8aa4a2876f889eb"><div class="ttname"><a href="group__vscp__security.html#ga232d1e24052db13ed8aa4a2876f889eb">vscp_security_sendTamperDetectedEvent</a></div><div class="ttdeci">BOOL vscp_security_sendTamperDetectedEvent(uint8_t userData, uint8_t zone, uint8_t subZone)</div><div class="ttdoc">Tamper detected. </div><div class="ttdef"><b>Definition:</b> vscp_security.c:587</div></div>
 <div class="ttc" id="group__vscp__security_html_gad52e004bfbfc0c7d11717122caa732d5"><div class="ttname"><a href="group__vscp__security.html#gad52e004bfbfc0c7d11717122caa732d5">vscp_security_sendFrostDetectedEvent</a></div><div class="ttdeci">BOOL vscp_security_sendFrostDetectedEvent(uint8_t userData, uint8_t zone, uint8_t subZone)</div><div class="ttdoc">A frost sensor condition is detected. </div><div class="ttdef"><b>Definition:</b> vscp_security.c:387</div></div>
 <div class="ttc" id="group__vscp__security_html_ga7b2884d58fa170903c34be1dcfda968a"><div class="ttname"><a href="group__vscp__security.html#ga7b2884d58fa170903c34be1dcfda968a">vscp_security_sendCoSensorEvent</a></div><div class="ttdeci">BOOL vscp_security_sendCoSensorEvent(uint8_t userData, uint8_t zone, uint8_t subZone)</div><div class="ttdoc">CO sensor has detected CO at non secure level. </div><div class="ttdef"><b>Definition:</b> vscp_security.c:362</div></div>
 <div class="ttc" id="group__vscp__security_html_ga0e9ac5b72318fe59b87a9fa3cea20547"><div class="ttname"><a href="group__vscp__security.html#ga0e9ac5b72318fe59b87a9fa3cea20547">vscp_security_sendPanicSwitchEvent</a></div><div class="ttdeci">BOOL vscp_security_sendPanicSwitchEvent(uint8_t userData, uint8_t zone, uint8_t subZone)</div><div class="ttdoc">A panic switch event has been detected. </div><div class="ttdef"><b>Definition:</b> vscp_security.c:287</div></div>
@@ -181,7 +184,7 @@
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri May 22 2015 16:38:51 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 10 2015 22:19:51 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
