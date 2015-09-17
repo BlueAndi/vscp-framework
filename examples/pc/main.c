@@ -511,7 +511,7 @@ static MAIN_RET main_getCmdLineArgs(main_CmdLineArgs * const cmdLineArgs, int ar
             {
                 cmdLineArgs->daemonUser = &argv[index][2];
 
-                if ('\0' == cmdLineArgs->daemonUser)
+                if ('\0' == cmdLineArgs->daemonUser[0])
                 {
                     printf("User name missing.\n");
                     abort = TRUE;
@@ -522,7 +522,7 @@ static MAIN_RET main_getCmdLineArgs(main_CmdLineArgs * const cmdLineArgs, int ar
             {
                 cmdLineArgs->daemonPassword = &argv[index][2];
 
-                if ('\0' == cmdLineArgs->daemonPassword)
+                if ('\0' == cmdLineArgs->daemonPassword[0])
                 {
                     printf("Password missing.\n");
                     abort = TRUE;
