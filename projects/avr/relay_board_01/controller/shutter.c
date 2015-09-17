@@ -876,13 +876,13 @@ static void shutter_driveCb(uint8_t nr, SHUTTERDRV_DIR direction, BOOL isDriving
 
             /* Is shutter at the top? */
             if ((0 == con->pos) &&
-                (SHUTTER_POS_STATUS_VALID_TOP == con->pos))
+                (SHUTTER_POS_STATUS_VALID_TOP == con->posStatus))
             {
                 shutterPos = SHUTTER_POS_TOP;
             }
             /* Is shutter at the bottom? */
             else if ((con->maxDown == con->pos) &&
-                     (SHUTTER_POS_STATUS_VALID_BOTTOM == con->pos))
+                     (SHUTTER_POS_STATUS_VALID_BOTTOM == con->posStatus))
             {
                 shutterPos = SHUTTER_POS_BOTTOM;
             }
