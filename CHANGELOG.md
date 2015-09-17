@@ -3,6 +3,12 @@
   - VSCP framework
     - CLASS1_INFORMATION, Type = 9 (0x09) Node Heartbeat is now mandatory for all Level I nodes. Default period is set to 30s.
 
+  - Projct: Relay board 01
+    - Fixed a wrong compare in the shutter position detection.
+    
+  - PC example
+    - Fixed wrong compares for a empty strings.
+    
 ## 0.4.0
 
 Features:
