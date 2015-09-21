@@ -9,9 +9,8 @@
 3. [Structure](https://github.com/BlueAndi/vscp-framework#structure)
 4. [Getting started](https://github.com/BlueAndi/vscp-framework#getting-started)
 5. [Bootloader](https://github.com/BlueAndi/vscp-framework/tree/master/vscp/bootloader)
-6. [Mailing list](https://github.com/BlueAndi/vscp-framework#mailing-list)
-7. [Issues, Ideas and bugs](https://github.com/BlueAndi/vscp-framework#issues-ideas-and-bugs)
-8. [License](https://github.com/BlueAndi/vscp-framework#license)
+6. [Issues, Ideas and bugs](https://github.com/BlueAndi/vscp-framework#issues-ideas-and-bugs)
+7. [License](https://github.com/BlueAndi/vscp-framework#license)
 
 ##VSCP
 
@@ -160,10 +159,6 @@ functions are used, so you have one read and one write function to adapt.
 Now the minimal sub set is done and your node hopefully starts up with a nickname discovery.
 
 Have fun!
-
-##Mailing list
-
-Are you interesting? Join us on the mailing list: https://groups.google.com/forum/#!forum/vscp
 
 ##Issues, Ideas and bugs
 
