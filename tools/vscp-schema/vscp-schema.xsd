@@ -44,6 +44,7 @@ This xml schema defines the VSCP protocol format.
     			type="vscp:element-types-type">
     		</xsd:element>
     	</xsd:sequence>
+    	<xsd:attribute name="version" type="xsd:string" use="required"></xsd:attribute>
     </xsd:complexType>
 
     <xsd:complexType name="classes-type">
@@ -70,12 +71,25 @@ This xml schema defines the VSCP protocol format.
     		<xsd:element name="description" type="xsd:string"
     			maxOccurs="1" minOccurs="0">
     		</xsd:element>
-    		<xsd:element name="symbol" maxOccurs="1" minOccurs="1" type="vscp:symbol-type">
+    		<xsd:element name="symbol" maxOccurs="1" minOccurs="1"
+    			type="vscp:symbol-type">
+
     		</xsd:element>
-    		<xsd:element name="types" type="vscp:types-type" maxOccurs="1" minOccurs="1"></xsd:element>
+    		<xsd:element name="types" type="vscp:types-type"
+    			maxOccurs="1" minOccurs="1">
+    		</xsd:element>
     	</xsd:sequence>
     	<xsd:attribute name="id" type="xsd:unsignedShort"
     		use="required">
+    	</xsd:attribute>
+    	<xsd:attribute name="level" use="required">
+    		<xsd:simpleType>
+    			<xsd:restriction base="xsd:unsignedInt">
+
+    				<xsd:minInclusive value="1"></xsd:minInclusive>
+    				<xsd:maxInclusive value="2"></xsd:maxInclusive>
+    			</xsd:restriction>
+    		</xsd:simpleType>
     	</xsd:attribute>
     </xsd:complexType>
 
