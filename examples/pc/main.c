@@ -66,6 +66,9 @@ This module contains the main entry point.
     CONSTANTS
 *******************************************************************************/
 
+/** Program name */
+#define MAIN_PROG_NAME          "VSCP level 1 node"
+
 /** Copyright */
 #define MAIN_COPYRIGHT          "(c) 2014-2015 Andreas Merkle"
 
@@ -203,7 +206,7 @@ int main(int argc, char* argv[])
     main_CmdLineArgs    cmdLineArgs;
     uint8_t             index           = 0;
 
-    printf("\nVSCP level 1 node\n");
+    printf("\n%s\n", MAIN_PROG_NAME);
     printf("Version: %s\n", VERSION);
     printf("%s\n\n", MAIN_COPYRIGHT);
 
