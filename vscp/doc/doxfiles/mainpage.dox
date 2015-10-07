@@ -61,11 +61,14 @@ VSCP independent, use the next upper layer, the event abstraction modules.
 
 <pre>
 +---common              (Common sourcecode, used for examples and projects)
+|   +---avr             (Common sourcecode for Atmel AVR microcontrollers)
+|   \\---pc              (Common sourcecode for PC)
 +---examples            (Examples which are showing how to use the VSCP framework)
 |   +---avr             (Examples with Atmel AVR microcontrollers)
 |   \\---pc              (PC example for windows and linux)
-+---projects            (Projects using the VSCP framework)
-|   \\---avr             (Projects with Atmel AVR microcontrollers)
++---projects            (Projects)
+|   +---avr             (Projects with Atmel AVR microcontrollers)
+|   \\---pc              (PC projects)
 +---tools               (General tools, used by examples and projects)
 |   \\---xslt            (XML transformation processor)
 \\---vscp                (VSCP framework)
