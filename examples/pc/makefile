@@ -40,9 +40,10 @@ BIN= vscpExamplePc
 
 # General include directories
 INCLUDES= -I. \
-		-Iinclude \
 		-Ivscp_user \
 		-I../../common \
+		-I../../common/pc \
+		-I../../common/pc/vscphelper \
 		-I../../vscp \
 		-I../../vscp/bootloader \
 		-I../../vscp/events
@@ -51,8 +52,6 @@ INCLUDES= -I. \
 SOURCES= main.c \
 		eeprom.c \
 		lamp_sim.c \
-		log.c \
-		platform.c \
 		temperature_sim.c \
 		vscp_thread.c \
 		vscp_user/vscp_action.c \
@@ -65,6 +64,8 @@ SOURCES= main.c \
 		vscp_user/dm_std_xml.c \
 		vscp_user/dm_ext_xml.c \
 		../../common/crc16ccitt.c \
+		../../common/pc/log.c \
+		../../common/pc/platform.c \
 		../../vscp/vscp_core.c \
 		../../vscp/vscp_data_coding.c \
 		../../vscp/vscp_dev_data.c \
@@ -86,10 +87,10 @@ SOURCES= main.c \
 		../../vscp/events/vscp_weather_forecast.c
 
 # Include all source pathes here like ../src1:../src2
-VPATH= ../../common:../../vscp:../../vscp/events:vscp_user:../../vscp/bootloader
+VPATH= ../../common:../../common/pc:../../common/pc/vscphelper:../../vscp:../../vscp/events:vscp_user:../../vscp/bootloader
 		
 # Library search path (-L...)
-LIBPATH= -Llib/linux
+LIBPATH= -L../../common/pc/vscphelper/lib/linux
 
 # Libraries (-l...)
 LIBRARIES= -lpthread -lvscphelper -lexpat
@@ -97,7 +98,7 @@ LIBRARIES= -lpthread -lvscphelper -lexpat
 # Windows specific part
 ifeq ($(OS),Windows_NT)
 
-LIBPATH= -Llib/win32
+LIBPATH= -L../../common/pc/vscphelper/lib/win32
 
 LIBRARIES+= -lws2_32
 
@@ -120,7 +121,7 @@ CFLAGS= -Wall -ffunction-sections -fdata-sections -fshort-enums -std=gnu99 -funs
 # -Wl,--cref        : Add cross reference to map file
 # -Wl,--gc-sections : Enable garbage collection of unused input sections
 # -Wl,-rpath='$$ORIGIN/../lib/linux' : Set shared object search path
-LDFLAGS= -Wall -Wl,-Map,$(BINDIR)/$(BIN).map -Wl,--cref -Wl,--gc-sections -Wl,-rpath='$$ORIGIN/../lib/linux'
+LDFLAGS= -Wall -Wl,-Map,$(BINDIR)/$(BIN).map -Wl,--cref -Wl,--gc-sections -Wl,-rpath='$$ORIGIN/../../../common/pc/vscphelper/lib/linux'
 
 ifeq ($(MAKECMDGOALS),debug)
 
@@ -162,11 +163,11 @@ OBJDIR= obj
 BINDIR= bin
 
 # Library directory
-LIBDIR= lib/linux
+LIBDIR= ../../common/pc/vscphelper/lib/linux
 
 ifeq ($(OS),Windows_NT)
 
-LIBDIR= lib/win32
+LIBDIR= ../../common/pc/vscphelper/lib/win32
 
 endif
 

@@ -63,6 +63,12 @@
 /** Base class id of L2 events */
 #define VSCP_TP_ADAPTER_CLASS_L2_BASE       1024
 
+/** Daemon command response timeout in ms */
+#define VSCP_TP_ADAPTER_RESPONSE_TIMEOUT    6000
+
+/** Daemon wait time after a command was executed in ms */
+#define VSCP_TP_ADAPTER_CMD_WAIT_TIME       200
+
 /*******************************************************************************
     MACROS
 *******************************************************************************/
@@ -476,9 +482,15 @@ extern VSCP_TP_ADAPTER_RET vscp_tp_adapter_connect(char const * const ipAddr, ch
         status = VSCP_TP_ADAPTER_RET_ERROR;
     }
     /* Set response timeout */
-    else if (VSCP_ERROR_SUCCESS != vscphlp_setResponseTimeout(client->hSession, 6))
+    else if (VSCP_ERROR_SUCCESS != vscphlp_setResponseTimeout(client->hSession, VSCP_TP_ADAPTER_RESPONSE_TIMEOUT))
     {
         LOG_ERROR("Couldn't set response timeout.");
+        status = VSCP_TP_ADAPTER_RET_ERROR;
+    }
+    /* Set wait time after command execution */
+    else if (VSCP_ERROR_SUCCESS != vscphlp_setAfterCommandSleep(client->hSession, VSCP_TP_ADAPTER_CMD_WAIT_TIME))
+    {
+        LOG_ERROR("Couldn't set wait time after command.");
         status = VSCP_TP_ADAPTER_RET_ERROR;
     }
     /* Open a channel */
