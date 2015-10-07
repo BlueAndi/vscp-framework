@@ -67,7 +67,7 @@
 #define VSCP_TP_ADAPTER_RESPONSE_TIMEOUT    6000
 
 /** Daemon wait time after a command was executed in ms */
-#define VSCP_TP_ADAPTER_CMD_WAIT_TIME       200
+#define VSCP_TP_ADAPTER_CMD_WAIT_TIME       250
 
 /*******************************************************************************
     MACROS
