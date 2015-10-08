@@ -5,6 +5,8 @@ Features:
   - VSCP framework
     - CLASS1_INFORMATION, Type = 9 (0x09) Node Heartbeat is now mandatory for all Level I nodes. Default period is set to 30s.
 
+  - PC VSCP event logger for the command line introduced.
+  
 Bugfixes:
     
   - Project: Relay board 01
