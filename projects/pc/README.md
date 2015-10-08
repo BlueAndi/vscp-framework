@@ -1,4 +1,4 @@
-#PC tools
+#PC projects
 
 | Project    | Description |
 | :------:   | :---------: |
