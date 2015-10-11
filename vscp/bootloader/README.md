@@ -111,10 +111,6 @@ Call in your main routine the
 
 Note that the vscp\_bootloader\_run() will never return!
 
-##Mailing list
-
-Are you interesting? Join us on the mailing list: https://groups.google.com/forum/#!forum/vscp
-
 ##Issues, Ideas and bugs
 
 If you have further ideas or you found some bugs, great! Create a [issue](https://github.com/BlueAndi/vscp-framework/issues) or if
