@@ -302,6 +302,7 @@ extern void cmdLineParser_show(cmdLineParser_Arg const * const config, uint32_t 
     {
         uint32_t    len         = 0;
         uint32_t    spaceIndex  = 0;
+        BOOL        parFound    = FALSE;
         
         arg = &config[index];
                 
@@ -322,20 +323,40 @@ extern void cmdLineParser_show(cmdLineParser_Arg const * const config, uint32_t 
                     printf("%c", ptr[len]);
                     ++len;
                     
+                    /* Parameter end found? */
+                    if ((TRUE == parFound) &&
+                        ('>' == ptr[len]))
+                    {
+                        parFound = FALSE;
+                    }
+                    /* Parameter found? */
+                    else if ((FALSE == parFound) &&
+                             ('<' == ptr[len]))
+                    {
+                        parFound = TRUE;
+                    }
                     /* Delimiter found? */
-                    if (nameDelimiter == ptr[len])
+                    else if (nameDelimiter == ptr[len])
                     {
                         /* Does a parameter follow? */
                         if ('<' == ptr[len + 1])
                         {
-                            printf(" ");
+                            printf("%c", nameDelimiter);
+                            ++len;
+                            
+                            parFound = TRUE;
+                        }
+                        /* Inside a parameter? */
+                        else if (TRUE == parFound)
+                        {
+                            printf("%c", nameDelimiter);
                             ++len;
                         }
                     }
                 }
                 
                 /* Overstep delimiter */
-                if ('\0' != ptr[len])
+                if (nameDelimiter == ptr[len])
                 {
                     printf("\n");
                     ++len;
