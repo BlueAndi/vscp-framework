@@ -35,10 +35,6 @@
 @section desc Description
 This module provides a command line parser.
 
-@section svn Subversion
-$Author: amerkle $
-$Rev: 449 $
-$Date: 2015-01-05 20:23:52 +0100 (Mo, 05 Jan 2015) $
 *******************************************************************************/
 /** @defgroup cmdLineParser Command line parser
  * Functionality of a command line parser.
