@@ -72,6 +72,8 @@
 
 static cmdLineParser_Arg const * cmdLineParser_find(cmdLineParser_Arg const * const possibleArgs, uint32_t num, char const * const name);
 static uint32_t cmdLineParser_getNameMaxLen(cmdLineParser_Arg const * const config, uint32_t num);
+static uint32_t cmdLineParser_showName(char const * const name);
+static void cmdLineParser_showDescription(char const * const description, uint32_t max);
 
 /*******************************************************************************
 	LOCAL VARIABLES
@@ -281,12 +283,9 @@ extern CMDLINEPARSER_RET cmdLineParser_parse(cmdLineParser_Arg const * const con
  */
 extern void cmdLineParser_show(cmdLineParser_Arg const * const config, uint32_t num)
 {
-    uint32_t                    index           = 0;
-    cmdLineParser_Arg const *   arg             = NULL;
-    uint32_t                    max             = cmdLineParser_getNameMaxLen(config, num) + 4;
-    char const *                ptr             = NULL;
-    char const                  nameDelimiter   = CMDLINEPARSER_NAME_DELIMITER;
-    char const                  descDelimiter   = CMDLINEPARSER_DESC_DELIMITER;
+    uint32_t                    index   = 0;
+    cmdLineParser_Arg const *   arg     = NULL;
+    uint32_t                    max     = cmdLineParser_getNameMaxLen(config, num) + 4;
 
     if (NULL == config)
     {
@@ -298,7 +297,6 @@ extern void cmdLineParser_show(cmdLineParser_Arg const * const config, uint32_t 
     {
         uint32_t    len         = 0;
         uint32_t    spaceIndex  = 0;
-        BOOL        parFound    = FALSE;
         
         arg = &config[index];
                 
@@ -308,58 +306,7 @@ extern void cmdLineParser_show(cmdLineParser_Arg const * const config, uint32_t 
             (0 != strcmp(arg->name, CMDLINEPARSER_UNKONWN)))
         {
             /* Show argument name(s) */
-            ptr = arg->name;
-            while('\0' != ptr[len])
-            {
-                printf("  ");
-                
-                len = 0;
-                while(('\0' != ptr[len]) && (nameDelimiter != ptr[len]))
-                {
-                    printf("%c", ptr[len]);
-                    ++len;
-                    
-                    /* Parameter end found? */
-                    if ((TRUE == parFound) &&
-                        ('>' == ptr[len]))
-                    {
-                        parFound = FALSE;
-                    }
-                    /* Parameter found? */
-                    else if ((FALSE == parFound) &&
-                             ('<' == ptr[len]))
-                    {
-                        parFound = TRUE;
-                    }
-                    /* Delimiter found? */
-                    else if (nameDelimiter == ptr[len])
-                    {
-                        /* Does a parameter follow? */
-                        if ('<' == ptr[len + 1])
-                        {
-                            printf("%c", nameDelimiter);
-                            ++len;
-                            
-                            parFound = TRUE;
-                        }
-                        /* Inside a parameter? */
-                        else if (TRUE == parFound)
-                        {
-                            printf("%c", nameDelimiter);
-                            ++len;
-                        }
-                    }
-                }
-                
-                /* Overstep delimiter */
-                if (nameDelimiter == ptr[len])
-                {
-                    printf("\n");
-                    ++len;
-                    ptr = &ptr[len];
-                    len = 0;
-                }
-            }
+            len = cmdLineParser_showName(arg->name);
             
             /* The description shall have a constant distance from the left
              * screen border.
@@ -377,37 +324,16 @@ extern void cmdLineParser_show(cmdLineParser_Arg const * const config, uint32_t 
             else
             {
                 /* Show the description */
-                ptr = arg->description;
-                while('\0' != ptr[len])
-                {
-                    len = 0;
-                    while(('\0' != ptr[len]) && (descDelimiter != ptr[len]))
-                    {
-                        printf("%c", ptr[len]);
-                        ++len;
-                    }
-                    
-                    /* Overstep delimiter */
-                    if ('\0' != ptr[len])
-                    {
-                        printf("\n");
-                        ++len;
-                        ptr = &ptr[len];
-                        len = 0;
-                        
-                        /* The description shall have a constant distance from the left
-                         * screen border.
-                         */
-                        for(spaceIndex = 0; spaceIndex < max; ++spaceIndex)
-                        {
-                            printf(" ");
-                        }
-                    }
-                }
-                printf("\n");
+                cmdLineParser_showDescription(arg->description, max);
             }
+            
             /* Empty line after every argument */
             printf("\n");
+        }
+        else if (NULL == arg->name)
+        {
+            /* Show the description */
+            cmdLineParser_showDescription(arg->description, max);            
         }
     }
     
@@ -430,10 +356,9 @@ extern void cmdLineParser_show(cmdLineParser_Arg const * const config, uint32_t 
  */
 static cmdLineParser_Arg const * cmdLineParser_find(cmdLineParser_Arg const * const config, uint32_t num, char const * const name)
 {
-    uint32_t                    index       = 0;
-    cmdLineParser_Arg const *   found       = NULL;
-    char const *                ptr         = NULL;
-    char const                  delimiter   = CMDLINEPARSER_NAME_DELIMITER;
+    uint32_t                    index   = 0;
+    cmdLineParser_Arg const *   found   = NULL;
+    char const *                ptr     = NULL;
 
     /* Walk through all possible program arguments */
     for(index = 0; index < num; ++index)
@@ -450,7 +375,7 @@ static cmdLineParser_Arg const * cmdLineParser_find(cmdLineParser_Arg const * co
                  * a parameter or several arguments with equal meaning.
                  */
                 len = 0;
-                while(('\0' != ptr[len]) && (delimiter != ptr[len]))
+                while(('\0' != ptr[len]) && (CMDLINEPARSER_NAME_DELIMITER != ptr[len]))
                 {
                     ++len;
                 }
@@ -462,10 +387,10 @@ static cmdLineParser_Arg const * cmdLineParser_find(cmdLineParser_Arg const * co
                 }
                 else
                 /* Maybe a parameter or another argument follows */
-                if (delimiter == ptr[len])
+                if (CMDLINEPARSER_NAME_DELIMITER == ptr[len])
                 {
                     /* Overstep delimiter */
-                    while(delimiter == ptr[len])
+                    while(CMDLINEPARSER_NAME_DELIMITER == ptr[len])
                     {
                         ++len;
                     }
@@ -510,11 +435,10 @@ static cmdLineParser_Arg const * cmdLineParser_find(cmdLineParser_Arg const * co
  */
 static uint32_t cmdLineParser_getNameMaxLen(cmdLineParser_Arg const * const config, uint32_t num)
 {
-    uint32_t                    index       = 0;
-    cmdLineParser_Arg const *   arg         = NULL;
-    char const *                ptr         = NULL;
-    uint32_t                    max         = 0;
-    const char                  delimiter   = CMDLINEPARSER_NAME_DELIMITER;
+    uint32_t                    index   = 0;
+    cmdLineParser_Arg const *   arg     = NULL;
+    char const *                ptr     = NULL;
+    uint32_t                    max     = 0;
     
     if (NULL != config)
     {
@@ -534,12 +458,12 @@ static uint32_t cmdLineParser_getNameMaxLen(cmdLineParser_Arg const * const conf
                 while('\0' != ptr[len])
                 {
                     len = 0;
-                    while(('\0' != ptr[len]) && (delimiter != ptr[len]))
+                    while(('\0' != ptr[len]) && (CMDLINEPARSER_NAME_DELIMITER != ptr[len]))
                     {
                         ++len;
                         
                         /* Delimiter found? */
-                        if (delimiter == ptr[len])
+                        if (CMDLINEPARSER_NAME_DELIMITER == ptr[len])
                         {
                             /* Does a parameter follow? */
                             if ('<' == ptr[len + 1])
@@ -555,7 +479,7 @@ static uint32_t cmdLineParser_getNameMaxLen(cmdLineParser_Arg const * const conf
                     }
                     
                     /* Overstep delimiter */
-                    if ('\0' != ptr[len])
+                    if (CMDLINEPARSER_NAME_DELIMITER == ptr[len])
                     {
                         ++len;
                         ptr = &ptr[len];
@@ -567,4 +491,129 @@ static uint32_t cmdLineParser_getNameMaxLen(cmdLineParser_Arg const * const conf
     }
     
     return max;
+}
+
+/**
+ * This function shows a argument name.
+ *
+ * @param[in] name  Argument name
+ *
+ * @return Length of last argument name
+ */
+static uint32_t cmdLineParser_showName(char const * const name)
+{
+    uint32_t    index       = 0;
+    uint32_t    len         = 0;
+    BOOL        parFound    = FALSE;
+    
+    if (NULL == name)
+    {
+        return 0;
+    }
+    
+    while('\0' != name[index])
+    {
+        printf("  ");
+        
+        while(('\0' != name[index]) && (CMDLINEPARSER_NAME_DELIMITER != name[index]))
+        {
+            printf("%c", name[index]);
+            ++index;
+            
+            /* Parameter end found? */
+            if ((TRUE == parFound) &&
+                ('>' == name[index]))
+            {
+                parFound = FALSE;
+            }
+            /* Parameter found? */
+            else if ((FALSE == parFound) &&
+                     ('<' == name[index]))
+            {
+                parFound = TRUE;
+            }
+            /* Delimiter found? */
+            else if (CMDLINEPARSER_NAME_DELIMITER == name[index])
+            {
+                /* Does a parameter follow? */
+                if ('<' == name[index + 1])
+                {
+                    printf("%c", CMDLINEPARSER_NAME_DELIMITER);
+                    ++index;
+                    
+                    parFound = TRUE;
+                }
+                /* Inside a parameter? */
+                else if (TRUE == parFound)
+                {
+                    printf("%c", CMDLINEPARSER_NAME_DELIMITER);
+                    ++index;
+                }
+            }
+        }
+        
+        /* Overstep delimiter */
+        if (CMDLINEPARSER_NAME_DELIMITER == name[index])
+        {
+            printf("\n");
+            ++index;
+            
+            /* Calculate length of last shown name */
+            len = index;
+        }
+        else
+        {
+            /* Calculate length of last shown name */
+            len = index - len;
+        }
+    }
+    
+    return len;
+}
+
+/**
+ * This function shows a argument description.
+ *
+ * @param[in] name  Argument description
+ * @param[in] max   Number of spaces from left border
+ */
+static void cmdLineParser_showDescription(char const * const description, uint32_t max)
+{
+    uint32_t    index       = 0;
+    uint32_t    spaceIndex  = 0;
+    
+    if (NULL == description)
+    {
+        return;
+    }
+
+    while('\0' != description[index])
+    {
+        /* Show description until string termination or a delimiter is found. */
+        while(('\0' != description[index]) && (CMDLINEPARSER_DESC_DELIMITER != description[index]))
+        {
+            printf("%c", description[index]);
+            ++index;
+        }
+        
+        /* If a delimiter is found, overstep it. */
+        if (CMDLINEPARSER_DESC_DELIMITER == description[index])
+        {
+            printf("\n");
+            ++index;
+            
+            /* The description shall have a constant distance from the left
+             * screen border.
+             */
+            printf("  ");
+            for(spaceIndex = 0; spaceIndex < max; ++spaceIndex)
+            {
+                printf(" ");
+            }
+        }
+    }
+    
+    printf("\n");
+    
+    return;
 }
