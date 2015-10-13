@@ -12,11 +12,11 @@ For programming a node you need
 * the ip address of your running VSCP daemon
 * and at least its user/password.
 
-Example for programming a node on windows:
+Example for programming a node on windows:--
 vscpProgrammerPc.exe -u admin -p secret -a demo.vscp.org:9598 -f new_image.hex -n 1 -g 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01
 
-Example for programming a node on linux:
-vscpProgrammerPc.exe -u admin -p secret -a demo.vscp.org:9598 -f new_image.hex -n 1 -g 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01
+Example for programming a node on linux:--
+./vscpProgrammerPc -u admin -p secret -a demo.vscp.org:9598 -f new_image.hex -n 1 -g 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01
 
 For more information about the program arguments, please call the executable with -h or --help.
 
