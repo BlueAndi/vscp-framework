@@ -8,6 +8,9 @@ Features:
   - PC VSCP event logger for the command line introduced.
   - PC VSCP L1 programmer for the command line introduced.
   
+  - PC example
+    - Command line arguments changed, please use -h or --help to see how.
+  
 Bugfixes:
     
   - Project: Relay board 01
