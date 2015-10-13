@@ -33,10 +33,6 @@ If you want to restore the factory settings, remove the "eeprom.asc" and start t
 
 Have fun!
 
-##Mailing list
-
-Are you interesting? Join us on the mailing list: https://groups.google.com/forum/#!forum/vscp
-
 ##Issues, Ideas and bugs
 
 If you have further ideas or you found some bugs, great! Create a [issue](https://github.com/BlueAndi/vscp-framework/issues) or if
