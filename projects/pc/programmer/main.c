@@ -262,6 +262,7 @@ int main(int argc, char* argv[])
     printf("Version: %s\n", VERSION);
     printf("%s\n\n", MAIN_COPYRIGHT);
 
+    /* Initialize all modules */
     if (MAIN_RET_OK != main_init())
     {
         abort = TRUE;
