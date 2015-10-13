@@ -96,7 +96,7 @@ typedef enum
     VSCP_TP_ADAPTER_RET_INVALID_PASSWORD,   /**< Invalid password */
     VSCP_TP_ADAPTER_RET_TIMEOUT,            /**< Connection timeout */
     VSCP_TP_ADAPTER_RET_ERROR,              /**< Error */
-    VSCP_TP_ADAPTER_RET_ENULL,              /**< Unexpected NULL pointer */
+    VSCP_TP_ADAPTER_RET_ENULL               /**< Unexpected NULL pointer */
 
 } VSCP_TP_ADAPTER_RET;
 
@@ -104,7 +104,7 @@ typedef enum
 typedef enum
 {
     VSCP_TP_ADAPTER_LVL_1 = 0,      /**< Send level 1 events */
-    VSCP_TP_ADAPTER_LVL_1_OVER_2,   /**< Send level 1 events over level 2 */
+    VSCP_TP_ADAPTER_LVL_1_OVER_2    /**< Send level 1 events over level 2 */
 
 } VSCP_TP_ADAPTER_LVL;
 
