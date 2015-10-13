@@ -64,6 +64,7 @@ SOURCES= main.c \
 		vscp_user/dm_std_xml.c \
 		vscp_user/dm_ext_xml.c \
 		../../common/crc16ccitt.c \
+		../../common/pc/cmdLineParser.c \
 		../../common/pc/log.c \
 		../../common/pc/platform.c \
 		../../vscp/vscp_core.c \

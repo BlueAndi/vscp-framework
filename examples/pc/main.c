@@ -47,6 +47,7 @@ This module contains the main entry point.
 #include "eeprom.h"
 #include "log.h"
 #include "platform.h"
+#include "cmdLineParser.h"
 #include "vscp_core.h"
 #include "vscp_ps_access.h"
 #include "vscp_tp_adapter.h"
@@ -108,13 +109,12 @@ typedef struct
     char const *        daemonAddr;                 /**< Daemon ip address */
     char const *        daemonUser;                 /**< User name for daemon ip access */
     char const *        daemonPassword;             /**< Password for daemon ip access */
+    char const *        nodeGuid;                   /**< Node GUID */
     BOOL                disableHeartbeat;           /**< Disable node heartbeat */
     BOOL                disableTemperature;         /**< Disable temperature simulation */
     BOOL                verbose;                    /**< Verbose information */
     BOOL                showHelp;                   /**< Show help to the user */
     VSCP_TP_ADAPTER_LVL lvl;                        /**< Network level */
-    uint32_t            nodeGuid[VSCP_GUID_SIZE];   /**< Node GUID */
-    BOOL                setNodeGuid;                /**< Set node GUID or not */
 
 } main_CmdLineArgs;
 
@@ -124,15 +124,50 @@ typedef struct
 
 static MAIN_RET main_init(void);
 static void main_deInit(void);
-static MAIN_RET main_getCmdLineArgs(main_CmdLineArgs * const cmdLineArgs, int argc, char ** const argv);
-static void main_showHelp(char const * const progName);
 static void main_showKeyTable(void);
 static void main_dumpEEPROM(void);
-static void main_loop(main_CmdLineArgs *cmdLineArgs);
+static void main_loop(main_CmdLineArgs *main_cmdLineArgs);
+static CMDLINEPARSER_RET main_clpUnknown(void* const userData, char const * const arg, char const * const par);
+static CMDLINEPARSER_RET main_clpLevel(void* const userData, char const * const arg, char const * const par);
 
 /*******************************************************************************
     LOCAL VARIABLES
 *******************************************************************************/
+
+/** Command line argument structure, which is initialized after parsing. */
+static main_CmdLineArgs         main_cmdLineArgs    =
+{
+    NULL,                   /* Program name */
+    NULL,                   /* Daemon address */
+    NULL,                   /* Daemon user name */
+    NULL,                   /* Daemon password */
+    NULL,                   /* Node GUID */
+    FALSE,                  /* Disable node heartbeat */
+    FALSE,                  /* Disable temperature simuluation */
+    FALSE,                  /* Verbose output */
+    FALSE,                  /* Show help */
+    VSCP_TP_ADAPTER_LVL_1   /* Network level */
+};
+
+/** Configuration for the command line parser. */
+static const cmdLineParser_Arg  main_clpConfig[]    =
+{
+    /* Special to retrieve the program name without path */
+    { CMDLINEPARSER_PROG_NAME_WP,   &main_cmdLineArgs.progName,         NULL,                                   NULL,               NULL,               NULL                                                },
+    /* Get every unknown command line argument */
+    { CMDLINEPARSER_UNKONWN,        NULL,                               NULL,                                   main_clpUnknown,    NULL,               NULL                                                },
+    /* Possible command line arguments */
+    { "-a <ip-address>",            &main_cmdLineArgs.daemonAddr,       NULL,                                   NULL,               NULL,               "IP address of VSCP daemon"                         },
+    { "-dheart",                    NULL,                               &main_cmdLineArgs.disableHeartbeat,     NULL,               NULL,               "Disable node heartbeat"                            },
+    { "-dtemp",                     NULL,                               &main_cmdLineArgs.disableTemperature,   NULL,               NULL,               "Disable node temperature simulation"               },
+    { "-g <guid>",                  &main_cmdLineArgs.nodeGuid,         NULL,                                   NULL,               NULL,               "Node GUID,\ne.g. 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01"      },
+    { "-h --help",                  NULL,                               &main_cmdLineArgs.showHelp,             NULL,               NULL,               "Show help"                                         },
+    { "-v",                         NULL,                               &main_cmdLineArgs.verbose,              NULL,               NULL,               "Increase verbose level"                            },
+    { NULL,                         NULL,                               NULL,                                   NULL,               NULL,               "Options only for daemon connection:"               },
+    { "-l <level>",                 NULL,                               NULL,                                   main_clpLevel,      &main_cmdLineArgs,  "1: Support L1 events\n12: Support L1 and L1 over L2 events (default)"  },
+    { "-p <password>",              &main_cmdLineArgs.daemonPassword,   NULL,                                   NULL,               NULL,               "Password for VSCP daemon access"                   },
+    { "-u <user>",                  &main_cmdLineArgs.daemonUser,       NULL,                                   NULL,               NULL,               "User name for VSCP daemon access"                  }
+};
 
 /** User friendly names for persistent memory elements */
 static const char*      main_psUserFriendlyName[]   =
@@ -201,67 +236,71 @@ static const char*      main_psUserFriendlyName[]   =
  */
 int main(int argc, char* argv[])
 {
-    int                 status          = 0;
-    BOOL                abort           = FALSE;
-    main_CmdLineArgs    cmdLineArgs;
-    uint8_t             index           = 0;
+    int     status  = 0;
+    BOOL    abort   = FALSE;
+    uint8_t index   = 0;
 
     printf("\n%s\n", MAIN_PROG_NAME);
     printf("Version: %s\n", VERSION);
     printf("%s\n\n", MAIN_COPYRIGHT);
 
-    /* Set log level */
-    log_setLevel(MAIN_LOG_LEVEL_DEFAULT);
-
-    /* Parse command line arguments */
-    if (MAIN_RET_OK != main_getCmdLineArgs(&cmdLineArgs, argc, argv))
+    /* Initialize all modules */
+    if (MAIN_RET_OK != main_init())
     {
         abort = TRUE;
     }
     else
+    /* Parse command line arguments */
+    if (CMDLINEPARSER_RET_OK != cmdLineParser_parse(main_clpConfig, MAIN_ARRAY_NUM(main_clpConfig), argc, argv))
     {
-        /* Increase log level for more detail? */
-        if (TRUE == cmdLineArgs.verbose)
+        abort = TRUE;
+    }
+    else
+    /* Show help? */
+    if (TRUE == main_cmdLineArgs.showHelp)
+    {
+        printf("Usage: %s <options>\n\n", main_cmdLineArgs.progName);
+        printf("Options:\n");
+        cmdLineParser_show(main_clpConfig, MAIN_ARRAY_NUM(main_clpConfig));
+    }
+    /* Abort because of a invalid program argument or continue? */
+    else
+    {
+        if (TRUE == main_cmdLineArgs.verbose)
         {
             /* Set log level */
             log_setLevel(LOG_LEVEL_INFO | LOG_LEVEL_DEBUG | LOG_LEVEL_WARNING | LOG_LEVEL_ERROR | LOG_LEVEL_FATAL);
         }
-    }
 
-    /* Show help? */
-    if (TRUE == cmdLineArgs.showHelp)
-    {
-        main_showHelp(cmdLineArgs.progName);
-    }
-    /* Abort because of a invalid program argument or continue? */
-    else if (FALSE == abort)
-    {
-        /* Show the user which keys can be used. */
-        main_showKeyTable();
-        printf("\n");
-
-        /* Initialize all modules */
-        if (MAIN_RET_OK != main_init())
+        /* Load EEPROM layout */
+        eeprom_load(MAIN_EEPROM_FILENAME);
+        
+        /* Initialize VSCP framework */
+        if (VSCP_CORE_RET_OK != vscp_core_init())
         {
             abort = TRUE;
         }
         else
         {
+            /* Show the user which keys can be used. */
+            main_showKeyTable();
+            printf("\n");
+
             /* Shall a connection to a VSCP daemon be established? */
-            if (NULL != cmdLineArgs.daemonAddr)
+            if (NULL != main_cmdLineArgs.daemonAddr)
             {
                 VSCP_TP_ADAPTER_RET ret = VSCP_TP_ADAPTER_RET_OK;
 
                 log_printf("Connecting ...\n");
 
-                ret = vscp_tp_adapter_connect(  cmdLineArgs.daemonAddr,
-                                                cmdLineArgs.daemonUser,
-                                                cmdLineArgs.daemonPassword,
-                                                cmdLineArgs.lvl);
+                ret = vscp_tp_adapter_connect(  main_cmdLineArgs.daemonAddr,
+                                                main_cmdLineArgs.daemonUser,
+                                                main_cmdLineArgs.daemonPassword,
+                                                main_cmdLineArgs.lvl);
 
                 if (VSCP_TP_ADAPTER_RET_OK != ret)
                 {
-                    printf("Connection failed to %s.\n", cmdLineArgs.daemonAddr);
+                    printf("Connection failed to %s.\n", main_cmdLineArgs.daemonAddr);
 
                     if (VSCP_TP_ADAPTER_RET_INVALID_USER == ret)
                     {
@@ -283,63 +322,71 @@ int main(int argc, char* argv[])
                     log_printf("Connection successful.\n");
                 }
             }
+        }
 
-            /* No error? */
-            if (FALSE == abort)
+        /* No error? */
+        if (FALSE == abort)
+        {
+            /* Shall the node GUID be set? */
+            if (NULL != main_cmdLineArgs.nodeGuid)
             {
-                /* Shall the node GUID be set? */
-                if (TRUE == cmdLineArgs.setNodeGuid )
+                uint8_t nodeGuid[16];
+                
+                /* Convert node GUID from string */
+                if (VSCP_ERROR_SUCCESS != vscphlp_getGuidFromStringToArray(nodeGuid, main_cmdLineArgs.nodeGuid))
                 {
-                    for(index = 0; index < MAIN_ARRAY_NUM(cmdLineArgs.nodeGuid); ++index)
+                    log_printf("Invalid node GUID.\n");
+                }
+                else
+                {
+                    for(index = 0; index < MAIN_ARRAY_NUM(nodeGuid); ++index)
                     {
-                        vscp_ps_writeGUID(index, cmdLineArgs.nodeGuid[index]);
-                    }
-                }
-            
-                /* Shall the node heartbeat be disabled? */
-                if (TRUE == cmdLineArgs.disableHeartbeat)
-                {
-                    vscp_core_enableHeartbeat(FALSE);
-                }
-
-                /* Start the whole VSCP framework */
-                if (VSCP_THREAD_RET_OK != vscp_thread_start())
-                {
-                    abort = TRUE;
-                }
-                /* Shall the temperature simulation be started? */
-                else if (FALSE == cmdLineArgs.disableTemperature)
-                {
-                    /* Start temperature simulation */
-                    if (TEMPERATURE_SIM_RET_OK != temperature_sim_start())
-                    {
-                        LOG_ERROR("Temperature simulation failed.");
+                        vscp_ps_writeGUID(index, nodeGuid[index]);
                     }
                 }
             }
-
-            /* If no error happened, start main loop. */
-            if (FALSE == abort)
+        
+            /* Shall the node heartbeat be disabled? */
+            if (TRUE == main_cmdLineArgs.disableHeartbeat)
             {
-                main_loop(&cmdLineArgs);
+                vscp_core_enableHeartbeat(FALSE);
             }
 
-            printf("Please wait ...\n");
-
-            /* Stop temperature simulation */
-            temperature_sim_stop();
-
-            /* Stop the whole VSCP framework */
-            vscp_thread_stop();
-
-            /* Shall a connection to a VSCP daemon be disconnected? */
-            if (NULL != cmdLineArgs.daemonAddr)
+            /* Start the whole VSCP framework */
+            if (VSCP_THREAD_RET_OK != vscp_thread_start())
             {
-                vscp_tp_adapter_disconnect();
+                abort = TRUE;
+            }
+            /* Shall the temperature simulation be started? */
+            else if (FALSE == main_cmdLineArgs.disableTemperature)
+            {
+                /* Start temperature simulation */
+                if (TEMPERATURE_SIM_RET_OK != temperature_sim_start())
+                {
+                    LOG_ERROR("Temperature simulation failed.");
+                }
             }
         }
 
-        main_deInit();
+        /* If no error happened, start main loop. */
+        if (FALSE == abort)
+        {
+            main_loop(&main_cmdLineArgs);
+        }
+
+        printf("Please wait ...\n");
+
+        /* Stop temperature simulation */
+        temperature_sim_stop();
+
+        /* Stop the whole VSCP framework */
+        vscp_thread_stop();
+
+        /* Shall a connection to a VSCP daemon be disconnected? */
+        if (NULL != main_cmdLineArgs.daemonAddr)
+        {
+            vscp_tp_adapter_disconnect();
+        }
     }
 
     if (TRUE == abort)
@@ -352,6 +399,8 @@ int main(int argc, char* argv[])
         }
     }
 
+    main_deInit();
+    
     return status;
 }
 
@@ -373,13 +422,9 @@ static MAIN_RET main_init(void)
 
     /* Initialize EEPROM simulation */
     eeprom_init(VSCP_PS_ADDR_NEXT);
-    eeprom_load(MAIN_EEPROM_FILENAME);
 
-    /* Initialize the whole VSCP framework */
-    if (VSCP_THREAD_RET_OK != vscp_thread_init())
-    {
-        status = MAIN_RET_ERROR;
-    }
+    /* Initialize VSCP threads, which processing the VSCP framework and timers. */
+    vscp_thread_init();
 
     /* Initialize temperature simulation */
     temperature_sim_init();
@@ -392,199 +437,11 @@ static MAIN_RET main_init(void)
  */
 static void main_deInit(void)
 {
-    platform_deInit();
-
     eeprom_save(MAIN_EEPROM_FILENAME);
     eeprom_deInit();
 
-    return;
-}
-
-/**
- * This function parses the command line arguments and fills the appropriate structure.
- *
- * @param[out]  cmdLineArgs Command line arguments structure
- * @param[in]   argc        Number of arguments
- * @param[in]   argv        Array of argument strings
- * @return Status
- */
-static MAIN_RET main_getCmdLineArgs(main_CmdLineArgs * const cmdLineArgs, int argc, char ** const argv)
-{
-    MAIN_RET    status  = MAIN_RET_OK;
-
-    if ((NULL == cmdLineArgs) ||
-        (NULL == argv))
-    {
-        return MAIN_RET_ENULL;
-    }
-
-    memset(cmdLineArgs, 0, sizeof(main_CmdLineArgs));
-
-    /* Determine program file name */
-    cmdLineArgs->progName = strrchr(argv[0], '/');
-
-    if (NULL == cmdLineArgs->progName)
-    {
-        cmdLineArgs->progName = strrchr(argv[0], '\\');
-    }
-
-    if (NULL == cmdLineArgs->progName)
-    {
-        cmdLineArgs->progName = argv[0];
-    }
-    else
-    {
-        ++(cmdLineArgs->progName);
-    }
-
-    /* Set network level default value */
-    cmdLineArgs->lvl = VSCP_TP_ADAPTER_LVL_1_OVER_2;
-
-    /* Any further program argument available? */
-    if (1 < argc)
-    {
-        uint32_t    index       = 0;
-        BOOL        abort       = FALSE;
-
-        for(index = 1; index < argc; ++index)
-        {
-            /* Node GUID? */
-            if (0 == strncmp(argv[index], "-guid", 5))
-            {
-                if (16 != sscanf(&argv[index][5],
-                                 "%x:%x:%x:%x:%x:%x:%x:%x:%x:%x:%x:%x:%x:%x:%x:%x",
-                                 &cmdLineArgs->nodeGuid[15],
-                                 &cmdLineArgs->nodeGuid[14],
-                                 &cmdLineArgs->nodeGuid[13],
-                                 &cmdLineArgs->nodeGuid[12],
-                                 &cmdLineArgs->nodeGuid[11],
-                                 &cmdLineArgs->nodeGuid[10],
-                                 &cmdLineArgs->nodeGuid[9],
-                                 &cmdLineArgs->nodeGuid[8],
-                                 &cmdLineArgs->nodeGuid[7],
-                                 &cmdLineArgs->nodeGuid[6],
-                                 &cmdLineArgs->nodeGuid[5],
-                                 &cmdLineArgs->nodeGuid[4],
-                                 &cmdLineArgs->nodeGuid[3],
-                                 &cmdLineArgs->nodeGuid[2],
-                                 &cmdLineArgs->nodeGuid[1],
-                                 &cmdLineArgs->nodeGuid[0]))
-                {
-                    printf("Invalid GUID.\n");
-                    abort = TRUE;
-                }
-                else
-                {
-                    cmdLineArgs->setNodeGuid = TRUE;
-                }
-            }
-            /* Show help? */
-            else if ((0 == strcmp(argv[index], "-h")) ||
-                     (0 == strcmp(argv[index], "--help")))
-            {
-                cmdLineArgs->showHelp = TRUE;
-            }
-            /* Disable node heartbeat? */
-            else if (0 == strcmp(argv[index], "-dheart"))
-            {
-                cmdLineArgs->disableHeartbeat = TRUE;
-            }
-            /* Disable temperature simulation? */
-            else if (0 == strcmp(argv[index], "-dtemp"))
-            {
-                cmdLineArgs->disableTemperature = TRUE;
-            }
-            /* Increase verbose level? */
-            else if (0 == strcmp(argv[index], "-v"))
-            {
-                cmdLineArgs->verbose = TRUE;
-            }
-            /* Support level 1 events? */
-            else if (0 == strcmp(argv[index], "-l1"))
-            {
-                cmdLineArgs->lvl = VSCP_TP_ADAPTER_LVL_1;
-            }
-            /* Support level 1 and level 1 over level 2 events? */
-            else if (0 == strcmp(argv[index], "-l12"))
-            {
-                cmdLineArgs->lvl = VSCP_TP_ADAPTER_LVL_1_OVER_2;
-            }
-            /* Daemon user name? */
-            else if (0 == strncmp(argv[index], "-u", 2))
-            {
-                cmdLineArgs->daemonUser = &argv[index][2];
-
-                if ('\0' == cmdLineArgs->daemonUser[0])
-                {
-                    printf("User name missing.\n");
-                    abort = TRUE;
-                }
-            }
-            /* Daemon password? */
-            else if (0 == strncmp(argv[index], "-p", 2))
-            {
-                cmdLineArgs->daemonPassword = &argv[index][2];
-
-                if ('\0' == cmdLineArgs->daemonPassword[0])
-                {
-                    printf("Password missing.\n");
-                    abort = TRUE;
-                }
-            }
-            /* Unknown option? */
-            else if ('-' == argv[index][0])
-            {
-                printf("Unknown option: %s\n", argv[index]);
-                abort = TRUE;
-            }
-            /* Daemon address? */
-            else if (NULL == cmdLineArgs->daemonAddr)
-            {
-                cmdLineArgs->daemonAddr = argv[index];
-            }
-            else
-            {
-                printf("Unknown option: %s\n", argv[index]);
-                abort = TRUE;
-            }
-
-            if (FALSE != abort)
-            {
-                break;
-            }
-        }
-
-        if (FALSE != abort)
-        {
-            status = MAIN_RET_ERROR;
-        }
-    }
-
-    return status;
-}
-
-/**
- * This function prints the help to the console.
- *
- * @param[in] progName  Program name
- */
-static void main_showHelp(char const * const progName)
-{
-    printf("%s <options> [<daemon ip address>[:<port>]]\n\n", progName);
-    printf("General options:\n");
-    printf("-dheart     Disable node heartbeat\n");
-    printf("-dtemp      Disable node temperature sim\n");
-    printf("-guid<guid> Set node GUID, given in hex\n");
-    printf("-h          Show help\n");
-    printf("--help      Show help\n");
-    printf("-v          Increase verbose level\n");
-    printf("\n");
-    printf("Options only for daemon connection:\n");
-    printf("-l<level>  1: Support L1 events\n");
-    printf("          12: Support L1 and L1 over L2 events (default)\n");
-    printf("-p<pass>  Password for VSCP daemon access\n");
-    printf("-u<user>  User name for VSCP daemon access\n");
-
+    platform_deInit();
+    
     return;
 }
 
@@ -903,19 +760,19 @@ static void main_dumpEEPROM(void)
  * This function contains the main loop where every user key press is
  * interpreted.
  *
- * @param[in] cmdLineArgs   Command line arguments
+ * @param[in] main_cmdLineArgs   Command line arguments
  */
-static void main_loop(main_CmdLineArgs *cmdLineArgs)
+static void main_loop(main_CmdLineArgs *main_cmdLineArgs)
 {
     int     keyValue                = 0;
     BOOL    isNodeHeartbeatEnabled  = TRUE;
 
-    if (NULL == cmdLineArgs)
+    if (NULL == main_cmdLineArgs)
     {
         return;
     }
     
-    if (TRUE == cmdLineArgs->disableHeartbeat)
+    if (TRUE == main_cmdLineArgs->disableHeartbeat)
     {
         isNodeHeartbeatEnabled = FALSE;
     }
@@ -1023,4 +880,65 @@ static void main_loop(main_CmdLineArgs *cmdLineArgs)
     platform_echoOn();
 
     return;
+}
+
+/**
+ * This function is called by the command line parser for every unknown argument.
+ *
+ * @param[in]   userData    User data
+ * @param[in]   arg         Argument name
+ * @param[in]   par         Array of parameter
+ * @param[in]   num         Number of parameters in the array
+ *
+ * @return Status
+ */
+static CMDLINEPARSER_RET main_clpUnknown(void* const userData, char const * const arg, char const * const par)
+{
+    printf("Unknown command line argument: %s\n", arg);
+
+    return CMDLINEPARSER_RET_ERROR;
+}
+
+/**
+ * This function is called by the command line parser for network level.
+ *
+ * @param[in]   userData    User data
+ * @param[in]   arg         Argument name
+ * @param[in]   par         Array of parameter
+ * @param[in]   num         Number of parameters in the array
+ *
+ * @return Status
+ */
+static CMDLINEPARSER_RET main_clpLevel(void* const userData, char const * const arg, char const * const par)
+{
+    CMDLINEPARSER_RET       ret         = CMDLINEPARSER_RET_OK;
+    main_CmdLineArgs* const cmdLineArgs = (main_CmdLineArgs* const)userData;
+    int                     value       = 0;
+    
+    if ((NULL == userData) ||
+        (NULL == arg) ||
+        (NULL == par))
+    {
+        ret = CMDLINEPARSER_RET_ERROR;
+    }
+    else
+    {
+        value = atoi(par);
+        
+        if (1 == value)
+        {
+            cmdLineArgs->lvl = VSCP_TP_ADAPTER_LVL_1;
+        }
+        else if (12 == value)
+        {
+            cmdLineArgs->lvl = VSCP_TP_ADAPTER_LVL_1_OVER_2;
+        }
+        else
+        {
+            printf("Invalid network level %s\n", par);
+            ret = CMDLINEPARSER_RET_ERROR;
+        }
+    }
+
+    return ret;
 }

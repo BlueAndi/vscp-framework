@@ -93,10 +93,8 @@ typedef enum
 
 /**
  * This function intializes the module.
- *
- * @return Status
  */
-extern VSCP_THREAD_RET vscp_thread_init(void);
+extern void vscp_thread_init(void);
 
 /**
  * This function starts the VSCP threads.

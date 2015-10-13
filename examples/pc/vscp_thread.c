@@ -105,36 +105,24 @@ static vscp_thread_Context  vscp_thread_timerThrdData;
 
 /**
  * This function intializes the module.
- *
- * @return Status
  */
-extern VSCP_THREAD_RET vscp_thread_init(void)
+extern void vscp_thread_init(void)
 {
-    VSCP_THREAD_RET status  = VSCP_THREAD_RET_OK;
+    /* Clear thread data */
+    memset(&vscp_thread_frameworkThrdData, 0, sizeof(vscp_thread_frameworkThrdData));
+    memset(&vscp_thread_timerThrdData, 0, sizeof(vscp_thread_timerThrdData));
 
-    /* Initialize the VSCP framework */
-    if (VSCP_CORE_RET_OK != vscp_core_init())
-    {
-        status = VSCP_THREAD_RET_ERROR;
-    }
-    else
-    {
-        /* Clear thread data */
-        memset(&vscp_thread_frameworkThrdData, 0, sizeof(vscp_thread_frameworkThrdData));
-        memset(&vscp_thread_timerThrdData, 0, sizeof(vscp_thread_timerThrdData));
+    /* Set error value here, to be able to check if vscp_thread_start is called and
+     * the threads are already started.
+     */
+    vscp_thread_frameworkThrdData.status    = 1;
+    vscp_thread_timerThrdData.status        = 1;
 
-        /* Set error value here, to be able to check if vscp_thread_start is called and
-         * the threads are already started.
-         */
-        vscp_thread_frameworkThrdData.status    = 1;
-        vscp_thread_timerThrdData.status        = 1;
+    /* Set mutex */
+    vscp_thread_frameworkThrdData.mutex = &vscp_thread_mutex;
+    vscp_thread_timerThrdData.mutex     = &vscp_thread_mutex;
 
-        /* Set mutex */
-        vscp_thread_frameworkThrdData.mutex = &vscp_thread_mutex;
-        vscp_thread_timerThrdData.mutex     = &vscp_thread_mutex;
-    }
-
-    return status;
+    return;
 }
 
 /**
