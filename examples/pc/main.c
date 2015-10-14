@@ -341,7 +341,7 @@ int main(int argc, char* argv[])
                 {
                     for(index = 0; index < MAIN_ARRAY_NUM(nodeGuid); ++index)
                     {
-                        vscp_ps_writeGUID(index, nodeGuid[index]);
+                        vscp_ps_writeGUID(MAIN_ARRAY_NUM(nodeGuid) - index - 1, nodeGuid[index]);
                     }
                 }
             }
