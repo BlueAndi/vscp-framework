@@ -820,12 +820,12 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
         txEvent.sizeData    = 8;
         txEvent.data[0]     = progCon->nodeId;
         txEvent.data[1]     = progCon->bootLoaderAlgo;
-        txEvent.data[2]     = 0;
-        txEvent.data[3]     = 0;
-        txEvent.data[4]     = 0;
-        txEvent.data[5]     = 0;
-        txEvent.data[6]     = 0;
-        txEvent.data[7]     = 0;
+        txEvent.data[2]     = progCon->nodeGuid[0];
+        txEvent.data[3]     = progCon->nodeGuid[3];
+        txEvent.data[4]     = progCon->nodeGuid[5];
+        txEvent.data[5]     = progCon->nodeGuid[7];
+        txEvent.data[6]     = 0;    /* Register 0x92, page select msb */
+        txEvent.data[7]     = 0;    /* Register 0x93, page select lsb */
 
         if (VSCP_ERROR_SUCCESS != vscphlp_sendEventEx(hSession, &txEvent))
         {
