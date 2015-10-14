@@ -17,6 +17,7 @@ Bugfixes:
     - Fixed a wrong compare in the shutter position detection.
     
   - PC example
+    - Setting the GUID via command line argument fixed.
     - Fixed wrong compares for a empty strings.
     
 ## 0.4.0
