@@ -330,7 +330,7 @@ int main(int argc, char* argv[])
             /* Shall the node GUID be set? */
             if (NULL != main_cmdLineArgs.nodeGuid)
             {
-                uint8_t nodeGuid[16];
+                uint8_t nodeGuid[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
                 
                 /* Convert node GUID from string */
                 if (VSCP_ERROR_SUCCESS != vscphlp_getGuidFromStringToArray(nodeGuid, main_cmdLineArgs.nodeGuid))
