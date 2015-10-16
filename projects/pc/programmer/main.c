@@ -142,7 +142,9 @@ typedef struct _main_Msg
 /** This type defines the programming state machine. */
 typedef enum
 {
-    MAIN_PRG_STATE_ENTER_BOOT_LOADER_MODE = 0,  /**< Enter boot loader mode */
+    MAIN_PRG_STATE_READ_REG_PAGE_SELECT = 0,    /**< Read page select register */
+    MAIN_PRG_STATE_READ_REG_PAGE_SELECT_RSP,    /**< Wait for read page select register response */
+    MAIN_PRG_STATE_ENTER_BOOT_LOADER_MODE,      /**< Enter boot loader mode */
     MAIN_PRG_STATE_ENTER_BOOT_LOADER_MODE_ACK,  /**< Wait for enter boot loader mode acknowledge */
     MAIN_PRG_STATE_START_BLOCK_TRANSFER,        /**< Start block transfer */
     MAIN_PRG_STATE_START_BLOCK_TRANSFER_ACK,    /**< Wait for start block transfer acknowledge */
@@ -166,6 +168,7 @@ typedef struct
     uint8_t         nodeGuid[16];       /**< Node GUID */
     uint8_t         bootLoaderAlgo;     /**< Boot loader algorithm */
 
+    uint16_t        pageSelect;         /**< Register page select content */
     uint32_t        blockSize;          /**< Block size in byte, received from the remote node */
     uint32_t        blockNum;           /**< Number of blocks, received from the remote node */
     uint32_t        blockIndex;         /**< Current block index, which is transfered */
@@ -810,6 +813,53 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
     /* Process programming state machine */
     switch(progCon->state)
     {
+    case MAIN_PRG_STATE_READ_REG_PAGE_SELECT:
+        log_printf("Read register page select.\n");
+        
+        txEvent.vscp_class  = VSCP_CLASS1_PROTOCOL;
+        txEvent.vscp_type   = VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_READ;
+        txEvent.head        = VSCP_PRIORITY_0 << 5;
+        txEvent.sizeData    = 5;
+        txEvent.data[0]     = progCon->nodeId;
+        txEvent.data[1]     = 0;    /* MSB page 0 */
+        txEvent.data[2]     = 0;    /* LSB page 0 */
+        txEvent.data[3]     = 0x92; /* Page select register */
+        txEvent.data[4]     = 2;    /* Page select is a 16-bit value */
+
+        if (VSCP_ERROR_SUCCESS != vscphlp_sendEventEx(hSession, &txEvent))
+        {
+            log_printf("Error!\n");
+            
+            progCon->state = MAIN_PRG_STATE_ERROR;
+        }
+        else
+        {
+            log_printf("Wait for response.\n");
+
+            progCon->state = MAIN_PRG_STATE_READ_REG_PAGE_SELECT_RSP;
+        }
+        
+        break;
+        
+    case MAIN_PRG_STATE_READ_REG_PAGE_SELECT_RSP:
+        if ((NULL != rxEvent) &&
+            (VSCP_CLASS1_PROTOCOL == rxEvent->vscp_class))
+        {
+            if ((VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_RESPONSE == rxEvent->vscp_type) &&
+                (6 == rxEvent->sizeData))
+            {
+                log_printf("Response received.\n");
+
+                /* Reconstruct selected page */
+                progCon->pageSelect = rxEvent->data[4];
+                progCon->pageSelect <<= 8;
+                progCon->pageSelect |= rxEvent->data[5];
+
+                progCon->state = MAIN_PRG_STATE_ENTER_BOOT_LOADER_MODE;
+            }
+        }
+        break;
+        
     case MAIN_PRG_STATE_ENTER_BOOT_LOADER_MODE:
 
         log_printf("Enter boot loader mode.\n");
@@ -824,12 +874,14 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
         txEvent.data[3]     = progCon->nodeGuid[3];
         txEvent.data[4]     = progCon->nodeGuid[5];
         txEvent.data[5]     = progCon->nodeGuid[7];
-        txEvent.data[6]     = 0;    /* Register 0x92, page select msb */
-        txEvent.data[7]     = 0;    /* Register 0x93, page select lsb */
+        txEvent.data[6]     = (progCon->pageSelect >> 8) & 0xff;    /* Register 0x92, page select msb */
+        txEvent.data[7]     = (progCon->pageSelect >> 0) & 0xff;    /* Register 0x93, page select lsb */
 
         if (VSCP_ERROR_SUCCESS != vscphlp_sendEventEx(hSession, &txEvent))
         {
             log_printf("Error!\n");
+            
+            progCon->state = MAIN_PRG_STATE_ERROR;
         }
         else
         {
@@ -843,7 +895,8 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
         if ((NULL != rxEvent) &&
             (VSCP_CLASS1_PROTOCOL == rxEvent->vscp_class))
         {
-            if (VSCP_TYPE_PROTOCOL_ACK_BOOT_LOADER == rxEvent->vscp_type)
+            if ((VSCP_TYPE_PROTOCOL_ACK_BOOT_LOADER == rxEvent->vscp_type) &&
+                (8 == rxEvent->sizeData))
             {
                 log_printf("Node entered boot loader mode.\n");
 
@@ -867,7 +920,8 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
 
                 progCon->state = MAIN_PRG_STATE_START_BLOCK_TRANSFER;
             }
-            else if (VSCP_TYPE_PROTOCOL_NACK_BOOT_LOADER == rxEvent->vscp_type)
+            else if ((VSCP_TYPE_PROTOCOL_NACK_BOOT_LOADER == rxEvent->vscp_type) &&
+                     (1 == rxEvent->sizeData))
             {
                 log_printf("Node failed to enter boot loader mode.\n");
 
@@ -899,6 +953,8 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
         if (VSCP_ERROR_SUCCESS != vscphlp_sendEventEx(hSession, &txEvent))
         {
             log_printf("Error!\n");
+            
+            progCon->state = MAIN_PRG_STATE_ERROR;
         }
         else
         {
@@ -912,7 +968,8 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
         if ((NULL != rxEvent) &&
             (VSCP_CLASS1_PROTOCOL == rxEvent->vscp_class))
         {
-            if (VSCP_TYPE_PROTOCOL_START_BLOCK_ACK == rxEvent->vscp_type)
+            if ((VSCP_TYPE_PROTOCOL_START_BLOCK_ACK == rxEvent->vscp_type) &&
+                (0 == rxEvent->sizeData))
             {
                 log_printf("Start block transfer acknowleded.\n");
 
@@ -928,7 +985,8 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
 
                 progCon->state = MAIN_PRG_STATE_BLOCK_DATA;
             }
-            else if (VSCP_TYPE_PROTOCOL_START_BLOCK_NACK == rxEvent->vscp_type)
+            else if ((VSCP_TYPE_PROTOCOL_START_BLOCK_NACK == rxEvent->vscp_type) &&
+                     (0 == rxEvent->sizeData))
             {
                 log_printf("Failed to start block transfer.\n");
 
@@ -977,6 +1035,8 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
             if (VSCP_ERROR_SUCCESS != vscphlp_sendEventEx(hSession, &txEvent))
             {
                 log_printf("Error!\n");
+                
+                progCon->state = MAIN_PRG_STATE_ERROR;
             }
             else
             {
@@ -997,7 +1057,8 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
         if ((NULL != rxEvent) &&
             (VSCP_CLASS1_PROTOCOL == rxEvent->vscp_class))
         {
-            if (VSCP_TYPE_PROTOCOL_BLOCK_DATA_ACK == rxEvent->vscp_type)
+            if ((VSCP_TYPE_PROTOCOL_BLOCK_DATA_ACK == rxEvent->vscp_type) &&
+                (6 == rxEvent->sizeData))
             {
                 Crc16CCITT  receivedCrc = 0;
 
@@ -1024,7 +1085,8 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
                     progCon->state = MAIN_PRG_STATE_PROGRAM_BLOCK;
                 }
             }
-            else if (VSCP_TYPE_PROTOCOL_BLOCK_DATA_NACK == rxEvent->vscp_type)
+            else if ((VSCP_TYPE_PROTOCOL_BLOCK_DATA_NACK == rxEvent->vscp_type) &&
+                     (5 == rxEvent->sizeData))
             {
                 log_printf("Block transfer failed.\n");
                 log_printf("Error code: %u\n", rxEvent->data[0]);
@@ -1073,6 +1135,8 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
         if (VSCP_ERROR_SUCCESS != vscphlp_sendEventEx(hSession, &txEvent))
         {
             log_printf("Error!\n");
+            
+            progCon->state = MAIN_PRG_STATE_ERROR;
         }
         else
         {
@@ -1086,7 +1150,8 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
         if ((NULL != rxEvent) &&
             (VSCP_CLASS1_PROTOCOL == rxEvent->vscp_class))
         {
-            if (VSCP_TYPE_PROTOCOL_PROGRAM_BLOCK_DATA_ACK == rxEvent->vscp_type)
+            if ((VSCP_TYPE_PROTOCOL_PROGRAM_BLOCK_DATA_ACK == rxEvent->vscp_type) &&
+                (4 == rxEvent->sizeData))
             {
                 log_printf("Block %u successful programmed.\n", progCon->blockIndex);
 
@@ -1103,7 +1168,8 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
                     progCon->state = MAIN_PRG_STATE_START_BLOCK_TRANSFER;
                 }
             }
-            else if (VSCP_TYPE_PROTOCOL_PROGRAM_BLOCK_DATA_NACK == rxEvent->vscp_type)
+            else if ((VSCP_TYPE_PROTOCOL_PROGRAM_BLOCK_DATA_NACK == rxEvent->vscp_type) &&
+                     (5 == rxEvent->sizeData))
             {
                 log_printf("Block %u failed to program.\n", progCon->blockIndex);
                 log_printf("Error code: %u\n", rxEvent->data[0]);
@@ -1130,6 +1196,8 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
         if (VSCP_ERROR_SUCCESS != vscphlp_sendEventEx(hSession, &txEvent))
         {
             log_printf("Error!\n");
+            
+            progCon->state = MAIN_PRG_STATE_ERROR;
         }
         else
         {
