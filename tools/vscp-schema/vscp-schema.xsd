@@ -107,9 +107,14 @@ This xml schema defines the VSCP protocol format.
     		<xsd:element name="description" type="xsd:string"
     			maxOccurs="1" minOccurs="0">
     		</xsd:element>
-    		<xsd:element name="symbol" maxOccurs="1" minOccurs="1" type="vscp:symbol-type">
+    		<xsd:element name="symbol" maxOccurs="1" minOccurs="1"
+    			type="vscp:symbol-type">
+
     		</xsd:element>
-    		<xsd:element name="frames" type="vscp:frames-type" maxOccurs="1" minOccurs="1"></xsd:element>
+    		<xsd:element name="frames" type="vscp:frames-type"
+    			maxOccurs="1" minOccurs="1">
+    		</xsd:element>
+    		<xsd:element name="optional" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
     	</xsd:sequence>
     	<xsd:attribute name="id" type="xsd:unsignedByte" use="required"></xsd:attribute>
     </xsd:complexType>
@@ -165,7 +170,10 @@ This xml schema defines the VSCP protocol format.
     		<xsd:element name="symbol" type="vscp:symbol-type"
     			maxOccurs="1" minOccurs="1">
     		</xsd:element>
-    		<xsd:element name="elements" type="vscp:elements-type" maxOccurs="1" minOccurs="1"></xsd:element>
+    		<xsd:element name="elements" type="vscp:elements-type"
+    			maxOccurs="1" minOccurs="1">
+    		</xsd:element>
+    		<xsd:element name="optional" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
     	</xsd:sequence>
     	<xsd:attribute name="pos" type="xsd:unsignedInt"
     		use="required">
