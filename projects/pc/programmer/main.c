@@ -125,6 +125,7 @@ typedef struct
     char const *    nodeId;         /**< Nickname of the node, which shall be programmed */
     char const *    nodeGuid;       /**< GUID of the node, which shall be programmed */
     char const *    bootLoaderAlgo; /**< Boot loader algorithm */
+    char const *    pageSelect;     /**< Register page select value, used for enter boot loader event */
     BOOL            showHelp;       /**< Show help to the user */
     BOOL            verbose;        /**< Verbose output */
 
@@ -208,9 +209,11 @@ static main_CmdLineArgs         main_cmdLineArgs    =
     NULL,   /* Daemon address */
     NULL,   /* Daemon user name */
     NULL,   /* Daemon password */
+    NULL,   /* File name of a intel hex format file */
     NULL,   /* Node id */
     NULL,   /* Node GUID */
     NULL,   /* Boot loader algorithm */
+    NULL,   /* Register page select value */
     FALSE,  /* Show help */
     FALSE   /* Verbose output */
 };
@@ -226,10 +229,11 @@ static const cmdLineParser_Arg  main_clpConfig[]    =
     { "-a <ip-address>",            &main_cmdLineArgs.daemonAddr,       NULL,                       NULL,               NULL,   "IP address of VSCP daemon"                         },
     { "-b <algorithm>",             &main_cmdLineArgs.bootLoaderAlgo,   NULL,                       NULL,               NULL,   "Boot load algorithm (default 0)"                   },
     { "-f <file name>",             &main_cmdLineArgs.iHexFileName,     NULL,                       NULL,               NULL,   "Intel hex format file"                             },
-    { "-g <guid>",                  &main_cmdLineArgs.nodeGuid,         NULL,                       NULL,               NULL,   "Node GUID,\ne.g. 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01"  },
+    { "-g <guid>",                  &main_cmdLineArgs.nodeGuid,         NULL,                       NULL,               NULL,   "Node GUID,\ne.g. 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01"          },
     { "-h --help",                  NULL,                               &main_cmdLineArgs.showHelp, NULL,               NULL,   "Show help"                                         },
     { "-n <node nickname>",         &main_cmdLineArgs.nodeId,           NULL,                       NULL,               NULL,   "Nickname of the node, which shall be programmed."  },
     { "-p <password>",              &main_cmdLineArgs.daemonPassword,   NULL,                       NULL,               NULL,   "Password for VSCP daemon access"                   },
+    { "-ps <page select value>",    &main_cmdLineArgs.pageSelect,       NULL,                       NULL,               NULL,   "Use the given page select register value\nfor enter boot loader event."    },
     { "-u <user>",                  &main_cmdLineArgs.daemonUser,       NULL,                       NULL,               NULL,   "User name for VSCP daemon access"                  },
     { "-v",                         NULL,                               &main_cmdLineArgs.verbose,  NULL,               NULL,   "Increase verbose level"                            }
 };
@@ -520,6 +524,20 @@ static MAIN_RET main_programming(long hSession, intelHexParser_Record* recSet, u
             return MAIN_RET_ERROR;
         }
         progCon.bootLoaderAlgo = tmp;
+    }
+    
+    /* Is a page select value available? */
+    if (NULL != main_cmdLineArgs.pageSelect)
+    {
+        /* Convert page select value from string */
+        tmp = atoi(main_cmdLineArgs.pageSelect);
+        if ((0x0000 > tmp) ||
+            (0xffff < tmp))
+        {
+            printf("Invalid page select value.\n");
+            return MAIN_RET_ERROR;
+        }
+        progCon.state = MAIN_PRG_STATE_ENTER_BOOT_LOADER_MODE;
     }
 
     platform_echoOff();
@@ -1014,7 +1032,7 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
             ++txEvent.sizeData;
 
             /* Next record? */
-            if (recSet[progCon->recIndex].dataSize >= progCon->recDataIndex)
+            if (recSet[progCon->recIndex].dataSize <= progCon->recDataIndex)
             {
                 ++progCon->recIndex;
                 progCon->recDataIndex = 0;
