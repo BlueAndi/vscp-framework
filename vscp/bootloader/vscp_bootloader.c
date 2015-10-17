@@ -272,10 +272,10 @@ static void vscp_bootloader_simApp(void)
                 case VSCP_TYPE_PROTOCOL_ENTER_BOOT_LOADER_MODE:
                     /* Is this event for this node? */
                     if ((vscp_bootloader_nickname == rxMsg.data[0]) &&
-                        (vscp_bl_adapter_readGUID(0) == rxMsg.data[2]) &&
-                        (vscp_bl_adapter_readGUID(3) == rxMsg.data[3]) &&
-                        (vscp_bl_adapter_readGUID(5) == rxMsg.data[4]) &&
-                        (vscp_bl_adapter_readGUID(7) == rxMsg.data[5]))
+                        (vscp_bl_adapter_readGUID(15 - 0) == rxMsg.data[2]) &&
+                        (vscp_bl_adapter_readGUID(15 - 3) == rxMsg.data[3]) &&
+                        (vscp_bl_adapter_readGUID(15 - 5) == rxMsg.data[4]) &&
+                        (vscp_bl_adapter_readGUID(15 - 7) == rxMsg.data[5]))
                     {
                         /* Is the bootloader programming algorithm supported? */
                         if (VSCP_BOOTLOADER_ALGORITHM == rxMsg.data[1])
