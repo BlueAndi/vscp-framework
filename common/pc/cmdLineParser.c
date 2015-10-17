@@ -435,10 +435,11 @@ static cmdLineParser_Arg const * cmdLineParser_find(cmdLineParser_Arg const * co
  */
 static uint32_t cmdLineParser_getNameMaxLen(cmdLineParser_Arg const * const config, uint32_t num)
 {
-    uint32_t                    index   = 0;
-    cmdLineParser_Arg const *   arg     = NULL;
-    char const *                ptr     = NULL;
-    uint32_t                    max     = 0;
+    uint32_t                    index       = 0;
+    cmdLineParser_Arg const *   arg         = NULL;
+    char const *                ptr         = NULL;
+    uint32_t                    max         = 0;
+    BOOL                        parFound    = FALSE;
     
     if (NULL != config)
     {
@@ -462,11 +463,30 @@ static uint32_t cmdLineParser_getNameMaxLen(cmdLineParser_Arg const * const conf
                     {
                         ++len;
                         
+                        /* Parameter end found? */
+                        if ((TRUE == parFound) &&
+                            ('>' == ptr[len]))
+                        {
+                            parFound = FALSE;
+                        }
+                        /* Parameter found? */
+                        else if ((FALSE == parFound) &&
+                                 ('<' == ptr[len]))
+                        {
+                            parFound = TRUE;
+                        }
                         /* Delimiter found? */
-                        if (CMDLINEPARSER_NAME_DELIMITER == ptr[len])
+                        else if (CMDLINEPARSER_NAME_DELIMITER == ptr[len])
                         {
                             /* Does a parameter follow? */
                             if ('<' == ptr[len + 1])
+                            {
+                                ++len;
+                                
+                                parFound = TRUE;
+                            }
+                            /* Inside a parameter? */
+                            else if (TRUE == parFound)
                             {
                                 ++len;
                             }
