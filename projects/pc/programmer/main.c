@@ -546,6 +546,9 @@ static MAIN_RET main_programming(long hSession, intelHexParser_Record* recSet, u
         }
         progCon.state = MAIN_PRG_STATE_ENTER_BOOT_LOADER_MODE;
     }
+    
+    /* Fill block up? */
+    progCon.fillBlock = main_cmdLineArgs.fillBlock;
 
     platform_echoOff();
 
@@ -1064,6 +1067,7 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
                 log_printf("Less number of intel hex records (%u).\n", recNum);
 
                 progCon->state = MAIN_PRG_STATE_ERROR;
+                break;
             }
         }
 
