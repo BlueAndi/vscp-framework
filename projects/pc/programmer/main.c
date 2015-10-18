@@ -1276,6 +1276,14 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
         log_printf("Programming aborted, caused by an error.\n");
         log_printf("Wait for user action.\n");
 
+        txEvent.vscp_class  = VSCP_CLASS1_PROTOCOL;
+        txEvent.vscp_type   = VSCP_TYPE_PROTOCOL_DROP_NICKNAME;
+        txEvent.head        = VSCP_PRIORITY_0 << 5;
+        txEvent.sizeData    = 1;
+        txEvent.data[0]     = progCon->nodeId;
+
+        (void)vscphlp_sendEventEx(hSession, &txEvent);
+        
         progCon->state = MAIN_PRG_STATE_IDLE;
         break;
 
