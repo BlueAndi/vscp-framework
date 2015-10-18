@@ -4,6 +4,7 @@ Features:
 
   - VSCP framework
     - CLASS1_INFORMATION, Type = 9 (0x09) Node Heartbeat is now mandatory for all Level I nodes. Default period is set to 30s.
+    - Bootloader can now handle shorter images too, but the image size has to be a multiple of the block size.
 
   - PC VSCP event logger for the command line introduced.
   - PC VSCP L1 programmer for the command line introduced.
