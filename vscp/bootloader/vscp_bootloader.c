@@ -101,7 +101,6 @@ typedef struct
     uint32_t    programBlockNumber; /**< Block number to program */
     uint8_t     pageBufferIndex;    /**< Current index in the page buffer */
     BOOL        programmingStarted; /**< Programming started or not */
-    uint16_t    writtenBlocks;      /**< Number of written blocks */
 
 } vscp_bootloader_ProgParam;
 
@@ -113,7 +112,7 @@ static void vscp_bootloader_simApp(void);
 static void vscp_bootloader_sendNewNodeOnlineEvent(void);
 static void vscp_bootloader_sendAckEnterBootLoader(uint32_t pageSize, uint32_t numPages);
 static void vscp_bootloader_sendNakEnterBootLoader(uint8_t errorCode);
-static BOOL vscp_bootloader_programmingProcedure(void);
+static void vscp_bootloader_programmingProcedure(void);
 static void vscp_bootloader_handleProtocolStartBlockDataTransfer(vscp_RxMessage const * const rxMsg, vscp_bootloader_ProgParam * const progParam);
 static void vscp_bootloader_handleProtocolBlockData(vscp_RxMessage const * const rxMsg, vscp_bootloader_ProgParam * const progParam);
 static void vscp_bootloader_handleProtocolProgramDataBlock(vscp_RxMessage const * const rxMsg, vscp_bootloader_ProgParam * const progParam);
@@ -126,7 +125,7 @@ static void vscp_bootloader_sendAckProgramBlockData(uint32_t blockNumber);
 static void vscp_bootloader_sendNakProgramBlockData(uint8_t errorCode, uint32_t blockNumber);
 static void vscp_bootloader_sendAckActivateNewImage(void);
 static void vscp_bootloader_sendNakActivateNewImage(void);
-static void vscp_bootloader_waitForActivate(void);
+static BOOL vscp_bootloader_handleProtocolActivateNewImage(vscp_RxMessage const * const rxMsg, vscp_bootloader_ProgParam * const progParam);
 
 /*******************************************************************************
     LOCAL VARIABLES
@@ -214,11 +213,7 @@ extern void vscp_bootloader_run(void)
     vscp_bootloader_sendAckEnterBootLoader(VSCP_PLATFORM_FLASH_PAGE_SIZE, VSCP_PLATFORM_FLASH_NUM_PAGES);
 
     /* Programming procedure */
-    if (FALSE == vscp_bootloader_programmingProcedure())
-    {
-        /* Wait for activate new image */
-        vscp_bootloader_waitForActivate();
-    }
+    vscp_bootloader_programmingProcedure();
 
     /* Set lamp off */
     vscp_bl_adapter_enableLamp(FALSE);
@@ -378,19 +373,14 @@ static void vscp_bootloader_sendNakEnterBootLoader(uint8_t errorCode)
 /**
  * This function process the programming procedure. It will block until the
  * programming procedure is finished or stopped by the remote host.
- *
- * @return Programming procedure successful or aborted
- * @retval FALSE    Successful
- * @retval TRUE     Aborted
  */
-static BOOL vscp_bootloader_programmingProcedure(void)
+static void vscp_bootloader_programmingProcedure(void)
 {
-    BOOL                        abortFlag       = FALSE;
-    BOOL                        stopProgramming = FALSE;    /* Stop programming procedure */
-    vscp_bootloader_ProgParam   progParam       = { vscp_bootloader_pageBuffer, 0, 0, 0, TRUE, 0 };
+    BOOL                        abortFlag   = FALSE;
+    vscp_bootloader_ProgParam   progParam   = { vscp_bootloader_pageBuffer, 0, 0, 0, TRUE };
     vscp_RxMessage              rxMsg;
 
-    /* Only with a "drop nickname/reset device" event we can leave. */
+    /* Only with a "activate new image" or "drop nickname/reset device" event we can leave. */
     do
     {
         if (TRUE == vscp_tp_adapter_readMessage(&rxMsg))
@@ -409,12 +399,10 @@ static BOOL vscp_bootloader_programmingProcedure(void)
 
                 case VSCP_TYPE_PROTOCOL_PROGRAM_DATA_BLOCK:
                     vscp_bootloader_handleProtocolProgramDataBlock(&rxMsg, &progParam);
-
-                    /* Complete application written? */
-                    if (VSCP_PLATFORM_FLASH_NUM_PAGES <= progParam.writtenBlocks)
-                    {
-                        stopProgramming = TRUE;
-                    }
+                    break;
+                
+                case VSCP_TYPE_PROTOCOL_ACTIVATE_NEW_IMAGE:
+                    abortFlag = vscp_bootloader_handleProtocolActivateNewImage(&rxMsg, &progParam);
                     break;
 
                 case VSCP_TYPE_PROTOCOL_DROP_NICKNAME_ID:
@@ -427,9 +415,9 @@ static BOOL vscp_bootloader_programmingProcedure(void)
             }
         }
     }
-    while((FALSE == stopProgramming) && (FALSE == abortFlag));
+    while(FALSE == abortFlag);
 
-    return abortFlag;
+    return;
 }
 
 /**
@@ -590,8 +578,6 @@ static void vscp_bootloader_handleProtocolProgramDataBlock(vscp_RxMessage const 
             vscp_bl_adapter_programPage(progParam->blockNumber, progParam->pageBuffer);
 
             vscp_bootloader_sendAckProgramBlockData(progParam->blockNumber);
-
-            ++progParam->writtenBlocks;
         }
     }
 
@@ -810,64 +796,62 @@ static void vscp_bootloader_sendNakActivateNewImage(void)
 }
 
 /**
- * This function waits for new image activation.
+ * This function handles the activate new image event.
+ *
+ * @param[in]   rxMsg       Received message
+ * @param[in]   progParam   Programming parameter
+ *
+ * @return New image successful received or not.
+ * @retval FALSE    Failed to activate new image
+ * @retval TRUE     New image successful activated
  */
-static void vscp_bootloader_waitForActivate(void)
+static BOOL vscp_bootloader_handleProtocolActivateNewImage(vscp_RxMessage const * const rxMsg, vscp_bootloader_ProgParam * const progParam)
 {
-    BOOL            success = FALSE;
-    vscp_RxMessage  rxMsg;
-
-    /* Wait for activate new image */
-    do
+    BOOL    success = FALSE;
+    
+    if ((NULL == rxMsg) ||
+        (NULL == progParam))
     {
-        if (TRUE == vscp_tp_adapter_readMessage(&rxMsg))
+        return success;
+    }
+
+    if (2 != rxMsg->dataNum)
+    {
+        vscp_bootloader_sendNakActivateNewImage();
+    }
+    else
+    {
+        Crc16CCITT  crcReceived     = 0;
+        Crc16CCITT  crcCalculated   = crc16ccitt_init();
+        uint16_t    index           = 0;
+
+        /* Calculate CRC from 0 to the last programmed block (inclusive) */
+        for(index = 0; index <= (VSCP_PLATFORM_FLASH_PAGE_SIZE * progParam->programBlockNumber); ++index)
         {
-            if (VSCP_CLASS_L1_PROTOCOL == rxMsg.vscpClass)
-            {
-                if ((VSCP_TYPE_PROTOCOL_ACTIVATE_NEW_IMAGE == rxMsg.vscpType) &&
-                    (2 == rxMsg.dataNum))
-                {
-                    Crc16CCITT  crcReceived     = 0;
-                    Crc16CCITT  crcCalculated   = crc16ccitt_init();
-                    uint16_t    index           = 0;
+            uint8_t data = vscp_bl_adapter_readProgMem(index);
 
-                    for(index = 0; index < (VSCP_PLATFORM_FLASH_PAGE_SIZE * VSCP_PLATFORM_FLASH_NUM_PAGES); ++index)
-                    {
-                        uint8_t data = vscp_bl_adapter_readProgMem(index);
+            crcCalculated = crc16ccitt_update(crcCalculated, &data, 1);
+        }
 
-                        crcCalculated = crc16ccitt_update(crcCalculated, &data, 1);
-                    }
+        crcCalculated = crc16ccitt_finalize(crcCalculated);
 
-                    crcCalculated = crc16ccitt_finalize(crcCalculated);
+        crcReceived  = ((uint16_t)rxMsg->data[0]) << 8u;
+        crcReceived |= ((uint16_t)rxMsg->data[1]) << 0u;
 
-                    crcReceived  = ((uint16_t)rxMsg.data[0]) << 8u;
-                    crcReceived |= ((uint16_t)rxMsg.data[1]) << 0u;
+        if (crcReceived != crcCalculated)
+        {
+            vscp_bootloader_sendNakActivateNewImage();
+        }
+        else
+        {
+            /* Write boot destination */
+            vscp_bl_adapter_writeBootFlag(VSCP_BOOT_FLAG_APPLICATION);
 
-                    if (crcReceived != crcCalculated)
-                    {
-                        vscp_bootloader_sendNakActivateNewImage();
+            vscp_bootloader_sendAckActivateNewImage();
 
-                        /* Set lamp off */
-                        vscp_bl_adapter_enableLamp(FALSE);
-
-                        /* Bad situation, it seems that the application is bad. */
-                        vscp_bl_adapter_halt();
-                        /* This line will never be reached. */
-                    }
-                    else
-                    {
-                        /* Write boot destination */
-                        vscp_bl_adapter_writeBootFlag(VSCP_BOOT_FLAG_APPLICATION);
-
-                        vscp_bootloader_sendAckActivateNewImage();
-
-                        success = TRUE;
-                    }
-                }
-            }
+            success = TRUE;
         }
     }
-    while(FALSE == success);
-
-    return;
+    
+    return success;
 }
