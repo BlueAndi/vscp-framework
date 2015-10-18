@@ -1260,6 +1260,8 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
             if (VSCP_TYPE_PROTOCOL_ACTIVATE_NEW_IMAGE_ACK == rxEvent->vscp_type)
             {
                 log_printf("New image activated.\n");
+                
+                progCon->state = MAIN_PRG_STATE_IDLE;
             }
             else if (VSCP_TYPE_PROTOCOL_ACTIVATE_NEW_IMAGE_NACK == rxEvent->vscp_type)
             {
