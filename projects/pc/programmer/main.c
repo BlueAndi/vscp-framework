@@ -81,6 +81,9 @@ This module contains the main entry point.
 /** Max. number of block transfer retries. */
 #define MAIN_MAX_BLOCK_TRANSFER_RETRIES 3
 
+/** Fill byte */
+#define MAIN_BLOCK_FILL_BYTE            (0x00)
+
 /*******************************************************************************
     MACROS
 *******************************************************************************/
@@ -128,6 +131,7 @@ typedef struct
     char const *    pageSelect;     /**< Register page select value, used for enter boot loader event */
     BOOL            showHelp;       /**< Show help to the user */
     BOOL            verbose;        /**< Verbose output */
+    BOOL            fillBlock;      /**< If set, the last block will be filled with a fill byte. */
 
 } main_CmdLineArgs;
 
@@ -174,6 +178,7 @@ typedef struct
     uint32_t        blockNum;           /**< Number of blocks, received from the remote node */
     uint32_t        blockIndex;         /**< Current block index, which is transfered */
     uint32_t        blockFragmentIndex; /**< Current block fragment index, which is transfered */
+    BOOL            fillBlock;          /**< If set, the last block will be filled with a fill byte. */
     uint32_t        recIndex;           /**< Current used intel hex record */
     uint32_t        recDataIndex;       /**< Current intel hex record data index */
     Crc16CCITT      crcCalculated;      /**< Calculated CRC over the whole image */
@@ -215,27 +220,29 @@ static main_CmdLineArgs         main_cmdLineArgs    =
     NULL,   /* Boot loader algorithm */
     NULL,   /* Register page select value */
     FALSE,  /* Show help */
-    FALSE   /* Verbose output */
+    FALSE,  /* Verbose output */
+    FALSE   /* Fill block */
 };
 
 /** Configuration for the command line parser. */
 static const cmdLineParser_Arg  main_clpConfig[]    =
 {
     /* Special to retrieve the program name without path */
-    { CMDLINEPARSER_PROG_NAME_WP,   &main_cmdLineArgs.progName,         NULL,                       NULL,               NULL,   NULL                                                },
+    { CMDLINEPARSER_PROG_NAME_WP,   &main_cmdLineArgs.progName,         NULL,                           NULL,               NULL,   NULL                                                },
     /* Get every unknown command line argument */
-    { CMDLINEPARSER_UNKONWN,        NULL,                               NULL,                       main_clpUnknown,    NULL,   NULL                                                },
+    { CMDLINEPARSER_UNKONWN,        NULL,                               NULL,                           main_clpUnknown,    NULL,   NULL                                                },
     /* Possible command line arguments */
-    { "-a <ip-address>",            &main_cmdLineArgs.daemonAddr,       NULL,                       NULL,               NULL,   "IP address of VSCP daemon"                         },
-    { "-b <algorithm>",             &main_cmdLineArgs.bootLoaderAlgo,   NULL,                       NULL,               NULL,   "Boot load algorithm (default 0)"                   },
-    { "-f <file name>",             &main_cmdLineArgs.iHexFileName,     NULL,                       NULL,               NULL,   "Intel hex format file"                             },
-    { "-g <guid>",                  &main_cmdLineArgs.nodeGuid,         NULL,                       NULL,               NULL,   "Node GUID,\ne.g. 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01"          },
-    { "-h --help",                  NULL,                               &main_cmdLineArgs.showHelp, NULL,               NULL,   "Show help"                                         },
-    { "-n <node nickname>",         &main_cmdLineArgs.nodeId,           NULL,                       NULL,               NULL,   "Nickname of the node, which shall be programmed."  },
-    { "-p <password>",              &main_cmdLineArgs.daemonPassword,   NULL,                       NULL,               NULL,   "Password for VSCP daemon access"                   },
-    { "-ps <page select value>",    &main_cmdLineArgs.pageSelect,       NULL,                       NULL,               NULL,   "Use the given page select register value\nfor enter boot loader event."    },
-    { "-u <user>",                  &main_cmdLineArgs.daemonUser,       NULL,                       NULL,               NULL,   "User name for VSCP daemon access"                  },
-    { "-v",                         NULL,                               &main_cmdLineArgs.verbose,  NULL,               NULL,   "Increase verbose level"                            }
+    { "-a <ip-address>",            &main_cmdLineArgs.daemonAddr,       NULL,                           NULL,               NULL,   "IP address of VSCP daemon"                         },
+    { "-b <algorithm>",             &main_cmdLineArgs.bootLoaderAlgo,   NULL,                           NULL,               NULL,   "Boot load algorithm (default 0)"                   },
+    { "-f <file name>",             &main_cmdLineArgs.iHexFileName,     NULL,                           NULL,               NULL,   "Intel hex format file"                             },
+    { "-fillBlock",                 NULL,                               &main_cmdLineArgs.fillBlock,    NULL,               NULL,   "Fill block with 0x00 up (default not)"             },
+    { "-g <guid>",                  &main_cmdLineArgs.nodeGuid,         NULL,                           NULL,               NULL,   "Node GUID,\ne.g. 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01"      },
+    { "-h --help",                  NULL,                               &main_cmdLineArgs.showHelp,     NULL,               NULL,   "Show help"                                         },
+    { "-n <node nickname>",         &main_cmdLineArgs.nodeId,           NULL,                           NULL,               NULL,   "Nickname of the node, which shall be programmed."  },
+    { "-p <password>",              &main_cmdLineArgs.daemonPassword,   NULL,                           NULL,               NULL,   "Password for VSCP daemon access"                   },
+    { "-ps <page select value>",    &main_cmdLineArgs.pageSelect,       NULL,                           NULL,               NULL,   "Use the given page select register value for enter boot loader event." },
+    { "-u <user>",                  &main_cmdLineArgs.daemonUser,       NULL,                           NULL,               NULL,   "User name for VSCP daemon access"                  },
+    { "-v",                         NULL,                               &main_cmdLineArgs.verbose,      NULL,               NULL,   "Increase verbose level"                            }
 };
 
 /*******************************************************************************
@@ -1023,28 +1030,40 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
 
         for(index = 0; index < 8; ++index)
         {
-            txEvent.data[index] = recSet[progCon->recIndex].data[progCon->recDataIndex];
-
-            progCon->blockCrcCalculated = crc16ccitt_update(progCon->blockCrcCalculated, &txEvent.data[index], 1);
-            progCon->crcCalculated      = crc16ccitt_update(progCon->crcCalculated, &txEvent.data[index], 1);
-
-            ++progCon->recDataIndex;
-            ++txEvent.sizeData;
-
-            /* Next record? */
-            if (recSet[progCon->recIndex].dataSize <= progCon->recDataIndex)
+            /* Records available? */
+            if (recNum > progCon->recIndex)
             {
-                ++progCon->recIndex;
-                progCon->recDataIndex = 0;
+                txEvent.data[index] = recSet[progCon->recIndex].data[progCon->recDataIndex];
 
-                /** Less intel hex records available than necessary? */
-                if (recNum <= progCon->recIndex)
+                progCon->blockCrcCalculated = crc16ccitt_update(progCon->blockCrcCalculated, &txEvent.data[index], 1);
+                progCon->crcCalculated      = crc16ccitt_update(progCon->crcCalculated, &txEvent.data[index], 1);
+
+                ++progCon->recDataIndex;
+                ++txEvent.sizeData;
+
+                /* Next record? */
+                if (recSet[progCon->recIndex].dataSize <= progCon->recDataIndex)
                 {
-                    log_printf("Less number of intel hex records (%u).\n", recNum);
-
-                    progCon->state = MAIN_PRG_STATE_ERROR;
-                    break;
+                    ++progCon->recIndex;
+                    progCon->recDataIndex = 0;
                 }
+            }
+            /* Records are empty, shall the block be filled up? */
+            else if (TRUE == progCon->fillBlock)
+            {
+                txEvent.data[index] = MAIN_BLOCK_FILL_BYTE;
+
+                progCon->blockCrcCalculated = crc16ccitt_update(progCon->blockCrcCalculated, &txEvent.data[index], 1);
+                progCon->crcCalculated      = crc16ccitt_update(progCon->crcCalculated, &txEvent.data[index], 1);
+                
+                ++txEvent.sizeData;
+            }
+            /* Error */
+            else
+            {
+                log_printf("Less number of intel hex records (%u).\n", recNum);
+
+                progCon->state = MAIN_PRG_STATE_ERROR;
             }
         }
 
@@ -1176,8 +1195,13 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
                 /* Next block */
                 ++progCon->blockIndex;
 
-                /* All blocks transfered? */
-                if (progCon->blockNum <= progCon->blockIndex)
+                /* All records transfered? */
+                if (recNum <= progCon->recIndex)
+                {
+                    progCon->state = MAIN_PRG_STATE_ACTIVATE_NEW_IMAGE;
+                }
+                /* Max. number of blocks transfered? */
+                else if (progCon->blockNum <= progCon->blockIndex)
                 {
                     progCon->state = MAIN_PRG_STATE_ACTIVATE_NEW_IMAGE;
                 }
