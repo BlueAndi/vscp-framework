@@ -826,7 +826,7 @@ static BOOL vscp_bootloader_handleProtocolActivateNewImage(vscp_RxMessage const 
         uint16_t    index           = 0;
 
         /* Calculate CRC from 0 to the last programmed block (inclusive) */
-        for(index = 0; index <= (VSCP_PLATFORM_FLASH_PAGE_SIZE * progParam->programBlockNumber); ++index)
+        for(index = 0; index < (VSCP_PLATFORM_FLASH_PAGE_SIZE * (progParam->programBlockNumber + 1)); ++index)
         {
             uint8_t data = vscp_bl_adapter_readProgMem(index);
 
@@ -835,8 +835,9 @@ static BOOL vscp_bootloader_handleProtocolActivateNewImage(vscp_RxMessage const 
 
         crcCalculated = crc16ccitt_finalize(crcCalculated);
 
-        crcReceived  = ((uint16_t)rxMsg->data[0]) << 8u;
-        crcReceived |= ((uint16_t)rxMsg->data[1]) << 0u;
+        crcReceived = rxMsg->data[0];
+        crcReceived <<= 8u;
+        crcReceived |= rxMsg->data[1];
 
         if (crcReceived != crcCalculated)
         {
