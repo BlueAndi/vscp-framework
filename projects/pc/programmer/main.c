@@ -181,7 +181,6 @@ typedef struct
     BOOL            fillBlock;          /**< If set, the last block will be filled with a fill byte. */
     uint32_t        recIndex;           /**< Current used intel hex record */
     uint32_t        recDataIndex;       /**< Current intel hex record data index */
-    Crc16CCITT      crcCalculated;      /**< Calculated CRC over the whole image */
     Crc16CCITT      blockCrcCalculated; /**< Calculated CRC over a single block */
     uint8_t         blockRetry;         /**< Number of current block transfer retries */
 
@@ -202,6 +201,7 @@ static MAIN_RET main_connect(long * const hSession, char const * const ipAddr, c
 static void main_disconnect(long * const hSession);
 static CMDLINEPARSER_RET main_clpUnknown(void* const userData, char const * const arg, char const * const par);
 static void main_programNode(main_Programming * const progCon, long hSession, intelHexParser_Record* recSet, uint32_t recNum, vscpEventEx const * const rxEvent);
+static Crc16CCITT main_calculateCrc(intelHexParser_Record* recSet, uint32_t recNum, uint32_t blockSize, BOOL fillBlock);
 
 /*******************************************************************************
     LOCAL VARIABLES
@@ -816,6 +816,55 @@ static CMDLINEPARSER_RET main_clpUnknown(void* const userData, char const * cons
 }
 
 /**
+ * Calculates the CRC16-CCITT for the while intel hex records.
+ *
+ * @param[in]   recSet      Intel hex record set
+ * @param[in]   recNum      Number of intel hex records
+ * @param[in]   blockSize   Block size in bytes
+ * @param[in]   fillBlock   Shall a block be filled up (TRUE) or not (FALSE)
+ *
+ * @return CRC16-CCITT
+ */
+static Crc16CCITT main_calculateCrc(intelHexParser_Record* recSet, uint32_t recNum, uint32_t blockSize, BOOL fillBlock)
+{
+    uint32_t    recIndex    = 0;
+    uint32_t    dataIndex   = 0;
+    uint32_t    blockIndex  = 0;
+    uint8_t     fillByte    = MAIN_BLOCK_FILL_BYTE;
+    Crc16CCITT  crc         = crc16ccitt_init();
+    
+    if (NULL == recSet)
+    {
+        return crc;
+    }
+    
+    for(recIndex = 0; recIndex < recNum; ++recIndex)
+    {
+        for(dataIndex = 0; dataIndex < recSet[recIndex].dataSize; ++dataIndex)
+        {    
+            crc = crc16ccitt_update(crc, &recSet[recIndex].data[dataIndex], 1);
+            
+            ++blockIndex;
+            blockIndex %= blockSize;
+        }
+    }
+
+    if (TRUE == fillBlock)
+    {
+        while(0 < (blockIndex % blockSize))
+        {
+            crc = crc16ccitt_update(crc, &fillByte, 1);
+            
+            ++blockIndex;
+        }
+    }
+    
+    crc = crc16ccitt_finalize(crc);
+        
+    return crc;
+}
+
+/**
  * This function proceeds the programming of a single node.
  *
  * @param[in,out]   progCon     Programming context
@@ -826,8 +875,9 @@ static CMDLINEPARSER_RET main_clpUnknown(void* const userData, char const * cons
  */
 static void main_programNode(main_Programming * const progCon, long hSession, intelHexParser_Record* recSet, uint32_t recNum, vscpEventEx const * const rxEvent)
 {
-    uint32_t    index   = 0;
+    uint32_t    index       = 0;
     vscpEventEx txEvent;
+    Crc16CCITT  imageCrc    = 0;
 
     if ((NULL == progCon) ||
         (NULL == recSet))
@@ -943,9 +993,6 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
                 log_printf("Block size: %u bytes\n", progCon->blockSize);
                 log_printf("Number of blocks: %u\n", progCon->blockNum);
 
-                /* Initialize image CRC */
-                progCon->crcCalculated = crc16ccitt_init();
-
                 progCon->state = MAIN_PRG_STATE_START_BLOCK_TRANSFER;
             }
             else if ((VSCP_TYPE_PROTOCOL_NACK_BOOT_LOADER == rxEvent->vscp_type) &&
@@ -1034,12 +1081,11 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
         for(index = 0; index < 8; ++index)
         {
             /* Records available? */
-            if (recNum > progCon->recIndex)
+            if (INTELHEXPARSER_REC_TYPE_DATA == recSet[progCon->recIndex].type)
             {
                 txEvent.data[index] = recSet[progCon->recIndex].data[progCon->recDataIndex];
 
                 progCon->blockCrcCalculated = crc16ccitt_update(progCon->blockCrcCalculated, &txEvent.data[index], 1);
-                progCon->crcCalculated      = crc16ccitt_update(progCon->crcCalculated, &txEvent.data[index], 1);
 
                 ++progCon->recDataIndex;
                 ++txEvent.sizeData;
@@ -1047,7 +1093,7 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
                 /* Next record? */
                 if (recSet[progCon->recIndex].dataSize <= progCon->recDataIndex)
                 {
-                    ++progCon->recIndex;
+                    ++progCon->recIndex;                    
                     progCon->recDataIndex = 0;
                 }
             }
@@ -1057,7 +1103,6 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
                 txEvent.data[index] = MAIN_BLOCK_FILL_BYTE;
 
                 progCon->blockCrcCalculated = crc16ccitt_update(progCon->blockCrcCalculated, &txEvent.data[index], 1);
-                progCon->crcCalculated      = crc16ccitt_update(progCon->crcCalculated, &txEvent.data[index], 1);
                 
                 ++txEvent.sizeData;
             }
@@ -1200,7 +1245,7 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
                 ++progCon->blockIndex;
 
                 /* All records transfered? */
-                if (recNum <= progCon->recIndex)
+                if (INTELHEXPARSER_REC_TYPE_DATA != recSet[progCon->recIndex].type)
                 {
                     progCon->state = MAIN_PRG_STATE_ACTIVATE_NEW_IMAGE;
                 }
@@ -1229,15 +1274,15 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
 
         log_printf("Activate new image.\n");
 
-        /* Finalize image CRC */
-        progCon->crcCalculated = crc16ccitt_finalize(progCon->crcCalculated);
+        /* Calculate image for the whole image */
+        imageCrc = main_calculateCrc(recSet, recNum, progCon->blockSize, progCon->fillBlock);
 
         txEvent.vscp_class  = VSCP_CLASS1_PROTOCOL;
         txEvent.vscp_type   = VSCP_TYPE_PROTOCOL_ACTIVATE_NEW_IMAGE;
         txEvent.head        = VSCP_PRIORITY_0 << 5;
         txEvent.sizeData    = 2;
-        txEvent.data[0]     = (progCon->crcCalculated >> 8) & 0xff;  /* CRC MSB */
-        txEvent.data[1]     = (progCon->crcCalculated >> 0) & 0xff;  /* CRC MSB */
+        txEvent.data[0]     = (imageCrc >> 8) & 0xff;  /* CRC MSB */
+        txEvent.data[1]     = (imageCrc >> 0) & 0xff;  /* CRC MSB */
 
         if (VSCP_ERROR_SUCCESS != vscphlp_sendEventEx(hSession, &txEvent))
         {

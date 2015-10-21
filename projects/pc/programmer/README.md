@@ -12,6 +12,8 @@ For programming a node you need
 * the ip address of your running VSCP daemon
 * and at least its user/password.
 
+Please note that the programmer only supports intel hex record types DATA and EOF. All others are NOT supported yet!
+
 Example for programming a node on windows:
 ```
 vscpProgrammerPc.exe -u admin -p secret -a demo.vscp.org:9598 -f new_image.hex -n 1 -g 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01
