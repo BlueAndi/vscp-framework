@@ -200,8 +200,9 @@ static MAIN_RET main_programming(long hSession, intelHexParser_Record* recSet, u
 static MAIN_RET main_connect(long * const hSession, char const * const ipAddr, char const * const user, char const * const password);
 static void main_disconnect(long * const hSession);
 static CMDLINEPARSER_RET main_clpUnknown(void* const userData, char const * const arg, char const * const par);
-static void main_programNode(main_Programming * const progCon, long hSession, intelHexParser_Record* recSet, uint32_t recNum, vscpEventEx const * const rxEvent);
 static Crc16CCITT main_calculateCrc(intelHexParser_Record* recSet, uint32_t recNum, uint32_t blockSize, BOOL fillBlock);
+static uint32_t main_calculateDataSize(intelHexParser_Record* recSet, uint32_t recNum);
+static void main_programNode(main_Programming * const progCon, long hSession, intelHexParser_Record* recSet, uint32_t recNum, vscpEventEx const * const rxEvent);
 
 /*******************************************************************************
     LOCAL VARIABLES
@@ -816,7 +817,7 @@ static CMDLINEPARSER_RET main_clpUnknown(void* const userData, char const * cons
 }
 
 /**
- * Calculates the CRC16-CCITT for the while intel hex records.
+ * Calculates the CRC16-CCITT for all intel hex records.
  *
  * @param[in]   recSet      Intel hex record set
  * @param[in]   recNum      Number of intel hex records
@@ -869,6 +870,39 @@ static Crc16CCITT main_calculateCrc(intelHexParser_Record* recSet, uint32_t recN
     crc = crc16ccitt_finalize(crc);
         
     return crc;
+}
+
+/**
+ * Calculates the complete data size in bytes for the intel hex records.
+ *
+ * @param[in]   recSet      Intel hex record set
+ * @param[in]   recNum      Number of intel hex records
+ *
+ * @return Size in bytes
+ */
+static uint32_t main_calculateDataSize(intelHexParser_Record* recSet, uint32_t recNum)
+{
+    uint32_t    recIndex    = 0;
+    uint32_t    cnt         = 0;
+    
+    if (NULL == recSet)
+    {
+        return cnt;
+    }
+    
+    for(recIndex = 0; recIndex < recNum; ++recIndex)
+    {
+        if (INTELHEXPARSER_REC_TYPE_DATA == recSet[recIndex].type)
+        {
+            cnt += recSet[recIndex].dataSize;
+        }
+        else
+        {
+            break;
+        }
+    }
+        
+    return cnt;
 }
 
 /**
@@ -983,6 +1017,9 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
             if ((VSCP_TYPE_PROTOCOL_ACK_BOOT_LOADER == rxEvent->vscp_type) &&
                 (8 == rxEvent->sizeData))
             {
+                uint32_t    dataSize    = 0;
+                uint32_t    blockNum    = 0;
+                
                 log_printf("Node entered boot loader mode.\n");
 
                 /* Reconstruct block size */
@@ -998,9 +1035,29 @@ static void main_programNode(main_Programming * const progCon, long hSession, in
                                                         rxEvent->data[7]);
 
                 log_printf("Block size: %u bytes\n", progCon->blockSize);
-                log_printf("Number of blocks: %u\n", progCon->blockNum);
+                log_printf("Max. number of blocks: %u\n", progCon->blockNum);
 
-                progCon->state = MAIN_PRG_STATE_START_BLOCK_TRANSFER;
+                /* Calculate number of needed blocks to transfer */
+                dataSize = main_calculateDataSize(recSet, recNum);
+                blockNum = dataSize / progCon->blockSize;
+                if (0 < (dataSize % progCon->blockSize))
+                {
+                    ++blockNum;
+                }
+                
+                log_printf("Blocks to transfer: %u\n", blockNum);
+                
+                /* More block to transfer, than max. possible? */
+                if (progCon->blockNum < blockNum)
+                {
+                    log_printf("More blocks to transfer, than max. possible!\n");
+                    
+                    progCon->state = MAIN_PRG_STATE_ERROR;
+                }
+                else
+                {
+                    progCon->state = MAIN_PRG_STATE_START_BLOCK_TRANSFER;
+                }
             }
             else if ((VSCP_TYPE_PROTOCOL_NACK_BOOT_LOADER == rxEvent->vscp_type) &&
                      (1 == rxEvent->sizeData))
