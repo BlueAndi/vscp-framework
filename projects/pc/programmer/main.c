@@ -840,12 +840,19 @@ static Crc16CCITT main_calculateCrc(intelHexParser_Record* recSet, uint32_t recN
     
     for(recIndex = 0; recIndex < recNum; ++recIndex)
     {
-        for(dataIndex = 0; dataIndex < recSet[recIndex].dataSize; ++dataIndex)
-        {    
-            crc = crc16ccitt_update(crc, &recSet[recIndex].data[dataIndex], 1);
-            
-            ++blockIndex;
-            blockIndex %= blockSize;
+        if (INTELHEXPARSER_REC_TYPE_DATA == recSet[recIndex].type)
+        {
+            for(dataIndex = 0; dataIndex < recSet[recIndex].dataSize; ++dataIndex)
+            {    
+                crc = crc16ccitt_update(crc, &recSet[recIndex].data[dataIndex], 1);
+                
+                ++blockIndex;
+                blockIndex %= blockSize;
+            }
+        }
+        else
+        {
+            break;
         }
     }
 
