@@ -901,6 +901,7 @@
 #define VSCP2_TYPE_PROTOCOL_READ_REGISTER                   1
 #define VSCP2_TYPE_PROTOCOL_WRITE_REGISTER                  2
 #define VSCP2_TYPE_PROTOCOL_READ_WRITE_RESPONSE             3
+#define VSCP2_TYPE_PROTOCOL_HIGH_END_SERVER_CAPS            20
 
 // Level II Control functionality Class=1025 (0x401)
 #define VSCP2_TYPE_CONTROL_GENERAL                          0
@@ -909,6 +910,7 @@
 #define VSCP2_TYPE_INFORMATION_GENERAL                      0
 #define VSCP2_TYPE_INFORMATION_TOKEN_ACTIVITY               1
 #define VSCP2_TYPE_INFORMATION_HEART_BEAT                   2
+#define VSCP2_TYPE_INFORMATION_PROXY_HEART_BEAT             3
 
 // Level II Text to speech functionality Class=1028 (0x404)
 #define VSCP2_TYPE_TEXT2SPEECH_GENERAL                      0

@@ -28,7 +28,7 @@
 // This file may be a copy of the original file. This is because the file is
 // copied to other projects as a convinience. Thus editing the copy will not make
 // it to the original and will be overwritten.
-// The original file can be foud in the vscp_softare source tree under 
+// The original file can be found in the vscp_softare source tree under 
 // src/vscp/common 
 
 #ifndef _VSCP_H_
@@ -189,23 +189,24 @@ extern "C" {
     //
 
     typedef struct {
-        uint16_t crc;       // crc checksum - currently only used for UDP and RF
-        uint8_t *pdata;     // Pointer to data. Max 487 (512- 25) bytes
+        uint16_t crc;           // crc checksum - currently only used for UDP and RF
+        uint8_t *pdata;         // Pointer to data. Max 487 (512- 25) bytes
         // Following two are for daemon internal use
-        uint32_t obid;      // Used by driver for channel info etc.
-        uint32_t timestamp; // Relative time stamp for package in microseconds
+        uint32_t obid;          // Used by driver for channel info etc.
+        uint32_t timestamp;     // Relative time stamp for package in microseconds
         // ----- CRC should be calculated from here to end + data block ----
-        uint16_t head;      // Bit 16   GUID is IP v.6 address.
-                            // bit 765  priority, Priority 0-7 where 0 is highest.
-                            // bit 4 = hard coded, true for a hard coded device.
-                            // bit 3 = Don't calculate CRC, false for CRC usage.
-                            // bit 2 = Reserved.
-                            // bit 1 = Reserved.
-                            // bit 0 = Reserved.
-        uint16_t vscp_class;// VSCP class
-        uint16_t vscp_type; // VSCP type
-        uint8_t GUID[ 16 ]; // Node globally unique id MSB(0) -> LSB(15)
-        uint16_t sizeData;  // Number of valid data bytes
+        uint16_t head;          // Bit 16   GUID is IP v.6 address.
+                                // Bit 8-15 = Reserved
+                                // bit 765  priority, Priority 0-7 where 0 is highest.
+                                // bit 4 = hard coded, true for a hard coded device.
+                                // bit 3 = Don't calculate CRC, false for CRC usage.
+                                // bit 2 = Reserved.
+                                // bit 1 = Reserved.
+                                // bit 0 = Reserved.
+        uint16_t vscp_class;    // VSCP class
+        uint16_t vscp_type;     // VSCP type
+        uint8_t GUID[ 16 ];     // Node globally unique id MSB(0) -> LSB(15)
+        uint16_t sizeData;      // Number of valid data bytes
     } /*__attribute__((packed, aligned(1)))*/ vscpEvent;
 
 
@@ -235,7 +236,7 @@ typedef struct {
 	uint8_t  GUID[ 16 ];            // Node globally unique id MSB(0) -> LSB(15)
 	uint16_t sizeData;              // Number of valid data bytes		
 
-    uint8_t  data[VSCP_MAX_DATA];   // Pointer to data. Max. 487 (512- 25) bytes
+    uint8_t  data[VSCP_MAX_DATA];   // Pointer to data. Max. 487 (512-25) bytes
 
 } /*__attribute__((packed, aligned(1)))*/ vscpEventEx;
 
@@ -294,7 +295,7 @@ typedef struct  {
 	uint16_t mask_type;
 
 	uint8_t filter_GUID[ 16 ];      // Node address MSB -> LSB, LSB is node nickname id
-	uint8_t mask_GUID[ 16 ];        //		when interfacing the VSCP daemon.
+	uint8_t mask_GUID[ 16 ];        // when interfacing the VSCP daemon.
 	
 } /*__attribute__((packed, aligned(1)))*/ vscpEventFilter;
 
@@ -331,10 +332,10 @@ typedef  VSCPStatistics * PVSCPSTATISTICS;
 #define VSCP_STATUS_ERROR_STRING_SIZE   80
 
 typedef struct structVSCPStatus {
-    unsigned long channel_status;           // Current state for channel
-    unsigned long lasterrorcode;            // Last error code
-    unsigned long lasterrorsubcode;         // Last error sub code
-    char lasterrorstr[VSCP_STATUS_ERROR_STRING_SIZE]; // Last error string
+    unsigned long channel_status;                       // Current state for channel
+    unsigned long lasterrorcode;                        // Last error code
+    unsigned long lasterrorsubcode;                     // Last error sub code
+    char lasterrorstr[VSCP_STATUS_ERROR_STRING_SIZE];   // Last error string
 } /*__attribute__((packed, aligned(1)))*/ VSCPStatus;
 
 
@@ -367,13 +368,40 @@ typedef struct structVSCPChannelInfo {
 
 typedef  VSCPChannelInfo	*PVSCPCHANNELINFO;
 
+// * * * Multicast on VSCP reserved IP 224.0.23.158
+
+#define VSCP_MULTICAST_DEFAULT_ANNNOUNCE_PORT   33333
+
+// Packet format type = 0
+#define VSCP_MULTICATS_PACKET0_HEADER_LENGTH    28
+
+#define VSCP_MULTICAST_PACKET0_POS_PKTTYPE      0
+#define VSCP_MULTICAST_PACKET0_POS_HEAD         1
+#define VSCP_MULTICAST_PACKET0_POS_HEAD_MSB     1
+#define VSCP_MULTICAST_PACKET0_POS_HEAD_LSB     2
+#define VSCP_MULTICAST_PACKET0_POS_TIMESTAMP    3
+#define VSCP_MULTICAST_PACKET0_POS_VSCP_CLASS   7
+#define VSCP_MULTICAST_PACKET0_POS_VSCP_TYPE    9
+#define VSCP_MULTICAST_PACKET0_POS_VSCP_GUID    11
+#define VSCP_MULTICAST_PACKET0_POS_VSCP_SIZE    27
+#define VSCP_MULTICAST_PACKET0_POS_VSCP_DATA    29
+
+// VSCP multicast packet types
+#define VSCP_MULTICAST_TYPE_EVENT               0
+
+// VSCP multicast Encryption types
+#define VSCP_MULTICAST_ENCRYPTION_NONE          0
+
+#define SET_VSCP_MULTICAST_TYPE( type, encryption )  ( (type<<8) + encryption )
+
 // Bootloaders
-#define VSCP_BOOTLOADER_VSCP            0x00	// VSCP boot loader algorithm
-#define VSCP_BOOTLOADER_PIC1            0x01	// PIC algorithm 0
-#define VSCP_BOOTLOADER_AVR1            0x10	// AVR algorithm 0
-#define VSCP_BOOTLOADER_LPC1            0x20	// NXP/Philips LPC algorithm 0
-#define VSCP_BOOTLOADER_ST              0x30	// ST STR algorithm 0
-#define VSCP_BOOTLOADER_NONE            0xff
+#define VSCP_BOOTLOADER_VSCP                    0x00	// VSCP boot loader algorithm
+#define VSCP_BOOTLOADER_PIC1                    0x01	// PIC algorithm 0
+#define VSCP_BOOTLOADER_AVR1                    0x10	// AVR algorithm 0
+#define VSCP_BOOTLOADER_LPC1                    0x20	// NXP/Philips LPC algorithm 0
+#define VSCP_BOOTLOADER_ST                      0x30	// ST STR algorithm 0
+#define VSCP_BOOTLOADER_FREESCALE               0x40	// Freescale Kinetics algorithm 0
+#define VSCP_BOOTLOADER_NONE                    0xff
 
 
 //			* * * Data Coding for VSCP packets * * *
@@ -480,11 +508,17 @@ struct myNode {
 
 // Bits for VSCP server 16-bit capability code
 // used by CLASS1.PROTOCOL, HIGH END SERVER RESPONSE
+// and low end 15-bits for
+// CLASS2.PROTOCOL, HIGH END SERVER HEART BEAT
 #define VSCP_SERVER_CAPABILITY_TCPIP            (1<<15)
 #define VSCP_SERVER_CAPABILITY_UDP              (1<<14)
-#define VSCP_SERVER_CAPABILITY_WEB              (1<<13)
-#define VSCP_SERVER_CAPABILITY_WEBSOCKET        (1<<12)
-#define VSCP_SERVER_CAPABILITY_REST             (1<<11)
+#define VSCP_SERVER_CAPABILITY_MULTICAST        (1<<13)
+#define VSCP_SERVER_CAPABILITY_RAWETH           (1<<12)
+#define VSCP_SERVER_CAPABILITY_WEB              (1<<11)
+#define VSCP_SERVER_CAPABILITY_WEBSOCKET        (1<<10)
+#define VSCP_SERVER_CAPABILITY_REST             (1<<9)
+#define VSCP_SERVER_CAPABILITY_MQTT             (1<<7)
+#define VSCP_SERVER_CAPABILITY_COAP             (1<<7)
 #define VSCP_SERVER_CAPABILITY_IP6              (1<<6)
 #define VSCP_SERVER_CAPABILITY_IP4              (1<<5)
 #define VSCP_SERVER_CAPABILITY_SSL              (1<<4)
@@ -492,38 +526,38 @@ struct myNode {
 
 
 /// Error Codes
-#define VSCP_ERROR_SUCCESS                 0       // All is OK
-#define VSCP_ERROR_ERROR                  -1       // Error
-#define VSCP_ERROR_CHANNEL                 7       // Invalid channel
-#define VSCP_ERROR_FIFO_EMPTY              8       // FIFO is empty
-#define VSCP_ERROR_FIFO_FULL               9       // FIFI is full
-#define VSCP_ERROR_FIFO_SIZE               10      // FIFO size error
-#define VSCP_ERROR_FIFO_WAIT               11      
-#define VSCP_ERROR_GENERIC                 12      // Generic error
-#define VSCP_ERROR_HARDWARE                13      // Hardware error
-#define VSCP_ERROR_INIT_FAIL               14      // Initialization failed
-#define VSCP_ERROR_INIT_MISSING            15		
-#define VSCP_ERROR_INIT_READY              16
-#define VSCP_ERROR_NOT_SUPPORTED           17      // Not supported
-#define VSCP_ERROR_OVERRUN                 18      // Overrun
-#define VSCP_ERROR_RCV_EMPTY               19      // Receive buffer empty
-#define VSCP_ERROR_REGISTER                20      // Register value error
-#define VSCP_ERROR_TRM_FULL                21      // Transmit buffer full
-#define VSCP_ERROR_LIBRARY                 28      // Unable to load library
-#define VSCP_ERROR_PROCADDRESS             29      // Unable get library proc. address
-#define VSCP_ERROR_ONLY_ONE_INSTANCE       30      // Only one instance allowed
-#define VSCP_ERROR_SUB_DRIVER              31      // Problem with sub driver call
-#define VSCP_ERROR_TIMEOUT                 32      // Time-out
-#define VSCP_ERROR_NOT_OPEN                33      // The device is not open.
-#define VSCP_ERROR_PARAMETER               34      // A parameter is invalid.
-#define VSCP_ERROR_MEMORY                  35      // Memory exhausted.
-#define VSCP_ERROR_INTERNAL                36      // Some kind of internal program error
-#define VSCP_ERROR_COMMUNICATION           37      // Some kind of communication error
-#define VSCP_ERROR_USER                    38      // Login error user name
-#define VSCP_ERROR_PASSWORD                39      // Login error password
-#define VSCP_ERROR_CONNECTION              40      // Could not connect   
-#define VSCP_ERROR_INVALID_HANDLE          41      // The handle is not valid
-#define VSCP_ERROR_OPERATION_FAILED        42      // Operation failed for some reason
+#define VSCP_ERROR_SUCCESS                      0       // All is OK
+#define VSCP_ERROR_ERROR                        -1       // Error
+#define VSCP_ERROR_CHANNEL                      7       // Invalid channel
+#define VSCP_ERROR_FIFO_EMPTY                   8       // FIFO is empty
+#define VSCP_ERROR_FIFO_FULL                    9       // FIFI is full
+#define VSCP_ERROR_FIFO_SIZE                    10      // FIFO size error
+#define VSCP_ERROR_FIFO_WAIT                    11      
+#define VSCP_ERROR_GENERIC                      12      // Generic error
+#define VSCP_ERROR_HARDWARE                     13      // Hardware error
+#define VSCP_ERROR_INIT_FAIL                    14      // Initialization failed
+#define VSCP_ERROR_INIT_MISSING                 15		
+#define VSCP_ERROR_INIT_READY                   16
+#define VSCP_ERROR_NOT_SUPPORTED                17      // Not supported
+#define VSCP_ERROR_OVERRUN                      18      // Overrun
+#define VSCP_ERROR_RCV_EMPTY                    19      // Receive buffer empty
+#define VSCP_ERROR_REGISTER                     20      // Register value error
+#define VSCP_ERROR_TRM_FULL                     21      // Transmit buffer full
+#define VSCP_ERROR_LIBRARY                      28      // Unable to load library
+#define VSCP_ERROR_PROCADDRESS                  29      // Unable get library proc. address
+#define VSCP_ERROR_ONLY_ONE_INSTANCE            30      // Only one instance allowed
+#define VSCP_ERROR_SUB_DRIVER                   31      // Problem with sub driver call
+#define VSCP_ERROR_TIMEOUT                      32      // Time-out
+#define VSCP_ERROR_NOT_OPEN                     33      // The device is not open.
+#define VSCP_ERROR_PARAMETER                    34      // A parameter is invalid.
+#define VSCP_ERROR_MEMORY                       35      // Memory exhausted.
+#define VSCP_ERROR_INTERNAL                     36      // Some kind of internal program error
+#define VSCP_ERROR_COMMUNICATION                37      // Some kind of communication error
+#define VSCP_ERROR_USER                         38      // Login error user name
+#define VSCP_ERROR_PASSWORD                     39      // Login error password
+#define VSCP_ERROR_CONNECTION                   40      // Could not connect   
+#define VSCP_ERROR_INVALID_HANDLE               41      // The handle is not valid
+#define VSCP_ERROR_OPERATION_FAILED             42      // Operation failed for some reason
 
 
 #ifdef __cplusplus
