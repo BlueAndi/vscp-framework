@@ -473,6 +473,7 @@ static void main_showKeyTable(void)
 static MAIN_RET main_programming(long hSession, intelHexParser_Record* recSet, uint32_t recNum)
 {
     int                 keyValue    = 0;
+    BOOL                quit        = FALSE;
     MAIN_RET            ret         = MAIN_RET_OK;
     main_Programming    progCon;
     int                 tmp         = 0;
@@ -554,7 +555,7 @@ static MAIN_RET main_programming(long hSession, intelHexParser_Record* recSet, u
     platform_echoOff();
 
     /* Execute simple terminal */
-    while('q' != keyValue)
+    while(FALSE == quit)
     {
         /* Any button pressed? */
         if (0 < platform_kbhit())
@@ -572,6 +573,7 @@ static MAIN_RET main_programming(long hSession, intelHexParser_Record* recSet, u
             else if ('q' == keyValue)
             {
                 printf("Quit.\n");
+                quit = TRUE;
             }
 
             platform_echoOff();
@@ -589,6 +591,9 @@ static MAIN_RET main_programming(long hSession, intelHexParser_Record* recSet, u
                 LOG_ERROR_INT32("Couldn't check for available data: ", vscphlpRet);
 
                 printf("Connection lost.\n");
+                
+                /* Abort */
+                quit = TRUE;
             }
             /* Any event available? */
             else if (0 < count)

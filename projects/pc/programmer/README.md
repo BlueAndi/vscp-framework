@@ -16,12 +16,12 @@ Please note that the programmer only supports intel hex record types DATA and EO
 
 Example for programming a node on windows:
 ```
-vscpProgrammerPc.exe -u admin -p secret -a demo.vscp.org:9598 -f new_image.hex -n 1 -g 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01
+vscpProgrammerPc.exe -u admin -p secret -a demo.vscp.org:9598 -fillBlock -f new_image.hex -n 1 -g 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01
 ```
 
 Example for programming a node on linux:
 ```
-./vscpProgrammerPc -u admin -p secret -a demo.vscp.org:9598 -f new_image.hex -n 1 -g 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01
+./vscpProgrammerPc -u admin -p secret -a demo.vscp.org:9598 -fillBlock -f new_image.hex -n 1 -g 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01
 ```
 
 For more information about the program arguments, please call the executable with -h or --help.
