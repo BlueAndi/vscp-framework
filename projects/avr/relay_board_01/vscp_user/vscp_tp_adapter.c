@@ -42,6 +42,7 @@
 *******************************************************************************/
 #include "vscp_tp_adapter.h"
 #include <avr/pgmspace.h>
+#include <util/delay.h>
 #include "can.h"
 
 /*******************************************************************************
@@ -51,6 +52,12 @@
 /*******************************************************************************
     CONSTANTS
 *******************************************************************************/
+
+/** Number of retries for sending a CAN message */
+#define VSCP_TP_ADAPTER_TX_RETRY        3
+
+/** The tx wait time in us is used after sending a CAN message failed. */
+#define VSCP_TP_ADAPTER_TX_WAIT_TIME    500
 
 /*******************************************************************************
     MACROS
@@ -176,7 +183,9 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg)
     if ((NULL != msg) &&                        /* Message shall exists */
         (VSCP_L1_DATA_SIZE >= msg->dataNum))    /* Number of data bytes is limited */
     {
-        can_t   canMsg; /* CAN message */
+        can_t   canMsg;             /* CAN message */
+        uint8_t rv          = 0;    /* Return value of CAN driver */
+        uint8_t retryCnt    = 0;    /* Retry counter */
 
         canMsg.id = (((uint32_t)msg->priority)  << 26) |
                     (((uint32_t)msg->hardCoded) << 25) |
@@ -198,7 +207,27 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg)
             }
         }
 
-        if (0 != can_send_message(&canMsg))
+        /* Send the CAN message */
+        do 
+        {
+            /* Before any retry, wait some time */
+            if (0 < retryCnt)
+            {
+                _delay_us(VSCP_TP_ADAPTER_TX_WAIT_TIME);
+            }
+
+            rv = can_send_message(&canMsg);
+
+            /* Failed to send CAN message? */
+            if (0 == rv)
+            {
+                ++retryCnt;
+            }
+        }
+        while ((0 == rv) && (VSCP_TP_ADAPTER_TX_RETRY > retryCnt));
+
+        /* CAN message successful sent? */
+        if (0 != rv)
         {
             status = TRUE;
         }
