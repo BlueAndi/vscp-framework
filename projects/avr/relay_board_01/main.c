@@ -63,6 +63,7 @@ This module contains the main entry point.
 #include "watchdog.h"
 #include "can_monitor.h"
 #include "vscp_information.h"
+#include <avr/sleep.h>
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -281,7 +282,10 @@ int main(void)
                 /* Enter power saving mode? */
                 if (FALSE == anyShutterDriving)
                 {
-                    /* TODO */
+                    /*
+                    set_sleep_mode(SLEEP_MODE_IDLE);
+                    sleep_mode();
+                    */
                 }
             }
 
@@ -580,7 +584,7 @@ static void main_timerCb(void)
     swTimer_process();
 
     /* Process all shutter timers in a 100 ms cycle period.
-     * It is important to do that in the ISR, because the shutter timer are used
+     * It is important to do that in the ISR, because the shutter timers are used
      * to determine the shutter position. Every deviation in time is bad.
      * Also the timer is used to drive the shutter a specific time in one direction.
      */
