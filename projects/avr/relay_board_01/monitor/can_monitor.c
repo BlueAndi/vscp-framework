@@ -42,6 +42,8 @@
 *******************************************************************************/
 #include "can_monitor.h"
 #include "can.h"
+#include "vscp_core.h"
+#include "vscp_portable.h"
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -71,9 +73,14 @@
     PROTOTYPES
 *******************************************************************************/
 
+static CAN_MONITOR_STATE can_monitor_determineCanBusState(void);
+
 /*******************************************************************************
     LOCAL VARIABLES
 *******************************************************************************/
+
+/** Current CAN bus state */
+static CAN_MONITOR_STATE    can_monitor_state   = CAN_MONITOR_STATE_ERR_ACTIVE;
 
 /*******************************************************************************
     GLOBAL VARIABLES
@@ -95,11 +102,54 @@ extern void can_monitor_init(void)
 }
 
 /**
- * This function returns the current CAN state.
+ * This function monitors the CAN bus state and in case of an
+ * error passive or bus off, corresponding alarm bits are set.
+ */
+extern void can_monitor_process(void)
+{
+    CAN_MONITOR_STATE   state   = CAN_MONITOR_STATE_ERR_ACTIVE;
+
+    /* Check the CAN bus and set alarms if necessary. */
+    state = can_monitor_determineCanBusState();
+
+    if (state != can_monitor_state)
+    {
+        if (CAN_MONITOR_STATE_ERR_PASSIVE == state)
+        {
+            vscp_core_setAlarm(VSCP_PORTABLE_ALARM_CAN_ERR_PASSIVE);
+        }
+        else if (CAN_MONITOR_STATE_BUS_OFF == state)
+        {
+            vscp_core_setAlarm(VSCP_PORTABLE_ALARM_CAN_BUS_OFF);
+        }
+
+        can_monitor_state = state;
+    }
+
+    return;
+}
+
+/**
+ * This function returns the current CAN bus state.
  *
- * @return CAN state
+ * @return CAN bus state
  */
 extern CAN_MONITOR_STATE can_monitor_getState(void)
+{
+    return can_monitor_state;
+}
+
+/*******************************************************************************
+    LOCAL FUNCTIONS
+*******************************************************************************/
+
+/**
+ * This function determines the current CAN bus state by reading the error
+ * counters of the CAN controller.
+ *
+ * @return CAN bus state
+ */
+static CAN_MONITOR_STATE can_monitor_determineCanBusState(void)
 {
     can_error_register_t    canErrorReg = can_read_error_register();
     CAN_MONITOR_STATE       state       = CAN_MONITOR_STATE_ERR_ACTIVE;
@@ -120,7 +170,3 @@ extern CAN_MONITOR_STATE can_monitor_getState(void)
 
     return state;
 }
-
-/*******************************************************************************
-    LOCAL FUNCTIONS
-*******************************************************************************/

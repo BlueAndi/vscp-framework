@@ -116,14 +116,6 @@ typedef enum
 
 } MAIN_RET;
 
-/**< This type defines the alarm bits. */
-typedef enum
-{
-    MAIN_ALARM_CAN_ERR_PASSIVE = 0x01,  /**< CAN bus error-passive detected */
-    MAIN_ALARM_CAN_BUS_OFF     = 0x02   /**< CAN bus-off detected */
-
-} MAIN_ALARM;
-
 /*******************************************************************************
     PROTOTYPES
 *******************************************************************************/
@@ -158,11 +150,11 @@ static volatile BOOL    main_isInitButtonPressed    = FALSE;
  */
 int main(void)
 {
-    BOOL                swTimer10MSTriggered    = FALSE;                    /* Signals that the 10 ms software timer triggered */
-    uint8_t             swTimer1S               = MAIN_SWTIMER_1S_PERIOD;   /* Based on 250 ms software timer */
-    uint8_t             index                   = 0;
-    BOOL                anyShutterDriving       = FALSE;
-    CAN_MONITOR_STATE   canBusState             = CAN_MONITOR_STATE_ERR_ACTIVE;
+    BOOL    swTimer10MSTriggered    = FALSE;                    /* Signals that the 10 ms software timer triggered */
+    BOOL    swTimer1STriggered      = FALSE;                    /* Signals that the 1s software timer triggered */
+    uint8_t swTimer1S               = MAIN_SWTIMER_1S_PERIOD;   /* The 1s timer is based on 250 ms software timer */
+    uint8_t index                   = 0;
+    BOOL    anyShutterDriving       = FALSE;
 
     /* ********** Run level 1 - interrupts disabled ********** */
 
@@ -216,17 +208,6 @@ int main(void)
             {
                 anyShutterDriving = TRUE;
             }
-
-            /* Check the CAN bus and set alarms if necessary. */
-            canBusState = can_monitor_getState();
-            if (CAN_MONITOR_STATE_ERR_PASSIVE == canBusState)
-            {
-                vscp_core_setAlarm(MAIN_ALARM_CAN_ERR_PASSIVE);
-            }
-            else if (CAN_MONITOR_STATE_BUS_OFF == canBusState)
-            {
-                vscp_core_setAlarm(MAIN_ALARM_CAN_BUS_OFF);
-            }
         }
 
         /* 250 ms period */
@@ -234,6 +215,9 @@ int main(void)
         {
             /* Process VSCP timers */
             vscp_timer_process(MAIN_SWTIMER_250MS_PERIOD);
+
+            /* Process CAN monitor */
+            can_monitor_process();
 
             /* Process VSCP lamp blinking */
             main_processStatusLamp();
@@ -245,6 +229,11 @@ int main(void)
             if (0 < swTimer1S)
             {
                 --swTimer1S;
+            }
+            else
+            {
+                swTimer1STriggered = TRUE;
+                swTimer1S = MAIN_SWTIMER_1S_PERIOD;
             }
         }
 
@@ -283,10 +272,8 @@ int main(void)
                 }
 
                 /* 1 s period */
-                if (0 == swTimer1S)
+                if (TRUE == swTimer1STriggered)
                 {
-                    swTimer1S = MAIN_SWTIMER_1S_PERIOD;
-
                     /* Observe the wind speed and send VSCP events. */
                     windObserver_process();
                 }
@@ -353,7 +340,8 @@ int main(void)
         }
 
         /* Reset software timer flags */
-        swTimer10MSTriggered = FALSE;
+        swTimer10MSTriggered    = FALSE;
+        swTimer1STriggered      = FALSE;
     }
 
     return 0;
@@ -617,40 +605,64 @@ static void main_processStatusLamp(void)
 {
     VSCP_LAMP_STATE state   = vscp_portable_getLampState();
     static uint8_t  slowCnt = 0;
+    static uint8_t  busOff  = 0;
 
-    switch(state)
+    /* Is the CAN bus off? */
+    if (CAN_MONITOR_STATE_BUS_OFF == can_monitor_getState())
     {
-    case VSCP_LAMP_STATE_OFF:
-        HW_DISABLE_STATUS_LED();
-        break;
-
-    case VSCP_LAMP_STATE_ON:
-        HW_ENABLE_STATUS_LED();
-        break;
-
-    case VSCP_LAMP_STATE_BLINK_SLOW:
-        if (0 == (slowCnt % 4))
+        /* Blink a special sequence to notify the user. */
+        if (0 == busOff)
         {
-            HW_TOGGLE_STATUS_LED();
+            HW_ENABLE_STATUS_LED();
         }
-        break;
+        else if (1 == busOff)
+        {
+            HW_DISABLE_STATUS_LED();
+        }
 
-    case VSCP_LAMP_STATE_BLINK_FAST:
-        HW_TOGGLE_STATUS_LED();
-        break;
-
-    default:
-        break;
+        busOff = (busOff + 1) % 7;
     }
-
-    /* Reset counter for slow blinking */
-    if (VSCP_LAMP_STATE_BLINK_SLOW != state)
-    {
-        slowCnt = 0;
-    }
+    /* CAN bus is ready */
     else
     {
-        ++slowCnt;
+        /* Blink accordingly to the VSCP framework state */
+        switch(state)
+        {
+        case VSCP_LAMP_STATE_OFF:
+            HW_DISABLE_STATUS_LED();
+            break;
+
+        case VSCP_LAMP_STATE_ON:
+            HW_ENABLE_STATUS_LED();
+            break;
+
+        case VSCP_LAMP_STATE_BLINK_SLOW:
+            if (0 == (slowCnt % 4))
+            {
+                HW_TOGGLE_STATUS_LED();
+            }
+            break;
+
+        case VSCP_LAMP_STATE_BLINK_FAST:
+            HW_TOGGLE_STATUS_LED();
+            break;
+
+        default:
+            break;
+        }
+
+        /* Reset counter for slow blinking */
+        if (VSCP_LAMP_STATE_BLINK_SLOW != state)
+        {
+            slowCnt = 0;
+        }
+        else
+        {
+            ++slowCnt;
+        }
+
+        /* Reset bus off special counter */
+        busOff = 0;
     }
 
     return;
@@ -696,8 +708,8 @@ static void main_shutterCb(uint8_t nr, SHUTTER_DIR dir, SHUTTER_POS pos)
         if (SHUTTER_DIR_UP == dir)
         {
             (void)vscp_information_sendShutterUpEvent(nr,
-                                                     vscp_ps_user_readShutterEventZone(nr),
-                                                     vscp_ps_user_readShutterEventSubZone(nr));
+                                                      vscp_ps_user_readShutterEventZone(nr),
+                                                      vscp_ps_user_readShutterEventSubZone(nr));
         }
         else if (SHUTTER_DIR_DOWN == dir)
         {

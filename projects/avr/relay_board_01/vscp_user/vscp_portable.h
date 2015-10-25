@@ -84,6 +84,14 @@ extern "C"
     TYPES AND STRUCTURES
 *******************************************************************************/
 
+/**< This type defines the alarm bits. */
+typedef enum
+{
+    VSCP_PORTABLE_ALARM_CAN_ERR_PASSIVE = 0x01, /**< CAN bus error-passive detected */
+    VSCP_PORTABLE_ALARM_CAN_BUS_OFF     = 0x02  /**< CAN bus-off detected */
+
+} VSCP_PORTABLE_ALARM;
+
 /*******************************************************************************
     VARIABLES
 *******************************************************************************/

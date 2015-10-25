@@ -108,9 +108,15 @@ typedef enum
 extern void can_monitor_init(void);
 
 /**
- * This function returns the current CAN state.
+ * This function monitors the CAN bus state and in case of an
+ * error passive or bus off, corresponding alarm bits are set.
+ */
+extern void can_monitor_process(void);
+
+/**
+ * This function returns the current CAN bus state.
  *
- * @return CAN state
+ * @return CAN bus state
  */
 extern CAN_MONITOR_STATE can_monitor_getState(void);
 
