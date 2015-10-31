@@ -38,8 +38,8 @@ This module description file (MDF) is for the relay board 01.
 
         <name>Relay Board 01</name>
         <model>A</model>
-        <version>0.3.0</version>
-        <changed>2015-05-24</changed>
+        <version>0.3.1</version>
+        <changed>2015-10-31</changed>
         <description lang="en">The relay board offers up to 8 digital inputs, controlling up to 8 relays or controlling up to 4 shutters.</description>
         <infourl></infourl>
 
@@ -970,7 +970,7 @@ The error counter is reset after reading.</description>
 
         <!-- ********** Page 0 ********** -->
 
-            <abstraction type="uint8_t" default="0" page="0" offset="0">
+            <abstraction id="0" type="uint8_t" default="0" page="0" offset="0">
                 <name lang="en">Enable/Disable button</name>
                 <description lang="en">Enable or disable a button. There are up to 8 buttons enumerated by 1 to 8.
 The button 1 corresponds to bit 0 and etc.
@@ -980,7 +980,7 @@ Any change in this register will be applied immediately.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="0" page="0" offset="1">
+            <abstraction id="1" type="uint8_t" default="0" page="0" offset="1">
                 <name lang="en">Enable/Disable wind measurement</name>
                 <description lang="en">Enable or disable the wind measurement.
 A 0 disables the wind measurement and a 1 enables it.
@@ -990,7 +990,7 @@ Any change in this register will be applied immediately.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="0" page="0" offset="2">
+            <abstraction id="2" type="uint8_t" default="0" page="0" offset="2">
                 <name lang="en">Enable/Disable relay</name>
                 <description lang="en">Enable or disable a relay. There are up to 8 relays enumerated by 1 to 8.
 The relay 1 corresponds to bit 0 and etc.
@@ -1001,7 +1001,7 @@ Any change in this register will be applied after a reset.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="0" page="0" offset="3">
+            <abstraction id="3" type="uint8_t" default="0" page="0" offset="3">
                 <name lang="en">Enable/Disable shutter</name>
                 <description lang="en">Enable or disable a shutter. There are up to 4 shutter enumerated by 1 to 4.
 The shutter 1 corresponds to bit 0 and etc.
@@ -1017,7 +1017,7 @@ Any change in this register will be applied after a reset.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="0" page="0" offset="4">
+            <abstraction id="4" type="uint8_t" default="0" page="0" offset="4">
                 <name lang="en">Relay event config</name>
                 <description lang="en">Enable or disable a releay event. There are up to 8 relay enumerated by 1 to 8.
 The relay 1 corresponds to bit 0 and etc.
@@ -1027,7 +1027,7 @@ Any change in this register will be applied immediately.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="0" page="0" offset="5">
+            <abstraction id="5" type="uint8_t" default="0" page="0" offset="5">
                 <name lang="en">Shutter event config</name>
                 <description lang="en">Enable or disable a shutter event. There are up to 4 shutter enumerated by 1 to 4.
 The shutter 1 corresponds to bit 0 and etc.
@@ -1038,7 +1038,7 @@ Any change in this register will be applied immediately.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint16_t" default="400" page="0" offset="6">
+            <abstraction id="6" type="uint16_t" default="400" page="0" offset="6">
                 <name lang="en">Relay switching current duty cycle</name>
                 <description lang="en">A monostable relay is configured by a switching current and a holding current.
 Both values are given as a pwm duty cycle value (3-400).
@@ -1047,7 +1047,7 @@ Any change in this register will be applied after a reset.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint16_t" default="400" page="0" offset="8">
+            <abstraction id="7" type="uint16_t" default="400" page="0" offset="8">
                 <name lang="en">Relay holding current duty cycle</name>
                 <description lang="en">A monostable relay is configured by a holding current and a holding current.
 Both values are given as a pwm duty cycle value (3-400).
@@ -1056,289 +1056,289 @@ Any change in this register will be applied after a reset.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="10">
+            <abstraction id="8" type="uint8_t" default="255" page="0" offset="10">
                 <name lang="en">Zone</name>
                 <description lang="en">Zone this module belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="11">
+            <abstraction id="9" type="uint8_t" default="255" page="0" offset="11">
                 <name lang="en">Sub-zone</name>
                 <description lang="en">Sub-zone this module belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="12">
+            <abstraction id="9" type="uint8_t" default="255" page="0" offset="12">
                 <name lang="en">Button 1 event zone</name>
                 <description lang="en">Zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="13">
+            <abstraction id="10" type="uint8_t" default="255" page="0" offset="13">
                 <name lang="en">Button 2 event zone</name>
                 <description lang="en">Zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="14">
+            <abstraction id="11" type="uint8_t" default="255" page="0" offset="14">
                 <name lang="en">Button 3 event zone</name>
                 <description lang="en">Zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="15">
+            <abstraction id="12" type="uint8_t" default="255" page="0" offset="15">
                 <name lang="en">Button 4 event zone</name>
                 <description lang="en">Zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="16">
+            <abstraction id="13" type="uint8_t" default="255" page="0" offset="16">
                 <name lang="en">Button 5 event zone</name>
                 <description lang="en">Zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="17">
+            <abstraction id="14" type="uint8_t" default="255" page="0" offset="17">
                 <name lang="en">Button 6 event zone</name>
                 <description lang="en">Zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="18">
+            <abstraction id="15" type="uint8_t" default="255" page="0" offset="18">
                 <name lang="en">Button 7 event zone</name>
                 <description lang="en">Zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="19">
+            <abstraction id="16" type="uint8_t" default="255" page="0" offset="19">
                 <name lang="en">Button 8 event zone</name>
                 <description lang="en">Zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="20">
+            <abstraction id="17" type="uint8_t" default="255" page="0" offset="20">
                 <name lang="en">Button 1 event sub-zone</name>
                 <description lang="en">Sub-zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="21">
+            <abstraction id="18" type="uint8_t" default="255" page="0" offset="21">
                 <name lang="en">Button 2 event sub-zone</name>
                 <description lang="en">Sub-zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="22">
+            <abstraction id="19" type="uint8_t" default="255" page="0" offset="22">
                 <name lang="en">Button 3 event sub-zone</name>
                 <description lang="en">Sub-zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="23">
+            <abstraction id="20" type="uint8_t" default="255" page="0" offset="23">
                 <name lang="en">Button 4 event sub-zone</name>
                 <description lang="en">Sub-zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="24">
+            <abstraction id="21" type="uint8_t" default="255" page="0" offset="24">
                 <name lang="en">Button 5 event sub-zone</name>
                 <description lang="en">Sub-zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="25">
+            <abstraction id="22" type="uint8_t" default="255" page="0" offset="25">
                 <name lang="en">Button 6 event sub-zone</name>
                 <description lang="en">Sub-zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="26">
+            <abstraction id="23" type="uint8_t" default="255" page="0" offset="26">
                 <name lang="en">Button 7 event sub-zone</name>
                 <description lang="en">Sub-zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="27">
+            <abstraction id="24" type="uint8_t" default="255" page="0" offset="27">
                 <name lang="en">Button 8 event sub-zone</name>
                 <description lang="en">Sub-zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="28">
+            <abstraction id="25" type="uint8_t" default="255" page="0" offset="28">
                 <name lang="en">Relay 1 event zone</name>
                 <description lang="en">Zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="29">
+            <abstraction id="26" type="uint8_t" default="255" page="0" offset="29">
                 <name lang="en">Relay 2 event zone</name>
                 <description lang="en">Zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="30">
+            <abstraction id="27" type="uint8_t" default="255" page="0" offset="30">
                 <name lang="en">Relay 3 event zone</name>
                 <description lang="en">Zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="31">
+            <abstraction id="28" type="uint8_t" default="255" page="0" offset="31">
                 <name lang="en">Relay 4 event zone</name>
                 <description lang="en">Zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="32">
+            <abstraction id="29" type="uint8_t" default="255" page="0" offset="32">
                 <name lang="en">Relay 5 event zone</name>
                 <description lang="en">Zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="33">
+            <abstraction id="30" type="uint8_t" default="255" page="0" offset="33">
                 <name lang="en">Relay 6 event zone</name>
                 <description lang="en">Zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="34">
+            <abstraction id="31" type="uint8_t" default="255" page="0" offset="34">
                 <name lang="en">Relay 7 event zone</name>
                 <description lang="en">Zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="35">
+            <abstraction id="32" type="uint8_t" default="255" page="0" offset="35">
                 <name lang="en">Relay 8 event zone</name>
                 <description lang="en">Zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="36">
+            <abstraction id="33" type="uint8_t" default="255" page="0" offset="36">
                 <name lang="en">Relay 1 event sub-zone</name>
                 <description lang="en">Sub-zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="37">
+            <abstraction id="34" type="uint8_t" default="255" page="0" offset="37">
                 <name lang="en">Relay 2 event sub-zone</name>
                 <description lang="en">Sub-zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="38">
+            <abstraction id="35" type="uint8_t" default="255" page="0" offset="38">
                 <name lang="en">Relay 3 event sub-zone</name>
                 <description lang="en">Sub-zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="39">
+            <abstraction id="36" type="uint8_t" default="255" page="0" offset="39">
                 <name lang="en">Relay 4 event sub-zone</name>
                 <description lang="en">Sub-zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="40">
+            <abstraction id="37" type="uint8_t" default="255" page="0" offset="40">
                 <name lang="en">Relay 5 event sub-zone</name>
                 <description lang="en">Sub-zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="41">
+            <abstraction id="38" type="uint8_t" default="255" page="0" offset="41">
                 <name lang="en">Relay 6 event sub-zone</name>
                 <description lang="en">Sub-zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="42">
+            <abstraction id="39" type="uint8_t" default="255" page="0" offset="42">
                 <name lang="en">Relay 7 event sub-zone</name>
                 <description lang="en">Sub-zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="43">
+            <abstraction id="40" type="uint8_t" default="255" page="0" offset="43">
                 <name lang="en">Relay 8 event sub-zone</name>
                 <description lang="en">Sub-zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="44">
+            <abstraction id="41" type="uint8_t" default="255" page="0" offset="44">
                 <name lang="en">Shutter 1 event zone</name>
                 <description lang="en">Zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="45">
+            <abstraction id="42" type="uint8_t" default="255" page="0" offset="45">
                 <name lang="en">Shutter 2 event zone</name>
                 <description lang="en">Zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="46">
+            <abstraction id="43" type="uint8_t" default="255" page="0" offset="46">
                 <name lang="en">Shutter 3 event zone</name>
                 <description lang="en">Zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="47">
+            <abstraction id="44" type="uint8_t" default="255" page="0" offset="47">
                 <name lang="en">Shutter 4 event zone</name>
                 <description lang="en">Zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="48">
+            <abstraction id="45" type="uint8_t" default="255" page="0" offset="48">
                 <name lang="en">Shutter 1 event sub-zone</name>
                 <description lang="en">Sub-zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="49">
+            <abstraction id="46" type="uint8_t" default="255" page="0" offset="49">
                 <name lang="en">Shutter 2 event sub-zone</name>
                 <description lang="en">Sub-zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="50">
+            <abstraction id="47" type="uint8_t" default="255" page="0" offset="50">
                 <name lang="en">Shutter 3 event sub-zone</name>
                 <description lang="en">Sub-zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="51">
+            <abstraction id="48" type="uint8_t" default="255" page="0" offset="51">
                 <name lang="en">Shutter 4 event sub-zone</name>
                 <description lang="en">Sub-zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="52">
+            <abstraction id="49" type="uint8_t" default="255" page="0" offset="52">
                 <name lang="en">Wind event zone</name>
                 <description lang="en">Zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="255" page="0" offset="53">
+            <abstraction id="50" type="uint8_t" default="255" page="0" offset="53">
                 <name lang="en">Wind event sub-zone</name>
                 <description lang="en">Sub-zone this event belongs to.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="40" page="0" offset="54">
+            <abstraction id="51" type="uint8_t" default="40" page="0" offset="54">
                 <name lang="en">Medium wind speed</name>
                 <description lang="en">Medium wind speed in [0,1m/s].</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="80" page="0" offset="55">
+            <abstraction id="52" type="uint8_t" default="80" page="0" offset="55">
                 <name lang="en">High wind speed</name>
                 <description lang="en">High wind speed in [0,1m/s].</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint8_t" default="160" page="0" offset="56">
+            <abstraction id="53" type="uint8_t" default="160" page="0" offset="56">
                 <name lang="en">Very high wind speed</name>
                 <description lang="en">Very high wind speed in [0,1m/s].</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint16_t" default="270" page="0" offset="57">
+            <abstraction id="54" type="uint16_t" default="270" page="0" offset="57">
                 <name lang="en">Shutter 1 max. up time</name>
                 <description lang="en">Max. up-time (drive time from bottom to top) in 0.1s as 16-bit value.
 
@@ -1346,7 +1346,7 @@ Any change in this register will be applied after a reset.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint16_t" default="270" page="0" offset="59">
+            <abstraction id="55" type="uint16_t" default="270" page="0" offset="59">
                 <name lang="en">Shutter 2 max. up time</name>
                 <description lang="en">Max. up-time (drive time from bottom to top) in 0.1s as 16-bit value.
 
@@ -1354,7 +1354,7 @@ Any change in this register will be applied after a reset.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint16_t" default="270" page="0" offset="61">
+            <abstraction id="56" type="uint16_t" default="270" page="0" offset="61">
                 <name lang="en">Shutter 3 max. up time</name>
                 <description lang="en">Max. up-time (drive time from bottom to top) in 0.1s as 16-bit value.
 
@@ -1362,7 +1362,7 @@ Any change in this register will be applied after a reset.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint16_t" default="270" page="0" offset="63">
+            <abstraction id="57" type="uint16_t" default="270" page="0" offset="63">
                 <name lang="en">Shutter 4 max. up time</name>
                 <description lang="en">Max. up-time (drive time from bottom to top) in 0.1s as 16-bit value.
 
@@ -1370,7 +1370,7 @@ Any change in this register will be applied after a reset.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint16_t" default="260" page="0" offset="65">
+            <abstraction id="58" type="uint16_t" default="260" page="0" offset="65">
                 <name lang="en">Shutter 1 max. down time</name>
                 <description lang="en">Max. down-time (drive time from top to bottom) in 0.1s as 16-bit value.
 
@@ -1378,7 +1378,7 @@ Any change in this register will be applied after a reset.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint16_t" default="260" page="0" offset="67">
+            <abstraction id="59" type="uint16_t" default="260" page="0" offset="67">
                 <name lang="en">Shutter 2 max. down time</name>
                 <description lang="en">Max. down-time (drive time from top to bottom) in 0.1s as 16-bit value.
 
@@ -1386,7 +1386,7 @@ Any change in this register will be applied after a reset.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint16_t" default="260" page="0" offset="69">
+            <abstraction id="60" type="uint16_t" default="260" page="0" offset="69">
                 <name lang="en">Shutter 3 max. down time</name>
                 <description lang="en">Max. down-time (drive time from top to bottom) in 0.1s as 16-bit value.
 
@@ -1394,7 +1394,7 @@ Any change in this register will be applied after a reset.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint16_t" default="260" page="0" offset="71">
+            <abstraction id="61" type="uint16_t" default="260" page="0" offset="71">
                 <name lang="en">Shutter 4 max. down time</name>
                 <description lang="en">Max. down-time (drive time from top to bottom) in 0.1s as 16-bit value.
 
@@ -1402,7 +1402,7 @@ Any change in this register will be applied after a reset.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint16_t" default="0" page="0" offset="73">
+            <abstraction id="62" type="uint16_t" default="0" page="0" offset="73">
                 <name lang="en">Shutter 1 turn time</name>
                 <description lang="en">Max. turn-time (turn 90°) in 0.1s as 16-bit value.
 
@@ -1410,7 +1410,7 @@ Any change in this register will be applied after a reset.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint16_t" default="0" page="0" offset="75">
+            <abstraction id="63" type="uint16_t" default="0" page="0" offset="75">
                 <name lang="en">Shutter 2 turn time</name>
                 <description lang="en">Max. turn-time (turn 90°) in 0.1s as 16-bit value.
 
@@ -1418,7 +1418,7 @@ Any change in this register will be applied after a reset.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint16_t" default="0" page="0" offset="77">
+            <abstraction id="64" type="uint16_t" default="0" page="0" offset="77">
                 <name lang="en">Shutter 3 turn time</name>
                 <description lang="en">Max. turn-time (turn 90°) in 0.1s as 16-bit value.
 
@@ -1426,7 +1426,7 @@ Any change in this register will be applied after a reset.</description>
                 <access>rw</access>
             </abstraction>
 
-            <abstraction type="uint16_t" default="0" page="0" offset="79">
+            <abstraction id="65" type="uint16_t" default="0" page="0" offset="79">
                 <name lang="en">Shutter 4 turn time</name>
                 <description lang="en">Max. turn-time (turn 90°) in 0.1s as 16-bit value.
 
@@ -1440,14 +1440,14 @@ Any change in this register will be applied after a reset.</description>
             
             <!-- ********** Page 3 ********** -->
 
-            <abstraction type="uint8_t" default="0xff" page="3" offset="0">
+            <abstraction id="66" type="uint8_t" default="0xff" page="3" offset="0">
                 <name lang="en">Log id (stream id)</name>
                 <description lang="en">The log id (stream id) is used for debugging purposes.
 If you want to enable the log message stream, start logging (CLASS1.Log.LogStart) with this log id.</description>
                 <access>rw</access>
             </abstraction>
             
-            <abstraction type="uint8_t" default="0xff" page="3" offset="1">
+            <abstraction id="67" type="uint8_t" default="0xff" page="3" offset="1">
                 <name lang="en">Transport transmit errors</name>
                 <description lang="en">Current number of transmit errors, counted in the VSCP-framework transport layer.
 The error counter is reset after reading.</description>
@@ -2043,6 +2043,20 @@ The error counter is reset after reading.</description>
 
         </events>
 
+        <setup>
+            <recipe>
+                <name>Enable/Disable relay</name>
+                <description lang="en">Enable or disable the relays.</description>
+                <messagebox>
+                    <function>input</function>
+                    <name lang="en">Set bit mask</name>
+                    <description lang="en">Set the bit mask please.</description>
+                    <variable type="uint8_t" name="bitMask" />
+                </messagebox>
+                <write-register page="0" offset="2" value="$bitMask" />
+            </recipe>
+        </setup>
+        
     </module>
 
 </vscp>
