@@ -190,9 +190,6 @@ int main(void)
 
         /* ----- System state independent jobs ----- */
 
-        /* Process watchdog */
-        watchdog_process();
-
         /* Process VSCP framework */
         vscp_core_process();
 
@@ -200,6 +197,9 @@ int main(void)
         if (TRUE == swTimer_getStatus(MAIN_SWTIMER_10MS_ID))
         {
             swTimer10MSTriggered = TRUE;
+
+            /* Process watchdog */
+            watchdog_process();
 
             /* Process every 10ms the shutter module. */
             anyShutterDriving = shutter_process();
