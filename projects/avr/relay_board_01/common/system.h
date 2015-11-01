@@ -97,10 +97,10 @@ extern "C"
 #define BIT_CLR(__value, __bit)  do{ (__value) &= ~(1 << (__bit)); }while(0)
 
 /** Is bit set? */
-#define IS_BIT_SET(__value, __bit)  (0 == ((__value) & (1 << (__bit)))) ? FALSE : TRUE
+#define IS_BIT_SET(__value, __bit)  ((0 == ((__value) & (1 << (__bit)))) ? FALSE : TRUE)
 
 /** Halt program */
-#define HALT()  do{ _NOP(); }while(1)
+#define HALT()  do{ for(;;) { _NOP(); } }while(0)
 
 /** Reboot via watchdog */
 #define REBOOT()    do{ wdt_enable(WDTO_15MS); HALT(); }while(0)
