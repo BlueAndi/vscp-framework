@@ -48,6 +48,11 @@
     COMPILER SWITCHES
 *******************************************************************************/
 
+/** If a bootloader is used, enable this compiler switch (1) otherwise disable
+ * it (0).
+ */
+#define HW_BOOTLOADER_ENABLED   1
+
 /*******************************************************************************
     CONSTANTS
 *******************************************************************************/
@@ -220,3 +225,39 @@ extern BOOL hw_getSegInitButtonState(void)
 /*******************************************************************************
     LOCAL FUNCTIONS
 *******************************************************************************/
+
+/* If a bootloader is active, it will do this task, otherwise we have to do it
+ * here.
+ */
+#if (0 == HW_BOOTLOADER_ENABLED)
+
+/*
+ * CAUTION! Older AVRs will have the watchdog timer disabled on a reset.
+ * For these older AVRs, doing a soft reset by enabling the watchdog is easy,
+ * as the watchdog will then be disabled after the reset. On newer AVRs, once
+ * the watchdog is enabled, then it stays enabled, even after a reset!
+ * For these newer AVRs a function needs to be added to the .init3 section
+ * (i.e. during the startup code, before main()) to disable the watchdog early
+ * enough so it does not continually reset the AVR.
+*/
+
+/* Disable the watchdog in the .init3 phase before main() is called. */
+static void hw_disableWatchdog(void) \
+__attribute__((naked)) \
+__attribute__((section(".init3")));
+
+/**
+ * Disable watchdog before any watchdog interrupt can happen.
+ * @see http://www.nongnu.org/avr-libc/user-manual/group__avr__watchdog.html
+ */
+static void hw_disableWatchdog(void)
+{
+    /* Save MCUSR so that the main program can access it later */
+    GPIOR0 = MCUSR;
+    MCUSR = 0;
+    wdt_disable();
+
+    return;
+}
+
+#endif  /* (0 == HW_BOOTLOADER_ENABLED) */

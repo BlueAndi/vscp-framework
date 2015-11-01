@@ -204,6 +204,16 @@ extern BOOL hw_getSegInitButtonState(void)
     LOCAL FUNCTIONS
 *******************************************************************************/
 
+/*
+ * CAUTION! Older AVRs will have the watchdog timer disabled on a reset.
+ * For these older AVRs, doing a soft reset by enabling the watchdog is easy,
+ * as the watchdog will then be disabled after the reset. On newer AVRs, once
+ * the watchdog is enabled, then it stays enabled, even after a reset!
+ * For these newer AVRs a function needs to be added to the .init3 section
+ * (i.e. during the startup code, before main()) to disable the watchdog early
+ * enough so it does not continually reset the AVR.
+*/
+
 /* Disable the watchdog in the .init3 phase before main() is called. */
 static void hw_disableWatchdog(void) \
 __attribute__((naked)) \
