@@ -1,26 +1,34 @@
 ## 0.5.0 (unreleased)
 
-Features:
+  - Examples
+    - AVR
+      - Features:
+        - Tx retry mechanismen implemented.
+    - PC
+      - Features:
+        - Command line arguments changed, please use -h or --help to see how.
+      - Bugfixes:
+        - Setting the GUID via command line argument fixed.
+        - Fixed wrong compares for a empty strings.  
+  
+  - Projects
+    - AVR
+      - Relay board 01
+        - Features:
+          - Tx retry mechanismen implemented.
+        - Bugfixes:
+          - Fixed a wrong compare in the shutter position detection.
+    - PC
+      - VSCP event logger for the command line introduced.
+      - VSCP L1 programmer for the command line introduced.
 
   - VSCP framework
-    - CLASS1_INFORMATION, Type = 9 (0x09) Node Heartbeat is now mandatory for all Level I nodes. Default period is set to 30s.
-    - Bootloader can now handle shorter images too, but the image size has to be a multiple of the block size.
-
-  - PC VSCP event logger for the command line introduced.
-  - PC VSCP L1 programmer for the command line introduced.
-  
-  - PC example
-    - Command line arguments changed, please use -h or --help to see how.
-  
-Bugfixes:
-    
-  - Project: Relay board 01
-    - Fixed a wrong compare in the shutter position detection.
-    
-  - PC example
-    - Setting the GUID via command line argument fixed.
-    - Fixed wrong compares for a empty strings.
-    
+    - Features:
+      - CLASS1_INFORMATION, Type = 9 (0x09) Node Heartbeat is now mandatory for all Level I nodes. Default period is set to 30s.
+      - Bootloader can now handle shorter images too, but the image size has to be a multiple of the block size.
+    - Bugfixes:
+      - Bootloader CRC calculation of the whole image fixed.
+      
 ## 0.4.0
 
 Features:
