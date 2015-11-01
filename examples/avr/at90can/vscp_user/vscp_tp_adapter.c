@@ -42,6 +42,7 @@
 *******************************************************************************/
 #include "vscp_tp_adapter.h"
 #include "canDrv.h"
+#include <util/delay.h>
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -50,6 +51,12 @@
 /*******************************************************************************
     CONSTANTS
 *******************************************************************************/
+
+/** Number of retries for sending a CAN message */
+#define VSCP_TP_ADAPTER_TX_RETRY        3
+
+/** The tx wait time in us is used after sending a CAN message failed. */
+#define VSCP_TP_ADAPTER_TX_WAIT_TIME    500
 
 /*******************************************************************************
     MACROS
@@ -141,7 +148,9 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg)
         (VSCP_L1_DATA_SIZE >= msg->dataNum))    /* Number of data bytes is limited */
     {
         CANMsg  canMsg;
-        uint8_t index   = 0;
+        uint8_t index       = 0;
+        int8_t  rv          = 0;    /* Return value of CAN driver */
+        uint8_t retryCnt    = 0;    /* Retry counter */
 
         canMsg.id       = ( (unsigned long)msg->priority << 26 ) |
                           ( (unsigned long)msg->hardCoded << 25) |
@@ -156,7 +165,27 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg)
             canMsg.byte[index] = msg->data[index];
         }
 
-        if (ERROR_OK == can_SendFrame(&canMsg))
+        /* Send the CAN message */
+        do
+        {
+            /* Before any retry, wait some time */
+            if (0 < retryCnt)
+            {
+                _delay_us(VSCP_TP_ADAPTER_TX_WAIT_TIME);
+            }
+
+            rv = can_SendFrame(&canMsg);
+
+            /* Failed to send CAN message? */
+            if (ERROR_OK != rv)
+            {
+                ++retryCnt;
+            }
+        }
+        while ((ERROR_OK != rv) && (VSCP_TP_ADAPTER_TX_RETRY > retryCnt));
+
+        /* CAN message successful sent? */
+        if (ERROR_OK == rv)
         {
             status = TRUE;
         }
