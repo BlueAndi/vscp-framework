@@ -155,7 +155,7 @@ int main(void)
     BOOL    swTimer1STriggered      = FALSE;                    /* Signals that the 1s software timer triggered */
     uint8_t swTimer1S               = MAIN_SWTIMER_1S_PERIOD;   /* The 1s timer is based on 250 ms software timer */
     uint8_t index                   = 0;
-    BOOL    anyShutterDriving       = FALSE;
+    BOOL    shuttersAreIdle         = FALSE;
 
     /* ********** Run level 1 - interrupts disabled ********** */
 
@@ -202,12 +202,12 @@ int main(void)
             watchdog_process();
 
             /* Process every 10ms the shutter module. */
-            anyShutterDriving = shutter_process();
+            shuttersAreIdle = shutter_process();
 
             /* Process every 10ms the shutter control. */
             if (TRUE == shutterDrv_process())
             {
-                anyShutterDriving = TRUE;
+                shuttersAreIdle = TRUE;
             }
         }
 
@@ -280,7 +280,7 @@ int main(void)
                 }
 
                 /* Enter power saving mode? */
-                if (FALSE == anyShutterDriving)
+                if (TRUE == shuttersAreIdle)
                 {
                     /*
                     set_sleep_mode(SLEEP_MODE_IDLE);
@@ -320,7 +320,7 @@ int main(void)
             /* Wait until all shutters are stopped before any further action
              * takes place.
              */
-            if (FALSE == anyShutterDriving)
+            if (TRUE == shuttersAreIdle)
             {
                 if (SYS_SM_ACTION_REBOOT == sysSmAction)
                 {
