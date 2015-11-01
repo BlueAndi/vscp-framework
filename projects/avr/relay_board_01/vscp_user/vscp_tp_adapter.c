@@ -184,6 +184,7 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg)
         (VSCP_L1_DATA_SIZE >= msg->dataNum))    /* Number of data bytes is limited */
     {
         can_t   canMsg;             /* CAN message */
+        uint8_t index       = 0;    /* Run variable */
         uint8_t rv          = 0;    /* Return value of CAN driver */
         uint8_t retryCnt    = 0;    /* Retry counter */
 
@@ -197,14 +198,9 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg)
         canMsg.flags.extended   = 1;
         canMsg.length           = msg->dataNum;
 
-        if (0 < canMsg.length)
+        for(index = 0; index < canMsg.length; ++index)
         {
-            uint8_t index   = 0;    /* Run variable */
-
-            for(index = 0; index < canMsg.length; ++index)
-            {
-                canMsg.data[index] = msg->data[index];
-            }
+            canMsg.data[index] = msg->data[index];
         }
 
         /* Send the CAN message */
