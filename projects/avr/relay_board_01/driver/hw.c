@@ -242,15 +242,18 @@ extern BOOL hw_getSegInitButtonState(void)
 */
 
 /* Disable the watchdog in the .init3 phase before main() is called. */
-static void hw_disableWatchdog(void) \
+void hw_disableWatchdog(void) \
 __attribute__((naked)) \
 __attribute__((section(".init3")));
 
 /**
  * Disable watchdog before any watchdog interrupt can happen.
  * @see http://www.nongnu.org/avr-libc/user-manual/group__avr__watchdog.html
+ *
+ * Important note: Don't declare this function static, otherwise it will be
+ * removed by the linker.
  */
-static void hw_disableWatchdog(void)
+void hw_disableWatchdog(void)
 {
     /* Save MCUSR so that the main program can access it later */
     GPIOR0 = MCUSR;

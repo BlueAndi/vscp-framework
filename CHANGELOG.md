@@ -4,6 +4,8 @@
     - AVR
       - Features:
         - Tx retry mechanismen implemented.
+      - Bugfixes:
+        - Watchdog was not disabled as soon as possible. That caused a permanent reset, after a watchdog reset.
     - PC
       - Features:
         - Command line arguments changed, please use -h or --help to see how.
@@ -13,11 +15,18 @@
   
   - Projects
     - AVR
+      - Bootloader jumper
+        - Bugfixes:
+          - Watchdog was not disabled as soon as possible. That caused a permanent reset, after a watchdog reset.
+      - Bootloader VSCP
+        - Bugfixes:
+          - Watchdog was not disabled as soon as possible. That caused a permanent reset, after a watchdog reset.
       - Relay board 01
         - Features:
           - Tx retry mechanismen implemented.
         - Bugfixes:
           - Fixed a wrong compare in the shutter position detection.
+          - Watchdog was not disabled as soon as possible. That caused a permanent reset, after a watchdog reset.
     - PC
       - VSCP event logger for the command line introduced.
       - VSCP L1 programmer for the command line introduced.
