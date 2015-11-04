@@ -52,7 +52,7 @@
 *******************************************************************************/
 
 /** Watchdog observation period */
-#define WATCHDOG_PERIOD WDTO_15MS
+#define WATCHDOG_PERIOD WDTO_30MS
 
 /*******************************************************************************
     MACROS
