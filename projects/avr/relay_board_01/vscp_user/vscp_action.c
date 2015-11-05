@@ -388,13 +388,12 @@ static void vscp_action_toggleRelay(uint8_t par)
  */
 static void vscp_action_driveShutter(uint8_t par, SHUTTER_DIR dir, uint16_t duration)
 {
-    uint8_t index        = 0;
-    uint8_t instances   = (par >> 0) & 0x0f;
+    uint8_t index   = 0;
 
     for(index = 0; index < SHUTTER_NUM; ++index)
     {
         /* Shutter masked? */
-        if (TRUE == IS_BIT_SET(instances, index))
+        if (TRUE == IS_BIT_SET(par, index))
         {
             shutter_drive(index, dir, duration);
         }
@@ -411,13 +410,12 @@ static void vscp_action_driveShutter(uint8_t par, SHUTTER_DIR dir, uint16_t dura
  */
 static void vscp_action_alertShutter(uint8_t par, BOOL alert)
 {
-    uint8_t index       = 0;
-    uint8_t instances   = (par >> 0) & 0x0f;
+    uint8_t index   = 0;
 
     for(index = 0; index < SHUTTER_NUM; ++index)
     {
         /* Shutter masked? */
-        if (TRUE == IS_BIT_SET(instances, index))
+        if (TRUE == IS_BIT_SET(par, index))
         {
             shutter_windAlert(index, alert);
         }
@@ -434,13 +432,12 @@ static void vscp_action_alertShutter(uint8_t par, BOOL alert)
  */
 static void vscp_action_driveAbsShutter(uint8_t par, uint8_t pos)
 {
-    uint8_t index        = 0;
-    uint8_t instances   = (par >> 0) & 0x0f;
+    uint8_t index   = 0;
 
     for(index = 0; index < SHUTTER_NUM; ++index)
     {
         /* Shutter masked? */
-        if (TRUE == IS_BIT_SET(instances, index))
+        if (TRUE == IS_BIT_SET(par, index))
         {
             shutter_driveAbs(index, pos);
         }
