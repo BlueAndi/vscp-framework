@@ -27,6 +27,7 @@
         - Bugfixes:
           - Fixed a wrong compare in the shutter position detection.
           - Watchdog was not disabled as soon as possible. That caused a permanent reset, after a watchdog reset.
+          - Driving a shutter infinite up or down was not possible.
     - PC
       - VSCP event logger for the command line introduced.
       - VSCP L1 programmer for the command line introduced.

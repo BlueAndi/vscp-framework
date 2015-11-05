@@ -859,11 +859,15 @@ static void shutter_driveCb(uint8_t nr, SHUTTERDRV_DIR direction, BOOL isDriving
     /* Shutter started to drive */
     else
     {
-        /* Start to count the time the shutter runs.
-         * At this point the timer duration is already set.
-         */
-        con->timer.run          = 0;
-        con->timer.isEnabled    = TRUE;
+        /* Shall the shutter run a defined time or infinite? */
+        if (0 < con->timer.duration)
+        {
+            /* Start to count the time the shutter runs.
+             * At this point the timer duration is already set.
+             */
+            con->timer.run          = 0;
+            con->timer.isEnabled    = TRUE;
+        }
     }
 
     /* Inform application? */
