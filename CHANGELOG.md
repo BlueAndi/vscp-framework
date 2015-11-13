@@ -1,3 +1,10 @@
+## 0.6.0 (unreleased)
+
+  - VSCP framework
+    - Features:
+      - The decision matrix NG register read/write is now handled in the core as well. Therefore it is not necessary
+        anymore to handle it in the vscp_app_reg.c manually.
+
 ## 0.5.0
 
   - Examples

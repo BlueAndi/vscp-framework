@@ -142,6 +142,8 @@ extern "C"
 
 #define VSCP_CONFIG_DM_ROWS                     35
 
+#define VSCP_CONFIG_DM_NG_PAGE                  4
+
 #define VSCP_CONFIG_DM_NG_RULE_SET_SIZE         80
 
 #define VSCP_CONFIG_LOOPBACK_STORAGE_NUM        10
@@ -161,6 +163,8 @@ extern "C"
 #define VSCP_CONFIG_DM_OFFSET                   0
 
 #define VSCP_CONFIG_DM_ROWS                     10
+
+#define VSCP_CONFIG_DM_NG_PAGE                  2
 
 #define VSCP_CONFIG_DM_NG_RULE_SET_SIZE         80
 

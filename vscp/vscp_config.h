@@ -264,8 +264,22 @@ extern "C"
 
 #if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION )
 
-/** Maximum size in bytes of a rule set. */
+#ifndef VSCP_CONFIG_DM_NG_PAGE
+
+/** Decision matrix next generation: Location in the application register space.
+ * Note that the dm ng always starts at the begin of the page! This design
+ * decision was just for simplification, nothing else.
+ */
+#define VSCP_CONFIG_DM_NG_PAGE                  2
+
+#endif  /* Undefined VSCP_CONFIG_DM_NG_PAGE */
+
+#ifndef VSCP_CONFIG_DM_NG_RULE_SET_SIZE
+
+/** Decision matrix next generation: Maximum size in bytes of a rule set. */
 #define VSCP_CONFIG_DM_NG_RULE_SET_SIZE         80
+
+#endif  /* VSCP_CONFIG_DM_NG_RULE_SET_SIZE */
 
 #endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION ) */
 

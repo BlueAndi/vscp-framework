@@ -73,6 +73,8 @@ extern "C"
 
 #define VSCP_CONFIG_ENABLE_LOOPBACK             VSCP_CONFIG_BASE_ENABLED
 
+#define VSCP_CONFIG_ENABLE_DM                   VSCP_CONFIG_BASE_ENABLED
+
 #define VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION   VSCP_CONFIG_BASE_ENABLED
 
 #define VSCP_CONFIG_ERROR_CALLOUT               VSCP_CONFIG_BASE_ENABLED
@@ -120,6 +122,8 @@ extern "C"
 
 #define VSCP_CONFIG_DM_ROWS                     2
 
+#define VSCP_CONFIG_DM_NG_PAGE                  2
+
 #define VSCP_CONFIG_DM_NG_RULE_SET_SIZE         80
 
 #define VSCP_CONFIG_LOOPBACK_STORAGE_NUM        4
@@ -139,6 +143,8 @@ extern "C"
 #define VSCP_CONFIG_DM_OFFSET                   0
 
 #define VSCP_CONFIG_DM_ROWS                     10
+
+#define VSCP_CONFIG_DM_NG_PAGE                  2
 
 #define VSCP_CONFIG_DM_NG_RULE_SET_SIZE         80
 

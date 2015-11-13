@@ -183,6 +183,37 @@ extern void vscp_dm_ng_init(void);
 extern void vscp_dm_ng_restoreFactoryDefaultSettings(void);
 
 /**
+ * This function check if the given page and address are part of the
+ * decision matrix.
+ *
+ * @param[in]   page    Page
+ * @param[in]   addr    Register address
+ * @return  Is part of the decision matrix or not.
+ * @retval  FALSE   Is not part of the decision matrix.
+ * @retval  TRUE    Is part of the decision matrix.
+ */
+extern BOOL vscp_dm_ng_isDecisionMatrix(uint16_t page, uint8_t addr);
+
+/**
+ * Read register and return its value.
+ *
+ * @param[in]   page    Page
+ * @param[in]   addr    Register address
+ * @return  Register value
+ */
+extern uint8_t  vscp_dm_ng_readRegister(uint16_t page, uint8_t addr);
+
+/**
+ * Write to register.
+ *
+ * @param[in]   page    Page
+ * @param[in]   addr    Register address
+ * @param[in]   value   Value to write
+ * @return  Register value
+ */
+extern uint8_t  vscp_dm_ng_writeRegister(uint16_t page, uint8_t addr, uint8_t value);
+
+/**
  * This function process all configured rules and if any action regarding the
  * received message takes place, it will call the corresponding action.
  *

@@ -398,7 +398,7 @@ extern void vscp_ps_user_writeShutterEnable(uint8_t value);
 
 /**
  * This function reads the relay event config from persistent storage.
- * Enable or disable a releay event. There are up to 8 relay enumerated by 1 to 8.
+ * Enable or disable a relay event. There are up to 8 relay enumerated by 1 to 8.
  * The relay 1 corresponds to bit 0 and etc.
  * A 0 disables the event and a 1 enables it.
  *
@@ -408,7 +408,7 @@ extern uint8_t vscp_ps_user_readRelayEventConfig(void);
 
 /**
  * This function writes the relay event config to persistent storage.
- * Enable or disable a releay event. There are up to 8 relay enumerated by 1 to 8.
+ * Enable or disable a relay event. There are up to 8 relay enumerated by 1 to 8.
  * The relay 1 corresponds to bit 0 and etc.
  * A 0 disables the event and a 1 enables it.
  *
