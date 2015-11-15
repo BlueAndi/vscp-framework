@@ -56,8 +56,6 @@ This module contains the VSCP decision matrix next generation.
  * Supported compile switches:
  * - VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION
  *
- * @todo Bind it to the application register apce
- *
  * @{
  */
 
