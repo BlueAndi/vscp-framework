@@ -200,7 +200,7 @@ extern void vscp_dm_ng_init(void)
  */
 extern void vscp_dm_ng_restoreFactoryDefaultSettings(void)
 {
-    uint8_t index   = 0;
+    uint16_t    index   = 0;
 
     /* Clear decision matrix next generation */
     for(index = 0; index < VSCP_CONFIG_DM_NG_RULE_SET_SIZE; ++index)
