@@ -54,8 +54,8 @@ This transformation script generates the user persistency access interface.
         INCLUDES
     ****************************************************************************
     -->
-    <xsl:include href="../../../../tools/xslt/utilities/ctools.xsl"/> 
-    
+    <xsl:include href="../../../../tools/xslt/utilities/ctools.xsl"/>
+
     <!--
     ****************************************************************************
         OUTPUT CONFIGURATION
@@ -71,14 +71,14 @@ This transformation script generates the user persistency access interface.
     <xsl:variable name="global.moduleName">vscp_ps_user</xsl:variable>
     <xsl:variable name="global.author">Andreas Merkle, http://www.blue-andi.de</xsl:variable>
     <xsl:variable name="global.description">This module contains the user specific access to the persistent storage.</xsl:variable>
-    
+
     <!--
     ****************************************************************************
         ROOT TEMPLATE
     ****************************************************************************
     -->
     <xsl:template match="/">
-    
+
         <!-- Generate header file -->
         <xsl:result-document href="{$global.moduleName}.h">
             <xsl:call-template name="h.header" />
@@ -91,7 +91,7 @@ This transformation script generates the user persistency access interface.
             <xsl:call-template name="h.functions" />
             <xsl:call-template name="h.footer" />
         </xsl:result-document>
-    
+
         <!-- Generate source file -->
         <xsl:result-document href="{$global.moduleName}.c">
             <xsl:call-template name="c.header" />
@@ -107,35 +107,35 @@ This transformation script generates the user persistency access interface.
             <xsl:call-template name="c.localFunctions" />
             <xsl:call-template name="c.footer" />
         </xsl:result-document>
-        
+
     </xsl:template>
-    
+
     <!--
     ****************************************************************************
         HEADER FILE
     ****************************************************************************
     -->
-    
+
     <!-- Header file header -->
-    <xsl:template name="h.header">    
+    <xsl:template name="h.header">
         <xsl:call-template name="ctools.hHeaderBlock">
             <xsl:with-param name="license">
             <xsl:text>/* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -143,14 +143,14 @@ This transformation script generates the user persistency access interface.
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 </xsl:text>
             </xsl:with-param>
             <xsl:with-param name="briefDesc">
                 <xsl:text>User specific persistency access.</xsl:text>
-            </xsl:with-param>        
+            </xsl:with-param>
             <xsl:with-param name="moduleName">
                 <xsl:value-of select="$global.moduleName" />
             </xsl:with-param>
@@ -163,7 +163,7 @@ This transformation script generates the user persistency access interface.
         </xsl:call-template>
         <xsl:text>&LF;</xsl:text>
     </xsl:template>
-    
+
     <!-- Header file includes -->
     <xsl:template name="h.includes">
         <xsl:call-template name="ctools.generalBlock">
@@ -175,7 +175,7 @@ This transformation script generates the user persistency access interface.
         <xsl:text>#include "vscp_ps.h"&LF;</xsl:text>
         <xsl:text>&LF;</xsl:text>
     </xsl:template>
-    
+
     <!-- Header file compiler switches -->
     <xsl:template name="h.compilerSwitches">
         <xsl:call-template name="ctools.generalBlock">
@@ -185,7 +185,7 @@ This transformation script generates the user persistency access interface.
         </xsl:call-template>
         <xsl:text>&LF;</xsl:text>
     </xsl:template>
-    
+
     <!-- Header file constants -->
     <xsl:template name="h.constants">
         <xsl:call-template name="ctools.generalBlock">
@@ -196,14 +196,14 @@ This transformation script generates the user persistency access interface.
         <xsl:text>&LF;</xsl:text>
         <xsl:apply-templates select="ss:Workbook/ss:Worksheet[@ss:Name='app_register']" mode="h.constants" />
     </xsl:template>
-    
+
     <xsl:template match="ss:Worksheet[@ss:Name='app_register']" mode="h.constants">
 
         <!-- Get the persistency base offset. -->
         <xsl:variable name="psBaseOffset">
             <xsl:value-of select="ss:Table/ss:Row[6]/ss:Cell[2]/ss:Data" />
         </xsl:variable>
-        
+
         <xsl:call-template name="ctools.define">
             <xsl:with-param name="comment">
                 <xsl:text>Address where the user specific persistent values are stored.</xsl:text>
@@ -219,12 +219,12 @@ This transformation script generates the user persistency access interface.
             </xsl:with-param>
         </xsl:call-template>
         <xsl:text>&LF;</xsl:text>
-        
+
         <xsl:for-each select="ss:Table/ss:Row[(fn:position() > 8)]">
             <!-- Sort after page and register offset. -->
             <xsl:sort order="ascending" data-type="number" select="ss:Cell[1]/ss:Data" />
             <xsl:sort order="ascending" data-type="number" select="ss:Cell[2]/ss:Data" />
-            
+
             <!-- Page -->
             <xsl:variable name="page" select="ss:Cell[1]/ss:Data" />
             <!-- Register offset -->
@@ -245,7 +245,7 @@ This transformation script generates the user persistency access interface.
             <xsl:variable name="userPersistencyWrite" select="ss:Cell[10]/ss:Data" />
             <!-- Size -->
             <xsl:variable name="size" select="$numElements * $elementSize" />
-        
+
             <xsl:if test="$page != '' and $offset != '' and $persistencyOffset != '' and $numElements != '' and $elementSize != '' and $shortName != ''">
 
                 <xsl:if test="not($userPersistencyRead)">
@@ -270,7 +270,7 @@ This transformation script generates the user persistency access interface.
                     </xsl:call-template>
                     <xsl:text>&LF;</xsl:text>
                 </xsl:if>
-                            
+
                 <xsl:if test="not($userPersistencyWrite)">
                     <!-- Generate #define for the size -->
                     <xsl:call-template name="ctools.define">
@@ -291,13 +291,13 @@ This transformation script generates the user persistency access interface.
                     </xsl:call-template>
                     <xsl:text>&LF;</xsl:text>
                 </xsl:if>
-            
+
             </xsl:if>
-        
+
         </xsl:for-each>
-        
+
     </xsl:template>
-    
+
     <!-- Header file macros -->
     <xsl:template name="h.macros">
         <xsl:call-template name="ctools.generalBlock">
@@ -307,7 +307,7 @@ This transformation script generates the user persistency access interface.
         </xsl:call-template>
         <xsl:text>&LF;</xsl:text>
     </xsl:template>
-    
+
     <!-- Header file types and structures -->
     <xsl:template name="h.typesAndStructures">
         <xsl:call-template name="ctools.generalBlock">
@@ -317,7 +317,7 @@ This transformation script generates the user persistency access interface.
         </xsl:call-template>
         <xsl:text>&LF;</xsl:text>
     </xsl:template>
-    
+
     <!-- Header file global variables -->
     <xsl:template name="h.variables">
         <xsl:call-template name="ctools.generalBlock">
@@ -327,7 +327,7 @@ This transformation script generates the user persistency access interface.
         </xsl:call-template>
         <xsl:text>&LF;</xsl:text>
     </xsl:template>
-    
+
     <!-- Header file global functions -->
     <xsl:template name="h.functions">
         <xsl:call-template name="ctools.generalBlock">
@@ -340,9 +340,9 @@ This transformation script generates the user persistency access interface.
         <xsl:text>&LF;</xsl:text>
         <xsl:apply-templates select="ss:Workbook/ss:Worksheet[@ss:Name='app_register']" mode="h.functions" />
     </xsl:template>
-    
+
     <xsl:template match="ss:Worksheet[@ss:Name='app_register']" mode="h.functions.init">
-    
+
         <xsl:call-template name="ctools.function">
             <xsl:with-param name="comment">
                 <xsl:text>This function initializes this module.</xsl:text>
@@ -360,16 +360,16 @@ This transformation script generates the user persistency access interface.
                 <xsl:text>void</xsl:text>
             </xsl:with-param>
         </xsl:call-template>
-    
+
     </xsl:template>
-    
+
     <xsl:template match="ss:Worksheet[@ss:Name='app_register']" mode="h.functions">
-       
+
         <xsl:for-each select="ss:Table/ss:Row[(fn:position() > 8)]">
             <!-- Sort after page and register offset. -->
             <xsl:sort order="ascending" data-type="number" select="ss:Cell[1]/ss:Data" />
             <xsl:sort order="ascending" data-type="number" select="ss:Cell[2]/ss:Data" />
-            
+
             <!-- Page -->
             <xsl:variable name="page" select="ss:Cell[1]/ss:Data" />
             <!-- Register offset -->
@@ -390,13 +390,13 @@ This transformation script generates the user persistency access interface.
             <xsl:variable name="userPersistencyWrite" select="ss:Cell[10]/ss:Data" />
             <!-- Size -->
             <xsl:variable name="size" select="$numElements * $elementSize" />
-        
+
             <xsl:if test="$page != '' and $offset != '' and $persistencyOffset != '' and $numElements != '' and $elementSize != '' and $shortName != ''">
-                
+
                 <xsl:choose>
                     <!-- Number of elements is 1 -->
                     <xsl:when test="$size = 1">
-                        
+
                         <xsl:if test="not($userPersistencyRead)">
                             <!-- Read function -->
                             <xsl:call-template name="ctools.function">
@@ -424,7 +424,7 @@ This transformation script generates the user persistency access interface.
                                 </xsl:with-param>
                             </xsl:call-template>
                         </xsl:if>
-                        
+
                         <xsl:if test="not($userPersistencyRead) and not($userPersistencyWrite)">
                             <xsl:text>&LF;</xsl:text>
                         </xsl:if>
@@ -456,11 +456,11 @@ This transformation script generates the user persistency access interface.
                                 </xsl:with-param>
                             </xsl:call-template>
                         </xsl:if>
-                        
+
                     </xsl:when>
                     <!-- Number of elements are greater than 1 -->
                     <xsl:otherwise>
-                    
+
                         <xsl:if test="not($userPersistencyRead)">
                             <!-- Read function -->
                             <xsl:call-template name="ctools.function">
@@ -489,11 +489,11 @@ This transformation script generates the user persistency access interface.
                                 </xsl:with-param>
                             </xsl:call-template>
                         </xsl:if>
-                        
+
                         <xsl:if test="not($userPersistencyRead) and not($userPersistencyWrite)">
                             <xsl:text>&LF;</xsl:text>
                         </xsl:if>
-                    
+
                         <xsl:if test="not($userPersistencyWrite)">
                             <!-- Write function -->
                             <xsl:call-template name="ctools.function">
@@ -522,17 +522,17 @@ This transformation script generates the user persistency access interface.
                                 </xsl:with-param>
                             </xsl:call-template>
                         </xsl:if>
-                    
+
                     </xsl:otherwise>
                 </xsl:choose>
                 <xsl:text>&LF;</xsl:text>
-                                
+
             </xsl:if>
-            
+
         </xsl:for-each>
-    
+
     </xsl:template>
-    
+
     <!-- Header file footer -->
     <xsl:template name="h.footer">
         <xsl:call-template name="ctools.hFooterBlock">
@@ -541,33 +541,33 @@ This transformation script generates the user persistency access interface.
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
-    
+
     <!--
     ****************************************************************************
         SOURCE FILE
     ****************************************************************************
     -->
-    
+
     <!-- Source file header -->
     <xsl:template name="c.header">
         <xsl:call-template name="ctools.cHeaderBlock">
             <xsl:with-param name="license">
             <xsl:text>/* The MIT License (MIT)
- * 
+ *
  * Copyright (c) 2014 - 2015, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -575,7 +575,7 @@ This transformation script generates the user persistency access interface.
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 </xsl:text>
@@ -592,7 +592,7 @@ This transformation script generates the user persistency access interface.
         </xsl:call-template>
         <xsl:text>&LF;</xsl:text>
     </xsl:template>
-    
+
     <!-- Source file includes -->
     <xsl:template name="c.includes">
         <xsl:call-template name="ctools.generalBlock">
@@ -605,7 +605,7 @@ This transformation script generates the user persistency access interface.
         <xsl:text>#include "vscp_ps_access.h"&LF;</xsl:text>
         <xsl:text>&LF;</xsl:text>
     </xsl:template>
-    
+
     <!-- Source file compiler switches -->
     <xsl:template name="c.compilerSwitches">
         <xsl:call-template name="ctools.generalBlock">
@@ -615,7 +615,7 @@ This transformation script generates the user persistency access interface.
         </xsl:call-template>
         <xsl:text>&LF;</xsl:text>
     </xsl:template>
-    
+
     <!-- Source file constants -->
     <xsl:template name="c.constants">
         <xsl:call-template name="ctools.generalBlock">
@@ -625,7 +625,7 @@ This transformation script generates the user persistency access interface.
         </xsl:call-template>
         <xsl:text>&LF;</xsl:text>
     </xsl:template>
-    
+
     <!-- Source file macros -->
     <xsl:template name="c.macros">
         <xsl:call-template name="ctools.generalBlock">
@@ -635,7 +635,7 @@ This transformation script generates the user persistency access interface.
         </xsl:call-template>
         <xsl:text>&LF;</xsl:text>
     </xsl:template>
-    
+
     <!-- Source file types and structures -->
     <xsl:template name="c.typesAndStructures">
         <xsl:call-template name="ctools.generalBlock">
@@ -645,7 +645,7 @@ This transformation script generates the user persistency access interface.
         </xsl:call-template>
         <xsl:text>&LF;</xsl:text>
     </xsl:template>
-    
+
     <!-- Source file prototypes -->
     <xsl:template name="c.prototypes">
         <xsl:call-template name="ctools.generalBlock">
@@ -655,7 +655,7 @@ This transformation script generates the user persistency access interface.
         </xsl:call-template>
         <xsl:text>&LF;</xsl:text>
     </xsl:template>
-    
+
     <!-- Source file local variables -->
     <xsl:template name="c.localVariables">
         <xsl:call-template name="ctools.generalBlock">
@@ -665,7 +665,7 @@ This transformation script generates the user persistency access interface.
         </xsl:call-template>
         <xsl:text>&LF;</xsl:text>
     </xsl:template>
-    
+
     <!-- Source file global variables -->
     <xsl:template name="c.globalVariables">
         <xsl:call-template name="ctools.generalBlock">
@@ -675,7 +675,7 @@ This transformation script generates the user persistency access interface.
         </xsl:call-template>
         <xsl:text>&LF;</xsl:text>
     </xsl:template>
-    
+
     <!-- Source file global functions -->
     <xsl:template name="c.globalFunctions">
         <xsl:call-template name="ctools.generalBlock">
@@ -688,9 +688,9 @@ This transformation script generates the user persistency access interface.
         <xsl:text>&LF;</xsl:text>
         <xsl:apply-templates select="ss:Workbook/ss:Worksheet[@ss:Name='app_register']" mode="c.globalFunctions" />
     </xsl:template>
-    
+
     <xsl:template match="ss:Worksheet[@ss:Name='app_register']" mode="c.globalFunctions.init">
-    
+
         <xsl:call-template name="ctools.function">
             <xsl:with-param name="comment">
                 <xsl:text>This function initializes this module.</xsl:text>
@@ -713,16 +713,16 @@ This transformation script generates the user persistency access interface.
                 <xsl:text>&TAB;return;&LF;</xsl:text>
             </xsl:with-param>
         </xsl:call-template>
-    
+
     </xsl:template>
-    
+
     <xsl:template match="ss:Worksheet[@ss:Name='app_register']" mode="c.globalFunctions">
-    
+
         <xsl:for-each select="ss:Table/ss:Row[(fn:position() > 8)]">
             <!-- Sort after page and register offset. -->
             <xsl:sort order="ascending" data-type="number" select="ss:Cell[1]/ss:Data" />
             <xsl:sort order="ascending" data-type="number" select="ss:Cell[2]/ss:Data" />
-            
+
             <!-- Page -->
             <xsl:variable name="page" select="ss:Cell[1]/ss:Data" />
             <!-- Register offset -->
@@ -743,12 +743,12 @@ This transformation script generates the user persistency access interface.
             <xsl:variable name="userPersistencyWrite" select="ss:Cell[10]/ss:Data" />
             <!-- Size -->
             <xsl:variable name="size" select="$numElements * $elementSize" />
-        
+
             <xsl:if test="$page != '' and $offset != '' and $persistencyOffset != '' and $numElements != '' and $elementSize != '' and $shortName != ''">
-                
+
                 <!-- Build persistency access function name -->
                 <xsl:variable name="ps.user.read.name">
-                
+
                     <xsl:text>vscp_ps_user_</xsl:text>
                     <xsl:call-template name="ctools.hungarianForm">
                         <xsl:with-param name="string">
@@ -756,12 +756,12 @@ This transformation script generates the user persistency access interface.
                             <xsl:value-of select="$shortName" />
                         </xsl:with-param>
                     </xsl:call-template>
-                
+
                 </xsl:variable>
-                
+
                 <!-- Build #define name of offset -->
                 <xsl:variable name="addr.define.name">
-                
+
                     <xsl:call-template name="ctools.define.name">
                         <xsl:with-param name="moduleName">
                             <xsl:value-of select="$global.moduleName" />
@@ -771,12 +771,12 @@ This transformation script generates the user persistency access interface.
                             <xsl:value-of select="$shortName" />
                         </xsl:with-param>
                     </xsl:call-template>
-                    
+
                 </xsl:variable>
-                
+
                 <!-- Build #define name of size -->
                 <xsl:variable name="size.define.name">
-                
+
                     <xsl:call-template name="ctools.define.name">
                         <xsl:with-param name="moduleName">
                             <xsl:value-of select="$global.moduleName" />
@@ -786,13 +786,13 @@ This transformation script generates the user persistency access interface.
                             <xsl:value-of select="$shortName" />
                         </xsl:with-param>
                     </xsl:call-template>
-                    
+
                 </xsl:variable>
-                
+
                 <xsl:choose>
                     <!-- Number of elements is 1 -->
                     <xsl:when test="$size = 1">
-                        
+
                         <xsl:if test="not($userPersistencyRead)">
                             <!-- Read function -->
                             <xsl:call-template name="ctools.function">
@@ -825,7 +825,7 @@ This transformation script generates the user persistency access interface.
                                 </xsl:with-param>
                             </xsl:call-template>
                         </xsl:if>
-                        
+
                         <xsl:if test="not($userPersistencyRead) and not($userPersistencyWrite)">
                             <xsl:text>&LF;</xsl:text>
                         </xsl:if>
@@ -864,11 +864,11 @@ This transformation script generates the user persistency access interface.
                                 </xsl:with-param>
                             </xsl:call-template>
                         </xsl:if>
-                        
+
                     </xsl:when>
                     <!-- Number of elements are greater than 1 -->
                     <xsl:otherwise>
-                    
+
                         <xsl:if test="not($userPersistencyRead)">
                             <!-- Read function -->
                             <xsl:call-template name="ctools.function">
@@ -911,11 +911,11 @@ This transformation script generates the user persistency access interface.
                                 </xsl:with-param>
                             </xsl:call-template>
                         </xsl:if>
-                        
+
                         <xsl:if test="not($userPersistencyRead) and not($userPersistencyWrite)">
                             <xsl:text>&LF;</xsl:text>
                         </xsl:if>
-                    
+
                         <xsl:if test="not($userPersistencyWrite)">
                             <!-- Write function -->
                             <xsl:call-template name="ctools.function">
@@ -956,17 +956,17 @@ This transformation script generates the user persistency access interface.
                                 </xsl:with-param>
                             </xsl:call-template>
                         </xsl:if>
-                    
+
                     </xsl:otherwise>
                 </xsl:choose>
                 <xsl:text>&LF;</xsl:text>
-                                
+
             </xsl:if>
-            
+
         </xsl:for-each>
-        
+
     </xsl:template>
-    
+
     <!-- Source file local functions -->
     <xsl:template name="c.localFunctions">
         <xsl:call-template name="ctools.generalBlock">
@@ -976,14 +976,14 @@ This transformation script generates the user persistency access interface.
         </xsl:call-template>
         <xsl:text>&LF;</xsl:text>
     </xsl:template>
-    
+
     <!-- Source file footer -->
     <xsl:template name="c.footer">
         <xsl:call-template name="ctools.cFooterBlock" />
     </xsl:template>
-    
+
     <!-- Garbage collector -->
     <xsl:template match="text()">
     </xsl:template>
-    
+
 </xsl:stylesheet>

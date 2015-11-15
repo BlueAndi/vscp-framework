@@ -838,126 +838,23 @@ Bit 8 of the class filter is stored in bit 1 of the flag byte.</description>
             </reg>
             
             <!-- ********** Page 2 ********** -->
-
-            <reg page="2" offset="0" >
-                <name lang="en">Decision matrix next generation</name>
-                <description lang="en">Decision matrix next generation storage.</description>
-                <access>rw</access>
-            </reg>
             
-            <reg page="2" offset="1" >
-                <name lang="en">Decision matrix next generation</name>
-                <description lang="en">Decision matrix next generation storage.</description>
-                <access>rw</access>
-            </reg>
-            <reg page="2" offset="2" >
-                <name lang="en">Decision matrix next generation</name>
-                <description lang="en">Decision matrix next generation storage.</description>
-                <access>rw</access>
-            </reg>
-            <reg page="2" offset="3" >
-                <name lang="en">Decision matrix next generation</name>
-                <description lang="en">Decision matrix next generation storage.</description>
-                <access>rw</access>
-            </reg>
-            <reg page="2" offset="4" >
-                <name lang="en">Decision matrix next generation</name>
-                <description lang="en">Decision matrix next generation storage.</description>
-                <access>rw</access>
-            </reg>
-            <reg page="2" offset="5" >
-                <name lang="en">Decision matrix next generation</name>
-                <description lang="en">Decision matrix next generation storage.</description>
-                <access>rw</access>
-            </reg>
-            <reg page="2" offset="6" >
-                <name lang="en">Decision matrix next generation</name>
-                <description lang="en">Decision matrix next generation storage.</description>
-                <access>rw</access>
-            </reg>
-            <reg page="2" offset="7" >
-                <name lang="en">Decision matrix next generation</name>
-                <description lang="en">Decision matrix next generation storage.</description>
-                <access>rw</access>
-            </reg>
-            <reg page="2" offset="8" >
-                <name lang="en">Decision matrix next generation</name>
-                <description lang="en">Decision matrix next generation storage.</description>
-                <access>rw</access>
-            </reg>
-            <reg page="2" offset="9" >
-                <name lang="en">Decision matrix next generation</name>
-                <description lang="en">Decision matrix next generation storage.</description>
-                <access>rw</access>
-            </reg>
-            <reg page="2" offset="10" >
-                <name lang="en">Decision matrix next generation</name>
-                <description lang="en">Decision matrix next generation storage.</description>
-                <access>rw</access>
-            </reg>
-            
-            <reg page="2" offset="11" >
-                <name lang="en">Decision matrix next generation</name>
-                <description lang="en">Decision matrix next generation storage.</description>
-                <access>rw</access>
-            </reg>
-            
-            <reg page="2" offset="12" >
-                <name lang="en">Decision matrix next generation</name>
-                <description lang="en">Decision matrix next generation storage.</description>
-                <access>rw</access>
-            </reg>
-            <reg page="2" offset="13" >
-                <name lang="en">Decision matrix next generation</name>
-                <description lang="en">Decision matrix next generation storage.</description>
-                <access>rw</access>
-            </reg>
-            <reg page="2" offset="14" >
-                <name lang="en">Decision matrix next generation</name>
-                <description lang="en">Decision matrix next generation storage.</description>
-                <access>rw</access>
-            </reg>
-            <reg page="2" offset="15" >
-                <name lang="en">Decision matrix next generation</name>
-                <description lang="en">Decision matrix next generation storage.</description>
-                <access>rw</access>
-            </reg>
-            <reg page="2" offset="16" >
-                <name lang="en">Decision matrix next generation</name>
-                <description lang="en">Decision matrix next generation storage.</description>
-                <access>rw</access>
-            </reg>
-            <reg page="2" offset="17" >
-                <name lang="en">Decision matrix next generation</name>
-                <description lang="en">Decision matrix next generation storage.</description>
-                <access>rw</access>
-            </reg>
-            <reg page="2" offset="18" >
-                <name lang="en">Decision matrix next generation</name>
-                <description lang="en">Decision matrix next generation storage.</description>
-                <access>rw</access>
-            </reg>
-            <reg page="2" offset="19" >
-                <name lang="en">Decision matrix next generation</name>
-                <description lang="en">Decision matrix next generation storage.</description>
-                <access>rw</access>
-            </reg>
-            <reg page="2" offset="20" >
-                <name lang="en">Decision matrix next generation</name>
-                <description lang="en">Decision matrix next generation storage.</description>
-                <access>rw</access>
-            </reg>
+            <!-- Used by decision matrix NG -->
             
             <!-- ********** Page 3 ********** -->
+            
+            <!-- Used by decision matrix NG -->
+            
+            <!-- ********** Page 4 ********** -->
 
-            <reg page="3" offset="0" >
+            <reg page="4" offset="0" >
                 <name lang="en">Log id (stream id)</name>
                 <description lang="en">The log id (stream id) is used for debugging purposes.
 If you want to enable the log message stream, start logging (CLASS1.Log.LogStart) with this log id.</description>
                 <access>rw</access>
             </reg>
 
-            <reg page="3" offset="1" >
+            <reg page="4" offset="1" >
                 <name lang="en">Transport transmit errors</name>
                 <description lang="en">Current number of transmit errors, counted in the VSCP-framework transport layer.
 The error counter is reset after reading.</description>
@@ -1438,16 +1335,22 @@ Any change in this register will be applied after a reset.</description>
             
             <!-- ********** Page 2 ********** -->
             
+            <!-- Used by decision matrix NG -->
+            
             <!-- ********** Page 3 ********** -->
+            
+            <!-- Used by decision matrix NG -->
+            
+            <!-- ********** Page 4 ********** -->
 
-            <abstraction id="66" type="uint8_t" default="0xff" page="3" offset="0">
+            <abstraction id="66" type="uint8_t" default="0xff" page="4" offset="0">
                 <name lang="en">Log id (stream id)</name>
                 <description lang="en">The log id (stream id) is used for debugging purposes.
 If you want to enable the log message stream, start logging (CLASS1.Log.LogStart) with this log id.</description>
                 <access>rw</access>
             </abstraction>
             
-            <abstraction id="67" type="uint8_t" default="0xff" page="3" offset="1">
+            <abstraction id="67" type="uint8_t" default="0xff" page="4" offset="1">
                 <name lang="en">Transport transmit errors</name>
                 <description lang="en">Current number of transmit errors, counted in the VSCP-framework transport layer.
 The error counter is reset after reading.</description>

@@ -124,7 +124,7 @@ extern "C"
 
 #define VSCP_CONFIG_DM_NG_PAGE                  2
 
-#define VSCP_CONFIG_DM_NG_RULE_SET_SIZE         80
+#define VSCP_CONFIG_DM_NG_RULE_SET_SIZE         ((uint16_t)512)
 
 #define VSCP_CONFIG_LOOPBACK_STORAGE_NUM        4
 
