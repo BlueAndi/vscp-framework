@@ -5,6 +5,12 @@
       - The decision matrix NG register read/write is now handled in the core as well. Therefore it is not necessary
         anymore to handle it in the vscp_app_reg.c manually.
 
+  - Projects
+    - AVR
+      - Relay board 01
+        - Features:
+          - Decision matrix NG size increased to 512 bytes.
+        
 ## 0.5.0
 
   - Examples
