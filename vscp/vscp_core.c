@@ -671,7 +671,7 @@ static void vscp_core_writeNicknameId(uint8_t nickname)
 
 /**
  * This function checks the persistent memory.
- * If the persistent memory is not initialized, it will return @FALSE.
+ * If the persistent memory is not initialized, it will return FALSE.
  * The check is done by checking the node control flags,
  * especially the start up control. Because the start up control bits can
  * be only 01b or 10b.
