@@ -146,7 +146,7 @@ extern "C"
 
 #ifndef VSCP_CONFIG_ENABLE_DM
 
-/** Enable decision matrix special paged feature. */
+/** Enable decision matrix (standard). */
 #define VSCP_CONFIG_ENABLE_DM                   VSCP_CONFIG_BASE_ENABLED
 
 #endif  /* Undefined VSCP_CONFIG_ENABLE_DM */
