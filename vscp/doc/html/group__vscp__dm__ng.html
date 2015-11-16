@@ -18,7 +18,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VSCP framework
-   &#160;<span id="projectnumber">v0.4.1</span>
+   &#160;<span id="projectnumber">v0.5.0</span>
    </div>
   </td>
  </tr>
@@ -127,6 +127,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__dm__ng.html#gae28459f48b5c746e5f23def1cac2a767">vscp_dm_ng_restoreFactoryDefaultSettings</a> (void)</td></tr>
 <tr class="memdesc:gae28459f48b5c746e5f23def1cac2a767"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function restores factory default settings. <br/></td></tr>
 <tr class="separator:gae28459f48b5c746e5f23def1cac2a767"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga944984b1a63d3c2d4f7765ded5f9003b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__dm__ng.html#ga944984b1a63d3c2d4f7765ded5f9003b">vscp_dm_ng_isDecisionMatrix</a> (uint16_t page, uint8_t addr)</td></tr>
+<tr class="memdesc:ga944984b1a63d3c2d4f7765ded5f9003b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function check if the given page and address are part of the decision matrix.  <a href="#ga944984b1a63d3c2d4f7765ded5f9003b">More...</a><br/></td></tr>
+<tr class="separator:ga944984b1a63d3c2d4f7765ded5f9003b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga607d0ff67bcc369d1dff6a2729b0713a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__dm__ng.html#ga607d0ff67bcc369d1dff6a2729b0713a">vscp_dm_ng_readRegister</a> (uint16_t page, uint8_t addr)</td></tr>
+<tr class="memdesc:ga607d0ff67bcc369d1dff6a2729b0713a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read register and return its value.  <a href="#ga607d0ff67bcc369d1dff6a2729b0713a">More...</a><br/></td></tr>
+<tr class="separator:ga607d0ff67bcc369d1dff6a2729b0713a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf7ebfb58a28d941d2ce8c529328a83f7"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__dm__ng.html#gaf7ebfb58a28d941d2ce8c529328a83f7">vscp_dm_ng_writeRegister</a> (uint16_t page, uint8_t addr, uint8_t value)</td></tr>
+<tr class="memdesc:gaf7ebfb58a28d941d2ce8c529328a83f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write to register.  <a href="#gaf7ebfb58a28d941d2ce8c529328a83f7">More...</a><br/></td></tr>
+<tr class="separator:gaf7ebfb58a28d941d2ce8c529328a83f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac460f084cbe5c31290398eab621c2803"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__dm__ng.html#gac460f084cbe5c31290398eab621c2803">vscp_dm_ng_executeActions</a> (<a class="el" href="group__vscp__core.html#gaa400280c5e6e5564de1806a7949d36c5">vscp_RxMessage</a> const *const rxMsg)</td></tr>
 <tr class="memdesc:gac460f084cbe5c31290398eab621c2803"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function process all configured rules and if any action regarding the received message takes place, it will call the corresponding action.  <a href="#gac460f084cbe5c31290398eab621c2803">More...</a><br/></td></tr>
 <tr class="separator:gac460f084cbe5c31290398eab621c2803"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -149,9 +158,8 @@ logic operator = last | and | or ;
 basic operator = undefined | equal | lower | greater | lower or equal | greater or equal | mask ;
 </pre><p>Supported compile switches:</p>
 <ul>
-<li>VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION</li>
+<li>VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION </li>
 </ul>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>Bind it to the application register apce</dd></dl>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="ga3b0269748fa7b38102a10915915e6650"></a>
 <div class="memitem">
@@ -399,10 +407,132 @@ basic operator = undefined | equal | lower | greater | lower or equal | greater 
 
 </div>
 </div>
+<a class="anchor" id="ga944984b1a63d3c2d4f7765ded5f9003b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> vscp_dm_ng_isDecisionMatrix </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>page</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>addr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function check if the given page and address are part of the decision matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">page</td><td>Page </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">addr</td><td>Register address </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Is part of the decision matrix or not. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FALSE</td><td>Is not part of the decision matrix. </td></tr>
+    <tr><td class="paramname">TRUE</td><td>Is part of the decision matrix. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga607d0ff67bcc369d1dff6a2729b0713a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t vscp_dm_ng_readRegister </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>page</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>addr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read register and return its value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">page</td><td>Page </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">addr</td><td>Register address </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Register value </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf7ebfb58a28d941d2ce8c529328a83f7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t vscp_dm_ng_writeRegister </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>page</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write to register. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">page</td><td>Page </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">addr</td><td>Register address </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>Value to write </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Register value </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 10 2015 22:19:52 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Nov 16 2015 18:27:30 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

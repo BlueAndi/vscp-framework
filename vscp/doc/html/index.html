@@ -18,7 +18,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VSCP framework
-   &#160;<span id="projectnumber">v0.4.1</span>
+   &#160;<span id="projectnumber">v0.5.0</span>
    </div>
   </td>
  </tr>
@@ -102,11 +102,14 @@ Event abstraction</h2>
 Structure</h1>
 <pre>
 +---common              (Common sourcecode, used for examples and projects)
+|   +---avr             (Common sourcecode for Atmel AVR microcontrollers)
+|   \---pc              (Common sourcecode for PC)
 +---examples            (Examples which are showing how to use the VSCP framework)
 |   +---avr             (Examples with Atmel AVR microcontrollers)
 |   \---pc              (PC example for windows and linux)
-+---projects            (Projects using the VSCP framework)
-|   \---avr             (Projects with Atmel AVR microcontrollers)
++---projects            (Projects)
+|   +---avr             (Projects with Atmel AVR microcontrollers)
+|   \---pc              (PC projects)
 +---tools               (General tools, used by examples and projects)
 |   \---xslt            (XML transformation processor)
 \---vscp                (VSCP framework)
@@ -171,7 +174,7 @@ Ready to run</h2>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 10 2015 22:19:52 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Nov 16 2015 18:27:30 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
