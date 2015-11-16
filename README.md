@@ -59,10 +59,15 @@ Templates exists for all of them, which makes it much easier to adapt it and les
 Using only the core, you have to assemble the VSCP events by yourself. If you want to deal only with parameter, which are
 VSCP independent, use the next upper layer, the event abstraction modules.
 
-###Features
+###Configuration parameters
+
+The following configuration parameters can be enable/disable/set in the
+```
+vscp_config_overwrite.h
+```
 
 | Feature switch | Default | Description |
-| :------------: |:------: | :---------: |
+| :------------: | :-----: | :---------: |
 | <sub>VSCP\_CONFIG\_ENABLE\_LOGGER<sub> | <sub>disabled<sub> | <sub>Enable log functionality (CLASS1.Log). Use the macros in vscp\_logger.h to send log messages.<sub> |
 | <sub>VSCP\_CONFIG\_SILENT\_NODE<sub> | <sub>disabled<sub> | <sub>Silent node configuration, which is used for e. g. RS-485 connections. This type of nodes only listen to traffic before they get initialized by a host. In this case the nickname discovery process is not started for a node when it is powered up for the first time. This type on node instead starts to listen for the CLASS1.PROTOCOL, Type=23 (GUID drop nickname-ID / reset device.) event. When this series of events is received and the GUID is the same as for the module the module starts the nickname discovery procedure as of above.<sub> |
 | <sub>VSCP\_CONFIG\_HARD\_CODED\_NODE<sub> | <sub>disabled<sub> | <sub>Hard-coded node (fixed nickname id)<sub> |
@@ -77,10 +82,18 @@ VSCP independent, use the next upper layer, the event abstraction modules.
 | <sub>VSCP\_CONFIG\_ENABLE\_DM\_NEXT\_GENERATION<sub> | <sub>disabled<sub> | <sub>Enable the decision matrix next generation.<sub> |
 | <sub>VSCP\_CONFIG\_ENABLE\_LOOPBACK<sub> | <sub>disabled<sub> | <sub>Enable a loopback for all sent VSCP events. This feature is interesting to invoke decision matrix actions by own sent VSCP events.<sub> |
 
-Note, you can enable/disable them in the
-```
-vscp_config_overwrite.h
-```
+| Parameter | Default | Description |
+| :-------: |:------: | :---------: |
+| <sub>VSCP\_CONFIG\_NODE\_SEGMENT\_INIT\_TIMEOUT<sub> | <sub>5000<sub> | <sub>Timeout in ms for the node segment initialization.<sub> |
+| <sub>VSCP\_CONFIG\_PROBE\_ACK\_TIMEOUT<sub> | <sub>2000<sub> | <sub>Timeout in ms for the probe acknowledge.<sub> |
+| <sub>VSCP\_CONFIG\_MULTI\_MSG\_TIMEOUT<sub> | <sub>1000<sub> | <sub>Timeout in ms to observe multi-message handling.<sub> |
+| <sub>VSCP\_CONFIG\_HEARTBEAT\_NODE\_PERIOD<sub> | <sub>30000<sub> | <sub>Node heartbeat period in ms (recommended 30s - 60s).<sub> |
+| <sub>VSCP\_CONFIG\_DM\_PAGE<sub> |<sub>1<sub> | <sub>Decision matrix location: First page of the decision matrix.<sub> |
+| <sub>VSCP\_CONFIG\_DM\_OFFSET<sub> | <sub>0<sub> | <sub>Decision matrix location: Offset in the first page of the decision matrix.<sub> |
+| <sub>VSCP\_CONFIG\_DM\_ROWS<sub> | <sub>10<sub> | <sub>Number of decision matrix rows.<sub> |
+| <sub>VSCP\_CONFIG\_DM\_NG\_PAGE<sub> | <sub>2<sub> | <sub>Decision matrix next generation: Location in the application register space. Note that the dm ng always starts at the begin of the page! This design decision was just for simplification, nothing else.<sub> |
+| <sub>VSCP\_CONFIG\_DM\_NG\_RULE\_SET\_SIZE<sub> | <sub>80<sub> | <sub>Decision matrix next generation: Maximum size in bytes of a rule set.<sub> |
+| <sub>VSCP\_CONFIG\_LOOPBACK\_STORAGE\_NUM<sub> | <sub>4<sub> | <sub>Number of messages in the loopback cyclic buffer. Note, that if you want to store up to 3 events, you have to configure 4, because of the technical implementation of the cyclic buffer.<sub> |
 
 ##Structure
 
