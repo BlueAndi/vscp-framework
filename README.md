@@ -63,19 +63,19 @@ VSCP independent, use the next upper layer, the event abstraction modules.
 
 | Feature switch | Default | Description |
 | :------------: |:------: | :---------: |
-| VSCP\_CONFIG\_ENABLE\_LOGGER | disabled | Enable log functionality (CLASS1.Log). Use the macros in vscp\_logger.h to send log messages. |
-| VSCP\_CONFIG\_SILENT\_NODE | disabled | Silent node configuration, which is used for e. g. RS-485 connections. This type of nodes only listen to traffic before they get initialized by a host. In this case the nickname discovery process is not started for a node when it is powered up for the first time. This type on node instead starts to listen for the CLASS1.PROTOCOL, Type=23 (GUID drop nickname-ID / reset device.) event. When this series of events is received and the GUID is the same as for the module the module starts the nickname discovery procedure as of above. |
-| VSCP\_CONFIG\_HARD\_CODED\_NODE | disabled | Hard-coded node (fixed nickname id) |
-| VSCP\_CONFIG\_HEARTBEAT\_SUPPORT\_SEGMENT | disabled | Enable segment controller heartbeat support for nodes. |
-| VSCP\_CONFIG\_HEARTBEAT\_NODE | enabled | Enable sending node heartbeat (mandatory since 2015-09-10). |
-| VSCP\_CONFIG\_IDLE\_CALLOUT | disabled | Enable idle callout. If VSCP stops working and enters idle state, the application will be notified. |
-| VSCP\_CONFIG\_ERROR\_CALLOUT | disabled | Enable error callout. If VSCP stops working and enters error state, the application will be notified. |
-| VSCP\_CONFIG\_BOOT\_LOADER\_SUPPORTED | disabled | Enable boot loader support. |
-| VSCP\_CONFIG\_ENABLE\_DM | enabled | Enable decision matrix (standard). |
-| VSCP\_CONFIG\_DM\_PAGED\_FEATURE | disabled | Enable decision matrix special paged feature. |
-| VSCP\_CONFIG\_ENABLE\_DM\_EXTENSION | disabled | Enable the decision matrix extension to be able to compare to a configureable zone/sub-zone and event parameters. |
-| VSCP\_CONFIG\_ENABLE\_DM\_NEXT\_GENERATION | disabled | Enable the decision matrix next generation. |
-| VSCP\_CONFIG\_ENABLE\_LOOPBACK | disabled | Enable a loopback for all sent VSCP events. This feature is interesting to invoke decision matrix actions by own sent VSCP events. |
+| <sub>VSCP\_CONFIG\_ENABLE\_LOGGER<sub> | <sub>disabled<sub> | <sub>Enable log functionality (CLASS1.Log). Use the macros in vscp\_logger.h to send log messages.<sub> |
+| <sub>VSCP\_CONFIG\_SILENT\_NODE<sub> | <sub>disabled<sub> | <sub>Silent node configuration, which is used for e. g. RS-485 connections. This type of nodes only listen to traffic before they get initialized by a host. In this case the nickname discovery process is not started for a node when it is powered up for the first time. This type on node instead starts to listen for the CLASS1.PROTOCOL, Type=23 (GUID drop nickname-ID / reset device.) event. When this series of events is received and the GUID is the same as for the module the module starts the nickname discovery procedure as of above.<sub> |
+| <sub>VSCP\_CONFIG\_HARD\_CODED\_NODE<sub> | <sub>disabled<sub> | <sub>Hard-coded node (fixed nickname id)<sub> |
+| <sub>VSCP\_CONFIG\_HEARTBEAT\_SUPPORT\_SEGMENT<sub> | <sub>disabled<sub> | <sub>Enable segment controller heartbeat support for nodes.<sub> |
+| <sub>VSCP\_CONFIG\_HEARTBEAT\_NODE<sub> | <sub>enabled<sub> | <sub>Enable sending node heartbeat (mandatory since 2015-09-10).<sub> |
+| <sub>VSCP\_CONFIG\_IDLE\_CALLOUT<sub> | <sub>disabled<sub> | <sub>Enable idle callout. If VSCP stops working and enters idle state, the application will be notified.<sub> |
+| <sub>VSCP\_CONFIG\_ERROR\_CALLOUT<sub> | <sub>disabled<sub> | <sub>Enable error callout. If VSCP stops working and enters error state, the application will be notified.<sub> |
+| <sub>VSCP\_CONFIG\_BOOT\_LOADER\_SUPPORTED<sub> | <sub>disabled<sub> | <sub>Enable boot loader support.<sub> |
+| <sub>VSCP\_CONFIG\_ENABLE\_DM<sub> | <sub>enabled<sub> | <sub>Enable decision matrix (standard).<sub> |
+| <sub>VSCP\_CONFIG\_DM\_PAGED\_FEATURE<sub> | <sub>disabled<sub> | <sub>Enable decision matrix special paged feature.<sub> |
+| <sub>VSCP\_CONFIG\_ENABLE\_DM\_EXTENSION<sub> | <sub>disabled<sub> | <sub>Enable the decision matrix extension to be able to compare to a configureable zone/sub-zone and event parameters.<sub> |
+| <sub>VSCP\_CONFIG\_ENABLE\_DM\_NEXT\_GENERATION<sub> | <sub>disabled<sub> | <sub>Enable the decision matrix next generation.<sub> |
+| <sub>VSCP\_CONFIG\_ENABLE\_LOOPBACK<sub> | <sub>disabled<sub> | <sub>Enable a loopback for all sent VSCP events. This feature is interesting to invoke decision matrix actions by own sent VSCP events.<sub> |
 
 Note, you can enable/disable them in the
 ```
