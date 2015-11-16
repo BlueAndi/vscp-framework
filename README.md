@@ -23,7 +23,7 @@ More information can be found on the main site http://www.vscp.org
 ##Framework
 The VSCP software framework for level 1 devices provides several layers according to the [VSCP specification](http://www.vscp.org/docs/vscpspec/doku.php).
 
-##Core
+###Core
 ![core-diagram](https://github.com/BlueAndi/vscp-framework/blob/master/vscp/doc/doxfiles/vscp_modules.png)
 ![color-legend](https://github.com/BlueAndi/vscp-framework/blob/master/vscp/doc/doxfiles/vscp_modules_color_legend.png)
 
@@ -53,7 +53,7 @@ how VSCP is integrated into your software:
 
 Templates exists for all of them, which makes it much easier to adapt it and less time. See in the templates folder.
 
-##Event abstraction
+###Event abstraction
 ![core-diagram](https://github.com/BlueAndi/vscp-framework/blob/master/vscp/doc/doxfiles/vscp_event_modules.png)
 
 Using only the core, you have to assemble the VSCP events by yourself. If you want to deal only with parameter, which are
