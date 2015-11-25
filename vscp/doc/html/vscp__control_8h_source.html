@@ -18,7 +18,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VSCP framework
-   &#160;<span id="projectnumber">v0.5.0</span>
+   &#160;<span id="projectnumber">v0.7.0</span>
    </div>
   </td>
  </tr>
@@ -186,8 +186,10 @@
 <div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;</div>
 <div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;<span class="keyword">extern</span> <a class="code" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> <a class="code" href="group__vscp__control.html#ga2019a84bed19f442f0917baadac90a18">vscp_control_sendMoveShutterMiddlePosEvent</a>(uint8_t index, uint8_t zone, uint8_t subZone);</div>
 <div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;</div>
-<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* __VSCP_CONTROL_H__ */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;<span class="keyword">extern</span> <a class="code" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> <a class="code" href="group__vscp__control.html#gac143d290cd47e251a182a81fb6522281">vscp_control_sendLampOnEvent</a>(uint8_t zone, uint8_t subZone);</div>
+<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;</div>
+<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* __VSCP_CONTROL_H__ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;<span class="preprocessor"></span></div>
 <div class="ttc" id="group__vscp__control_html_ga8ade6b7ed6f38aea9ef94ba5b382c774"><div class="ttname"><a href="group__vscp__control.html#ga8ade6b7ed6f38aea9ef94ba5b382c774">vscp_control_sendWakeupEvent</a></div><div class="ttdeci">BOOL vscp_control_sendWakeupEvent(uint8_t userData, uint8_t zone, uint8_t subZone)</div><div class="ttdoc">Wakeup all nodes in zone. </div><div class="ttdef"><b>Definition:</b> vscp_control.c:387</div></div>
 <div class="ttc" id="group__vscp__control_html_ga1a3255a793b0102be44ffe9810961ea7"><div class="ttname"><a href="group__vscp__control.html#ga1a3255a793b0102be44ffe9810961ea7">vscp_control_sendBigChangeLevelEvent</a></div><div class="ttdeci">BOOL vscp_control_sendBigChangeLevelEvent(uint8_t index, uint8_t zone, uint8_t subZone, int8_t const *const level, uint8_t levelSize)</div><div class="ttdoc">Big Change level can be used in situations when the one byte level of CLASS1.CONTROL, Type=22 is not enough. </div><div class="ttdef"><b>Definition:</b> vscp_control.c:926</div></div>
 <div class="ttc" id="group__vscp__control_html_ga2d7b956c5f0d8ad7de6fa96f27015bd7"><div class="ttname"><a href="group__vscp__control.html#ga2d7b956c5f0d8ad7de6fa96f27015bd7">vscp_control_sendRelativeChangeLevelEvent</a></div><div class="ttdeci">BOOL vscp_control_sendRelativeChangeLevelEvent(uint8_t level, uint8_t zone, uint8_t subZone)</div><div class="ttdef"><b>Definition:</b> vscp_control.c:591</div></div>
@@ -222,6 +224,7 @@
 <div class="ttc" id="group__vscp__control_html_gac0a35d9f1e570345c186fbe97916f222"><div class="ttname"><a href="group__vscp__control.html#gac0a35d9f1e570345c186fbe97916f222">vscp_control_sendMoveShutterRightEvent</a></div><div class="ttdeci">BOOL vscp_control_sendMoveShutterRightEvent(uint8_t index, uint8_t zone, uint8_t subZone)</div><div class="ttdoc">Move shutter right. </div><div class="ttdef"><b>Definition:</b> vscp_control.c:1038</div></div>
 <div class="ttc" id="group__vscp__control_html_ga3281232466e62ad1fa2d58982d628860"><div class="ttname"><a href="group__vscp__control.html#ga3281232466e62ad1fa2d58982d628860">vscp_control_sendStreamDataEvent</a></div><div class="ttdeci">BOOL vscp_control_sendStreamDataEvent(uint8_t sequenceNumber, uint8_t const *const data, uint8_t dataSize)</div><div class="ttdef"><b>Definition:</b> vscp_control.c:642</div></div>
 <div class="ttc" id="group__vscp__control_html_ga42cb49d1812884c21e7017916bcf391e"><div class="ttname"><a href="group__vscp__control.html#ga42cb49d1812884c21e7017916bcf391e">vscp_control_sendTimedPulseOnEvent</a></div><div class="ttdeci">BOOL vscp_control_sendTimedPulseOnEvent(uint8_t userData, uint8_t zone, uint8_t subZone, uint8_t d, uint8_t const *const e, uint8_t eSize)</div><div class="ttdoc">With this event it is possible to generate a timed pulse that is on for a specified time...</div><div class="ttdef"><b>Definition:</b> vscp_control.c:802</div></div>
+<div class="ttc" id="group__vscp__control_html_gac143d290cd47e251a182a81fb6522281"><div class="ttname"><a href="group__vscp__control.html#gac143d290cd47e251a182a81fb6522281">vscp_control_sendLampOnEvent</a></div><div class="ttdeci">BOOL vscp_control_sendLampOnEvent(uint8_t zone, uint8_t subZone)</div><div class="ttdoc">Turn on (all) lamps in zone/sub-zone. </div><div class="ttdef"><b>Definition:</b> vscp_control.c:1114</div></div>
 <div class="ttc" id="group__vscp__control_html_ga96b7cd04133986c22eea91605be5b386"><div class="ttname"><a href="group__vscp__control.html#ga96b7cd04133986c22eea91605be5b386">vscp_control_sendActivateEvent</a></div><div class="ttdeci">BOOL vscp_control_sendActivateEvent(uint8_t userData, uint8_t zone, uint8_t subZone)</div><div class="ttdoc">Activate all nodes in zone. </div><div class="ttdef"><b>Definition:</b> vscp_control.c:462</div></div>
 <div class="ttc" id="group__vscp__control_html_ga2594bb0d3e53de6c61937eef0fa36683"><div class="ttname"><a href="group__vscp__control.html#ga2594bb0d3e53de6c61937eef0fa36683">vscp_control_sendSetCountryLanguageEvent</a></div><div class="ttdeci">BOOL vscp_control_sendSetCountryLanguageEvent(uint8_t countryCode, uint8_t customCodedSystem, uint8_t zone, uint8_t subZone, uint8_t const *const countryCodeSpecific, uint8_t countryCodeSpecificSize)</div><div class="ttdoc">Set country language. </div><div class="ttdef"><b>Definition:</b> vscp_control.c:884</div></div>
 <div class="ttc" id="vscp__types_8h_html"><div class="ttname"><a href="vscp__types_8h.html">vscp_types.h</a></div><div class="ttdoc">VSCP types and structures. </div></div>
@@ -229,7 +232,7 @@
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Nov 16 2015 18:27:29 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Nov 25 2015 13:53:44 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -18,7 +18,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">VSCP framework
-   &#160;<span id="projectnumber">v0.5.0</span>
+   &#160;<span id="projectnumber">v0.7.0</span>
    </div>
   </td>
  </tr>
@@ -154,6 +154,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga2019a84bed19f442f0917baadac90a18"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__control.html#ga2019a84bed19f442f0917baadac90a18">vscp_control_sendMoveShutterMiddlePosEvent</a> (uint8_t index, uint8_t zone, uint8_t subZone)</td></tr>
 <tr class="memdesc:ga2019a84bed19f442f0917baadac90a18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move shutter to middle position.  <a href="#ga2019a84bed19f442f0917baadac90a18">More...</a><br/></td></tr>
 <tr class="separator:ga2019a84bed19f442f0917baadac90a18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac143d290cd47e251a182a81fb6522281"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__control.html#gac143d290cd47e251a182a81fb6522281">vscp_control_sendLampOnEvent</a> (uint8_t zone, uint8_t subZone)</td></tr>
+<tr class="memdesc:gac143d290cd47e251a182a81fb6522281"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turn on (all) lamps in zone/sub-zone.  <a href="#gac143d290cd47e251a182a81fb6522281">More...</a><br/></td></tr>
+<tr class="separator:gac143d290cd47e251a182a81fb6522281"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Level 1 control events abstraction. </p>
@@ -556,6 +559,49 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">level</td><td>Interrupt level. (0 – 255 , zero is lowest interrupt level. ). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">zone</td><td>Zone for which event applies to (0-255). 255 is all zones. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">subZone</td><td>Sub-zone for which event applies to (0-255). 255 is all sub-zones. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FALSE</td><td>Failed to send the event </td></tr>
+    <tr><td class="paramname">TRUE</td><td>Event successul sent </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac143d290cd47e251a182a81fb6522281"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> vscp_control_sendLampOnEvent </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>zone</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>subZone</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Turn on (all) lamps in zone/sub-zone. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">zone</td><td>Zone for which event applies to (0-255). 255 is all zones. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">subZone</td><td>Sub-zone for which event applies to (0-255). 255 is all sub-zones. </td></tr>
   </table>
@@ -2024,7 +2070,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Nov 16 2015 18:27:30 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Nov 25 2015 13:53:45 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
