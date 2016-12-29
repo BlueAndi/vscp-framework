@@ -934,9 +934,9 @@ extern BOOL vscp_measurement_sendRadiantIntensityEvent(uint8_t index, uint8_t un
 extern BOOL vscp_measurement_sendRadianceEvent(uint8_t index, uint8_t unit, int32_t data, int8_t exp);
 
 /**
- * Default unit: watt per square metre ( W / m² )
- *
  * Power emitted from or striking onto a surface or area.
+ *
+ * Default unit: watt per square metre ( W / m² )
  *
  * @param[in] index Index for sensor.
  * @param[in] unit The unit of the data.
@@ -950,6 +950,8 @@ extern BOOL vscp_measurement_sendRadianceEvent(uint8_t index, uint8_t unit, int3
 extern BOOL vscp_measurement_sendIrradianceExitanceRadiosityEvent(uint8_t index, uint8_t unit, int32_t data, int8_t exp);
 
 /**
+ * Radiance of a surface per unit frequency or wavelength.
+ *
  * Default unit: watt per steradian per square metre per nm (W·sr-1·m-2·nm-1)
  *
  * Opt. unit: watt per steradian per metre3 (W·sr-1·m-3) watt per steradian per square metre per hertz
@@ -967,6 +969,8 @@ extern BOOL vscp_measurement_sendIrradianceExitanceRadiosityEvent(uint8_t index,
 extern BOOL vscp_measurement_sendSpectralRadianceEvent(uint8_t index, uint8_t unit, int32_t data, int8_t exp);
 
 /**
+ * Irradiance of a surface per unit frequency or wavelength.
+ *
  * Default unit: watt per square metre per nm (W·m-2·nm-1)
  *
  * Opt. unit: watt per metre3 (W·m-3) watt per square metre per hertz (W·m-2·Hz-1)
@@ -981,5 +985,53 @@ extern BOOL vscp_measurement_sendSpectralRadianceEvent(uint8_t index, uint8_t un
  *
  */
 extern BOOL vscp_measurement_sendSpectralIrradianceEvent(uint8_t index, uint8_t unit, int32_t data, int8_t exp);
+
+/**
+ * This is a measurement of sound pressure (acoustic pressure). 
+ *
+ * Default unit: pascal (Pa)
+ *
+ * @param[in] index Index for sensor.
+ * @param[in] unit The unit of the data.
+ * @param[in] data The data as signed integer.
+ * @param[in] exp The exponent of the data (10^exponent).
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_measurement_sendSoundPressure(uint8_t index, uint8_t unit, int32_t data, int8_t exp);
+
+/**
+ * Sound energy density or sound density is the sound energy per unit volume.
+ *
+ * Default unit: pascal (Pa)
+ *
+ * @param[in] index Index for sensor.
+ * @param[in] unit The unit of the data.
+ * @param[in] data The data as signed integer.
+ * @param[in] exp The exponent of the data (10^exponent).
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_measurement_sendSoundEnergyDensity(uint8_t index, uint8_t unit, int32_t data, int8_t exp);
+
+/**
+ * Sound level expressed in decibel. This event is supplied for convenience.
+ *
+ * Default unit: decibel (dB)
+ *
+ * @param[in] index Index for sensor.
+ * @param[in] unit The unit of the data.
+ * @param[in] data The data as signed integer.
+ * @param[in] exp The exponent of the data (10^exponent).
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_measurement_sendSoundLevel(uint8_t index, uint8_t unit, int32_t data, int8_t exp);
 
 #endif /* __VSCP_MEASUREMENT_H__ */
