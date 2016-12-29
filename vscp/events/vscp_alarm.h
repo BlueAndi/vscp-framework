@@ -208,6 +208,32 @@ extern BOOL vscp_alarm_sendEmergencyResetEvent(uint8_t userData, uint8_t zone, u
  */
 extern BOOL vscp_alarm_sendEmergencyResumeEvent(uint8_t userData, uint8_t zone, uint8_t subZone);
 
+/**
+ * Issued after an alarm system has been armed.
+ *
+ * @param[in] userData User defined data.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_alarm_sendArm(uint8_t userData, uint8_t zone, uint8_t subZone);
+
+/**
+ * Issued after an alarm system has been disarmed.
+ *
+ * @param[in] userData User defined data.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_alarm_sendDisarm(uint8_t userData, uint8_t zone, uint8_t subZone);
+
 #endif /* __VSCP_ALARM_H__ */
 
 /** @} */
