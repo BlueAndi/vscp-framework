@@ -1,6 +1,6 @@
-#VSCP L1 Programmer
+# VSCP L1 Programmer
 
-##Manual
+## Manual
 
 The VSCP L1 Programmer programs a intel hex file image to a node via VSCP daemon connection.
 It supports the VSCP standard boot loader algorithm.
@@ -30,10 +30,10 @@ The VSCP L1 Programmer can be quit at any time with 'q'.
 
 Have fun!
 
-##Issues, Ideas and bugs
+## Issues, Ideas and bugs
 
 If you have further ideas or you found some bugs, great! Create a [issue](https://github.com/BlueAndi/vscp-framework/issues) or if
 you are able and willing to fix it by yourself, clone the repository and create a pull request.
 
-##License
+## License
 The whole source code is published under the [MIT license](http://choosealicense.com/licenses/mit/).

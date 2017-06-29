@@ -1,6 +1,6 @@
-#VSCP L1 PC simulation node
+# VSCP L1 PC simulation node
 
-##Manual
+## Manual
 
 The PC simulation node is a good start point to check out the features and possibilities of VSCP and
 the VSCP framework.
@@ -33,10 +33,10 @@ If you want to restore the factory settings, remove the "eeprom.asc" and start t
 
 Have fun!
 
-##Issues, Ideas and bugs
+## Issues, Ideas and bugs
 
 If you have further ideas or you found some bugs, great! Create a [issue](https://github.com/BlueAndi/vscp-framework/issues) or if
 you are able and willing to fix it by yourself, clone the repository and create a pull request.
 
-##License
+## License
 The whole source code is published under the [MIT license](http://choosealicense.com/licenses/mit/).

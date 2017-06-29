@@ -1,10 +1,10 @@
-#VSCP L1 Bootloader
+# VSCP L1 Bootloader
 
-##VSCP standard boot loader algorithm
+## VSCP standard boot loader algorithm
 
 ![VSCP standard boot loader algorithm](https://github.com/BlueAndi/vscp-framework/blob/master/vscp/bootloader/vscp_std_boot_loader_algorithm.png)
 
-##Description
+## Description
 
 The bootloader algorithm follows the standard VSCP bootloader algorithm. The following
 description contains more details about how it proceeds.
@@ -87,15 +87,15 @@ Error codes:
 * 2 - Bad block number
 * 3 - Invalid message
 
-##Facts
+## Facts
 
 * The bootloader supports only programming to program space right now.
 * The bootloader can only handle complete blocks. If the last block is not completly received from a programmer, the bootloader will infinite wait for the rest!
   In other words, the size of the new application shall be always a multiple of the block size.
 
-##FAQ
+## FAQ
 
-###How to integrate it?
+### How to integrate it?
 
 Include the following files to your project:
 * /common/crc16ccitt.h
@@ -119,11 +119,11 @@ Call in your main routine the
 
 Note that the vscp\_bootloader\_run() will never return!
 
-###How can a application be programmed via bootloader?
+### How can a application be programmed via bootloader?
 
 Take a look to the [VSCP L1 programmer](https://github.com/BlueAndi/vscp-framework/tree/master/projects/pc/programmer).
 
-###Why does the node sends a new node online event with 0xFE?
+### Why does the node sends a new node online event with 0xFE?
 
 If the bootloader starts, it try to figure out whether a valid application is programmed or not.
 In this case it seems there is no valid application and therefore most probably an invalid persistent memory.
@@ -132,10 +132,10 @@ Now the bootloader simulates a new node with nickname 0xFE, so that you are able
 If you think the application should be valid, because you programmed it just a minute ago via debugger ... can it be that
 you forgot to program a valid persistent memory? ;-)
 
-##Issues, Ideas and bugs
+## Issues, Ideas and bugs
 
 If you have further ideas or you found some bugs, great! Create a [issue](https://github.com/BlueAndi/vscp-framework/issues) or if
 you are able and willing to fix it by yourself, clone the repository and create a pull request.
 
-##License
+## License
 The whole source code is published under the [MIT license](http://choosealicense.com/licenses/mit/).
