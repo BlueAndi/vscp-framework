@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>VSCP framework: D:/Daten/projects/github/vscp-framework/vscp/events/vscp_alarm.h Source File</title>
+<title>VSCP framework: vscp_alarm.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -54,7 +54,7 @@
 <div class="contents">
 <a href="vscp__alarm_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/* The MIT License (MIT)</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * Copyright (c) 2014 - 2015, Andreas Merkle</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * Copyright (c) 2014 - 2017, Andreas Merkle</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> * http://www.blue-andi.de</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * vscp@blue-andi.de</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> *</span></div>
@@ -134,15 +134,21 @@
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;</div>
 <div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="keyword">extern</span> <a class="code" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> <a class="code" href="group__vscp__alarm.html#ga741fc50c8cd7ebe9c0206bf5338206a3">vscp_alarm_sendEmergencyResumeEvent</a>(uint8_t userData, uint8_t zone, uint8_t subZone);</div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* __VSCP_ALARM_H__ */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;<span class="keyword">extern</span> <a class="code" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> <a class="code" href="group__vscp__alarm.html#ga012077b0554ea0639fdd9c6865dd5be3">vscp_alarm_sendArm</a>(uint8_t userData, uint8_t zone, uint8_t subZone);</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="keyword">extern</span> <a class="code" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> <a class="code" href="group__vscp__alarm.html#ga71ab441ba20187257f3b7eb3e5f76a3a">vscp_alarm_sendDisarm</a>(uint8_t userData, uint8_t zone, uint8_t subZone);</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* __VSCP_ALARM_H__ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="preprocessor"></span></div>
 <div class="ttc" id="group__vscp__alarm_html_ga42871c234da45a3fa98fca3d11ea7358"><div class="ttname"><a href="group__vscp__alarm.html#ga42871c234da45a3fa98fca3d11ea7358">vscp_alarm_sendAlarmLightOnOffEvent</a></div><div class="ttdeci">BOOL vscp_alarm_sendAlarmLightOnOffEvent(uint8_t userData, uint8_t zone, uint8_t subZone)</div><div class="ttdoc">Alarm light should be turned on or off. </div><div class="ttdef"><b>Definition:</b> vscp_alarm.c:187</div></div>
 <div class="ttc" id="group__vscp__platform_html_gae4cc35dcc70810fa972cc8a5185a28fa"><div class="ttname"><a href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a></div><div class="ttdeci">#define BOOL</div><div class="ttdoc">Boolean type. </div><div class="ttdef"><b>Definition:</b> vscp_platform.h:72</div></div>
 <div class="ttc" id="group__vscp__alarm_html_ga8c780de69dd9c6f3ea9709945ac51a14"><div class="ttname"><a href="group__vscp__alarm.html#ga8c780de69dd9c6f3ea9709945ac51a14">vscp_alarm_sendEmergencyResetEvent</a></div><div class="ttdeci">BOOL vscp_alarm_sendEmergencyResetEvent(uint8_t userData, uint8_t zone, uint8_t subZone)</div><div class="ttdoc">Issued after an emergency stop or pause in order for nodes to reset and start operating ...</div><div class="ttdef"><b>Definition:</b> vscp_alarm.c:289</div></div>
+<div class="ttc" id="group__vscp__alarm_html_ga012077b0554ea0639fdd9c6865dd5be3"><div class="ttname"><a href="group__vscp__alarm.html#ga012077b0554ea0639fdd9c6865dd5be3">vscp_alarm_sendArm</a></div><div class="ttdeci">BOOL vscp_alarm_sendArm(uint8_t userData, uint8_t zone, uint8_t subZone)</div><div class="ttdoc">Issued after an alarm system has been armed. </div><div class="ttdef"><b>Definition:</b> vscp_alarm.c:340</div></div>
 <div class="ttc" id="group__vscp__alarm_html_ga3ba79e2d42ff8ba634db40919c757201"><div class="ttname"><a href="group__vscp__alarm.html#ga3ba79e2d42ff8ba634db40919c757201">vscp_alarm_sendEmergencyPauseEvent</a></div><div class="ttdeci">BOOL vscp_alarm_sendEmergencyPauseEvent(uint8_t userData, uint8_t zone, uint8_t subZone)</div><div class="ttdoc">Emergency pause has been hit/activated. </div><div class="ttdef"><b>Definition:</b> vscp_alarm.c:264</div></div>
 <div class="ttc" id="group__vscp__alarm_html_ga741fc50c8cd7ebe9c0206bf5338206a3"><div class="ttname"><a href="group__vscp__alarm.html#ga741fc50c8cd7ebe9c0206bf5338206a3">vscp_alarm_sendEmergencyResumeEvent</a></div><div class="ttdeci">BOOL vscp_alarm_sendEmergencyResumeEvent(uint8_t userData, uint8_t zone, uint8_t subZone)</div><div class="ttdoc">Issued after an emergency pause in order for nodes to start operating from where they left of without...</div><div class="ttdef"><b>Definition:</b> vscp_alarm.c:315</div></div>
 <div class="ttc" id="group__vscp__alarm_html_ga8d6d277e4ba45f4ced9cf3fb28f4c4ae"><div class="ttname"><a href="group__vscp__alarm.html#ga8d6d277e4ba45f4ced9cf3fb28f4c4ae">vscp_alarm_sendPowerOnOffEvent</a></div><div class="ttdeci">BOOL vscp_alarm_sendPowerOnOffEvent(uint8_t userData, uint8_t zone, uint8_t subZone)</div><div class="ttdoc">Power has been lost or is available again. </div><div class="ttdef"><b>Definition:</b> vscp_alarm.c:212</div></div>
 <div class="ttc" id="group__vscp__alarm_html_gae089f83d3c94a837a2f752575b3ac9f0"><div class="ttname"><a href="group__vscp__alarm.html#gae089f83d3c94a837a2f752575b3ac9f0">vscp_alarm_sendWarningEvent</a></div><div class="ttdeci">BOOL vscp_alarm_sendWarningEvent(uint8_t userData, uint8_t zone, uint8_t subZone)</div><div class="ttdoc">Indicates a warning condition. </div><div class="ttdef"><b>Definition:</b> vscp_alarm.c:112</div></div>
+<div class="ttc" id="group__vscp__alarm_html_ga71ab441ba20187257f3b7eb3e5f76a3a"><div class="ttname"><a href="group__vscp__alarm.html#ga71ab441ba20187257f3b7eb3e5f76a3a">vscp_alarm_sendDisarm</a></div><div class="ttdeci">BOOL vscp_alarm_sendDisarm(uint8_t userData, uint8_t zone, uint8_t subZone)</div><div class="ttdoc">Issued after an alarm system has been disarmed. </div><div class="ttdef"><b>Definition:</b> vscp_alarm.c:365</div></div>
 <div class="ttc" id="group__vscp__alarm_html_gabd28d83e083cdcb9de2f24c44ffdf180"><div class="ttname"><a href="group__vscp__alarm.html#gabd28d83e083cdcb9de2f24c44ffdf180">vscp_alarm_sendUndefinedEvent</a></div><div class="ttdeci">BOOL vscp_alarm_sendUndefinedEvent(void)</div><div class="ttdoc">Undefined alarm. </div><div class="ttdef"><b>Definition:</b> vscp_alarm.c:90</div></div>
 <div class="ttc" id="group__vscp__alarm_html_gad417688ec335ceb5b75233ad5d2e14b4"><div class="ttname"><a href="group__vscp__alarm.html#gad417688ec335ceb5b75233ad5d2e14b4">vscp_alarm_sendEmergencyStopEvent</a></div><div class="ttdeci">BOOL vscp_alarm_sendEmergencyStopEvent(uint8_t userData, uint8_t zone, uint8_t subZone)</div><div class="ttdoc">Emergency stop has been hit/activated. </div><div class="ttdef"><b>Definition:</b> vscp_alarm.c:238</div></div>
 <div class="ttc" id="group__vscp__alarm_html_ga742f1fc606aa94440c8dd4b5364edfd2"><div class="ttname"><a href="group__vscp__alarm.html#ga742f1fc606aa94440c8dd4b5364edfd2">vscp_alarm_sendAlarmOccurredEvent</a></div><div class="ttdeci">BOOL vscp_alarm_sendAlarmOccurredEvent(uint8_t userData, uint8_t zone, uint8_t subZone)</div><div class="ttdoc">Indicates an alarm condition. </div><div class="ttdef"><b>Definition:</b> vscp_alarm.c:137</div></div>
@@ -151,7 +157,7 @@
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Nov 25 2015 13:58:25 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 26 2017 20:14:41 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

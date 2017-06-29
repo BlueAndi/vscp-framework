@@ -4,7 +4,10 @@
     - Features:
       - The decision matrix NG register read/write is now handled in the core as well. Therefore it is not necessary
         anymore to handle it in the vscp_app_reg.c manually.
-      - CLASS1.CONTROL Type=40 , All lamps on  and CLASS1.CONTROL Type=41, All lamps off added.
+      - CLASS1.CONTROL Type=40, All lamps on  and CLASS1.CONTROL Type=41, All lamps off added.
+      - CLASS1.ALARM Type=10, Arm and CLASS1.ALARM Type=11, Disarm added.
+      - CLASS1.MEASUREMENT Type=58 - 60 added.
+      - CLASS1.INFORMATION Type=69 - 74 added.
 
   - Projects
     - AVR

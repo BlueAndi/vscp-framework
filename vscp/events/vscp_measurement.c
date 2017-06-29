@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2014 - 2015, Andreas Merkle
+ * Copyright (c) 2014 - 2017, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
  *
@@ -1575,9 +1575,9 @@ extern BOOL vscp_measurement_sendRadianceEvent(uint8_t index, uint8_t unit, int3
 }
 
 /**
- * Default unit: watt per square metre ( W / m² )
- *
  * Power emitted from or striking onto a surface or area.
+ *
+ * Default unit: watt per square metre ( W / m² )
  *
  * @param[in] index Index for sensor.
  * @param[in] unit The unit of the data.
@@ -1603,6 +1603,8 @@ extern BOOL vscp_measurement_sendIrradianceExitanceRadiosityEvent(uint8_t index,
 }
 
 /**
+ * Radiance of a surface per unit frequency or wavelength.
+ *
  * Default unit: watt per steradian per square metre per nm (W·sr-1·m-2·nm-1)
  *
  * Opt. unit: watt per steradian per metre3 (W·sr-1·m-3) watt per steradian per square metre per hertz
@@ -1632,6 +1634,8 @@ extern BOOL vscp_measurement_sendSpectralRadianceEvent(uint8_t index, uint8_t un
 }
 
 /**
+ * Irradiance of a surface per unit frequency or wavelength.
+ *
  * Default unit: watt per square metre per nm (W·m-2·nm-1)
  *
  * Opt. unit: watt per metre3 (W·m-3) watt per square metre per hertz (W·m-2·Hz-1)
@@ -1650,6 +1654,90 @@ extern BOOL vscp_measurement_sendSpectralIrradianceEvent(uint8_t index, uint8_t 
     vscp_TxMessage txMsg;
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_SPECTRAL_IRRADIANCE, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 1;
+    txMsg.data[0] = vscp_data_coding_getFormatByte( VSCP_DATA_CODING_REPRESENTATION_NORMALIZED_INTEGER, index, unit);
+
+    txMsg.dataNum += vscp_data_coding_int32ToNormalizedInteger(data, exp, &txMsg.data[1], VSCP_L1_DATA_SIZE - txMsg.dataNum);
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * This is a measurement of sound pressure (acoustic pressure). 
+ *
+ * Default unit: pascal (Pa)
+ *
+ * @param[in] index Index for sensor.
+ * @param[in] unit The unit of the data.
+ * @param[in] data The data as signed integer.
+ * @param[in] exp The exponent of the data (10^exponent).
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_measurement_sendSoundPressure(uint8_t index, uint8_t unit, int32_t data, int8_t exp)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_SOUND_PRESSURE, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 1;
+    txMsg.data[0] = vscp_data_coding_getFormatByte( VSCP_DATA_CODING_REPRESENTATION_NORMALIZED_INTEGER, index, unit);
+
+    txMsg.dataNum += vscp_data_coding_int32ToNormalizedInteger(data, exp, &txMsg.data[1], VSCP_L1_DATA_SIZE - txMsg.dataNum);
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Sound energy density or sound density is the sound energy per unit volume.
+ *
+ * Default unit: pascal (Pa)
+ *
+ * @param[in] index Index for sensor.
+ * @param[in] unit The unit of the data.
+ * @param[in] data The data as signed integer.
+ * @param[in] exp The exponent of the data (10^exponent).
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_measurement_sendSoundEnergyDensity(uint8_t index, uint8_t unit, int32_t data, int8_t exp)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_SOUND_DENSITY, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 1;
+    txMsg.data[0] = vscp_data_coding_getFormatByte( VSCP_DATA_CODING_REPRESENTATION_NORMALIZED_INTEGER, index, unit);
+
+    txMsg.dataNum += vscp_data_coding_int32ToNormalizedInteger(data, exp, &txMsg.data[1], VSCP_L1_DATA_SIZE - txMsg.dataNum);
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Sound level expressed in decibel. This event is supplied for convenience.
+ *
+ * Default unit: decibel (dB)
+ *
+ * @param[in] index Index for sensor.
+ * @param[in] unit The unit of the data.
+ * @param[in] data The data as signed integer.
+ * @param[in] exp The exponent of the data (10^exponent).
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_measurement_sendSoundLevel(uint8_t index, uint8_t unit, int32_t data, int8_t exp)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_SOUND_LEVEL, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 1;
     txMsg.data[0] = vscp_data_coding_getFormatByte( VSCP_DATA_CODING_REPRESENTATION_NORMALIZED_INTEGER, index, unit);

@@ -80,6 +80,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga741fc50c8cd7ebe9c0206bf5338206a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__alarm.html#ga741fc50c8cd7ebe9c0206bf5338206a3">vscp_alarm_sendEmergencyResumeEvent</a> (uint8_t userData, uint8_t zone, uint8_t subZone)</td></tr>
 <tr class="memdesc:ga741fc50c8cd7ebe9c0206bf5338206a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issued after an emergency pause in order for nodes to start operating from where they left of without resetting their registers .  <a href="#ga741fc50c8cd7ebe9c0206bf5338206a3">More...</a><br/></td></tr>
 <tr class="separator:ga741fc50c8cd7ebe9c0206bf5338206a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga012077b0554ea0639fdd9c6865dd5be3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__alarm.html#ga012077b0554ea0639fdd9c6865dd5be3">vscp_alarm_sendArm</a> (uint8_t userData, uint8_t zone, uint8_t subZone)</td></tr>
+<tr class="memdesc:ga012077b0554ea0639fdd9c6865dd5be3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issued after an alarm system has been armed.  <a href="#ga012077b0554ea0639fdd9c6865dd5be3">More...</a><br/></td></tr>
+<tr class="separator:ga012077b0554ea0639fdd9c6865dd5be3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga71ab441ba20187257f3b7eb3e5f76a3a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vscp__alarm.html#ga71ab441ba20187257f3b7eb3e5f76a3a">vscp_alarm_sendDisarm</a> (uint8_t userData, uint8_t zone, uint8_t subZone)</td></tr>
+<tr class="memdesc:ga71ab441ba20187257f3b7eb3e5f76a3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issued after an alarm system has been disarmed.  <a href="#ga71ab441ba20187257f3b7eb3e5f76a3a">More...</a><br/></td></tr>
+<tr class="separator:ga71ab441ba20187257f3b7eb3e5f76a3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Level 1 alarm events abstraction. </p>
@@ -218,6 +224,106 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">state</td><td>0=off. 1=on. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">zone</td><td>Zone for which event applies to (0-255). 255 is all zones. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">subZone</td><td>Sub-zone for which event applies to (0-255). 255 is all sub-zones. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FALSE</td><td>Failed to send the event </td></tr>
+    <tr><td class="paramname">TRUE</td><td>Event successul sent </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga012077b0554ea0639fdd9c6865dd5be3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> vscp_alarm_sendArm </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>userData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>zone</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>subZone</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Issued after an alarm system has been armed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">userData</td><td>User defined data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">zone</td><td>Zone for which event applies to (0-255). 255 is all zones. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">subZone</td><td>Sub-zone for which event applies to (0-255). 255 is all sub-zones. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FALSE</td><td>Failed to send the event </td></tr>
+    <tr><td class="paramname">TRUE</td><td>Event successul sent </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga71ab441ba20187257f3b7eb3e5f76a3a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__vscp__platform.html#gae4cc35dcc70810fa972cc8a5185a28fa">BOOL</a> vscp_alarm_sendDisarm </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>userData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>zone</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>subZone</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Issued after an alarm system has been disarmed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">userData</td><td>User defined data. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">zone</td><td>Zone for which event applies to (0-255). 255 is all zones. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">subZone</td><td>Sub-zone for which event applies to (0-255). 255 is all sub-zones. </td></tr>
   </table>
@@ -565,7 +671,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Nov 25 2015 13:58:26 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jan 26 2017 20:14:42 for VSCP framework by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
