@@ -91,7 +91,7 @@ extern BOOL vscp_alarm_sendUndefinedEvent(void);
 /**
  * Indicates a warning condition.
  *
- * @param[in] userData User defined data.
+ * @param[in] state State (0=off, 1=on)
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
@@ -99,12 +99,12 @@ extern BOOL vscp_alarm_sendUndefinedEvent(void);
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_alarm_sendWarningEvent(uint8_t userData, uint8_t zone, uint8_t subZone);
+extern BOOL vscp_alarm_sendWarningEvent(uint8_t state, uint8_t zone, uint8_t subZone);
 
 /**
  * Indicates an alarm condition.
  *
- * @param[in] userData User defined data.
+ * @param[in] state State (0=off, 1=on)
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
@@ -112,12 +112,12 @@ extern BOOL vscp_alarm_sendWarningEvent(uint8_t userData, uint8_t zone, uint8_t 
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_alarm_sendAlarmOccurredEvent(uint8_t userData, uint8_t zone, uint8_t subZone);
+extern BOOL vscp_alarm_sendAlarmOccurredEvent(uint8_t state, uint8_t zone, uint8_t subZone);
 
 /**
  * Alarm sound should be turned on or off.
  *
- * @param[in] state 0=off. 1=on.
+ * @param[in] state State (0=off, 1=on)
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
@@ -130,7 +130,7 @@ extern BOOL vscp_alarm_sendAlarmSoundOnOffEvent(uint8_t state, uint8_t zone, uin
 /**
  * Alarm light should be turned on or off.
  *
- * @param[in] userData User defined data.
+ * @param[in] state State (0=off, 1=on)
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
@@ -138,12 +138,12 @@ extern BOOL vscp_alarm_sendAlarmSoundOnOffEvent(uint8_t state, uint8_t zone, uin
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_alarm_sendAlarmLightOnOffEvent(uint8_t userData, uint8_t zone, uint8_t subZone);
+extern BOOL vscp_alarm_sendAlarmLightOnOffEvent(uint8_t state, uint8_t zone, uint8_t subZone);
 
 /**
  * Power has been lost or is available again.
  *
- * @param[in] userData User defined data.
+ * @param[in] state State (0=off, 1=on)
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
@@ -151,13 +151,13 @@ extern BOOL vscp_alarm_sendAlarmLightOnOffEvent(uint8_t userData, uint8_t zone, 
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_alarm_sendPowerOnOffEvent(uint8_t userData, uint8_t zone, uint8_t subZone);
+extern BOOL vscp_alarm_sendPowerOnOffEvent(uint8_t state, uint8_t zone, uint8_t subZone);
 
 /**
  * Emergency stop has been hit/activated. All systems on the zone/sub-zone should go to their
  * inactive/safe state.
  *
- * @param[in] userData User defined data.
+ * @param[in] state State (0=off, 1=on)
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
@@ -165,13 +165,13 @@ extern BOOL vscp_alarm_sendPowerOnOffEvent(uint8_t userData, uint8_t zone, uint8
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_alarm_sendEmergencyStopEvent(uint8_t userData, uint8_t zone, uint8_t subZone);
+extern BOOL vscp_alarm_sendEmergencyStopEvent(uint8_t state, uint8_t zone, uint8_t subZone);
 
 /**
  * Emergency pause has been hit/activated. All systems on the zone/sub-zone should go to their
  * inactive/safe state but preserve there settings.
  *
- * @param[in] userData User defined data.
+ * @param[in] state State (0=off, 1=on)
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all subzones.
  * @return Status
@@ -179,12 +179,12 @@ extern BOOL vscp_alarm_sendEmergencyStopEvent(uint8_t userData, uint8_t zone, ui
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_alarm_sendEmergencyPauseEvent(uint8_t userData, uint8_t zone, uint8_t subZone);
+extern BOOL vscp_alarm_sendEmergencyPauseEvent(uint8_t state, uint8_t zone, uint8_t subZone);
 
 /**
  * Issued after an emergency stop or pause in order for nodes to reset and start operating .
  *
- * @param[in] userData User defined data.
+ * @param[in] state State (0=off, 1=on)
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
@@ -192,13 +192,13 @@ extern BOOL vscp_alarm_sendEmergencyPauseEvent(uint8_t userData, uint8_t zone, u
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_alarm_sendEmergencyResetEvent(uint8_t userData, uint8_t zone, uint8_t subZone);
+extern BOOL vscp_alarm_sendEmergencyResetEvent(uint8_t state, uint8_t zone, uint8_t subZone);
 
 /**
  * Issued after an emergency pause in order for nodes to start operating from where they left of
  * without resetting their registers .
  *
- * @param[in] userData User defined data.
+ * @param[in] state State (0=off, 1=on)
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
@@ -206,12 +206,12 @@ extern BOOL vscp_alarm_sendEmergencyResetEvent(uint8_t userData, uint8_t zone, u
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_alarm_sendEmergencyResumeEvent(uint8_t userData, uint8_t zone, uint8_t subZone);
+extern BOOL vscp_alarm_sendEmergencyResumeEvent(uint8_t state, uint8_t zone, uint8_t subZone);
 
 /**
  * Issued after an alarm system has been armed.
  *
- * @param[in] userData User defined data.
+ * @param[in] state State (0=off, 1=on)
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
@@ -219,12 +219,12 @@ extern BOOL vscp_alarm_sendEmergencyResumeEvent(uint8_t userData, uint8_t zone, 
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_alarm_sendArm(uint8_t userData, uint8_t zone, uint8_t subZone);
+extern BOOL vscp_alarm_sendArm(uint8_t state, uint8_t zone, uint8_t subZone);
 
 /**
  * Issued after an alarm system has been disarmed.
  *
- * @param[in] userData User defined data.
+ * @param[in] state State (0=off, 1=on)
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
@@ -232,7 +232,7 @@ extern BOOL vscp_alarm_sendArm(uint8_t userData, uint8_t zone, uint8_t subZone);
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_alarm_sendDisarm(uint8_t userData, uint8_t zone, uint8_t subZone);
+extern BOOL vscp_alarm_sendDisarm(uint8_t state, uint8_t zone, uint8_t subZone);
 
 #endif /* __VSCP_ALARM_H__ */
 

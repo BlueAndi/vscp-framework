@@ -6,6 +6,7 @@
         anymore to handle it in the vscp_app_reg.c manually.
       - CLASS1.CONTROL Type=40, All lamps on  and CLASS1.CONTROL Type=41, All lamps off added.
       - CLASS1.ALARM Type=10, Arm and CLASS1.ALARM Type=11, Disarm added.
+      - CLASS1.ALARM now have byte 1 specified as '0=off. 1=on' in first byte.
       - CLASS1.MEASUREMENT Type=58 - 60 added.
       - CLASS1.INFORMATION Type=69 - 74 added.
 
