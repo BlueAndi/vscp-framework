@@ -1,4 +1,4 @@
-## 0.6.0 (unreleased)
+## 0.6.0
 
   - VSCP framework
     - Features:
@@ -8,6 +8,9 @@
       - CLASS1.ALARM Type=10, Arm and CLASS1.ALARM Type=11, Disarm added.
       - CLASS1.MEASUREMENT Type=58 - 60 added.
       - CLASS1.INFORMATION Type=69 - 74 added.
+
+  - Common
+    - vscphelperlib updated to v1.12.4 (previous one was v1.1.0)
 
   - Projects
     - AVR

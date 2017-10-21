@@ -15,7 +15,8 @@
  *
  * The MIT License (MIT)
  *
- * Copyright (c) 2000-2015 Ake Hedman, Grodans Paradis AB <info@grodansparadis.com>
+ * Copyright (c) 2000-2016 Ake Hedman, 
+ * Grodans Paradis AB <info@grodansparadis.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +47,7 @@
  // This file may be a copy of the original file. This is because the file is
  // copied to other projects as a convinience. Thus editing the copy will not make
  // it to the original and will be overwritten.
- // The original file can be foud in the vscp_softare source tree under 
+ // The original file can be foud in the vscp software source tree under 
  // src/vscp/common 
 
 
@@ -100,15 +101,19 @@
 #define VSCP_CLASS2_LEVEL1_CONTROL                      ( 512 + 30 )
 #define VSCP_CLASS2_LEVEL1_MULTIMEDIA                   ( 512 + 40 )
 #define VSCP_CLASS2_LEVEL1_AOL                          ( 512 + 50 )
-#define VSCP_CLASS2_MEASUREMENT64                       ( 512 + 60 )
-#define VSCP_CLASS2_MEASUREZONE                         ( 512 + 65 )
-#define VSCP_CLASS2_MEASUREMENT32                       ( 512 + 70 )
-#define VSCP_CLASS2_SETVALUEZONE                        ( 512 + 85 )
+#define VSCP_CLASS2_LEVEL1_MEASUREMENT64                ( 512 + 60 )
+#define VSCP_CLASS2_LEVEL1_MEASUREZONE                  ( 512 + 65 )
+#define VSCP_CLASS2_LEVEL1_MEASUREMENT32                ( 512 + 70 )
+#define VSCP_CLASS2_LEVEL1_SETVALUEZONE                 ( 512 + 85 )
+#define VSCP_CLASS2_LEVEL1_WEATHER                      ( 512 + 90 )
+#define VSCP_CLASS2_LEVEL1_WEATHER_FORECAST             ( 512 + 95 )
 #define VSCP_CLASS2_LEVEL1_PHONE                        ( 512 + 100 )
 #define VSCP_CLASS2_LEVEL1_LIN                          ( 512 + 101 )
 #define VSCP_CLASS2_LEVEL1_REMOTE                       ( 512 + 110 )
 #define VSCP_CLASS2_LEVEL1_GPS                          ( 512 + 206 )
 #define VSCP_CLASS2_LEVEL1_WIRELESS                     ( 512 + 212 )
+#define VSCP_CLASS2_LEVEL1_DIAGNOSTIC                   ( 512 + 507 )
+#define VSCP_CLASS2_LEVEL1_ERROR                        ( 512 + 508 )
 #define VSCP_CLASS2_LEVEL1_LOG                          ( 512 + 509 )
 #define VSCP_CLASS2_LEVEL1_LAB                          ( 512 + 510 )
 #define VSCP_CLASS2_LEVEL1_LOCAL                        ( 512 + 511 )

@@ -16,7 +16,7 @@
  *
  * The MIT License (MIT)
  *
- * Copyright (c) 2000-2015 Ake Hedman, Grodans Paradis AB <info@grodansparadis.com>
+ * Copyright (c) 2000-2016 Ake Hedman, Grodans Paradis AB <info@grodansparadis.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -274,6 +274,9 @@
 #define VSCP_TYPE_INFORMATION_SHUTTER_END_PRESET            66
 #define VSCP_TYPE_INFORMATION_SHUTTER_END_LEFT              67
 #define VSCP_TYPE_INFORMATION_SHUTTER_END_RIGHT             68
+#define VSCP_TYPE_INFORMATION_LONG_CLICK                    69
+#define VSCP_TYPE_INFORMATION_SINGLE_CLICK                  70
+#define VSCP_TYPE_INFORMATION_DOUBLE_CLICK                  71
 
 // class 30 (0x1E) -- CONTROL
 #define VSCP_TYPE_CONTROL_GENERAL                           0
@@ -313,6 +316,8 @@
 #define VSCP_TYPE_CONTROL_SHUTTER_RIGHT                     37
 #define VSCP_TYPE_CONTROL_SHUTTER_MIDDLE                    38
 #define VSCP_TYPE_CONTROL_SHUTTER_PRESET                    39
+#define VSCP_TYPE_CONTROL_ALL_LAMPS_ON                      40
+#define VSCP_TYPE_CONTROL_ALL_LAMPS_OFF                     41
 
 // class 40 (0x28) -- MULTIMEDIA
 #define VSCP_TYPE_MULTIMEDIA_GENERAL                        0
@@ -1069,5 +1074,6 @@
 #define VSCP2_TYPE_VSCPD_TIMER_RESUMED                          27
 #define VSCP2_TYPE_VSCPD_TIMER_STOPPED                          28
 #define VSCP2_TYPE_VSCPD_TIMER_ELLAPSED                         29
+#define VSCP2_TYPE_VSCPD_NEW_CALCULATION                        30
 
 #endif
