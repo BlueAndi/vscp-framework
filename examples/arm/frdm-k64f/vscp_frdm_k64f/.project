@@ -24,4 +24,22 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>vscp</name>
+			<type>2</type>
+			<locationURI>PARENT-4-PROJECT_LOC/vscp</locationURI>
+		</link>
+	</linkedResources>
+	<filteredResources>
+		<filter>
+			<id>1510507051663</id>
+			<name>vscp</name>
+			<type>9</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-events</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
 </projectDescription>
