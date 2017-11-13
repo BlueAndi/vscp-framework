@@ -31,7 +31,7 @@ https://www.nxp.com/video/:MCUXPRESSO-SW-TOOLS-OVERVIEW
 
 * Serial port driver
 
-##Start vom scratch
+##Short story about the software installation
 * Download and install the MCUXpresso IDE.
 * Download and extract the MCUXpresso SDK for FRDM-K64F.
 * Download and install MCUXpresso Config Tools.
@@ -44,7 +44,7 @@ https://www.nxp.com/video/:MCUXPRESSO-SW-TOOLS-OVERVIEW
 *** Enter a project name, but don't use '-' character, because it will cause problems in the MCUXpresso Config Tools  later. In this example we use vscp_frdm_k64f.
 *** Disable "Use default location" and enter the path to the vscp-framework/examples/arm/frdm-k64f folder.
 *** Select default board files.
-*** Additional select the flexcan driver.
+*** Additional select the flexcan and pit driver.
 *** Disable "Enable semihost".
 ** Click on "Next".
 ** Disable Redirect SDK "PRINTF" to C library "print".
@@ -71,3 +71,13 @@ https://www.nxp.com/video/:MCUXPRESSO-SW-TOOLS-OVERVIEW
 * Back to the MCUXpresso IDE.
 ** Set board folder as source folder in project properties -> C/C++ General -> Paths and Symbols -> Source Location
 ** Adapt the source/vscp_frdm_k64f.c to your needs.
+
+##Initialization of the VSCP framework
+Adapt the main.c to initialize the VSCP framework by calling vscp_core_init().
+
+##Processing of the VSCP framework
+The processing is done by calling vscp_core_process() in a constant cyclic period of 100 ms.
+That means a timer is needed with a 1 ms tick.
+
+The PIT (Periodic Interrupt Timer) driver supports operating the module as a time counter.
+

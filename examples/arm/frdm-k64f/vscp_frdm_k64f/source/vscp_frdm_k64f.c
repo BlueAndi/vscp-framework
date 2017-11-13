@@ -77,9 +77,14 @@ This module contains the main entry point.
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "MK64F12.h"
-#include "fsl_debug_console.h"
 
-#include "vscp_core.h"
+#include "fsl_common.h"			/* Interrupt handling */
+#include "fsl_debug_console.h"	/* Debug console */
+#include "fsl_pit.h"			/* Periodic Interrupt Timer */
+
+#include "system.h"				/* System specific defines, types and constants. */
+#include "swTimer.h"			/* Software timer */
+#include "vscp_core.h"			/* VSCP core */
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -89,12 +94,24 @@ This module contains the main entry point.
     CONSTANTS
 *******************************************************************************/
 
+/** 10 ms software timer id */
+#define MAIN_SWTIMER_10MS_ID        0
+
+/** 10 ms software timer period */
+#define MAIN_SWTIMER_10MS_PERIOD    10
+
+/** 250 ms software timer id */
+#define MAIN_SWTIMER_250MS_ID       1
+
+/** 250 ms software timer period */
+#define MAIN_SWTIMER_250MS_PERIOD   250
+
 /*******************************************************************************
     MACROS
 *******************************************************************************/
 
-/** Halt program */
-#define HALT()  do{ for(;;) { __asm("NOP"); } }while(0)
+/** Get source clock for PIT driver */
+#define PIT_SOURCE_CLOCK()	CLOCK_GetFreq(kCLOCK_BusClk)
 
 /*******************************************************************************
     TYPES AND STRUCTURES
@@ -115,6 +132,8 @@ typedef enum
 
 static MAIN_RET main_initRunLevel1(void);
 static MAIN_RET main_initRunLevel2(void);
+static void main_initPIT(void);
+static void main_enableInterrupts(void);
 
 /*******************************************************************************
     GLOBAL VARIABLES
@@ -144,10 +163,8 @@ int main(void)
 
     /* ********** Run level 2 - interrupts enabled ********** */
 
-#if 0
     /* Enable interrupts */
-    sei();
-#endif
+    main_enableInterrupts();
 
     /* Enter run level 2 */
     if (MAIN_RET_OK != main_initRunLevel2())
@@ -175,7 +192,6 @@ int main(void)
         vscp_core_process();
 
 #if 0
-
         /* Initialize the VSCP segment, because user pressed the segment
          * initialization button?
          *
@@ -218,6 +234,20 @@ int main(void)
     return 0 ;
 }
 
+/**
+ * This function is called by the periodic interrupt timer channel 0.
+ */
+extern void PIT0_IRQHandler(void)
+{
+    /* Clear interrupt flag.*/
+    PIT_ClearStatusFlags(PIT, kPIT_Chnl_0, kPIT_TimerFlag);
+
+    /* Process all software timer */
+    swTimer_process();
+
+	return;
+}
+
 /*******************************************************************************
     LOCAL FUNCTIONS
 *******************************************************************************/
@@ -230,7 +260,7 @@ int main(void)
  */
 static MAIN_RET main_initRunLevel1(void)
 {
-    MAIN_RET    status  = MAIN_RET_OK;
+    MAIN_RET	status	= MAIN_RET_OK;
 
     /* Initialize the board hardware */
     BOARD_InitBootPins();
@@ -239,11 +269,21 @@ static MAIN_RET main_initRunLevel1(void)
   	/* Initialize FSL debug console. */
     BOARD_InitDebugConsole();
 
+    /* Initialize periodic interrupt timer */
+    main_initPIT();
+
+    /* Initialize software timers */
+    swTimer_init();
+
     /* Initialize the VSCP framework */
     if (VSCP_CORE_RET_OK != vscp_core_init())
     {
         status = MAIN_RET_ERROR;
     }
+
+    /* Configure all software timer */
+    swTimer_start(MAIN_SWTIMER_10MS_ID, MAIN_SWTIMER_10MS_PERIOD, FALSE);
+    swTimer_start(MAIN_SWTIMER_250MS_ID, MAIN_SWTIMER_250MS_PERIOD, FALSE);
 
     return status;
 }
@@ -258,7 +298,39 @@ static MAIN_RET main_initRunLevel2(void)
 {
     MAIN_RET    status  = MAIN_RET_OK;
 
-    /* Implement your code here ... */
+    /* Start periodic interrupt timer, channel 0 */
+    PIT_StartTimer(PIT, kPIT_Chnl_0);
 
     return status;
+}
+
+/**
+ * This function initializes the periodic interrupt timer and
+ * setup the channel for a 1 ms tick.
+ */
+static void main_initPIT(void)
+{
+	pit_config_t	pitConfig	= { 0 };	/* Structure of initialize PIT */
+
+	/* Get default configuration */
+    PIT_GetDefaultConfig(&pitConfig);
+
+    /* Init pit module */
+    PIT_Init(PIT, &pitConfig);
+
+    /* Set timer period for channel 0 */
+    PIT_SetTimerPeriod(PIT, kPIT_Chnl_0, USEC_TO_COUNT(1000U, PIT_SOURCE_CLOCK()));
+
+    /* Enable timer interrupts for channel 0 */
+    PIT_EnableInterrupts(PIT, kPIT_Chnl_0, kPIT_TimerInterruptEnable);
+
+	return;
+}
+
+static void main_enableInterrupts(void)
+{
+	/* Enable pit timer channel 0 interrupt at the NVIC */
+	EnableIRQ(PIT0_IRQn);
+
+	return;
 }
