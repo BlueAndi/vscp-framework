@@ -37,6 +37,7 @@ https://www.nxp.com/video/:MCUXPRESSO-SW-TOOLS-OVERVIEW
 * Download and install MCUXpresso Config Tools.
 * Start the MCUXpresso IDE.
 ** Drag'n drop the SDK as .zip file to the "Installed SDKs" window.
+** Set "Insert spaces for tabs" in Windows -> Preferences -> General -> Editors -> Text Editors
 ** Create a new MCUXpresso IDE C/C++ project.
 ** Choose the FRDM-K64F board.
 ** Click on "Next".

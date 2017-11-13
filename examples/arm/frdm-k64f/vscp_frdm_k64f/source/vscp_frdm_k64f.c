@@ -78,13 +78,13 @@ This module contains the main entry point.
 #include "clock_config.h"
 #include "MK64F12.h"
 
-#include "fsl_common.h"			/* Interrupt handling */
-#include "fsl_debug_console.h"	/* Debug console */
-#include "fsl_pit.h"			/* Periodic Interrupt Timer */
+#include "fsl_common.h"         /* Interrupt handling */
+#include "fsl_debug_console.h"  /* Debug console */
+#include "fsl_pit.h"            /* Periodic Interrupt Timer */
 
-#include "system.h"				/* System specific defines, types and constants. */
-#include "swTimer.h"			/* Software timer */
-#include "vscp_core.h"			/* VSCP core */
+#include "system.h"             /* System specific defines, types and constants. */
+#include "swTimer.h"            /* Software timer */
+#include "vscp_core.h"          /* VSCP core */
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -111,7 +111,7 @@ This module contains the main entry point.
 *******************************************************************************/
 
 /** Get source clock for PIT driver */
-#define PIT_SOURCE_CLOCK()	CLOCK_GetFreq(kCLOCK_BusClk)
+#define PIT_SOURCE_CLOCK()  CLOCK_GetFreq(kCLOCK_BusClk)
 
 /*******************************************************************************
     TYPES AND STRUCTURES
@@ -245,7 +245,7 @@ extern void PIT0_IRQHandler(void)
     /* Process all software timer */
     swTimer_process();
 
-	return;
+    return;
 }
 
 /*******************************************************************************
@@ -260,13 +260,13 @@ extern void PIT0_IRQHandler(void)
  */
 static MAIN_RET main_initRunLevel1(void)
 {
-    MAIN_RET	status	= MAIN_RET_OK;
+    MAIN_RET    status  = MAIN_RET_OK;
 
     /* Initialize the board hardware */
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
 
-  	/* Initialize FSL debug console. */
+    /* Initialize FSL debug console. */
     BOARD_InitDebugConsole();
 
     /* Initialize periodic interrupt timer */
@@ -310,9 +310,9 @@ static MAIN_RET main_initRunLevel2(void)
  */
 static void main_initPIT(void)
 {
-	pit_config_t	pitConfig	= { 0 };	/* Structure of initialize PIT */
+    pit_config_t    pitConfig   = { 0 };    /* Structure of initialize PIT */
 
-	/* Get default configuration */
+    /* Get default configuration */
     PIT_GetDefaultConfig(&pitConfig);
 
     /* Init pit module */
@@ -324,13 +324,13 @@ static void main_initPIT(void)
     /* Enable timer interrupts for channel 0 */
     PIT_EnableInterrupts(PIT, kPIT_Chnl_0, kPIT_TimerInterruptEnable);
 
-	return;
+    return;
 }
 
 static void main_enableInterrupts(void)
 {
-	/* Enable pit timer channel 0 interrupt at the NVIC */
-	EnableIRQ(PIT0_IRQn);
+    /* Enable pit timer channel 0 interrupt at the NVIC */
+    EnableIRQ(PIT0_IRQn);
 
-	return;
+    return;
 }
