@@ -191,8 +191,8 @@ int main(void)
     /* ********** Run level 3 - main loop starts ********** */
 
     /* Show VSCP protocol and framework version */
-    printf("VSCP framework %s\n", VSCP_CORE_FRAMEWORK_VERSION);
-    printf("VSCP %s\n\n", VSCP_CORE_VERSION_STR);
+    PRINTF("VSCP framework %s\n", VSCP_CORE_FRAMEWORK_VERSION);
+    PRINTF("VSCP %s\n\n", VSCP_CORE_VERSION_STR);
 
     /* Main loop */
     for(;;)
