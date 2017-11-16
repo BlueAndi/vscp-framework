@@ -67,6 +67,9 @@
     LOCAL VARIABLES
 *******************************************************************************/
 
+/** Current lamp state */
+static VSCP_LAMP_STATE  vscp_portable_lampState = VSCP_LAMP_STATE_OFF;
+
 /*******************************************************************************
     GLOBAL VARIABLES
 *******************************************************************************/
@@ -102,29 +105,19 @@ extern void vscp_portable_restoreFactoryDefaultSettings(void)
  */
 extern void vscp_portable_setLampState(VSCP_LAMP_STATE state)
 {
-    switch(state)
-    {
-    case VSCP_LAMP_STATE_OFF:
-        /* Implement your code here ... */
-        break;
-
-    case VSCP_LAMP_STATE_ON:
-        /* Implement your code here ... */
-        break;
-
-    case VSCP_LAMP_STATE_BLINK_SLOW:
-        /* Implement your code here ... */
-        break;
-
-    case VSCP_LAMP_STATE_BLINK_FAST:
-        /* Implement your code here ... */
-        break;
-
-    default:
-        break;
-    }
+	vscp_portable_lampState = state;
 
     return;
+}
+
+/**
+ * This function get the current lamp state.
+ *
+ * @return Lamp state
+ */
+extern VSCP_LAMP_STATE vscp_portable_getLampState(void)
+{
+    return vscp_portable_lampState;
 }
 
 #if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_IDLE_CALLOUT )

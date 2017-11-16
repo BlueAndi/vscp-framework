@@ -84,7 +84,10 @@ This module contains the main entry point.
 
 #include "system.h"             /* System specific defines, types and constants. */
 #include "swTimer.h"            /* Software timer */
-#include "vscp_core.h"          /* VSCP core */
+
+#include "vscp_core.h"
+#include "vscp_timer.h"
+#include "vscp_portable.h"
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -105,6 +108,9 @@ This module contains the main entry point.
 
 /** 250 ms software timer period */
 #define MAIN_SWTIMER_250MS_PERIOD   250
+
+/** Segment initialization button debouncing time in ms. */
+#define MAIN_SEG_INIT_DEBOUNCE_TIME 100
 
 /*******************************************************************************
     MACROS
@@ -134,6 +140,15 @@ static MAIN_RET main_initRunLevel1(void);
 static MAIN_RET main_initRunLevel2(void);
 static void main_initPIT(void);
 static void main_enableInterrupts(void);
+static BOOL main_getInitButtonState(void);
+static void main_processStatusLamp(void);
+
+/*******************************************************************************
+    LOCAL VARIABLES
+*******************************************************************************/
+
+/** Segment init button state */
+static volatile BOOL	main_isInitButtonPressed	= FALSE;
 
 /*******************************************************************************
     GLOBAL VARIABLES
@@ -175,15 +190,9 @@ int main(void)
 
     /* ********** Run level 3 - main loop starts ********** */
 
-#if 0
     /* Show VSCP protocol and framework version */
-    main_print("VSCP framework ");
-    main_print(VSCP_CORE_FRAMEWORK_VERSION);
-    main_print("\n");
-    main_print("VSCP ");
-    main_print(VSCP_CORE_VERSION_STR);
-    main_print("\n\n");
-#endif
+    printf("VSCP framework %s\n", VSCP_CORE_FRAMEWORK_VERSION);
+    printf("VSCP %s\n\n", VSCP_CORE_VERSION_STR);
 
     /* Main loop */
     for(;;)
@@ -191,7 +200,6 @@ int main(void)
         /* Process VSCP framework */
         vscp_core_process();
 
-#if 0
         /* Initialize the VSCP segment, because user pressed the segment
          * initialization button?
          *
@@ -214,9 +222,6 @@ int main(void)
 
             /* Process VSCP lamp blinking */
             main_processStatusLamp();
-
-            /* Process the time */
-            time_process(MAIN_SWTIMER_250MS_PERIOD);
         }
 
         /* Some stuff shall only be done in case that VSCP is in ACTIVE state. */
@@ -226,8 +231,6 @@ int main(void)
 
 
         }
-
-#endif
 
     }
 
@@ -239,8 +242,29 @@ int main(void)
  */
 extern void PIT0_IRQHandler(void)
 {
+	static volatile uint8_t	segmentInitButtonDebounceCnt	= 0;
+
     /* Clear interrupt flag.*/
     PIT_ClearStatusFlags(PIT, kPIT_Chnl_0, kPIT_TimerFlag);
+
+    /* Is the segment initialization button released? */
+
+    if (FALSE != main_getInitButtonState())
+    {
+        segmentInitButtonDebounceCnt = 0;
+        main_isInitButtonPressed = FALSE;
+    }
+    /* Segment initialization button is pressed.
+     * Perform debouncing!
+     */
+    else if (MAIN_SEG_INIT_DEBOUNCE_TIME <= segmentInitButtonDebounceCnt)
+    {
+        main_isInitButtonPressed = TRUE;
+    }
+    else
+    {
+        ++segmentInitButtonDebounceCnt;
+    }
 
     /* Process all software timer */
     swTimer_process();
@@ -268,6 +292,11 @@ static MAIN_RET main_initRunLevel1(void)
 
     /* Initialize FSL debug console. */
     BOARD_InitDebugConsole();
+
+    /* Initialize LEDs */
+    LED_RED_INIT(LOGIC_LED_OFF);
+    LED_GREEN_INIT(LOGIC_LED_OFF);
+    LED_BLUE_INIT(LOGIC_LED_OFF);
 
     /* Initialize periodic interrupt timer */
     main_initPIT();
@@ -331,6 +360,72 @@ static void main_enableInterrupts(void)
 {
     /* Enable pit timer channel 0 interrupt at the NVIC */
     EnableIRQ(PIT0_IRQn);
+
+    return;
+}
+
+/**
+ * This function returns the current init button state.
+ * Note, this state is not debounced!
+ *
+ * @return State of button
+ * @retval FALSE	Button released
+ * @retval TRUE		Button pressed
+ */
+static BOOL main_getInitButtonState(void)
+{
+	BOOL	result = FALSE;
+
+	if (0 == (BOARD_SW2_GPIO->PDIR & (1 << BOARD_SW2_GPIO_PIN)))
+	{
+		result = TRUE;
+	}
+
+	return result;
+}
+
+/**
+ * This function process the status lamp.
+ */
+static void main_processStatusLamp(void)
+{
+    VSCP_LAMP_STATE state   = vscp_portable_getLampState();
+    static uint8_t  slowCnt = 0;
+
+    switch(state)
+    {
+    case VSCP_LAMP_STATE_OFF:
+    	LED_RED_OFF();
+        break;
+
+    case VSCP_LAMP_STATE_ON:
+    	LED_RED_ON();
+        break;
+
+    case VSCP_LAMP_STATE_BLINK_SLOW:
+        if (0 == (slowCnt % 4))
+        {
+        	LED_RED_TOGGLE();
+        }
+        break;
+
+    case VSCP_LAMP_STATE_BLINK_FAST:
+    	LED_RED_TOGGLE();
+        break;
+
+    default:
+        break;
+    }
+
+    /* Reset counter for slow blinking */
+    if (VSCP_LAMP_STATE_BLINK_SLOW != state)
+    {
+        slowCnt = 0;
+    }
+    else
+    {
+        ++slowCnt;
+    }
 
     return;
 }

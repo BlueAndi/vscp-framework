@@ -109,6 +109,13 @@ extern void vscp_portable_restoreFactoryDefaultSettings(void);
  */
 extern void vscp_portable_setLampState(VSCP_LAMP_STATE state);
 
+/**
+ * This function get the current lamp state.
+ *
+ * @return Lamp state
+ */
+extern VSCP_LAMP_STATE vscp_portable_getLampState(void);
+
 #if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_IDLE_CALLOUT )
 
 /**
