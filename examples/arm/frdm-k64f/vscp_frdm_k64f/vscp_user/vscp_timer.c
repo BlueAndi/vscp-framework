@@ -41,6 +41,9 @@
     INCLUDES
 *******************************************************************************/
 #include "vscp_timer.h"
+#include "vscp_util.h"
+#include "vscp_config.h"
+#include <string.h>
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -50,6 +53,18 @@
     CONSTANTS
 *******************************************************************************/
 
+#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_HEARTBEAT_NODE )
+
+/** Number of provided timers */
+#define VSCP_TIMER_NUM  4
+
+#else   /* VSCP_CONFIG_BASE_IS_DISABLED( VSCP_CONFIG_HEARTBEAT_NODE ) */
+
+/** Number of provided timers */
+#define VSCP_TIMER_NUM  3
+
+#endif  /* VSCP_CONFIG_BASE_IS_DISABLED( VSCP_CONFIG_HEARTBEAT_NODE ) */
+
 /*******************************************************************************
     MACROS
 *******************************************************************************/
@@ -58,6 +73,14 @@
     TYPES AND STRUCTURES
 *******************************************************************************/
 
+/** This type defines a timer context with all its internal parameters. */
+typedef struct
+{
+    uint8_t     id;     /**< Timer id (0xFF means this timer is available) */
+    uint16_t    value;  /**< Timer counter value */
+
+} vscp_timer_Timer;
+
 /*******************************************************************************
     PROTOTYPES
 *******************************************************************************/
@@ -65,6 +88,9 @@
 /*******************************************************************************
     LOCAL VARIABLES
 *******************************************************************************/
+
+/** Timers */
+static vscp_timer_Timer vscp_timer_context[VSCP_TIMER_NUM];
 
 /*******************************************************************************
     GLOBAL VARIABLES
@@ -79,7 +105,15 @@
  */
 extern void vscp_timer_init(void)
 {
-    /* Implement your code here ... */
+    uint8_t index   = 0;
+
+    /* Reset all timers */
+    memset(vscp_timer_context, 0, sizeof(vscp_timer_context));
+
+    for(index = 0; index < VSCP_TIMER_NUM; ++index)
+    {
+        vscp_timer_context[index].id = 0xFF;
+    }
 
     return;
 }
@@ -94,8 +128,21 @@ extern void vscp_timer_init(void)
 extern uint8_t  vscp_timer_create(void)
 {
     uint8_t timerId = 0xFF;
+    uint8_t index   = 0;
 
-    /* Implement your code here ... */
+    /* Search for an available timer */
+    for(index = 0; index < VSCP_TIMER_NUM; ++index)
+    {
+        /* Is the timer available? */
+        if (0xFF == vscp_timer_context[index].id)
+        {
+            /* Mark the timer as used */
+            vscp_timer_context[index].id    = index;
+            timerId                         = vscp_timer_context[index].id;
+
+            break;
+        }
+    }
 
     return timerId;
 }
@@ -109,7 +156,10 @@ extern uint8_t  vscp_timer_create(void)
  */
 extern void vscp_timer_start(uint8_t id, uint16_t value)
 {
-    /* Implement your code here ... */
+    if (VSCP_UTIL_ARRAY_NUM(vscp_timer_context) > id)
+    {
+        vscp_timer_context[id].value = value;
+    }
 
     return;
 }
@@ -121,7 +171,10 @@ extern void vscp_timer_start(uint8_t id, uint16_t value)
  */
 extern void vscp_timer_stop(uint8_t id)
 {
-    /* Implement your code here ... */
+    if (VSCP_UTIL_ARRAY_NUM(vscp_timer_context) > id)
+    {
+        vscp_timer_context[id].value = 0;
+    }
 
     return;
 }
@@ -138,7 +191,13 @@ extern BOOL vscp_timer_getStatus(uint8_t id)
 {
     BOOL    status  = FALSE;
 
-    /* Implement your code here ... */
+    if (VSCP_UTIL_ARRAY_NUM(vscp_timer_context) > id)
+    {
+        if (0 < vscp_timer_context[id].value)
+        {
+            status = TRUE;
+        }
+    }
 
     return status;
 }
@@ -150,7 +209,24 @@ extern BOOL vscp_timer_getStatus(uint8_t id)
  */
 extern void vscp_timer_process(uint16_t period)
 {
-    /* Implement your code here ... */
+    uint8_t index   = 0;
+
+    /* Process all timers */
+    for(index = 0; index < VSCP_TIMER_NUM; ++index)
+    {
+        /* Is the timer enabled? */
+        if (0xFF != vscp_timer_context[index].id)
+        {
+            if (period <= vscp_timer_context[index].value)
+            {
+                vscp_timer_context[index].value -= period;
+            }
+            else
+            {
+                vscp_timer_context[index].value = 0;
+            }
+        }
+    }
 
     return;
 }
