@@ -672,6 +672,7 @@
                <component>platform.drivers.uart</component>
                <component>platform.drivers.gpio</component>
                <component>platform.drivers.flexcan</component>
+               <component>platform.drivers.pit</component>
             </component_set>
             <component_set type="utility" selection="custom">
                <component>platform.utilities.debug_console</component>
