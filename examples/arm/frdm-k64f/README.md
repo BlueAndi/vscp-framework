@@ -1,84 +1,140 @@
-##Board
+## Board
 
 ![board](https://github.com/BlueAndi/vscp-framework/blob/master/examples/arm/frdm-k64f/doc/FRDM-K64F-ANGLE.jpg)
 
-Hardware Details
+### Hardware Details
 
 | Board:  | FRDM-K64F |
 | Device: | MK64F12 |
-| Core Type | Cortex-M4F |
-| Max. Freq. | 120 MHz |
+| Core Type: | Cortex-M4F |
+| Max. Freq.: | 120 MHz |
 | Flash: | 1024 kByte |
 | RAM: | 256 kByte |
 
-##Installation
+## Installation
 
-Follow the "getting started" guide on the NXP homepage, which is very useful:
-https://www.nxp.com/products/microcontrollers-and-processors/arm-based-processors-and-mcus/kinetis-cortex-m-mcus/k-seriesperformancem4/k2x-usb/freedom-development-platform-for-kinetis-k64-k63-and-k24-mcus:FRDM-K64F?tab=In-Depth_Tab
+Follow the [Getting Started](https://www.nxp.com/products/microcontrollers-and-processors/arm-based-processors-and-mcus/kinetis-cortex-m-mcus/k-seriesperformancem4/k2x-usb/freedom-development-platform-for-kinetis-k64-k63-and-k24-mcus:FRDM-K64F?tab=In-Depth_Tab) guide on the NXP homepage, which is very useful.
 
-Original the microcontroller was introduced with the Kinetis Design Studio IDE.
+Original the microcontroller was introduced with the Kinetis Design Studio IDE. It was introduced original by Freescale Semiconductor. On December 7, 2015, Freescale Semiconductor merged with NXP Semiconductors.
 In the meantime the MCUXpresso IDE is the successor of the Kinetis Design Studio.
-The Kinetis Design Studio was introduced original by Freescale Semiconductor.
-On December 7, 2015, Freescale Semiconductor merged with NXP Semiconductors.
 
-A short overview about the software:
-* MCUXpresso IDE - The integrated development environment, based on Eclipse. 
-* MCUXpresso SDK for FRDM-K64F - The software development kit contains all meta information about the MCU and board.
-* MCUXpresso Config Tools - Configuration tool of the peripheral, pins, clocks, etc.
+A short overview about the software items:
+* **MCUXpresso IDE** - The integrated development environment, based on Eclipse. 
+* **MCUXpresso SDK for FRDM-K64F** - The software development kit contains all meta information about the MCU and board.
+* **MCUXpresso Config Tools** - Configuration tool of the peripheral, pins, clocks, etc.
 
-NXP provides a short video introduction about the software and how they are working together here:
-https://www.nxp.com/video/:MCUXPRESSO-SW-TOOLS-OVERVIEW
+NXP provides a [short video introduction](https://www.nxp.com/video/:MCUXPRESSO-SW-TOOLS-OVERVIEW) about the software items and how they are working together.
 
-* Serial port driver
+### Short story about the software installation and first setup
 
-##Short story about the software installation
+#### Get the software items and install them
 * Download and install the MCUXpresso IDE.
 * Download and extract the MCUXpresso SDK for FRDM-K64F.
 * Download and install MCUXpresso Config Tools.
+
+#### Create a new project
 * Start the MCUXpresso IDE.
-** Drag'n drop the SDK as .zip file to the "Installed SDKs" window.
-** Set "Insert spaces for tabs" in Windows -> Preferences -> General -> Editors -> Text Editors
-** Create a new MCUXpresso IDE C/C++ project.
-** Choose the FRDM-K64F board.
-** Click on "Next".
-** Configure the project
-*** Enter a project name, but don't use '-' character, because it will cause problems in the MCUXpresso Config Tools  later. In this example we use vscp_frdm_k64f.
-*** Disable "Use default location" and enter the path to the vscp-framework/examples/arm/frdm-k64f folder.
-*** Select default board files.
-*** Additional select the flexcan and pit driver.
-*** Disable "Enable semihost".
-** Click on "Next".
-** Disable Redirect SDK "PRINTF" to C library "print".
-** Click on "Finish".
-** Create a vscp_user source folder and copy the templates to it.
-** Link the vscp folder into the project (file -> new -> folder).
-*** Use "Link to alternate location" and enter: ${PROJECT_LOC}\..\..\..\..\..\vscp-framework\vscp
-*** Set a resource filter for folder "events".
-** Set vscp as source folder in project properties -> C/C++ General -> Paths and Symbols -> Source Location
-** Add the include paths in project properties -> C/C++ Build -> Settings -> Includes:
-*** "${workspace_loc:/${ProjName}/vscp}"
-*** "${workspace_loc:/${ProjName}/vscp/events}"
-*** "${workspace_loc:/${ProjName}/vscp_user}"
+* Drag'n drop the SDK as .zip file to the "Installed SDKs" window.
+* Set "Insert spaces for tabs" in *Windows -> Preferences -> General -> Editors -> Text Editors*
+* Create a new MCUXpresso IDE C/C++ project.
+* Choose the FRDM-K64F board.
+* Click on "Next".
+* Configure the project
+  * Enter a project name, but don't use '-' character, because it will cause problems in the MCUXpresso Config Tools later. In this example we use "vscp_frdm_k64f".
+  * Disable "Use default location" and enter the path to the "<vscp-framework>/examples/arm/frdm-k64f" folder.
+  * Select default board files.
+  * Additional select the flexcan and pit driver.
+  * Disable "Enable semihost".
+* Click on "Next".
+* Disable Redirect SDK "PRINTF" to C library "print".
+* Click on "Finish".
+
+#### Add the VSCP-Framework files
+In the MCUXpresso IDE:
+* Create a vscp_user source folder in the project and copy the templates from "<vscp-framework>/vscp/templates" to it.
+* Link the "<vscp-framework>/vscp" folder into the project (*file -> new -> folder*).
+  * Use "Link to alternate location" and enter "${PROJECT_LOC}\\..\\..\\..\\..\\..\\vscp-framework\\vscp"
+  * Set a resource filter for folder "events". This will include only the sources inside the "vscp" folder and "events" folder.
+* Set "vscp" folder as source folder in *project properties -> C/C++ General -> Paths and Symbols -> Source Location*.
+* Add the include paths in *project properties -> C/C++ Build -> Settings -> Includes*:
+  * "${workspace_loc:/${ProjName}/vscp}"
+  * "${workspace_loc:/${ProjName}/vscp/events}"
+  * "${workspace_loc:/${ProjName}/vscp_user}"
+
+#### Overwrite board configuration
+The initial board configuration was created within the MCUXpresso IDE. But further configuration shall take place in the MCUXpresso Config Tool. Unfortunately, the MCUXpresso IDE doesn't create a configuration file for the MCUXpresso Config Tool. Therefore it has to be created separately. And unfortunately, you can not create it directly in the project, created via MCUXpresso IDE.
+
+The workaround is to create a MCUXpresso Config Tool configuration in a different location and copy it afterwards (including the generated files) to the project:
 * Start the MCUXpresso Config Tools.
-** Select the SDK folder.
-** Click on "Next".
-** Select "New FRDM-K64F configuratin".
-** Click on "Finish".
-** Configure as you like and store the configuration somewhere.
-** Replace in all files of the generated project the project name with vscp_frdm_k64f.
-** Copy the configuration to the vscp_frdm_k64f folder.
-** The new board folder replaces the frdmk64f folder, therefore delete it.
-** Delete the main.c in the source folder as well.
+  * Select the SDK folder.
+  * Click on "Next".
+  * Select "New FRDM-K64F configuration".
+  * Click on "Finish".
+  * Configure as you like and store the configuration somewhere with the project name "vscp_frdm_k64f".
+* Close MCUXpresso Config Tool.
+* Copy the MCUXpresso Config Tool configuration to the "vscp_frdm_k64f" project folder.
+* The new "board" folder replaces the "frdmk64f" folder, therefore delete it.
+* Delete the "main.c" in the "source" folder as well.
 * Back to the MCUXpresso IDE.
-** Set board folder as source folder in project properties -> C/C++ General -> Paths and Symbols -> Source Location
-** Adapt the source/vscp_frdm_k64f.c to your needs.
+  * Set the "board" folder as source folder in *project properties -> C/C++ General -> Paths and Symbols -> Source Location*.
+  * Adapt the "source/vscp_frdm_k64f.c" to your needs.
 
-##Initialization of the VSCP framework
-Adapt the main.c to initialize the VSCP framework by calling vscp_core_init().
+### Setup of VSCP-Framework inside the project
 
-##Processing of the VSCP framework
-The processing is done by calling vscp_core_process() in a constant cyclic period of 100 ms.
-That means a timer is needed with a 1 ms tick.
+#### Initialization of the VSCP framework
+Adapt the "source/vscp_frdm_k64f.c" to initialize the VSCP framework by calling "vscp_core_init()".
 
-The PIT (Periodic Interrupt Timer) driver supports operating the module as a time counter.
+#### Processing of the VSCP framework
+The processing is done by calling "vscp_core_process()" in a constant cyclic period of 100 ms.
+The PIT (Periodic Interrupt Timer) driver supports this and we will generate a 1 ms tick.
 
+The problem we are facing now is how to get PIT support?
+It looks like it is not possible to select in the MCUXpresso IDE, therefore I opened the MCUXpresso Config Tool and step to the project generator. There select the PIT driver and generate again.
+
+Now the expectation is that the PIT driver was added, but this doesn't happen. A short look to the content description of the MCUXpresso Config Tool shows that the MCUXpresso IDE is not fully supported. :-(
+
+Let's do it simple by just copy the PIT driver from "SDK_2.2_FRDM-K64F/devices/MK64F12/drivers/fsl_pit.*" to the "driver" folder.
+
+To see how to initialize the PIT driver, just import the pit driver example from the SDK in the MCUXpresso IDE and use it accordingly.
+
+To say the truth, I added also a simple driver for software timers, which are processed by the periodic interrupt timer. This makes it easier for the example. :-)
+
+### Using a button to start the VSCP init sequence
+We will use the SW2 button on the board for this. The "pin_mux.h" contains the necessary preprocessor defines, starting all with "BOARD_SW2_..." and note that the button is low active.
+
+Code snipet:
+```
+/**
+ * This function returns the current init button state.
+ * Note, this state is not debounced!
+ *
+ * @return State of button
+ * @retval FALSE	Button released
+ * @retval TRUE		Button pressed
+ */
+static BOOL main_getInitButtonState(void)
+{
+	BOOL	result = FALSE;
+
+	if (0 == (BOARD_SW2_GPIO->PDIR & (1 << BOARD_SW2_GPIO_PIN)))
+	{
+		result = TRUE;
+	}
+
+	return result;
+}
+```
+
+Use the periodic interrupt timer to debounce it, just to go sure and indepedent whether there is a low pass filter in the schematic. ;-)
+
+#### Let's blink
+The onboard red LED shall be used to blink the *hello world* of VSCP. The "board.h" contains all necessary preprocessor defines, starting with "LED_RED_...".
+
+#### Adapt the transport layer to CAN
+
+
+## Useful links
+
+* [OPENSDA: OpenSDA Serial and Debug Adapter](https://www.nxp.com/support/developer-resources/run-time-software/kinetis-developer-resources/ides-for-kinetis-mcus/opensda-serial-and-debug-adapter:OPENSDA#FRDM-K64F).
+* [ARMmbed/DAPLink github project](https://github.com/ARMmbed/DAPLink).
+* [ARMmbed Platform FRDM-K64F](https://os.mbed.com/platforms/FRDM-K64F)
