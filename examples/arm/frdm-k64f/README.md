@@ -131,6 +131,13 @@ Use the periodic interrupt timer to debounce it, just to go sure and indepedent 
 The onboard red LED shall be used to blink the *hello world* of VSCP. The "board.h" contains all necessary preprocessor defines, starting with "LED_RED_...".
 
 #### Adapt the transport layer to CAN
+The next driver we need is the FlexCAN driver. Let's do it simple again by just copy the FlexCAN driver from "SDK_2.2_FRDM-K64F/devices/MK64F12/drivers/fsl_flexcan.*" to the "driver" folder.
+
+To see how to use the FlexCAN driver, just import the FlexCAN driver example from the SDK in the MCUXpresso IDE and adapt the "vscp_tp_adapter.c" accordingly.
+
+The K64F supports 16 CAN message buffers. In this example 15 of them shall be used for receiving and one for transmitting.
+
+#### Use the EEPROM as persitent storage
 
 
 ## Useful links
