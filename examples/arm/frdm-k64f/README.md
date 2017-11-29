@@ -5,6 +5,9 @@ Additional in this example a FRDM-CAN-VSCP shield is used, which contains an CAN
 ![board](https://github.com/BlueAndi/vscp-framework/blob/master/examples/arm/frdm-k64f/doc/FRDM-K64F-ANGLE.jpg)
 
 ### Hardware Details
+
+| | |
+| --- | --- |
 | Board:  | FRDM-K64F |
 | Device: | MK64F12 |
 | Core Type: | Cortex-M4F |
