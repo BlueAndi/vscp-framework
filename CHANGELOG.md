@@ -1,3 +1,8 @@
+## 0.6.1
+
+  - VSCP framework
+    - inttypes.h replaced with stdint.h, because inttypes.h was missing in the MCUXpresso toolchain for the Kinetis MCU.
+
 ## 0.6.0
 
   - VSCP framework

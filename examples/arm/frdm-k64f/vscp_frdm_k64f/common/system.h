@@ -82,7 +82,7 @@ extern "C"
 *******************************************************************************/
 
 /** No operation */
-#define _NOP()  do{ asm volatile ("nop"); }while(0)
+#define _NOP()  do{ __asm volatile ("nop"); }while(0)
 
 /** Set bit */
 #define BIT_SET(__value, __bit)  do{ (__value) |= (1 << (__bit)); }while(0)

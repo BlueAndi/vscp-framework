@@ -47,7 +47,7 @@ This module contains the CRC16-CCITT algorithm.
 /*******************************************************************************
     INCLUDES
 *******************************************************************************/
-#include <inttypes.h>
+#include <stdint.h>
 #include <stdlib.h>
 
 #ifdef __cplusplus

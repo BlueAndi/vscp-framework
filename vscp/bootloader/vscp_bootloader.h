@@ -131,7 +131,7 @@ This module provides a generic bootloader as specified by VSCP specification.
 /*******************************************************************************
     INCLUDES
 *******************************************************************************/
-#include <inttypes.h>
+#include <stdint.h>
 #include "vscp_types.h"
 
 #ifdef __cplusplus
