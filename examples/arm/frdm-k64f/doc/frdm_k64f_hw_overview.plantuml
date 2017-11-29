@@ -1,0 +1,57 @@
+@startuml
+
+title FRDM-K64F Hardware Overview
+
+node "FRDM-K64F" as frdm_k64f {
+
+    component "MCU (MK64FN1M0VLL12)" as mcu
+    component "Button (SW2)" as sw2
+    component "Button (SW3)" as sw3
+    component "Reset Button" as reset_button
+    component "RGB Led" as led
+    component "Micro SD Card" as sdcard
+    component "Ethernet Phy" as eth_phy
+    component "Micro USB" as usb
+    component "Accelerometer" as accel_sensor
+    component "Magnetometer" as magnet_sensor
+    
+    package "OpenSDAv2" {
+        component "MCU (MK20DX128VLF5)" as osda_mcu
+        component "Micro USB" as osda_usb
+    }
+    
+    mcu -up- sw2
+    mcu -up- sw3
+    mcu -up- led
+    mcu -- osda_mcu
+    mcu -up- reset_button
+    mcu -down- sdcard
+    mcu -down- eth_phy
+    mcu -down- usb
+    mcu -down- accel_sensor
+    mcu -down- magnet_sensor
+
+    osda_mcu -- osda_usb
+    
+    note top of led: Used for VSCP lamp.
+    note top of sw2: Used for VSCP init button.
+    note bottom of osda_usb: Programming the firmware.
+    note top of mcu
+        120 MHz, 1 MB flash memory, 256 KB RAM
+    end note
+}
+
+node "FRDM-CAN-VSCP Shield" as frdm_can_shield {
+
+    component "CAN Transceiver" as can_transceiver
+    component "EEPROM" as eeprom
+
+    note bottom of can_transceiver: Used for VSCP link layer.
+    note bottom of eeprom: Used for VSCP persistent storage.
+
+}
+
+mcu -- can_transceiver
+mcu -- eeprom
+
+@enduml

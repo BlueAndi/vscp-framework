@@ -1,9 +1,10 @@
-## Board
+## Using the VSCP-Framework on an NXP FRDM-K64F
+First of all many thanks goes to Iain Galloway from NXP Semiconductors, which provided the FRDM-K64F hardware to integrate the VSCP-Framework on it.
+Additional in this example a FRDM-CAN-VSCP shield is used, which contains an CAN transceiver and an EEPROM. This was created by [Angus Galloway](https://github.com/gallowaa), therefore many thanks as well.
 
 ![board](https://github.com/BlueAndi/vscp-framework/blob/master/examples/arm/frdm-k64f/doc/FRDM-K64F-ANGLE.jpg)
 
 ### Hardware Details
-
 | Board:  | FRDM-K64F |
 | Device: | MK64F12 |
 | Core Type: | Cortex-M4F |
@@ -11,26 +12,29 @@
 | Flash: | 1024 kByte |
 | RAM: | 256 kByte |
 
-## Installation
+### Hardware Overview
+![frdm_k64_hw_overview](https://github.com/BlueAndi/vscp-framework/blob/master/examples/arm/frdm-k64f/doc/frdm_k64f_hw_overview.png)
 
-Follow the [Getting Started](https://www.nxp.com/products/microcontrollers-and-processors/arm-based-processors-and-mcus/kinetis-cortex-m-mcus/k-seriesperformancem4/k2x-usb/freedom-development-platform-for-kinetis-k64-k63-and-k24-mcus:FRDM-K64F?tab=In-Depth_Tab) guide on the NXP homepage, which is very useful.
+## Getting Started
+I read the [Getting Started](https://www.nxp.com/products/microcontrollers-and-processors/arm-based-processors-and-mcus/kinetis-cortex-m-mcus/k-seriesperformancem4/k2x-usb/freedom-development-platform-for-kinetis-k64-k63-and-k24-mcus:FRDM-K64F?tab=In-Depth_Tab) guide on the NXP homepage, which helped me to get a first impression about the hardware and how to get a "hello world" running.
 
-Original the microcontroller was introduced with the Kinetis Design Studio IDE. It was introduced original by Freescale Semiconductor. On December 7, 2015, Freescale Semiconductor merged with NXP Semiconductors.
-In the meantime the MCUXpresso IDE is the successor of the Kinetis Design Studio.
+## Software
+Original the microcontroller was introduced with the Kinetis Design Studio IDE, by Freescale Semiconductor. On December 7, 2015, Freescale Semiconductor merged with NXP Semiconductors. The Kinetis Design Studio IDE could still be used, but the MCUXpresso IDE is the successor. Therefore I decided to use MCUXpresso IDE and its tools around.
 
 A short overview about the software items:
-* **MCUXpresso IDE** - The integrated development environment, based on Eclipse. 
-* **MCUXpresso SDK for FRDM-K64F** - The software development kit contains all meta information about the MCU and board.
-* **MCUXpresso Config Tools** - Configuration tool of the peripheral, pins, clocks, etc.
+* **MCUXpresso IDE v10.0.2** - The integrated development environment, based on Eclipse. 
+* **MCUXpresso SDK for FRDM-K64F V2.2** - The software development kit contains all meta information about the MCU and board.
+* **MCUXpresso Config Tools V3.0** - Configuration tool of the peripheral, pins, clocks, etc.
 
-NXP provides a [short video introduction](https://www.nxp.com/video/:MCUXPRESSO-SW-TOOLS-OVERVIEW) about the software items and how they are working together.
+This [short video introduction](https://www.nxp.com/video/:MCUXPRESSO-SW-TOOLS-OVERVIEW) about the software items shows how they are working together.
 
 ### Short story about the software installation and first setup
+The following steps showing what I did to create a project and adapt it step by step to get the VSCP-Framework running.
 
 #### Get the software items and install them
-* Download and install the MCUXpresso IDE.
-* Download and extract the MCUXpresso SDK for FRDM-K64F.
-* Download and install MCUXpresso Config Tools.
+* Download and install the [MCUXpresso IDE](https://www.nxp.com/support/developer-resources/run-time-software/mcuxpresso-software-and-tools/mcuxpresso-integrated-development-environment-ide:MCUXpresso-IDE?tab=Design_Tools_Tab).
+* Download and extract the [MCUXpresso SDK for FRDM-K64F](https://mcuxpresso.nxp.com/en/license?hash=7352a00d5166ebf9cc83f1442c02d98e&hash_download=1).
+* Download and install [MCUXpresso Config Tools](https://www.nxp.com/support/developer-resources/run-time-software/mcuxpresso-software-and-tools/mcuxpresso-config-tools:MCUXpresso-Config-Tools?tab=Design_Tools_Tab).
 
 #### Create a new project
 * Start the MCUXpresso IDE.
@@ -80,6 +84,8 @@ The workaround is to create a MCUXpresso Config Tool configuration in a differen
   * Adapt the "source/vscp_frdm_k64f.c" to your needs.
 
 ### Setup of VSCP-Framework inside the project
+
+![simple_vscp-framework_processing](https://github.com/BlueAndi/vscp-framework/blob/master/examples/arm/frdm-k64f/doc/simple_vscp-framework_processing.png)
 
 #### Initialization of the VSCP framework
 Adapt the "source/vscp_frdm_k64f.c" to initialize the VSCP framework by calling "vscp_core_init()".
@@ -137,8 +143,9 @@ To see how to use the FlexCAN driver, just import the FlexCAN driver example fro
 
 The K64F supports 16 CAN message buffers. In this example 15 of them shall be used for receiving and one for transmitting.
 
-#### Use the EEPROM as persitent storage
+#### Use the EEPROM as persistent storage
 
+... to be continued ...
 
 ## Useful links
 

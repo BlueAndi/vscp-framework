@@ -1,0 +1,48 @@
+@startuml
+
+title Simple VSCP-Framework Processing
+
+participant "Timer ISR" as isr
+participant "Software Timer" as swTimer
+participant "Main" as main
+participant "VSCP-Framework" as vscp
+
+loop every 1 ms
+
+    isr -> swTimer: process all timer
+    activate isr
+    activate swTimer
+    swTimer --> isr
+    deactivate swTimer
+    deactivate isr
+
+end loop
+
+loop as fast as possible
+
+    main -> vscp: process core
+    activate main
+    activate vscp
+    vscp --> main
+    deactivate vscp
+
+    main -> swTimer: get status of 250 ms timer
+    activate swTimer
+    swTimer --> main: result
+    deactivate swTimer
+
+    
+    alt 250 ms timeout
+    
+        main -> vscp: process timer
+        activate vscp
+        vscp --> main
+        deactivate vscp
+    
+    end alt
+    
+    deactivate main
+    
+end loop
+
+@enduml
