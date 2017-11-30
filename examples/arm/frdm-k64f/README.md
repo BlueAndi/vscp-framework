@@ -147,8 +147,11 @@ To see how to use the FlexCAN driver, just import the FlexCAN driver example fro
 The K64F supports 16 CAN message buffers. In this example 15 of them shall be used for receiving and one for transmitting.
 
 #### Use the EEPROM as persistent storage
+The EEPROM on the shield is connected via SPI to the mcu, so let's again just copy the SPI driver from "SDK_2.2_FRDM-K64F/devices/MK64F12/drivers/fsl_dspi.*" to the "driver" folder.
 
-... to be continued ...
+To see how to use the SPI driver, just import the SPI driver example from the SDK in the MCUXpresso IDE and adapt the "vscp_ps_access.c" accordingly.
+
+The EEPROM is a 2k 25AA02E48 SPI EEPROM from Microchip.
 
 ## Useful links
 
