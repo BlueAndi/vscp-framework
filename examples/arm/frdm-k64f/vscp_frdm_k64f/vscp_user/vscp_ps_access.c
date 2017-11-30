@@ -41,6 +41,7 @@
     INCLUDES
 *******************************************************************************/
 #include "vscp_ps_access.h"
+#include "fsl_dspi.h"
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -50,6 +51,24 @@
     CONSTANTS
 *******************************************************************************/
 
+/** Used SPI peripheral */
+#define VSCP_PS_ACCESS_DSPI_MASTER_BASEADDR	SPI0
+
+/** SPI clock source */
+#define VSCP_PS_ACCESS_DSPI_CLKSRC			kCLOCK_BusClk
+
+/** SPI clock frequency */
+#define VSCP_PS_ACCESS_DSPI_CLK_FREQ		CLOCK_GetFreq(VSCP_PS_ACCESS_DSPI_CLKSRC)
+
+/** SPI baudrate: 1 MBit/s */
+#define VSCP_PS_ACCESS_DSPI_BAUDRATE		(1000000U)
+
+/** SPI chip select */
+#define VSCP_PS_ACCESS_DSPI_CS				kDSPI_Pcs0
+
+/** EEPROM read transfer size in byte */
+#define VSCP_PS_ACCESS_EEPROM_READ_TFR_SIZE	(3)
+
 /*******************************************************************************
     MACROS
 *******************************************************************************/
@@ -57,6 +76,18 @@
 /*******************************************************************************
     TYPES AND STRUCTURES
 *******************************************************************************/
+
+/* Microchip 25AA02E48 SPI EEPROM commands */
+typedef enum
+{
+	VSCP_PS_ACCESS_EEPROM_CMD_WRSR 	= 0x01,
+	VSCP_PS_ACCESS_EEPROM_CMD_WRITE	= 0x02,
+	VSCP_PS_ACCESS_EEPROM_CMD_READ	= 0x03,
+	VSCP_PS_ACCESS_EEPROM_CMD_WRDI	= 0x04,
+	VSCP_PS_ACCESS_EEPROM_CMD_RDSR	= 0x05,
+	VSCP_PS_ACCESS_EEPROM_CMD_WREN	= 0x06
+
+} VSCP_PS_ACCESS_EEPROM_CMD;
 
 /*******************************************************************************
     PROTOTYPES
@@ -81,7 +112,26 @@
  */
 extern void vscp_ps_access_init(void)
 {
-    /* Implement your code here ... */
+	dspi_master_config_t	masterConfig = { 0 };
+
+	/* Initialize SPI here to access the EEPROM on the FRDM-VSCP-CAN shield. */
+	masterConfig.whichCtar                                = kDSPI_Ctar0;
+	masterConfig.ctarConfig.baudRate                      = VSCP_PS_ACCESS_DSPI_BAUDRATE;
+	masterConfig.ctarConfig.bitsPerFrame                  = 8;
+	masterConfig.ctarConfig.cpol                          = kDSPI_ClockPolarityActiveHigh;
+	masterConfig.ctarConfig.cpha                          = kDSPI_ClockPhaseFirstEdge;
+	masterConfig.ctarConfig.direction                     = kDSPI_MsbFirst;
+	masterConfig.ctarConfig.pcsToSckDelayInNanoSec        = 1000000000U / masterConfig.ctarConfig.baudRate ;
+	masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec    = 1000000000U / masterConfig.ctarConfig.baudRate ;
+	masterConfig.ctarConfig.betweenTransferDelayInNanoSec = 1000000000U / masterConfig.ctarConfig.baudRate ;
+	masterConfig.whichPcs                                 = VSCP_PS_ACCESS_DSPI_CS;
+	masterConfig.pcsActiveHighOrLow                       = kDSPI_PcsActiveLow;
+	masterConfig.enableContinuousSCK                      = false;
+	masterConfig.enableRxFifoOverWrite                    = false;
+	masterConfig.enableModifiedTimingFormat               = false;
+	masterConfig.samplePoint                              = kDSPI_SckToSin0Clock;
+
+	DSPI_MasterInit(VSCP_PS_ACCESS_DSPI_MASTER_BASEADDR, &masterConfig, VSCP_PS_ACCESS_DSPI_CLK_FREQ);
 
     return;
 }
@@ -94,9 +144,27 @@ extern void vscp_ps_access_init(void)
  */
 extern uint8_t  vscp_ps_access_read8(uint16_t addr)
 {
-    uint8_t data    = 0;
+	dspi_transfer_t	masterXfer										= { 0 };
+	uint8_t			txBuffer[VSCP_PS_ACCESS_EEPROM_READ_TFR_SIZE]	= { 0 }; /* [  op-code ] [  address ] [     dummy   ] */
+	uint8_t			rxBuffer[VSCP_PS_ACCESS_EEPROM_READ_TFR_SIZE]	= { 0 }; /* [  dummy   ] [  dummy   ] [returned data] */
+	uint8_t			data											= 0;
 
-    /* Implement your code here ... */
+	if (0xff >= addr)
+	{
+		txBuffer[0] = VSCP_PS_ACCESS_EEPROM_CMD_READ;	/* Opcode */
+		txBuffer[1] = (uint8_t)addr;					/* Address */
+		txBuffer[2] = 0x00;								/* Dummy */
+
+		masterXfer.txData = txBuffer;
+		masterXfer.rxData = rxBuffer;
+		masterXfer.dataSize = VSCP_PS_ACCESS_EEPROM_READ_TFR_SIZE;
+		masterXfer.configFlags = kDSPI_MasterCtar0 | VSCP_PS_ACCESS_DSPI_CS | kDSPI_MasterPcsContinuous;
+
+		if (kStatus_Success == DSPI_MasterTransferBlocking(VSCP_PS_ACCESS_DSPI_MASTER_BASEADDR, &masterXfer))
+		{
+			data = rxBuffer[2];
+		}
+	}
 
     return data;
 }
@@ -109,7 +177,35 @@ extern uint8_t  vscp_ps_access_read8(uint16_t addr)
  */
 extern void vscp_ps_access_write8(uint16_t addr, uint8_t value)
 {
-    /* Implement your code here ... */
+	dspi_transfer_t	masterXfer		= { 0 };
+	const uint8_t	size			= 3;
+	uint8_t			txBuffer[size]; /* [  op-code ] [  address ] [     dummy   ] */
+	uint8_t			rxBuffer[size]; /* [  dummy   ] [  dummy   ] [returned data] */
+
+	if (0xff >= addr)
+	{
+		masterXfer.txData = txBuffer;
+		masterXfer.rxData = rxBuffer;
+		masterXfer.configFlags = kDSPI_MasterCtar0 | VSCP_PS_ACCESS_DSPI_CS | kDSPI_MasterPcsContinuous;
+
+		/* The WREN instruction must be sent separately to enable writes to the eeprom. This is done
+		 * with its own API call to make the CS line comes back up which sets the WREN latch.
+		 */
+		txBuffer[0] = VSCP_PS_ACCESS_EEPROM_CMD_WREN;	/* Opcode */
+
+		masterXfer.dataSize = 1;
+
+		(void)DSPI_MasterTransferBlocking(VSCP_PS_ACCESS_DSPI_MASTER_BASEADDR, &masterXfer);
+
+		/* Write data */
+		txBuffer[0] = VSCP_PS_ACCESS_EEPROM_CMD_WRITE;	/* Opcode */
+		txBuffer[1] = (uint8_t)addr;					/* Address */
+		txBuffer[2] = value;							/* Data */
+
+		masterXfer.dataSize = size;
+
+		(void)DSPI_MasterTransferBlocking(VSCP_PS_ACCESS_DSPI_MASTER_BASEADDR, &masterXfer);
+	}
 
     return;
 }

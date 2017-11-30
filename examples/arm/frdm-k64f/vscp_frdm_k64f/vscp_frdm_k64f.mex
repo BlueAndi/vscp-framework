@@ -48,6 +48,18 @@
                         <pin_feature name="identifier" value=""/>
                      </pin_features>
                   </pin>
+                  <pin peripheral="SPI0" signal="SCK" pin_num="94" pin_signal="ADC0_SE5b/PTD1/SPI0_SCK/UART2_CTS_b/FTM3_CH1/FB_CS0_b"/>
+                  <pin peripheral="SPI0" signal="SIN" pin_num="47" pin_signal="ADC1_SE17/PTA17/SPI0_SIN/UART0_RTS_b/RMII0_TXD1/MII0_TXD1/I2S0_MCLK">
+                     <pin_features>
+                        <pin_feature name="identifier" value=""/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="SPI0" signal="SOUT" pin_num="78" pin_signal="CMP0_IN0/PTC6/LLWU_P10/SPI0_SOUT/PDB0_EXTRG/I2S0_RX_BCLK/FB_AD9/I2S0_MCLK"/>
+                  <pin peripheral="SPI0" signal="PCS0_SS" pin_num="44" pin_signal="PTA14/SPI0_PCS0/UART0_TX/RMII0_CRS_DV/MII0_RXDV/I2C2_SCL/I2S0_RX_BCLK/I2S0_TXD1">
+                     <pin_features>
+                        <pin_feature name="identifier" value=""/>
+                     </pin_features>
+                  </pin>
                </pins>
             </function>
             <function name="BOARD_InitButtons">
@@ -235,6 +247,7 @@
             <function name="BOARD_InitACCEL">
                <description>Configures pin routing and optionally pin electrical features.&amp;lt;br/&amp;gt;</description>
                <options>
+                  <callFromInitBoot>true</callFromInitBoot>
                   <prefix>BOARD_</prefix>
                   <coreID>core0</coreID>
                   <enableClock>true</enableClock>
@@ -300,6 +313,7 @@
             <function name="BOARD_InitENET">
                <description>Configures pin routing and optionally pin electrical features.&amp;lt;br/&amp;gt;</description>
                <options>
+                  <callFromInitBoot>false</callFromInitBoot>
                   <prefix>BOARD_</prefix>
                   <coreID>core0</coreID>
                   <enableClock>true</enableClock>
@@ -423,6 +437,7 @@
             <function name="BOARD_InitSDHC">
                <description>Configures pin routing and optionally pin electrical features.&amp;lt;br/&amp;gt;</description>
                <options>
+                  <callFromInitBoot>false</callFromInitBoot>
                   <prefix>BOARD_</prefix>
                   <coreID>core0</coreID>
                   <enableClock>true</enableClock>
@@ -516,6 +531,7 @@
             <function name="BOARD_InitUSB">
                <description>Configures pin routing and optionally pin electrical features.&amp;lt;br/&amp;gt;</description>
                <options>
+                  <callFromInitBoot>false</callFromInitBoot>
                   <prefix>BOARD_</prefix>
                   <coreID>core0</coreID>
                   <enableClock>true</enableClock>
@@ -673,6 +689,7 @@
                <component>platform.drivers.gpio</component>
                <component>platform.drivers.flexcan</component>
                <component>platform.drivers.pit</component>
+               <component>platform.drivers.dspi</component>
             </component_set>
             <component_set type="utility" selection="custom">
                <component>platform.utilities.debug_console</component>
