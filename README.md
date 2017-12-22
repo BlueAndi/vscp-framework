@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://choosealicense.com/licenses/mit/)
 [![Release](https://img.shields.io/github/release/BlueAndi/vscp-framework.svg)](https://github.com/BlueAndi/vscp-framework/releases)
 [![Coverity Scan Build Status](https://img.shields.io/coverity/scan/4825.svg)](https://scan.coverity.com/projects/4825?tab=overview)
-[![Travis Build Status](https://api.travis-ci.org/BlueAndi/vscp-framework.svg?branch=master)](https://travis-ci.org/BlueAndi/vscp-framework)
+[![Build Status](https://travis-ci.org/BlueAndi/vscp-framework.svg?branch=master)](https://travis-ci.org/BlueAndi/vscp-framework)
 
 1. [VSCP](https://github.com/BlueAndi/vscp-framework#vscp)
 2. [Framework](https://github.com/BlueAndi/vscp-framework#framework)
