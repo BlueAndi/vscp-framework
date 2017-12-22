@@ -1,4 +1,0 @@
-[note: VSCP framework core modules{bg:yellow}]
-[note: VSCP framework event abstraction modules{bg:lightyellow}]
-[note: VSCP framework adaptation modules{bg:steelblue}]
-[note: Example modules]

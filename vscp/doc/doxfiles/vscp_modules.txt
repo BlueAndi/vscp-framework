@@ -1,41 +1,77 @@
-[VSCP core{bg:yellow}]
-[VSCP transport{bg:yellow}]
-[VSCP device data{bg:yellow}]
-[VSCP decision matrix{bg:yellow}]
-[VSCP decision matrix NG{bg:yellow}]
-[VSCP persistent memory{bg:yellow}]
-[VSCP transport{bg:yellow}]
-[VSCP utilities{bg:yellow}]
-[VSCP logger{bg:yellow}]
-[VSCP timer{bg:steelblue}]
-[VSCP application register{bg:steelblue}]
-[VSCP portable{bg:steelblue}]
-[VSCP action{bg:steelblue}]
-[VSCP transport adapter{bg:steelblue}]
-[VSCP persistent memory access{bg:steelblue}]
-[application]-process and use>[VSCP core]
-[application]-process all timer>[VSCP timer]
-[application]-log messages>[VSCP logger]
-[VSCP core]-send and receive events>[VSCP transport]
-[VSCP core]-read and write>[VSCP device data]
-[VSCP core]-forward events>[VSCP decision matrix]
-[VSCP core]-forward events>[VSCP decision matrix NG]
-[VSCP core]-read and write>[VSCP persistent memory]
-[VSCP core]-use>[VSCP timer]
-[VSCP core]-read and write>[VSCP application register]
-[VSCP core]-use>[VSCP portable]
-[VSCP device data]-read and write>[VSCP persistent memory]
-[VSCP decision matrix]-read>[VSCP persistent memory]
-[VSCP decision matrix]-use>[VSCP portable]
-[VSCP decision matrix]-execute>[VSCP action]
-[VSCP decision matrix NG]-read>[VSCP persistent memory]
-[VSCP decision matrix NG]-execute>[VSCP action]
-[VSCP transport]-send and receive>[VSCP transport adapter]
-[VSCP transport]-use>[VSCP utilities]
-[VSCP persistent memory]-read and write>[VSCP persistent memory access]
-[VSCP logger]-use>[VSCP core]
-[VSCP logger]-use>[VSCP persistent memory]
-[VSCP transport adapter]-send and receive>[CAN driver]
-[VSCP persistent memory access]-read and write>[EEPROM]
-[VSCP application register]-read and write>[VSCP persistent memory]
-[VSCP application register]-read and write>[VSCP persistent memory access]
+@startuml
+
+title VSCP-framework
+
+package "Core Modules" as core_modules {
+    component "VSCP logger" as logger
+    component "VSCP core" as core
+    component "VSCP device data" as device_data
+    component "VSCP decision matrix" as dm
+    component "VSCP decision matrix NG" as dm_ng
+    component "VSCP transport" as transport
+    component "VSCP utilities" as utilities
+    component "VSCP persistent memory" as ps
+}
+
+package "Adaption Modules" as adaption_modules {
+    component "VSCP timer" as timer #LightBlue
+    component "VSCP transport adapter" as transport_adapter #LightBlue
+    component "VSCP action" as action #LightBlue
+    component "VSCP portable" as portable #LightBlue
+    component "VSCP application register" as application_register #LightBlue
+    component "VSCP persistent memory access" as ps_access #LightBlue
+}
+
+component "CAN" as can #LightGray
+component "EEPROM" as eeprom #LightGray
+
+component "Application" as app
+
+app --> logger: uses
+app --> core: process and uses
+app --> timer: process
+
+logger --> core: uses
+logger --> ps: uses
+
+core --> timer: uses
+core --> application_register: read and write
+core --> portable: uses
+core --> device_data: read and write
+core --> dm: forward events
+core --> dm_ng: forward events
+core --> transport: send and receive events
+core --> ps: read and write
+
+dm --> action: execute
+dm --> portable: uses
+dm --> ps: read
+
+dm_ng --> ps: read
+dm_ng --> action: execute
+
+ps --> ps_access: read and write
+
+transport --> utilities: uses
+transport --> transport_adapter: read and write
+
+device_data --> ps: read
+
+transport_adapter --> can: read and write
+
+ps_access --> eeprom: read and write
+
+application_register -left-> ps_access: read and write
+
+note right of eeprom
+    Use a real EEPROM or
+    simulate it in the flash.
+end note
+
+note right of can
+    Just an example.
+    Other physical transports
+    are possible as well.
+end note
+
+@enduml

@@ -23,7 +23,6 @@ More information can be found on the main site http://www.vscp.org
 
 @subsection core Core
 @image html vscp_modules.png
-@image html vscp_modules_color_legend.png
 
   - The core functionality which has a built-in state machine to handle different use cases of the protocol and etc. (@ref vscp_core). Right now it supports every mandatory event and some minor optional ones.
   - The decision matrix is handled separately (@ref vscp_dm). It contains the standard decision matrix, as described in the VSCP specification and contains an additional extension.
