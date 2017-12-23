@@ -10,13 +10,13 @@
 3. [Structure](https://github.com/BlueAndi/vscp-framework#structure)
 4. [Getting started](https://github.com/BlueAndi/vscp-framework#getting-started)
 5. [Bootloader](https://github.com/BlueAndi/vscp-framework/tree/master/vscp/bootloader)
-6. [Issues, Ideas and bugs](https://github.com/BlueAndi/vscp-framework#issues-ideas-and-bugs)
-7. [License](https://github.com/BlueAndi/vscp-framework#license)
+6. [Typical infrastructure](https://github.com/BlueAndi/vscp-framework#typical-infrastructure)
+7. [Issues, Ideas and bugs](https://github.com/BlueAndi/vscp-framework#issues-ideas-and-bugs)
+8. [License](https://github.com/BlueAndi/vscp-framework#license)
 
 ## VSCP
 
 <img src="https://github.com/grodansparadis/vscp_logo/raw/master/vscp_logo.jpg" width="200px" alt="Logo" />
-
 
 The Very Simple Control Protocol (VSCP), an open and free protocol for IoT/m2m automation tasks.
 
@@ -27,7 +27,6 @@ The VSCP software framework for level 1 devices provides several layers accordin
 
 ### Core
 ![core-diagram](https://github.com/BlueAndi/vscp-framework/blob/master/vscp/doc/doxfiles/vscp_modules.png)
-![color-legend](https://github.com/BlueAndi/vscp-framework/blob/master/vscp/doc/doxfiles/vscp_modules_color_legend.png)
 
 * The core functionality which has a built-in state machine to handle different use cases of the protocol and etc. (vscp\_core.[ch]). Right now it supports every mandatory event and some minor optional ones.
 * The decision matrix is handled separately (vscp\_dm.[ch]). It contains the standard decision matrix, as described in the VSCP specification and contains an additional extension.
@@ -104,6 +103,7 @@ vscp_config_overwrite.h
 |   +---avr             (Common sourcecode for Atmel AVR microcontrollers)
 |   \---pc              (Common sourcecode for PC)
 +---examples            (Examples which are showing how to use the VSCP framework)
+|   +---arm             (Examples with ARM based microcontrollers)
 |   +---avr             (Examples with Atmel AVR microcontrollers)
 |   \---pc              (PC example for windows and linux)
 +---projects            (Projects)
@@ -200,6 +200,10 @@ functions are used, so you have one read and one write function to adapt.
 Now the minimal sub set is done and your node hopefully starts up with a nickname discovery.
 
 Have fun!
+
+## Typical infrastructure
+
+![typical-infrastructure](https://github.com/BlueAndi/vscp-framework/blob/master/vscp/doc/doxfiles/vscp_typcial_infrastructure.png)
 
 ## Issues, Ideas and bugs
 

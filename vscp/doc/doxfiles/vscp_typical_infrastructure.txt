@@ -1,0 +1,65 @@
+@startuml
+title "Typical VSCP Infrastructure"
+
+node "BeagleBone Black" as beagle {
+
+    component "VSCP Daemon" as vscp_daemon
+    component "SocketCAN" as socket_can
+}
+
+interface "Ethernet" as ethernet1
+interface "Ethernet" as ethernet2
+interface "Ethernet" as ethernet3
+interface "Ethernet" as ethernet4
+interface "Ethernet" as ethernet5
+interface "USB" as usb
+interface "CAN" as can
+
+node "PC" as pc {
+    
+    component "Browser" as browser
+    component "VSCP Programmer" as vscp_programmer
+    component "VSCP Logger" as vscp_logger
+    component "VSCP Works" as vscp_works
+}
+
+node "Node 1..N" {
+    component "VSCP Node" as vscp_node
+}
+
+node "CAN Monitor" as can_monitor {
+    component "CAN2USB" as can2usb
+}
+
+node "Network Switch" as switch {
+}
+
+pc -[hidden]right- switch
+switch -[hidden]right- beagle
+
+switch -right- ethernet1
+switch -down- ethernet2
+switch -up- ethernet3
+switch -left- ethernet4
+switch -up- ethernet5
+
+vscp_daemon --> socket_can
+vscp_daemon -up-( ethernet1
+socket_can -- can
+
+browser -[hidden]- vscp_programmer
+vscp_programmer -[hidden]- vscp_logger
+vscp_logger -[hidden]- vscp_works
+
+browser -down-( ethernet5
+vscp_programmer -down-( ethernet3
+vscp_logger -down-( ethernet4
+vscp_works -- usb
+vscp_works -( ethernet2
+
+vscp_node -left-( can
+
+can2usb -up-( usb
+can2usb -right-( can
+
+@enduml
