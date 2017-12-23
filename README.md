@@ -203,7 +203,7 @@ Have fun!
 
 ## Typical infrastructure
 
-![typical-infrastructure](https://github.com/BlueAndi/vscp-framework/blob/master/vscp/doc/doxfiles/vscp_typcial_infrastructure.png)
+![typical-infrastructure](https://github.com/BlueAndi/vscp-framework/blob/master/vscp/doc/doxfiles/vscp_typical_infrastructure.png)
 
 ## Issues, Ideas and bugs
 
