@@ -153,6 +153,26 @@ To see how to use the SPI driver, just import the SPI driver example from the SD
 
 The EEPROM is a 2k 25AA02E48 SPI EEPROM from Microchip.
 
+## Program binary via OpenSDA
+
+Using the OpenSDA to program a new software needs to create a binary. By default an .afx file is created, which means we have to generate the
+binary file from it in the post build step. This is already prepared, but commented out with '#'.
+
+Remove the comments and it should look like:
+```
+arm-none-eabi-size "${BuildArtifactFileName}"
+arm-none-eabi-objcopy -v -O binary "${BuildArtifactFileName}" "${BuildArtifactFileBaseName}.bin"
+checksum -p ${TargetChip} -d "${BuildArtifactFileBaseName}.bin"
+```
+
+Now just move the binary file to the drive, which is automatically mounted after connecting the board to the PC.
+This will program it and restart the board afterwards.
+
+## Debug your sofware via OpenSDA
+
+Connect the board to the PC and use ONLY the "Debug 'vscp_frdm_k64f' [Debug]" in the quickstart panel.
+That's it.
+
 ## Useful links
 
 * [OPENSDA: OpenSDA Serial and Debug Adapter](https://www.nxp.com/support/developer-resources/run-time-software/kinetis-developer-resources/ides-for-kinetis-mcus/opensda-serial-and-debug-adapter:OPENSDA#FRDM-K64F).

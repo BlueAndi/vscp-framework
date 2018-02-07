@@ -30,7 +30,7 @@
 
 /* The MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, Andreas Merkle
+ * Copyright (c) 2014 - 2018, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
  *
@@ -166,6 +166,7 @@ static volatile BOOL	main_isInitButtonPressed	= FALSE;
 int main(void)
 {
     BOOL    lastSegInitButtonState  = FALSE;    /* Used for raising edge detection */
+    BOOL	vscpIsActive			= FALSE;	/* VSCP is in active state or not */
 
     /* ********** Run level 1 - interrupts disabled ********** */
 
@@ -191,8 +192,9 @@ int main(void)
     /* ********** Run level 3 - main loop starts ********** */
 
     /* Show VSCP protocol and framework version */
-    PRINTF("VSCP framework %s\n", VSCP_CORE_FRAMEWORK_VERSION);
-    PRINTF("VSCP %s\n\n", VSCP_CORE_VERSION_STR);
+    PRINTF("VSCP framework %s\r\n", VSCP_CORE_FRAMEWORK_VERSION);
+    PRINTF("VSCP %s\r\n", VSCP_CORE_VERSION_STR);
+    PRINTF("\r\n");
 
     /* Main loop */
     for(;;)
@@ -209,6 +211,8 @@ int main(void)
         if ((TRUE == main_isInitButtonPressed) &&
             (FALSE == lastSegInitButtonState))
         {
+        	LOG_CONSOLE("Start node segment initialization.");
+
             vscp_core_startNodeSegmentInit();
         }
 
@@ -227,9 +231,20 @@ int main(void)
         /* Some stuff shall only be done in case that VSCP is in ACTIVE state. */
         if (TRUE == vscp_core_isActive())
         {
+        	if (FALSE == vscpIsActive)
+        	{
+        		LOG_CONSOLE("VSCP entered active state.");
+				vscpIsActive = TRUE;
+        	}
+
             /* Implement your code here ... */
 
 
+        }
+        else if (TRUE == vscpIsActive)
+        {
+        	LOG_CONSOLE("VSCP left active state.");
+        	vscpIsActive = FALSE;
         }
 
     }

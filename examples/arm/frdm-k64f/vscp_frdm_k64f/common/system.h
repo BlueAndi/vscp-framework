@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, Andreas Merkle
+ * Copyright (c) 2014 - 2018, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
  *
@@ -49,6 +49,7 @@ This header file contains system specific defines, types and constants.
     INCLUDES
 *******************************************************************************/
 #include <stdint.h>
+#include "fsl_debug_console.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -115,6 +116,9 @@ extern "C"
 
 /** Not used macro */
 #define NOT_USED(__var) ((void)(__var))
+
+/** Log to console */
+#define LOG_CONSOLE(__format)	do{ PRINTF("%s (%d): ", __FILE__, __LINE__); PRINTF(__format); }while(0)
 
 /*******************************************************************************
     TYPES AND STRUCTURES

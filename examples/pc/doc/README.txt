@@ -25,6 +25,8 @@ Download and install the following packages with the installation manager:
 - mingw32-expat
 - mingw32-libexpat-dev
 
+https://sourceforge.net/projects/mingw/files/MinGW/Base/pthreads-w32/pthreads-w32-2.10-pre-20160821-1/
+
 2.2 How to build
 
 The makefile needs a unix environment and therefore the msys shell is used.

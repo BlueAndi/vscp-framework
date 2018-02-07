@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, Andreas Merkle
+ * Copyright (c) 2014 - 2018, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
  *
@@ -64,7 +64,7 @@ This module contains the main entry point.
 #define MAIN_PROG_NAME                  "VSCP L1 programmer"
 
 /** Copyright */
-#define MAIN_COPYRIGHT                  "(c) 2014 - 2017 Andreas Merkle"
+#define MAIN_COPYRIGHT                  "(c) 2014 - 2018 Andreas Merkle"
 
 /** Default log level */
 #define MAIN_LOG_LEVEL_DEFAULT          (LOG_LEVEL_FATAL)

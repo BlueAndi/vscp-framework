@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, Andreas Merkle
+ * Copyright (c) 2014 - 2018, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
  *
@@ -139,7 +139,10 @@ extern  void    hw_init(void)
                 HW_PORT_INPUT_NO_PULLUP(PB4) |  /* SPI MISO */
                 HW_PORT_OUTPUT_L(PB3) |         /* SPI MOSI */
                 HW_PORT_OUTPUT_H(PB2) |         /* CAN /CS */
-                HW_PORT_OUTPUT_L(PB1) |         /* RELAY_PWM */
+                HW_PORT_OUTPUT_H(PB1) |         /* RELAY_PWM
+                                                 * A high prevents that the relays are enabled
+                                                 * after power up for a short time.
+                                                 */
                 HW_PORT_INPUT_PULLUP(PB0);      /* MCU_IN7 */
 
     /* Port C */
