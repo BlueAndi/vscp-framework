@@ -82,16 +82,19 @@ This module contains the main entry point.
  */
 int main(int argc, char* argv[])
 {
+    int result = 0;
+    
     if (CUE_SUCCESS != CU_initialize_registry())
     {
         printf("Initialize of test registry failed.\n");
+        result = 1;
     }
     else
     {
         CU_pSuite   pSuite  = NULL;
 
         pSuite  = CU_add_suite("Initialization and nickname discovery", vscp_test_init, NULL);
-        (void)CU_add_test(pSuite, "Initialize the node the first time", vscp_test_initNodeTheFirstTime);
+        CU_add_test(pSuite, "Initialize the node the first time", vscp_test_initNodeTheFirstTime);
         (void)CU_add_test(pSuite, "Process the node the first time", vscp_test_processNodeTheFirstTime);
         (void)CU_add_test(pSuite, "Finish nickname discovery", vscp_test_finisheNicknameDiscovery);
         (void)CU_add_test(pSuite, "First segment controller heartbeat", vscp_test_firstSegCtrlHeartBeat);
@@ -194,12 +197,16 @@ int main(int argc, char* argv[])
         (void)CU_add_test(pSuite, "Send class information, type button event with parameter \"pressed\".", vscp_test_dmNG02);
 
         CU_basic_set_mode(CU_BRM_VERBOSE);
-        CU_basic_run_tests();
+        
+        if (CUE_SUCCESS != CU_basic_run_tests())
+        {
+            result = 1;
+        }
 
         CU_cleanup_registry();
     }
 
-    return 0;
+    return result;
 }
 
 /*******************************************************************************

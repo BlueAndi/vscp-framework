@@ -41,4 +41,7 @@ before_script:
     - cd vscp
     - cd test
     
-script: make debug
+script:
+    - make debug
+    - cd bin
+    - ./vscp_test
