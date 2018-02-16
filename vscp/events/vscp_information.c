@@ -1988,6 +1988,223 @@ extern BOOL vscp_information_sendShutterReachedPresetRightEvent(uint8_t reserved
     return vscp_core_sendEvent(&txMsg);
 }
 
+/**
+ * Long click detected.
+ *
+ * @param[in] index Index for device generating long click. Set to zero if not used.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendLongClickEvent(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_LONG_CLICK, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Single click detected.
+ *
+ * @param[in] index Index for device generating single click. Set to zero if not used.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendSingleClickEvent(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SINGLE_CLICK, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Double click detected.
+ *
+ * @param[in] index Index for device generating double click. Set to zero if not used.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendDoubleClickEvent(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_DOUBLE_CLICK, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Send date event.
+ *
+ * @param[in] index Index for device generating date. Set to zero if not used. 
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @param[in] century Year century
+ * @param[in] year Year
+ * @param[in] month Month (1-12)
+ * @param[in] day Day (1-31)
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendDateEvent(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t century, uint8_t year, uint8_t month, uint8_t day)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_DATE, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 7;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+    txMsg.data[3] = century;
+    txMsg.data[4] = year;
+    txMsg.data[5] = month;
+    txMsg.data[6] = day;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Send time event.
+ *
+ * @param[in] index Index for device generating time. Set to zero if not used. 
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @param[in] hour Hour (0-23)
+ * @param[in] minutes Minutes (0-59)
+ * @param[in] milliseconds Milliseconds (0-999)
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendTimeEvent(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t hour, uint8_t minutes, uint16_t milliseconds)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_TIME, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 7;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+    txMsg.data[3] = hour;
+    txMsg.data[4] = minutes;
+    txMsg.data[5] = (uint8_t)((milliseconds >> 8) & 0xff);
+    txMsg.data[6] = (uint8_t)((milliseconds >> 8) & 0xff;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Send day of the week event.
+ *
+ * @param[in] index Index for device generating weekday. Set to zero if not used. 
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @param[in] weekday Day of the week (0: Monday, 6: Sunday)
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendWeekdayEvent(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t weekday)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_WEEKDAY, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 4;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+    txMsg.data[3] = weekday;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * A device got locked.
+ *
+ * @param[in] index Index for device. Set to zero if not used.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendLockEvent(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_LOCK, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * A device got unlocked.
+ *
+ * @param[in] index Index for device. Set to zero if not used.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendUnlockEvent(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_UNLOCK, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
 /*******************************************************************************
     LOCAL FUNCTIONS
 *******************************************************************************/

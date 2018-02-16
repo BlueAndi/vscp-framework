@@ -1,3 +1,10 @@
+## 0.x.x
+
+  - VSCP framework
+    - Features:
+      - CLASS1.INFORMATION Type=69 - 76 added.
+      - CLASS1.CONTROL Type=42 - 43 added.
+
 ## 0.6.1
 
   - VSCP framework

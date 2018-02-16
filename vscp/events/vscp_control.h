@@ -586,6 +586,30 @@ extern BOOL vscp_control_sendMoveShutterMiddlePosEvent(uint8_t index, uint8_t zo
  */
 extern BOOL vscp_control_sendLampOnEvent(uint8_t zone, uint8_t subZone);
 
+/**
+ * Lock devices in zone.
+ *
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_control_sendLockEvent(uint8_t zone, uint8_t subZone);
+
+/**
+ * Unlock devices in zone.
+ *
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_control_sendUnlockEvent(uint8_t zone, uint8_t subZone);
+
 #endif /* __VSCP_CONTROL_H__ */
 
 /** @} */
