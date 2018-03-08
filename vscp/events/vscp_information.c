@@ -2123,7 +2123,7 @@ extern BOOL vscp_information_sendTimeEvent(uint8_t index, uint8_t zone, uint8_t 
     txMsg.data[3] = hour;
     txMsg.data[4] = minutes;
     txMsg.data[5] = (uint8_t)((milliseconds >> 8) & 0xff);
-    txMsg.data[6] = (uint8_t)((milliseconds >> 8) & 0xff;
+    txMsg.data[6] = (uint8_t)((milliseconds >> 0) & 0xff);
 
     return vscp_core_sendEvent(&txMsg);
 }
