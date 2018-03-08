@@ -1,5 +1,13 @@
 ## 0.x.x
 
+  - Examples
+    - AVR
+      - Upgraded to AtmelStudio 7
+
+  - Projects
+    - AVR
+      - Upgraded to AtmelStudio 7
+
   - VSCP framework
     - Features:
       - CLASS1.INFORMATION Type=69 - 76 added.
