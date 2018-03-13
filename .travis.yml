@@ -42,6 +42,7 @@ before_script:
     - cd test
     
 script:
+    - make cunit
     - make debug
     - cd bin
     - ./vscp_test
