@@ -35,6 +35,14 @@
 # C Unit Testing Framework library
 CUNITLIB= CUnit/Sources/.libs/libcunit.a
 
+CONFIGURE_PREFIX=
+
+ifeq ($(OS),Windows_NT)
+
+CONFIGURE_PREFIX= --prefix=/mingw
+
+endif
+
 ################################################################################
 # Tools
 ################################################################################
@@ -56,7 +64,7 @@ $(CUNITLIB):
 	aclocal
 	-automake --add-missing
 	autoreconf
-	./configure --prefix=/mingw
+	./configure $(CONFIGURE_PREFIX)
 	make all
 	make install
 
