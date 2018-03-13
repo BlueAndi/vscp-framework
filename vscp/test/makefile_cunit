@@ -57,4 +57,6 @@ $(CUNITLIB):
 	-automake --add-missing
 	autoreconf
 	./configure --prefix=/mingw
-	make
+	make all
+	make install
+
