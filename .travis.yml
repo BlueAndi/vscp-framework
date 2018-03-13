@@ -42,6 +42,6 @@ before_script:
     
 script:
     - make cunit
+    - cd CUnit-2.1-3; sudo make install; cd..
     - make debug
-    - cd bin
-    - ./vscp_test
+    - cd bin; ./vscp_test

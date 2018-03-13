@@ -66,5 +66,4 @@ $(CUNITLIB):
 	autoreconf
 	./configure $(CONFIGURE_PREFIX)
 	make all
-	make install
 
