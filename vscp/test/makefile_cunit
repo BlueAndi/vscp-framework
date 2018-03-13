@@ -53,6 +53,7 @@ all: $(CUNITLIB)
 
 $(CUNITLIB):
 	libtoolize
+	aclocal
 	-automake --add-missing
 	autoreconf
 	./configure --prefix=/mingw
