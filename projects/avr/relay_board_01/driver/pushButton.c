@@ -54,6 +54,31 @@
     MACROS
 *******************************************************************************/
 
+/** Pushbutton 1 level */
+#define PUSHBUTTON_PB1  ((PIND >> PD0) & 0x01)
+
+/** Pushbutton 2 level */
+#define PUSHBUTTON_PB2  ((PIND >> PD1) & 0x01)
+
+/** Pushbutton 3 level */
+#define PUSHBUTTON_PB3  ((PIND >> PD5) & 0x01)
+
+/** Pushbutton 4 level */
+#define PUSHBUTTON_PB4  ((PIND >> PD4) & 0x01)
+
+/** Pushbutton 5 level */
+#define PUSHBUTTON_PB5  ((PIND >> PD6) & 0x01)
+
+/** Pushbutton 6 level */
+#define PUSHBUTTON_PB6  ((PIND >> PD7) & 0x01)
+
+/** Pushbutton 7 level */
+#define PUSHBUTTON_PB7  ((PINB >> PB0) & 0x01)
+
+/** Pushbutton 8 level */
+#define PUSHBUTTON_PB8  ((PIND >> PD3) & 0x01)
+    
+
 /*******************************************************************************
     TYPES AND STRUCTURES
 *******************************************************************************/
@@ -91,26 +116,22 @@ extern void pushButton_init(void)
  *   MSB-------------------------------------------LSB
  *   | PB8 | PB7 | PB6 | PB5 | PB4 | PB3 | PB2 | PB1 |
  *   -------------------------------------------------
- *   A low bit means the pushbutton is pressed and a high bit means the
+ *   A high bit means the pushbutton is pressed and a low bit means the
  *   pushbutton is released.
  *
  *   @return Status of the pushbuttons.
  */
 extern uint8_t pushButton_readStatus(void)
 {
-    volatile uint8_t    inputPortB   = 0;
-    volatile uint8_t    inputPortD   = 0;
-
-    uint8_t status      = 0;
-
-    /* Read current pushbutton status */
-    inputPortB = PINB;
-    inputPortD = PIND;
-
-    status  = (inputPortD & (_BV(PD1) | _BV(PD0))) >> 0;
-    status |= (inputPortD & (_BV(PD7) | _BV(PD6) | _BV(PD5) | _BV(PD4))) >> 2;
-    status |= (inputPortB & _BV(PB0)) << 6;
-    status |= (inputPortD & _BV(PD3)) << 4;
+    uint8_t status      =
+        (PUSHBUTTON_PB8 << 7) |
+        (PUSHBUTTON_PB7 << 6) |
+        (PUSHBUTTON_PB6 << 5) |
+        (PUSHBUTTON_PB5 << 4) |
+        (PUSHBUTTON_PB4 << 3) |
+        (PUSHBUTTON_PB3 << 2) |
+        (PUSHBUTTON_PB2 << 1) |
+        (PUSHBUTTON_PB1 << 0);
 
     /* Invert status, because the pushbuttons are low active. */
     status = (~status) & 0xff;

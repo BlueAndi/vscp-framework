@@ -92,7 +92,7 @@ extern void pushButton_init(void);
  *   MSB-------------------------------------------LSB
  *   | PB8 | PB7 | PB6 | PB5 | PB4 | PB3 | PB2 | PB1 |
  *   -------------------------------------------------
- *   A low bit means the pushbutton is pressed and a high bit means the
+ *   A high bit means the pushbutton is pressed and a low bit means the
  *   pushbutton is released.
  *
  *   @return Status of the pushbuttons.
