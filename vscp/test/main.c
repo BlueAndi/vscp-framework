@@ -41,8 +41,8 @@ This module contains the main entry point.
     INCLUDES
 *******************************************************************************/
 #include <stdint.h>
-#include "CUnit/CUnit.h"
-#include "CUnit/Basic.h"
+#include "CUnit.h"
+#include "Basic.h"
 #include "vscp_test.h"
 
 /*******************************************************************************

@@ -38,11 +38,14 @@ VERSION= 0.1.0
 # Binary file name
 BIN= vscp_test
 
+# C Unit Testing Framework version
+CUNITVERSION= 2.1-3
+
 # Includes
 INCLUDES= -I. \
 		-I.. \
 		-I../events \
-		-Icunit/include \
+		-ICUnit-$(CUNITVERSION)/CUnit/Headers \
 		-IvscpUser
 
 # Sources
@@ -66,10 +69,10 @@ SOURCES= main.c \
 
 # Include all source pathes here like ../src1:../src2
 VPATH= ..:vscpUser:../events
-		
+
 # Library search path
-LIBPATH= -Lcunit/lib
-		
+LIBPATH= -LCUnit-$(CUNITVERSION)/CUnit/Sources/.libs
+
 # Libraries
 LIBRARIES= -lcunit
 
@@ -129,6 +132,12 @@ OBJECTS= $(addprefix $(OBJDIR)/,$(notdir $(SOURCES:%.c=%.o)))
 # All dependency files
 DEPFILES= $(OBJECTS:%.o=%.d)
 
+# C Unit Testing Framework directory
+CUNITDIR= CUnit-$(CUNITVERSION)
+
+# C Unit Testing Framework library
+CUNITLIB= $(CUNITDIR)/CUnit/Sources/.libs/libcunit.a
+
 ################################################################################
 # Tools
 ################################################################################
@@ -161,6 +170,7 @@ help:
 	@echo "clean   - Remove object and binary files"
 	@echo "objsize - Show object sizes"
 	@echo "help    - This help is shown"
+	@echo "cunit   - Build cunit testing framework"
 	@echo ""
 	
 debug: $(BINDIR)/$(BIN).exe
@@ -186,6 +196,9 @@ objsize:
 	@size -d $(OBJDIR)/*.o
 	
 depend: $(DEPFILES)
+	@echo "Finished."
+
+cunit: $(CUNITLIB)
 	@echo "Finished."
 
 .PHONY: help clean
@@ -215,6 +228,10 @@ $(OBJDIR)/%.d: %.c
 $(DEPFILES): | $(OBJDIR)
 
 $(OBJECTS): | $(OBJDIR) $(BINDIR)
+
+$(CUNITLIB):
+	@cp makefile_cunit $(CUNITDIR)
+	@$(MAKE) -f makefile_cunit -C $(CUNITDIR) all
 
 # Create directory for object and dependency files
 $(OBJDIR):

@@ -43,7 +43,7 @@
 #include "vscp_test.h"
 #include <stdint.h>
 #include <string.h>
-#include "CUnit/CUnit.h"
+#include "CUnit.h"
 #include "vscp_core.h"
 #include "vscp_ps.h"
 #include "vscp_class_l1.h"
