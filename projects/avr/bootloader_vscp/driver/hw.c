@@ -134,7 +134,10 @@ extern  void    hw_init(void)
                 HW_PORT_INPUT_NO_PULLUP(PB4) |  /* SPI MISO */
                 HW_PORT_OUTPUT_L(PB3) |         /* SPI MOSI */
                 HW_PORT_OUTPUT_H(PB2) |         /* CAN /CS */
-                HW_PORT_OUTPUT_L(PB1) |         /* RELAY_PWM */
+                HW_PORT_OUTPUT_H(PB1) |         /* RELAY_PWM
+                                                 * A high prevents that the relays are enabled
+                                                 * after power up for a short time.
+                                                 */
                 HW_PORT_INPUT_PULLUP(PB0);      /* MCU_IN7 */
 
     /* Port C */
@@ -149,7 +152,7 @@ extern  void    hw_init(void)
     PORTC   =   HW_PORT_INPUT_NO_PULLUP(PC6) |  /* Reset */
                 HW_PORT_OUTPUT_L(PC5) |         /* LED_CTRL */
                 HW_PORT_INPUT_PULLUP(PC4) |     /* Boot jumper / segment initialization button */
-                HW_PORT_OUTPUT_L(PC3) |         /* RELAY_SCL */
+                HW_PORT_OUTPUT_L(PC3) |         /* RELAY_SCL (clear shift register at startup) */
                 HW_PORT_OUTPUT_L(PC2) |         /* RELAY_SCK */
                 HW_PORT_OUTPUT_L(PC1) |         /* RELAY_RCK */
                 HW_PORT_OUTPUT_L(PC0);          /* RELAY_SER */

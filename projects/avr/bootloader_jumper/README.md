@@ -1,4 +1,4 @@
-# Bootloader Jumper
+# Bootloader Jumper for Relay Board 01
 
 ## Description
 

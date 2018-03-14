@@ -123,8 +123,11 @@ int main(void)
 
     MAIN_ISR_VECTOR_TO_BL();
 
-    /* Raise the status lamp brightness up and down */
-    main_smoothStatusLamp();
+    for(;;)
+    {
+        /* Raise the status lamp brightness up and down */
+        main_smoothStatusLamp();
+    }    
 
     MAIN_ISR_VECTOR_TO_APP();
 

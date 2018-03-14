@@ -108,6 +108,8 @@ extern  void    hw_init(void)
     /* Disable all interrupts */
     cli();
 
+#if (0 == HW_BOOTLOADER_ENABLED)
+
     /* Common information:
         The DDxn bit in the DDRx Register selects the direction of this pin. If DDxn is written
         logic one, Pxn is configured as an output pin. If DDxn is written logic zero, Pxn is configured
@@ -157,7 +159,7 @@ extern  void    hw_init(void)
     PORTC   =   HW_PORT_INPUT_NO_PULLUP(PC6) |  /* Reset */
                 HW_PORT_OUTPUT_L(PC5) |         /* LED_CTRL */
                 HW_PORT_INPUT_PULLUP(PC4) |     /* Boot jumper / segment initialization button */
-                HW_PORT_OUTPUT_L(PC3) |         /* RELAY_SCL */
+                HW_PORT_OUTPUT_L(PC3) |         /* RELAY_SCL (clear shift register at startup) */
                 HW_PORT_OUTPUT_L(PC2) |         /* RELAY_SCK */
                 HW_PORT_OUTPUT_L(PC1) |         /* RELAY_RCK */
                 HW_PORT_OUTPUT_L(PC0);          /* RELAY_SER */
@@ -190,6 +192,8 @@ extern  void    hw_init(void)
      */
     BIT_CLR(MCUSR, WDRF);
     BIT_CLR(WDTCSR, WDE);
+
+#endif  /* (0 == HW_BOOTLOADER_ENABLED) */
 
     return;
 }

@@ -1,4 +1,4 @@
-# VSCP L1 Bootloader of relay board 01
+# VSCP L1 Bootloader for Relay Board 01
 
 ## Description
 
