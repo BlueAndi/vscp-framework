@@ -136,8 +136,9 @@ static uint8_t          relay_enableMask            = 0xff;
  */
 extern void relay_init(void)
 {
-    /* Clear shift register */
+    /* Set all output pins to low */
     relay_clearShiftRegister();
+    relay_store();
 
 #if (16000000UL == F_CPU)
 
@@ -388,13 +389,6 @@ static inline void relay_clearShiftRegister(void)
 {
     /* SCL is low active */
     BIT_CLR(RELAY_PORT, RELAY_PIN_SCL);
-
-    BIT_SET(RELAY_PORT, RELAY_PIN_SCK);
-    BIT_CLR(RELAY_PORT, RELAY_PIN_SCK);
-
-    BIT_SET(RELAY_PORT, RELAY_PIN_RCK);
-    BIT_CLR(RELAY_PORT, RELAY_PIN_RCK);
-
     BIT_SET(RELAY_PORT, RELAY_PIN_SCL);
 
     return;
