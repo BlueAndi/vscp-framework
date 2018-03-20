@@ -1,4 +1,7 @@
-## 0.x.x
+## 0.7.0
+
+  - Common
+    - vscphelperlib updated to v1.13.0 build 11 (Aluminium release)
 
   - Examples
     - AVR
