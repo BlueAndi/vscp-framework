@@ -1483,15 +1483,6 @@ static inline void  vscp_core_handleProtocolHeartbeat(void)
             /* Store CRC of the this segment */
             vscp_ps_writeSegmentControllerCRC(vscp_core_rxMessage.data[0]);
 
-            /* If available, store time since epoch 00:00:00 UTC, January 1, 1970 */
-            if (5 <= vscp_core_rxMessage.dataNum)
-            {
-                vscp_core_timeSinceEpoch  = ((uint32_t)vscp_core_rxMessage.data[1]) << 24;
-                vscp_core_timeSinceEpoch |= ((uint32_t)vscp_core_rxMessage.data[2]) << 16;
-                vscp_core_timeSinceEpoch |= ((uint32_t)vscp_core_rxMessage.data[3]) <<  8;
-                vscp_core_timeSinceEpoch |= ((uint32_t)vscp_core_rxMessage.data[4]) <<  0;
-            }
-
             /* If a nickname discovery was processed just before, there is no
              * need to do it again.
              */
@@ -1499,6 +1490,15 @@ static inline void  vscp_core_handleProtocolHeartbeat(void)
             {
                 vscp_core_changeToStateInit();
             }
+        }
+        
+        /* If available, store time since epoch 00:00:00 UTC, January 1, 1970 */
+        if (5 <= vscp_core_rxMessage.dataNum)
+        {
+            vscp_core_timeSinceEpoch  = ((uint32_t)vscp_core_rxMessage.data[1]) << 24;
+            vscp_core_timeSinceEpoch |= ((uint32_t)vscp_core_rxMessage.data[2]) << 16;
+            vscp_core_timeSinceEpoch |= ((uint32_t)vscp_core_rxMessage.data[3]) <<  8;
+            vscp_core_timeSinceEpoch |= ((uint32_t)vscp_core_rxMessage.data[4]) <<  0;
         }
     }
 
