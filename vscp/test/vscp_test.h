@@ -223,6 +223,19 @@ extern void vscp_test_active02(void);
  *  - VSCP is active.
  *
  * Action:
+ *  - Send segment controller heartbeat event with new time since epoch.
+ *
+ * Expectation:
+ *  - Node stays in active mode.
+ *  - Node updates time since epoch.
+ */
+extern void vscp_test_active02_1(void);
+
+/**
+ * Precondition:
+ *  - VSCP is active.
+ *
+ * Action:
  *  - Send segment controller heartbeat event with different CRC.
  *
  * Expectation:

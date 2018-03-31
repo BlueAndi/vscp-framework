@@ -124,6 +124,9 @@
 /** Heartbeat sub zone */
 #define VSCP_TEST_HEARTBEAT_SUB_ZONE            (0xff)
 
+/** Time since epoch: 03/31/2018 @ 3:45pm (UTC) */
+#define VSCP_TEST_TIME_SINCE_EPOCH              (1522511138)
+
 /*******************************************************************************
     MACROS
 *******************************************************************************/
@@ -859,10 +862,10 @@ extern void vscp_test_active02(void)
     vscp_test_rxMessage.hardCoded   = FALSE;
     vscp_test_rxMessage.dataNum     = 5;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_SEGMENT_CRC;
-    vscp_test_rxMessage.data[1]     = 0x00; /* Time since epoch */
-    vscp_test_rxMessage.data[2]     = 0x00; /* Time since epoch */
-    vscp_test_rxMessage.data[3]     = 0x00; /* Time since epoch */
-    vscp_test_rxMessage.data[4]     = 0x00; /* Time since epoch */
+    vscp_test_rxMessage.data[1]     = (VSCP_TEST_TIME_SINCE_EPOCH >> 24) & 0xff;    /* Time since epoch */
+    vscp_test_rxMessage.data[2]     = (VSCP_TEST_TIME_SINCE_EPOCH >> 16) & 0xff;    /* Time since epoch */
+    vscp_test_rxMessage.data[3]     = (VSCP_TEST_TIME_SINCE_EPOCH >>  8) & 0xff;    /* Time since epoch */
+    vscp_test_rxMessage.data[4]     = (VSCP_TEST_TIME_SINCE_EPOCH >>  0) & 0xff;    /* Time since epoch */
 
     vscp_test_waitForTxMessage(1, 10);
 
@@ -874,6 +877,56 @@ extern void vscp_test_active02(void)
 
     /* Node shall store the segment CRC. */
     CU_ASSERT_EQUAL(vscp_ps_readSegmentControllerCRC(), VSCP_TEST_SEGMENT_CRC);
+
+    /* Node shall store the time since epoch */
+    CU_ASSERT_EQUAL(vscp_core_getTimeSinceEpoch(), VSCP_TEST_TIME_SINCE_EPOCH);
+
+    return;
+}
+
+/**
+ * Precondition:
+ *  - VSCP is active.
+ *
+ * Action:
+ *  - Send segment controller heartbeat event with new time since epoch.
+ *
+ * Expectation:
+ *  - Node stays in active mode.
+ *  - Node updates time since epoch.
+ */
+extern void vscp_test_active02_1(void)
+{
+    uint32_t    timeSinceEpoch = VSCP_TEST_TIME_SINCE_EPOCH + 10;
+
+    vscp_test_initTestCase();
+
+    /* Send probe acknowledge */
+    vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
+    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_SEGMENT_CONTROLLER_HEARTBEAT;
+    vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
+    vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 5;
+    vscp_test_rxMessage.data[0]     = VSCP_TEST_SEGMENT_CRC;
+    vscp_test_rxMessage.data[1]     = (timeSinceEpoch >> 24) & 0xff;    /* Time since epoch */
+    vscp_test_rxMessage.data[2]     = (timeSinceEpoch >> 16) & 0xff;    /* Time since epoch */
+    vscp_test_rxMessage.data[3]     = (timeSinceEpoch >>  8) & 0xff;    /* Time since epoch */
+    vscp_test_rxMessage.data[4]     = (timeSinceEpoch >>  0) & 0xff;    /* Time since epoch */
+
+    vscp_test_waitForTxMessage(1, 10);
+
+    /* Node shall send nothing. */
+    CU_ASSERT_EQUAL(vscp_test_txMessageCnt, 0);
+
+    /* Nickname shall not be overwritten.  */
+    CU_ASSERT_EQUAL(vscp_ps_readNicknameId(), VSCP_TEST_NICKNAME);
+
+    /* Node shall store the segment CRC. */
+    CU_ASSERT_EQUAL(vscp_ps_readSegmentControllerCRC(), VSCP_TEST_SEGMENT_CRC);
+
+    /* Node shall store the time since epoch */
+    CU_ASSERT_EQUAL(vscp_core_getTimeSinceEpoch(), timeSinceEpoch);
 
     return;
 }
@@ -899,7 +952,7 @@ extern void vscp_test_active03(void)
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
     vscp_test_rxMessage.hardCoded   = FALSE;
     vscp_test_rxMessage.dataNum     = 5;
-    vscp_test_rxMessage.data[0]     = 0x00;
+    vscp_test_rxMessage.data[0]     = 0x00; /* Segment CRC */
     vscp_test_rxMessage.data[1]     = 0x00; /* Time since epoch */
     vscp_test_rxMessage.data[2]     = 0x00; /* Time since epoch */
     vscp_test_rxMessage.data[3]     = 0x00; /* Time since epoch */
@@ -924,6 +977,9 @@ extern void vscp_test_active03(void)
 
     /* Node shall store the segment CRC. */
     CU_ASSERT_EQUAL(vscp_ps_readSegmentControllerCRC(), 0x00);
+
+    /* Node shall store the time since epoch */
+    CU_ASSERT_EQUAL(vscp_core_getTimeSinceEpoch(), 0);
 
     return;
 }

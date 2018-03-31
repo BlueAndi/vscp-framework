@@ -107,6 +107,7 @@ int main(int argc, char* argv[])
         pSuite  = CU_add_suite("Segment controller heartbeat tests", vscp_test_initActive, NULL);
         (void)CU_add_test(pSuite, "Start up", vscp_test_active01);
         (void)CU_add_test(pSuite, "Segment controller heartbeat (CRC equal)", vscp_test_active02);
+        (void)CU_add_test(pSuite, "Segment controller heartbeat (CRC equal), update time since epoch", vscp_test_active02_1);
         (void)CU_add_test(pSuite, "Segment controller heartbeat (CRC different)", vscp_test_active03);
         (void)CU_add_test(pSuite, "Proceed nickname disovery", vscp_test_active04);
 

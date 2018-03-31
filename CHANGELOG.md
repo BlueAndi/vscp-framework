@@ -12,6 +12,9 @@
       - Upgraded to AtmelStudio 7
 
   - VSCP framework
+    - Bugfixes:
+      - If a segment controller heartbeat is received, the time since epoch will now be stored.
+
     - Features:
       - CLASS1.INFORMATION Type=69 - 76 added.
       - CLASS1.CONTROL Type=42 - 43 added.
