@@ -539,7 +539,7 @@ extern void vscp_core_startNodeSegmentInit(void)
  * This function set one or more alarm status.
  * How the bits are read, is application specific.
  * Note that a active alarm (bit is set) can only be cleared by reading the
- * alarm register. Calling this function with 0, do nothing.
+ * alarm register. Calling this function with 0, does nothing.
  *
  * @param[in]   value   New alarm status
  */
