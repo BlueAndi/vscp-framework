@@ -94,7 +94,7 @@ extern void vscp_timer_init(void)
  */
 extern uint8_t  vscp_timer_create(void)
 {
-    uint8_t timerId = 0xFF;
+    uint8_t timerId = VSCP_TIMER_ID_INVALID;
 
     timerId = vscp_test_timerCreate();
 

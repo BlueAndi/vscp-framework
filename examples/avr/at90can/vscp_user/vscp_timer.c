@@ -112,7 +112,7 @@ extern void vscp_timer_init(void)
 
     for(index = 0; index < VSCP_TIMER_NUM; ++index)
     {
-        vscp_timer_context[index].id = 0xFF;
+        vscp_timer_context[index].id = VSCP_TIMER_ID_INVALID;
     }
 
     return;
@@ -127,14 +127,14 @@ extern void vscp_timer_init(void)
  */
 extern uint8_t  vscp_timer_create(void)
 {
-    uint8_t timerId = 0xFF;
+    uint8_t timerId = VSCP_TIMER_ID_INVALID;
     uint8_t index   = 0;
 
     /* Search for an available timer */
     for(index = 0; index < VSCP_TIMER_NUM; ++index)
     {
         /* Is the timer available? */
-        if (0xFF == vscp_timer_context[index].id)
+        if (VSCP_TIMER_ID_INVALID == vscp_timer_context[index].id)
         {
             /* Mark the timer as used */
             vscp_timer_context[index].id    = index;
@@ -215,7 +215,7 @@ extern void vscp_timer_process(uint16_t period)
     for(index = 0; index < VSCP_TIMER_NUM; ++index)
     {
         /* Is the timer enabled? */
-        if (0xFF != vscp_timer_context[index].id)
+        if (VSCP_TIMER_ID_INVALID != vscp_timer_context[index].id)
         {
             if (period <= vscp_timer_context[index].value)
             {
