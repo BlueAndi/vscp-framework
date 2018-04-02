@@ -163,6 +163,7 @@ typedef enum
     VSCP_TEST_CALL_COUNTER_PORTABLE_BOOT_LOADER_REQUEST,
     VSCP_TEST_CALL_COUNTER_PORTABLE_SET_LAMP_STATE,
     VSCP_TEST_CALL_COUNTER_PORTABLE_PROVIDE_EVENT,
+    VSCP_TEST_CALL_COUNTER_PORTABLE_UPDATE_TIME_SINCE_EPOCH,
 
     VSCP_TEST_CALL_COUNTER_PS_ACCESS_INIT,
 
@@ -317,19 +318,21 @@ static vscp_dm_ExtRow*      vscp_test_extStorage    = (vscp_dm_ExtRow*)&vscp_tes
 static uint8_t*             vscp_test_dmNG          = &vscp_test_persistentMemory[VSCP_PS_ADDR_DM_NEXT_GENERATION];
 
 /** Action id */
-static uint8_t              vscp_test_action    = 0;
+static uint8_t              vscp_test_action        = 0;
 
 /** Action parameter */
-static uint8_t              vscp_test_actionPar = 0;
+static uint8_t              vscp_test_actionPar     = 0;
 
 /** VSCP event which triggered the action */
 static vscp_RxMessage       vscp_test_actionTriggeredMsg;
 
 /** Lamp state */
-static VSCP_LAMP_STATE      vscp_test_lampState = VSCP_LAMP_STATE_OFF;
+static VSCP_LAMP_STATE      vscp_test_lampState         = VSCP_LAMP_STATE_OFF;
 
 /** Simulate no more timers available. */
-static BOOL                 vscp_test_noMoreTimers  = FALSE;
+static BOOL                 vscp_test_noMoreTimers      = FALSE;
+
+static uint32_t             vscp_test_timeSinceEpoch    = 0;
 
 /*******************************************************************************
     GLOBAL VARIABLES
@@ -568,6 +571,8 @@ extern void vscp_test_finisheNicknameDiscovery(void)
  */
 extern void vscp_test_firstSegCtrlHeartBeat(void)
 {
+    uint32_t    timeSinceEpoch  = 0;
+
     vscp_test_initTestCase();
 
     /* Send probe acknowledge */
@@ -578,10 +583,10 @@ extern void vscp_test_firstSegCtrlHeartBeat(void)
     vscp_test_rxMessage.hardCoded   = FALSE;
     vscp_test_rxMessage.dataNum     = 5;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_SEGMENT_CRC;
-    vscp_test_rxMessage.data[1]     = 0x00; /* Time since epoch */
-    vscp_test_rxMessage.data[2]     = 0x00; /* Time since epoch */
-    vscp_test_rxMessage.data[3]     = 0x00; /* Time since epoch */
-    vscp_test_rxMessage.data[4]     = 0x00; /* Time since epoch */
+    vscp_test_rxMessage.data[1]     = (timeSinceEpoch >> 24) & 0xff;    /* Time since epoch */
+    vscp_test_rxMessage.data[2]     = (timeSinceEpoch >> 16) & 0xff;    /* Time since epoch */
+    vscp_test_rxMessage.data[3]     = (timeSinceEpoch >>  8) & 0xff;    /* Time since epoch */
+    vscp_test_rxMessage.data[4]     = (timeSinceEpoch >>  0) & 0xff;    /* Time since epoch */
 
     vscp_test_waitForTxMessage(1, 10);
 
@@ -593,6 +598,15 @@ extern void vscp_test_firstSegCtrlHeartBeat(void)
 
     /* Lamp shall be on */
     CU_ASSERT_EQUAL(vscp_test_lampState, VSCP_LAMP_STATE_ON);
+
+    /* Application shall be notified about new timestamp */
+    CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_PORTABLE_UPDATE_TIME_SINCE_EPOCH], 1);
+
+    /* Timestamp shall be the one from the event */
+    CU_ASSERT_EQUAL(vscp_test_timeSinceEpoch, 0);
+
+    /* Node shall store the time since epoch */
+    CU_ASSERT_EQUAL(vscp_core_getTimeSinceEpoch(), timeSinceEpoch);
 
     return;
 }
@@ -854,6 +868,8 @@ extern void vscp_test_active01(void)
  */
 extern void vscp_test_active02(void)
 {
+    uint32_t    timeSinceEpoch  = VSCP_TEST_TIME_SINCE_EPOCH;
+
     vscp_test_initTestCase();
 
     /* Send probe acknowledge */
@@ -864,10 +880,10 @@ extern void vscp_test_active02(void)
     vscp_test_rxMessage.hardCoded   = FALSE;
     vscp_test_rxMessage.dataNum     = 5;
     vscp_test_rxMessage.data[0]     = VSCP_TEST_SEGMENT_CRC;
-    vscp_test_rxMessage.data[1]     = (VSCP_TEST_TIME_SINCE_EPOCH >> 24) & 0xff;    /* Time since epoch */
-    vscp_test_rxMessage.data[2]     = (VSCP_TEST_TIME_SINCE_EPOCH >> 16) & 0xff;    /* Time since epoch */
-    vscp_test_rxMessage.data[3]     = (VSCP_TEST_TIME_SINCE_EPOCH >>  8) & 0xff;    /* Time since epoch */
-    vscp_test_rxMessage.data[4]     = (VSCP_TEST_TIME_SINCE_EPOCH >>  0) & 0xff;    /* Time since epoch */
+    vscp_test_rxMessage.data[1]     = (timeSinceEpoch >> 24) & 0xff;    /* Time since epoch */
+    vscp_test_rxMessage.data[2]     = (timeSinceEpoch >> 16) & 0xff;    /* Time since epoch */
+    vscp_test_rxMessage.data[3]     = (timeSinceEpoch >>  8) & 0xff;    /* Time since epoch */
+    vscp_test_rxMessage.data[4]     = (timeSinceEpoch >>  0) & 0xff;    /* Time since epoch */
 
     vscp_test_waitForTxMessage(1, 10);
 
@@ -880,8 +896,14 @@ extern void vscp_test_active02(void)
     /* Node shall store the segment CRC. */
     CU_ASSERT_EQUAL(vscp_ps_readSegmentControllerCRC(), VSCP_TEST_SEGMENT_CRC);
 
+    /* Application shall be notified about new timestamp */
+    CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_PORTABLE_UPDATE_TIME_SINCE_EPOCH], 1);
+
+    /* Timestamp shall be the one from the event */
+    CU_ASSERT_EQUAL(vscp_test_timeSinceEpoch, timeSinceEpoch);
+
     /* Node shall store the time since epoch */
-    CU_ASSERT_EQUAL(vscp_core_getTimeSinceEpoch(), VSCP_TEST_TIME_SINCE_EPOCH);
+    CU_ASSERT_EQUAL(vscp_core_getTimeSinceEpoch(), timeSinceEpoch);
 
     return;
 }
@@ -927,6 +949,12 @@ extern void vscp_test_active02_1(void)
     /* Node shall store the segment CRC. */
     CU_ASSERT_EQUAL(vscp_ps_readSegmentControllerCRC(), VSCP_TEST_SEGMENT_CRC);
 
+    /* Application shall be notified about new timestamp */
+    CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_PORTABLE_UPDATE_TIME_SINCE_EPOCH], 1);
+
+    /* Timestamp shall be the one from the event */
+    CU_ASSERT_EQUAL(vscp_test_timeSinceEpoch, timeSinceEpoch);
+
     /* Node shall store the time since epoch */
     CU_ASSERT_EQUAL(vscp_core_getTimeSinceEpoch(), timeSinceEpoch);
 
@@ -945,6 +973,8 @@ extern void vscp_test_active02_1(void)
  */
 extern void vscp_test_active03(void)
 {
+    uint32_t    timeSinceEpoch  = 0;
+
     vscp_test_initTestCase();
 
     /* Send probe acknowledge */
@@ -955,10 +985,10 @@ extern void vscp_test_active03(void)
     vscp_test_rxMessage.hardCoded   = FALSE;
     vscp_test_rxMessage.dataNum     = 5;
     vscp_test_rxMessage.data[0]     = 0x00; /* Segment CRC */
-    vscp_test_rxMessage.data[1]     = 0x00; /* Time since epoch */
-    vscp_test_rxMessage.data[2]     = 0x00; /* Time since epoch */
-    vscp_test_rxMessage.data[3]     = 0x00; /* Time since epoch */
-    vscp_test_rxMessage.data[4]     = 0x00; /* Time since epoch */
+    vscp_test_rxMessage.data[1]     = (timeSinceEpoch >> 24) & 0xff;    /* Time since epoch */
+    vscp_test_rxMessage.data[2]     = (timeSinceEpoch >> 16) & 0xff;    /* Time since epoch */
+    vscp_test_rxMessage.data[3]     = (timeSinceEpoch >>  8) & 0xff;    /* Time since epoch */
+    vscp_test_rxMessage.data[4]     = (timeSinceEpoch >>  0) & 0xff;    /* Time since epoch */
 
     vscp_test_waitForTxMessage(1, 10);
 
@@ -980,8 +1010,14 @@ extern void vscp_test_active03(void)
     /* Node shall store the segment CRC. */
     CU_ASSERT_EQUAL(vscp_ps_readSegmentControllerCRC(), 0x00);
 
+    /* Application shall be notified about new timestamp */
+    CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_PORTABLE_UPDATE_TIME_SINCE_EPOCH], 1);
+
+    /* Timestamp shall be the one from the event */
+    CU_ASSERT_EQUAL(vscp_test_timeSinceEpoch, timeSinceEpoch);
+
     /* Node shall store the time since epoch */
-    CU_ASSERT_EQUAL(vscp_core_getTimeSinceEpoch(), 0);
+    CU_ASSERT_EQUAL(vscp_core_getTimeSinceEpoch(), timeSinceEpoch);
 
     return;
 }
@@ -3317,6 +3353,9 @@ extern BOOL vscp_test_tpAdatperReadMessage(vscp_RxMessage * const msg)
 
     *msg = vscp_test_rxMessage;
 
+    /* Make message invalid */
+    vscp_test_rxMessage.vscpType = 0;
+
     return status;
 }
 
@@ -3552,6 +3591,15 @@ extern uint8_t  vscp_test_portableGetMdfUrl(uint8_t index)
 extern void vscp_test_portableProvideEvent(vscp_RxMessage const * const msg)
 {
     ++vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_PORTABLE_PROVIDE_EVENT];
+
+    return;
+}
+
+extern void vscp_test_portableUpdateTimeSinceEpoch(uint32_t timestamp)
+{
+    ++vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_PORTABLE_UPDATE_TIME_SINCE_EPOCH];
+
+    vscp_test_timeSinceEpoch = timestamp;
 
     return;
 }

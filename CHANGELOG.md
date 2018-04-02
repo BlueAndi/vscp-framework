@@ -22,6 +22,7 @@
       - The internal VSCP core time (time since epoch) is now updated once per second.
         The core process routine will handle it, independent of the current internal state.
         Please increase your max. number of timers to be able to use this feature.
+      - Callout function for every received segment controller heartbeat with timestamp implemented.
 
 ## 0.6.1
 

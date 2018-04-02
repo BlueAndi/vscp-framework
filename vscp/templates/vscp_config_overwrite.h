@@ -94,6 +94,8 @@ extern "C"
 
 #define VSCP_CONFIG_ENABLE_LOOPBACK             VSCP_CONFIG_BASE_DISABLED
 
+#define VSCP_CONFIG_ENABLE_SEGMENT_TIME_CALLOUT VSCP_CONFIG_BASE_DISABLED
+
 */
 
 /*******************************************************************************

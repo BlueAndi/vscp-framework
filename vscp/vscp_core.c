@@ -1534,6 +1534,13 @@ static inline void  vscp_core_handleProtocolHeartbeat(void)
             vscp_core_timeSinceEpoch |= ((uint32_t)vscp_core_rxMessage.data[2]) << 16;
             vscp_core_timeSinceEpoch |= ((uint32_t)vscp_core_rxMessage.data[3]) <<  8;
             vscp_core_timeSinceEpoch |= ((uint32_t)vscp_core_rxMessage.data[4]) <<  0;
+
+#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_SEGMENT_TIME_CALLOUT )
+
+            /* Notify application about a new received timestamp. */
+            vscp_portable_updateTimeSinceEpoch(vscp_core_timeSinceEpoch);
+
+#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_SEGMENT_TIME_CALLOUT ) */
         }
     }
 

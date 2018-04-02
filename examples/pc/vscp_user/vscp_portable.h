@@ -167,6 +167,18 @@ extern BOOL vscp_portable_isBootloaderRequested(void);
  */
 extern void vscp_portable_provideEvent(vscp_RxMessage const * const msg);
 
+#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_SEGMENT_TIME_CALLOUT )
+
+/**
+ * This function is called for every received segment master heartbeat event,
+ * in case it contains a new time since epoch.
+ * 
+ * @param timestamp Unix timestamp
+ */
+extern void vscp_portable_updateTimeSinceEpoch(uint32_t timestamp);
+
+#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_SEGMENT_TIME_CALLOUT ) */
+
 #ifdef __cplusplus
 }
 #endif

@@ -16,7 +16,7 @@ node --> app
 deactivate node
 deactivate app
 
-alt If RTC available
+alt If RTC is available
     app -> node: Set timeSinceEpoch with RTC.
     activate app
     activate node
@@ -44,31 +44,28 @@ note over node,segctrl: Segment controller synchronizes the time.
 segctrl ->> node: Heartbeat with timestamp.
 
 app -> node: Process VSCP core.
+activate app
 activate node
 
 node -> node: Update timeSinceEpoch with received timestamp.
 
+alt If callout is enabled
+
+    node -> app: Update time since epoch.
+    
+    alt If RTC is available
+    
+        app -> app: Update RTC with time since epoch.
+    
+    end alt
+    
+    app --> node
+
+end alt
+
 node --> app
 
 deactivate node
-
-alt If RTC available
-
-    note over app, node: Synchronize RTC once per day.
-    
-    app -> node: Get timeSinceEpoch.
-    
-    activate app
-    activate node
-    
-    node --> app: Return timeSinceEpoch.
-    
-    deactivate node
-    
-    app -> app: Update RTC with read timestamp.
-    
-    deactivate app
-
-end alt
+deactivate app
 
 @enduml

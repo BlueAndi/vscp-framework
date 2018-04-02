@@ -195,6 +195,15 @@ extern "C"
 
 #endif  /* Undefined VSCP_CONFIG_ENABLE_LOOPBACK */
 
+#ifndef VSCP_CONFIG_ENABLE_SEGMENT_TIME_CALLOUT
+
+/** Enable a time update callout for every received segment master heartbeat,
+ * in case the event contains a new time since epoch.
+ */
+#define VSCP_CONFIG_ENABLE_SEGMENT_TIME_CALLOUT VSCP_CONFIG_BASE_DISABLED
+
+#endif  /* Undefined VSCP_CONFIG_ENABLE_LOOPBACK */
+
 /*******************************************************************************
     CONSTANTS
 *******************************************************************************/

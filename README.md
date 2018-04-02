@@ -82,6 +82,7 @@ vscp_config_overwrite.h
 | <sub>VSCP\_CONFIG\_ENABLE\_DM\_EXTENSION<sub> | <sub>disabled<sub> | <sub>Enable the decision matrix extension to be able to compare to a configureable zone/sub-zone and event parameters.<sub> |
 | <sub>VSCP\_CONFIG\_ENABLE\_DM\_NEXT\_GENERATION<sub> | <sub>disabled<sub> | <sub>Enable the decision matrix next generation.<sub> |
 | <sub>VSCP\_CONFIG\_ENABLE\_LOOPBACK<sub> | <sub>disabled<sub> | <sub>Enable a loopback for all sent VSCP events. This feature is interesting to invoke decision matrix actions by own sent VSCP events.<sub> |
+| <sub>VSCP\_CONFIG\_ENABLE\_SEGMENT\_TIME\_CALLOUT<sub> | <sub>disabled<sub> | <sub>Enable a time update callout for every received segment master heartbeat, in case the event contains a new time since epoch.<sub> |
 
 | Parameter | Default | Description |
 | :-------: |:------: | :---------: |

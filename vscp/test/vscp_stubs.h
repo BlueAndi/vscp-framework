@@ -107,6 +107,7 @@ extern uint8_t  vscp_test_portableGetPagesUsed(void);
 extern void vscp_test_portableBootLoaderRequest(void);
 extern uint8_t  vscp_test_portableGetMdfUrl(uint8_t index);
 extern void vscp_test_portableProvideEvent(vscp_RxMessage const * const msg);
+extern void vscp_test_portableUpdateTimeSinceEpoch(uint32_t timestamp);
 extern void vscp_test_portableSetLampState(VSCP_LAMP_STATE state);
 
 extern void vscp_test_actionInit(void);
