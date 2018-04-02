@@ -52,6 +52,7 @@
 #include "vscp_stubs.h"
 #include "vscp_dev_data.h"
 #include "vscp_dm_ng.h"
+#include "vscp_timer.h"
 
 /*******************************************************************************
     COMPILER SWITCHES
@@ -178,6 +179,7 @@ typedef enum
     VSCP_TEST_TIMER_1,
     VSCP_TEST_TIMER_2,
     VSCP_TEST_TIMER_3,
+    VSCP_TEST_TIMER_4,
 
     VSCP_TEST_TIMER_SIZE
 
@@ -408,8 +410,8 @@ extern void vscp_test_initNodeTheFirstTime(void)
     /* Action module shall be initialized. */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_INIT], 1);
 
-    /* 4 timers shall be created, general timer, 2 multi-frame timers and heartbeat timer */
-    CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_PORTABLE_CREATE_TIMER], 4);
+    /* Timers shall be created, general timer, 2 multi-frame timers, heartbeat timer and time since epoch timer. */
+    CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_PORTABLE_CREATE_TIMER], VSCP_TEST_TIMER_SIZE);
 
     /* Persistent memory shall contain default values.  */
     CU_ASSERT_EQUAL(vscp_ps_readNodeControlFlags(), VSCP_NODE_CONTROL_FLAGS_DEFAULT);
@@ -816,8 +818,8 @@ extern void vscp_test_active01(void)
     /* Action module shall be initialized. */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_INIT], 1);
 
-    /* 4 timers shall be created, general timer, multi-frame timers and heartbeat timer */
-    CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_PORTABLE_CREATE_TIMER], 4);
+    /* Timers shall be created, general timer, 2 multi-frame timers, heartbeat timer and time since epoch timer. */
+    CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_PORTABLE_CREATE_TIMER], VSCP_TEST_TIMER_SIZE);
 
     /* Nickname shall not be overwritten.  */
     CU_ASSERT_EQUAL(vscp_ps_readNicknameId(), VSCP_TEST_NICKNAME);
@@ -3429,13 +3431,13 @@ extern uint8_t  vscp_test_timerCreate(void)
 
     if (TRUE == vscp_test_noMoreTimers)
     {
-        id = 0xff;
+        id = VSCP_TIMER_ID_INVALID;
     }
     else if (VSCP_TEST_ARRAY_NUM(vscp_test_timerValues) <= vscp_test_timerInstances)
     {
         CU_ASSERT_FATAL(VSCP_TEST_ARRAY_NUM(vscp_test_timerValues) > vscp_test_timerInstances);
 
-        id = 0xff;
+        id = VSCP_TIMER_ID_INVALID;
     }
     else
     {

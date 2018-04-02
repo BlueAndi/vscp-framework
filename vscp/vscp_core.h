@@ -90,16 +90,16 @@ extern "C"
     CONSTANTS
 *******************************************************************************/
 
-/** VSCP major version number */
+/** VSCP specification major version number, the framework is compliant to. */
 #define VSCP_CORE_VERSION_MAJOR     (1)
 
-/** VSCP minor version number */
+/** VSCP specification minor version number, the framework is compliant to. */
 #define VSCP_CORE_VERSION_MINOR     (10)
 
-/** VSCP sub minor version number */
+/** VSCP specification sub-minor version number, the framework is compliant to. */
 #define VSCP_CORE_VERSION_SUB_MINOR (8)
 
-/** Version string */
+/** VSCP specification version string, the framework is compliant to. */
 #define VSCP_CORE_VERSION_STR       "v1.10.8"
 
 /** VSCP framework version string */
@@ -183,17 +183,22 @@ extern void vscp_core_setAlarm(uint8_t value);
  */
 extern BOOL vscp_core_isActive(void);
 
-#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_HEARTBEAT_SUPPORT_SEGMENT )
-
 /**
  * Get the time since epoch 00:00:00 UTC, January 1, 1970.
  * The time itself is received by the segment master.
  *
- * @return Time
+ * @return Unix timestamp
  */
 extern uint32_t vscp_core_getTimeSinceEpoch(void);
 
-#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_HEARTBEAT_SUPPORT_SEGMENT ) */
+/**
+ * Set the time since epoch 00:00:00 UTC, January 1, 1970.
+ * Note, if a segment master is present, it will overwrite the time with its
+ * heartbeat message.
+ * 
+ * @param[in] timestamp Unix timestamp
+ */
+extern void vscp_core_setTimeSinceEpoch(uint32_t timestamp);
 
 /**
  * Prepares a transmit message, before it is used.

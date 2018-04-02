@@ -76,6 +76,9 @@
 
 #endif  /* VSCP_CONFIG_BASE_IS_DISABLED( VSCP_CONFIG_HARD_CODED_NODE ) */
 
+/** Timer threshold of 1s in ms */
+#define VSCP_CORE_TIMER_THRESHOLD_1S    ((uint16_t)1000)
+
 /*******************************************************************************
     MACROS
 *******************************************************************************/
@@ -187,13 +190,16 @@ static vscp_RxMessage   vscp_core_rxMessage;
 static BOOL             vscp_core_rxMessageValid    = FALSE;
 
 /** Timer id, which is used for timeout handling, regarding state transitions. */
-static uint8_t          vscp_core_timerId                   = 0xFF;
+static uint8_t          vscp_core_timerId                   = VSCP_TIMER_ID_INVALID;
 
 /** Timer id, which is used for GUID drop nickname multi-frame timeout. */
-static uint8_t          vscp_core_timerIdGuidDropNickname   = 0xFF;
+static uint8_t          vscp_core_timerIdGuidDropNickname   = VSCP_TIMER_ID_INVALID;
 
 /** Timer id, which is used for vscp register 162 multi-frame timeout. */
-static uint8_t          vscp_core_timerIdReg162             = 0xFF;
+static uint8_t          vscp_core_timerIdReg162             = VSCP_TIMER_ID_INVALID;
+
+/** Timer id, which is used to drive the time since epoch (unix timestamp). */
+static uint8_t          vscp_core_timerIdTimeSinceEpoch     = VSCP_TIMER_ID_INVALID;
 
 /** Seconds counter, used to wait for reset request. */
 static uint8_t          vscp_core_secCnt            = 0;
@@ -201,17 +207,13 @@ static uint8_t          vscp_core_secCnt            = 0;
 /** Nickname id used during nickname discovery process */
 static uint8_t          vscp_core_nickname_probe    = VSCP_NICKNAME_NOT_INIT;
 
-#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_HEARTBEAT_SUPPORT_SEGMENT )
-
-/** Time since epoch 00:00:00 UTC, January 1, 1970 */
+/** Time since epoch 00:00:00 UTC, January 1, 1970 (unix timestamp) in s */
 static uint32_t         vscp_core_timeSinceEpoch    = 0;
-
-#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_HEARTBEAT_SUPPORT_SEGMENT ) */
 
 #if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_HEARTBEAT_NODE )
 
 /** Timer id, which is used for node heartbeat handling. */
-static uint8_t          vscp_core_heartbeatTimerId      = 0xFF;
+static uint8_t          vscp_core_heartbeatTimerId      = VSCP_TIMER_ID_INVALID;
 
 /** Enable/Disable node heartbeat */
 static BOOL             vscp_core_isHeartbeatEnabled    = TRUE;
@@ -317,7 +319,7 @@ extern VSCP_CORE_RET vscp_core_init(void)
 
     /* Create a timer for common timing issues */
     vscp_core_timerId = vscp_timer_create();
-    if (0xFF == vscp_core_timerId)
+    if (VSCP_TIMER_ID_INVALID == vscp_core_timerId)
     {
         /* No timer available. */
         ret = VSCP_CORE_RET_ERROR;
@@ -325,7 +327,7 @@ extern VSCP_CORE_RET vscp_core_init(void)
 
     /* Create a timer for GUID drop nickname multi-frame timeout. */
     vscp_core_timerIdGuidDropNickname = vscp_timer_create();
-    if (0xFF == vscp_core_timerIdGuidDropNickname)
+    if (VSCP_TIMER_ID_INVALID == vscp_core_timerIdGuidDropNickname)
     {
         /* No timer available. */
         ret = VSCP_CORE_RET_ERROR;
@@ -333,17 +335,30 @@ extern VSCP_CORE_RET vscp_core_init(void)
 
     /* Create a timer for vscp register 162 multi-frame timeout. */
     vscp_core_timerIdReg162 = vscp_timer_create();
-    if (0xFF == vscp_core_timerIdReg162)
+    if (VSCP_TIMER_ID_INVALID == vscp_core_timerIdReg162)
     {
         /* No timer available. */
         ret = VSCP_CORE_RET_ERROR;
+    }
+
+    /* Create a timer used to drive the internal time since epoch (unix timestamp). */
+    vscp_core_timerIdTimeSinceEpoch = vscp_timer_create();
+    if (VSCP_TIMER_ID_INVALID == vscp_core_timerIdTimeSinceEpoch)
+    {
+        /* No timer available. */
+        ret = VSCP_CORE_RET_ERROR;
+    }
+    else
+    {
+        /* Start timer immediately. */
+        vscp_timer_start(vscp_core_timerIdTimeSinceEpoch, VSCP_CORE_TIMER_THRESHOLD_1S);
     }
 
 #if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_HEARTBEAT_NODE )
 
     /* Create a timer for own heartbeat */
     vscp_core_heartbeatTimerId = vscp_timer_create();
-    if (0xFF == vscp_core_heartbeatTimerId)
+    if (VSCP_TIMER_ID_INVALID == vscp_core_heartbeatTimerId)
     {
         /* No timer available. */
         ret = VSCP_CORE_RET_ERROR;
@@ -455,6 +470,17 @@ extern void vscp_core_process(void)
 
 #endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_LOGGER ) */
 
+    /* Handle internal time since epoch (unix timestamp), which increase per second. */
+    if ((VSCP_TIMER_ID_INVALID != vscp_core_timerIdTimeSinceEpoch) &&
+        (FALSE == vscp_timer_getStatus(vscp_core_timerIdTimeSinceEpoch)))
+    {
+        /* Increase unix timestamp */
+        ++vscp_core_timeSinceEpoch;
+
+        /* Restart timer */
+        vscp_timer_start(vscp_core_timerIdTimeSinceEpoch, VSCP_CORE_TIMER_THRESHOLD_1S);
+    }
+
     /* State machine */
     switch(vscp_core_state)
     {
@@ -563,20 +589,29 @@ extern BOOL vscp_core_isActive(void)
     return (STATE_ACTIVE == vscp_core_state) ? TRUE : FALSE;
 }
 
-#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_HEARTBEAT_SUPPORT_SEGMENT )
-
 /**
  * Get the time since epoch 00:00:00 UTC, January 1, 1970.
  * The time itself is received by the segment master.
  *
- * @return Time
+ * @return Unix timestamp
  */
 extern uint32_t vscp_core_getTimeSinceEpoch(void)
 {
     return vscp_core_timeSinceEpoch;
 }
 
-#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_HEARTBEAT_SUPPORT_SEGMENT ) */
+/**
+ * Set the time since epoch 00:00:00 UTC, January 1, 1970.
+ * Note, if a segment master is present, it will overwrite the time with its
+ * heartbeat message.
+ * 
+ * @param[in] timestamp Unix timestamp
+ */
+extern void vscp_core_setTimeSinceEpoch(uint32_t timestamp)
+{
+    vscp_core_timeSinceEpoch = timestamp;
+    return;
+}
 
 /**
  * Prepares a transmit message, before it is used.

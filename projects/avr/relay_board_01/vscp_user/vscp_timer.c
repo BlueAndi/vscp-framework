@@ -56,12 +56,12 @@
 #if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_HEARTBEAT_NODE )
 
 /** Number of provided timers */
-#define VSCP_TIMER_NUM  4
+#define VSCP_TIMER_NUM  5
 
 #else   /* VSCP_CONFIG_BASE_IS_DISABLED( VSCP_CONFIG_HEARTBEAT_NODE ) */
 
 /** Number of provided timers */
-#define VSCP_TIMER_NUM  3
+#define VSCP_TIMER_NUM  4
 
 #endif  /* VSCP_CONFIG_BASE_IS_DISABLED( VSCP_CONFIG_HEARTBEAT_NODE ) */
 
