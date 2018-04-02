@@ -202,7 +202,13 @@ extern "C"
  */
 #define VSCP_CONFIG_ENABLE_SEGMENT_TIME_CALLOUT VSCP_CONFIG_BASE_DISABLED
 
-#endif  /* Undefined VSCP_CONFIG_ENABLE_LOOPBACK */
+#endif  /* Undefined VSCP_CONFIG_ENABLE_SEGMENT_TIME_CALLOUT */
+
+#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_SEGMENT_TIME_CALLOUT )
+#if VSCP_CONFIG_BASE_IS_DISABLED( VSCP_CONFIG_HEARTBEAT_SUPPORT_SEGMENT )
+#error If the segment time callout is enabled, the segment heartbeat must be enabled too.
+#endif  /* VSCP_CONFIG_BASE_IS_DISABLED( VSCP_CONFIG_HEARTBEAT_SUPPORT_SEGMENT ) */
+#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_SEGMENT_TIME_CALLOUT ) */
 
 /*******************************************************************************
     CONSTANTS
