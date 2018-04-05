@@ -63,6 +63,7 @@ VSCP independent, use the next upper layer, the event abstraction modules.
 |   +---avr             (Common sourcecode for Atmel AVR microcontrollers)
 |   \\---pc              (Common sourcecode for PC)
 +---examples            (Examples which are showing how to use the VSCP framework)
+|   +---arm             (Examples with ARM based microcontrollers)
 |   +---avr             (Examples with Atmel AVR microcontrollers)
 |   \\---pc              (PC example for windows and linux)
 +---projects            (Projects)
