@@ -976,8 +976,10 @@ static inline void  vscp_core_statePreActive(void)
     /* Timeout? Note, the timer was started in init state. */
     if (FALSE == vscp_timer_getStatus(vscp_core_timerId))
     {
-        /* Go back to init state and try again. */
-        vscp_core_changeToStateInit();
+        /* Segment master didn't assign nickname so start nickname id discovery process */
+        vscp_core_state = INIT_STATE_PROBE;
+        /* Probe shall start with nickname id 1. */
+        vscp_core_nickname_probe = 1;
     }
     /* Valid message received */
     else if (TRUE == vscp_core_rxMessageValid)
