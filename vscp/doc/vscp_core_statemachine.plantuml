@@ -1,0 +1,50 @@
+@startuml
+
+title VSCP-framework statemachine
+
+state STARTUP: entry / Blink lamp slow
+state INIT: entry / Blink lamp fast
+state PREACTIVE
+state ACTIVE: entry / Set lamp on
+state IDLE: entry / Set lamp off
+state RESET: entry / Set lamp off
+state ERROR: entry / Set lamp off
+
+[*] --> STARTUP
+
+STARTUP --> INIT: [No nickname id assigned.] AND\n( [Init triggered by user] OR\n[Start-up control set to immediate start] )
+STARTUP --> ACTIVE: [Nickname id already assigned.]
+STARTUP --> ERROR
+
+state INIT {
+
+    state PROBE_MASTER: entry / Probe for segment master.\nexit / Start timer.
+    state PROBE_WAIT: exit / Stop timer if node acknowledge received.
+    state PROBE: entry / Probe for nickname id\nexit / Start timer if next probe.
+
+    [*] -l-> PROBE_MASTER
+    
+    PROBE_MASTER --> PROBE_WAIT
+    
+    PROBE_WAIT --> PROBE: ( [Timeout] AND\n[No segment master available] ) OR\n( [No timeout] AND\n[Node acknowledge received.] )
+    PROBE_WAIT --> PREACTIVE: [Segment master\nacknowledge received.]
+    PROBE_WAIT -> ACTIVE: [Timeout] AND\n[Unused nickname id found.]
+    
+    PROBE --> IDLE: [Segment is full]
+    PROBE --> PROBE_WAIT
+}
+
+PREACTIVE -> INIT: [Timeout]
+PREACTIVE --> ACTIVE: [Nickname id received from\nsegment master.]
+
+ACTIVE --> IDLE
+
+ACTIVE --> RESET
+
+IDLE --> [*]
+
+RESET --> [*]
+
+ERROR --> [*]
+
+@enduml
