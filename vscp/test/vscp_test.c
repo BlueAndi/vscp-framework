@@ -492,7 +492,7 @@ extern void vscp_test_processNodeTheFirstTime(void)
  *  - Node stops nickname discovery.
  *  - Lamp is on.
  */
-extern void vscp_test_finisheNicknameDiscovery(void)
+extern void vscp_test_finishNicknameDiscovery(void)
 {
     vscp_test_initTestCase();
 
@@ -705,7 +705,7 @@ extern void vscp_test_noSegmentMaster(void)
         vscp_test_waitForTxMessage(1, 2);
     }
 
-    /* Node stops and sends 0xFF as nickaname to notify it surrenders */
+    /* Node stops and sends 0xFF as nickname to notify it surrenders */
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_NEW_NODE_ONLINE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_NICKNAME_NOT_INIT);
@@ -717,6 +717,84 @@ extern void vscp_test_noSegmentMaster(void)
     /* Lamp shall be off */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_PORTABLE_SET_LAMP_STATE], 1);
     CU_ASSERT_EQUAL(vscp_test_lampState, VSCP_LAMP_STATE_OFF);
+
+    return;
+}
+
+/**
+ * Precondition:
+ *  - Node sent a probe event to segment master.
+ *
+ * Action:
+ *  - Response from segment master, but no nickname assignment follows.
+ *
+ * Expectation:
+ *  - After a specific time, the node starts probing id for id.
+ */
+extern void vscp_test_badSegmentMaster(void)
+{
+    uint8_t id  = 1;
+
+    vscp_test_initTestCase();
+
+    /* Request initialization */
+    vscp_core_startNodeSegmentInit();
+
+    /* Process core */
+    vscp_test_waitForTxMessage(1, 10);
+
+    /* Probe event shall be sent to segment master */
+    CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_TP_ADAPTER_WRITE_MESSAGE], 1);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_NEW_NODE_ONLINE);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_NICKNAME_NOT_INIT);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].priority, VSCP_PRIORITY_7_LOW);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 1);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[0], VSCP_NICKNAME_SEGMENT_MASTER);
+
+    /* Timer shall be started to observe the nickname discovery */
+    CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_PORTABLE_START_TIMER], 1);
+    CU_ASSERT_EQUAL(vscp_test_timerValues[VSCP_TEST_TIMER_0], VSCP_CONFIG_NODE_SEGMENT_INIT_TIMEOUT);
+
+    /* Lamp shall blink fast */
+    CU_ASSERT_EQUAL(vscp_test_lampState, VSCP_LAMP_STATE_BLINK_FAST);
+
+    /* Send probe acknowledge */
+    vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
+    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_PROBE_ACK;
+    vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
+    vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
+    vscp_test_rxMessage.hardCoded   = FALSE;
+    vscp_test_rxMessage.dataNum     = 0;
+
+    /* Wait for at least 1 event */
+    vscp_test_waitForTxMessage(1, VSCP_CONFIG_NODE_SEGMENT_INIT_TIMEOUT + 1);
+
+    /* Probe event shall be sent with nickname id 1 */
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_NEW_NODE_ONLINE);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_NICKNAME_NOT_INIT);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].priority, VSCP_PRIORITY_7_LOW);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 1);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[0], id);
+
+    /* Wait for at least 1 event */
+    vscp_test_waitForTxMessage(1, VSCP_CONFIG_NODE_SEGMENT_INIT_TIMEOUT + 1);
+
+    /* Node sends 1 as nickname */
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_NEW_NODE_ONLINE);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, id);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].priority, VSCP_PRIORITY_0_HIGH);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 1);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[0], id);
+
+    /* Lamp shall be off */
+    CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_PORTABLE_SET_LAMP_STATE], 3);
+    CU_ASSERT_EQUAL(vscp_test_lampState, VSCP_LAMP_STATE_ON);
 
     return;
 }

@@ -96,10 +96,11 @@ int main(int argc, char* argv[])
         pSuite  = CU_add_suite("Initialization and nickname discovery", vscp_test_init, NULL);
         CU_add_test(pSuite, "Initialize the node the first time", vscp_test_initNodeTheFirstTime);
         (void)CU_add_test(pSuite, "Process the node the first time", vscp_test_processNodeTheFirstTime);
-        (void)CU_add_test(pSuite, "Finish nickname discovery", vscp_test_finisheNicknameDiscovery);
+        (void)CU_add_test(pSuite, "Finish nickname discovery", vscp_test_finishNicknameDiscovery);
         (void)CU_add_test(pSuite, "First segment controller heartbeat", vscp_test_firstSegCtrlHeartBeat);
         (void)CU_add_test(pSuite, "Send probe ack with same nickname", vscp_test_sendProbeAckInActiveState);
         (void)CU_add_test(pSuite, "Segment master removed", vscp_test_noSegmentMaster);
+        (void)CU_add_test(pSuite, "Bad segment master", vscp_test_badSegmentMaster);
 
         pSuite  = CU_add_suite("Force error state", vscp_test_init, NULL);
         (void)CU_add_test(pSuite, "Limit number of available timers", vscp_test_init07);

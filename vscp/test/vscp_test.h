@@ -127,7 +127,7 @@ extern void vscp_test_processNodeTheFirstTime(void);
  *  - Node stops nickname discovery.
  *  - Lamp is on.
  */
-extern void vscp_test_finisheNicknameDiscovery(void);
+extern void vscp_test_finishNicknameDiscovery(void);
 
 /**
  * Precondition:
@@ -169,6 +169,18 @@ extern void vscp_test_sendProbeAckInActiveState(void);
  *  - But because every probe gets an answer, the node surrenders at the end.
  */
 extern void vscp_test_noSegmentMaster(void);
+
+/**
+ * Precondition:
+ *  - Node sent a probe event to segment master.
+ *
+ * Action:
+ *  - Response from segment master, but no nickname assignment follows.
+ *
+ * Expectation:
+ *  - After a specific time, the node starts probing id for id.
+ */
+extern void vscp_test_badSegmentMaster(void);
 
 /**
  * Precondition:
