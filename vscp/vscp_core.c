@@ -104,6 +104,7 @@ typedef enum
 typedef enum
 {
     INIT_STATE_PROBE_MASTER = 0,    /**< Notify segment master via probe event */
+    INIT_STATE_PROBE_MASTER_WAIT,   /**< Wait for segment master acknowledge */
     INIT_STATE_PROBE,               /**< Probe nickname */
     INIT_STATE_PROBE_WAIT           /**< Wait for probe acknowledge */
 
@@ -129,7 +130,7 @@ typedef struct
 static void vscp_core_writeNicknameId(uint8_t nickname);
 static BOOL vscp_core_checkPersistentMemory(void);
 static void vscp_core_stateStartup(void);
-static void vscp_core_changeToStateInit(void);
+static void vscp_core_changeToStateInit(BOOL probeSegmentMaster);
 static void vscp_core_stateInit(void);
 static void vscp_core_changeToStatePreActive(void);
 static void vscp_core_statePreActive(void);
@@ -555,7 +556,7 @@ extern void vscp_core_startNodeSegmentInit(void)
     if (STATE_INIT != vscp_core_state)
     {
         /* Change to init state */
-        vscp_core_changeToStateInit();
+        vscp_core_changeToStateInit(TRUE);
     }
 
     return;
@@ -764,7 +765,7 @@ static inline void  vscp_core_stateStartup(void)
          */
         if (0x01 == vscp_core_getStartUpControl())
         {
-            vscp_core_changeToStateInit();
+            vscp_core_changeToStateInit(TRUE);
         }
         else
         {
@@ -785,16 +786,28 @@ static inline void  vscp_core_stateStartup(void)
 /**
  * Change to init state.
  * - Drop nickname id.
+ * 
+ * @param[in] probeSegmentMaster    Probe for segment master (true) or start own nickname discovery (false).
  */
-static inline void  vscp_core_changeToStateInit(void)
+static inline void  vscp_core_changeToStateInit(BOOL probeSegmentMaster)
 {
     if (STATE_INIT != vscp_core_state)
     {
         /* Show the user that the node enters initialization state by blinking lamp. */
         vscp_portable_setLampState(VSCP_LAMP_STATE_BLINK_FAST);
 
-        vscp_core_state     = STATE_INIT;
-        vscp_core_initState = INIT_STATE_PROBE_MASTER;
+        vscp_core_state = STATE_INIT;
+
+        if (FALSE == probeSegmentMaster)
+        {
+            vscp_core_initState = INIT_STATE_PROBE;
+            vscp_core_nickname_probe = 1;
+        }
+        else
+        {
+            vscp_core_initState = INIT_STATE_PROBE_MASTER;
+            vscp_core_nickname_probe = VSCP_NICKNAME_SEGMENT_MASTER;
+        }
 
         /* Clear nickname id */
         vscp_core_writeNicknameId(VSCP_NICKNAME_NOT_INIT);
@@ -837,11 +850,48 @@ static inline void  vscp_core_stateInit(void)
         }
         else
         {
-            vscp_core_initState         = INIT_STATE_PROBE_WAIT;
-            vscp_core_nickname_probe    = VSCP_NICKNAME_SEGMENT_MASTER;
+            vscp_core_initState = INIT_STATE_PROBE_MASTER_WAIT;
 
             /* Start timer to observe the node segment initialization */
             vscp_timer_start(vscp_core_timerId, VSCP_CONFIG_NODE_SEGMENT_INIT_TIMEOUT);
+        }
+
+        break;
+
+    case INIT_STATE_PROBE_MASTER_WAIT:
+
+        /* Timeout, because no segment master available? */
+        if (FALSE == vscp_timer_getStatus(vscp_core_timerId))
+        {
+            /* Start nickname id discovery process */
+            vscp_core_initState = INIT_STATE_PROBE;
+
+            /* Probe shall start with nickname id 1. */
+            vscp_core_nickname_probe = 1;
+        }
+        /* Valid message received */
+        else if (TRUE == vscp_core_rxMessageValid)
+        {
+            if (VSCP_CLASS_L1_PROTOCOL == vscp_core_rxMessage.vscpClass)
+            {
+                /* Probe event acknowledge? */
+                if (VSCP_TYPE_PROTOCOL_PROBE_ACK == vscp_core_rxMessage.vscpType)
+                {
+                    /* Acknowledge from the segment master? */
+                    if (VSCP_NICKNAME_SEGMENT_MASTER == vscp_core_rxMessage.oAddr)
+                    {
+                        /* Wait for nickname id assignment and don't stop the timer,
+                         * because the next state is still part of it.
+                         */
+                        vscp_core_changeToStatePreActive();
+                    }
+                    else
+                    {
+                        /* Don't care about. */
+                        ;
+                    }
+                }
+            }
         }
 
         break;
@@ -885,25 +935,13 @@ static inline void  vscp_core_stateInit(void)
 
     case INIT_STATE_PROBE_WAIT:
 
-        /* Timeout and nickname id found? */
+        /* Timeout, because no other node uses the nickname id? */
         if (FALSE == vscp_timer_getStatus(vscp_core_timerId))
         {
-            /* No segment master available? */
-            if (VSCP_NICKNAME_SEGMENT_MASTER == vscp_core_nickname_probe)
-            {
-                /* Start nickname id discovery process */
-                vscp_core_initState = INIT_STATE_PROBE;
+            /* Available nickname id found. */
+            vscp_core_writeNicknameId(vscp_core_nickname_probe);
 
-                /* Probe shall start with nickname id 1. */
-                vscp_core_nickname_probe = 1;
-            }
-            else
-            /* No node answered, probed nickname id can be used. */
-            {
-                vscp_core_writeNicknameId(vscp_core_nickname_probe);
-
-                vscp_core_changeToStateActive();
-            }
+            vscp_core_changeToStateActive();
         }
         /* Valid message received */
         else if (TRUE == vscp_core_rxMessageValid)
@@ -913,16 +951,8 @@ static inline void  vscp_core_stateInit(void)
                 /* Probe event acknowledge? */
                 if (VSCP_TYPE_PROTOCOL_PROBE_ACK == vscp_core_rxMessage.vscpType)
                 {
-                    /* Acknowledge from the segment master? */
-                    if (VSCP_NICKNAME_SEGMENT_MASTER == vscp_core_rxMessage.oAddr)
-                    {
-                        /* Wait for nickname id assignment and don't stop the timer,
-                         * because the next state is still part of it.
-                         */
-                        vscp_core_changeToStatePreActive();
-                    }
-                    /* Acknowledge from a node, which has the probed nickname id */
-                    else if (vscp_core_nickname_probe == vscp_core_rxMessage.oAddr)
+                    /* Acknowledge from a node, which has the probed nickname id? */
+                    if (vscp_core_nickname_probe == vscp_core_rxMessage.oAddr)
                     {
                         /* Stop timer */
                         vscp_timer_stop(vscp_core_timerId);
@@ -970,14 +1000,15 @@ static inline void  vscp_core_changeToStatePreActive(void)
 
 /**
  * Handles the pre-active state.
+ * Waiting for the nickname assignment by the segment master.
  */
 static inline void  vscp_core_statePreActive(void)
 {
     /* Timeout? Note, the timer was started in init state. */
     if (FALSE == vscp_timer_getStatus(vscp_core_timerId))
     {
-        /* Go back to init state and try again. */
-        vscp_core_changeToStateInit();
+        /* No nickname id received, start own nickname discovery. */
+        vscp_core_changeToStateInit(FALSE);
     }
     /* Valid message received */
     else if (TRUE == vscp_core_rxMessageValid)
@@ -1523,7 +1554,7 @@ static inline void  vscp_core_handleProtocolHeartbeat(void)
              */
             if (VSCP_NICKNAME_SEGMENT_MASTER != vscp_core_nickname_probe)
             {
-                vscp_core_changeToStateInit();
+                vscp_core_changeToStateInit(TRUE);
             }
         }
         
@@ -1589,7 +1620,7 @@ static inline void  vscp_core_handleProtocolProbeAck(void)
         if (vscp_core_nickname == vscp_core_rxMessage.oAddr)
         {
             /* Oups ... */
-            vscp_core_changeToStateInit();
+            vscp_core_changeToStateInit(TRUE);
         }
     }
 

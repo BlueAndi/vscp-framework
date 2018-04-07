@@ -2,9 +2,9 @@
 
 title VSCP-framework statemachine
 
-state STARTUP: entry / Blink lamp slow
+state STARTUP: entry / Blink lamp slow\nexit to INIT / init(PROBE_MASTER)
 state INIT: entry / Blink lamp fast
-state PREACTIVE
+state PREACTIVE: exit to INIT / init(PROBE)\nexit to ACTIVE / Stop timer.
 state ACTIVE: entry / Set lamp on
 state IDLE: entry / Set lamp off
 state RESET: entry / Set lamp off
@@ -19,19 +19,23 @@ STARTUP --> ERROR
 state INIT {
 
     state PROBE_MASTER: entry / Probe for segment master.\nexit / Start timer.
+    state PROBE_MASTER_WAIT
     state PROBE_WAIT: exit / Stop timer if node acknowledge received.
-    state PROBE: entry / Probe for nickname id\nexit / Start timer if next probe.
+    state PROBE: entry / Probe for nickname id\nexit to PROBE_WAIT / Start timer.
 
-    [*] -l-> PROBE_MASTER
+    [*] -> PROBE_MASTER
+    [*] --> PROBE
     
-    PROBE_MASTER --> PROBE_WAIT
+    PROBE_MASTER --> PROBE_MASTER_WAIT
     
-    PROBE_WAIT --> PROBE: ( [Timeout] AND\n[No segment master available] ) OR\n( [No timeout] AND\n[Node acknowledge received.] )
-    PROBE_WAIT --> PREACTIVE: [Segment master\nacknowledge received.]
-    PROBE_WAIT -> ACTIVE: [Timeout] AND\n[Unused nickname id found.]
+    PROBE_MASTER_WAIT --> PROBE: [Timeout]
+    PROBE_MASTER_WAIT -> PREACTIVE: [Segment master\nacknowledge received.]
     
     PROBE --> IDLE: [Segment is full]
     PROBE --> PROBE_WAIT
+
+    PROBE_WAIT --> PROBE: [Node acknowledge received.] )
+    PROBE_WAIT -> ACTIVE: [Timeout]
 }
 
 PREACTIVE -> INIT: [Timeout]

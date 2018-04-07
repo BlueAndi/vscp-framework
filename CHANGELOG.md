@@ -14,6 +14,7 @@
   - VSCP framework
     - Bugfixes:
       - If a segment controller heartbeat is received, the time since epoch will now be stored.
+      - If a segment master don't assign a nickname id, a infinite segment master probe loop occurred.
 
     - Features:
       - CLASS1.INFORMATION Type=69 - 76 added.
