@@ -44,9 +44,6 @@ This module contains the core functionality of VSCP.
  * the message will be lost.
  * - If a transmit message is lost, the core won't change to error state.
  *
- * Limitations:
- * - Silent nodes are not supported.
- *
  * Supported compile switches:
  * - VSCP_CONFIG_ENABLE_LOGGER
  * - VSCP_CONFIG_SILENT_NODE

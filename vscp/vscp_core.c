@@ -523,7 +523,7 @@ extern void vscp_core_process(void)
     /* Unknown state */
     default:
         /* This should never happen. */
-        vscp_core_state = STATE_ERROR;
+        vscp_core_changeToStateError();
         break;
     }
 

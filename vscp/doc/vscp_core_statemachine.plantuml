@@ -10,11 +10,11 @@ state IDLE: entry / Set lamp off
 state RESET: entry / Set lamp off
 state ERROR: entry / Set lamp off
 
-[*] --> STARTUP
+[*] --> STARTUP: VSCP core\ninitialization successful.
+[*] --> ERROR: VSCP core\ninitialization failed.
 
 STARTUP --> INIT: [No nickname id assigned.] AND\n( [Init triggered by user] OR\n[Start-up control set to immediate start] )
 STARTUP --> ACTIVE: [Nickname id already assigned.]
-STARTUP --> ERROR
 
 state INIT {
 
