@@ -28,33 +28,33 @@ component "CAN" as can #LightGray
 
 component "Application" as app
 
-app --> log: uses
-app --> information: uses
-app --> control: uses
-app --> alarm: uses
-app --> measurement: uses
-app --> weather: uses
-app --> weather_forecast: uses
-app --> security: uses
-app --> measurezone: uses
+app ..> log: uses
+app ..> information: uses
+app ..> control: uses
+app ..> alarm: uses
+app ..> measurement: uses
+app ..> weather: uses
+app ..> weather_forecast: uses
+app ..> security: uses
+app ..> measurezone: uses
 
-log --> logger: uses
-information --> core: uses
-control --> core: uses
-alarm --> core: uses
-measurement --> core: uses
-weather --> core: uses
-weather_forecast --> core: uses
-security --> core: uses
-measurezone --> core: uses
+log ..> logger: uses
+information ..> core: uses
+control ..> core: uses
+alarm ..> core: uses
+measurement ..> core: uses
+weather ..> core: uses
+weather_forecast ..> core: uses
+security ..> core: uses
+measurezone ..> core: uses
 
-logger --> core: uses
+logger ..> core: uses
 
-core --> transport: send and receive events
+core ..> transport: send and receive events
 
-transport --> transport_adapter: read and write
+transport ..> transport_adapter: read and write
 
-transport_adapter --> can: read and write
+transport_adapter ..> can: read and write
 
 note right of can
     Just an example.

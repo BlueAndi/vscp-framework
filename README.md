@@ -62,6 +62,8 @@ VSCP independent, use the next upper layer, the event abstraction modules.
 
 ### Configuration parameters
 
+#### Common
+
 The following configuration parameters can be enable/disable/set in the
 ```
 vscp_config_overwrite.h
@@ -96,6 +98,41 @@ vscp_config_overwrite.h
 | <sub>VSCP\_CONFIG\_DM\_NG\_PAGE<sub> | <sub>2<sub> | <sub>Decision matrix next generation: Location in the application register space. Note that the dm ng always starts at the begin of the page! This design decision was just for simplification, nothing else.<sub> |
 | <sub>VSCP\_CONFIG\_DM\_NG\_RULE\_SET\_SIZE<sub> | <sub>80<sub> | <sub>Decision matrix next generation: Maximum size in bytes of a rule set.<sub> |
 | <sub>VSCP\_CONFIG\_LOOPBACK\_STORAGE\_NUM<sub> | <sub>4<sub> | <sub>Number of messages in the loopback cyclic buffer. Note, that if you want to store up to 3 events, you have to configure 4, because of the technical implementation of the cyclic buffer.<sub> |
+
+#### Device data
+
+The following device data can be enable/disable/set in the
+```
+vscp_dev_data_config_overwrite.h
+```
+
+| Feature switch | Default | Description |
+| :------------: | :-----: | :---------: |
+| <sub>VSCP\_DEV\_DATA\_CONFIG\_ENABLE\_FAMILY\_CODE<sub> | <sub>enabled<sub> | <sub>Enable the support of the family code.<sub> |
+| <sub>VSCP\_DEV\_DATA\_CONFIG\_ENABLE\_GUID\_STORAGE\_PS<sub> | <sub>disabled<sub> | <sub>Enable this define to load the GUID from persistent storage.<sub> |
+| <sub>VSCP\_DEV\_DATA\_CONFIG\_ENABLE\_GUID\_STORAGE\_EXT<sub> | <sub>disabled<sub> | <sub>Enable this define to load the GUID from external storage, e.g. from MCU GUID.<sub> |
+| <sub>VSCP\_DEV\_DATA\_CONFIG\_ENABLE\_NODE\_ZONE\_STORAGE\_PS<sub> | <sub>disabled<sub> | <sub>Enable this define to load the node zone from persistent storage.<sub> |
+| <sub>VSCP\_DEV\_DATA\_CONFIG\_ENABLE\_NODE\_SUB\_ZONE\_STORAGE\_PS<sub> | <sub>disabled<sub> | <sub>Enable this define to load the node sub-zone from persistent storage.<sub> |
+| <sub>VSCP\_DEV\_DATA\_CONFIG\_ENABLE\_MANUFACTURER\_DEV\_ID\_STORAGE\_PS<sub> | <sub>disabled<sub> | <sub>Enable this define to load the manufacturer device id from persistent storage.<sub> |
+| <sub>VSCP\_DEV\_DATA\_CONFIG\_ENABLE\_MANUFACTURER\_SUB\_DEV\_ID\_STORAGE\_PS<sub> | <sub>disabled<sub> | <sub>Enable this define to load the manufacturer sub device id from persistent storage.<sub> |
+| <sub>VSCP\_DEV\_DATA\_CONFIG\_ENABLE\_MDF\_URL\_STORAGE\_PS<sub> | <sub>disabled<sub> | <sub>Enable this define to load the MDF URL from persistent storage.<sub> |
+| <sub>VSCP\_DEV\_DATA\_CONFIG\_ENABLE\_STD\_DEV\_FAMILY\_CODE\_STORAGE\_PS<sub> | <sub>disabled<sub> | <sub>Enable this define to load the standard device family code from persistent storage. Note, that the feature family code has to be enabled, otherwise this define won't be considered.<sub> |
+| <sub>VSCP\_DEV\_DATA\_CONFIG\_ENABLE\_STD\_DEV\_TYPE\_STORAGE\_PS<sub> | <sub>disabled<sub> | <sub>Enable this define to load the standard device type from persistent storage. Note, that the feature family code has to be enabled, otherwise this define won't be considered.<sub> |
+
+| Parameter | Default | Description |
+| :-------: |:------: | :---------: |
+| <sub>VSCP\_DEV\_DATA\_CONFIG\_NODE\_GUID<sub> | <sub>00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00<sub> | <sub>Node GUID<sub> |
+| <sub>VSCP\_DEV\_DATA\_CONFIG\_NODE\_ZONE<sub> | <sub>0xff<sub> | <sub>Node zone. Note, 0xff means all zones.<sub> |
+| <sub>VSCP\_DEV\_DATA\_CONFIG\_NODE\_SUB\_ZONE<sub> | <sub>0xff<sub> | <sub>Node sub-zone. Note, 0xff means all sub zones.<sub> |
+| <sub>VSCP\_DEV\_DATA\_CONFIG\_MANUFACTURER\_ID<sub> | <sub>0x0000<sub> | <sub>Manufacturer id (0x0000 means unknown)<sub> |
+| <sub>VSCP\_DEV\_DATA\_CONFIG\_MANUFACTURER\_DEVICE\_ID<sub> | <sub>0x00000000<sub> | <sub>Manufacturer device id<sub> |
+| <sub>VSCP\_DEV\_DATA\_CONFIG\_MANUFACTURER\_SUB\_DEVICE\_ID<sub> | <sub>0x00000000<sub> | <sub>Manufacturer sub device id<sub> |
+| <sub>VSCP\_DEV\_DATA\_CONFIG\_MDF\_URL<sub> | <sub>empty<sub> | <sub>MDF URL (only 32 characters are allowed!), without "http://" which is implied Note, the encoding is UTF-8!<sub> |
+| <sub>VSCP\_DEV\_DATA\_CONFIG\_VERSION\_MAJOR<sub> | <sub>0<sub> | <sub>Major firmware version (format: major.minor.sub-minor)<sub> |
+| <sub>VSCP\_DEV\_DATA\_CONFIG\_VERSION\_MINOR<sub> | <sub>1<sub> | <sub>Minor firmware version (format: major.minor.sub-minor)<sub> |
+| <sub>VSCP\_DEV\_DATA\_CONFIG\_VERSION\_SUB\_MINOR<sub> | <sub>0<sub> | <sub>Sub-minor firmware version (format: major.minor.sub-minor)<sub> |
+| <sub>VSCP\_DEV\_DATA\_CONFIG\_STANDARD\_DEVICE\_FAMILY\_CODE<sub> | <sub>0x00000000<sub> | <sub>Standard device family code.<sub> |
+| <sub>VSCP\_DEV\_DATA\_CONFIG\_STANDARD\_DEVICE\_TYPE<sub> | <sub>0x00000000<sub> | <sub>Standard device type.<sub> |
 
 ## Structure
 

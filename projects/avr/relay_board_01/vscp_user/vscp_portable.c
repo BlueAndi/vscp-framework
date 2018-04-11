@@ -250,6 +250,28 @@ extern void vscp_portable_updateTimeSinceEpoch(uint32_t timestamp)
 
 #endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_SEGMENT_TIME_CALLOUT ) */
 
+#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_DEV_DATA_CONFIG_ENABLE_GUID_STORAGE_EXT )
+
+/**
+ * This function returns one byte of the GUID, which is selected by the index.
+ * Index 0 corresponds with the GUID LSB byte, index 15 with the GUID MSB byte.
+ * 
+ * Note, this function can be used to get the MCU stored GUID.
+ *
+ * @param[in]   index   Index in the GUID [0-15]
+ * @return  GUID byte
+ */
+extern uint8_t  vscp_portable_readGUID(uint8_t index)
+{
+    uint8_t value = 0;
+
+    /* Implement your code here ... */
+
+    return value;
+}
+
+#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_DEV_DATA_CONFIG_ENABLE_GUID_STORAGE_EXT ) */
+
 /*******************************************************************************
     LOCAL FUNCTIONS
 *******************************************************************************/
