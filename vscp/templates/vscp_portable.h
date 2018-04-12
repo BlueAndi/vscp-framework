@@ -64,6 +64,7 @@ This module contains VSCP support functionality, which is used by the core.
 #include <stdint.h>
 #include "vscp_types.h"
 #include "vscp_config.h"
+#include "vscp_dev_data_config.h"
 
 #ifdef __cplusplus
 extern "C"
