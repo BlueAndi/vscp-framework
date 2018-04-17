@@ -24,6 +24,7 @@
         The core process routine will handle it, independent of the current internal state.
         Please increase your max. number of timers to be able to use this feature.
       - Callout function for every received segment controller heartbeat with timestamp implemented.
+      - MCU stored GUID is now supported additional to storing the GUID in code flash or in persistent memory.
 
 ## 0.6.1
 
