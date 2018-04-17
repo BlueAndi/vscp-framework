@@ -17,7 +17,7 @@
       - If a segment master don't assign a nickname id, a infinite segment master probe loop occurred.
 
     - Features:
-      - CLASS1.INFORMATION Type=69 - 76 added.
+      - CLASS1.INFORMATION Type=69 - 77 added.
       - CLASS1.CONTROL Type=42 - 43 added.
       - VSCP_TIMER_ID_INVALID introduced for invalid timer id. Please update your code accordingly, see template 'vscp_timer.c'.
       - The internal VSCP core time (time since epoch) is now updated once per second.

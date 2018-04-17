@@ -1207,6 +1207,25 @@ extern BOOL vscp_information_sendLockEvent(uint8_t index, uint8_t zone, uint8_t 
  */
 extern BOOL vscp_information_sendUnlockEvent(uint8_t index, uint8_t zone, uint8_t subZone);
 
+/**
+ * A device generated a date/time event. Time is UTC.
+ *
+ * @param[in] index Index for device. Set to zero if not used.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @param[in] year Year (0-4095)
+ * @param[in] month Month (1-12)
+ * @param[in] day Day (1-31)
+ * @param[in] hour Hour (0-23)
+ * @param[in] minute Minute (0-59)
+ * @param[in] second Second (0-59)
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendDateTime(uint8_t index, uint8_t zone, uint8_t subZone, uin16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second);
+
 #endif /* __VSCP_INFORMATION_H__ */
 
 /** @} */

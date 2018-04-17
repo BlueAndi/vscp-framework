@@ -298,6 +298,9 @@ extern "C"
 /** VSCP class 1 information type: A device got unlocked */
 #define VSCP_TYPE_INFORMATION_UNLOCK                                76
 
+/** VSCP class 1 information type: A device generated a date/time event. Time is UTC. */
+#define VSCP_TYPE_INFORMATION_DATETIME                              77
+
 /*******************************************************************************
     MACROS
 *******************************************************************************/

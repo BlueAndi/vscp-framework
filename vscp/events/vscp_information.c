@@ -2205,6 +2205,72 @@ extern BOOL vscp_information_sendUnlockEvent(uint8_t index, uint8_t zone, uint8_
     return vscp_core_sendEvent(&txMsg);
 }
 
+/**
+ * A device generated a date/time event. Time is UTC.
+ *
+ * @param[in] index Index for device. Set to zero if not used.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @param[in] year Year (0-4095)
+ * @param[in] month Month (1-12)
+ * @param[in] day Day (1-31)
+ * @param[in] hour Hour (0-23)
+ * @param[in] minute Minute (0-59)
+ * @param[in] second Second (0-59)
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendDateTime(uint8_t index, uint8_t zone, uint8_t subZone, uin16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second)
+{
+    vscp_TxMessage txMsg;
+
+    /* Year
+     *   mask: 0x0fff
+     *   bit position: 27-39
+     * 
+     * Month
+     *    mask: 0x0f
+     *    bit position: 23-26
+     * 
+     * Day
+     *     mask: 0x1f
+     *     bit position: 17-21
+     * 
+     * Hour
+     *     mask: 0x1f
+     *     bit position: 12-16
+     * 
+     * Minute
+     *     mask: 0x3f
+     *     bit position: 6-11
+     *
+     * Second
+     *     mask: 0x3f
+     *     bit position: 0-5
+     */
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_DATETIME, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 8;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+    /* 32-39 */
+    txMsg.data[3] = (year & 0x0fc0) >> 6;
+    /* 24-31 */
+    txMsg.data[4] = ((year & 0x003f) << 3) | ((month & 0x0e) >> 1);
+    /* 16-23 */
+    txMsg.data[5] = ((month & 0x01) << 7) | ((day & 0x1f) << 1) | ((hour & 0x10) >> 4);
+    /* 8-15 */
+    txMsg.data[6] = ((hour & 0x0f) << 4) | ((minute & 0x3c) >> 2);
+    /* 0-7 */
+    txMsg.data[7] = ((minute & 0x03) << 6) | ((second & 0x3f) >> 0);
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
 /*******************************************************************************
     LOCAL FUNCTIONS
 *******************************************************************************/
