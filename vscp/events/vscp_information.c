@@ -2222,7 +2222,7 @@ extern BOOL vscp_information_sendUnlockEvent(uint8_t index, uint8_t zone, uint8_
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_information_sendDateTime(uint8_t index, uint8_t zone, uint8_t subZone, uin16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second)
+extern BOOL vscp_information_sendDateTime(uint8_t index, uint8_t zone, uint8_t subZone, uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second)
 {
     vscp_TxMessage txMsg;
 
