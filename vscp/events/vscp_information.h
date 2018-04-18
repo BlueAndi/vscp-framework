@@ -1159,13 +1159,14 @@ extern BOOL vscp_information_sendDateEvent(uint8_t index, uint8_t zone, uint8_t 
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] hour Hour (0-23)
  * @param[in] minutes Minutes (0-59)
+ * @param[in] seconds Seconds (0-59)
  * @param[in] milliseconds Milliseconds (0-999)
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_information_sendTimeEvent(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t hour, uint8_t minutes, uint16_t milliseconds);
+extern BOOL vscp_information_sendTimeEvent(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t hour, uint8_t minutes, uint8_t seconds, uint16_t milliseconds);
 
 /**
  * Send day of the week event.
@@ -1224,7 +1225,7 @@ extern BOOL vscp_information_sendUnlockEvent(uint8_t index, uint8_t zone, uint8_
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_information_sendDateTime(uint8_t index, uint8_t zone, uint8_t subZone, uin16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second);
+extern BOOL vscp_information_sendDateTime(uint8_t index, uint8_t zone, uint8_t subZone, uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second);
 
 #endif /* __VSCP_INFORMATION_H__ */
 
