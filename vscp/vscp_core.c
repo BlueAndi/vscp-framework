@@ -1104,7 +1104,21 @@ static inline void  vscp_core_stateActive(void)
         /* Handle all protocol class specific events. This is mandatory for L1 and L2 nodes. */
         if (VSCP_CLASS_L1_PROTOCOL == vscp_core_rxMessage.vscpClass)
         {
+#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_PROTOCOL_EVENT_NOTIFICATION )
+
+            /* Notify application about event.
+             * If application handles event, the core will not handle it.
+             */
+            if (FALSE == vscp_portable_provideProtocolEvent(&vscp_core_rxMessage))
+            {
+                vscp_core_handleProtocolClassType();
+            }
+
+#else   /* VSCP_CONFIG_BASE_IS_DISABLED( VSCP_CONFIG_PROTOCOL_EVENT_NOTIFICATION ) */
+
             vscp_core_handleProtocolClassType();
+
+#endif  /* VSCP_CONFIG_BASE_IS_DISABLED( VSCP_CONFIG_PROTOCOL_EVENT_NOTIFICATION ) */
         }
         else
         /* Notify application */

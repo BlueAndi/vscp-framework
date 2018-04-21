@@ -195,7 +195,7 @@ extern void vscp_portable_bootLoaderRequest(void)
 /**
  * This function provides received VSCP events, except the PROTOCOL class.
  *
- * @param[out]  msg Message
+ * @param[in]   msg Message
  */
 extern void vscp_portable_provideEvent(vscp_RxMessage const * const msg)
 {
@@ -203,6 +203,31 @@ extern void vscp_portable_provideEvent(vscp_RxMessage const * const msg)
 
     return;
 }
+
+#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_PROTOCOL_EVENT_NOTIFICATION )
+
+/**
+ * This function provides received VSCP PROTOCOL class events.
+ *
+ * Attention: Handling events which the core is waiting for can cause bad
+ * behaviour.
+ * 
+ * @param[in]   msg Message
+ * 
+ * @return Event handled or not. If application handles event, the core won't handle it.
+ * @retval FALSE    Event not handled
+ * @retval TRUE     Event handled
+ */
+extern BOOL vscp_portable_provideProtocolEvent(vscp_RxMessage const * const msg)
+{
+    BOOL isEventHandled = FALSE;
+
+    /* Implement your code here ... */
+
+    return isEventHandled;
+}
+
+#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_PROTOCOL_EVENT_NOTIFICATION ) */
 
 #if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_SEGMENT_TIME_CALLOUT )
 

@@ -85,6 +85,7 @@ vscp_config_overwrite.h
 | <sub>VSCP\_CONFIG\_ENABLE\_DM\_NEXT\_GENERATION<sub> | <sub>disabled<sub> | <sub>Enable the decision matrix next generation.<sub> |
 | <sub>VSCP\_CONFIG\_ENABLE\_LOOPBACK<sub> | <sub>disabled<sub> | <sub>Enable a loopback for all sent VSCP events. This feature is interesting to invoke decision matrix actions by own sent VSCP events.<sub> |
 | <sub>VSCP\_CONFIG\_ENABLE\_SEGMENT\_TIME\_CALLOUT<sub> | <sub>disabled<sub> | <sub>Enable a time update callout for every received segment master heartbeat, in case the event contains a new time since epoch.<sub> |
+| <sub>VSCP\_CONFIG\_PROTOCOL\_EVENT\_NOTIFICATION<sub> | <sub>disabled<sub> | <sub>Usually the core handles all protocol class events and they are not forwarded to the application. Enable this to forward the events as well. If application handles the event, the core won't handle it. Attention: Handling events which the core is waiting for can cause bad behaviour.<sub> |
 
 | Parameter | Default | Description |
 | :-------: |:------: | :---------: |

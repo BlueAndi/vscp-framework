@@ -1,0 +1,93 @@
+@startuml
+
+title VSCP event handling
+
+participant "Application" as app
+participant "VSCP core" as core
+participant "VSCP transport" as tp
+participant "VSCP dm" as dm
+participant "VSCP action" as action
+
+note over core: In ACTIVE state
+
+app -> core: process
+activate app
+activate core
+
+core -> tp: read event
+activate tp
+
+tp --> core: event
+deactivate tp
+
+alt If CLASS1.PROTOCOL event
+
+    alt If CLASS1.PROTOCOL event notification configured
+        
+        alt Application handles event
+        
+            core -> app: provide event
+            activate app
+            
+            app -> app: handle event
+            app --> core: event handled
+            deactivate app
+        
+        else Application does not handle event
+        
+            core -> app: notify event
+            activate app
+            
+            app --> core: event not handled
+            deactivate app
+            
+            core -> core: handle event
+        
+        end alt
+        
+    else Else
+    
+        core -> core: handle event
+    
+    end alt
+
+else Else
+
+    core -> app: provide event
+    activate app
+    
+    app -> app: handle event
+    app --> core
+    deactivate app
+
+end alt
+
+    alt If DM configured
+
+        core -> dm: execute actions depended on event
+        activate dm
+        
+        loop For every DM row
+        
+            alt If DM row triggered
+            
+                dm -> action: execute action
+                activate action
+                
+                action --> dm
+                deactivate action
+            
+            end alt
+        
+        end loop
+        
+        dm --> core
+        deactivate dm
+    
+    end alt
+
+    core --> app
+    deactivate core
+    deactivate app
+    
+@enduml
