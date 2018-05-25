@@ -37,7 +37,6 @@ before_install:
     - sudo apt-get update -qq
 
 before_script:
-    
     - cd vscp
     - cd test
     - make cunit
