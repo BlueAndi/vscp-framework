@@ -31,7 +31,7 @@ This xml schema defines the VSCP module description file (MDF) format.
 ********************************************************************************
 -->
 
-<schema targetNamespace="http://www.blue-andi.de/vscp/mdf/1.0" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:mdf="http://www.blue-andi.de/vscp/mdf/1.0" attributeFormDefault="unqualified">
+<schema targetNamespace="http://www.blue-andi.de/vscp/xml-schema/mdf/1.0" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:mdf="http://www.blue-andi.de/vscp/xml-schema/mdf/1.0" attributeFormDefault="unqualified">
 
     <element name="vscp">
         <annotation>

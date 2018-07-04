@@ -31,210 +31,239 @@ This xml schema defines the VSCP protocol format.
 ********************************************************************************
 -->
 
-<schema targetNamespace="http://www.blue-andi.de/vscp-protocol" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:vscp="http://www.blue-andi.de/vscp-protocol">
+<xs:schema targetNamespace="http://www.blue-andi.de/vscp/xml-schema/vscp-protocol/1.0" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.blue-andi.de/vscp/xml-schema/vscp-protocol/1.0">
 
-    <annotation>
-    	<documentation>VSCP protocol format</documentation></annotation>
-    <attribute name="version">
-    	<simpleType>
-    		<restriction base="string">
-    			<pattern value="\d+\.\d+\.\d+"></pattern>
-    		</restriction>
-    	</simpleType>
-    </attribute>
+    <xs:annotation>
+    	<xs:documentation>VSCP protocol format</xs:documentation></xs:annotation>
 
-    <complexType name="Protocols">
-    	<sequence>
-    		<element ref="vscp:protocol" minOccurs="0" maxOccurs="unbounded"></element>
-    	</sequence>
-    </complexType>
+    <xs:complexType name="Protocols">
+    	<xs:sequence>
+    		<xs:element ref="protocol" minOccurs="0" maxOccurs="unbounded"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
     
-    <complexType name="Specification">
-    	<sequence>
-    		<element ref="vscp:protocols" minOccurs="0" maxOccurs="1"></element>
-    	</sequence>
-    	<attribute ref="vscp:version"></attribute>
-    </complexType>
-    
-    <complexType name="Protocol">
-    	<sequence>
-    		<element ref="vscp:name" minOccurs="1" maxOccurs="1"></element>
-    		<element ref="vscp:description" minOccurs="0" maxOccurs="1"></element>
-    	</sequence>
-    	<attribute ref="vscp:level"></attribute>
-    </complexType>
-
-    <attribute name="level">
-    	<simpleType>
-    		<restriction base="string">
-    			<enumeration value="1"></enumeration>
-    			<enumeration value="2"></enumeration>
-    			<enumeration value="1over2"></enumeration>
-    		</restriction>
-    	</simpleType>
-    </attribute>
-
-    <element name="specification" type="vscp:Specification"></element>
-
-    <element name="protocols" type="vscp:Protocols"></element>
-
-    <element name="protocol" type="vscp:Protocol"></element>
-
-    <element name="name" type="vscp:Text"></element>
-
-    <element name="description" type="vscp:Text"></element>
-
-    <attribute name="lang" type="string"></attribute>
-
-    <complexType name="Text">
-    	<attribute ref="vscp:lang"></attribute>
-    </complexType>
-
-    <complexType name="VSCP-Classes">
-    	<sequence>
-    		<element ref="vscp:vscp-class" minOccurs="0" maxOccurs="unbounded"></element>
-    	</sequence>
-    </complexType>
-    
-    <complexType name="VSCP-Class">
-    	<sequence>
-    		<element ref="vscp:name" minOccurs="1" maxOccurs="1"></element>
-    		<element ref="vscp:description" minOccurs="0" maxOccurs="1"></element>
-    	</sequence>
-    	<attribute ref="vscp:id"></attribute>
-    </complexType>
-
-    <element name="vscp-classes" type="vscp:VSCP-Classes"></element>
-
-    <element name="vscp-class" type="vscp:VSCP-Class"></element>
-
-    <attribute name="id" type="ID"></attribute>
-
-    <complexType name="VSCP-Types">
-    	<sequence>
-    		<element ref="vscp:vscp-type" minOccurs="0" maxOccurs="unbounded"></element>
-    	</sequence>
-    </complexType>
-    
-    <complexType name="VSCP-Type">
-    	<sequence>
-    		<element ref="vscp:name" maxOccurs="1" minOccurs="1"></element>
-    		<element ref="vscp:description" maxOccurs="1" minOccurs="0"></element>
-    		<element ref="vscp:frame-selector" maxOccurs="1" minOccurs="0"></element>
-    	</sequence>
-    	<attribute ref="vscp:id"></attribute>
-    </complexType>
-
-    <element name="vscp-types" type="vscp:VSCP-Types"></element>
-
-    <element name="vscp-type" type="vscp:VSCP-Type"></element>
-
-    <complexType name="Frames">
-    	<sequence>
-    		<element ref="vscp:frame" minOccurs="0" maxOccurs="unbounded"></element>
-    	</sequence>
-    </complexType>
-    
-    <complexType name="Frame">
-    	<sequence>
-    		<element ref="vscp:name"></element>
-    		<element ref="vscp:description"></element>
-    	</sequence>
-    	<attribute ref="vscp:id"></attribute>
-    </complexType>
-
-    <element name="frames" type="vscp:Frames"></element>
-
-    <element name="frame" type="vscp:Frame"></element>
-
-    <complexType name="Elements">
-    	<sequence>
-    		<element ref="vscp:element" maxOccurs="unbounded" minOccurs="0"></element>
-    	</sequence>
-    </complexType>
-
-    <complexType name="Element">
-    	<sequence>
-    		<element ref="vscp:name" maxOccurs="1" minOccurs="1"></element>
-    		<element ref="vscp:description" maxOccurs="1" minOccurs="0"></element>
-    		<element ref="vscp:bitfield" minOccurs="0" maxOccurs="1"></element>
-    	</sequence>
-    	<attribute name="pos" type="unsignedInt"></attribute>
-    	<attribute name="type" type="string"></attribute>
-    	<attribute name="num" type="unsignedInt"></attribute>
-    	<attribute name="optional" type="boolean"></attribute>
-    </complexType>
-
-    <element name="elements" type="vscp:Elements"></element>
-
-    <element name="element" type="vscp:Element"></element>
-
-    <complexType name="Bitfield">
-    	<sequence>
-    		<element ref="vscp:bit" minOccurs="0" maxOccurs="unbounded"></element>
-    	</sequence>
-    </complexType>
-    
-    <element name="bitfield" type="vscp:Bitfield"></element>
-
-    <complexType name="Bit">
-    	<sequence>
-    		<element name="pos" type="unsignedInt"></element>
-    		<element ref="vscp:name"></element>
-    		<element ref="vscp:description"></element>
-    	</sequence>
-    </complexType>
-    
-    <element name="bit" type="vscp:Bit"></element>
-
-    <complexType name="Enumeration">
-    	<sequence>
-    		<element ref="vscp:enum" maxOccurs="unbounded" minOccurs="0"></element>
-    	</sequence>
-    </complexType>
-    
-    <complexType name="Enum">
-    	<simpleContent>
-    		<extension base="string">
-    			<attribute ref="vscp:id"></attribute>
-    		</extension>
-    	</simpleContent>
-    </complexType>
-
-    <element name="enumeration" type="vscp:Enumeration"></element>
-
-    <element name="enum" type="vscp:Enum"></element>
-
-    <complexType name="Frame-Selector">
-    	<attribute name="pos" type="unsignedInt"></attribute>
-    	<attribute name="type" type="string"></attribute>
-    </complexType>
-
-    <element name="frame-selector" type="vscp:Frame-Selector"></element>
-
-    <complexType name="Sub-Elements">
-    	<sequence>
-    		<element ref="vscp:sub-element" maxOccurs="unbounded" minOccurs="0"></element>
-    	</sequence>
-    </complexType>
-    
-    <complexType name="Sub-Element">
-    	<sequence>
-    		<element name="begin" type="unsignedInt" maxOccurs="1"
-    			minOccurs="1">
-    		</element>
-    		<element name="end" type="unsignedInt" maxOccurs="1"
-    			minOccurs="1">
-    		</element>
-    		<element ref="vscp:name" maxOccurs="1" minOccurs="1"></element>
-    		<element ref="vscp:description" maxOccurs="1"
+    <xs:complexType name="Specification">
+    	<xs:sequence>
+    		<xs:element ref="protocols" minOccurs="0" maxOccurs="1"></xs:element>
+    		<xs:element ref="type-definitions" maxOccurs="1"
     			minOccurs="0">
-    		</element>
-    		<element ref="vscp:enumeration" maxOccurs="1" minOccurs="0"></element>
-    	</sequence>
-    </complexType>
-    
-    <element name="sub-elements" type="vscp:Sub-Elements"></element>
+    		</xs:element>
+    	</xs:sequence>
+    	<xs:attribute name="version">
+    		<xs:simpleType>
+    			<xs:restriction base="xs:string">
+    				<xs:pattern value="\d+\.\d+\.\d+"></xs:pattern>
+    			</xs:restriction>
+    		</xs:simpleType>
+    	</xs:attribute>
+    </xs:complexType>
 
-    <element name="sub-element" type="vscp:Sub-Element"></element>
-</schema>
+    <xs:complexType name="Protocol">
+    	<xs:sequence>
+    		<xs:element ref="name" minOccurs="1" maxOccurs="1"></xs:element>
+    		<xs:element ref="description" minOccurs="0" maxOccurs="1"></xs:element>
+    		<xs:element ref="vscp-classes" maxOccurs="1"
+    			minOccurs="0">
+    		</xs:element>
+    	</xs:sequence>
+    	<xs:attribute name="level">
+    		<xs:simpleType>
+    			<xs:restriction base="xs:string">
+    				<xs:enumeration value="1"></xs:enumeration>
+    				<xs:enumeration value="2"></xs:enumeration>
+    				<xs:enumeration value="1over2"></xs:enumeration>
+    			</xs:restriction>
+    		</xs:simpleType>
+    	</xs:attribute>
+    </xs:complexType>
+    
+
+    <xs:element name="specification" type="Specification"></xs:element>
+
+    <xs:element name="protocols" type="Protocols"></xs:element>
+
+    <xs:element name="protocol" type="Protocol"></xs:element>
+
+    <xs:element name="name" type="Text"></xs:element>
+
+    <xs:element name="description" type="Text"></xs:element>
+
+
+    <xs:complexType name="Text">
+    	<xs:simpleContent>
+    		<xs:extension base="xs:string">
+    			<xs:attribute name="lang" type="xs:string"></xs:attribute>
+    		</xs:extension>
+    	</xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="VSCP-Classes">
+    	<xs:sequence>
+    		<xs:element ref="vscp-class" minOccurs="0" maxOccurs="unbounded"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="VSCP-Class">
+    	<xs:sequence>
+    		<xs:element ref="name" minOccurs="1" maxOccurs="1"></xs:element>
+    		<xs:element ref="description" minOccurs="0" maxOccurs="1"></xs:element>
+    		<xs:element ref="vscp-types" maxOccurs="1" minOccurs="0"></xs:element>
+    	</xs:sequence>
+    	<xs:attribute name="id" type="xs:unsignedInt"></xs:attribute>
+    </xs:complexType>
+
+    <xs:element name="vscp-classes" type="VSCP-Classes"></xs:element>
+
+    <xs:element name="vscp-class" type="VSCP-Class"></xs:element>
+
+
+    <xs:complexType name="VSCP-Types">
+    	<xs:sequence>
+    		<xs:element ref="vscp-type" minOccurs="0" maxOccurs="unbounded"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="VSCP-Type">
+    	<xs:sequence>
+    		<xs:element ref="name" maxOccurs="1" minOccurs="1"></xs:element>
+    		<xs:element ref="description" maxOccurs="1" minOccurs="0"></xs:element>
+    		<xs:element ref="frame-selector" maxOccurs="1"
+    			minOccurs="0">
+    		</xs:element>
+    		<xs:element ref="frames" maxOccurs="1" minOccurs="0"></xs:element>
+    	</xs:sequence>
+    	<xs:attribute name="id" type="xs:unsignedInt"></xs:attribute>
+    </xs:complexType>
+
+    <xs:element name="vscp-types" type="VSCP-Types"></xs:element>
+
+    <xs:element name="vscp-type" type="VSCP-Type"></xs:element>
+
+    <xs:complexType name="Frames">
+    	<xs:sequence>
+    		<xs:element ref="frame" minOccurs="0" maxOccurs="unbounded"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="Frame">
+    	<xs:sequence>
+    		<xs:element ref="name" maxOccurs="1" minOccurs="1"></xs:element>
+    		<xs:element ref="description" maxOccurs="1" minOccurs="0"></xs:element>
+    		<xs:element ref="elements" maxOccurs="1" minOccurs="0"></xs:element>
+    	</xs:sequence>
+    	<xs:attribute name="id" type="xs:unsignedInt"></xs:attribute>
+    </xs:complexType>
+
+    <xs:element name="frames" type="Frames"></xs:element>
+
+    <xs:element name="frame" type="Frame"></xs:element>
+
+    <xs:complexType name="Elements">
+    	<xs:sequence>
+    		<xs:element ref="element" maxOccurs="unbounded" minOccurs="0"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Element">
+    	<xs:sequence>
+    		<xs:element ref="name" maxOccurs="1" minOccurs="1"></xs:element>
+    		<xs:element ref="description" maxOccurs="1" minOccurs="0"></xs:element>
+    		<xs:element ref="bitfield" minOccurs="0" maxOccurs="1"></xs:element>
+    		<xs:element ref="enumeration" maxOccurs="1" minOccurs="0"></xs:element>
+    		<xs:element ref="sub-elements" maxOccurs="1" minOccurs="0"></xs:element>
+    	</xs:sequence>
+    	<xs:attribute name="pos" type="xs:unsignedInt"></xs:attribute>
+    	<xs:attribute name="type" type="xs:string"></xs:attribute>
+    	<xs:attribute name="num" type="xs:unsignedInt"></xs:attribute>
+    	<xs:attribute name="optional" type="xs:boolean"></xs:attribute>
+    </xs:complexType>
+
+    <xs:element name="elements" type="Elements"></xs:element>
+
+    <xs:element name="element" type="Element"></xs:element>
+
+    <xs:complexType name="Bitfield">
+    	<xs:sequence>
+    		<xs:element ref="bit" minOccurs="0" maxOccurs="unbounded"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+    
+    <xs:element name="bitfield" type="Bitfield"></xs:element>
+
+    <xs:complexType name="Bit">
+    	<xs:simpleContent>
+    		<xs:extension base="xs:string">
+    			<xs:attribute name="pos" type="xs:unsignedInt"></xs:attribute>
+    		</xs:extension>
+    	</xs:simpleContent>
+    </xs:complexType>
+
+    <xs:element name="bit" type="Bit"></xs:element>
+
+    <xs:complexType name="Enumeration">
+    	<xs:sequence>
+    		<xs:element ref="enum" maxOccurs="unbounded" minOccurs="0"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="Enum">
+    	<xs:simpleContent>
+    		<xs:extension base="xs:string">
+    			<xs:attribute name="id" type="xs:unsignedInt"></xs:attribute>
+    		</xs:extension>
+    	</xs:simpleContent>
+    </xs:complexType>
+
+    <xs:element name="enumeration" type="Enumeration"></xs:element>
+
+    <xs:element name="enum" type="Enum"></xs:element>
+
+    <xs:complexType name="Frame-Selector">
+    	<xs:attribute name="pos" type="xs:unsignedInt"></xs:attribute>
+    	<xs:attribute name="type" type="xs:string"></xs:attribute>
+    </xs:complexType>
+
+    <xs:element name="frame-selector" type="Frame-Selector"></xs:element>
+
+    <xs:complexType name="Sub-Elements">
+    	<xs:sequence>
+    		<xs:element ref="sub-element" maxOccurs="unbounded" minOccurs="0"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="Sub-Element">
+    	<xs:sequence>
+    		<xs:element ref="name" maxOccurs="1" minOccurs="1"></xs:element>
+    		<xs:element ref="description" maxOccurs="1" minOccurs="0">
+    		</xs:element>
+    		<xs:element ref="enumeration" maxOccurs="1" minOccurs="0"></xs:element>
+    	</xs:sequence>
+    	<xs:attribute name="begin" type="xs:unsignedInt"></xs:attribute>
+    	<xs:attribute name="end" type="xs:unsignedInt"></xs:attribute>
+    </xs:complexType>
+
+    <xs:element name="sub-elements" type="Sub-Elements"></xs:element>
+
+    <xs:element name="sub-element" type="Sub-Element"></xs:element>
+
+    <xs:complexType name="Type-Definitions">
+    	<xs:sequence>
+    		<xs:element ref="type-definition" maxOccurs="unbounded" minOccurs="0"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="Type-Definition">
+    	<xs:sequence>
+    		<xs:element name="name" type="xs:string" maxOccurs="1"
+    			minOccurs="1">
+    		</xs:element>
+    		<xs:element name="size" type="xs:unsignedInt" maxOccurs="1" minOccurs="1"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+    
+    <xs:element name="type-definitions" type="Type-Definitions"></xs:element>
+
+    <xs:element name="type-definition" type="Type-Definition"></xs:element>
+
+
+</xs:schema>
