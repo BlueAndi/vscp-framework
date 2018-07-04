@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+The MIT License (MIT)
+
+Copyright (c) 2014 - 2018, Andreas Merkle
+http://www.blue-andi.de
+vscp@blue-andi.de
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+********************************************************************************
+This xml schema defines the VSCP protocol format.
+********************************************************************************
+-->
+
+<schema targetNamespace="http://www.blue-andi.de/vscp-protocol" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:vscp="http://www.blue-andi.de/vscp-protocol">
+
+    <annotation>
+    	<documentation>VSCP protocol format</documentation></annotation>
+    <attribute name="version">
+    	<simpleType>
+    		<restriction base="string">
+    			<pattern value="\d+\.\d+\.\d+"></pattern>
+    		</restriction>
+    	</simpleType>
+    </attribute>
+
+    <complexType name="Protocols">
+    	<sequence>
+    		<element ref="vscp:protocol" minOccurs="0" maxOccurs="unbounded"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="Specification">
+    	<sequence>
+    		<element ref="vscp:protocols" minOccurs="0" maxOccurs="1"></element>
+    	</sequence>
+    	<attribute ref="vscp:version"></attribute>
+    </complexType>
+    
+    <complexType name="Protocol">
+    	<sequence>
+    		<element ref="vscp:name" minOccurs="1" maxOccurs="1"></element>
+    		<element ref="vscp:description" minOccurs="0" maxOccurs="1"></element>
+    	</sequence>
+    	<attribute ref="vscp:level"></attribute>
+    </complexType>
+
+    <attribute name="level">
+    	<simpleType>
+    		<restriction base="string">
+    			<enumeration value="1"></enumeration>
+    			<enumeration value="2"></enumeration>
+    			<enumeration value="1over2"></enumeration>
+    		</restriction>
+    	</simpleType>
+    </attribute>
+
+    <element name="specification" type="vscp:Specification"></element>
+
+    <element name="protocols" type="vscp:Protocols"></element>
+
+    <element name="protocol" type="vscp:Protocol"></element>
+
+    <element name="name" type="vscp:Text"></element>
+
+    <element name="description" type="vscp:Text"></element>
+
+    <attribute name="lang" type="string"></attribute>
+
+    <complexType name="Text">
+    	<attribute ref="vscp:lang"></attribute>
+    </complexType>
+
+    <complexType name="VSCP-Classes">
+    	<sequence>
+    		<element ref="vscp:vscp-class" minOccurs="0" maxOccurs="unbounded"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="VSCP-Class">
+    	<sequence>
+    		<element ref="vscp:name" minOccurs="1" maxOccurs="1"></element>
+    		<element ref="vscp:description" minOccurs="0" maxOccurs="1"></element>
+    	</sequence>
+    	<attribute ref="vscp:id"></attribute>
+    </complexType>
+
+    <element name="vscp-classes" type="vscp:VSCP-Classes"></element>
+
+    <element name="vscp-class" type="vscp:VSCP-Class"></element>
+
+    <attribute name="id" type="ID"></attribute>
+
+    <complexType name="VSCP-Types">
+    	<sequence>
+    		<element ref="vscp:vscp-type" minOccurs="0" maxOccurs="unbounded"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="VSCP-Type">
+    	<sequence>
+    		<element ref="vscp:name" maxOccurs="1" minOccurs="1"></element>
+    		<element ref="vscp:description" maxOccurs="1" minOccurs="0"></element>
+    		<element ref="vscp:frame-selector" maxOccurs="1" minOccurs="0"></element>
+    	</sequence>
+    	<attribute ref="vscp:id"></attribute>
+    </complexType>
+
+    <element name="vscp-types" type="vscp:VSCP-Types"></element>
+
+    <element name="vscp-type" type="vscp:VSCP-Type"></element>
+
+    <complexType name="Frames">
+    	<sequence>
+    		<element ref="vscp:frame" minOccurs="0" maxOccurs="unbounded"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="Frame">
+    	<sequence>
+    		<element ref="vscp:name"></element>
+    		<element ref="vscp:description"></element>
+    	</sequence>
+    	<attribute ref="vscp:id"></attribute>
+    </complexType>
+
+    <element name="frames" type="vscp:Frames"></element>
+
+    <element name="frame" type="vscp:Frame"></element>
+
+    <complexType name="Elements">
+    	<sequence>
+    		<element ref="vscp:element" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="Element">
+    	<sequence>
+    		<element ref="vscp:name" maxOccurs="1" minOccurs="1"></element>
+    		<element ref="vscp:description" maxOccurs="1" minOccurs="0"></element>
+    		<element ref="vscp:bitfield" minOccurs="0" maxOccurs="1"></element>
+    	</sequence>
+    	<attribute name="pos" type="unsignedInt"></attribute>
+    	<attribute name="type" type="string"></attribute>
+    	<attribute name="num" type="unsignedInt"></attribute>
+    	<attribute name="optional" type="boolean"></attribute>
+    </complexType>
+
+    <element name="elements" type="vscp:Elements"></element>
+
+    <element name="element" type="vscp:Element"></element>
+
+    <complexType name="Bitfield">
+    	<sequence>
+    		<element ref="vscp:bit" minOccurs="0" maxOccurs="unbounded"></element>
+    	</sequence>
+    </complexType>
+    
+    <element name="bitfield" type="vscp:Bitfield"></element>
+
+    <complexType name="Bit">
+    	<sequence>
+    		<element name="pos" type="unsignedInt"></element>
+    		<element ref="vscp:name"></element>
+    		<element ref="vscp:description"></element>
+    	</sequence>
+    </complexType>
+    
+    <element name="bit" type="vscp:Bit"></element>
+
+    <complexType name="Enumeration">
+    	<sequence>
+    		<element ref="vscp:enum" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="Enum">
+    	<simpleContent>
+    		<extension base="string">
+    			<attribute ref="vscp:id"></attribute>
+    		</extension>
+    	</simpleContent>
+    </complexType>
+
+    <element name="enumeration" type="vscp:Enumeration"></element>
+
+    <element name="enum" type="vscp:Enum"></element>
+
+    <complexType name="Frame-Selector">
+    	<attribute name="pos" type="unsignedInt"></attribute>
+    	<attribute name="type" type="string"></attribute>
+    </complexType>
+
+    <element name="frame-selector" type="vscp:Frame-Selector"></element>
+
+    <complexType name="Sub-Elements">
+    	<sequence>
+    		<element ref="vscp:sub-element" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="Sub-Element">
+    	<sequence>
+    		<element name="begin" type="unsignedInt" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="end" type="unsignedInt" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element ref="vscp:name" maxOccurs="1" minOccurs="1"></element>
+    		<element ref="vscp:description" maxOccurs="1"
+    			minOccurs="0">
+    		</element>
+    		<element ref="vscp:enumeration" maxOccurs="1" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+    
+    <element name="sub-elements" type="vscp:Sub-Elements"></element>
+
+    <element name="sub-element" type="vscp:Sub-Element"></element>
+</schema>
