@@ -352,7 +352,7 @@ extern uint8_t  eeprom_read8(uint16_t addr)
     {
         char    logBuffer[255];
 
-        snprintf(logBuffer, 255, "Address is out of bounce: %u", addr);
+        snprintf(logBuffer, 255, "Address is out of bounds: %u", addr);
         LOG_ERROR(logBuffer);
     }
 
@@ -377,7 +377,7 @@ extern void eeprom_write8(uint16_t addr, uint8_t value)
     {
         char    logBuffer[255];
 
-        snprintf(logBuffer, 255, "Address is out of bounce: %u", addr);
+        snprintf(logBuffer, 255, "Address is out of bounds: %u", addr);
         LOG_ERROR(logBuffer);
     }
 
