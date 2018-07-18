@@ -1,3 +1,10 @@
+## 0.x.y
+
+  - Examples
+    - PC
+      - Fixed the GUID in the event, sent by the node. It must be always
+        a combination of interface GUID and the node nickname id at LSB byte.
+
 ## 0.7.0
 
   - Common
