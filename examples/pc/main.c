@@ -137,16 +137,16 @@ static CMDLINEPARSER_RET main_clpLevel(void* const userData, char const * const 
 /** Command line argument structure, which is initialized after parsing. */
 static main_CmdLineArgs         main_cmdLineArgs    =
 {
-    NULL,                   /* Program name */
-    NULL,                   /* Daemon address */
-    NULL,                   /* Daemon user name */
-    NULL,                   /* Daemon password */
-    NULL,                   /* Node GUID */
-    FALSE,                  /* Disable node heartbeat */
-    FALSE,                  /* Disable temperature simuluation */
-    FALSE,                  /* Verbose output */
-    FALSE,                  /* Show help */
-    VSCP_TP_ADAPTER_LVL_1   /* Network level */
+    NULL,                           /* Program name */
+    NULL,                           /* Daemon address */
+    NULL,                           /* Daemon user name */
+    NULL,                           /* Daemon password */
+    NULL,                           /* Node GUID */
+    FALSE,                          /* Disable node heartbeat */
+    FALSE,                          /* Disable temperature simuluation */
+    FALSE,                          /* Verbose output */
+    FALSE,                          /* Show help */
+    VSCP_TP_ADAPTER_LVL_1_OVER_2    /* Network level */
 };
 
 /** Configuration for the command line parser. */
@@ -241,7 +241,7 @@ int main(int argc, char* argv[])
     uint8_t index   = 0;
 
     printf("\n%s\n", MAIN_PROG_NAME);
-    printf("Version: %s\n", VERSION);
+    printf("Version: %s (%s)\n", VERSION, BUILDTYPE);
     printf("%s\n\n", MAIN_COPYRIGHT);
 
     /* Initialize all modules */
