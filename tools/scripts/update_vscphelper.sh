@@ -5,6 +5,11 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
+if [ -z "$1" ]; then
+    echo Variant is missing. Please specify release or debug.
+    exit 1
+fi
+
 VSCPHELPER_PATH=../../common/pc/vscphelper/
 
 echo Updating the vscphelper ...
@@ -18,10 +23,7 @@ cp $1/src/vscp/common/vscp_class.h $VSCPHELPER_PATH
 cp $1/src/vscp/common/vscp_type.h $VSCPHELPER_PATH
 cp $1/src/vscp/helperlib/vscphelperlib.h $VSCPHELPER_PATH
 
-cp $1/src/vscp/helperlib/linux/debug/vscphelper.so $VSCPHELPER_PATH/lib/linux/debug/
-cp $1/src/vscp/helperlib/linux/debug/vscphelper.a $VSCPHELPER_PATH/lib/linux/debug/
-
-cp $1/src/vscp/helperlib/linux/release/vscphelper.so $VSCPHELPER_PATH/lib/linux/release/
-cp $1/src/vscp/helperlib/linux/release/vscphelper.a $VSCPHELPER_PATH/lib/linux/release/
+cp $1/src/vscp/helperlib/linux/vscphelper.so $VSCPHELPER_PATH/lib/linux/$2/
+cp $1/src/vscp/helperlib/linux/vscphelper.a $VSCPHELPER_PATH/lib/linux/$2/
 
 echo Finished.
