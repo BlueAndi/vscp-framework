@@ -89,7 +89,7 @@ Error codes:
 
 ## Facts
 
-* The bootloader supports only programming to program space right now.
+* The bootloader supports only programming the program space right now.
 * The bootloader can only handle complete blocks. If the last block is not completly received from a programmer, the bootloader will infinite wait for the rest!
   In other words, the size of the new application shall be always a multiple of the block size.
 

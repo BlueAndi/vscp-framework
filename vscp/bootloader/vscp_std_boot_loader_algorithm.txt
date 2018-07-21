@@ -1,12 +1,12 @@
 @startuml
 
-title "Software Update Procedure"
+title "Firmware Update Procedure"
 
 participant Master as master
 participant Node as node
 
 master ->> node: Enter boot loader mode\n(algorithm)
-node ->> master: Enter boot loader mode acknowledge\n(block size and number of blocks)
+node ->> master: Enter boot loader mode acknowledge\n(block size and max. number of blocks)
 
 loop Until all blocks are programmed
     master ->> node: Start block data transfer\n(block number)
