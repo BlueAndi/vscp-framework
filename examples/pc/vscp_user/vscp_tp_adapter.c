@@ -82,6 +82,7 @@ typedef struct
 {
     long                hSession;   /**< Session handle */
     VSCP_TP_ADAPTER_LVL lvl;        /**< Network level */
+    uint8_t             interfaceGUID[VSCP_TP_ADAPTER_INTERFACE_GUID_SIZE]; /**< Interface GUID */
 
 } vscp_tp_adapter_NetPar;
 
@@ -365,9 +366,16 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg)
                 daemonEvent.head        = 0;
                 daemonEvent.head        |= (msg->priority & 0x07) << 5;
                 daemonEvent.head        |= (msg->hardCoded & 0x01) << 4;
-                daemonEvent.GUID[15]    = msg->oAddr; /* Node GUID LSB */
                 daemonEvent.sizeData    = msg->dataNum;
+                
+                /* Assign interface GUID and node nickname at LSB byte */
+                for(index = 0; index < (VSCP_TP_ADAPTER_INTERFACE_GUID_SIZE - 1); ++index)
+                {
+                    daemonEvent.GUID[index] = client->interfaceGUID[index];
+                }
+                daemonEvent.GUID[index] = msg->oAddr; /* Node nickname shall be at interface GUID LSB byte */
 
+                /* Copy event data */
                 for(index = 0; index < daemonEvent.sizeData; ++index)
                 {
                     daemonEvent.data[index] = msg->data[index];
@@ -540,6 +548,12 @@ extern VSCP_TP_ADAPTER_RET vscp_tp_adapter_connect(char const * const ipAddr, ch
         LOG_ERROR_INT32("Couldn't clear rx event queue:", vscphlpRet);
         status = VSCP_TP_ADAPTER_RET_ERROR;
     }
+    /* Get interface GUID */
+    else if (VSCP_ERROR_SUCCESS != (vscphlpRet = vscphlp_getGUID(client->hSession, client->interfaceGUID)))
+    {
+        LOG_ERROR_INT32("Couldn't get interface GUID:", vscphlpRet);
+        status = VSCP_TP_ADAPTER_RET_ERROR;
+    }
     else
     /* Successful connected */
     {
@@ -552,6 +566,24 @@ extern VSCP_TP_ADAPTER_RET vscp_tp_adapter_connect(char const * const ipAddr, ch
         vscp_tp_adapter_isConnected = TRUE;
 
         LOG_INFO("Connected.");
+        
+        log_printf("Interface GUID: %02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X\n",
+                    client->interfaceGUID[0],
+                    client->interfaceGUID[1],
+                    client->interfaceGUID[2],
+                    client->interfaceGUID[3],
+                    client->interfaceGUID[4],
+                    client->interfaceGUID[5],
+                    client->interfaceGUID[6],
+                    client->interfaceGUID[7],
+                    client->interfaceGUID[8],
+                    client->interfaceGUID[9],
+                    client->interfaceGUID[10],
+                    client->interfaceGUID[11],
+                    client->interfaceGUID[12],
+                    client->interfaceGUID[13],
+                    client->interfaceGUID[14],
+                    client->interfaceGUID[15]);
 
         /* Get version of remote VSCP daemon */
         if (VSCP_ERROR_SUCCESS != (vscphlpRet = vscphlp_getVersion(client->hSession, &major, &minor, &subMinor)))
