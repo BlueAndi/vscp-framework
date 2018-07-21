@@ -36,18 +36,16 @@ This xml schema defines the VSCP protocol format.
     <xs:annotation>
     	<xs:documentation>VSCP protocol format</xs:documentation></xs:annotation>
 
-    <xs:complexType name="Protocols">
-    	<xs:sequence>
-    		<xs:element ref="protocol" minOccurs="0" maxOccurs="unbounded"></xs:element>
-    	</xs:sequence>
-    </xs:complexType>
     
     <xs:complexType name="Specification">
     	<xs:sequence>
-    		<xs:element ref="protocols" minOccurs="0" maxOccurs="1"></xs:element>
+    		<xs:element ref="vscp-classes" maxOccurs="1"
+    			minOccurs="0">
+    		</xs:element>
     		<xs:element ref="type-definitions" maxOccurs="1"
     			minOccurs="0">
     		</xs:element>
+    		<xs:element ref="levels" maxOccurs="1" minOccurs="0"></xs:element>
     	</xs:sequence>
     	<xs:attribute name="version">
     		<xs:simpleType>
@@ -58,31 +56,14 @@ This xml schema defines the VSCP protocol format.
     	</xs:attribute>
     </xs:complexType>
 
-    <xs:complexType name="Protocol">
-    	<xs:sequence>
-    		<xs:element ref="name" minOccurs="1" maxOccurs="1"></xs:element>
-    		<xs:element ref="description" minOccurs="0" maxOccurs="1"></xs:element>
-    		<xs:element ref="vscp-classes" maxOccurs="1"
-    			minOccurs="0">
-    		</xs:element>
-    	</xs:sequence>
-    	<xs:attribute name="level">
-    		<xs:simpleType>
-    			<xs:restriction base="xs:string">
-    				<xs:enumeration value="1"></xs:enumeration>
-    				<xs:enumeration value="2"></xs:enumeration>
-    				<xs:enumeration value="1over2"></xs:enumeration>
-    			</xs:restriction>
-    		</xs:simpleType>
-    	</xs:attribute>
-    </xs:complexType>
-    
 
-    <xs:element name="specification" type="Specification"></xs:element>
 
-    <xs:element name="protocols" type="Protocols"></xs:element>
+    <xs:element name="specification" type="Specification">
+    	<xs:annotation>
+    		<xs:documentation>The specification is the top level element.</xs:documentation>
+    	</xs:annotation></xs:element>
 
-    <xs:element name="protocol" type="Protocol"></xs:element>
+
 
     <xs:element name="name" type="Text"></xs:element>
 
@@ -130,7 +111,10 @@ This xml schema defines the VSCP protocol format.
     		<xs:element ref="frame-selector" maxOccurs="1"
     			minOccurs="0">
     		</xs:element>
-    		<xs:element ref="frames" maxOccurs="1" minOccurs="0"></xs:element>
+    		<xs:choice maxOccurs="1" minOccurs="0">
+    			<xs:element ref="frames" maxOccurs="1" minOccurs="0"></xs:element>
+    			<xs:element ref="frames-ref" maxOccurs="1" minOccurs="0"></xs:element>
+    		</xs:choice>
     	</xs:sequence>
     	<xs:attribute name="id" type="xs:unsignedInt"></xs:attribute>
     </xs:complexType>
@@ -266,4 +250,44 @@ This xml schema defines the VSCP protocol format.
     <xs:element name="type-definition" type="Type-Definition"></xs:element>
 
 
+
+    <xs:complexType name="Frames-Ref">
+    	<xs:simpleContent>
+    		<xs:extension base="xs:string"></xs:extension>
+    	</xs:simpleContent>
+    </xs:complexType>
+    
+    <xs:element name="frames-ref" type="Frames-Ref"></xs:element>
+
+
+
+    <xs:complexType name="Levels">
+    	<xs:sequence>
+    		<xs:element ref="level" maxOccurs="unbounded" minOccurs="0"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="Level">
+    	<xs:sequence>
+    		<xs:element ref="name" maxOccurs="1" minOccurs="1"></xs:element>
+    		<xs:element ref="vscp-class-id-range" maxOccurs="1" minOccurs="1"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+    
+    <xs:element name="levels" type="Levels"></xs:element>
+
+    <xs:element name="level" type="Level"></xs:element>
+
+    <xs:complexType name="VSCP-Class-Id-Range">
+    	<xs:sequence>
+    		<xs:element ref="begin"></xs:element>
+    		<xs:element ref="end"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+    
+    <xs:element name="vscp-class-id-range" type="VSCP-Class-Id-Range"></xs:element>
+
+    <xs:element name="begin" type="xs:unsignedInt"></xs:element>
+
+    <xs:element name="end" type="xs:unsignedInt"></xs:element>
 </xs:schema>
