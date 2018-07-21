@@ -23,7 +23,7 @@ cp $1/src/vscp/common/vscp_class.h $VSCPHELPER_PATH
 cp $1/src/vscp/common/vscp_type.h $VSCPHELPER_PATH
 cp $1/src/vscp/helperlib/vscphelperlib.h $VSCPHELPER_PATH
 
-cp $1/src/vscp/helperlib/linux/vscphelper.so $VSCPHELPER_PATH/lib/linux/$2/
-cp $1/src/vscp/helperlib/linux/vscphelper.a $VSCPHELPER_PATH/lib/linux/$2/
+cp $1/src/vscp/helperlib/linux/libvscphelper.so $VSCPHELPER_PATH/lib/linux/$2/
+cp $1/src/vscp/helperlib/linux/libvscphelper.a $VSCPHELPER_PATH/lib/linux/$2/
 
 echo Finished.
