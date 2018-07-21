@@ -4,6 +4,11 @@
     - PC
       - Fixed the GUID in the event, sent by the node. It must be always
         a combination of interface GUID and the node nickname id at LSB byte.
+      - Fixed the default option of supported events.
+        
+  - Projects
+    - PC
+      - All projects adapted according to the possible usage of vscphelper library in debug or release variant.
 
 ## 0.7.0
 
