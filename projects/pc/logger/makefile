@@ -98,7 +98,7 @@ CFLAGS= -Wall -ffunction-sections -fdata-sections -fshort-enums -std=gnu99 -funs
 # -Wl,--cref        : Add cross reference to map file
 # -Wl,--gc-sections : Enable garbage collection of unused input sections
 # -Wl,-rpath='$$ORIGIN/../lib/linux' : Set shared object search path
-LDFLAGS= -Wall -Wl,-Map,$(BINDIR)/$(BIN).map -Wl,--cref -Wl,--gc-sections -Wl,-rpath='$$ORIGIN/../../../../common/pc/vscphelper/lib/linux'
+LDFLAGS= -Wall -Wl,-Map,$(BINDIR)/$(BIN).map -Wl,--cref -Wl,--gc-sections -Wl,-rpath='$$ORIGIN/../../../../common/pc/vscphelper/lib/linux/$(BUILDTYPE)'
 
 ifeq ($(MAKECMDGOALS),debug)
 
