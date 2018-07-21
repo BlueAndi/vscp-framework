@@ -5,7 +5,7 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-VSCPHELPER_PATH=../common/pc/vscphelper/
+VSCPHELPER_PATH=../../common/pc/vscphelper/
 
 echo Updating the vscphelper ...
 

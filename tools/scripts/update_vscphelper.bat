@@ -5,7 +5,7 @@ if "%1" == "" (
     exit 1
 )
 
-set VSCPHELPER_PATH=..\common\pc\vscphelper
+set VSCPHELPER_PATH=..\..\common\pc\vscphelper
 
 echo Updating the vscphelper ...
 
