@@ -55,8 +55,24 @@ SOURCES= main.c \
 # Include all source pathes here like ../src1:../src2
 VPATH= ../../../common:../../../common/pc
 
+# Determine build type
+ifeq ($(MAKECMDGOALS),debug)
+BUILDTYPE= debug
+endif
+
+ifeq ($(MAKECMDGOALS),release)
+BUILDTYPE= release
+endif
+
+# Determine operating system
+ifeq ($(OS),Windows_NT)
+BUILDOS= win32
+else
+BUILDOS= linux
+endif
+
 # Library search path (-L...)
-LIBPATH= -L../../../common/pc/vscphelper/lib/linux
+LIBPATH= -L../../../common/pc/vscphelper/lib/$(BUILDOS)/$(BUILDTYPE)
 
 # Libraries (-l...)
 LIBRARIES= -lpthread -lvscphelper
@@ -64,14 +80,12 @@ LIBRARIES= -lpthread -lvscphelper
 # Windows specific part
 ifeq ($(OS),Windows_NT)
 
-LIBPATH= -L../../../common/pc/vscphelper/lib/win32
-
 LIBRARIES+= -lws2_32
 
 endif
 
 # Preprocessor defines
-PREPROC= -D_REENTRANT -DVERSION=\"$(VERSION)\"
+PREPROC= -D_REENTRANT -DVERSION=\"$(VERSION)\" -DBUILDTYPE=\"$(BUILDTYPE)\"
 
 # General compiler flags independent of debug or release build
 # -Wall                : Enable all warnings
@@ -129,13 +143,7 @@ OBJDIR= obj
 BINDIR= bin
 
 # Library directory
-LIBDIR= ../../../common/pc/vscphelper/lib/linux
-
-ifeq ($(OS),Windows_NT)
-
-LIBDIR= ../../../common/pc/vscphelper/lib/win32
-
-endif
+LIBDIR= ../../common/pc/vscphelper/lib/$(BUILDOS)/$(BUILDTYPE)
 
 # Remove path from .c files, rename to .o files and add object directory
 OBJECTS= $(addprefix $(OBJDIR)/,$(notdir $(SOURCES:%.c=%.o)))

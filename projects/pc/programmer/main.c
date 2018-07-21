@@ -234,9 +234,9 @@ static const cmdLineParser_Arg  main_clpConfig[]    =
     { CMDLINEPARSER_UNKONWN,        NULL,                               NULL,                           main_clpUnknown,    NULL,   NULL                                                },
     /* Possible command line arguments */
     { "-a <ip-address>",            &main_cmdLineArgs.daemonAddr,       NULL,                           NULL,               NULL,   "IP address of VSCP daemon"                         },
-    { "-b <algorithm>",             &main_cmdLineArgs.bootLoaderAlgo,   NULL,                           NULL,               NULL,   "Boot load algorithm (default 0)"                   },
+    { "-b <algorithm>",             &main_cmdLineArgs.bootLoaderAlgo,   NULL,                           NULL,               NULL,   "Bootloader algorithm (default: 0)"                 },
     { "-f <file name>",             &main_cmdLineArgs.iHexFileName,     NULL,                           NULL,               NULL,   "Intel hex format file"                             },
-    { "-fillBlock",                 NULL,                               &main_cmdLineArgs.fillBlock,    NULL,               NULL,   "Fill block with 0x00 up (default not)"             },
+    { "-fillBlock",                 NULL,                               &main_cmdLineArgs.fillBlock,    NULL,               NULL,   "Fill block with 0x00 up (default: not filling)"    },
     { "-g <guid>",                  &main_cmdLineArgs.nodeGuid,         NULL,                           NULL,               NULL,   "Node GUID,\ne.g. 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01"      },
     { "-h --help",                  NULL,                               &main_cmdLineArgs.showHelp,     NULL,               NULL,   "Show help"                                         },
     { "-n <node nickname>",         &main_cmdLineArgs.nodeId,           NULL,                           NULL,               NULL,   "Nickname of the node, which shall be programmed."  },
@@ -274,7 +274,7 @@ int main(int argc, char* argv[])
     uint32_t                iHexRecordNum   = 0;
 
     printf("\n%s\n", MAIN_PROG_NAME);
-    printf("Version: %s\n", VERSION);
+    printf("Version: %s (%s)\n", VERSION, BUILDTYPE);
     printf("%s\n\n", MAIN_COPYRIGHT);
 
     /* Initialize all modules */

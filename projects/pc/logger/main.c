@@ -186,7 +186,7 @@ int main(int argc, char* argv[])
     MAIN_RET    ret         = MAIN_RET_OK;
 
     printf("\n%s\n", MAIN_PROG_NAME);
-    printf("Version: %s\n", VERSION);
+    printf("Version: %s (%s)\n", VERSION, BUILDTYPE);
     printf("%s\n\n", MAIN_COPYRIGHT);
 
     /* Initialize all modules */
