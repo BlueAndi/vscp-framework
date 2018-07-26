@@ -56,7 +56,7 @@
 *******************************************************************************/
 
 /** Node nickname id in case of no application is present. */
-#define VSCP_BOOTLOADER_NODE_NICKNAME_ID        (0xFE)
+#define VSCP_BOOTLOADER_NODE_NICKNAME_ID    (0xFE)
 
 /*******************************************************************************
     MACROS
@@ -86,20 +86,20 @@ typedef enum
 /** This type defines different memory types. */
 typedef enum
 {
-    VSCP_BOOTLOADER_MEM_TYPE_PROG_FLASH = 0,    /**< Program flash */
-    VSCP_BOOTLOADER_MEM_TYPE_DATA,              /**< Data (EEPROM, etc.) */
-    VSCP_BOOTLOADER_MEM_TYPE_CONFIG,            /**< Configuation (fuses, etc.) */
-    VSCP_BOOTLOADER_MEM_TYPE_RAM                /**< RAM */
+    VSCP_BOOTLOADER_MEM_TYPE_PROGRAM = 0,   /**< Program memory */
+    VSCP_BOOTLOADER_MEM_TYPE_EEPROM,        /**< Data EEPROM memory */
+    VSCP_BOOTLOADER_MEM_TYPE_CONFIG,        /**< Configuation memory (fuses, etc.) */
+    VSCP_BOOTLOADER_MEM_TYPE_DATA           /**< Data memory (RAM) */
 
 } VSCP_BOOTLOADER_MEM_TYPE;
 
 /** This type defines all necessary programming parameters. */
 typedef struct
 {
-    uint8_t*    pageBuffer;         /**< Buffer contains one complete page */
+    uint8_t*    blockBuffer;        /**< Buffer contains one complete block */
     uint32_t    blockNumber;        /**< Start block number */
     uint32_t    programBlockNumber; /**< Block number to program */
-    uint8_t     pageBufferIndex;    /**< Current index in the page buffer */
+    uint8_t     blockBufferIndex;   /**< Current index in the block buffer */
     BOOL        programmingStarted; /**< Programming started or not */
 
 } vscp_bootloader_ProgParam;
@@ -110,7 +110,7 @@ typedef struct
 
 static void vscp_bootloader_simApp(void);
 static void vscp_bootloader_sendNewNodeOnlineEvent(void);
-static void vscp_bootloader_sendAckEnterBootLoader(uint32_t pageSize, uint32_t numPages);
+static void vscp_bootloader_sendAckEnterBootLoader(uint32_t blockSize, uint32_t numBlocks);
 static void vscp_bootloader_sendNakEnterBootLoader(uint8_t errorCode);
 static void vscp_bootloader_programmingProcedure(void);
 static void vscp_bootloader_handleProtocolStartBlockDataTransfer(vscp_RxMessage const * const rxMsg, vscp_bootloader_ProgParam * const progParam);
@@ -134,8 +134,8 @@ static BOOL vscp_bootloader_handleProtocolActivateNewImage(vscp_RxMessage const 
 /** Node nickname id */
 static uint8_t  vscp_bootloader_nickname    = VSCP_BOOTLOADER_NODE_NICKNAME_ID;
 
-/** Page buffer */
-static uint8_t  vscp_bootloader_pageBuffer[VSCP_PLATFORM_FLASH_PAGE_SIZE];
+/** Block buffer */
+static uint8_t  vscp_bootloader_blockBuffer[VSCP_PLATFORM_PROG_MEM_BLOCK_SIZE];
 
 /*******************************************************************************
     GLOBAL VARIABLES
@@ -210,7 +210,7 @@ extern void vscp_bootloader_run(void)
     }
 
     /* Acknowledge the "enter bootloader event", which was received by the application. */
-    vscp_bootloader_sendAckEnterBootLoader(VSCP_PLATFORM_FLASH_PAGE_SIZE, VSCP_PLATFORM_FLASH_NUM_PAGES);
+    vscp_bootloader_sendAckEnterBootLoader(VSCP_PLATFORM_PROG_MEM_BLOCK_SIZE, VSCP_PLATFORM_PROG_MEM_NUM_BLOCKS);
 
     /* Programming procedure */
     vscp_bootloader_programmingProcedure();
@@ -321,10 +321,10 @@ static void vscp_bootloader_sendNewNodeOnlineEvent(void)
 /**
  * This function sends a "ACK enter bootloader" event.
  *
- * @param[in]   pageSize    Page size
- * @param[in]   numPages    Number of pages
+ * @param[in]   blockSize   Block size
+ * @param[in]   numBlocks   Number of blocks
  */
-static void vscp_bootloader_sendAckEnterBootLoader(uint32_t pageSize, uint32_t numPages)
+static void vscp_bootloader_sendAckEnterBootLoader(uint32_t blockSize, uint32_t numBlocks)
 {
     vscp_TxMessage  txMsg;
 
@@ -334,14 +334,14 @@ static void vscp_bootloader_sendAckEnterBootLoader(uint32_t pageSize, uint32_t n
     txMsg.oAddr     = vscp_bootloader_nickname;
     txMsg.hardCoded = FALSE;
     txMsg.dataNum   = 8;                        /* 8 byte data */
-    txMsg.data[0]   = (pageSize >> 24) & 0xff;  /* MSB of flash block size. */
-    txMsg.data[1]   = (pageSize >> 16) & 0xff;  /* Flash block size. */
-    txMsg.data[2]   = (pageSize >>  8) & 0xff;  /* Flash block size. */
-    txMsg.data[3]   = (pageSize >>  0) & 0xff;  /* LSB of flash block size. */
-    txMsg.data[4]   = (numPages >> 24) & 0xff;  /* MSB of number of block s available. */
-    txMsg.data[5]   = (numPages >> 16) & 0xff;  /* Number of block s available. */
-    txMsg.data[6]   = (numPages >>  8) & 0xff;  /* Number of block s available. */
-    txMsg.data[7]   = (numPages >>  0) & 0xff;  /* LSB of number of blocks available. */
+    txMsg.data[0]   = (blockSize >> 24) & 0xff; /* MSB of program memory block size. */
+    txMsg.data[1]   = (blockSize >> 16) & 0xff; /* Program memory block size. */
+    txMsg.data[2]   = (blockSize >>  8) & 0xff; /* Program memory block size. */
+    txMsg.data[3]   = (blockSize >>  0) & 0xff; /* LSB of program memory block size. */
+    txMsg.data[4]   = (numBlocks >> 24) & 0xff; /* MSB of number of block s available. */
+    txMsg.data[5]   = (numBlocks >> 16) & 0xff; /* Number of block s available. */
+    txMsg.data[6]   = (numBlocks >>  8) & 0xff; /* Number of block s available. */
+    txMsg.data[7]   = (numBlocks >>  0) & 0xff; /* LSB of number of blocks available. */
 
     (void)vscp_tp_adapter_writeMessage(&txMsg);
 
@@ -377,7 +377,7 @@ static void vscp_bootloader_sendNakEnterBootLoader(uint8_t errorCode)
 static void vscp_bootloader_programmingProcedure(void)
 {
     BOOL                        abortFlag   = FALSE;
-    vscp_bootloader_ProgParam   progParam   = { vscp_bootloader_pageBuffer, 0, 0, 0, TRUE };
+    vscp_bootloader_ProgParam   progParam   = { vscp_bootloader_blockBuffer, 0, 0, 0, TRUE };
     vscp_RxMessage              rxMsg;
 
     /* Only with a "activate new image" or "drop nickname/reset device" event we can leave. */
@@ -441,7 +441,7 @@ static void vscp_bootloader_handleProtocolStartBlockDataTransfer(vscp_RxMessage 
     }
     else
     {
-        uint8_t memoryType  = VSCP_BOOTLOADER_MEM_TYPE_PROG_FLASH;
+        uint8_t memoryType  = VSCP_BOOTLOADER_MEM_TYPE_PROGRAM;
 
         /* Get block number */
         progParam->blockNumber = VSCP_BOOTLOADER_BUILD_UINT32(rxMsg->data[0],
@@ -456,18 +456,18 @@ static void vscp_bootloader_handleProtocolStartBlockDataTransfer(vscp_RxMessage 
         }
         else
         {
-            memoryType = VSCP_BOOTLOADER_MEM_TYPE_PROG_FLASH;
+            memoryType = VSCP_BOOTLOADER_MEM_TYPE_PROGRAM;
         }
 
         /* Validate parameters:
             * - Only program flash is supported.
             * - Received block number shall be valid.
             */
-        if (VSCP_BOOTLOADER_MEM_TYPE_PROG_FLASH != memoryType)
+        if (VSCP_BOOTLOADER_MEM_TYPE_PROGRAM != memoryType)
         {
             vscp_bootloader_sendNakStartBlockDataTransfer();
         }
-        else if (VSCP_PLATFORM_FLASH_NUM_PAGES <= progParam->blockNumber)
+        else if (VSCP_PLATFORM_PROG_MEM_NUM_BLOCKS <= progParam->blockNumber)
         {
             vscp_bootloader_sendNakStartBlockDataTransfer();
         }
@@ -475,8 +475,8 @@ static void vscp_bootloader_handleProtocolStartBlockDataTransfer(vscp_RxMessage 
         {
             vscp_bootloader_sendAckStartBlockDataTransfer();
 
-            /* Reset page buffer index */
-            progParam->pageBufferIndex = 0;
+            /* Reset block buffer index */
+            progParam->blockBufferIndex = 0;
         }
     }
 
@@ -501,13 +501,13 @@ static void vscp_bootloader_handleProtocolBlockData(vscp_RxMessage const * const
     if (VSCP_L1_DATA_SIZE != rxMsg->dataNum)
     {
         vscp_bootloader_sendNakBlockData(VSCP_BOOTLOADER_ERROR_INVALID_MESSAGE,
-                                         progParam->blockNumber * VSCP_PLATFORM_FLASH_PAGE_SIZE);
+                                         progParam->blockNumber * VSCP_PLATFORM_PROG_MEM_BLOCK_SIZE);
     }
-    /* Page buffer already full? */
-    else if (VSCP_PLATFORM_FLASH_PAGE_SIZE < (progParam->pageBufferIndex + rxMsg->dataNum))
+    /* Block buffer already full? */
+    else if (VSCP_PLATFORM_PROG_MEM_BLOCK_SIZE < (progParam->blockBufferIndex + rxMsg->dataNum))
     {
         vscp_bootloader_sendNakBlockData(VSCP_BOOTLOADER_ERROR_INVALID_MESSAGE,
-                                         progParam->blockNumber * VSCP_PLATFORM_FLASH_PAGE_SIZE);
+                                         progParam->blockNumber * VSCP_PLATFORM_PROG_MEM_BLOCK_SIZE);
     }
     else
     {
@@ -515,18 +515,18 @@ static void vscp_bootloader_handleProtocolBlockData(vscp_RxMessage const * const
 
         for(index = 0; index < rxMsg->dataNum; ++index)
         {
-            progParam->pageBuffer[progParam->pageBufferIndex] = rxMsg->data[index];
+            progParam->blockBuffer[progParam->blockBufferIndex] = rxMsg->data[index];
 
-            ++(progParam->pageBufferIndex);
+            ++(progParam->blockBufferIndex);
         }
 
         /* Complete block received? */
-        if (VSCP_PLATFORM_FLASH_PAGE_SIZE <= progParam->pageBufferIndex)
+        if (VSCP_PLATFORM_PROG_MEM_BLOCK_SIZE <= progParam->blockBufferIndex)
         {
             /* Calculate CRC16-CCITT over the whole block and send it back for verification. */
-            Crc16CCITT  crcCalculated = crc16ccitt_calculate(progParam->pageBuffer, VSCP_PLATFORM_FLASH_PAGE_SIZE);
+            Crc16CCITT  crcCalculated = crc16ccitt_calculate(progParam->blockBuffer, VSCP_PLATFORM_PROG_MEM_BLOCK_SIZE);
 
-            vscp_bootloader_sendAckBlockData(crcCalculated, progParam->blockNumber * VSCP_PLATFORM_FLASH_PAGE_SIZE);
+            vscp_bootloader_sendAckBlockData(crcCalculated, progParam->blockNumber * VSCP_PLATFORM_PROG_MEM_BLOCK_SIZE);
         }
     }
 
@@ -575,7 +575,7 @@ static void vscp_bootloader_handleProtocolProgramDataBlock(vscp_RxMessage const 
                 progParam->programmingStarted = FALSE;
             }
 
-            vscp_bl_adapter_programPage(progParam->blockNumber, progParam->pageBuffer);
+            vscp_bl_adapter_programBlock(progParam->blockNumber, progParam->blockBuffer);
 
             vscp_bootloader_sendAckProgramBlockData(progParam->blockNumber);
         }
@@ -826,7 +826,7 @@ static BOOL vscp_bootloader_handleProtocolActivateNewImage(vscp_RxMessage const 
         uint16_t    index           = 0;
 
         /* Calculate CRC from 0 to the last programmed block (inclusive) */
-        for(index = 0; index < (VSCP_PLATFORM_FLASH_PAGE_SIZE * (progParam->programBlockNumber + 1)); ++index)
+        for(index = 0; index < (VSCP_PLATFORM_PROG_MEM_BLOCK_SIZE * (progParam->programBlockNumber + 1)); ++index)
         {
             uint8_t data = vscp_bl_adapter_readProgMem(index);
 

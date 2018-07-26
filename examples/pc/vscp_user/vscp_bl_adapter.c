@@ -65,7 +65,7 @@
 #define VSCP_BL_ADAPTER_APP_SEC_FILENAME    "appsec.bin"
 
 /** Application section size in bytes */
-#define VSCP_BL_ADAPTER_APP_SEC_SIZE        (VSCP_PLATFORM_FLASH_NUM_PAGES * VSCP_PLATFORM_FLASH_PAGE_SIZE)
+#define VSCP_BL_ADAPTER_APP_SEC_SIZE        (VSCP_PLATFORM_PROG_MEM_NUM_BLOCKS * VSCP_PLATFORM_PROG_MEM_BLOCK_SIZE)
 
 /*******************************************************************************
     MACROS
@@ -238,16 +238,16 @@ extern uint8_t  vscp_bl_adapter_readGUID(uint8_t index)
 }
 
 /**
- * This function writes a complete page to the flash memory.
+ * This function writes a complete block to the program memory.
  *
- * @param[in]   page    Page which shall be written
+ * @param[in]   blockNo Block number of block which shall be written
  * @param[in]   buffer  Pointer to the buffer with the data
  */
-extern void vscp_bl_adapter_programPage(uint16_t page, uint8_t *buffer)
+extern void vscp_bl_adapter_programBlock(uint32_t blockNo, uint8_t *buffer)
 {
     FILE*   fd  = NULL;
 
-    log_printf("Program page 0x%04X.\n", page);
+    log_printf("Program block no. 0x%04X.\n", blockNo);
 
     fd = fopen(VSCP_BL_ADAPTER_APP_SEC_FILENAME, "r+b");
 
@@ -258,9 +258,9 @@ extern void vscp_bl_adapter_programPage(uint16_t page, uint8_t *buffer)
     else
     {
         /* Seek successful? */
-        if (0 == fseek(fd, page * VSCP_PLATFORM_FLASH_PAGE_SIZE, SEEK_SET))
+        if (0 == fseek(fd, blockNo * VSCP_PLATFORM_PROG_MEM_BLOCK_SIZE, SEEK_SET))
         {
-            (void)fwrite(buffer, sizeof(uint8_t), VSCP_PLATFORM_FLASH_PAGE_SIZE, fd);
+            (void)fwrite(buffer, sizeof(uint8_t), VSCP_PLATFORM_PROG_MEM_BLOCK_SIZE, fd);
         }
 
         fclose(fd);

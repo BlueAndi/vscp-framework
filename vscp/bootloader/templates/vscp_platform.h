@@ -82,11 +82,11 @@ extern "C"
 #define TRUE    (!FALSE)
 #endif  /* FALSE */
 
-/** Flash page size */
-#define VSCP_PLATFORM_FLASH_PAGE_SIZE   (/* Implement your code here ... */)
+/** Program memory block size */
+#define VSCP_PLATFORM_PROG_MEM_BLOCK_SIZE   (/* Implement your code here ... */)
 
-/** Number of pages for the application section */
-#define VSCP_PLATFORM_FLASH_NUM_PAGES   (/* Implement your code here ... */)
+/** Number of blocks for the program memory */
+#define VSCP_PLATFORM_PROG_MEM_NUM_BLOCKS   (/* Implement your code here ... */)
 
 /*******************************************************************************
     MACROS

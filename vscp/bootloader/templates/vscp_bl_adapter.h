@@ -154,12 +154,12 @@ extern void vscp_bl_adapter_writeBootFlag(uint8_t bootFlag);
 extern uint8_t  vscp_bl_adapter_readGUID(uint8_t index);
 
 /**
- * This function writes a complete page to the flash memory.
+ * This function writes a complete block to the program memory.
  *
- * @param[in]   page    Page which shall be written
+ * @param[in]   blockNo Block number of block which shall be written
  * @param[in]   buffer  Pointer to the buffer with the data
  */
-extern void vscp_bl_adapter_programPage(uint16_t page, uint8_t *buffer);
+extern void vscp_bl_adapter_programBlock(uint32_t blockNo, uint8_t *buffer);
 
 /**
  * This function read a byte from program memory.

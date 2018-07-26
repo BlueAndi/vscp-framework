@@ -120,11 +120,11 @@ extern "C"
 
 #endif  /* not defined(__AVR_ATmega328P__) */
 
-/** Flash page size */
-#define VSCP_PLATFORM_FLASH_PAGE_SIZE (SPM_PAGESIZE)
+/** Program memory block size */
+#define VSCP_PLATFORM_PROG_MEM_BLOCK_SIZE   (SPM_PAGESIZE)
 
-/** Number of pages for the application section */
-#define VSCP_PLATFORM_FLASH_NUM_PAGES ((FLASHEND + 1u - VSCP_PLATFORM_BL_SECTION_SIZE) / VSCP_PLATFORM_FLASH_PAGE_SIZE)
+/** Number of blocks for the program memory */
+#define VSCP_PLATFORM_PROG_MEM_NUM_BLOCKS   ((FLASHEND + 1u - VSCP_PLATFORM_BL_SECTION_SIZE) / VSCP_PLATFORM_PROG_MEM_BLOCK_SIZE)
 
 /*******************************************************************************
     MACROS
