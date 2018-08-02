@@ -5,12 +5,12 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-if [ -z "$1" ]; then
+if [ -z "$2" ]; then
     echo Variant is missing. Please specify release or debug.
     exit 1
 fi
 
-VSCPHELPER_PATH=../../common/pc/vscphelper/
+VSCPHELPER_PATH=../../common/pc/vscphelper
 
 echo Updating the vscphelper ...
 
