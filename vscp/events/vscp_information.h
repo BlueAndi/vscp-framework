@@ -1227,6 +1227,32 @@ extern BOOL vscp_information_sendUnlockEvent(uint8_t index, uint8_t zone, uint8_
  */
 extern BOOL vscp_information_sendDateTime(uint8_t index, uint8_t zone, uint8_t subZone, uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second);
 
+/**
+ * A rising (edge) is detected.
+ *
+ * @param[in] index Index for device. Set to zero if not used.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendRisingEvent(uint8_t index, uint8_t zone, uint8_t subZone);
+
+/**
+ * A falling (edge) is detected.
+ *
+ * @param[in] index Index for device. Set to zero if not used.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendFallingEvent(uint8_t index, uint8_t zone, uint8_t subZone);
+
 #endif /* __VSCP_INFORMATION_H__ */
 
 /** @} */

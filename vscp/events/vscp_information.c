@@ -2230,11 +2230,11 @@ extern BOOL vscp_information_sendDateTime(uint8_t index, uint8_t zone, uint8_t s
 
     /* Year
      *   mask: 0x0fff
-     *   bit position: 27-39
+     *   bit position: 26-37
      * 
      * Month
      *    mask: 0x0f
-     *    bit position: 23-26
+     *    bit position: 22-25
      * 
      * Day
      *     mask: 0x1f
@@ -2260,15 +2260,65 @@ extern BOOL vscp_information_sendDateTime(uint8_t index, uint8_t zone, uint8_t s
     txMsg.data[1] = zone;
     txMsg.data[2] = subZone;
     /* 32-39 */
-    txMsg.data[3] = (year & 0x0fc0) >> 6;
+    txMsg.data[3] = (year & 0x0fc0) >> 7;
     /* 24-31 */
-    txMsg.data[4] = ((year & 0x003f) << 3) | ((month & 0x0e) >> 1);
+    txMsg.data[4] = ((year & 0x003f) << 2) | ((month & 0x0c) >> 2);
     /* 16-23 */
-    txMsg.data[5] = ((month & 0x01) << 7) | ((day & 0x1f) << 1) | ((hour & 0x10) >> 4);
+    txMsg.data[5] = ((month & 0x03) << 6) | ((day & 0x1f) << 1) | ((hour & 0x10) >> 4);
     /* 8-15 */
     txMsg.data[6] = ((hour & 0x0f) << 4) | ((minute & 0x3c) >> 2);
     /* 0-7 */
     txMsg.data[7] = ((minute & 0x03) << 6) | ((second & 0x3f) >> 0);
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * A rising (edge) is detected.
+ *
+ * @param[in] index Index for device. Set to zero if not used.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendRisingEvent(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_RISING, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * A falling (edge) is detected.
+ *
+ * @param[in] index Index for device. Set to zero if not used.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendFallingEvent(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_FALLING, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
 
     return vscp_core_sendEvent(&txMsg);
 }
