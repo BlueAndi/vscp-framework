@@ -10,6 +10,13 @@
     - PC
       - All projects adapted according to the possible usage of vscphelper library in debug or release variant.
 
+  - VSCP framework
+    - Bugfixes:
+        - CLASS1.INFOMRATION Type=77 month/year was in wrong position in the event data.
+
+    - Features:
+        - CLASS1.INFOMRATION Type=78 and 79 added (raising and falling edge detection)
+    
 ## 0.7.0
 
   - Common
