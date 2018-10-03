@@ -2230,7 +2230,7 @@ extern BOOL vscp_information_sendDateTime(uint8_t index, uint8_t zone, uint8_t s
 
     /* Year
      *   mask: 0x0fff
-     *   bit position: 27-39
+     *   bit position: 27-38
      * 
      * Month
      *    mask: 0x0f
@@ -2260,9 +2260,9 @@ extern BOOL vscp_information_sendDateTime(uint8_t index, uint8_t zone, uint8_t s
     txMsg.data[1] = zone;
     txMsg.data[2] = subZone;
     /* 32-39 */
-    txMsg.data[3] = (year & 0x0fc0) >> 6;
+    txMsg.data[3] = (year & 0x0fe0) >> 5;
     /* 24-31 */
-    txMsg.data[4] = ((year & 0x003f) << 3) | ((month & 0x0e) >> 1);
+    txMsg.data[4] = ((year & 0x001f) << 3) | ((month & 0x0e) >> 1);
     /* 16-23 */
     txMsg.data[5] = ((month & 0x01) << 7) | ((day & 0x1f) << 1) | ((hour & 0x10) >> 4);
     /* 8-15 */
