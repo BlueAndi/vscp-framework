@@ -1118,14 +1118,15 @@ extern BOOL vscp_information_sendStreamDataWithZoneEvent(uint8_t zone, uint8_t s
  *
  * @param[in] zone Zone.
  * @param[in] subZone Sub-zone.
- * @param[in] sequenceNumberClass Sequence number byte 3 Class.
+ * @param[in] sequenceNumber Sequence number byte.
+ * @param[in] class Class.
  * @param[in] type Type.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_information_sendConfirmEvent(uint8_t zone, uint8_t subZone, uint16_t sequenceNumberClass, uint16_t type)
+extern BOOL vscp_information_sendConfirmEvent(uint8_t zone, uint8_t subZone, uint8_t sequenceNumber, uint16_t class, uint16_t type)
 {
     vscp_TxMessage txMsg;
 
@@ -1134,8 +1135,9 @@ extern BOOL vscp_information_sendConfirmEvent(uint8_t zone, uint8_t subZone, uin
     txMsg.dataNum = 6;
     txMsg.data[0] = zone;
     txMsg.data[1] = subZone;
-    txMsg.data[2] = (uint8_t)((sequenceNumberClass >> 8) & 0xff);
-    txMsg.data[3] = (uint8_t)((sequenceNumberClass >> 0) & 0xff);
+    txMsg.data[2] = sequenceNumber;
+    txMsg.data[3] = (uint8_t)((class >> 8) & 0xff);
+    txMsg.data[4] = (uint8_t)((class >> 0) & 0xff);
     txMsg.data[5] = (uint8_t)((type >> 8) & 0xff);
     txMsg.data[6] = (uint8_t)((type >> 0) & 0xff);
 

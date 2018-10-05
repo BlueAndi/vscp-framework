@@ -604,14 +604,15 @@ extern BOOL vscp_information_sendStreamDataWithZoneEvent(uint8_t zone, uint8_t s
  *
  * @param[in] zone Zone.
  * @param[in] subZone Sub-zone.
- * @param[in] sequenceNumberClass Sequence number byte 3 Class.
+ * @param[in] sequenceNumber Sequence number byte.
+ * @param[in] class Class.
  * @param[in] type Type.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_information_sendConfirmEvent(uint8_t zone, uint8_t subZone, uint16_t sequenceNumberClass, uint16_t type);
+extern BOOL vscp_information_sendConfirmEvent(uint8_t zone, uint8_t subZone, uint8_t sequenceNumber, uint16_t class, uint16_t type);
 
 /**
  * Response/confirmation from ex. a dimmer control after a dimmer command or some other unit that
