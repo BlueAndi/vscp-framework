@@ -1132,7 +1132,7 @@ extern BOOL vscp_information_sendConfirmEvent(uint8_t zone, uint8_t subZone, uin
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_CONFIRM, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.dataNum = 6;
+    txMsg.dataNum = 7;
     txMsg.data[0] = zone;
     txMsg.data[1] = subZone;
     txMsg.data[2] = sequenceNumber;
