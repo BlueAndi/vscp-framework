@@ -224,6 +224,31 @@ extern BOOL vscp_information_sendClosedEvent(uint8_t userData, uint8_t zone, uin
 extern BOOL vscp_information_sendNodeHeartbeatEvent(uint8_t userData, uint8_t zone, uint8_t subZone);
 
 /**
+ * Heartbeats can be used to indicate that a unit is alive or to send periodic data. This can be sent
+ * out at predefined intervals to indicate that the node is alive, however, it does not necessarily
+ * mean the node is functioning as it should. It simply states that the node is connected to the
+ * network. To check if a node is functioning, other properties such as a measurement event or
+ * registry should be used. This event should be sent as a response to a “Segment Status Heartbeat”
+ * (CLASS1.PROTOCOL, Type=1) in order to provide a method of finding out what is connected to the
+ * network. The data bytes from byte 3 and forward can be used to send a descriptive/user friendly
+ * name if desired.
+ *
+ *     Not mandatory but it is highly recommended that all nodes send this event on regular intervals.
+ * A Level II node should not send this event but instead a Level II node heartbeat.
+ *
+ * @param[in] userData User specified.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @param[in] extraData Extra data to be sent.
+ * @param[in] extraDataLen Extra data length.
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_information_sendNodeHeartbeatEventEx(uint8_t userData, uint8_t zone, uint8_t subZone, uint8_t * extraData, uint8_t extraDataLen);
+
+/**
  * This indicates that the node has a condition that is below a configurable limit.
  *
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
