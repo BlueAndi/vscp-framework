@@ -16,6 +16,7 @@
 
     - Features:
         - CLASS1.INFOMRATION Type=78 and 79 added (rising and falling edge detection)
+        - CLASS1.INFORMATION Heartbeat event supports now extra data, see vscp_information_sendNodeHeartbeatEventEx().
     
 ## 0.7.0
 

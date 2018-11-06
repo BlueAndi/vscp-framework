@@ -345,8 +345,15 @@ extern BOOL vscp_information_sendClosedEvent(uint8_t userData, uint8_t zone, uin
 extern BOOL vscp_information_sendNodeHeartbeatEventEx(uint8_t userData, uint8_t zone, uint8_t subZone, uint8_t * extraData, uint8_t extraDataLen)
 {
     vscp_TxMessage txMsg;
-
-    if (extraDataLen > 5) {
+    
+    if ((NULL == extraData) &&
+        (0 < extraDataLen))
+    {
+        return FALSE;
+    }
+    
+    if (5 < extraDataLen)
+    {
         return FALSE;
     }
 
@@ -357,7 +364,8 @@ extern BOOL vscp_information_sendNodeHeartbeatEventEx(uint8_t userData, uint8_t 
     txMsg.data[1] = zone;
     txMsg.data[2] = subZone;
 
-    if (extraData && extraDataLen > 0) {
+    if (0 < extraDataLen)
+    {
         memcpy(&txMsg.data[3], extraData, extraDataLen);
     }
 
