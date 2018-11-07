@@ -209,6 +209,15 @@ extern uint8_t  vscp_portable_readGUID(uint8_t index);
 
 #endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_DEV_DATA_CONFIG_ENABLE_GUID_STORAGE_EXT ) */
 
+#if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_CUSTOM_HEARTBEAT )
+
+/**
+ * Custom node heartbeat event function implementation.
+ */
+extern BOOL vscp_portable_sendNodeHeartbeatEvent();
+
+#endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_CUSTOM_HEARTBEAT ) */
+
 #ifdef __cplusplus
 }
 #endif
