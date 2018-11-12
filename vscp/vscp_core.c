@@ -47,6 +47,7 @@
 #include "vscp_class_l1.h"
 #include "vscp_type_protocol.h"
 #include "vscp_type_information.h"
+#include "vscp_information.h"
 #include "vscp_ps.h"
 #include "vscp_timer.h"
 #include "vscp_app_reg.h"
