@@ -98,6 +98,8 @@ extern "C"
 
 #define VSCP_CONFIG_PROTOCOL_EVENT_NOTIFICATION VSCP_CONFIG_BASE_DISABLED
 
+#define VSCP_CONFIG_ENABLE_CUSTOM_HEARTBEAT     VSCP_CONFIG_BASE_DISABLED
+
 */
 
 /*******************************************************************************

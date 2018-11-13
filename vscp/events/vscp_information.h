@@ -246,7 +246,7 @@ extern BOOL vscp_information_sendNodeHeartbeatEvent(uint8_t userData, uint8_t zo
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_information_sendNodeHeartbeatEventEx(uint8_t userData, uint8_t zone, uint8_t subZone, uint8_t * extraData, uint8_t extraDataLen);
+extern BOOL vscp_information_sendNodeHeartbeatEventEx(uint8_t userData, uint8_t zone, uint8_t subZone, uint8_t const * const extraData, uint8_t extraDataLen);
 
 /**
  * This indicates that the node has a condition that is below a configurable limit.

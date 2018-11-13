@@ -65,7 +65,8 @@ SOURCES= main.c \
 		../vscp_ps.c \
 		../vscp_transport.c \
 		../vscp_util.c \
-		../events/vscp_log.c
+		../events/vscp_log.c \
+		../events/vscp_information.c
 
 # Include all source pathes here like ../src1:../src2
 VPATH= ..:vscpUser:../events
