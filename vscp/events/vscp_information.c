@@ -342,9 +342,10 @@ extern BOOL vscp_information_sendClosedEvent(uint8_t userData, uint8_t zone, uin
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_information_sendNodeHeartbeatEventEx(uint8_t userData, uint8_t zone, uint8_t subZone, uint8_t * extraData, uint8_t extraDataLen)
+extern BOOL vscp_information_sendNodeHeartbeatEventEx(uint8_t userData, uint8_t zone, uint8_t subZone, uint8_t const * const extraData, uint8_t extraDataLen)
 {
-    vscp_TxMessage txMsg;
+    vscp_TxMessage  txMsg;
+    uint8_t         index   = 0;
     
     if ((NULL == extraData) &&
         (0 < extraDataLen))
@@ -366,7 +367,10 @@ extern BOOL vscp_information_sendNodeHeartbeatEventEx(uint8_t userData, uint8_t 
 
     if (0 < extraDataLen)
     {
-        memcpy(&txMsg.data[3], extraData, extraDataLen);
+        for(index = 0; index < extraDataLen; ++index)
+        {
+            txMsg.data[3 + index] = extraData[index];
+        }
     }
 
     return vscp_core_sendEvent(&txMsg);

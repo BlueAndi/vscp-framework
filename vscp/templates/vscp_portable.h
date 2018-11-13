@@ -213,6 +213,10 @@ extern uint8_t  vscp_portable_readGUID(uint8_t index);
 
 /**
  * Custom node heartbeat event function implementation.
+ *
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
  */
 extern BOOL vscp_portable_sendNodeHeartbeatEvent();
 

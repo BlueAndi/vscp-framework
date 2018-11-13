@@ -224,6 +224,17 @@ extern "C"
 
 #endif  /* Undefined VSCP_CONFIG_PROTOCOL_EVENT_NOTIFICATION */
 
+#ifndef VSCP_CONFIG_ENABLE_CUSTOM_HEARTBEAT
+
+/**
+ * By default a heartbeat is sent, with 0 as user data and without extended
+ * data. If you need a custom heartbeat and able to define user and extended
+ * data by yourself, enable this.
+ */
+#define VSCP_CONFIG_ENABLE_CUSTOM_HEARTBEAT     VSCP_CONFIG_BASE_DISABLED
+
+#endif  /* Undefined VSCP_CONFIG_ENABLE_CUSTOM_HEARTBEAT */
+
 /*******************************************************************************
     CONSTANTS
 *******************************************************************************/
