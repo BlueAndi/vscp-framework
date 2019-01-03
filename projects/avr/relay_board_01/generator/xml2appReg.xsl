@@ -4,7 +4,7 @@
 
 The MIT License (MIT)
 
-Copyright (c) 2014 - 2018, Andreas Merkle
+Copyright (c) 2014 - 2019, Andreas Merkle
 http://www.blue-andi.de
 vscp@blue-andi.de
 
@@ -110,7 +110,7 @@ VSCP framework.
             <xsl:with-param name="license">
             <xsl:text>/* The MIT License (MIT)
  *
- * Copyright (c) 2014 - 2018, Andreas Merkle
+ * Copyright (c) 2014 - 2019, Andreas Merkle
  * http://www.blue-andi.de
  * vscp@blue-andi.de
  *
