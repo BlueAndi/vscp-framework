@@ -1,3 +1,9 @@
+## 0.8.1 (not released yet)
+
+  - VSCP framework
+    - Bugfixes:
+      - Bugfix: Fix of misspellings/typos, thanks to TomasRoj.
+
 ## 0.8.0
 
   - Examples
@@ -12,14 +18,14 @@
 
   - VSCP framework
     - Bugfixes:
-        - CLASS1.INFOMRATION Type=77 month/year was in wrong position in the event data.
+      - CLASS1.INFOMRATION Type=77 month/year was in wrong position in the event data.
 
     - Features:
-        - CLASS1.INFOMRATION Type=78 and 79 added (rising and falling edge detection)
-        - CLASS1.INFORMATION Heartbeat event supports now extra data, see vscp_information_sendNodeHeartbeatEventEx().
-        - If your node shall send a custom heartbeat with user data and extended data,
-          enable VSCP_CONFIG_ENABLE_CUSTOM_HEARTBEAT in your configuration. Find the function prototype in
-          the vscp_portable.c module. Thanks troky!
+      - CLASS1.INFOMRATION Type=78 and 79 added (rising and falling edge detection)
+      - CLASS1.INFORMATION Heartbeat event supports now extra data, see vscp_information_sendNodeHeartbeatEventEx().
+      - If your node shall send a custom heartbeat with user data and extended data,
+        enable VSCP_CONFIG_ENABLE_CUSTOM_HEARTBEAT in your configuration. Find the function prototype in
+        the vscp_portable.c module. Thanks troky!
     
 ## 0.7.0
 
