@@ -2,7 +2,8 @@
 
   - VSCP framework
     - Bugfixes:
-      - Bugfix: Fix of misspellings/typos, thanks to TomasRoj.
+      - Fix of misspellings/typos, thanks to TomasRoj.
+      - VSCP measurement events fixed, because internal the parameters unit and index in the vscp_data_coding_getFormatByte() call were reversed. Thanks to troky!
 
 ## 0.8.0
 
