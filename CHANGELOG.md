@@ -1,9 +1,14 @@
-## 0.8.1 (not released yet)
+## 0.9.0
 
   - VSCP framework
     - Bugfixes:
       - Fix of misspellings/typos, thanks to TomasRoj.
       - VSCP measurement events fixed, because internal the parameters unit and index in the vscp_data_coding_getFormatByte() call were reversed. Thanks to troky!
+
+    - Features:
+      - CLASS1.ALARM, Type=12, "Watchdog" added.
+      - CLASS1.INFORMATION, Type=80, "Updated" added.
+      - CLASS1.WEATHER/CLASS1.WEATHER_FORECAST Type=52, "UV Index" added.
 
 ## 0.8.0
 
