@@ -2835,7 +2835,7 @@ extern void vscp_test_dm04(void)
     vscp_test_processTimers();
     vscp_core_process();
 
-    /* Three actions shall be executed */
+    /* Four actions shall be executed */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_EXECUTE], 4);
 
     /* Check last action */
@@ -2921,7 +2921,7 @@ extern void vscp_test_dm06(void)
     vscp_test_processTimers();
     vscp_core_process();
 
-    /* Three actions shall be executed */
+    /* One action shall be executed */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_EXECUTE], 1);
 
     /* Check last action */
@@ -2964,7 +2964,7 @@ extern void vscp_test_dm07(void)
     vscp_test_processTimers();
     vscp_core_process();
 
-    /* Three actions shall be executed */
+    /* One action shall be executed */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_EXECUTE], 1);
 
     /* Check last action */
@@ -3007,7 +3007,7 @@ extern void vscp_test_dm08(void)
     vscp_test_processTimers();
     vscp_core_process();
 
-    /* Three actions shall be executed */
+    /* One action shall be executed */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_EXECUTE], 1);
 
     /* Check last action */
