@@ -54,7 +54,7 @@ This module contains functionality to parse a intel hex format string.
 /*******************************************************************************
     INCLUDES
 *******************************************************************************/
-#include <inttypes.h>
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C"
