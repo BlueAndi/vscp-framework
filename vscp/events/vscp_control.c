@@ -1197,6 +1197,38 @@ extern BOOL vscp_control_sendUnlockEvent(uint8_t zone, uint8_t subZone)
     return vscp_core_sendEvent(&txMsg);
 }
 
+/**
+ * With this event it is possible to set duty cycle output such as PWM.
+ *
+ * @param[in] repeat Repeat/counter: 0=repeat forever, >0 number of repeats
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @param[in] control Control byte.
+ * @param[in] timeOn TimeOn
+ * @param[in] timeOff TimeOff
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_control_sendPWMEvent(uint8_t repeat, uint8_t zone, uint8_t subZone, uint8_t control, uint16_t timeOn, uint16_t timeOff) {
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_PWM, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 8;
+    txMsg.data[0] = repeat;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+    txMsg.data[3] = control;
+    txMsg.data[4] = timeOn >> 8;
+    txMsg.data[5] = timeOn & 0xFF;
+    txMsg.data[6] = timeOff >> 8;
+    txMsg.data[7] = timeOff & 0xFF;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
 /*******************************************************************************
     LOCAL FUNCTIONS
 *******************************************************************************/

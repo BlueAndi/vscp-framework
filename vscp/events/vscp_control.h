@@ -610,6 +610,22 @@ extern BOOL vscp_control_sendLockEvent(uint8_t zone, uint8_t subZone);
  */
 extern BOOL vscp_control_sendUnlockEvent(uint8_t zone, uint8_t subZone);
 
+/**
+ * With this event it is possible to set duty cycle output such as PWM.
+ *
+ * @param[in] repeat Repeat/counter: 0=repeat forever, >0 number of repeats
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @param[in] control Control byte.
+ * @param[in] timeOn TimeOn
+ * @param[in] timeOff TimeOff
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_control_sendPWMEvent(uint8_t repeat, uint8_t zone, uint8_t subZone, uint8_t control, uint16_t timeOn, uint16_t timeOff);
+
 #endif /* __VSCP_CONTROL_H__ */
 
 /** @} */
