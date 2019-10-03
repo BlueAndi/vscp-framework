@@ -791,37 +791,30 @@ extern BOOL vscp_control_sendToggleStateEvent(uint8_t userData, uint8_t zone, ui
  * @param[in] userData Optional byte that have a meaning given by the issuer of the event.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
- * @param[in] d Control byte.
- * @param[in] e Set time as a long with MSB in the first byte.
- * @param[in] eSize Size in bytes (1-4)
+ * @param[in] control Control byte.
+ * @param[in] time Set time as a long with MSB in the first byte.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_control_sendTimedPulseOnEvent(uint8_t userData, uint8_t zone, uint8_t subZone, uint8_t d, uint8_t const * const e, uint8_t eSize)
+extern BOOL vscp_control_sendTimedPulseOnEvent(uint8_t userData, uint8_t zone, uint8_t subZone, uint8_t control, uint32_t time)
 {
     uint8_t byteIndex = 0;
     vscp_TxMessage txMsg;
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_TIMED_PULSE_ON, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.dataNum = 4;
+    txMsg.dataNum = 8;
     txMsg.data[0] = userData;
     txMsg.data[1] = zone;
     txMsg.data[2] = subZone;
-    txMsg.data[3] = d;
-
-    for(byteIndex = 0; byteIndex < eSize; ++byteIndex)
-    {
-        txMsg.data[4 + byteIndex] = e[byteIndex];
-        ++txMsg.dataNum;
-
-        if (VSCP_L1_DATA_SIZE <= txMsg.dataNum)
-        {
-            break;
-        }
-    }
+    txMsg.data[3] = control;
+    
+    txMsg.data[4] = ((uint8_t*)&time)[3];
+    txMsg.data[5] = ((uint8_t*)&time)[2];
+    txMsg.data[6] = ((uint8_t*)&time)[1];
+    txMsg.data[7] = ((uint8_t*)&time)[0];
 
     return vscp_core_sendEvent(&txMsg);
 }
@@ -834,35 +827,28 @@ extern BOOL vscp_control_sendTimedPulseOnEvent(uint8_t userData, uint8_t zone, u
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] control Control byte.
  * @param[in] time Set time as a long with MSB in the first byte.
- * @param[in] timeSize Size in bytes (1-4)
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_control_sendTimedPulseOffEvent(uint8_t userData, uint8_t zone, uint8_t subZone, uint8_t control, uint8_t const * const time, uint8_t timeSize)
+extern BOOL vscp_control_sendTimedPulseOffEvent(uint8_t userData, uint8_t zone, uint8_t subZone, uint8_t control, uint32_t time)
 {
     uint8_t byteIndex = 0;
     vscp_TxMessage txMsg;
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_TIMED_PULSE_OFF, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.dataNum = 4;
+    txMsg.dataNum = 8;
     txMsg.data[0] = userData;
     txMsg.data[1] = zone;
     txMsg.data[2] = subZone;
     txMsg.data[3] = control;
-
-    for(byteIndex = 0; byteIndex < timeSize; ++byteIndex)
-    {
-        txMsg.data[4 + byteIndex] = time[byteIndex];
-        ++txMsg.dataNum;
-
-        if (VSCP_L1_DATA_SIZE <= txMsg.dataNum)
-        {
-            break;
-        }
-    }
+    
+    txMsg.data[4] = ((uint8_t*)&time)[3];
+    txMsg.data[5] = ((uint8_t*)&time)[2];
+    txMsg.data[6] = ((uint8_t*)&time)[1];
+    txMsg.data[7] = ((uint8_t*)&time)[0];
 
     return vscp_core_sendEvent(&txMsg);
 }
@@ -1193,6 +1179,38 @@ extern BOOL vscp_control_sendUnlockEvent(uint8_t zone, uint8_t subZone)
     txMsg.data[0] = 0;
     txMsg.data[1] = zone;
     txMsg.data[2] = subZone;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * With this event it is possible to set duty cycle output such as PWM.
+ *
+ * @param[in] repeat Repeat/counter: 0=repeat forever, >0 number of repeats
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @param[in] control Control byte.
+ * @param[in] timeOn TimeOn
+ * @param[in] timeOff TimeOff
+ * @return Status
+ * @retval FALSE Failed to send the event
+ * @retval TRUE  Event successul sent
+ *
+ */
+extern BOOL vscp_control_sendPWMEvent(uint8_t repeat, uint8_t zone, uint8_t subZone, uint8_t control, uint16_t timeOn, uint16_t timeOff) {
+    vscp_TxMessage txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_PWM, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 8;
+    txMsg.data[0] = repeat;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+    txMsg.data[3] = control;
+    txMsg.data[4] = timeOn >> 8;
+    txMsg.data[5] = timeOn & 0xFF;
+    txMsg.data[6] = timeOff >> 8;
+    txMsg.data[7] = timeOff & 0xFF;
 
     return vscp_core_sendEvent(&txMsg);
 }
