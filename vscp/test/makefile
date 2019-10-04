@@ -58,6 +58,7 @@ SOURCES= main.c \
 		vscpUser/vscp_tp_adapter.c \
 		vscpUser/vscp_timer.c \
 		../vscp_core.c \
+		../vscp_data_coding.c \
 		../vscp_dev_data.c \
 		../vscp_dm.c \
 		../vscp_dm_ng.c \
@@ -65,8 +66,15 @@ SOURCES= main.c \
 		../vscp_ps.c \
 		../vscp_transport.c \
 		../vscp_util.c \
+		../events/vscp_alarm.c \
+		../events/vscp_control.c \
+		../events/vscp_information.c \
 		../events/vscp_log.c \
-		../events/vscp_information.c
+		../events/vscp_measurement.c \
+		../events/vscp_measurezone.c \
+		../events/vscp_security.c \
+		../events/vscp_weather.c \
+		../events/vscp_weather_forecast.c
 
 # Include all source pathes here like ../src1:../src2
 VPATH= ..:vscpUser:../events
