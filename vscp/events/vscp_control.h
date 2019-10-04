@@ -450,15 +450,14 @@ extern BOOL vscp_control_sendToggleStateEvent(uint8_t userData, uint8_t zone, ui
  * @param[in] userData Optional byte that have a meaning given by the issuer of the event.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
- * @param[in] d Control byte.
- * @param[in] e Set time as a long with MSB in the first byte.
- * @param[in] eSize Size in bytes (1-4)
+ * @param[in] control Control byte.
+ * @param[in] time Set time as a long with MSB in the first byte.
  * @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_control_sendTimedPulseOnEvent(uint8_t userData, uint8_t zone, uint8_t subZone, uint8_t d, uint8_t const * const e, uint8_t eSize);
+extern BOOL vscp_control_sendTimedPulseOnEvent(uint8_t userData, uint8_t zone, uint8_t subZone, uint8_t control, uint32_t time);
 
 /**
  * With this event it is possible to generate a timed pulse that is off for a specified time.
@@ -467,14 +466,12 @@ extern BOOL vscp_control_sendTimedPulseOnEvent(uint8_t userData, uint8_t zone, u
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] control Control byte.
- * @param[in] time Set time as a long with MSB in the first byte.
- * @param[in] timeSize Size in bytes (1-4)
- * @return Status
+ * @param[in] time Set time as a long with MSB in the first byte.* @return Status
  * @retval FALSE Failed to send the event
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_control_sendTimedPulseOffEvent(uint8_t userData, uint8_t zone, uint8_t subZone, uint8_t control, uint8_t const * const time, uint8_t timeSize);
+extern BOOL vscp_control_sendTimedPulseOffEvent(uint8_t userData, uint8_t zone, uint8_t subZone, uint8_t control, uint32_t time);
 
 /**
  * Set country language.
