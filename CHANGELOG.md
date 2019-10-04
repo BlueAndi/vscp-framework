@@ -1,12 +1,16 @@
 ## 0.10.0 (not released yet)
 
   - VSCP framework
+    - Bugfixes:
+      - Fixed CLASS1.CONTROL Timed pulse on/off to match specification. Thanks troky!
     - Improvements:
       - Optimized decision matrix (+ extension) access during normal operation.
         First its checked whether the decision matrix row is enabled or not.
         If its enabled, the whole decision matrix row is read at once from persistent memory.
         Please update your vscp_ps_access.[ch] files accordingly!
         #20
+    - Features:
+      - CLASS1.CONTROL, Type=44, "PWM" added. Thanks troky!
 
 ## 0.9.0
 
