@@ -773,6 +773,7 @@ extern BOOL vscp_information_sendStopEvent(uint8_t reserved, uint8_t zone, uint8
 /**
  * A node indicates that a start event occurred. This can be a motor starting.
  *
+ * @param[in] reserved Reserved for any kind of information
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @return Status
@@ -780,14 +781,14 @@ extern BOOL vscp_information_sendStopEvent(uint8_t reserved, uint8_t zone, uint8
  * @retval TRUE  Event successul sent
  *
  */
-extern BOOL vscp_information_sendStartEvent(uint8_t zone, uint8_t subZone)
+extern BOOL vscp_information_sendStartEvent(uint8_t reserved, uint8_t zone, uint8_t subZone)
 {
     vscp_TxMessage txMsg;
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_START, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
-    txMsg.data[0] = 0;
+    txMsg.data[0] = reserved;
     txMsg.data[1] = zone;
     txMsg.data[2] = subZone;
 
