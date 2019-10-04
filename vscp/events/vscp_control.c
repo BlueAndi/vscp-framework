@@ -800,7 +800,6 @@ extern BOOL vscp_control_sendToggleStateEvent(uint8_t userData, uint8_t zone, ui
  */
 extern BOOL vscp_control_sendTimedPulseOnEvent(uint8_t userData, uint8_t zone, uint8_t subZone, uint8_t control, uint32_t time)
 {
-    uint8_t byteIndex = 0;
     vscp_TxMessage txMsg;
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_TIMED_PULSE_ON, VSCP_PRIORITY_3_NORMAL);
@@ -810,7 +809,6 @@ extern BOOL vscp_control_sendTimedPulseOnEvent(uint8_t userData, uint8_t zone, u
     txMsg.data[1] = zone;
     txMsg.data[2] = subZone;
     txMsg.data[3] = control;
-    
     txMsg.data[4] = ((uint8_t*)&time)[3];
     txMsg.data[5] = ((uint8_t*)&time)[2];
     txMsg.data[6] = ((uint8_t*)&time)[1];
@@ -834,7 +832,6 @@ extern BOOL vscp_control_sendTimedPulseOnEvent(uint8_t userData, uint8_t zone, u
  */
 extern BOOL vscp_control_sendTimedPulseOffEvent(uint8_t userData, uint8_t zone, uint8_t subZone, uint8_t control, uint32_t time)
 {
-    uint8_t byteIndex = 0;
     vscp_TxMessage txMsg;
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_TIMED_PULSE_OFF, VSCP_PRIORITY_3_NORMAL);
@@ -844,7 +841,6 @@ extern BOOL vscp_control_sendTimedPulseOffEvent(uint8_t userData, uint8_t zone, 
     txMsg.data[1] = zone;
     txMsg.data[2] = subZone;
     txMsg.data[3] = control;
-    
     txMsg.data[4] = ((uint8_t*)&time)[3];
     txMsg.data[5] = ((uint8_t*)&time)[2];
     txMsg.data[6] = ((uint8_t*)&time)[1];
@@ -1207,10 +1203,10 @@ extern BOOL vscp_control_sendPWMEvent(uint8_t repeat, uint8_t zone, uint8_t subZ
     txMsg.data[1] = zone;
     txMsg.data[2] = subZone;
     txMsg.data[3] = control;
-    txMsg.data[4] = timeOn >> 8;
-    txMsg.data[5] = timeOn & 0xFF;
-    txMsg.data[6] = timeOff >> 8;
-    txMsg.data[7] = timeOff & 0xFF;
+    txMsg.data[4] = (uint8_t)((timeOn >> 8) & 0xff);
+    txMsg.data[5] = (uint8_t)((timeOn >> 0) & 0xff);
+    txMsg.data[6] = (uint8_t)((timeOff >> 8) & 0xff);
+    txMsg.data[7] = (uint8_t)((timeOff >> 0) & 0xff);
 
     return vscp_core_sendEvent(&txMsg);
 }
