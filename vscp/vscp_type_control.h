@@ -199,7 +199,7 @@ extern "C"
 /** VSCP class 1 control type: Unlock devices in a zone */
 #define VSCP_TYPE_CONTROL_UNLOCK                    43
 
-/** VSCP class 1 control type: Set PWM */
+/** VSCP class 1 control type: With this event it is possible to set duty cycle output such as PWM. */
 #define VSCP_TYPE_CONTROL_PWM                       44
 
 /*******************************************************************************
