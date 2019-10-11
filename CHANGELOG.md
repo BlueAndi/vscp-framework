@@ -11,6 +11,7 @@
         #20
     - Features:
       - CLASS1.CONTROL, Type=44, "PWM" added. Thanks troky!
+      - With VSCP_CONFIG_START_NODE_PROBE_NICKNAME you define where to start with the nickname probing. Thanks troky!
 
 ## 0.9.0
 

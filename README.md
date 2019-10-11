@@ -100,6 +100,7 @@ vscp_config_overwrite.h
 | <sub>VSCP\_CONFIG\_DM\_NG\_PAGE<sub> | <sub>2<sub> | <sub>Decision matrix next generation: Location in the application register space. Note that the dm ng always starts at the begin of the page! This design decision was just for simplification, nothing else.<sub> |
 | <sub>VSCP\_CONFIG\_DM\_NG\_RULE\_SET\_SIZE<sub> | <sub>80<sub> | <sub>Decision matrix next generation: Maximum size in bytes of a rule set.<sub> |
 | <sub>VSCP\_CONFIG\_LOOPBACK\_STORAGE\_NUM<sub> | <sub>4<sub> | <sub>Number of messages in the loopback cyclic buffer. Note, that if you want to store up to 3 events, you have to configure 4, because of the technical implementation of the cyclic buffer.<sub> |
+| <sub>VSCP\_CONFIG\_START\_NODE\_PROBE\_NICKNAME<sub> | <sub>1<sub> | <sub>Number to start probing nickname from.<sub> |
 
 #### Device data
 
