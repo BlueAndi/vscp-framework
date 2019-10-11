@@ -802,7 +802,7 @@ static inline void  vscp_core_changeToStateInit(BOOL probeSegmentMaster)
         if (FALSE == probeSegmentMaster)
         {
             vscp_core_initState = INIT_STATE_PROBE;
-            vscp_core_nickname_probe = 1;
+            vscp_core_nickname_probe = VSCP_CONFIG_START_NODE_PROBE_NICKNAME;
         }
         else
         {
@@ -868,7 +868,7 @@ static inline void  vscp_core_stateInit(void)
             vscp_core_initState = INIT_STATE_PROBE;
 
             /* Probe shall start with nickname id 1. */
-            vscp_core_nickname_probe = 1;
+            vscp_core_nickname_probe = VSCP_CONFIG_START_NODE_PROBE_NICKNAME;
         }
         /* Valid message received */
         else if (TRUE == vscp_core_rxMessageValid)
