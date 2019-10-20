@@ -158,7 +158,7 @@ This xml schema defines the VSCP protocol format.
     	</xs:sequence>
     	<xs:attribute name="pos" type="xs:unsignedInt"></xs:attribute>
     	<xs:attribute name="type" type="xs:string"></xs:attribute>
-    	<xs:attribute name="num" type="xs:unsignedInt"></xs:attribute>
+    	<xs:attribute name="length" type="xs:unsignedInt"></xs:attribute>
     	<xs:attribute name="optional" type="xs:boolean"></xs:attribute>
     </xs:complexType>
 
