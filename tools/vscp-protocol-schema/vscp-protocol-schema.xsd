@@ -87,7 +87,8 @@ This xml schema defines the VSCP protocol format.
     <xs:complexType name="VSCP-Class">
     	<xs:sequence>
     		<xs:element ref="name" minOccurs="1" maxOccurs="1"></xs:element>
-    		<xs:element ref="description" minOccurs="0" maxOccurs="1"></xs:element>
+            <xs:element ref="token" minOccurs="1" maxOccurs="1"></xs:element>
+            <xs:element ref="description" minOccurs="0" maxOccurs="1"></xs:element>
     		<xs:element ref="vscp-types" maxOccurs="1" minOccurs="0"></xs:element>
     	</xs:sequence>
     	<xs:attribute name="id" type="xs:unsignedInt"></xs:attribute>
@@ -107,13 +108,16 @@ This xml schema defines the VSCP protocol format.
     <xs:complexType name="VSCP-Type">
     	<xs:sequence>
     		<xs:element ref="name" maxOccurs="1" minOccurs="1"></xs:element>
-    		<xs:element ref="description" maxOccurs="1" minOccurs="0"></xs:element>
+            <xs:element ref="token" minOccurs="1" maxOccurs="1"></xs:element>
+            <xs:element ref="description" maxOccurs="1" minOccurs="0"></xs:element>
     		<xs:element ref="frame-selector" maxOccurs="1"
     			minOccurs="0">
     		</xs:element>
     		<xs:choice maxOccurs="1" minOccurs="0">
     			<xs:element ref="frames" maxOccurs="1" minOccurs="0"></xs:element>
-    			<xs:element ref="frames-ref" maxOccurs="1" minOccurs="0"></xs:element>
+    			<xs:element ref="frames-ref" maxOccurs="1"
+    				minOccurs="0">
+    			</xs:element>
     		</xs:choice>
     	</xs:sequence>
     	<xs:attribute name="id" type="xs:unsignedInt"></xs:attribute>
@@ -290,4 +294,7 @@ This xml schema defines the VSCP protocol format.
     <xs:element name="begin" type="xs:unsignedInt"></xs:element>
 
     <xs:element name="end" type="xs:unsignedInt"></xs:element>
+
+
+    <xs:element name="token" type="xs:NMTOKEN"></xs:element>
 </xs:schema>
