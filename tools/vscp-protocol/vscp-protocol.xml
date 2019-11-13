@@ -22,7 +22,7 @@ Notes:
     version="1.10.8"
     xmlns="http://www.blue-andi.de/vscp/xml-schema/vscp-protocol/1.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.blue-andi.de/vscp/xml-schema/vscp-protocol/1.0 vscp-protocol-schema.xsd "
+    xsi:schemaLocation="http://www.blue-andi.de/vscp/xml-schema/vscp-protocol/1.0/vscp-protocol-schema.xsd"
     >
     <vscp-classes>
     
