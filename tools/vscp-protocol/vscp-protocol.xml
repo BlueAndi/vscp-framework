@@ -6605,12 +6605,6 @@ Notes:
                     <description lang="en"></description>
                     <frames></frames>
                 </vscp-type>
-                <vscp-type id="1">
-                    <name lang="en">Season winter</name>
-                    <token></token>
-                    <description lang="en"></description>
-                    <frames></frames>
-                </vscp-type>
                 <vscp-type id="2">
                     <name lang="en">Season spring</name>
                     <token></token>
@@ -6926,12 +6920,6 @@ Notes:
                 </vscp-type>
                 <vscp-type id="1">
                     <name lang="en">Season Winter</name>
-                    <token></token>
-                    <description lang="en"></description>
-                    <frames></frames>
-                </vscp-type>
-                <vscp-type id="1">
-                    <name lang="en">Season winter</name>
                     <token></token>
                     <description lang="en"></description>
                     <frames></frames>
