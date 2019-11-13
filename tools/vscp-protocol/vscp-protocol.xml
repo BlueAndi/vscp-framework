@@ -4375,7 +4375,7 @@ Notes:
                                 </element>
                                 <element pos="4" type="uint8" length="1" optional="false">
                                     <name lang="en">Minutes</name>
-                                    <description lang="en">Minuates (0-59).</description>
+                                    <description lang="en">Minutes (0-59).</description>
                                 </element>
                                 <element pos="5" type="uint8" length="1" optional="false">
                                     <name lang="en">Seconds</name>
