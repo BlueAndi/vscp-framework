@@ -108,7 +108,7 @@ This xml schema defines the VSCP protocol format.
     <xs:complexType name="VSCP-Type">
     	<xs:sequence>
     		<xs:element ref="name" maxOccurs="1" minOccurs="1"></xs:element>
-            <xs:element ref="token" minOccurs="1" maxOccurs="1"></xs:element>
+            <xs:element ref="token" minOccurs="0" maxOccurs="1"></xs:element>
             <xs:element ref="description" maxOccurs="1" minOccurs="0"></xs:element>
     		<xs:element ref="frame-selector" maxOccurs="1"
     			minOccurs="0">
