@@ -184,8 +184,10 @@ Templates to support the generation of C-modules.
     <xsl:template name="ctools.define.name">
         <xsl:param name="moduleName" />
         <xsl:param name="name" />
-        <xsl:value-of select="fn:upper-case(fn:replace($moduleName, ' ', '_'))" />
-        <xsl:text>_</xsl:text>
+        <xsl:if test="moduleName">
+            <xsl:value-of select="fn:upper-case(fn:replace($moduleName, ' ', '_'))" />
+            <xsl:text>_</xsl:text>
+        </xsl:if>
         <xsl:value-of select="fn:upper-case(fn:replace($name, ' ', '_'))" />
     </xsl:template>
     
