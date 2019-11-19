@@ -92,12 +92,112 @@ This transformation script generates the VSCP type C header files.
             </xsl:when>
             <xsl:when test="@id = 1">
                 <xsl:call-template name="createFile">
-                    <xsl:with-param name="moduleName">vscp_alarm_protocol</xsl:with-param>
+                    <xsl:with-param name="moduleName">vscp_type_alarm</xsl:with-param>
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test="@id = 2">
                 <xsl:call-template name="createFile">
-                    <xsl:with-param name="moduleName">vscp_security_protocol</xsl:with-param>
+                    <xsl:with-param name="moduleName">vscp_type_security</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="@id = 10">
+                <xsl:call-template name="createFile">
+                    <xsl:with-param name="moduleName">vscp_type_measurement</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="@id = 15">
+                <xsl:call-template name="createFile">
+                    <xsl:with-param name="moduleName">vscp_type_data</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="@id = 20">
+                <xsl:call-template name="createFile">
+                    <xsl:with-param name="moduleName">vscp_type_information</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="@id = 30">
+                <xsl:call-template name="createFile">
+                    <xsl:with-param name="moduleName">vscp_type_control</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="@id = 40">
+                <xsl:call-template name="createFile">
+                    <xsl:with-param name="moduleName">vscp_type_multimedia</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="@id = 50">
+                <xsl:call-template name="createFile">
+                    <xsl:with-param name="moduleName">vscp_type_aol</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="@id = 60">
+                <xsl:call-template name="createFile">
+                    <xsl:with-param name="moduleName">vscp_type_measurement64</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="@id = 65">
+                <xsl:call-template name="createFile">
+                    <xsl:with-param name="moduleName">vscp_type_measurezone</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="@id = 70">
+                <xsl:call-template name="createFile">
+                    <xsl:with-param name="moduleName">vscp_type_measurement32</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="@id = 85">
+                <xsl:call-template name="createFile">
+                    <xsl:with-param name="moduleName">vscp_type_setvaluezone</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="@id = 90">
+                <xsl:call-template name="createFile">
+                    <xsl:with-param name="moduleName">vscp_type_weather</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="@id = 95">
+                <xsl:call-template name="createFile">
+                    <xsl:with-param name="moduleName">vscp_type_weather_forecast</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="@id = 100">
+                <xsl:call-template name="createFile">
+                    <xsl:with-param name="moduleName">vscp_type_phone</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="@id = 102">
+                <xsl:call-template name="createFile">
+                    <xsl:with-param name="moduleName">vscp_type_display</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="@id = 110">
+                <xsl:call-template name="createFile">
+                    <xsl:with-param name="moduleName">vscp_type_ir</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="@id = 206">
+                <xsl:call-template name="createFile">
+                    <xsl:with-param name="moduleName">vscp_type_gnss</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="@id = 212">
+                <xsl:call-template name="createFile">
+                    <xsl:with-param name="moduleName">vscp_type_wireless</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="@id = 506">
+                <xsl:call-template name="createFile">
+                    <xsl:with-param name="moduleName">vscp_type_diagnostic</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="@id = 508">
+                <xsl:call-template name="createFile">
+                    <xsl:with-param name="moduleName">vscp_type_error</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="@id = 509">
+                <xsl:call-template name="createFile">
+                    <xsl:with-param name="moduleName">vscp_type_log</xsl:with-param>
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
