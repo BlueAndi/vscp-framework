@@ -187,7 +187,16 @@ This transformation script generates the VSCP type C header files.
                 </xsl:with-param>
             </xsl:call-template>
             <xsl:text>&LF;</xsl:text>
-            <xsl:apply-templates select="vscp-types/vscp-type" />
+            <xsl:apply-templates select="vscp-types/vscp-type[token]">
+                <xsl:with-param name="maxLen">
+                    <xsl:for-each select="vscp-types/vscp-type">
+                        <xsl:sort select="string-length(token)" order="descending" data-type="number"/>
+                        <xsl:if test="position() = 1">
+                            <xsl:value-of select="string-length(token)"/>
+                        </xsl:if>
+                    </xsl:for-each>
+                </xsl:with-param> 
+            </xsl:apply-templates>
 
             <!-- Macros -->
             <xsl:call-template name="ctools.generalBlock">
@@ -231,19 +240,43 @@ This transformation script generates the VSCP type C header files.
         </xsl:result-document>
     </xsl:template>
 
+    <!-- Create a #define for each vscp-type  -->
     <xsl:template match="vscp-type">
+        <xsl:param name="maxLen" />
         <xsl:call-template name="ctools.define">
             <xsl:with-param name="comment">
-                <xsl:value-of select="description[@lang='en']" />
+                <xsl:analyze-string select="description[@lang='en']" regex="\\n">
+                    <xsl:matching-substring>
+                        <xsl:text>arg&LF;</xsl:text>
+                    </xsl:matching-substring>
+                    <xsl:non-matching-substring>
+                        <xsl:value-of select="." />
+                    </xsl:non-matching-substring>
+                </xsl:analyze-string>
             </xsl:with-param>
             <xsl:with-param name="name">
                 <xsl:value-of select="token" />
             </xsl:with-param>
             <xsl:with-param name="value">
+                <xsl:call-template name="addSpaces">
+                    <xsl:with-param name="count">
+                        <xsl:value-of select="$maxLen - string-length(token)" />
+                    </xsl:with-param>
+                </xsl:call-template>
                 <xsl:value-of select="@id" />
             </xsl:with-param>
         </xsl:call-template>
         <xsl:text>&LF;</xsl:text>
+    </xsl:template>
+
+    <xsl:template name="addSpaces">
+        <xsl:param name="count" />
+        <xsl:if test="$count &gt; 0">
+            <xsl:text> </xsl:text>
+            <xsl:call-template name="addSpaces">
+                <xsl:with-param name="count" select="$count - 1" />
+            </xsl:call-template>
+        </xsl:if>
     </xsl:template>
 
     <!-- Garbage collector -->

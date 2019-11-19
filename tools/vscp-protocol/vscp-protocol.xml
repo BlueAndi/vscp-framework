@@ -82,6 +82,16 @@ Notes:
                         </frame>
                     </frames>
                 </vscp-type>
+                <vscp-type id="4">
+                    <name lang="en">Reserved for future use.</name>
+                    <token>VSCP_TYPE_PROTOCOL_RESERVED4</token>
+                    <description lang="en">Reserved for future use.</description>
+                </vscp-type>
+                <vscp-type id="5">
+                    <name lang="en">Reserved for future use.</name>
+                    <token>VSCP_TYPE_PROTOCOL_RESERVED5</token>
+                    <description lang="en">Reserved for future use.</description>
+                </vscp-type>
                 <vscp-type id="6">
                     <name lang="en">Set nickname-ID for node.</name>
                     <token>VSCP_TYPE_PROTOCOL_SET_NICKNAME</token>
@@ -1092,16 +1102,6 @@ Notes:
                             <description lang="en" />
                         </frame>
                     </frames>
-                </vscp-type>
-                <vscp-type id="4">
-                    <name lang="en">Reserved for future use.</name>
-                    <token>VSCP_TYPE_PROTOCOL_RESERVED4</token>
-                    <description lang="en">Reserved for future use.</description>
-                </vscp-type>
-                <vscp-type id="5">
-                    <name lang="en">Reserved for future use.</name>
-                    <token>VSCP_TYPE_PROTOCOL_RESERVED5</token>
-                    <description lang="en">Reserved for future use.</description>
                 </vscp-type>
             </vscp-types>
         </vscp-class>

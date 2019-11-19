@@ -172,7 +172,7 @@ Templates to support the generation of C-modules.
                 <xsl:value-of select="$name" />
             </xsl:with-param>
         </xsl:call-template>
-        <xsl:text>&TAB;</xsl:text>
+        <xsl:text> </xsl:text>
         <xsl:value-of select="$value" />
         <xsl:text>&LF;</xsl:text>
     </xsl:template>
