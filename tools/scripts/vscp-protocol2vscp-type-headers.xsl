@@ -347,7 +347,7 @@ This transformation script generates the VSCP type C header files.
             <xsl:with-param name="comment">
                 <xsl:analyze-string select="description[@lang='en']" regex="\\n">
                     <xsl:matching-substring>
-                        <xsl:text>arg&LF;</xsl:text>
+                        <xsl:text>&LF;</xsl:text>
                     </xsl:matching-substring>
                     <xsl:non-matching-substring>
                         <xsl:value-of select="." />
