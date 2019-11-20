@@ -140,7 +140,7 @@ Templates to support the generation of C-modules.
     -->
     <xsl:template name="ctools.hFooterBlock">
         <xsl:param name="moduleName" />
-        <xsl:text>#endif /* __</xsl:text><xsl:value-of select="fn:upper-case($moduleName)" /><xsl:text>_H__ */&LF;</xsl:text>
+        <xsl:text>#endif&TAB;/* __</xsl:text><xsl:value-of select="fn:upper-case($moduleName)" /><xsl:text>_H__ */&LF;</xsl:text>
     </xsl:template>
     
     <!-- Footer of a .c file -->
