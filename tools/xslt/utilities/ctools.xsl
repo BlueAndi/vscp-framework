@@ -184,7 +184,7 @@ Templates to support the generation of C-modules.
     <xsl:template name="ctools.define.name">
         <xsl:param name="moduleName" />
         <xsl:param name="name" />
-        <xsl:if test="moduleName">
+        <xsl:if test="string-length($moduleName) &gt; 0">
             <xsl:value-of select="fn:upper-case(fn:replace($moduleName, ' ', '_'))" />
             <xsl:text>_</xsl:text>
         </xsl:if>
