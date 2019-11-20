@@ -264,7 +264,7 @@ static void vscp_bootloader_simApp(void)
                     }
                     break;
 
-                case VSCP_TYPE_PROTOCOL_ENTER_BOOT_LOADER_MODE:
+                case VSCP_TYPE_PROTOCOL_ENTER_BOOT_LOADER:
                     /* Is this event for this node? */
                     if ((vscp_bootloader_nickname == rxMsg.data[0]) &&
                         (vscp_bl_adapter_readGUID(15 - 0) == rxMsg.data[2]) &&
@@ -329,7 +329,7 @@ static void vscp_bootloader_sendAckEnterBootLoader(uint32_t blockSize, uint32_t 
     vscp_TxMessage  txMsg;
 
     txMsg.vscpClass = VSCP_CLASS_L1_PROTOCOL;
-    txMsg.vscpType  = VSCP_TYPE_PROTOCOL_ENTER_BOOT_LOADER_MODE_ACK;
+    txMsg.vscpType  = VSCP_TYPE_PROTOCOL_ACK_BOOT_LOADER;
     txMsg.priority  = VSCP_PRIORITY_7_LOW;
     txMsg.oAddr     = vscp_bootloader_nickname;
     txMsg.hardCoded = FALSE;
@@ -358,7 +358,7 @@ static void vscp_bootloader_sendNakEnterBootLoader(uint8_t errorCode)
     vscp_TxMessage  txMsg;
 
     txMsg.vscpClass = VSCP_CLASS_L1_PROTOCOL;
-    txMsg.vscpType  = VSCP_TYPE_PROTOCOL_ENTER_BOOT_LOADER_MODE_NACK;
+    txMsg.vscpType  = VSCP_TYPE_PROTOCOL_NACK_BOOT_LOADER;
     txMsg.priority  = VSCP_PRIORITY_7_LOW;
     txMsg.oAddr     = vscp_bootloader_nickname;
     txMsg.hardCoded = FALSE;
@@ -389,7 +389,7 @@ static void vscp_bootloader_programmingProcedure(void)
             {
                 switch(rxMsg.vscpType)
                 {
-                case VSCP_TYPE_PROTOCOL_START_BLOCK_DATA_TRANSFER:
+                case VSCP_TYPE_PROTOCOL_START_BLOCK:
                     vscp_bootloader_handleProtocolStartBlockDataTransfer(&rxMsg, &progParam);
                     break;
 
@@ -397,7 +397,7 @@ static void vscp_bootloader_programmingProcedure(void)
                     vscp_bootloader_handleProtocolBlockData(&rxMsg, &progParam);
                     break;
 
-                case VSCP_TYPE_PROTOCOL_PROGRAM_DATA_BLOCK:
+                case VSCP_TYPE_PROTOCOL_PROGRAM_BLOCK_DATA:
                     vscp_bootloader_handleProtocolProgramDataBlock(&rxMsg, &progParam);
                     break;
                 
@@ -405,7 +405,7 @@ static void vscp_bootloader_programmingProcedure(void)
                     abortFlag = vscp_bootloader_handleProtocolActivateNewImage(&rxMsg, &progParam);
                     break;
 
-                case VSCP_TYPE_PROTOCOL_DROP_NICKNAME_ID:
+                case VSCP_TYPE_PROTOCOL_DROP_NICKNAME:
                     abortFlag = vscp_bootloader_handleProtocolDropNicknameId(&rxMsg);
                     break;
 
@@ -620,7 +620,7 @@ static void vscp_bootloader_sendAckStartBlockDataTransfer(void)
     vscp_TxMessage  txMsg;
 
     txMsg.vscpClass = VSCP_CLASS_L1_PROTOCOL;
-    txMsg.vscpType  = VSCP_TYPE_PROTOCOL_START_BLOCK_DATA_TRANSFER_ACK;
+    txMsg.vscpType  = VSCP_TYPE_PROTOCOL_START_BLOCK_ACK;
     txMsg.priority  = VSCP_PRIORITY_7_LOW;
     txMsg.oAddr     = vscp_bootloader_nickname;
     txMsg.hardCoded = FALSE;
@@ -639,7 +639,7 @@ static void vscp_bootloader_sendNakStartBlockDataTransfer(void)
     vscp_TxMessage  txMsg;
 
     txMsg.vscpClass = VSCP_CLASS_L1_PROTOCOL;
-    txMsg.vscpType  = VSCP_TYPE_PROTOCOL_START_BLOCK_DATA_TRANSFER_NACK;
+    txMsg.vscpType  = VSCP_TYPE_PROTOCOL_START_BLOCK_NACK;
     txMsg.priority  = VSCP_PRIORITY_7_LOW;
     txMsg.oAddr     = vscp_bootloader_nickname;
     txMsg.hardCoded = FALSE;
@@ -715,7 +715,7 @@ static void vscp_bootloader_sendAckProgramBlockData(uint32_t blockNumber)
     vscp_TxMessage  txMsg;
 
     txMsg.vscpClass = VSCP_CLASS_L1_PROTOCOL;
-    txMsg.vscpType  = VSCP_TYPE_PROTOCOL_PROGRAM_DATA_BLOCK_ACK;
+    txMsg.vscpType  = VSCP_TYPE_PROTOCOL_PROGRAM_BLOCK_DATA_ACK;
     txMsg.priority  = VSCP_PRIORITY_7_LOW;
     txMsg.oAddr     = vscp_bootloader_nickname;
     txMsg.hardCoded = FALSE;
@@ -741,7 +741,7 @@ static void vscp_bootloader_sendNakProgramBlockData(uint8_t errorCode, uint32_t 
     vscp_TxMessage  txMsg;
 
     txMsg.vscpClass = VSCP_CLASS_L1_PROTOCOL;
-    txMsg.vscpType  = VSCP_TYPE_PROTOCOL_PROGRAM_DATA_BLOCK_NACK;
+    txMsg.vscpType  = VSCP_TYPE_PROTOCOL_PROGRAM_BLOCK_DATA_NACK;
     txMsg.priority  = VSCP_PRIORITY_7_LOW;
     txMsg.oAddr     = vscp_bootloader_nickname;
     txMsg.hardCoded = FALSE;

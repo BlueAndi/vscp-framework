@@ -91,7 +91,7 @@ extern BOOL vscp_security_sendUndefinedEvent(void)
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SECURITY, VSCP_TYPE_SECURITY_UNDEFINED, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SECURITY, VSCP_TYPE_SECURITY_GENERAL, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 0;
 
@@ -113,7 +113,7 @@ extern BOOL vscp_security_sendMotionDetectEvent(uint8_t userData, uint8_t zone, 
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SECURITY, VSCP_TYPE_SECURITY_MOTION_DETECT, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SECURITY, VSCP_TYPE_SECURITY_MOTION, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = userData;
@@ -313,7 +313,7 @@ extern BOOL vscp_security_sendDoorContactEvent(uint8_t userData, uint8_t zone, u
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SECURITY, VSCP_TYPE_SECURITY_DOOR_CONTACT, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SECURITY, VSCP_TYPE_SECURITY_DOOR_OPEN, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = userData;
@@ -338,7 +338,7 @@ extern BOOL vscp_security_sendWindowContactEvent(uint8_t userData, uint8_t zone,
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SECURITY, VSCP_TYPE_SECURITY_WINDOW_CONTACT, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SECURITY, VSCP_TYPE_SECURITY_WINDOW_OPEN, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = userData;
@@ -538,7 +538,7 @@ extern BOOL vscp_security_sendNoiseDetectedEvent(uint8_t userData, uint8_t zone,
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SECURITY, VSCP_TYPE_SECURITY_NOISE_DETECTED, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SECURITY, VSCP_TYPE_SECURITY_SOUND_DETECTED, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = userData;
@@ -563,7 +563,7 @@ extern BOOL vscp_security_sendHarmfulSoundLevelsDetectedEvent(uint8_t userData, 
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SECURITY, VSCP_TYPE_SECURITY_HARMFUL_SOUND_LEVELS_DETECTED, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SECURITY, VSCP_TYPE_SECURITY_HARMFUL_SOUND_LEVEL, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = userData;
@@ -588,7 +588,7 @@ extern BOOL vscp_security_sendTamperDetectedEvent(uint8_t userData, uint8_t zone
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SECURITY, VSCP_TYPE_SECURITY_TAMPER_DETECTED, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SECURITY, VSCP_TYPE_SECURITY_TAMPER, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = userData;

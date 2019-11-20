@@ -148,7 +148,7 @@ extern uint8_t  vscp_util_getZoneIndex(uint16_t vscpClass, uint8_t vscpType)
         case VSCP_CLASS_L1_CONTROL:
             if ((VSCP_TYPE_CONTROL_DEACTIVATE >= vscpType) ||
                 (
-                    (VSCP_TYPE_CONTROL_DIM_LAMP <= vscpType) &&
+                    (VSCP_TYPE_CONTROL_DIM_LAMPS <= vscpType) &&
                     (VSCP_TYPE_CONTROL_STREAM_DATA != vscpType)
                 ))
             {
@@ -164,7 +164,7 @@ extern uint8_t  vscp_util_getZoneIndex(uint16_t vscpClass, uint8_t vscpType)
             break;
 
         case VSCP_CLASS_L1_DISPLAY:
-            if (VSCP_TYPE_DISPLAY_SET_DISPLAY_BUFFER_PARAMETER != vscpType)
+            if (VSCP_TYPE_DISPLAY_SET_DISPLAY_BUFFER_PARAM != vscpType)
             {
                 zoneIndex = 1;
             }

@@ -95,7 +95,7 @@ extern BOOL vscp_measurement_sendUndefinedEvent(void)
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_UNDEFINED, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_GENERAL, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 0;
 
@@ -147,7 +147,7 @@ extern BOOL vscp_measurement_sendLengthDistanceEvent(uint8_t index, uint8_t unit
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_LENGTH_DISTANCE, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_LENGTH, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 1;
     txMsg.data[0] = vscp_data_coding_getFormatByte(VSCP_DATA_CODING_REPRESENTATION_NORMALIZED_INTEGER, unit, index);
@@ -318,7 +318,7 @@ extern BOOL vscp_measurement_sendLuminousIntensityEvent(uint8_t index, uint8_t u
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_LUMINOUS_INTENSITY, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_INTENSITY_OF_LIGHT, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 1;
     txMsg.data[0] = vscp_data_coding_getFormatByte(VSCP_DATA_CODING_REPRESENTATION_NORMALIZED_INTEGER, unit, index);
@@ -374,7 +374,7 @@ extern BOOL vscp_measurement_sendRadioactivityAndOtherRandomEventsEvent(uint8_t 
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_RADIOACTIVITY_AND_OTHER_RANDOM_EVENTS, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_RADIOACTIVITY, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 1;
     txMsg.data[0] = vscp_data_coding_getFormatByte(VSCP_DATA_CODING_REPRESENTATION_NORMALIZED_INTEGER, unit, index);
@@ -769,7 +769,7 @@ extern BOOL vscp_measurement_sendLuminousFluxEvent(uint8_t index, uint8_t unit, 
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_LUMINOUS_FLUX, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_FLUX_OF_LIGHT, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 1;
     txMsg.data[0] = vscp_data_coding_getFormatByte(VSCP_DATA_CODING_REPRESENTATION_NORMALIZED_INTEGER, unit, index);
@@ -854,7 +854,7 @@ extern BOOL vscp_measurement_sendCatalyticActivityEvent(uint8_t index, uint8_t u
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_CATALYTIC_ACTIVITY, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_CATALYTIC_ACITIVITY, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 1;
     txMsg.data[0] = vscp_data_coding_getFormatByte(VSCP_DATA_CODING_REPRESENTATION_NORMALIZED_INTEGER, unit, index);
@@ -1085,7 +1085,7 @@ extern BOOL vscp_measurement_sendDampMoistEvent(uint8_t index, uint8_t unit, int
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_DAMP_MOIST, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_HUMIDITY, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 1;
     txMsg.data[0] = vscp_data_coding_getFormatByte(VSCP_DATA_CODING_REPRESENTATION_NORMALIZED_INTEGER, unit, index);
@@ -1393,7 +1393,7 @@ extern BOOL vscp_measurement_sendDoseEquivalentEvent(uint8_t index, uint8_t unit
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_DOSE_EQUIVALENT, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_DOSE_EQVIVALENT, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 1;
     txMsg.data[0] = vscp_data_coding_getFormatByte(VSCP_DATA_CODING_REPRESENTATION_NORMALIZED_INTEGER, unit, index);
@@ -1423,7 +1423,7 @@ extern BOOL vscp_measurement_sendDewPointEvent(uint8_t index, uint8_t unit, int3
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_DEW_POINT, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_DEWPOINT, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 1;
     txMsg.data[0] = vscp_data_coding_getFormatByte(VSCP_DATA_CODING_REPRESENTATION_NORMALIZED_INTEGER, unit, index);
@@ -1592,7 +1592,7 @@ extern BOOL vscp_measurement_sendIrradianceExitanceRadiosityEvent(uint8_t index,
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_IRRADIANCE_EXITANCE_RADIOSITY, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_IRRADIANCE, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 1;
     txMsg.data[0] = vscp_data_coding_getFormatByte(VSCP_DATA_CODING_REPRESENTATION_NORMALIZED_INTEGER, unit, index);

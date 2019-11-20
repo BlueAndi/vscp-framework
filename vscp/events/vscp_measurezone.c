@@ -95,7 +95,7 @@ extern BOOL vscp_measurezone_sendUndefinedEvent(void)
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_UNDEFINED, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_GENERAL, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 0;
 
@@ -151,7 +151,7 @@ extern BOOL vscp_measurezone_sendLengthDistanceEvent(uint8_t index, uint8_t zone
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_LENGTH_DISTANCE, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_LENGTH, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -340,7 +340,7 @@ extern BOOL vscp_measurezone_sendLuminousIntensityEvent(uint8_t index, uint8_t z
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_LUMINOUS_INTENSITY, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_INTENSITY_OF_LIGHT, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -402,7 +402,7 @@ extern BOOL vscp_measurezone_sendRadioactivityAndOtherRandomEventsEvent(uint8_t 
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_RADIOACTIVITY_AND_OTHER_RANDOM_EVENTS, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_RADIOACTIVITY, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -839,7 +839,7 @@ extern BOOL vscp_measurezone_sendLuminousFluxEvent(uint8_t index, uint8_t zone, 
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_LUMINOUS_FLUX, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_FLUX_OF_LIGHT, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -933,7 +933,7 @@ extern BOOL vscp_measurezone_sendCatalyticActivityEvent(uint8_t index, uint8_t z
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_CATALYTIC_ACTIVITY, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_CATALYTIC_ACITIVITY, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -1188,7 +1188,7 @@ extern BOOL vscp_measurezone_sendDampMoistEvent(uint8_t index, uint8_t zone, uin
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_DAMP_MOIST, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_HUMIDITY, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -1529,7 +1529,7 @@ extern BOOL vscp_measurezone_sendDoseEquivalentEvent(uint8_t index, uint8_t zone
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_DOSE_EQUIVALENT, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_DOSE_EQVIVALENT, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -1562,7 +1562,7 @@ extern BOOL vscp_measurezone_sendDewPointEvent(uint8_t index, uint8_t zone, uint
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_DEW_POINT, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_DEWPOINT, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -1749,7 +1749,7 @@ extern BOOL vscp_measurezone_sendIrradianceExitanceRadiosityEvent(uint8_t index,
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_IRRADIANCE_EXITANCE_RADIOSITY, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_IRRADIANCE, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
