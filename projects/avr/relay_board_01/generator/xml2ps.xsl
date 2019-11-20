@@ -71,6 +71,7 @@ This transformation script generates the user persistency access interface.
     <xsl:variable name="global.moduleName">vscp_ps_user</xsl:variable>
     <xsl:variable name="global.author">Andreas Merkle, http://www.blue-andi.de</xsl:variable>
     <xsl:variable name="global.description">This module contains the user specific access to the persistent storage.</xsl:variable>
+    <xsl:variable name="global.license" as="xs:string" select="unparsed-text('../../../../tools/xslt/utilities/license.txt', 'utf-8')" />
 
     <!--
     ****************************************************************************
@@ -120,33 +121,7 @@ This transformation script generates the user persistency access interface.
     <xsl:template name="h.header">
         <xsl:call-template name="ctools.hHeaderBlock">
             <xsl:with-param name="license">
-            <xsl:text>/* The MIT License (MIT)
- *
- * Copyright (c) 2014 - 2019, Andreas Merkle
- * http://www.blue-andi.de
- * vscp@blue-andi.de
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- *
- */
-
-</xsl:text>
+                <xsl:value-of select="$global.license" />
             </xsl:with-param>
             <xsl:with-param name="briefDesc">
                 <xsl:text>User specific persistency access.</xsl:text>
@@ -552,33 +527,7 @@ This transformation script generates the user persistency access interface.
     <xsl:template name="c.header">
         <xsl:call-template name="ctools.cHeaderBlock">
             <xsl:with-param name="license">
-            <xsl:text>/* The MIT License (MIT)
- *
- * Copyright (c) 2014 - 2019, Andreas Merkle
- * http://www.blue-andi.de
- * vscp@blue-andi.de
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- *
- */
-
-</xsl:text>
+                <xsl:value-of select="$global.license" />
             </xsl:with-param>
             <xsl:with-param name="briefDesc">
                 <xsl:text>User specific persistency access.</xsl:text>
