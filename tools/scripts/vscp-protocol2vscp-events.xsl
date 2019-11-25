@@ -664,7 +664,9 @@ This transformation script generates the VSCP event modules.
                     <xsl:with-param name="body">
                         <!-- Function variables -->
                         <xsl:text>&TAB;vscp_TxMessage&TAB;txMsg;&LF;</xsl:text>
-                        <xsl:text>&TAB;uint8_t       &TAB;size&TAB;= 0;&LF;</xsl:text>
+                        <xsl:if test="frames/frame/elements/element">
+                            <xsl:text>&TAB;uint8_t       &TAB;size&TAB;= 0;&LF;</xsl:text>
+                        </xsl:if>
                         <xsl:if test="frames/frame/elements/element[@length &gt; 1]">
                             <xsl:text>&TAB;uint8_t       &TAB;index&TAB;= 0;&LF;</xsl:text>
                         </xsl:if>
@@ -866,6 +868,11 @@ This transformation script generates the VSCP event modules.
                         </xsl:for-each>
 
                         <xsl:if test="frames/frame/elements/element">
+                            <xsl:text>&LF;</xsl:text>
+                        </xsl:if>
+
+                        <xsl:if test="frames/frame/elements/element">
+                            <xsl:text>&TAB;txMsg.dataNum = size;&LF;</xsl:text>
                             <xsl:text>&LF;</xsl:text>
                         </xsl:if>
 
