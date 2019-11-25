@@ -32,6 +32,12 @@ Notes:
                     <name lang="en">General event.</name>
                     <token>VSCP_TYPE_PROTOCOL_GENERAL</token>
                     <description lang="en">General Event.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="1">
                     <name lang="en">Segment Controller Heartbeat.</name>
@@ -1449,16 +1455,16 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
-                                    <name>Data0</name>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
                                     <description lang="en">index.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
-                                    <name>Data1</name>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
-                                    <name>Data2</name>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-zone</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
                             </elements>
@@ -1992,15 +1998,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">User defined data.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -2017,15 +2023,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">User defined data.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -2042,15 +2048,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">User defined data.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -2067,15 +2073,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">User defined data.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -2092,15 +2098,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">ID check bits.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -2117,15 +2123,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">User defined data.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -2142,15 +2148,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">User defined data.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -2167,15 +2173,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">User defined data.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -2192,15 +2198,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">User defined data.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -2217,15 +2223,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">User defined data.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -2242,15 +2248,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">User defined data.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -2267,15 +2273,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">User defined data.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -2292,15 +2298,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">User defined data.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -2736,6 +2742,7 @@ Notes:
                     <name lang="en">General event</name>
                     <token>VSCP_TYPE_DATA_GENERAL</token>
                     <description lang="en">General event.</description>
+                    <frames-ref>specification/vscp-classes/10/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="1">
                     <name lang="en">I/O value</name>
@@ -2784,6 +2791,12 @@ Notes:
                     <name lang="en">General event</name>
                     <token>VSCP_TYPE_INFORMATION_GENERAL</token>
                     <description lang="en">General Event.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="1">
                     <name lang="en">Button</name>
@@ -4849,17 +4862,17 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
-                                    <name>Data0</name>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
                                     <description lang="en">Index for device. Set to zero if not used.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
-                                    <name>Data1</name>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
-                                    <name>Data2</name>
-                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
                             </elements>
                         </frame>
@@ -4874,17 +4887,17 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
-                                    <name>Data0</name>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
                                     <description lang="en">Index for device. Set to zero if not used.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
-                                    <name>Data1</name>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
-                                    <name>Data2</name>
-                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
                             </elements>
                         </frame>
@@ -4899,17 +4912,17 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
-                                    <name>Data0</name>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
                                     <description lang="en">Index for device. Set to zero if not used.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
-                                    <name>Data1</name>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
-                                    <name>Data2</name>
-                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
                             </elements>
                         </frame>
@@ -4926,6 +4939,12 @@ Notes:
                     <name lang="en">General event</name>
                     <token>VSCP_TYPE_CONTROL_GENERAL</token>
                     <description lang="en">General Event.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="1">
                     <name lang="en">Mute on/off</name>
@@ -5151,35 +5170,35 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">Repeat/counter: 0=repeat forever, &gt;0 number of repeats</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
-                                <element pos="3" type="uint8_t" length="1" optional="false">
+                                <element pos="3" type="uint8" length="1" optional="false">
                                     <name>Data3</name>
                                     <description lang="en">Control byte.</description>
                                 </element>
-                                <element pos="4" type="uint8_t" length="1" optional="false">
+                                <element pos="4" type="uint8" length="1" optional="false">
                                     <name>Data4</name>
                                     <description lang="en">Time-On MSB</description>
                                 </element>
-                                <element pos="5" type="uint8_t" length="1" optional="false">
+                                <element pos="5" type="uint8" length="1" optional="false">
                                     <name>Data5</name>
                                     <description lang="en">Time-On LSB</description>
                                 </element>
-                                <element pos="6" type="uint8_t" length="1" optional="false">
+                                <element pos="6" type="uint8" length="1" optional="false">
                                     <name>Data6</name>
                                     <description lang="en">Time-Off MSB</description>
                                 </element>
-                                <element pos="7" type="uint8_t" length="1" optional="false">
+                                <element pos="7" type="uint8" length="1" optional="false">
                                     <name>Data7</name>
                                     <description lang="en">Time-Off LSB</description>
                                 </element>
@@ -5196,19 +5215,19 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">Not used.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
-                                <element pos="3" type="uint8_t" length="2" optional="false">
+                                <element pos="3" type="uint8" length="2" optional="false">
                                     <name>Data3</name>
                                     <description lang="en">Token. This token can be 1-5 bytes and length of event is set accordingly. It should be interpreted as an unsigned integer in the range 0-1099511627775. MSB byte is stored in first byte.</description>
                                 </element>
@@ -5225,19 +5244,19 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">Not used.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
-                                <element pos="3" type="uint8_t" length="2" optional="false">
+                                <element pos="3" type="uint8" length="2" optional="false">
                                     <name>Data3</name>
                                     <description lang="en">Token. This token can be 1-5 bytes and length of event is set accordingly. It should be interpreted as an unsigned integer in the range 0-1099511627775. MSB byte is stored in first byte.</description>
                                 </element>
@@ -5254,15 +5273,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">Security level to set. 0-255 (Higher value is higher security level).</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5279,19 +5298,19 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">Not used.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
-                                <element pos="3" type="uint8_t" length="2" optional="false">
+                                <element pos="3" type="uint8" length="2" optional="false">
                                     <name>Data3</name>
                                     <description lang="en">Security pin. This pin can be 1-5 bytes and length of event is set accordingly. It should be interpreted as an unsigned integer in the range 0-1099511627775. MSB byte is stored in first byte.</description>
                                 </element>
@@ -5308,19 +5327,19 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">Not used.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
-                                <element pos="3" type="uint8_t" length="2" optional="false">
+                                <element pos="3" type="uint8" length="2" optional="false">
                                     <name>Data3</name>
                                     <description lang="en">Security password. This password can be 1-5 bytes and length of event is set accordingly. It should be interpreted as an UTF-8 string with a length set bt event data length - 3</description>
                                 </element>
@@ -5337,19 +5356,19 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">Not used.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
-                                <element pos="3" type="uint8_t" length="2" optional="false">
+                                <element pos="3" type="uint8" length="2" optional="false">
                                     <name>Data3</name>
                                     <description lang="en">Token. This token can be 1-5 bytes and length of event is set accordingly. It should be interpreted as an unsigned integer in the range 0-1099511627775. MSB byte is stored in first byte.</description>
                                 </element>
@@ -5366,15 +5385,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">Not used.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5393,6 +5412,12 @@ Notes:
                     <name lang="en">General event</name>
                     <token>VSCP_TYPE_MULTIMEDIA_GENERAL</token>
                     <description lang="en">General Event.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="1">
                     <name lang="en">Playback</name>
@@ -5403,15 +5428,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">Function (See below)</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5428,15 +5453,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">Function</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5453,15 +5478,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">A value between 0 and 127 indicates the specific contrast level to set. A value between 128 and 159 is change down by the specified number of contrast levels. A value between 160 and 191 is change up by the specified number of contrast levels. A value of 255 means that this is and extended event and that the specific contrast level is sent in byte 3 and after.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5478,15 +5503,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">A value between 0 and 127 indicates the specific focus level to set. A value between 128 and 159 is change down by the specified number of focus levels. A value between 160 and 191 is change up by the specified number of focus levels. A value of 255 means that this is and extended event and that the specific focus level is sent in byte 3 and after.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5503,15 +5528,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">A value between 0 and 127 indicates the specific tint level to set. A value between 128 and 159 is change down by the specified number of tint levels. A value between 160 and 191 is change up by the specified number of tint levels. A value of 255 means that this is and extended event and that the specific tint level is sent in byte 3 and after.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5528,15 +5553,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">Reserved.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5553,15 +5578,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">A value between 0 and 127 indicates the specific brightness level to set. A value between 128 and 159 is change down by the specified number of brightness levels. A value between 160 and 191 is change up by the specified number of brightness levels. A value of 255 means that this is and extended event and that the specific brightness level is sent in byte 3 and after.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5578,15 +5603,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">Reserved.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5603,15 +5628,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">A value between 0 and 127 indicates the specific bass level to set. A value between 128 and 159 is change down by the specified number of bass levels. A value between 160 and 191 is change up by the specified number of bass levels. A value of 255 means that this is and extended event and that the specific bass level is sent in byte 3 and after.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5628,15 +5653,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">0 A value between 0 and 127 indicates the specific treble level to set. A value between 128 and 159 is change down by the specified number of treble levels. A value between 160 and 191 is change up by the specified number of treble levels. A value of 255 means that this is and extended event and that the specific treble level is sent in byte 3 and after.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5653,15 +5678,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">A value between 0 and 127 indicates the specific volume level to set. A value between 128 and 159 is change down by the specified number of volume levels. A value between 160 and 191 is change up by the specified number of volume levels. A value of 255 means that this is and extended event and that the specific volume level is sent in byte 3 and after.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5678,15 +5703,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">A value between 0 and 127 indicates the specific volume level to set. A value between 128 and 159 is change down by the specified number of volume levels. A value between 160 and 191 is change up by the specified number of volume levels. A value of 255 means that this is and extended event and that the specific volume level is sent in byte 3 and after.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5703,15 +5728,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">A value between 0 and 127 indicates the specific volume level to set. A value between 128 and 159 is change down by the specified number of volume levels. A value between 160 and 191 is change up by the specified number of volume levels. A value of 255 means that this is and extended event and that the specific volume level is sent in byte 3 and after.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5728,15 +5753,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">A value between 0 and 127 indicates the specific volume level to set. A value between 128 and 159 is change down by the specified number of volume levels. A value between 160 and 191 is change up by the specified number of volume levels. A value of 255 means that this is and extended event and that the specific volume level is sent in byte 3 and after.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5753,15 +5778,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">A value between 0 and 127 indicates the specific volume level to set. A value between 128 and 159 is change down by the specified number of volume levels. A value between 160 and 191 is change up by the specified number of volume levels. A value of 255 means that this is and extended event and that the specific volume level is sent in byte 3 and after.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5798,15 +5823,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">A value between 0 and 127 indicates the specific disk number. A value between 128 and 159 is change down by the specified number of disks. A value between 160 and 191 is change up by the specified number of disks. A value of 200 means select a random disk. A value of 255 means that this is and extended event and that the disk number is sent in byte 3 and after.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5823,15 +5848,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">A value between 0 and 127 indicates the track number. A value between 128 and 159 is change down by the specified number of tracks. A value between 160 and 191 is change up by the specified number of tracks. A value of 200 means select a random track. A value of 255 means that this is and extended event and that the track number is sent in byte 3 and after.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5848,15 +5873,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">A value between 0 and 127 indicates the album/play-list number. A value between 128 and 159 is change down by the specified number of albums/play-lists. A value between 160 and 191 is change up by the specified number of albums. A value of 200 means select a random album. A value of 255 means that this is and extended event and that the album number is sent in byte 3 and after.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5873,15 +5898,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">A value between 0 and 127 indicates the channel number. A value between 128 and 159 is change down by the specified number of channels. A value between 160 and 191 is change up by the specified number of channels. A value of 200 means select a random channel. A value of 255 means that this is and extended event and that the channel number is sent in byte 3 and after.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5898,15 +5923,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">A value between 0 and 127 indicates the page number. A value between 128 and 159 is change down by the specified number of pages. A value between 160 and 191 is change up by the specified number of pages. A value of 200 means select a random page. A value of 255 means that this is and extended event and that the page number is sent in byte 3 and after.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5923,15 +5948,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">A value between 0 and 127 indicates the chapter number. A value between 128 and 159 is change down by the specified number of chapters. A value between 160 and 191 is change up by the specified number of chapters. A value of 200 means select a random chapter. A value of 255 means that this is and extended event and that the chapter number is sent in byte 3 and after.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5948,15 +5973,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">0 = Auto, 1 = Just, 2 = Norma,l 3 = Zoom.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5973,15 +5998,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">Device code</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -5998,15 +6023,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">Output Code</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -6023,15 +6048,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">0 - Start to record, 1 - Stop record, 2 - Disable, AGC 3 - Enable AGC.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -6048,15 +6073,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">A value between 0 and 127 indicates the specific contrast level to set. A value between 128 and 159 is change down by the specified number of contrast levels. A value between 160 and 191 is change up by the specified number of contrast levels. A value of 255 means that this is and extended event and that the specific contrast level is sent in byte 3 and after.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -6073,15 +6098,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">TIVO Code</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -6098,15 +6123,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">Reserved.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -6123,19 +6148,19 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">Reserved</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
-                                <element pos="3" type="uint8_t" length="2" optional="false">
+                                <element pos="3" type="uint8" length="2" optional="false">
                                     <name>Data3</name>
                                     <description lang="en">Position in milliseconds, This is an integer with a size specified by the event size. This 0xFF, 0xFFFF, 0xFFFFFF, 0xFFFFFFFF and 0xFFFFFFFFFF is the maximum that can be sent for different sizes.</description>
                                 </element>
@@ -6152,15 +6177,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">Type of media information requested. 1 - Current Title, 1 - Get Folders, 2 - Get Disks, 3 - Get Tracks, 4 - Get Albums/Play list,s 5 - Get Channels, 6 - Get Pages, 7 - Get Chapters</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -6177,15 +6202,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">0-128 - Pos to remove from album/play-list A value of 255 means that this is and extended event and that the specific contrast level is sent in byte 3 and after.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -6202,15 +6227,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">Reserved.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -6227,15 +6252,15 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">0 - Do not overwrite if it already exists 1 - Overwrite if it exist.</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
@@ -6252,23 +6277,23 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
+                                <element pos="0" type="uint8" length="1" optional="false">
                                     <name>Data0</name>
                                     <description lang="en">Control codes</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
+                                <element pos="1" type="uint8" length="1" optional="false">
                                     <name>Data1</name>
                                     <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
+                                <element pos="2" type="uint8" length="1" optional="false">
                                     <name>Data2</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
-                                <element pos="3" type="uint8_t" length="1" optional="false">
+                                <element pos="3" type="uint8" length="1" optional="false">
                                     <name>Data3</name>
                                     <description lang="en">Index. Base 0. Increase by one for every fragment of the title sent.</description>
                                 </element>
-                                <element pos="4" type="uint8_t" length="2" optional="false">
+                                <element pos="4" type="uint8" length="2" optional="false">
                                     <name>Data4</name>
                                     <description lang="en">Data.</description>
                                 </element>
@@ -6292,6 +6317,12 @@ Notes:
                     <name lang="en">General event</name>
                     <token>VSCP_TYPE_AOL_GENERAL</token>
                     <description lang="en">General Event.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="1">
                     <name lang="en">System unplugged from power source</name>
@@ -7896,6 +7927,12 @@ Notes:
                     <name lang="en">General event</name>
                     <token>VSCP_TYPE_WEATHER_GENERAL</token>
                     <description lang="en">General Event.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="1">
                     <name lang="en">Season winter</name>
@@ -8168,6 +8205,12 @@ Notes:
                     <name lang="en">General event</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_GENERAL</token>
                     <description lang="en">General Event.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="1">
                     <name lang="en">Season winter</name>
@@ -8440,6 +8483,12 @@ Notes:
                     <name lang="en">General event</name>
                     <token>VSCP_TYPE_PHONE_GENERAL</token>
                     <description lang="en">General Event.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="1">
                     <name lang="en">Incoming call</name>
@@ -8492,6 +8541,12 @@ Notes:
                     <name lang="en">General event</name>
                     <token>VSCP_TYPE_DISPLAY_GENERAL</token>
                     <description lang="en">General Event.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="1">
                     <name lang="en">Clear Display</name>
@@ -8549,6 +8604,12 @@ Notes:
                     <name lang="en">General event</name>
                     <token>VSCP_TYPE_REMOTE_GENERAL</token>
                     <description lang="en">General Event.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="1">
                     <name lang="en">RC5 Send/Receive</name>
@@ -8586,6 +8647,12 @@ Notes:
                     <name lang="en">General event</name>
                     <token>VSCP_TYPE_GNSS_GENERAL</token>
                     <description lang="en">General Event.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="1">
                     <name lang="en">Position</name>
@@ -8608,6 +8675,12 @@ Notes:
                     <name lang="en">General event</name>
                     <token>VSCP_TYPE_WIRELESS_GENERAL</token>
                     <description lang="en">General Event.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="1">
                     <name lang="en">GSM Cell</name>
@@ -8625,6 +8698,12 @@ Notes:
                     <name lang="en">General event</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_GENERAL</token>
                     <description lang="en">General Event.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="1">
                     <name lang="en">Overvoltage</name>
@@ -9253,6 +9332,12 @@ Notes:
                     <name lang="en">General event</name>
                     <token>VSCP_TYPE_LOG_GENERAL</token>
                     <description lang="en">General Event.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="1">
                     <name lang="en">Log event</name>
@@ -9285,6 +9370,12 @@ Notes:
                     <name lang="en">General event</name>
                     <token>VSCP_TYPE_LABORATORY_GENERAL</token>
                     <description lang="en">General Event.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                        </frame>
+                    </frames>
                 </vscp-type>
             </vscp-types>
         </vscp-class>
@@ -9297,6 +9388,12 @@ Notes:
                     <name lang="en">General event</name>
                     <token>VSCP_TYPE_LOCAL_GENERAL</token>
                     <description lang="en">General Event.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                        </frame>
+                    </frames>
                 </vscp-type>
             </vscp-types>
         </vscp-class>
