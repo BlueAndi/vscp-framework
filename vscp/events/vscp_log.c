@@ -92,7 +92,7 @@ extern BOOL vscp_log_sendUndefinedEvent(void)
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_LOG, VSCP_TYPE_LOG_UNDEFINED, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_LOG, VSCP_TYPE_LOG_GENERAL, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 0;
 
@@ -131,7 +131,7 @@ extern BOOL vscp_log_sendLogStartEvent(uint8_t id)
 {
     vscp_TxMessage  txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_LOG, VSCP_TYPE_LOG_LOG_START, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_LOG, VSCP_TYPE_LOG_START, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 1;
     txMsg.data[0] = id;
@@ -152,7 +152,7 @@ extern BOOL vscp_log_sendLogStopEvent(uint8_t id)
 {
     vscp_TxMessage  txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_LOG, VSCP_TYPE_LOG_LOG_STOP, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_LOG, VSCP_TYPE_LOG_STOP, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 1;
     txMsg.data[0] = id;
@@ -173,7 +173,7 @@ extern BOOL vscp_log_sendLogLevelEvent(uint8_t level)
 {
     vscp_TxMessage  txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_LOG, VSCP_TYPE_LOG_LOG_LEVEL, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_LOG, VSCP_TYPE_LOG_LEVEL, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 1;
     txMsg.data[0] = level;

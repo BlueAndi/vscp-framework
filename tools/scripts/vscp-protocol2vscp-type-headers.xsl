@@ -238,13 +238,26 @@ This transformation script generates the VSCP type C header files.
             </xsl:call-template>
             <xsl:text>&LF;</xsl:text>
 
+            <!-- Doxygen comment block -->
+            <xsl:text>/** @defgroup </xsl:text><xsl:value-of select="$moduleName" /><xsl:text> </xsl:text><xsl:value-of select="name[@lang='en']" /><xsl:text>&LF;</xsl:text>
+            <xsl:text> * Level 1 protocol class types&LF;</xsl:text>
+            <xsl:text> * @{&LF;</xsl:text>
+            <xsl:text> * @ingroup vscp_l1&LF;</xsl:text>
+            <xsl:text> */&LF;</xsl:text>
+            <xsl:text>&LF;</xsl:text>
+
             <!-- Includes -->
             <xsl:call-template name="ctools.generalBlock">
                 <xsl:with-param name="name">
                     <xsl:text>INCLUDES</xsl:text>
                 </xsl:with-param>
             </xsl:call-template>
-            <xsl:text>#include &lt;stdint.h&gt;&LF;</xsl:text>
+            <xsl:text>&LF;</xsl:text>
+
+            <xsl:text>#ifdef __cplusplus&LF;</xsl:text>
+            <xsl:text>extern "C"&LF;</xsl:text>
+            <xsl:text>{&LF;</xsl:text>
+            <xsl:text>#endif&LF;</xsl:text>
             <xsl:text>&LF;</xsl:text>
 
             <!-- Compiler switches -->
@@ -305,12 +318,20 @@ This transformation script generates the VSCP type C header files.
             </xsl:call-template>
             <xsl:text>&LF;</xsl:text>
 
+            <xsl:text>#ifdef __cplusplus&LF;</xsl:text>
+            <xsl:text>}&LF;</xsl:text>
+            <xsl:text>#endif&LF;</xsl:text>
+            <xsl:text>&LF;</xsl:text>
+
             <!-- Footer -->
             <xsl:call-template name="ctools.hFooterBlock">
                 <xsl:with-param name="moduleName">
                     <xsl:value-of select="$moduleName" />
                 </xsl:with-param>
             </xsl:call-template>
+            <xsl:text>&LF;</xsl:text>
+
+            <xsl:text>/** @} */&LF;</xsl:text>
 
         </xsl:result-document>
     </xsl:template>

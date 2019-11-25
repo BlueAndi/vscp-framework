@@ -91,7 +91,7 @@ extern BOOL vscp_weather_sendUndefinedEvent(void)
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_UNDEFINED, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_GENERAL, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 0;
 
@@ -113,7 +113,7 @@ extern BOOL vscp_weather_sendSeasonWinterEvent(uint8_t index, uint8_t zone, uint
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SEASON_WINTER, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SEASONS_WINTER, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -138,7 +138,7 @@ extern BOOL vscp_weather_sendSeasonSpringEvent(uint8_t index, uint8_t zone, uint
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SEASON_SPRING, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SEASONS_SPRING, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -163,7 +163,7 @@ extern BOOL vscp_weather_sendSeasonSummerEvent(uint8_t index, uint8_t zone, uint
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SEASON_SUMMER, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SEASONS_SUMMER, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -188,7 +188,7 @@ extern BOOL vscp_weather_sendAutumnSummerEvent(uint8_t index, uint8_t zone, uint
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_AUTUMN_SUMMER, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_SEASONS_AUTUMN, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -213,7 +213,7 @@ extern BOOL vscp_weather_sendWinNoneEvent(uint8_t index, uint8_t zone, uint8_t s
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WIN_NONE, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WIND_NONE, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -238,7 +238,7 @@ extern BOOL vscp_weather_sendLowWindEvent(uint8_t index, uint8_t zone, uint8_t s
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_LOW_WIND, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WIND_LOW, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -263,7 +263,7 @@ extern BOOL vscp_weather_sendMediumWindEvent(uint8_t index, uint8_t zone, uint8_
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_MEDIUM_WIND, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WIND_MEDIUM, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -288,7 +288,7 @@ extern BOOL vscp_weather_sendHighWindEvent(uint8_t index, uint8_t zone, uint8_t 
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_HIGH_WIND, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WIND_HIGH, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -313,7 +313,7 @@ extern BOOL vscp_weather_sendVeryHighWindEvent(uint8_t index, uint8_t zone, uint
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_VERY_HIGH_WIND, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WIND_VERY_HIGH, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -388,7 +388,7 @@ extern BOOL vscp_weather_sendColdEvent(uint8_t index, uint8_t zone, uint8_t subZ
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_COLD, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_AIR_VERY_COLD, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -413,7 +413,7 @@ extern BOOL vscp_weather_sendVeryColdEvent(uint8_t index, uint8_t zone, uint8_t 
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_VERY_COLD, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_AIR_COLD, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -513,7 +513,7 @@ extern BOOL vscp_weather_sendPollutionLowEvent(uint8_t index, uint8_t zone, uint
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_POLLUTION_LOW, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_AIR_POLLUTION_LOW, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -538,7 +538,7 @@ extern BOOL vscp_weather_sendPollutionMediumEvent(uint8_t index, uint8_t zone, u
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_POLLUTION_MEDIUM, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_AIR_POLLUTION_MEDIUM, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -563,7 +563,7 @@ extern BOOL vscp_weather_sendPollutionHighEvent(uint8_t index, uint8_t zone, uin
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_POLLUTION_HIGH, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_AIR_POLLUTION_HIGH, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -1238,7 +1238,7 @@ extern BOOL vscp_weather_sendWarningLevel1Event(uint8_t index, uint8_t zone, uin
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WARNING_LEVEL_1, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WARNING_LEVEL1, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -1263,7 +1263,7 @@ extern BOOL vscp_weather_sendWarningLevel2Event(uint8_t index, uint8_t zone, uin
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WARNING_LEVEL_2, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WARNING_LEVEL2, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -1288,7 +1288,7 @@ extern BOOL vscp_weather_sendWarningLevel3Event(uint8_t index, uint8_t zone, uin
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WARNING_LEVEL_3, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WARNING_LEVEL3, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -1313,7 +1313,7 @@ extern BOOL vscp_weather_sendWarningLevel4Event(uint8_t index, uint8_t zone, uin
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WARNING_LEVEL_4, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WARNING_LEVEL4, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -1338,7 +1338,7 @@ extern BOOL vscp_weather_sendWarningLevel5Event(uint8_t index, uint8_t zone, uin
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WARNING_LEVEL_5, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_WARNING_LEVEL5, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -1363,7 +1363,7 @@ extern BOOL vscp_weather_sendArmageddonEvent(uint8_t index, uint8_t zone, uint8_
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_ARMAGEDDON, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WEATHER, VSCP_TYPE_WEATHER_ARMAGEDON, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;

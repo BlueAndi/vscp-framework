@@ -91,7 +91,7 @@ extern BOOL vscp_control_sendUndefinedEvent(void)
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_UNDEFINED, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_GENERAL, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 0;
 
@@ -113,7 +113,7 @@ extern BOOL vscp_control_sendMuteOnOffEvent(uint8_t mute, uint8_t zone, uint8_t 
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_MUTE_ON_OFF, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_MUTE, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = mute;
@@ -138,7 +138,7 @@ extern BOOL vscp_control_sendLampOnOffEvent(uint8_t on, uint8_t zone, uint8_t su
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_LAMP_ON_OFF, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_ALL_LAMPS, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = on;
@@ -213,7 +213,7 @@ extern BOOL vscp_control_sendTurnOnEvent(uint8_t userData, uint8_t zone, uint8_t
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_TURN_ON, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_TURNON, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = userData;
@@ -238,7 +238,7 @@ extern BOOL vscp_control_sendTurnOffEvent(uint8_t userData, uint8_t zone, uint8_
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_TURN_OFF, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_TURNOFF, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = userData;
@@ -514,7 +514,7 @@ extern BOOL vscp_control_sendDimLampEvent(uint8_t value, uint8_t zone, uint8_t s
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_DIM_LAMP, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_DIM_LAMPS, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = value;
@@ -678,7 +678,7 @@ extern BOOL vscp_control_sendSynchronizeEvent(uint8_t index, uint8_t zone, uint8
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_SYNCHRONIZE, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_SYNC, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -706,7 +706,7 @@ extern BOOL vscp_control_sendStreamDataWithZoneEvent(uint8_t sequenceNumber, uin
     uint8_t byteIndex = 0;
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_STREAM_DATA_WITH_ZONE, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_ZONED_STREAM_DATA, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = sequenceNumber;
@@ -946,7 +946,7 @@ extern BOOL vscp_control_sendMoveShutterUpEvent(uint8_t index, uint8_t zone, uin
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_MOVE_SHUTTER_UP, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_SHUTTER_UP, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -971,7 +971,7 @@ extern BOOL vscp_control_sendMoveShutterDownEvent(uint8_t index, uint8_t zone, u
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_MOVE_SHUTTER_DOWN, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_SHUTTER_DOWN, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -996,7 +996,7 @@ extern BOOL vscp_control_sendMoveShutterLeftEvent(uint8_t index, uint8_t zone, u
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_MOVE_SHUTTER_LEFT, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_SHUTTER_LEFT, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -1021,7 +1021,7 @@ extern BOOL vscp_control_sendMoveShutterRightEvent(uint8_t index, uint8_t zone, 
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_MOVE_SHUTTER_RIGHT, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_SHUTTER_RIGHT, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -1046,7 +1046,7 @@ extern BOOL vscp_control_sendMoveShutterMiddlePosEvent(uint8_t index, uint8_t zo
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_MOVE_SHUTTER_MIDDLE_POS, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_SHUTTER_MIDDLE, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = index;
@@ -1072,7 +1072,7 @@ extern BOOL vscp_control_sendMoveShutterPresetPosEvent(uint8_t index, uint8_t zo
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_MOVE_SHUTTER_PRESET_POS, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_SHUTTER_PRESET, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 4;
     txMsg.data[0] = index;
@@ -1097,7 +1097,7 @@ extern BOOL vscp_control_sendLampOnEvent(uint8_t zone, uint8_t subZone)
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_LAMP_ON, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_ALL_LAMPS_ON, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = 0;
@@ -1121,7 +1121,7 @@ extern BOOL vscp_control_sendLampOffEvent(uint8_t zone, uint8_t subZone)
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_LAMP_OFF, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_ALL_LAMPS_OFF, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = 0;

@@ -91,7 +91,7 @@ extern BOOL vscp_alarm_sendUndefinedEvent(void)
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_ALARM, VSCP_TYPE_ALARM_UNDEFINED, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_ALARM, VSCP_TYPE_ALARM_GENERAL, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 0;
 
@@ -138,7 +138,7 @@ extern BOOL vscp_alarm_sendAlarmOccurredEvent(uint8_t state, uint8_t zone, uint8
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_ALARM, VSCP_TYPE_ALARM_ALARM_OCCURRED, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_ALARM, VSCP_TYPE_ALARM_ALARM, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = state;
@@ -163,7 +163,7 @@ extern BOOL vscp_alarm_sendAlarmSoundOnOffEvent(uint8_t state, uint8_t zone, uin
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_ALARM, VSCP_TYPE_ALARM_ALARM_SOUND_ON_OFF, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_ALARM, VSCP_TYPE_ALARM_SOUND, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = state;
@@ -188,7 +188,7 @@ extern BOOL vscp_alarm_sendAlarmLightOnOffEvent(uint8_t state, uint8_t zone, uin
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_ALARM, VSCP_TYPE_ALARM_ALARM_LIGHT_ON_OFF, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_ALARM, VSCP_TYPE_ALARM_LIGHT, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = state;
@@ -213,7 +213,7 @@ extern BOOL vscp_alarm_sendPowerOnOffEvent(uint8_t state, uint8_t zone, uint8_t 
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_ALARM, VSCP_TYPE_ALARM_POWER_ON_OFF, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_ALARM, VSCP_TYPE_ALARM_POWER, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = state;
@@ -341,7 +341,7 @@ extern BOOL vscp_alarm_sendArm(uint8_t state, uint8_t zone, uint8_t subZone)
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_ALARM, VSCP_TYPE_ALARM_EMERGENCY_ARM, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_ALARM, VSCP_TYPE_ALARM_ARM, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = state;
@@ -366,7 +366,7 @@ extern BOOL vscp_alarm_sendDisarm(uint8_t state, uint8_t zone, uint8_t subZone)
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_ALARM, VSCP_TYPE_ALARM_EMERGENCY_DISARM, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_ALARM, VSCP_TYPE_ALARM_DISARM, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = state;

@@ -515,7 +515,7 @@ extern void vscp_test_finishNicknameDiscovery(void)
 
     /* Set new nickname */
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_SET_NICKNAME_ID;
+    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_SET_NICKNAME;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_3_NORMAL;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
     vscp_test_rxMessage.hardCoded   = FALSE;
@@ -534,7 +534,7 @@ extern void vscp_test_finishNicknameDiscovery(void)
 
     /* Nickname accepted shall be sent. */
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_NICKNAME_ID_ACCEPTED);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_NICKNAME_ACCEPTED);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 0);
@@ -577,7 +577,7 @@ extern void vscp_test_firstSegCtrlHeartBeat(void)
 
     /* Send probe acknowledge */
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_SEGMENT_CONTROLLER_HEARTBEAT;
+    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_SEGCTRL_HEARTBEAT;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
     vscp_test_rxMessage.hardCoded   = FALSE;
@@ -952,7 +952,7 @@ extern void vscp_test_active02(void)
 
     /* Send probe acknowledge */
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_SEGMENT_CONTROLLER_HEARTBEAT;
+    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_SEGCTRL_HEARTBEAT;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
     vscp_test_rxMessage.hardCoded   = FALSE;
@@ -1005,7 +1005,7 @@ extern void vscp_test_active02_1(void)
 
     /* Send probe acknowledge */
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_SEGMENT_CONTROLLER_HEARTBEAT;
+    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_SEGCTRL_HEARTBEAT;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
     vscp_test_rxMessage.hardCoded   = FALSE;
@@ -1057,7 +1057,7 @@ extern void vscp_test_active03(void)
 
     /* Send probe acknowledge */
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_SEGMENT_CONTROLLER_HEARTBEAT;
+    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_SEGCTRL_HEARTBEAT;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
     vscp_test_rxMessage.hardCoded   = FALSE;
@@ -1133,7 +1133,7 @@ extern void vscp_test_active04(void)
 
     /* Set new nickname */
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_SET_NICKNAME_ID;
+    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_SET_NICKNAME;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_3_NORMAL;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
     vscp_test_rxMessage.hardCoded   = FALSE;
@@ -1152,7 +1152,7 @@ extern void vscp_test_active04(void)
 
     /* Nickname accepted shall be sent. */
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_NICKNAME_ID_ACCEPTED);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_NICKNAME_ACCEPTED);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 0);
@@ -1281,7 +1281,7 @@ extern void vscp_test_active08(void)
 
     /* Send probe acknowledge */
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_SET_NICKNAME_ID;
+    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_SET_NICKNAME;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
     vscp_test_rxMessage.hardCoded   = FALSE;
@@ -1294,7 +1294,7 @@ extern void vscp_test_active08(void)
     /* Node shall send probe acknowledge. */
     CU_ASSERT_EQUAL(vscp_test_txMessageCnt, 1);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_NICKNAME_ID_ACCEPTED);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_NICKNAME_ACCEPTED);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME_REMOTE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 0);
@@ -1321,7 +1321,7 @@ extern void vscp_test_active09(void)
 
     /* Send probe acknowledge */
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_SET_NICKNAME_ID;
+    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_SET_NICKNAME;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
     vscp_test_rxMessage.hardCoded   = FALSE;
@@ -1356,7 +1356,7 @@ extern void vscp_test_active10(void)
 
     /* Send probe acknowledge */
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_DROP_NICKNAME_ID;
+    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_DROP_NICKNAME;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
     vscp_test_rxMessage.hardCoded   = FALSE;
@@ -1393,7 +1393,7 @@ extern void vscp_test_active11(void)
 
     /* Send probe acknowledge */
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_DROP_NICKNAME_ID;
+    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_DROP_NICKNAME;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
     vscp_test_rxMessage.hardCoded   = FALSE;
@@ -1431,7 +1431,7 @@ extern void vscp_test_active12(void)
 
     /* Send probe acknowledge */
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_DROP_NICKNAME_ID;
+    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_DROP_NICKNAME;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
     vscp_test_rxMessage.hardCoded   = FALSE;
@@ -1473,7 +1473,7 @@ extern void vscp_test_active13(void)
 
     /* Send probe acknowledge */
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_DROP_NICKNAME_ID;
+    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_DROP_NICKNAME;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
     vscp_test_rxMessage.hardCoded   = FALSE;
@@ -1518,7 +1518,7 @@ extern void vscp_test_active14(void)
 
     /* Send probe acknowledge */
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_DROP_NICKNAME_ID;
+    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_DROP_NICKNAME;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
     vscp_test_rxMessage.hardCoded   = FALSE;
@@ -1669,7 +1669,7 @@ extern void vscp_test_active16(void)
 
     /* Send probe acknowledge */
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_ENTER_BOOT_LOADER_MODE;
+    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_ENTER_BOOT_LOADER;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
     vscp_test_rxMessage.hardCoded   = FALSE;
@@ -1688,7 +1688,7 @@ extern void vscp_test_active16(void)
     /* Node shall send NACK */
     CU_ASSERT_EQUAL(vscp_test_txMessageCnt, 1);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_ENTER_BOOT_LOADER_MODE_NACK);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_NACK_BOOT_LOADER);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 1);
@@ -1715,7 +1715,7 @@ extern void vscp_test_active17(void)
 
     /* Send probe acknowledge */
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_ENTER_BOOT_LOADER_MODE;
+    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_ENTER_BOOT_LOADER;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
     vscp_test_rxMessage.hardCoded   = FALSE;
@@ -1757,7 +1757,7 @@ extern void vscp_test_active18(void)
     vscp_test_initTestCase();
 
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_GUID_DROP_NICKNAME_ID;
+    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_RESET_DEVICE;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
     vscp_test_rxMessage.hardCoded   = FALSE;
@@ -1771,7 +1771,7 @@ extern void vscp_test_active18(void)
     vscp_test_waitForTxMessage(1, 10);
 
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_GUID_DROP_NICKNAME_ID;
+    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_RESET_DEVICE;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
     vscp_test_rxMessage.hardCoded   = FALSE;
@@ -1785,7 +1785,7 @@ extern void vscp_test_active18(void)
     vscp_test_waitForTxMessage(1, 10);
 
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_GUID_DROP_NICKNAME_ID;
+    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_RESET_DEVICE;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
     vscp_test_rxMessage.hardCoded   = FALSE;
@@ -1799,7 +1799,7 @@ extern void vscp_test_active18(void)
     vscp_test_waitForTxMessage(1, 10);
 
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_GUID_DROP_NICKNAME_ID;
+    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_RESET_DEVICE;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
     vscp_test_rxMessage.hardCoded   = FALSE;
@@ -1854,7 +1854,7 @@ extern void vscp_test_active19(void)
     CU_ASSERT_EQUAL(vscp_test_txMessageCnt, 1);
 
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_PAGE_READ_WRITE_RESPONSE);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_RW_PAGE_RESPONSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 5);
@@ -1897,7 +1897,7 @@ extern void vscp_test_active20(void)
     CU_ASSERT_EQUAL(vscp_test_txMessageCnt, 1);
 
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_PAGE_READ_WRITE_RESPONSE);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_RW_PAGE_RESPONSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 8);
@@ -1943,7 +1943,7 @@ extern void vscp_test_active21(void)
     CU_ASSERT_EQUAL(vscp_test_txMessageCnt, 2);
 
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_PAGE_READ_WRITE_RESPONSE);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_RW_PAGE_RESPONSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 8);
@@ -1957,7 +1957,7 @@ extern void vscp_test_active21(void)
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].data[7], (VSCP_TEST_MANUFACTURER_SUB_DEV_ID >> 16) & 0xff);
 
     CU_ASSERT_EQUAL(vscp_test_txMessage[1].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-    CU_ASSERT_EQUAL(vscp_test_txMessage[1].vscpType, VSCP_TYPE_PROTOCOL_PAGE_READ_WRITE_RESPONSE);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[1].vscpType, VSCP_TYPE_PROTOCOL_RW_PAGE_RESPONSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[1].oAddr, VSCP_TEST_NICKNAME);
     CU_ASSERT_EQUAL(vscp_test_txMessage[1].hardCoded, FALSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[1].dataNum, 2);
@@ -2000,7 +2000,7 @@ extern void vscp_test_active22(void)
     CU_ASSERT_EQUAL(vscp_test_txMessageCnt, 1);
 
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_PAGE_READ_WRITE_RESPONSE);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_RW_PAGE_RESPONSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 5);
@@ -2044,7 +2044,7 @@ extern void vscp_test_active23(void)
     CU_ASSERT_EQUAL(vscp_test_txMessageCnt, 1);
 
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_READ_WRITE_RESPONSE);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_RW_RESPONSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 2);
@@ -2085,7 +2085,7 @@ extern void vscp_test_active24(void)
     CU_ASSERT_EQUAL(vscp_test_txMessageCnt, 1);
 
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_READ_WRITE_RESPONSE);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_RW_RESPONSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 2);
@@ -2353,7 +2353,7 @@ extern void vscp_test_active28(void)
     memset(vscp_test_extStorage, 0, VSCP_PS_SIZE_DM_EXTENSION);
 
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_GET_DECISION_MATRIX_INFO;
+    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_GET_MATRIX_INFO;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
     vscp_test_rxMessage.hardCoded   = FALSE;
@@ -2366,7 +2366,7 @@ extern void vscp_test_active28(void)
     CU_ASSERT_EQUAL(vscp_test_txMessageCnt, 1);
 
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_GET_DECISION_MATRIX_INFO_RESPONSE);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_GET_MATRIX_INFO_RESPONSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 4);
@@ -2432,7 +2432,7 @@ extern void vscp_test_active29(void)
             offset %= 256;
 
             vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-            vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_WRITE_REGISTER;
+            vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_WRITE;
             vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
             vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
             vscp_test_rxMessage.hardCoded   = FALSE;
@@ -2452,7 +2452,7 @@ extern void vscp_test_active29(void)
         if (0 == vscp_test_dmPage)
         {
             CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-            CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_READ_WRITE_RESPONSE);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_RW_RESPONSE);
             CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
             CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
             CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 2);
@@ -2468,7 +2468,7 @@ extern void vscp_test_active29(void)
             offset %= 256;
 
             CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-            CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_READ_WRITE_RESPONSE);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_RESPONSE);
             CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
             CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
             CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 5);
@@ -2523,7 +2523,7 @@ extern void vscp_test_active30(void)
             offset %= 256;
 
             vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-            vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_READ_REGISTER;
+            vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_READ;
             vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
             vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
             vscp_test_rxMessage.hardCoded   = FALSE;
@@ -2542,7 +2542,7 @@ extern void vscp_test_active30(void)
         if (0 == vscp_test_dmPage)
         {
             CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-            CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_READ_WRITE_RESPONSE);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_RW_RESPONSE);
             CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
             CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
             CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 2);
@@ -2558,7 +2558,7 @@ extern void vscp_test_active30(void)
             offset %= 256;
 
             CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-            CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_READ_WRITE_RESPONSE);
+            CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_RESPONSE);
             CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
             CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
             CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 5);
@@ -3176,7 +3176,7 @@ extern void vscp_test_active31(void)
     vscp_test_initTestCase();
 
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_READ_REGISTER;
+    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_READ;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
     vscp_test_rxMessage.hardCoded   = FALSE;
@@ -3193,7 +3193,7 @@ extern void vscp_test_active31(void)
     CU_ASSERT_EQUAL(vscp_test_txMessageCnt, 1);
 
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_READ_WRITE_RESPONSE);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_RESPONSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 5);
@@ -3222,7 +3222,7 @@ extern void vscp_test_active32(void)
     vscp_test_initTestCase();
 
     vscp_test_rxMessage.vscpClass   = VSCP_CLASS_L1_PROTOCOL;
-    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_WRITE_REGISTER;
+    vscp_test_rxMessage.vscpType    = VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_WRITE;
     vscp_test_rxMessage.priority    = VSCP_PRIORITY_7_LOW;
     vscp_test_rxMessage.oAddr       = VSCP_NICKNAME_SEGMENT_MASTER;
     vscp_test_rxMessage.hardCoded   = FALSE;
@@ -3239,7 +3239,7 @@ extern void vscp_test_active32(void)
     CU_ASSERT_EQUAL(vscp_test_txMessageCnt, 1);
 
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_READ_WRITE_RESPONSE);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_EXTENDED_PAGE_RESPONSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 5);
@@ -3299,10 +3299,10 @@ extern void vscp_test_active34(void)
 {
     vscp_TxMessage  txMessage;
 
-    vscp_core_prepareTxMessage(&txMessage, VSCP_CLASS_L1_PROTOCOL, VSCP_TYPE_PROTOCOL_UNDEFINED, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMessage, VSCP_CLASS_L1_PROTOCOL, VSCP_TYPE_PROTOCOL_GENERAL, VSCP_PRIORITY_3_NORMAL);
 
     CU_ASSERT_EQUAL(txMessage.vscpClass, VSCP_CLASS_L1_PROTOCOL);
-    CU_ASSERT_EQUAL(txMessage.vscpType, VSCP_TYPE_PROTOCOL_UNDEFINED);
+    CU_ASSERT_EQUAL(txMessage.vscpType, VSCP_TYPE_PROTOCOL_GENERAL);
     CU_ASSERT_EQUAL(txMessage.priority, VSCP_PRIORITY_3_NORMAL);
     CU_ASSERT_EQUAL(txMessage.oAddr, VSCP_TEST_NICKNAME);
     CU_ASSERT_EQUAL(txMessage.hardCoded, FALSE);
@@ -3322,7 +3322,7 @@ extern void vscp_test_active34(void)
     CU_ASSERT_EQUAL(vscp_test_txMessageCnt, 1);
 
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_UNDEFINED);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_GENERAL);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].priority, VSCP_PRIORITY_3_NORMAL);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
@@ -3774,7 +3774,7 @@ static uint8_t  vscp_test_readRegister(uint8_t addr)
     /* Node shall send a response. */
     CU_ASSERT_EQUAL(vscp_test_txMessageCnt, 1);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_READ_WRITE_RESPONSE);
+    CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_RW_RESPONSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
     CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 2);
@@ -3803,7 +3803,7 @@ static uint8_t  vscp_test_writeRegister(uint8_t addr, uint8_t value, BOOL readOn
         /* Node shall send a response. */
         CU_ASSERT_EQUAL(vscp_test_txMessageCnt, 1);
         CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpClass, VSCP_CLASS_L1_PROTOCOL);
-        CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_READ_WRITE_RESPONSE);
+        CU_ASSERT_EQUAL(vscp_test_txMessage[0].vscpType, VSCP_TYPE_PROTOCOL_RW_RESPONSE);
         CU_ASSERT_EQUAL(vscp_test_txMessage[0].oAddr, VSCP_TEST_NICKNAME);
         CU_ASSERT_EQUAL(vscp_test_txMessage[0].hardCoded, FALSE);
         CU_ASSERT_EQUAL(vscp_test_txMessage[0].dataNum, 2);

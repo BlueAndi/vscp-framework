@@ -330,7 +330,7 @@ static void vscp_action_dimLamp(uint8_t par, vscp_RxMessage const * const msg)
      * Any other event is not supported by this action.
      */
     if ((VSCP_CLASS_L1_CONTROL != msg->vscpClass) ||
-        (VSCP_TYPE_CONTROL_DIM_LAMP != msg->vscpType) ||
+        (VSCP_TYPE_CONTROL_DIM_LAMPS != msg->vscpType) ||
         (3 != msg->dataNum))
     {
         return;

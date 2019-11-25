@@ -91,7 +91,7 @@ extern BOOL vscp_information_sendUndefinedEvent(void)
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_UNDEFINED, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_GENERAL, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 0;
 
@@ -560,7 +560,7 @@ extern BOOL vscp_information_sendSleepingEvent(uint8_t zone, uint8_t subZone)
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SLEEPING, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SLEEP, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = 0;
@@ -1553,7 +1553,7 @@ extern BOOL vscp_information_sendCivilSunriseTwilightTimeEvent(uint8_t userData,
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_CIVIL_SUNRISE_TWILIGHT_TIME, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SUNRISE_TWILIGHT_START, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = userData;
@@ -1595,7 +1595,7 @@ extern BOOL vscp_information_sendCivilSunsetTwilightTimeEvent(uint8_t userData, 
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_CIVIL_SUNSET_TWILIGHT_TIME, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SUNSET_TWILIGHT_START, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = userData;
@@ -1635,7 +1635,7 @@ extern BOOL vscp_information_sendNauticalSunriseTwilightTimeEvent(uint8_t userDa
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_NAUTICAL_SUNRISE_TWILIGHT_TIME, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_NAUTICAL_SUNRISE_TWILIGHT_START, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = userData;
@@ -1675,7 +1675,7 @@ extern BOOL vscp_information_sendNauticalSunsetTwilightTimeEvent(uint8_t userDat
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_NAUTICAL_SUNSET_TWILIGHT_TIME, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_NAUTICAL_SUNSET_TWILIGHT_START, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = userData;
@@ -1715,7 +1715,7 @@ extern BOOL vscp_information_sendAstronomicalSunriseTwilightTimeEvent(uint8_t us
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_ASTRONOMICAL_SUNRISE_TWILIGHT_TIME, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_ASTRONOMICAL_SUNRISE_TWILIGHT_START, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = userData;
@@ -1755,7 +1755,7 @@ extern BOOL vscp_information_sendAstronomicalSunsetTwilightTimeEvent(uint8_t use
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_ASTRONOMICAL_SUNSET_TWILIGHT_TIME, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_ASTRONOMICAL_SUNSET_TWILIGHT_START, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = userData;
@@ -1904,7 +1904,7 @@ extern BOOL vscp_information_sendShutterReachedTopEndEvent(uint8_t reserved, uin
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SHUTTER_REACHED_TOP_END, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SHUTTER_END_TOP, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = reserved;
@@ -1929,7 +1929,7 @@ extern BOOL vscp_information_sendShutterReachedBottomEndEvent(uint8_t reserved, 
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SHUTTER_REACHED_BOTTOM_END, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SHUTTER_END_BOTTOM, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = reserved;
@@ -1954,7 +1954,7 @@ extern BOOL vscp_information_sendShutterReachedMiddleEndEvent(uint8_t reserved, 
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SHUTTER_REACHED_MIDDLE_END, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SHUTTER_END_MIDDLE, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = reserved;
@@ -1979,7 +1979,7 @@ extern BOOL vscp_information_sendShutterReachedPresetEndEvent(uint8_t reserved, 
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SHUTTER_REACHED_PRESET_END, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SHUTTER_END_PRESET, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = reserved;
@@ -2004,7 +2004,7 @@ extern BOOL vscp_information_sendShutterReachedPresetLeftEvent(uint8_t reserved,
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SHUTTER_REACHED_PRESET_LEFT, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SHUTTER_END_LEFT, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = reserved;
@@ -2029,7 +2029,7 @@ extern BOOL vscp_information_sendShutterReachedPresetRightEvent(uint8_t reserved
 {
     vscp_TxMessage txMsg;
 
-    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SHUTTER_REACHED_PRESET_RIGHT, VSCP_PRIORITY_3_NORMAL);
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_SHUTTER_END_RIGHT, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.dataNum = 3;
     txMsg.data[0] = reserved;
