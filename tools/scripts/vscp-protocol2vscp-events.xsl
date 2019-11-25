@@ -97,13 +97,7 @@ This transformation script generates the VSCP event modules.
 
     </xsl:template>
 
-    <!--
-    ****************************************************************************
-        HEADER FILE
-    ****************************************************************************
-    -->
-
-    <!-- Create one header file per VSCP class. -->
+    <!-- Create a C module per VSCP class. -->
     <xsl:template match="vscp-class">
         <xsl:choose>
             <xsl:when test="@id = 0">
@@ -246,6 +240,12 @@ This transformation script generates the VSCP event modules.
         </xsl:call-template>
     </xsl:template>
 
+    <!--
+    ****************************************************************************
+        HEADER FILE
+    ****************************************************************************
+    -->
+
     <!-- Create header file. -->
     <xsl:template name="createHeaderFile">
         <xsl:param name="baseName" />
@@ -349,6 +349,12 @@ This transformation script generates the VSCP event modules.
         </xsl:result-document>
     </xsl:template>
 
+    <!--
+    ****************************************************************************
+        SOURCE FILE
+    ****************************************************************************
+    -->
+
     <xsl:template name="createSourceFile">
         <xsl:param name="baseName" />
 
@@ -448,6 +454,12 @@ This transformation script generates the VSCP event modules.
 
         </xsl:result-document>
     </xsl:template>
+
+    <!--
+    ****************************************************************************
+        OTHER TEMPLATES
+    ****************************************************************************
+    -->
 
     <!-- Create function prototype for vscp-type  -->
     <xsl:template match="vscp-type" mode="h">
