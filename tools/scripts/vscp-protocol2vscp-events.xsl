@@ -461,6 +461,299 @@ This transformation script generates the VSCP event modules.
     ****************************************************************************
     -->
 
+    <!-- Function comment -->
+    <xsl:template name="funcComment">
+        <xsl:value-of select="name[@lang='en']" />
+        <xsl:text>&LF;</xsl:text>
+
+        <!-- Any parameter? -->
+        <xsl:if test="frames/frame/elements/element">
+            <xsl:text>&LF;</xsl:text>
+
+            <!-- Generate comment per parameter -->
+            <xsl:for-each select="frames/frame/elements/element">
+                <xsl:if test="position() &gt; 1">
+                    <xsl:text>&LF;</xsl:text>
+                </xsl:if>
+                <xsl:text>@param[in] </xsl:text>
+                <xsl:value-of select="local:hungarianForm(name[@lang='en'])" />
+                <xsl:text> </xsl:text>
+                <xsl:value-of select="description[@lang='en']" />
+                <xsl:if test="@optional = 'true'">
+                    <xsl:text> (optional)</xsl:text>
+                </xsl:if>
+                <xsl:if test="@length &gt; 1">
+                    <xsl:text> (array[</xsl:text>
+                    <xsl:value-of select="@length" />
+                    <xsl:text>])</xsl:text>
+                    <xsl:text>&LF;</xsl:text>
+                    <xsl:text>@param[in] </xsl:text>
+                    <xsl:value-of select="local:hungarianForm(concat(name[@lang='en'], 'size'))" />
+                    <xsl:text> Size in byte.</xsl:text>
+                </xsl:if>
+            </xsl:for-each>
+            <xsl:text>&LF;</xsl:text>
+        </xsl:if>
+        <xsl:text>&LF;</xsl:text>
+        <xsl:text>@return If event is sent, it will return TRUE otherwise FALSE.</xsl:text>
+    </xsl:template>
+
+    <!-- Function parameters -->
+    <xsl:template name="funcParameter">
+        <xsl:choose>
+            <xsl:when test="(count(frames/frame) = 1) and frames/frame/elements/element">
+
+                <!-- Generate variable per parameter -->
+                <xsl:for-each select="frames/frame/elements/element">
+                    <xsl:if test="position() &gt; 1">
+                        <xsl:text>, </xsl:text>
+                    </xsl:if>
+                    <xsl:choose>
+                        <xsl:when test="@length = 1">
+                            <xsl:value-of select="@type" />
+                            <xsl:text>_t</xsl:text>
+                            <xsl:if test="@optional = 'true'">
+                                <xsl:text> const * const</xsl:text>
+                            </xsl:if>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="@type" />
+                            <xsl:text>_t const * const</xsl:text>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <xsl:text> </xsl:text>
+                    <xsl:value-of select="local:hungarianForm(name[@lang='en'])" />
+                    <xsl:if test="@length &gt; 1">
+                        <xsl:text>, uint8_t </xsl:text>
+                        <xsl:value-of select="local:hungarianForm(concat(name[@lang='en'], ' size'))" />
+                    </xsl:if>
+                </xsl:for-each>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:text>void</xsl:text>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    <!-- Function body -->
+    <xsl:template name="funcBody">
+        <!-- Function variables -->
+        <xsl:text>&TAB;vscp_TxMessage&TAB;txMsg;&LF;</xsl:text>
+        <xsl:if test="frames/frame/elements/element">
+            <xsl:text>&TAB;uint8_t       &TAB;size&TAB;= 0;&LF;</xsl:text>
+        </xsl:if>
+        <xsl:if test="frames/frame/elements/element[@length &gt; 1]">
+            <xsl:text>&TAB;uint8_t       &TAB;index&TAB;= 0;&LF;</xsl:text>
+        </xsl:if>
+        <xsl:text>&LF;</xsl:text>
+
+        <!-- Pointer checks -->
+        <xsl:if test="frames/frame/elements/element[(@length &gt; 1) and (@optional = 'false')]">
+            <!-- Array pointer, which is not optional -->
+            <xsl:for-each select="frames/frame/elements/element[(@length &gt; 1) and (@optional = 'false')]">
+
+                <xsl:if test="position() &gt; 1">
+                    <xsl:text>&LF;</xsl:text>
+                </xsl:if>
+
+                <xsl:text>&TAB;if (NULL == </xsl:text>
+                <xsl:value-of select="local:hungarianForm(name[@lang = 'en'])" />
+                <xsl:text>) || (0 == </xsl:text>
+                <xsl:value-of select="local:hungarianForm(concat(name[@lang = 'en'], ' size'))" />
+                <xsl:text>)&LF;</xsl:text>
+                <xsl:text>&TAB;{&LF;</xsl:text>
+                <xsl:text>&TAB;&TAB;return FALSE;&LF;</xsl:text>
+                <xsl:text>&TAB;}&LF;</xsl:text>
+
+            </xsl:for-each>
+            <xsl:text>&LF;</xsl:text>
+        </xsl:if>
+
+        <!-- Prepare tx message -->
+        <xsl:text>&TAB;vscp_core_prepareTxMessage(&amp;txMsg, </xsl:text>
+        <xsl:value-of select="../../token" />
+        <xsl:text>, </xsl:text>
+        <xsl:value-of select="token" />
+        <xsl:text>, VSCP_PRIORITY_3_NORMAL);&LF;</xsl:text>
+        <xsl:text>&LF;</xsl:text>
+
+        <!-- Handle each function parameter -->
+        <xsl:for-each select="frames/frame/elements/element">
+
+            <!-- Variable name -->
+            <xsl:variable name="varName">
+                <xsl:value-of select="local:hungarianForm(name[@lang='en'])" />
+            </xsl:variable>
+
+            <!-- Variable content access. If variable is pointer, it will differ from variable name otherwise not. -->
+            <xsl:variable name="varContent">
+                <xsl:choose>
+                    <xsl:when test="@optional = 'true'">
+                        <xsl:text>*</xsl:text>
+                        <xsl:value-of select="$varName" />
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="$varName" />
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+
+            <!-- Line indention -->
+            <xsl:variable name="indent">
+                <xsl:choose>
+                    <xsl:when test="@optional = 'true'">
+                        <xsl:text>&TAB;&TAB;</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>&TAB;</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+
+            <!-- Every parameter section is separated with a empty line. -->
+            <xsl:if test="position() &gt; 1">
+                <xsl:text>&LF;</xsl:text>
+            </xsl:if>
+
+            <xsl:if test="@optional = 'true'">
+                <xsl:text>&TAB;if (NULL != </xsl:text>
+                <xsl:value-of select="$varName" />
+                <xsl:text>)&LF;</xsl:text>
+                <xsl:text>&TAB;{&LF;</xsl:text>
+            </xsl:if>
+
+            <xsl:choose>
+                <xsl:when test="@type = 'uint8'">
+
+                    <xsl:choose>
+                        <xsl:when test="@length = 1">
+                            <xsl:value-of select="$indent" />
+                            <xsl:text>txMsg.data[</xsl:text>
+                            <xsl:value-of select="@pos + 0" />
+                            <xsl.text>] = </xsl.text>
+                            <xsl:value-of select="$varContent" />
+                            <xsl:text>;&LF;</xsl:text>
+                            <xsl:value-of select="$indent" />
+                            <xsl:text>size += </xsl:text>
+                            <xsl:value-of select="/specification/type-definitions/type-definition[name/text() = 'uint8']/size" />
+                            <xsl:text>;&LF;</xsl:text>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="$indent" />
+                            <xsl:text>for(index = 0; index &lt; </xsl:text>
+                            <xsl:value-of select="local:hungarianForm(concat(name[@lang='en'], ' size'))" />
+                            <xsl:text>; ++index)&LF;</xsl:text>
+                            <xsl:value-of select="$indent" />
+                            <xsl:text>{&LF;</xsl:text>
+                            <xsl:value-of select="$indent" />
+                            <xsl:text>&TAB;txMsg.data[</xsl:text>
+                            <xsl:value-of select="@pos" />
+                            <xsl.text> + index] = </xsl.text>
+                            <xsl:value-of select="$varName" />
+                            <xsl:text>[index];&LF;</xsl:text>
+                            <xsl:value-of select="$indent" />
+                            <xsl:text>&TAB;size += </xsl:text>
+                            <xsl:value-of select="/specification/type-definitions/type-definition[name/text() = 'uint8']/size" />
+                            <xsl:text>;&LF;</xsl:text>
+                            <xsl:text>&LF;</xsl:text>
+                            <xsl:value-of select="$indent" />
+                            <xsl:text>&TAB;if (VSCP_L1_DATA_SIZE &lt;= size)&LF;</xsl:text>
+                            <xsl:value-of select="$indent" />
+                            <xsl:text>&TAB;{&LF;</xsl:text>
+                            <xsl:value-of select="$indent" />
+                            <xsl:text>&TAB;&TAB;break;&LF;</xsl:text>
+                            <xsl:value-of select="$indent" />
+                            <xsl:text>&TAB;}&LF;</xsl:text>
+                            <xsl:value-of select="$indent" />
+                            <xsl:text>}&LF;</xsl:text>
+                        </xsl:otherwise>
+                    </xsl:choose>
+
+                </xsl:when>
+                <xsl:when test="@type = 'uint16'">
+
+                    <xsl:value-of select="$indent" />
+                    <xsl:text>txMsg.data[</xsl:text>
+                    <xsl:value-of select="@pos + 0" />
+                    <xsl.text>] = (uint8_t)((</xsl.text>
+                    <xsl:value-of select="$varContent" />
+                    <xsl:text> &gt;&gt; 8) &amp; 0xff);&LF;</xsl:text>
+
+                    <xsl:value-of select="$indent" />
+                    <xsl:text>txMsg.data[</xsl:text>
+                    <xsl:value-of select="@pos + 1" />
+                    <xsl.text>] = (uint8_t)((</xsl.text>
+                    <xsl:value-of select="$varContent" />
+                    <xsl:text> &gt;&gt; 0) &amp; 0xff);&LF;</xsl:text>
+
+                    <xsl:value-of select="$indent" />
+                    <xsl:text>size += </xsl:text>
+                    <xsl:value-of select="/specification/type-definitions/type-definition[name/text() = 'uint16']/size" />
+                    <xsl:text>;&LF;</xsl:text>
+
+                </xsl:when>
+                <xsl:when test="@type = 'uint32'">
+
+                    <xsl:value-of select="$indent" /> 
+                    <xsl:text>txMsg.data[</xsl:text>
+                    <xsl:value-of select="@pos + 0" />
+                    <xsl.text>] = (uint8_t)((</xsl.text>
+                    <xsl:value-of select="$varContent" />
+                    <xsl:text> &gt;&gt; 24) &amp; 0xff);&LF;</xsl:text>
+
+                    <xsl:value-of select="$indent" />
+                    <xsl:text>txMsg.data[</xsl:text>
+                    <xsl:value-of select="@pos + 1" />
+                    <xsl.text>] = (uint8_t)((</xsl.text>
+                    <xsl:value-of select="$varContent" />
+                    <xsl:text> &gt;&gt; 18) &amp; 0xff);&LF;</xsl:text>
+
+                    <xsl:value-of select="$indent" />
+                    <xsl:text>txMsg.data[</xsl:text>
+                    <xsl:value-of select="@pos + 2" />
+                    <xsl.text>] = (uint8_t)((</xsl.text>
+                    <xsl:value-of select="$varContent" />
+                    <xsl:text> &gt;&gt; 8) &amp; 0xff);&LF;</xsl:text>
+
+                    <xsl:value-of select="$indent" />
+                    <xsl:text>txMsg.data[</xsl:text>
+                    <xsl:value-of select="@pos + 3" />
+                    <xsl.text>] = (uint8_t)((</xsl.text>
+                    <xsl:value-of select="$varContent" />
+                    <xsl:text> &gt;&gt; 0) &amp; 0xff);&LF;</xsl:text>
+
+                    <xsl:value-of select="$indent" />
+                    <xsl:text>size += </xsl:text>
+                    <xsl:value-of select="/specification/type-definitions/type-definition[name/text() = 'uint32']/size" />
+                    <xsl:text>;&LF;</xsl:text>
+
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$indent" />
+                    <xsl:text>/* </xsl:text>
+                    <xsl:value-of select="$varName" />
+                    <xsl:text> not supported! */&LF;</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+
+            <xsl:if test="@optional = 'true'">
+                <xsl:text>&TAB;}&LF;</xsl:text>
+            </xsl:if>
+
+        </xsl:for-each>
+
+        <xsl:if test="frames/frame/elements/element">
+            <xsl:text>&LF;</xsl:text>
+        </xsl:if>
+
+        <xsl:if test="frames/frame/elements/element">
+            <xsl:text>&TAB;txMsg.dataNum = size;&LF;</xsl:text>
+            <xsl:text>&LF;</xsl:text>
+        </xsl:if>
+
+        <xsl:text>&TAB;return vscp_core_sendEvent(&amp;txMsg);&LF;</xsl:text>
+    </xsl:template>
+
     <!-- Create function prototype for vscp-type  -->
     <xsl:template match="vscp-type" mode="h">
 
@@ -472,39 +765,7 @@ This transformation script generates the VSCP event modules.
                     
                     <!-- Comment -->
                     <xsl:with-param name="comment">
-                        <xsl:value-of select="name[@lang='en']" />
-                        <xsl:text>&LF;</xsl:text>
-
-                        <!-- Any parameter? -->
-                        <xsl:if test="frames/frame/elements/element">
-                            <xsl:text>&LF;</xsl:text>
-
-                            <!-- Generate comment per parameter -->
-                            <xsl:for-each select="frames/frame/elements/element">
-                                <xsl:if test="position() &gt; 1">
-                                    <xsl:text>&LF;</xsl:text>
-                                </xsl:if>
-                                <xsl:text>@param[in] </xsl:text>
-                                <xsl:value-of select="local:hungarianForm(name[@lang='en'])" />
-                                <xsl:text> </xsl:text>
-                                <xsl:value-of select="description[@lang='en']" />
-                                <xsl:if test="@optional = 'true'">
-                                    <xsl:text> (optional)</xsl:text>
-                                </xsl:if>
-                                <xsl:if test="@length &gt; 1">
-                                    <xsl:text> (array[</xsl:text>
-                                    <xsl:value-of select="@length" />
-                                    <xsl:text>])</xsl:text>
-                                    <xsl:text>&LF;</xsl:text>
-                                    <xsl:text>@param[in] </xsl:text>
-                                    <xsl:value-of select="local:hungarianForm(concat(name[@lang='en'], 'size'))" />
-                                    <xsl:text> Size in byte.</xsl:text>
-                                </xsl:if>
-                            </xsl:for-each>
-                            <xsl:text>&LF;</xsl:text>
-                        </xsl:if>
-                        <xsl:text>&LF;</xsl:text>
-                        <xsl:text>@return If event is sent, it will return TRUE otherwise FALSE.</xsl:text>
+                        <xsl:call-template name="funcComment" />
                     </xsl:with-param>
 
                     <!-- Return type -->
@@ -525,40 +786,10 @@ This transformation script generates the VSCP event modules.
 
                     <!-- Parameter -->
                     <xsl:with-param name="parameter">
-                        <xsl:choose>
-                            <xsl:when test="(count(frames/frame) = 1) and frames/frame/elements/element">
-
-                                <!-- Generate variable per parameter -->
-                                <xsl:for-each select="frames/frame/elements/element">
-                                    <xsl:if test="position() &gt; 1">
-                                        <xsl:text>, </xsl:text>
-                                    </xsl:if>
-                                    <xsl:choose>
-                                        <xsl:when test="@length = 1">
-                                            <xsl:value-of select="@type" />
-                                            <xsl:text>_t</xsl:text>
-                                            <xsl:if test="@optional = 'true'">
-                                                <xsl:text> const * const</xsl:text>
-                                            </xsl:if>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <xsl:value-of select="@type" />
-                                            <xsl:text>_t const * const</xsl:text>
-                                        </xsl:otherwise>
-                                    </xsl:choose>
-                                    <xsl:text> </xsl:text>
-                                    <xsl:value-of select="local:hungarianForm(name[@lang='en'])" />
-                                    <xsl:if test="@length &gt; 1">
-                                        <xsl:text>, uint8_t </xsl:text>
-                                        <xsl:value-of select="local:hungarianForm(concat(name[@lang='en'], ' size'))" />
-                                    </xsl:if>
-                                </xsl:for-each>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:text>void</xsl:text>
-                            </xsl:otherwise>
-                        </xsl:choose>
+                        <xsl:call-template name="funcParameter" />
                     </xsl:with-param>
+
+                    <!-- Body -->
                     <xsl:with-param name="body">
                     </xsl:with-param>
                 </xsl:call-template>
@@ -586,39 +817,7 @@ This transformation script generates the VSCP event modules.
                     
                     <!-- Comment -->
                     <xsl:with-param name="comment">
-                        <xsl:value-of select="name[@lang='en']" />
-                        <xsl:text>&LF;</xsl:text>
-
-                        <!-- Any parameter? -->
-                        <xsl:if test="frames/frame/elements/element">
-                            <xsl:text>&LF;</xsl:text>
-
-                            <!-- Generate comment per parameter -->
-                            <xsl:for-each select="frames/frame/elements/element">
-                                <xsl:if test="position() &gt; 1">
-                                    <xsl:text>&LF;</xsl:text>
-                                </xsl:if>
-                                <xsl:text>@param[in] </xsl:text>
-                                <xsl:value-of select="local:hungarianForm(name[@lang='en'])" />
-                                <xsl:text> </xsl:text>
-                                <xsl:value-of select="description[@lang='en']" />
-                                <xsl:if test="@optional = 'true'">
-                                    <xsl:text> (optional)</xsl:text>
-                                </xsl:if>
-                                <xsl:if test="@length &gt; 1">
-                                    <xsl:text> (array[</xsl:text>
-                                    <xsl:value-of select="@length" />
-                                    <xsl:text>])</xsl:text>
-                                    <xsl:text>&LF;</xsl:text>
-                                    <xsl:text>@param[in] </xsl:text>
-                                    <xsl:value-of select="local:hungarianForm(concat(name[@lang='en'], ' size'))" />
-                                    <xsl:text> Size in byte.</xsl:text>
-                                </xsl:if>
-                            </xsl:for-each>
-                            <xsl:text>&LF;</xsl:text>
-                        </xsl:if>
-                        <xsl:text>&LF;</xsl:text>
-                        <xsl:text>@return If event is sent, it will return TRUE otherwise FALSE.</xsl:text>
+                        <xsl:call-template name="funcComment" />
                     </xsl:with-param>
 
                     <!-- Return type -->
@@ -639,256 +838,12 @@ This transformation script generates the VSCP event modules.
 
                     <!-- Parameter -->
                     <xsl:with-param name="parameter">
-                        <xsl:choose>
-                            <xsl:when test="(count(frames/frame) = 1) and frames/frame/elements/element">
-
-                                <!-- Generate variable per parameter -->
-                                <xsl:for-each select="frames/frame/elements/element">
-                                    <xsl:if test="position() &gt; 1">
-                                        <xsl:text>, </xsl:text>
-                                    </xsl:if>
-                                    <xsl:choose>
-                                        <xsl:when test="@length = 1">
-                                            <xsl:value-of select="@type" />
-                                            <xsl:text>_t</xsl:text>
-                                            <xsl:if test="@optional = 'true'">
-                                                <xsl:text> const * const</xsl:text>
-                                            </xsl:if>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <xsl:value-of select="@type" />
-                                            <xsl:text>_t const * const</xsl:text>
-                                        </xsl:otherwise>
-                                    </xsl:choose>
-                                    <xsl:text> </xsl:text>
-                                    <xsl:value-of select="local:hungarianForm(name[@lang='en'])" />
-                                    <xsl:if test="@length &gt; 1">
-                                        <xsl:text>, uint8_t </xsl:text>
-                                        <xsl:value-of select="local:hungarianForm(concat(name[@lang='en'], ' size'))" />
-                                    </xsl:if>
-                                </xsl:for-each>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:text>void</xsl:text>
-                            </xsl:otherwise>
-                        </xsl:choose>
+                        <xsl:call-template name="funcParameter" />
                     </xsl:with-param>
+
+                    <!-- Body -->
                     <xsl:with-param name="body">
-                        <!-- Function variables -->
-                        <xsl:text>&TAB;vscp_TxMessage&TAB;txMsg;&LF;</xsl:text>
-                        <xsl:if test="frames/frame/elements/element">
-                            <xsl:text>&TAB;uint8_t       &TAB;size&TAB;= 0;&LF;</xsl:text>
-                        </xsl:if>
-                        <xsl:if test="frames/frame/elements/element[@length &gt; 1]">
-                            <xsl:text>&TAB;uint8_t       &TAB;index&TAB;= 0;&LF;</xsl:text>
-                        </xsl:if>
-                        <xsl:text>&LF;</xsl:text>
-
-                        <!-- Pointer checks -->
-                        <xsl:if test="frames/frame/elements/element[(@length &gt; 1) and (@optional = 'false')]">
-                            <!-- Array pointer, which is not optional -->
-                            <xsl:for-each select="frames/frame/elements/element[(@length &gt; 1) and (@optional = 'false')]">
-
-                                <xsl:if test="position() &gt; 1">
-                                    <xsl:text>&LF;</xsl:text>
-                                </xsl:if>
-
-                                <xsl:text>&TAB;if (NULL == </xsl:text>
-                                <xsl:value-of select="local:hungarianForm(name[@lang = 'en'])" />
-                                <xsl:text>) || (0 == </xsl:text>
-                                <xsl:value-of select="local:hungarianForm(concat(name[@lang = 'en'], ' size'))" />
-                                <xsl:text>)&LF;</xsl:text>
-                                <xsl:text>&TAB;{&LF;</xsl:text>
-                                <xsl:text>&TAB;&TAB;return FALSE;&LF;</xsl:text>
-                                <xsl:text>&TAB;}&LF;</xsl:text>
-
-                            </xsl:for-each>
-                            <xsl:text>&LF;</xsl:text>
-                        </xsl:if>
-
-                        <!-- Prepare tx message -->
-                        <xsl:text>&TAB;vscp_core_prepareTxMessage(&amp;txMsg, </xsl:text>
-                        <xsl:value-of select="../../token" />
-                        <xsl:text>, </xsl:text>
-                        <xsl:value-of select="token" />
-                        <xsl:text>, VSCP_PRIORITY_3_NORMAL);&LF;</xsl:text>
-                        <xsl:text>&LF;</xsl:text>
-
-                        <!-- Handle each function parameter -->
-                        <xsl:for-each select="frames/frame/elements/element">
-
-                            <!-- Variable name -->
-                            <xsl:variable name="varName">
-                                <xsl:value-of select="local:hungarianForm(name[@lang='en'])" />
-                            </xsl:variable>
-
-                            <!-- Variable content access. If variable is pointer, it will differ from variable name otherwise not. -->
-                            <xsl:variable name="varContent">
-                                <xsl:choose>
-                                    <xsl:when test="@optional = 'true'">
-                                        <xsl:text>*</xsl:text>
-                                        <xsl:value-of select="$varName" />
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:value-of select="$varName" />
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                            </xsl:variable>
-
-                            <!-- Line indention -->
-                            <xsl:variable name="indent">
-                                <xsl:choose>
-                                    <xsl:when test="@optional = 'true'">
-                                        <xsl:text>&TAB;&TAB;</xsl:text>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:text>&TAB;</xsl:text>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                            </xsl:variable>
-
-                            <!-- Every parameter section is separated with a empty line. -->
-                            <xsl:if test="position() &gt; 1">
-                                <xsl:text>&LF;</xsl:text>
-                            </xsl:if>
-
-                            <xsl:if test="@optional = 'true'">
-                                <xsl:text>&TAB;if (NULL != </xsl:text>
-                                <xsl:value-of select="$varName" />
-                                <xsl:text>)&LF;</xsl:text>
-                                <xsl:text>&TAB;{&LF;</xsl:text>
-                            </xsl:if>
-
-                            <xsl:choose>
-                                <xsl:when test="@type = 'uint8'">
-
-                                    <xsl:choose>
-                                        <xsl:when test="@length = 1">
-                                            <xsl:value-of select="$indent" />
-                                            <xsl:text>txMsg.data[</xsl:text>
-                                            <xsl:value-of select="@pos + 0" />
-                                            <xsl.text>] = </xsl.text>
-                                            <xsl:value-of select="$varContent" />
-                                            <xsl:text>;&LF;</xsl:text>
-                                            <xsl:value-of select="$indent" />
-                                            <xsl:text>size += </xsl:text>
-                                            <xsl:value-of select="/specification/type-definitions/type-definition[name/text() = 'uint8']/size" />
-                                            <xsl:text>;&LF;</xsl:text>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <xsl:value-of select="$indent" />
-                                            <xsl:text>for(index = 0; index &lt; </xsl:text>
-                                            <xsl:value-of select="local:hungarianForm(concat(name[@lang='en'], ' size'))" />
-                                            <xsl:text>; ++index)&LF;</xsl:text>
-                                            <xsl:value-of select="$indent" />
-                                            <xsl:text>{&LF;</xsl:text>
-                                            <xsl:value-of select="$indent" />
-                                            <xsl:text>&TAB;txMsg.data[</xsl:text>
-                                            <xsl:value-of select="@pos" />
-                                            <xsl.text> + index] = </xsl.text>
-                                            <xsl:value-of select="$varName" />
-                                            <xsl:text>[index];&LF;</xsl:text>
-                                            <xsl:value-of select="$indent" />
-                                            <xsl:text>&TAB;size += </xsl:text>
-                                            <xsl:value-of select="/specification/type-definitions/type-definition[name/text() = 'uint8']/size" />
-                                            <xsl:text>;&LF;</xsl:text>
-                                            <xsl:text>&LF;</xsl:text>
-                                            <xsl:value-of select="$indent" />
-                                            <xsl:text>&TAB;if (VSCP_L1_DATA_SIZE &lt;= size)&LF;</xsl:text>
-                                            <xsl:value-of select="$indent" />
-                                            <xsl:text>&TAB;{&LF;</xsl:text>
-                                            <xsl:value-of select="$indent" />
-                                            <xsl:text>&TAB;&TAB;break;&LF;</xsl:text>
-                                            <xsl:value-of select="$indent" />
-                                            <xsl:text>&TAB;}&LF;</xsl:text>
-                                            <xsl:value-of select="$indent" />
-                                            <xsl:text>}&LF;</xsl:text>
-                                        </xsl:otherwise>
-                                    </xsl:choose>
-
-                                </xsl:when>
-                                <xsl:when test="@type = 'uint16'">
-
-                                    <xsl:value-of select="$indent" />
-                                    <xsl:text>txMsg.data[</xsl:text>
-                                    <xsl:value-of select="@pos + 0" />
-                                    <xsl.text>] = (uint8_t)((</xsl.text>
-                                    <xsl:value-of select="$varContent" />
-                                    <xsl:text> &gt;&gt; 8) &amp; 0xff);&LF;</xsl:text>
-
-                                    <xsl:value-of select="$indent" />
-                                    <xsl:text>txMsg.data[</xsl:text>
-                                    <xsl:value-of select="@pos + 1" />
-                                    <xsl.text>] = (uint8_t)((</xsl.text>
-                                    <xsl:value-of select="$varContent" />
-                                    <xsl:text> &gt;&gt; 0) &amp; 0xff);&LF;</xsl:text>
-
-                                    <xsl:value-of select="$indent" />
-                                    <xsl:text>size += </xsl:text>
-                                    <xsl:value-of select="/specification/type-definitions/type-definition[name/text() = 'uint16']/size" />
-                                    <xsl:text>;&LF;</xsl:text>
-
-                                </xsl:when>
-                                <xsl:when test="@type = 'uint32'">
-
-                                    <xsl:value-of select="$indent" /> 
-                                    <xsl:text>txMsg.data[</xsl:text>
-                                    <xsl:value-of select="@pos + 0" />
-                                    <xsl.text>] = (uint8_t)((</xsl.text>
-                                    <xsl:value-of select="$varContent" />
-                                    <xsl:text> &gt;&gt; 24) &amp; 0xff);&LF;</xsl:text>
-
-                                    <xsl:value-of select="$indent" />
-                                    <xsl:text>txMsg.data[</xsl:text>
-                                    <xsl:value-of select="@pos + 1" />
-                                    <xsl.text>] = (uint8_t)((</xsl.text>
-                                    <xsl:value-of select="$varContent" />
-                                    <xsl:text> &gt;&gt; 18) &amp; 0xff);&LF;</xsl:text>
-
-                                    <xsl:value-of select="$indent" />
-                                    <xsl:text>txMsg.data[</xsl:text>
-                                    <xsl:value-of select="@pos + 2" />
-                                    <xsl.text>] = (uint8_t)((</xsl.text>
-                                    <xsl:value-of select="$varContent" />
-                                    <xsl:text> &gt;&gt; 8) &amp; 0xff);&LF;</xsl:text>
-
-                                    <xsl:value-of select="$indent" />
-                                    <xsl:text>txMsg.data[</xsl:text>
-                                    <xsl:value-of select="@pos + 3" />
-                                    <xsl.text>] = (uint8_t)((</xsl.text>
-                                    <xsl:value-of select="$varContent" />
-                                    <xsl:text> &gt;&gt; 0) &amp; 0xff);&LF;</xsl:text>
-
-                                    <xsl:value-of select="$indent" />
-                                    <xsl:text>size += </xsl:text>
-                                    <xsl:value-of select="/specification/type-definitions/type-definition[name/text() = 'uint32']/size" />
-                                    <xsl:text>;&LF;</xsl:text>
-
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:value-of select="$indent" />
-                                    <xsl:text>/* </xsl:text>
-                                    <xsl:value-of select="$varName" />
-                                    <xsl:text> not supported! */&LF;</xsl:text>
-                                </xsl:otherwise>
-                            </xsl:choose>
-
-                            <xsl:if test="@optional = 'true'">
-                                <xsl:text>&TAB;}&LF;</xsl:text>
-                            </xsl:if>
-
-                        </xsl:for-each>
-
-                        <xsl:if test="frames/frame/elements/element">
-                            <xsl:text>&LF;</xsl:text>
-                        </xsl:if>
-
-                        <xsl:if test="frames/frame/elements/element">
-                            <xsl:text>&TAB;txMsg.dataNum = size;&LF;</xsl:text>
-                            <xsl:text>&LF;</xsl:text>
-                        </xsl:if>
-
-                        <xsl:text>&TAB;return vscp_core_sendEvent(&amp;txMsg);&LF;</xsl:text>
+                        <xsl:call-template name="funcBody" />
                     </xsl:with-param>
                 </xsl:call-template>
             </xsl:when>
