@@ -83,67 +83,73 @@ extern BOOL vscp_evt_data_sendGeneralEvent(void);
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] index Index for sensor.
+ * @param[in] unit The unit of the data.
+ * @param[in] data The data as signed integer.
+ * @param[in] exp The exponent of the data (10^exponent).
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_data_sendIOValue(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize);
+extern BOOL vscp_evt_data_sendIOValue(uint8_t index, uint8_t unit, int32_t data, int8_t exp);
 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] index Index for sensor.
+ * @param[in] unit The unit of the data.
+ * @param[in] data The data as signed integer.
+ * @param[in] exp The exponent of the data (10^exponent).
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_data_sendADValue(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize);
+extern BOOL vscp_evt_data_sendADValue(uint8_t index, uint8_t unit, int32_t data, int8_t exp);
 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] index Index for sensor.
+ * @param[in] unit The unit of the data.
+ * @param[in] data The data as signed integer.
+ * @param[in] exp The exponent of the data (10^exponent).
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_data_sendDAValue(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize);
+extern BOOL vscp_evt_data_sendDAValue(uint8_t index, uint8_t unit, int32_t data, int8_t exp);
 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] index Index for sensor.
+ * @param[in] unit The unit of the data.
+ * @param[in] data The data as signed integer.
+ * @param[in] exp The exponent of the data (10^exponent).
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_data_sendRelativeStrength(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize);
+extern BOOL vscp_evt_data_sendRelativeStrength(uint8_t index, uint8_t unit, int32_t data, int8_t exp);
 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] index Index for sensor.
+ * @param[in] unit The unit of the data.
+ * @param[in] data The data as signed integer.
+ * @param[in] exp The exponent of the data (10^exponent).
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_data_sendSignalLevel(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize);
+extern BOOL vscp_evt_data_sendSignalLevel(uint8_t index, uint8_t unit, int32_t data, int8_t exp);
 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] index Index for sensor.
+ * @param[in] unit The unit of the data.
+ * @param[in] data The data as signed integer.
+ * @param[in] exp The exponent of the data (10^exponent).
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_data_sendSignalQuality(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize);
+extern BOOL vscp_evt_data_sendSignalQuality(uint8_t index, uint8_t unit, int32_t data, int8_t exp);
 
 #endif  /* __VSCP_EVT_DATA_H__ */

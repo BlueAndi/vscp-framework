@@ -422,10 +422,13 @@ This transformation script generates the VSCP event modules.
             <!-- Exception handling for special classes. -->
             <xsl:choose>
                 <xsl:when test="@id = 10">
-                    <xsl:text>#include "vscp_data_coding.h"</xsl:text>
+                    <xsl:text>#include "vscp_data_coding.h"&LF;</xsl:text>
+                </xsl:when>
+                <xsl:when test="@id = 15">
+                    <xsl:text>#include "vscp_data_coding.h"&LF;</xsl:text>
                 </xsl:when>
                 <xsl:when test="@id = 65">
-                    <xsl:text>#include "vscp_data_coding.h"</xsl:text>
+                    <xsl:text>#include "vscp_data_coding.h"&LF;</xsl:text>
                 </xsl:when>
                 <xsl:otherwise>
                 </xsl:otherwise>
@@ -517,6 +520,15 @@ This transformation script generates the VSCP event modules.
                 <xsl:text>@param[in] exp The exponent of the data (10^exponent).&LF;</xsl:text>
             </xsl:when>
 
+            <!-- Handle data class exceptional -->
+            <xsl:when test="(../../@id = 15) and ($vscpTypeId &gt; 0)">
+                <xsl:text>&LF;</xsl:text>
+                <xsl:text>@param[in] index Index for sensor.&LF;</xsl:text>
+                <xsl:text>@param[in] unit The unit of the data.&LF;</xsl:text>
+                <xsl:text>@param[in] data The data as signed integer.&LF;</xsl:text>
+                <xsl:text>@param[in] exp The exponent of the data (10^exponent).&LF;</xsl:text>
+            </xsl:when>
+
             <!-- Handle measurezone class exceptional -->
             <xsl:when test="(../../@id = 65) and ($vscpTypeId &gt; 0)">
                 <xsl:text>&LF;</xsl:text>
@@ -576,6 +588,11 @@ This transformation script generates the VSCP event modules.
                 <xsl:text>uint8_t index, uint8_t unit, int32_t data, int8_t exp</xsl:text>
             </xsl:when>
 
+            <!-- Handle data class exceptional -->
+            <xsl:when test="(../../@id = 15) and ($vscpTypeId &gt; 0)">
+                <xsl:text>uint8_t index, uint8_t unit, int32_t data, int8_t exp</xsl:text>
+            </xsl:when>
+
             <!-- Handle measurezone class exceptional -->
             <xsl:when test="(../../@id = 65) and ($vscpTypeId &gt; 0)">
                 <xsl:text>uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp</xsl:text>
@@ -629,6 +646,28 @@ This transformation script generates the VSCP event modules.
 
             <!-- Handle measurement class exceptional -->
             <xsl:when test="(../../@id = 10) and ($vscpTypeId &gt; 0)">
+                <!-- Function variables -->
+                <xsl:text>&TAB;vscp_TxMessage&TAB;txMsg;&LF;</xsl:text>
+                <xsl:text>&LF;</xsl:text>
+
+                <!-- Prepare tx message -->
+                <xsl:text>&TAB;vscp_core_prepareTxMessage(&amp;txMsg, </xsl:text>
+                <xsl:value-of select="../../token" />
+                <xsl:text>, </xsl:text>
+                <xsl:value-of select="token" />
+                <xsl:text>, VSCP_PRIORITY_3_NORMAL);&LF;</xsl:text>
+                <xsl:text>&LF;</xsl:text>
+
+                <xsl:text>&TAB;txMsg.dataNum = 1;&LF;</xsl:text>
+                <xsl:text>&TAB;txMsg.data[0] = vscp_data_coding_getFormatByte(VSCP_DATA_CODING_REPRESENTATION_NORMALIZED_INTEGER, unit, index);&LF;</xsl:text>
+                <xsl:text>&LF;</xsl:text>
+                <xsl:text>&TAB;txMsg.dataNum += vscp_data_coding_int32ToNormalizedInteger(data, exp, &amp;txMsg.data[1], VSCP_L1_DATA_SIZE - txMsg.dataNum);&LF;</xsl:text>
+                <xsl:text>&LF;</xsl:text>
+                <xsl:text>&TAB;return vscp_core_sendEvent(&amp;txMsg);&LF;</xsl:text>
+            </xsl:when>
+
+            <!-- Handle data class exceptional -->
+            <xsl:when test="(../../@id = 15) and ($vscpTypeId &gt; 0)">
                 <!-- Function variables -->
                 <xsl:text>&TAB;vscp_TxMessage&TAB;txMsg;&LF;</xsl:text>
                 <xsl:text>&LF;</xsl:text>
