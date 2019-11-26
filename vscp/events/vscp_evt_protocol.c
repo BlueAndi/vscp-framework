@@ -476,18 +476,18 @@ extern BOOL vscp_evt_protocol_sendBlockData(uint8_t const * const data, uint8_t 
 {
 	vscp_TxMessage	txMsg;
 	uint8_t       	size	= 0;
-	uint8_t       	index	= 0;
+	uint8_t       	byteIndex	= 0;
 
-	if (NULL == data) || (0 == dataSize)
+	if ((NULL == data) || (0 == dataSize))
 	{
 		return FALSE;
 	}
 
 	vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_PROTOCOL, VSCP_TYPE_PROTOCOL_BLOCK_DATA, VSCP_PRIORITY_3_NORMAL);
 
-	for(index = 0; index < dataSize; ++index)
+	for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
 	{
-		txMsg.data[0 + index] = data[index];
+		txMsg.data[0 + byteIndex] = data[byteIndex];
 		size += 1;
 
 		if (VSCP_L1_DATA_SIZE <= size)
@@ -708,9 +708,9 @@ extern BOOL vscp_evt_protocol_sendPageWrite(uint8_t nodeId, uint8_t registerStar
 {
 	vscp_TxMessage	txMsg;
 	uint8_t       	size	= 0;
-	uint8_t       	index	= 0;
+	uint8_t       	byteIndex	= 0;
 
-	if (NULL == data) || (0 == dataSize)
+	if ((NULL == data) || (0 == dataSize))
 	{
 		return FALSE;
 	}
@@ -723,9 +723,9 @@ extern BOOL vscp_evt_protocol_sendPageWrite(uint8_t nodeId, uint8_t registerStar
 	txMsg.data[1] = registerStart;
 	size += 1;
 
-	for(index = 0; index < dataSize; ++index)
+	for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
 	{
-		txMsg.data[2 + index] = data[index];
+		txMsg.data[2 + byteIndex] = data[byteIndex];
 		size += 1;
 
 		if (VSCP_L1_DATA_SIZE <= size)
@@ -752,9 +752,9 @@ extern BOOL vscp_evt_protocol_sendReadWritePageResponse(uint8_t sequenceNumber, 
 {
 	vscp_TxMessage	txMsg;
 	uint8_t       	size	= 0;
-	uint8_t       	index	= 0;
+	uint8_t       	byteIndex	= 0;
 
-	if (NULL == data) || (0 == dataSize)
+	if ((NULL == data) || (0 == dataSize))
 	{
 		return FALSE;
 	}
@@ -764,9 +764,9 @@ extern BOOL vscp_evt_protocol_sendReadWritePageResponse(uint8_t sequenceNumber, 
 	txMsg.data[0] = sequenceNumber;
 	size += 1;
 
-	for(index = 0; index < dataSize; ++index)
+	for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
 	{
-		txMsg.data[2 + index] = data[index];
+		txMsg.data[2 + byteIndex] = data[byteIndex];
 		size += 1;
 
 		if (VSCP_L1_DATA_SIZE <= size)
@@ -810,9 +810,9 @@ extern BOOL vscp_evt_protocol_sendHighEndServerServiceResponse(uint16_t capabili
 {
 	vscp_TxMessage	txMsg;
 	uint8_t       	size	= 0;
-	uint8_t       	index	= 0;
+	uint8_t       	byteIndex	= 0;
 
-	if (NULL == serverIp) || (0 == serverIpSize)
+	if ((NULL == serverIp) || (0 == serverIpSize))
 	{
 		return FALSE;
 	}
@@ -823,9 +823,9 @@ extern BOOL vscp_evt_protocol_sendHighEndServerServiceResponse(uint16_t capabili
 	txMsg.data[1] = (uint8_t)((capabilityCode >> 0) & 0xff);
 	size += 2;
 
-	for(index = 0; index < serverIpSize; ++index)
+	for(byteIndex = 0; byteIndex < serverIpSize; ++byteIndex)
 	{
-		txMsg.data[2 + index] = serverIp[index];
+		txMsg.data[2 + byteIndex] = serverIp[byteIndex];
 		size += 1;
 
 		if (VSCP_L1_DATA_SIZE <= size)
@@ -856,9 +856,9 @@ extern BOOL vscp_evt_protocol_sendIncrementRegister(uint8_t nodeId, uint8_t cons
 {
 	vscp_TxMessage	txMsg;
 	uint8_t       	size	= 0;
-	uint8_t       	index	= 0;
+	uint8_t       	byteIndex	= 0;
 
-	if (NULL == registerAddress) || (0 == registerAddressSize)
+	if ((NULL == registerAddress) || (0 == registerAddressSize))
 	{
 		return FALSE;
 	}
@@ -868,9 +868,9 @@ extern BOOL vscp_evt_protocol_sendIncrementRegister(uint8_t nodeId, uint8_t cons
 	txMsg.data[0] = nodeId;
 	size += 1;
 
-	for(index = 0; index < registerAddressSize; ++index)
+	for(byteIndex = 0; byteIndex < registerAddressSize; ++byteIndex)
 	{
-		txMsg.data[1 + index] = registerAddress[index];
+		txMsg.data[1 + byteIndex] = registerAddress[byteIndex];
 		size += 1;
 
 		if (VSCP_L1_DATA_SIZE <= size)
@@ -897,9 +897,9 @@ extern BOOL vscp_evt_protocol_sendDecrementRegister(uint8_t nodeId, uint8_t cons
 {
 	vscp_TxMessage	txMsg;
 	uint8_t       	size	= 0;
-	uint8_t       	index	= 0;
+	uint8_t       	byteIndex	= 0;
 
-	if (NULL == registerAddress) || (0 == registerAddressSize)
+	if ((NULL == registerAddress) || (0 == registerAddressSize))
 	{
 		return FALSE;
 	}
@@ -909,9 +909,9 @@ extern BOOL vscp_evt_protocol_sendDecrementRegister(uint8_t nodeId, uint8_t cons
 	txMsg.data[0] = nodeId;
 	size += 1;
 
-	for(index = 0; index < registerAddressSize; ++index)
+	for(byteIndex = 0; byteIndex < registerAddressSize; ++byteIndex)
 	{
-		txMsg.data[1 + index] = registerAddress[index];
+		txMsg.data[1 + byteIndex] = registerAddress[byteIndex];
 		size += 1;
 
 		if (VSCP_L1_DATA_SIZE <= size)
@@ -1107,9 +1107,9 @@ extern BOOL vscp_evt_protocol_sendExtendedPageWriteRegister(uint8_t nodeAddress,
 {
 	vscp_TxMessage	txMsg;
 	uint8_t       	size	= 0;
-	uint8_t       	index	= 0;
+	uint8_t       	byteIndex	= 0;
 
-	if (NULL == value) || (0 == valueSize)
+	if ((NULL == value) || (0 == valueSize))
 	{
 		return FALSE;
 	}
@@ -1126,9 +1126,9 @@ extern BOOL vscp_evt_protocol_sendExtendedPageWriteRegister(uint8_t nodeAddress,
 	txMsg.data[3] = offset;
 	size += 1;
 
-	for(index = 0; index < valueSize; ++index)
+	for(byteIndex = 0; byteIndex < valueSize; ++byteIndex)
 	{
-		txMsg.data[4 + index] = value[index];
+		txMsg.data[4 + byteIndex] = value[byteIndex];
 		size += 1;
 
 		if (VSCP_L1_DATA_SIZE <= size)
@@ -1157,9 +1157,9 @@ extern BOOL vscp_evt_protocol_sendExtendedPageReadWriteResponse(uint8_t index, u
 {
 	vscp_TxMessage	txMsg;
 	uint8_t       	size	= 0;
-	uint8_t       	index	= 0;
+	uint8_t       	byteIndex	= 0;
 
-	if (NULL == value) || (0 == valueSize)
+	if ((NULL == value) || (0 == valueSize))
 	{
 		return FALSE;
 	}
@@ -1176,9 +1176,9 @@ extern BOOL vscp_evt_protocol_sendExtendedPageReadWriteResponse(uint8_t index, u
 	txMsg.data[3] = offset;
 	size += 1;
 
-	for(index = 0; index < valueSize; ++index)
+	for(byteIndex = 0; byteIndex < valueSize; ++byteIndex)
 	{
-		txMsg.data[4 + index] = value[index];
+		txMsg.data[4 + byteIndex] = value[byteIndex];
 		size += 1;
 
 		if (VSCP_L1_DATA_SIZE <= size)
@@ -1229,19 +1229,19 @@ extern BOOL vscp_evt_protocol_sendGetEventInterestResponse(uint8_t index, uint16
 {
 	vscp_TxMessage	txMsg;
 	uint8_t       	size	= 0;
-	uint8_t       	index	= 0;
+	uint8_t       	byteIndex	= 0;
 
-	if (NULL == type1) || (0 == type1Size)
+	if ((NULL == type1) || (0 == type1Size))
 	{
 		return FALSE;
 	}
 
-	if (NULL == type2) || (0 == type2Size)
+	if ((NULL == type2) || (0 == type2Size))
 	{
 		return FALSE;
 	}
 
-	if (NULL == type3) || (0 == type3Size)
+	if ((NULL == type3) || (0 == type3Size))
 	{
 		return FALSE;
 	}
@@ -1258,9 +1258,9 @@ extern BOOL vscp_evt_protocol_sendGetEventInterestResponse(uint8_t index, uint16
 	txMsg.data[2] = class1;
 	size += 1;
 
-	for(index = 0; index < type1Size; ++index)
+	for(byteIndex = 0; byteIndex < type1Size; ++byteIndex)
 	{
-		txMsg.data[3 + index] = type1[index];
+		txMsg.data[3 + byteIndex] = type1[byteIndex];
 		size += 1;
 
 		if (VSCP_L1_DATA_SIZE <= size)
@@ -1272,9 +1272,9 @@ extern BOOL vscp_evt_protocol_sendGetEventInterestResponse(uint8_t index, uint16
 	txMsg.data[4] = class2;
 	size += 1;
 
-	for(index = 0; index < type2Size; ++index)
+	for(byteIndex = 0; byteIndex < type2Size; ++byteIndex)
 	{
-		txMsg.data[5 + index] = type2[index];
+		txMsg.data[5 + byteIndex] = type2[byteIndex];
 		size += 1;
 
 		if (VSCP_L1_DATA_SIZE <= size)
@@ -1286,9 +1286,9 @@ extern BOOL vscp_evt_protocol_sendGetEventInterestResponse(uint8_t index, uint16
 	txMsg.data[6] = class3;
 	size += 1;
 
-	for(index = 0; index < type3Size; ++index)
+	for(byteIndex = 0; byteIndex < type3Size; ++byteIndex)
 	{
-		txMsg.data[7 + index] = type3[index];
+		txMsg.data[7 + byteIndex] = type3[byteIndex];
 		size += 1;
 
 		if (VSCP_L1_DATA_SIZE <= size)
