@@ -86,6 +86,24 @@ This transformation script generates the VSCP event modules.
         </xsl:call-template>
     </xsl:function>
 
+    <xsl:function name="local:getVscpClassId">
+        <xsl:param name="frameRef" />
+        <xsl:analyze-string select="$frameRef" regex="specification/vscp-classes/([0-9]*).*">
+            <xsl:matching-substring>
+                <xsl:value-of select="regex-group(1)" />
+            </xsl:matching-substring>
+        </xsl:analyze-string>
+    </xsl:function>
+
+    <xsl:function name="local:getVscpTypeId">
+        <xsl:param name="frameRef" />
+        <xsl:analyze-string select="$frameRef" regex="specification/vscp-classes/[0-9]*/vscp-types/([0-9]*).*">
+            <xsl:matching-substring>
+                <xsl:value-of select="regex-group(1)" />
+            </xsl:matching-substring>
+        </xsl:analyze-string>
+    </xsl:function>
+
     <!--
     ****************************************************************************
         ROOT TEMPLATE
@@ -463,15 +481,18 @@ This transformation script generates the VSCP event modules.
 
     <!-- Function comment -->
     <xsl:template name="funcComment">
-        <xsl:value-of select="name[@lang='en']" />
+        <xsl:param name="vscpClassId" />
+        <xsl:param name="vscpTypeId" />
+
+        <xsl:value-of select="/specification/vscp-classes/vscp-class[@id = $vscpClassId]/vscp-types/vscp-type[@id = $vscpTypeId]/name[@lang='en']" />
         <xsl:text>&LF;</xsl:text>
 
         <!-- Any parameter? -->
-        <xsl:if test="frames/frame/elements/element">
+        <xsl:if test="/specification/vscp-classes/vscp-class[@id = $vscpClassId]/vscp-types/vscp-type[@id = $vscpTypeId]/frames/frame/elements/element">
             <xsl:text>&LF;</xsl:text>
 
             <!-- Generate comment per parameter -->
-            <xsl:for-each select="frames/frame/elements/element">
+            <xsl:for-each select="/specification/vscp-classes/vscp-class[@id = $vscpClassId]/vscp-types/vscp-type[@id = $vscpTypeId]/frames/frame/elements/element">
                 <xsl:if test="position() &gt; 1">
                     <xsl:text>&LF;</xsl:text>
                 </xsl:if>
@@ -500,11 +521,14 @@ This transformation script generates the VSCP event modules.
 
     <!-- Function parameters -->
     <xsl:template name="funcParameter">
+        <xsl:param name="vscpClassId" />
+        <xsl:param name="vscpTypeId" />
+
         <xsl:choose>
-            <xsl:when test="(count(frames/frame) = 1) and frames/frame/elements/element">
+            <xsl:when test="(count(/specification/vscp-classes/vscp-class[@id = $vscpClassId]/vscp-types/vscp-type[@id = $vscpTypeId]/frames/frame) = 1) and /specification/vscp-classes/vscp-class[@id = $vscpClassId]/vscp-types/vscp-type[@id = $vscpTypeId]/frames/frame/elements/element">
 
                 <!-- Generate variable per parameter -->
-                <xsl:for-each select="frames/frame/elements/element">
+                <xsl:for-each select="/specification/vscp-classes/vscp-class[@id = $vscpClassId]/vscp-types/vscp-type[@id = $vscpTypeId]/frames/frame/elements/element">
                     <xsl:if test="position() &gt; 1">
                         <xsl:text>, </xsl:text>
                     </xsl:if>
@@ -537,20 +561,23 @@ This transformation script generates the VSCP event modules.
 
     <!-- Function body -->
     <xsl:template name="funcBody">
+        <xsl:param name="vscpClassId" />
+        <xsl:param name="vscpTypeId" />
+
         <!-- Function variables -->
         <xsl:text>&TAB;vscp_TxMessage&TAB;txMsg;&LF;</xsl:text>
-        <xsl:if test="frames/frame/elements/element">
+        <xsl:if test="/specification/vscp-classes/vscp-class[@id = $vscpClassId]/vscp-types/vscp-type[@id = $vscpTypeId]/frames/frame/elements/element">
             <xsl:text>&TAB;uint8_t       &TAB;size&TAB;= 0;&LF;</xsl:text>
         </xsl:if>
-        <xsl:if test="frames/frame/elements/element[@length &gt; 1]">
+        <xsl:if test="/specification/vscp-classes/vscp-class[@id = $vscpClassId]/vscp-types/vscp-type[@id = $vscpTypeId]/frames/frame/elements/element[@length &gt; 1]">
             <xsl:text>&TAB;uint8_t       &TAB;index&TAB;= 0;&LF;</xsl:text>
         </xsl:if>
         <xsl:text>&LF;</xsl:text>
 
         <!-- Pointer checks -->
-        <xsl:if test="frames/frame/elements/element[(@length &gt; 1) and (@optional = 'false')]">
+        <xsl:if test="/specification/vscp-classes/vscp-class[@id = $vscpClassId]/vscp-types/vscp-type[@id = $vscpTypeId]/frames/frame/elements/element[(@length &gt; 1) and (@optional = 'false')]">
             <!-- Array pointer, which is not optional -->
-            <xsl:for-each select="frames/frame/elements/element[(@length &gt; 1) and (@optional = 'false')]">
+            <xsl:for-each select="/specification/vscp-classes/vscp-class[@id = $vscpClassId]/vscp-types/vscp-type[@id = $vscpTypeId]/frames/frame/elements/element[(@length &gt; 1) and (@optional = 'false')]">
 
                 <xsl:if test="position() &gt; 1">
                     <xsl:text>&LF;</xsl:text>
@@ -578,7 +605,7 @@ This transformation script generates the VSCP event modules.
         <xsl:text>&LF;</xsl:text>
 
         <!-- Handle each function parameter -->
-        <xsl:for-each select="frames/frame/elements/element">
+        <xsl:for-each select="/specification/vscp-classes/vscp-class[@id = $vscpClassId]/vscp-types/vscp-type[@id = $vscpTypeId]/frames/frame/elements/element">
 
             <!-- Variable name -->
             <xsl:variable name="varName">
@@ -742,11 +769,11 @@ This transformation script generates the VSCP event modules.
 
         </xsl:for-each>
 
-        <xsl:if test="frames/frame/elements/element">
+        <xsl:if test="/specification/vscp-classes/vscp-class[@id = $vscpClassId]/vscp-types/vscp-type[@id = $vscpTypeId]/frames/frame/elements/element">
             <xsl:text>&LF;</xsl:text>
         </xsl:if>
 
-        <xsl:if test="frames/frame/elements/element">
+        <xsl:if test="/specification/vscp-classes/vscp-class[@id = $vscpClassId]/vscp-types/vscp-type[@id = $vscpTypeId]/frames/frame/elements/element">
             <xsl:text>&TAB;txMsg.dataNum = size;&LF;</xsl:text>
             <xsl:text>&LF;</xsl:text>
         </xsl:if>
@@ -760,12 +787,42 @@ This transformation script generates the VSCP event modules.
         <!-- Generate a function only if at least one frame is defined. -->
         <xsl:choose>
 
-            <xsl:when test="frames/frame">
+            <xsl:when test="frames/frame or frames-ref">
+
+                <xsl:variable name="vscpClassId">
+                    <xsl:choose>
+                        <xsl:when test="frames/frame">
+                            <xsl:value-of select="../../@id" />
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="local:getVscpClassId(frames-ref)" />
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+
+                <xsl:variable name="vscpTypeId">
+                    <xsl:choose>
+                        <xsl:when test="frames/frame">
+                            <xsl:value-of select="@id" />
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="local:getVscpTypeId(frames-ref)" />
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+
                 <xsl:call-template name="ctools.function">
-                    
+
                     <!-- Comment -->
                     <xsl:with-param name="comment">
-                        <xsl:call-template name="funcComment" />
+                        <xsl:call-template name="funcComment">
+                            <xsl:with-param name="vscpClassId">
+                                <xsl:value-of select="$vscpClassId" />
+                            </xsl:with-param>
+                            <xsl:with-param name="vscpTypeId">
+                                <xsl:value-of select="$vscpTypeId" />
+                            </xsl:with-param>
+                        </xsl:call-template>
                     </xsl:with-param>
 
                     <!-- Return type -->
@@ -786,12 +843,20 @@ This transformation script generates the VSCP event modules.
 
                     <!-- Parameter -->
                     <xsl:with-param name="parameter">
-                        <xsl:call-template name="funcParameter" />
+                        <xsl:call-template name="funcParameter">
+                            <xsl:with-param name="vscpClassId">
+                                <xsl:value-of select="$vscpClassId" />
+                            </xsl:with-param>
+                            <xsl:with-param name="vscpTypeId">
+                                <xsl:value-of select="$vscpTypeId" />
+                            </xsl:with-param>
+                        </xsl:call-template>
                     </xsl:with-param>
 
                     <!-- Body -->
                     <xsl:with-param name="body">
                     </xsl:with-param>
+
                 </xsl:call-template>
             </xsl:when>
 
@@ -812,12 +877,42 @@ This transformation script generates the VSCP event modules.
         <!-- Generate a function only if at least one frame is defined. -->
         <xsl:choose>
 
-            <xsl:when test="frames/frame">
+            <xsl:when test="frames/frame or frames-ref">
+
+                <xsl:variable name="vscpClassId">
+                    <xsl:choose>
+                        <xsl:when test="frames/frame">
+                            <xsl:value-of select="../../@id" />
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="local:getVscpClassId(frames-ref)" />
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+
+                <xsl:variable name="vscpTypeId">
+                    <xsl:choose>
+                        <xsl:when test="frames/frame">
+                            <xsl:value-of select="@id" />
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="local:getVscpTypeId(frames-ref)" />
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+
                 <xsl:call-template name="ctools.function">
                     
                     <!-- Comment -->
                     <xsl:with-param name="comment">
-                        <xsl:call-template name="funcComment" />
+                        <xsl:call-template name="funcComment">
+                            <xsl:with-param name="vscpClassId">
+                                <xsl:value-of select="$vscpClassId" />
+                            </xsl:with-param>
+                            <xsl:with-param name="vscpTypeId">
+                                <xsl:value-of select="$vscpTypeId" />
+                            </xsl:with-param>
+                        </xsl:call-template>
                     </xsl:with-param>
 
                     <!-- Return type -->
@@ -838,13 +933,28 @@ This transformation script generates the VSCP event modules.
 
                     <!-- Parameter -->
                     <xsl:with-param name="parameter">
-                        <xsl:call-template name="funcParameter" />
+                        <xsl:call-template name="funcParameter">
+                            <xsl:with-param name="vscpClassId">
+                                <xsl:value-of select="$vscpClassId" />
+                            </xsl:with-param>
+                            <xsl:with-param name="vscpTypeId">
+                                <xsl:value-of select="$vscpTypeId" />
+                            </xsl:with-param>
+                        </xsl:call-template>
                     </xsl:with-param>
 
                     <!-- Body -->
                     <xsl:with-param name="body">
-                        <xsl:call-template name="funcBody" />
+                        <xsl:call-template name="funcBody">
+                            <xsl:with-param name="vscpClassId">
+                                <xsl:value-of select="$vscpClassId" />
+                            </xsl:with-param>
+                            <xsl:with-param name="vscpTypeId">
+                                <xsl:value-of select="$vscpTypeId" />
+                            </xsl:with-param>
+                        </xsl:call-template>
                     </xsl:with-param>
+
                 </xsl:call-template>
             </xsl:when>
 
