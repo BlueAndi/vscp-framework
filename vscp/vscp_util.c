@@ -121,7 +121,7 @@ extern uint8_t  vscp_util_getZoneIndex(uint16_t vscpClass, uint8_t vscpType)
             /*@fallthrough@*/
         case VSCP_CLASS_L1_MEASUREZONE:
             /*@fallthrough@*/
-        case VSCP_CLASS_L1_SET_VALUE_WITH_ZONE:
+        case VSCP_CLASS_L1_SETVALUEZONE:
             /*@fallthrough@*/
         case VSCP_CLASS_L1_WEATHER:
             /*@fallthrough@*/
@@ -183,9 +183,9 @@ extern uint8_t  vscp_util_getZoneIndex(uint16_t vscpClass, uint8_t vscpType)
             /*@fallthrough@*/
         case VSCP_CLASS_L1_DATA:
             /*@fallthrough@*/
-        case VSCP_CLASS_L1_MEASUREMENT_DOUBLE:
+        case VSCP_CLASS_L1_MEASUREMENT64:
             /*@fallthrough@*/
-        case VSCP_CLASS_L1_MEASUREMENT_SINGLE:
+        case VSCP_CLASS_L1_MEASUREMENT32:
             /*@fallthrough@*/
         case VSCP_CLASS_L1_GNSS:
             /*@fallthrough@*/
