@@ -672,7 +672,7 @@ This transformation script generates the VSCP event modules.
                     <xsl:text>&TAB;uint8_t       &TAB;size&TAB;= 0;&LF;</xsl:text>
                 </xsl:if>
                 <xsl:if test="/specification/vscp-classes/vscp-class[@id = $vscpClassId]/vscp-types/vscp-type[@id = $vscpTypeId]/frames/frame/elements/element[@length &gt; 1]">
-                    <xsl:text>&TAB;uint8_t       &TAB;index&TAB;= 0;&LF;</xsl:text>
+                    <xsl:text>&TAB;uint8_t       &TAB;byteIndex&TAB;= 0;&LF;</xsl:text>
                 </xsl:if>
                 <xsl:text>&LF;</xsl:text>
 
@@ -769,17 +769,17 @@ This transformation script generates the VSCP event modules.
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <xsl:value-of select="$indent" />
-                                    <xsl:text>for(index = 0; index &lt; </xsl:text>
+                                    <xsl:text>for(byteIndex = 0; byteIndex &lt; </xsl:text>
                                     <xsl:value-of select="local:hungarianForm(concat(name[@lang='en'], ' size'))" />
-                                    <xsl:text>; ++index)&LF;</xsl:text>
+                                    <xsl:text>; ++byteIndex)&LF;</xsl:text>
                                     <xsl:value-of select="$indent" />
                                     <xsl:text>{&LF;</xsl:text>
                                     <xsl:value-of select="$indent" />
                                     <xsl:text>&TAB;txMsg.data[</xsl:text>
                                     <xsl:value-of select="@pos" />
-                                    <xsl.text> + index] = </xsl.text>
+                                    <xsl.text> + byteIndex] = </xsl.text>
                                     <xsl:value-of select="$varName" />
-                                    <xsl:text>[index];&LF;</xsl:text>
+                                    <xsl:text>[byteIndex];&LF;</xsl:text>
                                     <xsl:value-of select="$indent" />
                                     <xsl:text>&TAB;size += </xsl:text>
                                     <xsl:value-of select="/specification/type-definitions/type-definition[name/text() = 'uint8']/size" />
