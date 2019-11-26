@@ -685,11 +685,11 @@ This transformation script generates the VSCP event modules.
                             <xsl:text>&LF;</xsl:text>
                         </xsl:if>
 
-                        <xsl:text>&TAB;if (NULL == </xsl:text>
+                        <xsl:text>&TAB;if ((NULL == </xsl:text>
                         <xsl:value-of select="local:hungarianForm(name[@lang = 'en'])" />
                         <xsl:text>) || (0 == </xsl:text>
                         <xsl:value-of select="local:hungarianForm(concat(name[@lang = 'en'], ' size'))" />
-                        <xsl:text>)&LF;</xsl:text>
+                        <xsl:text>))&LF;</xsl:text>
                         <xsl:text>&TAB;{&LF;</xsl:text>
                         <xsl:text>&TAB;&TAB;return FALSE;&LF;</xsl:text>
                         <xsl:text>&TAB;}&LF;</xsl:text>
