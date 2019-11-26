@@ -100,7 +100,7 @@ extern "C"
 #define VSCP_CLASS_L1_L2_MULTIMEDIA         (VSCP_CLASS_L1_L2_BASE + 40)
 
 /** VSCP level 1 class over level 2: Alert on LAN */
-#define VSCP_CLASS_L1_L2_ALERT_ON_LAN       (VSCP_CLASS_L1_L2_BASE + 50)
+#define VSCP_CLASS_L1_L2_AOL                (VSCP_CLASS_L1_L2_BASE + 50)
 
 /** VSCP level 1 class over level 2: Double precision floating point measurement */
 #define VSCP_CLASS_L1_L2_MEASUREMENT_DOUBLE (VSCP_CLASS_L1_L2_BASE + 60)
@@ -127,10 +127,10 @@ extern "C"
 #define VSCP_CLASS_L1_L2_DISPLAY             (VSCP_CLASS_L1_L2_BASE + 102)
 
 /** VSCP level 1 class over level 2: IR Remote i/f */
-#define VSCP_CLASS_L1_L2_REMOTE              (VSCP_CLASS_L1_L2_BASE + 110)
+#define VSCP_CLASS_L1_L2_IR                  (VSCP_CLASS_L1_L2_BASE + 110)
 
 /** VSCP level 1 class over level 2: Position (GPS) */
-#define VSCP_CLASS_L1_L2_GPS                 (VSCP_CLASS_L1_L2_BASE + 206)
+#define VSCP_CLASS_L1_L2_GNSS                (VSCP_CLASS_L1_L2_BASE + 206)
 
 /** VSCP level 1 class over level 2: Wireless */
 #define VSCP_CLASS_L1_L2_WIRELESS            (VSCP_CLASS_L1_L2_BASE + 212)

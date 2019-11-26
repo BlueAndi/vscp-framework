@@ -117,7 +117,7 @@ extern uint8_t  vscp_util_getZoneIndex(uint16_t vscpClass, uint8_t vscpType)
             /*@fallthrough@*/
         case VSCP_CLASS_L1_SECURITY:
             /*@fallthrough@*/
-        case VSCP_CLASS_L1_ALERT_ON_LAN:
+        case VSCP_CLASS_L1_AOL:
             /*@fallthrough@*/
         case VSCP_CLASS_L1_MEASUREZONE:
             /*@fallthrough@*/
@@ -170,7 +170,7 @@ extern uint8_t  vscp_util_getZoneIndex(uint16_t vscpClass, uint8_t vscpType)
             }
             break;
 
-        case VSCP_CLASS_L1_REMOTE:
+        case VSCP_CLASS_L1_IR:
             if ((VSCP_TYPE_REMOTE_VSCP_ABSTRACT == vscpType) ||
                 (VSCP_TYPE_REMOTE_MAPITO == vscpType))
             {
@@ -187,7 +187,7 @@ extern uint8_t  vscp_util_getZoneIndex(uint16_t vscpClass, uint8_t vscpType)
             /*@fallthrough@*/
         case VSCP_CLASS_L1_MEASUREMENT_SINGLE:
             /*@fallthrough@*/
-        case VSCP_CLASS_L1_GPS:
+        case VSCP_CLASS_L1_GNSS:
             /*@fallthrough@*/
         case VSCP_CLASS_L1_WIRELESS:
             /*@fallthrough@*/
