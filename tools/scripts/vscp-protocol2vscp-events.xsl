@@ -781,41 +781,99 @@ This transformation script generates the VSCP event modules.
         <xsl:text>&TAB;return vscp_core_sendEvent(&amp;txMsg);&LF;</xsl:text>
     </xsl:template>
 
+    <!-- Output header -->
+    <xsl:template name="header">
+        <xsl:param name="vscpClassId" />
+        <xsl:param name="vscpTypeId" />
+
+        <xsl:call-template name="ctools.function">
+
+            <!-- Comment -->
+            <xsl:with-param name="comment">
+                <xsl:call-template name="funcComment">
+                    <xsl:with-param name="vscpClassId">
+                        <xsl:value-of select="$vscpClassId" />
+                    </xsl:with-param>
+                    <xsl:with-param name="vscpTypeId">
+                        <xsl:value-of select="$vscpTypeId" />
+                    </xsl:with-param>
+                </xsl:call-template>
+            </xsl:with-param>
+
+            <!-- Return type -->
+            <xsl:with-param name="returnType">
+                <xsl:text>extern BOOL</xsl:text>
+            </xsl:with-param>
+
+            <!-- Module name -->
+            <xsl:with-param name="moduleName">
+                <xsl:text>vscp_evt_protocol</xsl:text>
+            </xsl:with-param>
+            
+            <!-- Name -->
+            <xsl:with-param name="name">
+                <xsl:text>send </xsl:text>
+                <xsl:value-of select="local:normalize(name[@lang='en'])" />
+            </xsl:with-param>
+
+            <!-- Parameter -->
+            <xsl:with-param name="parameter">
+                <xsl:call-template name="funcParameter">
+                    <xsl:with-param name="vscpClassId">
+                        <xsl:value-of select="$vscpClassId" />
+                    </xsl:with-param>
+                    <xsl:with-param name="vscpTypeId">
+                        <xsl:value-of select="$vscpTypeId" />
+                    </xsl:with-param>
+                </xsl:call-template>
+            </xsl:with-param>
+
+            <!-- Body -->
+            <xsl:with-param name="body">
+            </xsl:with-param>
+
+        </xsl:call-template>
+    </xsl:template>
+
     <!-- Create function prototype for vscp-type  -->
     <xsl:template match="vscp-type" mode="h">
 
         <!-- Generate a function only if at least one frame is defined. -->
         <xsl:choose>
 
-            <xsl:when test="frames/frame or frames-ref">
+            <xsl:when test="(frames/frame) and (count(frames/frame) = 1)">
+
+                <xsl:call-template name="header">
+                    <xsl:with-param name="vscpClassId">
+                        <xsl:value-of select="../../@id" />
+                    </xsl:with-param>
+                    <xsl:with-param name="vscpTypeId">
+                        <xsl:value-of select="@id" />
+                    </xsl:with-param>
+                </xsl:call-template>
+
+            </xsl:when>
+
+            <xsl:when test="count(frames/frame) &gt; 1">
+                <xsl:text>/* "</xsl:text>
+                <xsl:value-of select="name[@lang='en']" />
+                <xsl:text>" not supported, because of multi frame. */&LF;</xsl:text>
+            </xsl:when>
+            
+            <xsl:when test="frames-ref">
 
                 <xsl:variable name="vscpClassId">
-                    <xsl:choose>
-                        <xsl:when test="frames/frame">
-                            <xsl:value-of select="../../@id" />
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="local:getVscpClassId(frames-ref)" />
-                        </xsl:otherwise>
-                    </xsl:choose>
+                    <xsl:value-of select="local:getVscpClassId(frames-ref)" />
                 </xsl:variable>
 
                 <xsl:variable name="vscpTypeId">
-                    <xsl:choose>
-                        <xsl:when test="frames/frame">
-                            <xsl:value-of select="@id" />
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="local:getVscpTypeId(frames-ref)" />
-                        </xsl:otherwise>
-                    </xsl:choose>
+                    <xsl:value-of select="local:getVscpTypeId(frames-ref)" />
                 </xsl:variable>
 
-                <xsl:call-template name="ctools.function">
-
-                    <!-- Comment -->
-                    <xsl:with-param name="comment">
-                        <xsl:call-template name="funcComment">
+                <xsl:choose>
+                    <!-- Single frame -->
+                    <xsl:when test="count(/specification/vscp-classes/vscp-class[@id = $vscpClassId]/vscp-types/vscp-type[@id = $vscpTypeId]/frames/frame) = 1">
+                        <xsl:call-template name="header">
                             <xsl:with-param name="vscpClassId">
                                 <xsl:value-of select="$vscpClassId" />
                             </xsl:with-param>
@@ -823,52 +881,89 @@ This transformation script generates the VSCP event modules.
                                 <xsl:value-of select="$vscpTypeId" />
                             </xsl:with-param>
                         </xsl:call-template>
-                    </xsl:with-param>
+                    </xsl:when>
 
-                    <!-- Return type -->
-                    <xsl:with-param name="returnType">
-                        <xsl:text>extern BOOL</xsl:text>
-                    </xsl:with-param>
+                    <!-- Multi frame -->
+                    <xsl:otherwise>
+                        <xsl:text>/* "</xsl:text>
+                        <xsl:value-of select="name[@lang='en']" />
+                        <xsl:text>" not supported, because of multi frame. */&LF;</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
 
-                    <!-- Module name -->
-                    <xsl:with-param name="moduleName">
-                        <xsl:text>vscp_evt_protocol</xsl:text>
-                    </xsl:with-param>
-                    
-                    <!-- Name -->
-                    <xsl:with-param name="name">
-                        <xsl:text>send </xsl:text>
-                        <xsl:value-of select="local:normalize(name[@lang='en'])" />
-                    </xsl:with-param>
-
-                    <!-- Parameter -->
-                    <xsl:with-param name="parameter">
-                        <xsl:call-template name="funcParameter">
-                            <xsl:with-param name="vscpClassId">
-                                <xsl:value-of select="$vscpClassId" />
-                            </xsl:with-param>
-                            <xsl:with-param name="vscpTypeId">
-                                <xsl:value-of select="$vscpTypeId" />
-                            </xsl:with-param>
-                        </xsl:call-template>
-                    </xsl:with-param>
-
-                    <!-- Body -->
-                    <xsl:with-param name="body">
-                    </xsl:with-param>
-
-                </xsl:call-template>
             </xsl:when>
 
             <xsl:otherwise>
-                <xsl:text>/* </xsl:text>
+                <xsl:text>/* "</xsl:text>
                 <xsl:value-of select="name[@lang='en']" />
-                <xsl:text> not supported. No frame defined. */&LF;</xsl:text>
+                <xsl:text>" not supported. No frame defined. */&LF;</xsl:text>
             </xsl:otherwise>
 
         </xsl:choose>
 
         <xsl:text>&LF;</xsl:text>
+    </xsl:template>
+
+    <!-- Output source -->
+    <xsl:template name="source">
+        <xsl:param name="vscpClassId" />
+        <xsl:param name="vscpTypeId" />
+
+        <xsl:call-template name="ctools.function">
+            
+            <!-- Comment -->
+            <xsl:with-param name="comment">
+                <xsl:call-template name="funcComment">
+                    <xsl:with-param name="vscpClassId">
+                        <xsl:value-of select="$vscpClassId" />
+                    </xsl:with-param>
+                    <xsl:with-param name="vscpTypeId">
+                        <xsl:value-of select="$vscpTypeId" />
+                    </xsl:with-param>
+                </xsl:call-template>
+            </xsl:with-param>
+
+            <!-- Return type -->
+            <xsl:with-param name="returnType">
+                <xsl:text>extern BOOL</xsl:text>
+            </xsl:with-param>
+
+            <!-- Module name -->
+            <xsl:with-param name="moduleName">
+                <xsl:text>vscp_evt_protocol</xsl:text>
+            </xsl:with-param>
+            
+            <!-- Name -->
+            <xsl:with-param name="name">
+                <xsl:text>send </xsl:text>
+                <xsl:value-of select="local:normalize(name[@lang='en'])" />
+            </xsl:with-param>
+
+            <!-- Parameter -->
+            <xsl:with-param name="parameter">
+                <xsl:call-template name="funcParameter">
+                    <xsl:with-param name="vscpClassId">
+                        <xsl:value-of select="$vscpClassId" />
+                    </xsl:with-param>
+                    <xsl:with-param name="vscpTypeId">
+                        <xsl:value-of select="$vscpTypeId" />
+                    </xsl:with-param>
+                </xsl:call-template>
+            </xsl:with-param>
+
+            <!-- Body -->
+            <xsl:with-param name="body">
+                <xsl:call-template name="funcBody">
+                    <xsl:with-param name="vscpClassId">
+                        <xsl:value-of select="$vscpClassId" />
+                    </xsl:with-param>
+                    <xsl:with-param name="vscpTypeId">
+                        <xsl:value-of select="$vscpTypeId" />
+                    </xsl:with-param>
+                </xsl:call-template>
+            </xsl:with-param>
+
+        </xsl:call-template>
     </xsl:template>
 
     <!-- Create function for vscp-type  -->
@@ -877,35 +972,39 @@ This transformation script generates the VSCP event modules.
         <!-- Generate a function only if at least one frame is defined. -->
         <xsl:choose>
 
-            <xsl:when test="frames/frame or frames-ref">
+            <xsl:when test="(frames/frame) and (count(frames/frame) = 1)">
+
+                <xsl:call-template name="source">
+                    <xsl:with-param name="vscpClassId">
+                        <xsl:value-of select="../../@id" />
+                    </xsl:with-param>
+                    <xsl:with-param name="vscpTypeId">
+                        <xsl:value-of select="@id" />
+                    </xsl:with-param>
+                </xsl:call-template>
+
+            </xsl:when>
+            
+            <xsl:when test="count(frames/frame) &gt; 1">
+                <xsl:text>/* "</xsl:text>
+                <xsl:value-of select="name[@lang='en']" />
+                <xsl:text>" not supported, because of multi frame. */&LF;</xsl:text>
+            </xsl:when>
+
+            <xsl:when test="frames-ref">
 
                 <xsl:variable name="vscpClassId">
-                    <xsl:choose>
-                        <xsl:when test="frames/frame">
-                            <xsl:value-of select="../../@id" />
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="local:getVscpClassId(frames-ref)" />
-                        </xsl:otherwise>
-                    </xsl:choose>
+                    <xsl:value-of select="local:getVscpClassId(frames-ref)" />
                 </xsl:variable>
 
                 <xsl:variable name="vscpTypeId">
-                    <xsl:choose>
-                        <xsl:when test="frames/frame">
-                            <xsl:value-of select="@id" />
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="local:getVscpTypeId(frames-ref)" />
-                        </xsl:otherwise>
-                    </xsl:choose>
+                    <xsl:value-of select="local:getVscpTypeId(frames-ref)" />
                 </xsl:variable>
 
-                <xsl:call-template name="ctools.function">
-                    
-                    <!-- Comment -->
-                    <xsl:with-param name="comment">
-                        <xsl:call-template name="funcComment">
+                <xsl:choose>
+                    <!-- Single frame -->
+                    <xsl:when test="count(/specification/vscp-classes/vscp-class[@id = $vscpClassId]/vscp-types/vscp-type[@id = $vscpTypeId]/frames/frame) = 1">
+                        <xsl:call-template name="source">
                             <xsl:with-param name="vscpClassId">
                                 <xsl:value-of select="$vscpClassId" />
                             </xsl:with-param>
@@ -913,55 +1012,22 @@ This transformation script generates the VSCP event modules.
                                 <xsl:value-of select="$vscpTypeId" />
                             </xsl:with-param>
                         </xsl:call-template>
-                    </xsl:with-param>
+                    </xsl:when>
 
-                    <!-- Return type -->
-                    <xsl:with-param name="returnType">
-                        <xsl:text>extern BOOL</xsl:text>
-                    </xsl:with-param>
+                    <!-- Multi frame -->
+                    <xsl:otherwise>
+                        <xsl:text>/* "</xsl:text>
+                        <xsl:value-of select="name[@lang='en']" />
+                        <xsl:text>" not supported, because of multi frame. */&LF;</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
 
-                    <!-- Module name -->
-                    <xsl:with-param name="moduleName">
-                        <xsl:text>vscp_evt_protocol</xsl:text>
-                    </xsl:with-param>
-                    
-                    <!-- Name -->
-                    <xsl:with-param name="name">
-                        <xsl:text>send </xsl:text>
-                        <xsl:value-of select="local:normalize(name[@lang='en'])" />
-                    </xsl:with-param>
-
-                    <!-- Parameter -->
-                    <xsl:with-param name="parameter">
-                        <xsl:call-template name="funcParameter">
-                            <xsl:with-param name="vscpClassId">
-                                <xsl:value-of select="$vscpClassId" />
-                            </xsl:with-param>
-                            <xsl:with-param name="vscpTypeId">
-                                <xsl:value-of select="$vscpTypeId" />
-                            </xsl:with-param>
-                        </xsl:call-template>
-                    </xsl:with-param>
-
-                    <!-- Body -->
-                    <xsl:with-param name="body">
-                        <xsl:call-template name="funcBody">
-                            <xsl:with-param name="vscpClassId">
-                                <xsl:value-of select="$vscpClassId" />
-                            </xsl:with-param>
-                            <xsl:with-param name="vscpTypeId">
-                                <xsl:value-of select="$vscpTypeId" />
-                            </xsl:with-param>
-                        </xsl:call-template>
-                    </xsl:with-param>
-
-                </xsl:call-template>
             </xsl:when>
 
             <xsl:otherwise>
-                <xsl:text>/* </xsl:text>
+                <xsl:text>/* "</xsl:text>
                 <xsl:value-of select="name[@lang='en']" />
-                <xsl:text> not supported. No frame defined. */&LF;</xsl:text>
+                <xsl:text>" not supported. No frame defined. */&LF;</xsl:text>
             </xsl:otherwise>
 
         </xsl:choose>
