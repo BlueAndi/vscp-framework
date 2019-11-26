@@ -2645,7 +2645,6 @@ Notes:
                     <name lang="en">Reserved</name>
                     <token>VSCP_TYPE_MEASUREMENT_RESERVED46</token>
                     <description lang="en">Reserved (previously was doublet of Type= 26, don't use any longer!)</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="47">
                     <name lang="en">Dose equivalent</name>
@@ -2657,7 +2656,6 @@ Notes:
                     <name lang="en">Reserved</name>
                     <token>VSCP_TYPE_MEASUREMENT_RESERVED48</token>
                     <description lang="en">Reserved (was doublet of Type= 24, do not use any longer!)</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="49">
                     <name lang="en">Dew Point</name>
@@ -6696,7 +6694,6 @@ Notes:
                     <name lang="en">Reserved</name>
                     <token>VSCP_TYPE_MEASUREMENT64_RESERVED46</token>
                     <description lang="en">Reserved (previously was doublet of Type= 26, don't use any longer!)</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="47">
                     <name lang="en">Dose equivalent</name>
@@ -6708,7 +6705,6 @@ Notes:
                     <name lang="en">Reserved</name>
                     <token>VSCP_TYPE_MEASUREMENT64_RESERVED48</token>
                     <description lang="en">Reserved (was doublet of Type= 24, do not use any longer!)</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="49">
                     <name lang="en">Dew Point</name>
@@ -7125,7 +7121,6 @@ Notes:
                     <name lang="en">Reserved</name>
                     <token>VSCP_TYPE_MEASUREZONE_RESERVED46</token>
                     <description lang="en">Reserved (previously was doublet of Type= 26, don't use any longer!)</description>
-                    <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="47">
                     <name lang="en">Dose equivalent</name>
@@ -7137,7 +7132,6 @@ Notes:
                     <name lang="en">Reserved</name>
                     <token>VSCP_TYPE_MEASUREZONE_RESERVED48</token>
                     <description lang="en">Reserved (was doublet of Type= 24, do not use any longer!)</description>
-                    <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="49">
                     <name lang="en">Dew Point</name>
@@ -7503,7 +7497,6 @@ Notes:
                     <name lang="en">Reserved</name>
                     <token>VSCP_TYPE_MEASUREMENT32_RESERVED46</token>
                     <description lang="en">Reserved (previously was doublet of Type= 26, don't use any longer!)</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="47">
                     <name lang="en">Dose equivalent</name>
@@ -7515,7 +7508,6 @@ Notes:
                     <name lang="en">Reserved</name>
                     <token>VSCP_TYPE_MEASUREMENT32_RESERVED48</token>
                     <description lang="en">Reserved (was doublet of Type= 24, do not use any longer!)</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="49">
                     <name lang="en">Dew Point</name>
@@ -7881,7 +7873,6 @@ Notes:
                     <name lang="en">Reserved</name>
                     <token>VSCP_TYPE_SETVALUEZONE_RESERVED46</token>
                     <description lang="en">Reserved (previously was doublet of Type= 26, don't use any longer!)</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="47">
                     <name lang="en">Dose equivalent</name>
@@ -7893,7 +7884,6 @@ Notes:
                     <name lang="en">Reserved</name>
                     <token>VSCP_TYPE_SETVALUEZONE_RESERVED48</token>
                     <description lang="en">Reserved (was doublet of Type= 24, do not use any longer!)</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="49">
                     <name lang="en">Dew Point</name>
