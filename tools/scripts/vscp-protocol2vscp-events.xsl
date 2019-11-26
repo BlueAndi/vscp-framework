@@ -355,7 +355,11 @@ This transformation script generates the VSCP event modules.
                 </xsl:with-param>
             </xsl:call-template>
             <xsl:text>&LF;</xsl:text>
-            <xsl:apply-templates select="vscp-types/vscp-type[token]" mode="h"/>
+            <xsl:apply-templates select="vscp-types/vscp-type[token]" mode="h">
+                <xsl:with-param name="baseName">
+                    <xsl:value-of select="$baseName" />
+                </xsl:with-param>
+            </xsl:apply-templates>
 
             <!-- Footer -->
             <xsl:call-template name="ctools.hFooterBlock">
@@ -475,7 +479,11 @@ This transformation script generates the VSCP event modules.
                 </xsl:with-param>
             </xsl:call-template>
             <xsl:text>&LF;</xsl:text>
-            <xsl:apply-templates select="vscp-types/vscp-type[token]" mode="c" />
+            <xsl:apply-templates select="vscp-types/vscp-type[token]" mode="c">
+                <xsl:with-param name="baseName">
+                    <xsl:value-of select="$baseName" />
+                </xsl:with-param>
+            </xsl:apply-templates>
 
             <!-- Footer -->
             <xsl:call-template name="ctools.cFooterBlock">
@@ -889,6 +897,7 @@ This transformation script generates the VSCP event modules.
 
     <!-- Output function declaration -->
     <xsl:template name="funcDeclaration">
+        <xsl:param name="baseName" />
         <xsl:param name="vscpClassId" />
         <xsl:param name="vscpTypeId" />
 
@@ -913,7 +922,8 @@ This transformation script generates the VSCP event modules.
 
             <!-- Module name -->
             <xsl:with-param name="moduleName">
-                <xsl:text>vscp_evt_protocol</xsl:text>
+                <xsl:text>vscp_evt_</xsl:text>
+                <xsl:value-of select="$baseName" />
             </xsl:with-param>
             
             <!-- Name -->
@@ -943,6 +953,7 @@ This transformation script generates the VSCP event modules.
 
     <!-- Create function prototype for vscp-type  -->
     <xsl:template match="vscp-type" mode="h">
+        <xsl:param name="baseName" />
 
         <!-- Generate a function only if at least one frame is defined. -->
         <xsl:choose>
@@ -951,6 +962,9 @@ This transformation script generates the VSCP event modules.
             <xsl:when test="count(frames/frame) = 1">
 
                 <xsl:call-template name="funcDeclaration">
+                    <xsl:with-param name="baseName">
+                        <xsl:value-of select="$baseName" />
+                    </xsl:with-param>
                     <xsl:with-param name="vscpClassId">
                         <xsl:value-of select="../../@id" />
                     </xsl:with-param>
@@ -983,6 +997,9 @@ This transformation script generates the VSCP event modules.
                     <!-- Single frame -->
                     <xsl:when test="count(/specification/vscp-classes/vscp-class[@id = $vscpClassId]/vscp-types/vscp-type[@id = $vscpTypeId]/frames/frame) = 1">
                         <xsl:call-template name="funcDeclaration">
+                            <xsl:with-param name="baseName">
+                                <xsl:value-of select="$baseName" />
+                            </xsl:with-param>
                             <xsl:with-param name="vscpClassId">
                                 <xsl:value-of select="$vscpClassId" />
                             </xsl:with-param>
@@ -1015,6 +1032,7 @@ This transformation script generates the VSCP event modules.
 
     <!-- Output function definition -->
     <xsl:template name="funcDefinition">
+        <xsl:param name="baseName" />
         <xsl:param name="vscpClassId" />
         <xsl:param name="vscpTypeId" />
 
@@ -1039,7 +1057,8 @@ This transformation script generates the VSCP event modules.
 
             <!-- Module name -->
             <xsl:with-param name="moduleName">
-                <xsl:text>vscp_evt_protocol</xsl:text>
+                <xsl:text>vscp_evt_</xsl:text>
+                <xsl:value-of select="$baseName" />
             </xsl:with-param>
             
             <!-- Name -->
@@ -1077,6 +1096,7 @@ This transformation script generates the VSCP event modules.
 
     <!-- Create function for vscp-type  -->
     <xsl:template match="vscp-type" mode="c">
+        <xsl:param name="baseName" />
 
         <!-- Generate a function only if at least one frame is defined. -->
         <xsl:choose>
@@ -1085,6 +1105,9 @@ This transformation script generates the VSCP event modules.
             <xsl:when test="count(frames/frame) = 1">
 
                 <xsl:call-template name="funcDefinition">
+                    <xsl:with-param name="baseName">
+                        <xsl:value-of select="$baseName" />
+                    </xsl:with-param>
                     <xsl:with-param name="vscpClassId">
                         <xsl:value-of select="../../@id" />
                     </xsl:with-param>
@@ -1117,6 +1140,9 @@ This transformation script generates the VSCP event modules.
                     <!-- Single frame -->
                     <xsl:when test="count(/specification/vscp-classes/vscp-class[@id = $vscpClassId]/vscp-types/vscp-type[@id = $vscpTypeId]/frames/frame) = 1">
                         <xsl:call-template name="funcDefinition">
+                            <xsl:with-param name="baseName">
+                                <xsl:value-of select="$baseName" />
+                            </xsl:with-param>
                             <xsl:with-param name="vscpClassId">
                                 <xsl:value-of select="$vscpClassId" />
                             </xsl:with-param>
