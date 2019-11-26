@@ -237,4 +237,4 @@ extern BOOL vscp_evt_diagnostic_sendGeneralEvent(void);
 
 /* "External IC failure" not supported. No frame defined. */
 
-#endif	/* __VSCP_EVT_DIAGNOSTIC_H__ */
+#endif  /* __VSCP_EVT_DIAGNOSTIC_H__ */

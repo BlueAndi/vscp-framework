@@ -146,4 +146,4 @@ extern BOOL vscp_evt_data_sendSignalLevel(uint8_t dataCoding, uint8_t const * co
  */
 extern BOOL vscp_evt_data_sendSignalQuality(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize);
 
-#endif	/* __VSCP_EVT_DATA_H__ */
+#endif  /* __VSCP_EVT_DATA_H__ */

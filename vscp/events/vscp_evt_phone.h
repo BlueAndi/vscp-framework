@@ -95,4 +95,4 @@ extern BOOL vscp_evt_phone_sendGeneralEvent(void);
 
 /* "Database Info" not supported. No frame defined. */
 
-#endif	/* __VSCP_EVT_PHONE_H__ */
+#endif  /* __VSCP_EVT_PHONE_H__ */

@@ -282,4 +282,4 @@ extern BOOL vscp_evt_control_sendSetSecurityToken(uint8_t data0, uint8_t zone, u
  */
 extern BOOL vscp_evt_control_sendRequestNewSecurityToken(uint8_t data0, uint8_t zone, uint8_t subZone);
 
-#endif	/* __VSCP_EVT_CONTROL_H__ */
+#endif  /* __VSCP_EVT_CONTROL_H__ */

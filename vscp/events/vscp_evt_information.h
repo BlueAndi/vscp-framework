@@ -996,4 +996,4 @@ extern BOOL vscp_evt_information_sendFalling(uint8_t index, uint8_t zone, uint8_
  */
 extern BOOL vscp_evt_information_sendUpdated(uint8_t index, uint8_t zone, uint8_t subZone);
 
-#endif	/* __VSCP_EVT_INFORMATION_H__ */
+#endif  /* __VSCP_EVT_INFORMATION_H__ */

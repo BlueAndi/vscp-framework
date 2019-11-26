@@ -528,4 +528,4 @@ extern BOOL vscp_evt_multimedia_sendMultimediaControl(uint8_t data0, uint8_t zon
 
 /* "Multimedia Control response" not supported. No frame defined. */
 
-#endif	/* __VSCP_EVT_MULTIMEDIA_H__ */
+#endif  /* __VSCP_EVT_MULTIMEDIA_H__ */

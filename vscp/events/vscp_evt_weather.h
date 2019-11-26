@@ -183,4 +183,4 @@ extern BOOL vscp_evt_weather_sendGeneralEvent(void);
 
 /* "UV Index" not supported. No frame defined. */
 
-#endif	/* __VSCP_EVT_WEATHER_H__ */
+#endif  /* __VSCP_EVT_WEATHER_H__ */

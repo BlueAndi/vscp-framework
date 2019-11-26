@@ -87,4 +87,4 @@ extern BOOL vscp_evt_log_sendGeneralEvent(void);
 
 /* "Log Level" not supported. No frame defined. */
 
-#endif	/* __VSCP_EVT_LOG_H__ */
+#endif  /* __VSCP_EVT_LOG_H__ */

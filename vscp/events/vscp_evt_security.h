@@ -442,4 +442,4 @@ extern BOOL vscp_evt_security_sendPasswordWarning(uint8_t data0, uint8_t zone, u
  */
 extern BOOL vscp_evt_security_sendPasswordError(uint8_t data0, uint8_t zone, uint8_t subZone);
 
-#endif	/* __VSCP_EVT_SECURITY_H__ */
+#endif  /* __VSCP_EVT_SECURITY_H__ */

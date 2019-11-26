@@ -97,4 +97,4 @@ extern BOOL vscp_evt_display_sendGeneralEvent(void);
 
 /* "Set RGB Color" not supported. No frame defined. */
 
-#endif	/* __VSCP_EVT_DISPLAY_H__ */
+#endif  /* __VSCP_EVT_DISPLAY_H__ */

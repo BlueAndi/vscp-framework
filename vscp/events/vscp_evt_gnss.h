@@ -84,4 +84,4 @@ extern BOOL vscp_evt_gnss_sendGeneralEvent(void);
 
 /* "Satellites" not supported. No frame defined. */
 
-#endif	/* __VSCP_EVT_GNSS_H__ */
+#endif  /* __VSCP_EVT_GNSS_H__ */

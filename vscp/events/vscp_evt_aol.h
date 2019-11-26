@@ -112,4 +112,4 @@ extern BOOL vscp_evt_aol_sendGeneralEvent(void);
 
 /* "Update Perform other diagnostic procedures" not supported. No frame defined. */
 
-#endif	/* __VSCP_EVT_AOL_H__ */
+#endif  /* __VSCP_EVT_AOL_H__ */

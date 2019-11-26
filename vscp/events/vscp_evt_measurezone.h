@@ -840,4 +840,4 @@ extern BOOL vscp_evt_measurezone_sendSoundEnergyDensity(uint8_t index, uint8_t z
  */
 extern BOOL vscp_evt_measurezone_sendSoundLevel(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp);
 
-#endif	/* __VSCP_EVT_MEASUREZONE_H__ */
+#endif  /* __VSCP_EVT_MEASUREZONE_H__ */

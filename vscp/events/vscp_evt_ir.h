@@ -89,4 +89,4 @@ extern BOOL vscp_evt_ir_sendGeneralEvent(void);
 
 /* "MAPito Remote Format" not supported. No frame defined. */
 
-#endif	/* __VSCP_EVT_IR_H__ */
+#endif  /* __VSCP_EVT_IR_H__ */

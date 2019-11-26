@@ -713,4 +713,4 @@ extern BOOL vscp_evt_setvaluezone_sendSoundEnergyDensity(uint8_t dataCoding, uin
  */
 extern BOOL vscp_evt_setvaluezone_sendSoundLevel(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize);
 
-#endif	/* __VSCP_EVT_SETVALUEZONE_H__ */
+#endif  /* __VSCP_EVT_SETVALUEZONE_H__ */

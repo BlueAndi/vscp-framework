@@ -508,4 +508,4 @@ extern BOOL vscp_evt_protocol_sendBlockDataTransferAck(void);
  */
 extern BOOL vscp_evt_protocol_sendBlockDataTransferNack(void);
 
-#endif	/* __VSCP_EVT_PROTOCOL_H__ */
+#endif  /* __VSCP_EVT_PROTOCOL_H__ */

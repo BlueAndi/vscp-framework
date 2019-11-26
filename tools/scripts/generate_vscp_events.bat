@@ -20,7 +20,11 @@ echo Convert line endings ...
 
 rem Convert tabs to spaces
 echo Convert tabs to spaces ...
-for /f "delims=" %%a in ('dir /b /a-d "*.h *.c"') do (
+for /f "delims=" %%a in ('dir /b /a-d "*.h"') do (
+    %EXPAND% -t 4 %%a > temp.tmp
+    type temp.tmp > %%a
+)
+for /f "delims=" %%a in ('dir /b /a-d "*.c"') do (
     %EXPAND% -t 4 %%a > temp.tmp
     type temp.tmp > %%a
 )

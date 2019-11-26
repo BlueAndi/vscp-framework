@@ -713,4 +713,4 @@ extern BOOL vscp_evt_measurement64_sendSoundEnergyDensity(uint8_t dataCoding, ui
  */
 extern BOOL vscp_evt_measurement64_sendSoundLevel(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize);
 
-#endif	/* __VSCP_EVT_MEASUREMENT64_H__ */
+#endif  /* __VSCP_EVT_MEASUREMENT64_H__ */

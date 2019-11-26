@@ -81,4 +81,4 @@ extern BOOL vscp_evt_wireless_sendGeneralEvent(void);
 
 /* "GSM Cell" not supported. No frame defined. */
 
-#endif	/* __VSCP_EVT_WIRELESS_H__ */
+#endif  /* __VSCP_EVT_WIRELESS_H__ */

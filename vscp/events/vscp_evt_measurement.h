@@ -781,4 +781,4 @@ extern BOOL vscp_evt_measurement_sendSoundEnergyDensity(uint8_t index, uint8_t u
  */
 extern BOOL vscp_evt_measurement_sendSoundLevel(uint8_t index, uint8_t unit, int32_t data, int8_t exp);
 
-#endif	/* __VSCP_EVT_MEASUREMENT_H__ */
+#endif  /* __VSCP_EVT_MEASUREMENT_H__ */

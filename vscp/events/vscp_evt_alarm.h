@@ -212,4 +212,4 @@ extern BOOL vscp_evt_alarm_sendDisarm(uint8_t onOff, uint8_t zone, uint8_t subZo
  */
 extern BOOL vscp_evt_alarm_sendWatchdog(uint8_t index, uint8_t zone, uint8_t subZone);
 
-#endif	/* __VSCP_EVT_ALARM_H__ */
+#endif  /* __VSCP_EVT_ALARM_H__ */
