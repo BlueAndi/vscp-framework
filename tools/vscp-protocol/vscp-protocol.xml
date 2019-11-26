@@ -3835,7 +3835,7 @@ Notes:
                                     <name lang="en">Class</name>
                                     <description lang="en">Class.</description>
                                 </element>
-                                <element pos="5" type="uint16" length="4" optional="false">
+                                <element pos="5" type="uint16" length="1" optional="false">
                                     <name lang="en">Type</name>
                                     <description lang="en">Type.</description>
                                 </element>
@@ -4065,8 +4065,8 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">0</name>
-                                    <description lang="en">Must be 0.</description>
+                                    <name lang="en">User</name>
+                                    <description lang="en">User specified.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
                                     <name lang="en">Zone</name>
