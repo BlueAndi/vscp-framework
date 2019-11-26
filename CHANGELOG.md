@@ -1,4 +1,4 @@
-## 0.10.0 (not released yet)
+## 1.0.0 (not released yet)
 
   - VSCP framework
     - Bugfixes:
@@ -14,6 +14,8 @@
       - With VSCP_CONFIG_START_NODE_PROBE_NICKNAME you define where to start with the nickname probing. Thanks troky!
       - All VSCP type headers are generated now from vscp-protocol.xml and some of the types changed in its
         name. Please update your sources accordingly!
+      - All VSCP event abstraction modules are generated now from vscp-protocol.xml. Their file names changed to vscp_evt_...
+        Please update your sources accordingly!
 
 ## 0.9.0
 
