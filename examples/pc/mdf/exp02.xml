@@ -32,7 +32,7 @@ This module description file (MDF) is for the VSCP framework example PC.
 ********************************************************************************
 -->
 
-<vscp xmlns="http://www.blue-andi.de/vscp/xml-schema/mdf/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blue-andi.de/vscp/xml-schema/mdf/1.0 vscp-mdf-schema.xsd ">
+<vscp xmlns="http://www.blue-andi.de/vscp/xml-schema/mdf/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blue-andi.de/vscp/xml-schema/mdf/1.0 http://www.blue-andi.de/vscp/xml-schema/mdf/1.0/vscp-mdf-schema.xsd ">
 
     <module>
 
