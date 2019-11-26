@@ -87,35 +87,483 @@ extern BOOL vscp_evt_aol_sendGeneralEvent(void)
     return vscp_core_sendEvent(&txMsg);
 }
 
-/* "System unplugged from power source" not supported. No frame defined. */
+/**
+ * System unplugged from power source
+ * 
+ * @param[in] index Index for record.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_aol_sendSystemUnpluggedFromPowerSource(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
 
-/* "System unplugged from network" not supported. No frame defined. */
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_AOL, VSCP_TYPE_AOL_UNPLUGGED_POWER, VSCP_PRIORITY_3_NORMAL);
 
-/* "Chassis intrusion" not supported. No frame defined. */
+    txMsg.data[0] = index;
+    size += 1;
 
-/* "Processor removal" not supported. No frame defined. */
+    txMsg.data[1] = zone;
+    size += 1;
 
-/* "System environmental errors" not supported. No frame defined. */
+    txMsg.data[2] = subZone;
+    size += 1;
 
-/* "High temperature" not supported. No frame defined. */
+    txMsg.dataNum = size;
 
-/* "Fan speed problem" not supported. No frame defined. */
+    return vscp_core_sendEvent(&txMsg);
+}
 
-/* "Voltage fluctuations" not supported. No frame defined. */
+/**
+ * System unplugged from power source
+ * 
+ * @param[in] index Index for record.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_aol_sendSystemUnpluggedFromNetwork(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
 
-/* "Operating system errors" not supported. No frame defined. */
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_AOL, VSCP_TYPE_AOL_UNPLUGGED_LAN, VSCP_PRIORITY_3_NORMAL);
 
-/* "System power-on error" not supported. No frame defined. */
+    txMsg.data[0] = index;
+    size += 1;
 
-/* "System is hung" not supported. No frame defined. */
+    txMsg.data[1] = zone;
+    size += 1;
 
-/* "Component failure" not supported. No frame defined. */
+    txMsg.data[2] = subZone;
+    size += 1;
 
-/* "Remote system reboot upon report of a critical failure" not supported. No frame defined. */
+    txMsg.dataNum = size;
 
-/* "Repair Operating System" not supported. No frame defined. */
+    return vscp_core_sendEvent(&txMsg);
+}
 
-/* "Update BIOS image" not supported. No frame defined. */
+/**
+ * System unplugged from power source
+ * 
+ * @param[in] index Index for record.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_aol_sendChassisIntrusion(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
 
-/* "Update Perform other diagnostic procedures" not supported. No frame defined. */
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_AOL, VSCP_TYPE_AOL_CHASSIS_INTRUSION, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * System unplugged from power source
+ * 
+ * @param[in] index Index for record.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_aol_sendProcessorRemoval(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_AOL, VSCP_TYPE_AOL_PROCESSOR_REMOVAL, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * System unplugged from power source
+ * 
+ * @param[in] index Index for record.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_aol_sendSystemEnvironmentalErrors(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_AOL, VSCP_TYPE_AOL_ENVIRONMENT_ERROR, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * System unplugged from power source
+ * 
+ * @param[in] index Index for record.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_aol_sendHighTemperature(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_AOL, VSCP_TYPE_AOL_HIGH_TEMPERATURE, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * System unplugged from power source
+ * 
+ * @param[in] index Index for record.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_aol_sendFanSpeedProblem(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_AOL, VSCP_TYPE_AOL_FAN_SPEED, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * System unplugged from power source
+ * 
+ * @param[in] index Index for record.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_aol_sendVoltageFluctuations(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_AOL, VSCP_TYPE_AOL_VOLTAGE_FLUCTUATIONS, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * System unplugged from power source
+ * 
+ * @param[in] index Index for record.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_aol_sendOperatingSystemErrors(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_AOL, VSCP_TYPE_AOL_OS_ERROR, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * System unplugged from power source
+ * 
+ * @param[in] index Index for record.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_aol_sendSystemPowerOnError(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_AOL, VSCP_TYPE_AOL_POWER_ON_ERROR, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * System unplugged from power source
+ * 
+ * @param[in] index Index for record.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_aol_sendSystemIsHung(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_AOL, VSCP_TYPE_AOL_SYSTEM_HUNG, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * System unplugged from power source
+ * 
+ * @param[in] index Index for record.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_aol_sendComponentFailure(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_AOL, VSCP_TYPE_AOL_COMPONENT_FAILURE, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * System unplugged from power source
+ * 
+ * @param[in] index Index for record.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_aol_sendRemoteSystemRebootUponReportOfACriticalFailure(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_AOL, VSCP_TYPE_AOL_REBOOT_UPON_FAILURE, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * System unplugged from power source
+ * 
+ * @param[in] index Index for record.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_aol_sendRepairOperatingSystem(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_AOL, VSCP_TYPE_AOL_REPAIR_OPERATING_SYSTEM, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * System unplugged from power source
+ * 
+ * @param[in] index Index for record.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_aol_sendUpdateBiosImage(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_AOL, VSCP_TYPE_AOL_UPDATE_BIOS_IMAGE, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * System unplugged from power source
+ * 
+ * @param[in] index Index for record.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_aol_sendUpdatePerformOtherDiagnosticProcedures(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_AOL, VSCP_TYPE_AOL_UPDATE_DIAGNOSTIC_PROCEDURE, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
 

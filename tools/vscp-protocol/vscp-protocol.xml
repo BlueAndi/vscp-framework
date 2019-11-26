@@ -6403,81 +6403,116 @@ Notes:
                     <name lang="en">System unplugged from power source</name>
                     <token>VSCP_TYPE_AOL_UNPLUGGED_POWER</token>
                     <description lang="en">This node was unplugged from its power source.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Index for record.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-zone</name>
+                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="2">
                     <name lang="en">System unplugged from network</name>
                     <token>VSCP_TYPE_AOL_UNPLUGGED_LAN</token>
                     <description lang="en">This node was unplugged from the network.</description>
+                    <frames-ref>specification/vscp-classes/50/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="3">
                     <name lang="en">Chassis intrusion</name>
                     <token>VSCP_TYPE_AOL_CHASSIS_INTRUSION</token>
                     <description lang="en">This node detected chassis intrusion.</description>
+                    <frames-ref>specification/vscp-classes/50/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="4">
                     <name lang="en">Processor removal</name>
                     <token>VSCP_TYPE_AOL_PROCESSOR_REMOVAL</token>
                     <description lang="en">This node detected processor removal.</description>
+                    <frames-ref>specification/vscp-classes/50/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="5">
                     <name lang="en">System environmental errors</name>
                     <token>VSCP_TYPE_AOL_ENVIRONMENT_ERROR</token>
                     <description lang="en">This node detected system environmental errors.</description>
+                    <frames-ref>specification/vscp-classes/50/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="6">
                     <name lang="en">High temperature</name>
                     <token>VSCP_TYPE_AOL_HIGH_TEMPERATURE</token>
                     <description lang="en">This node detected high temperature.</description>
+                    <frames-ref>specification/vscp-classes/50/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="7">
                     <name lang="en">Fan speed problem</name>
                     <token>VSCP_TYPE_AOL_FAN_SPEED</token>
                     <description lang="en">This node detected Fan speed problem.</description>
+                    <frames-ref>specification/vscp-classes/50/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="8">
                     <name lang="en">Voltage fluctuations</name>
                     <token>VSCP_TYPE_AOL_VOLTAGE_FLUCTUATIONS</token>
                     <description lang="en">This node detected Voltage fluctuations.</description>
+                    <frames-ref>specification/vscp-classes/50/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="9">
                     <name lang="en">Operating system errors</name>
                     <token>VSCP_TYPE_AOL_OS_ERROR</token>
                     <description lang="en">This node detected Operating system errors.</description>
+                    <frames-ref>specification/vscp-classes/50/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="10">
                     <name lang="en">System power-on error</name>
                     <token>VSCP_TYPE_AOL_POWER_ON_ERROR</token>
                     <description lang="en">This node detected System power-on errors.</description>
+                    <frames-ref>specification/vscp-classes/50/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="11">
                     <name lang="en">System is hung</name>
                     <token>VSCP_TYPE_AOL_SYSTEM_HUNG</token>
                     <description lang="en">This node detected System is hung.</description>
+                    <frames-ref>specification/vscp-classes/50/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="12">
                     <name lang="en">Component failure</name>
                     <token>VSCP_TYPE_AOL_COMPONENT_FAILURE</token>
                     <description lang="en">This node detected Component failure.</description>
+                    <frames-ref>specification/vscp-classes/50/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="13">
                     <name lang="en">Remote system reboot upon report of a critical failure</name>
                     <token>VSCP_TYPE_AOL_REBOOT_UPON_FAILURE</token>
                     <description lang="en">This node detected Remote system reboot upon report of a critical failure.</description>
+                    <frames-ref>specification/vscp-classes/50/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="14">
                     <name lang="en">Repair Operating System</name>
                     <token>VSCP_TYPE_AOL_REPAIR_OPERATING_SYSTEM</token>
                     <description lang="en">This node detected Repair Operating System.</description>
+                    <frames-ref>specification/vscp-classes/50/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="15">
                     <name lang="en">Update BIOS image</name>
                     <token>VSCP_TYPE_AOL_UPDATE_BIOS_IMAGE</token>
                     <description lang="en">This node detected Update BIOS image.</description>
+                    <frames-ref>specification/vscp-classes/50/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="16">
                     <name lang="en">Update Perform other diagnostic procedures</name>
                     <token>VSCP_TYPE_AOL_UPDATE_DIAGNOSTIC_PROCEDURE</token>
                     <description lang="en">This node detected Update Perform other diagnostic procedures.</description>
+                    <frames-ref>specification/vscp-classes/50/vscp-types/1/frames</frames-ref>
                 </vscp-type>
             </vscp-types>
         </vscp-class>
