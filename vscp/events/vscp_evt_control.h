@@ -172,114 +172,112 @@ extern BOOL vscp_evt_control_sendGeneralEvent(void);
 /**
  * PWM set
  * 
- * @param[in] data0 Repeat/counter: 0=repeat forever, >0 number of repeats
+ * @param[in] repeats Repeat/counter: 0=repeat forever, >0 number of repeats
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
- * @param[in] data3 Control byte.
- * @param[in] data4 Time-On MSB
- * @param[in] data5 Time-On LSB
- * @param[in] data6 Time-Off MSB
- * @param[in] data7 Time-Off LSB
+ * @param[in] control Control byte.
+ * @param[in] timeOn Time-On
+ * @param[in] timeOff Time-Off
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_control_sendPwmSet(uint8_t data0, uint8_t zone, uint8_t subZone, uint8_t data3, uint8_t data4, uint8_t data5, uint8_t data6, uint8_t data7);
+extern BOOL vscp_evt_control_sendPwmSet(uint8_t repeats, uint8_t zone, uint8_t subZone, uint8_t control, uint16_t timeOn, uint16_t timeOff);
 
 /**
  * Lock with token
  * 
- * @param[in] data0 Not used.
+ * @param[in] reserved Not used.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
- * @param[in] data3 Token. This token can be 1-5 bytes and length of event is set accordingly. It
+ * @param[in] token Token. This token can be 1-5 bytes and length of event is set accordingly. It
  * should be interpreted as an unsigned integer in the range 0-1099511627775. MSB byte is stored in
- * first byte. (array[2])
- * @param[in] data3size Size in byte.
+ * first byte. (array[5])
+ * @param[in] tokensize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_control_sendLockWithToken(uint8_t data0, uint8_t zone, uint8_t subZone, uint8_t const * const data3, uint8_t data3Size);
+extern BOOL vscp_evt_control_sendLockWithToken(uint8_t reserved, uint8_t zone, uint8_t subZone, uint8_t const * const token, uint8_t tokenSize);
 
 /**
  * Unlock with token
  * 
- * @param[in] data0 Not used.
+ * @param[in] reserved Not used.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
- * @param[in] data3 Token. This token can be 1-5 bytes and length of event is set accordingly. It
+ * @param[in] token Token. This token can be 1-5 bytes and length of event is set accordingly. It
  * should be interpreted as an unsigned integer in the range 0-1099511627775. MSB byte is stored in
- * first byte. (array[2])
- * @param[in] data3size Size in byte.
+ * first byte. (array[5])
+ * @param[in] tokensize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_control_sendUnlockWithToken(uint8_t data0, uint8_t zone, uint8_t subZone, uint8_t const * const data3, uint8_t data3Size);
+extern BOOL vscp_evt_control_sendUnlockWithToken(uint8_t reserved, uint8_t zone, uint8_t subZone, uint8_t const * const token, uint8_t tokenSize);
 
 /**
  * Set security level
  * 
- * @param[in] data0 Security level to set. 0-255 (Higher value is higher security level).
+ * @param[in] securityLevel Security level to set. 0-255 (Higher value is higher security level).
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_control_sendSetSecurityLevel(uint8_t data0, uint8_t zone, uint8_t subZone);
+extern BOOL vscp_evt_control_sendSetSecurityLevel(uint8_t securityLevel, uint8_t zone, uint8_t subZone);
 
 /**
  * Set security pin
  * 
- * @param[in] data0 Not used.
+ * @param[in] reserved Not used.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
- * @param[in] data3 Security pin. This pin can be 1-5 bytes and length of event is set accordingly. It
- * should be interpreted as an unsigned integer in the range 0-1099511627775. MSB byte is stored in
- * first byte. (array[2])
- * @param[in] data3size Size in byte.
+ * @param[in] securityPin Security pin. This pin can be 1-5 bytes and length of event is set
+ * accordingly. It should be interpreted as an unsigned integer in the range 0-1099511627775. MSB byte
+ * is stored in first byte. (array[5])
+ * @param[in] securityPinsize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_control_sendSetSecurityPin(uint8_t data0, uint8_t zone, uint8_t subZone, uint8_t const * const data3, uint8_t data3Size);
+extern BOOL vscp_evt_control_sendSetSecurityPin(uint8_t reserved, uint8_t zone, uint8_t subZone, uint8_t const * const securityPin, uint8_t securityPinSize);
 
 /**
  * Set security password
  * 
- * @param[in] data0 Not used.
+ * @param[in] reserved Not used.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
- * @param[in] data3 Security password. This password can be 1-5 bytes and length of event is set
- * accordingly. It should be interpreted as an UTF-8 string with a length set bt event data length - 3
- * (array[2])
- * @param[in] data3size Size in byte.
+ * @param[in] securityPassword Security password. This password can be 1-5 bytes and length of event
+ * is set accordingly. It should be interpreted as an UTF-8 string with a length set bt event data
+ * length - 3 (array[5])
+ * @param[in] securityPasswordsize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_control_sendSetSecurityPassword(uint8_t data0, uint8_t zone, uint8_t subZone, uint8_t const * const data3, uint8_t data3Size);
+extern BOOL vscp_evt_control_sendSetSecurityPassword(uint8_t reserved, uint8_t zone, uint8_t subZone, uint8_t const * const securityPassword, uint8_t securityPasswordSize);
 
 /**
  * Set security token
  * 
- * @param[in] data0 Not used.
+ * @param[in] reserved Not used.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
- * @param[in] data3 Token. This token can be 1-5 bytes and length of event is set accordingly. It
+ * @param[in] token Token. This token can be 1-5 bytes and length of event is set accordingly. It
  * should be interpreted as an unsigned integer in the range 0-1099511627775. MSB byte is stored in
- * first byte. (array[2])
- * @param[in] data3size Size in byte.
+ * first byte. (array[5])
+ * @param[in] tokensize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_control_sendSetSecurityToken(uint8_t data0, uint8_t zone, uint8_t subZone, uint8_t const * const data3, uint8_t data3Size);
+extern BOOL vscp_evt_control_sendSetSecurityToken(uint8_t reserved, uint8_t zone, uint8_t subZone, uint8_t const * const token, uint8_t tokenSize);
 
 /**
  * Request new security token
  * 
- * @param[in] data0 Not used.
+ * @param[in] reserved Not used.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_control_sendRequestNewSecurityToken(uint8_t data0, uint8_t zone, uint8_t subZone);
+extern BOOL vscp_evt_control_sendRequestNewSecurityToken(uint8_t reserved, uint8_t zone, uint8_t subZone);
 
 #endif  /* __VSCP_EVT_CONTROL_H__ */

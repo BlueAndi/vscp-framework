@@ -176,25 +176,23 @@ extern BOOL vscp_evt_control_sendGeneralEvent(void)
 /**
  * PWM set
  * 
- * @param[in] data0 Repeat/counter: 0=repeat forever, >0 number of repeats
+ * @param[in] repeats Repeat/counter: 0=repeat forever, >0 number of repeats
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
- * @param[in] data3 Control byte.
- * @param[in] data4 Time-On MSB
- * @param[in] data5 Time-On LSB
- * @param[in] data6 Time-Off MSB
- * @param[in] data7 Time-Off LSB
+ * @param[in] control Control byte.
+ * @param[in] timeOn Time-On
+ * @param[in] timeOff Time-Off
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_control_sendPwmSet(uint8_t data0, uint8_t zone, uint8_t subZone, uint8_t data3, uint8_t data4, uint8_t data5, uint8_t data6, uint8_t data7)
+extern BOOL vscp_evt_control_sendPwmSet(uint8_t repeats, uint8_t zone, uint8_t subZone, uint8_t control, uint16_t timeOn, uint16_t timeOff)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_PWM, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = data0;
+    txMsg.data[0] = repeats;
     size += 1;
 
     txMsg.data[1] = zone;
@@ -203,20 +201,16 @@ extern BOOL vscp_evt_control_sendPwmSet(uint8_t data0, uint8_t zone, uint8_t sub
     txMsg.data[2] = subZone;
     size += 1;
 
-    txMsg.data[3] = data3;
+    txMsg.data[3] = control;
     size += 1;
 
-    txMsg.data[4] = data4;
-    size += 1;
+    txMsg.data[4] = (uint8_t)((timeOn >> 8) & 0xff);
+    txMsg.data[5] = (uint8_t)((timeOn >> 0) & 0xff);
+    size += 2;
 
-    txMsg.data[5] = data5;
-    size += 1;
-
-    txMsg.data[6] = data6;
-    size += 1;
-
-    txMsg.data[7] = data7;
-    size += 1;
+    txMsg.data[6] = (uint8_t)((timeOff >> 8) & 0xff);
+    txMsg.data[7] = (uint8_t)((timeOff >> 0) & 0xff);
+    size += 2;
 
     txMsg.dataNum = size;
 
@@ -226,30 +220,30 @@ extern BOOL vscp_evt_control_sendPwmSet(uint8_t data0, uint8_t zone, uint8_t sub
 /**
  * Lock with token
  * 
- * @param[in] data0 Not used.
+ * @param[in] reserved Not used.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
- * @param[in] data3 Token. This token can be 1-5 bytes and length of event is set accordingly. It
+ * @param[in] token Token. This token can be 1-5 bytes and length of event is set accordingly. It
  * should be interpreted as an unsigned integer in the range 0-1099511627775. MSB byte is stored in
- * first byte. (array[2])
- * @param[in] data3size Size in byte.
+ * first byte. (array[5])
+ * @param[in] tokensize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_control_sendLockWithToken(uint8_t data0, uint8_t zone, uint8_t subZone, uint8_t const * const data3, uint8_t data3Size)
+extern BOOL vscp_evt_control_sendLockWithToken(uint8_t reserved, uint8_t zone, uint8_t subZone, uint8_t const * const token, uint8_t tokenSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
     uint8_t         byteIndex   = 0;
 
-    if ((NULL == data3) || (0 == data3Size))
+    if ((NULL == token) || (0 == tokenSize))
     {
         return FALSE;
     }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_TOKEN_LOCK, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = data0;
+    txMsg.data[0] = reserved;
     size += 1;
 
     txMsg.data[1] = zone;
@@ -258,9 +252,9 @@ extern BOOL vscp_evt_control_sendLockWithToken(uint8_t data0, uint8_t zone, uint
     txMsg.data[2] = subZone;
     size += 1;
 
-    for(byteIndex = 0; byteIndex < data3Size; ++byteIndex)
+    for(byteIndex = 0; byteIndex < tokenSize; ++byteIndex)
     {
-        txMsg.data[3 + byteIndex] = data3[byteIndex];
+        txMsg.data[3 + byteIndex] = token[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -277,30 +271,30 @@ extern BOOL vscp_evt_control_sendLockWithToken(uint8_t data0, uint8_t zone, uint
 /**
  * Unlock with token
  * 
- * @param[in] data0 Not used.
+ * @param[in] reserved Not used.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
- * @param[in] data3 Token. This token can be 1-5 bytes and length of event is set accordingly. It
+ * @param[in] token Token. This token can be 1-5 bytes and length of event is set accordingly. It
  * should be interpreted as an unsigned integer in the range 0-1099511627775. MSB byte is stored in
- * first byte. (array[2])
- * @param[in] data3size Size in byte.
+ * first byte. (array[5])
+ * @param[in] tokensize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_control_sendUnlockWithToken(uint8_t data0, uint8_t zone, uint8_t subZone, uint8_t const * const data3, uint8_t data3Size)
+extern BOOL vscp_evt_control_sendUnlockWithToken(uint8_t reserved, uint8_t zone, uint8_t subZone, uint8_t const * const token, uint8_t tokenSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
     uint8_t         byteIndex   = 0;
 
-    if ((NULL == data3) || (0 == data3Size))
+    if ((NULL == token) || (0 == tokenSize))
     {
         return FALSE;
     }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_TOKEN_UNLOCK, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = data0;
+    txMsg.data[0] = reserved;
     size += 1;
 
     txMsg.data[1] = zone;
@@ -309,9 +303,9 @@ extern BOOL vscp_evt_control_sendUnlockWithToken(uint8_t data0, uint8_t zone, ui
     txMsg.data[2] = subZone;
     size += 1;
 
-    for(byteIndex = 0; byteIndex < data3Size; ++byteIndex)
+    for(byteIndex = 0; byteIndex < tokenSize; ++byteIndex)
     {
-        txMsg.data[3 + byteIndex] = data3[byteIndex];
+        txMsg.data[3 + byteIndex] = token[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -328,20 +322,20 @@ extern BOOL vscp_evt_control_sendUnlockWithToken(uint8_t data0, uint8_t zone, ui
 /**
  * Set security level
  * 
- * @param[in] data0 Security level to set. 0-255 (Higher value is higher security level).
+ * @param[in] securityLevel Security level to set. 0-255 (Higher value is higher security level).
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_control_sendSetSecurityLevel(uint8_t data0, uint8_t zone, uint8_t subZone)
+extern BOOL vscp_evt_control_sendSetSecurityLevel(uint8_t securityLevel, uint8_t zone, uint8_t subZone)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_SET_SECURITY_LEVEL, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = data0;
+    txMsg.data[0] = securityLevel;
     size += 1;
 
     txMsg.data[1] = zone;
@@ -358,30 +352,30 @@ extern BOOL vscp_evt_control_sendSetSecurityLevel(uint8_t data0, uint8_t zone, u
 /**
  * Set security pin
  * 
- * @param[in] data0 Not used.
+ * @param[in] reserved Not used.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
- * @param[in] data3 Security pin. This pin can be 1-5 bytes and length of event is set accordingly. It
- * should be interpreted as an unsigned integer in the range 0-1099511627775. MSB byte is stored in
- * first byte. (array[2])
- * @param[in] data3size Size in byte.
+ * @param[in] securityPin Security pin. This pin can be 1-5 bytes and length of event is set
+ * accordingly. It should be interpreted as an unsigned integer in the range 0-1099511627775. MSB byte
+ * is stored in first byte. (array[5])
+ * @param[in] securityPinsize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_control_sendSetSecurityPin(uint8_t data0, uint8_t zone, uint8_t subZone, uint8_t const * const data3, uint8_t data3Size)
+extern BOOL vscp_evt_control_sendSetSecurityPin(uint8_t reserved, uint8_t zone, uint8_t subZone, uint8_t const * const securityPin, uint8_t securityPinSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
     uint8_t         byteIndex   = 0;
 
-    if ((NULL == data3) || (0 == data3Size))
+    if ((NULL == securityPin) || (0 == securityPinSize))
     {
         return FALSE;
     }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_SET_SECURITY_PIN, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = data0;
+    txMsg.data[0] = reserved;
     size += 1;
 
     txMsg.data[1] = zone;
@@ -390,9 +384,9 @@ extern BOOL vscp_evt_control_sendSetSecurityPin(uint8_t data0, uint8_t zone, uin
     txMsg.data[2] = subZone;
     size += 1;
 
-    for(byteIndex = 0; byteIndex < data3Size; ++byteIndex)
+    for(byteIndex = 0; byteIndex < securityPinSize; ++byteIndex)
     {
-        txMsg.data[3 + byteIndex] = data3[byteIndex];
+        txMsg.data[3 + byteIndex] = securityPin[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -409,30 +403,30 @@ extern BOOL vscp_evt_control_sendSetSecurityPin(uint8_t data0, uint8_t zone, uin
 /**
  * Set security password
  * 
- * @param[in] data0 Not used.
+ * @param[in] reserved Not used.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
- * @param[in] data3 Security password. This password can be 1-5 bytes and length of event is set
- * accordingly. It should be interpreted as an UTF-8 string with a length set bt event data length - 3
- * (array[2])
- * @param[in] data3size Size in byte.
+ * @param[in] securityPassword Security password. This password can be 1-5 bytes and length of event
+ * is set accordingly. It should be interpreted as an UTF-8 string with a length set bt event data
+ * length - 3 (array[5])
+ * @param[in] securityPasswordsize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_control_sendSetSecurityPassword(uint8_t data0, uint8_t zone, uint8_t subZone, uint8_t const * const data3, uint8_t data3Size)
+extern BOOL vscp_evt_control_sendSetSecurityPassword(uint8_t reserved, uint8_t zone, uint8_t subZone, uint8_t const * const securityPassword, uint8_t securityPasswordSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
     uint8_t         byteIndex   = 0;
 
-    if ((NULL == data3) || (0 == data3Size))
+    if ((NULL == securityPassword) || (0 == securityPasswordSize))
     {
         return FALSE;
     }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_SET_SECURITY_PASSWORD, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = data0;
+    txMsg.data[0] = reserved;
     size += 1;
 
     txMsg.data[1] = zone;
@@ -441,9 +435,9 @@ extern BOOL vscp_evt_control_sendSetSecurityPassword(uint8_t data0, uint8_t zone
     txMsg.data[2] = subZone;
     size += 1;
 
-    for(byteIndex = 0; byteIndex < data3Size; ++byteIndex)
+    for(byteIndex = 0; byteIndex < securityPasswordSize; ++byteIndex)
     {
-        txMsg.data[3 + byteIndex] = data3[byteIndex];
+        txMsg.data[3 + byteIndex] = securityPassword[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -460,30 +454,30 @@ extern BOOL vscp_evt_control_sendSetSecurityPassword(uint8_t data0, uint8_t zone
 /**
  * Set security token
  * 
- * @param[in] data0 Not used.
+ * @param[in] reserved Not used.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
- * @param[in] data3 Token. This token can be 1-5 bytes and length of event is set accordingly. It
+ * @param[in] token Token. This token can be 1-5 bytes and length of event is set accordingly. It
  * should be interpreted as an unsigned integer in the range 0-1099511627775. MSB byte is stored in
- * first byte. (array[2])
- * @param[in] data3size Size in byte.
+ * first byte. (array[5])
+ * @param[in] tokensize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_control_sendSetSecurityToken(uint8_t data0, uint8_t zone, uint8_t subZone, uint8_t const * const data3, uint8_t data3Size)
+extern BOOL vscp_evt_control_sendSetSecurityToken(uint8_t reserved, uint8_t zone, uint8_t subZone, uint8_t const * const token, uint8_t tokenSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
     uint8_t         byteIndex   = 0;
 
-    if ((NULL == data3) || (0 == data3Size))
+    if ((NULL == token) || (0 == tokenSize))
     {
         return FALSE;
     }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_SET_SECURITY_TOKEN, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = data0;
+    txMsg.data[0] = reserved;
     size += 1;
 
     txMsg.data[1] = zone;
@@ -492,9 +486,9 @@ extern BOOL vscp_evt_control_sendSetSecurityToken(uint8_t data0, uint8_t zone, u
     txMsg.data[2] = subZone;
     size += 1;
 
-    for(byteIndex = 0; byteIndex < data3Size; ++byteIndex)
+    for(byteIndex = 0; byteIndex < tokenSize; ++byteIndex)
     {
-        txMsg.data[3 + byteIndex] = data3[byteIndex];
+        txMsg.data[3 + byteIndex] = token[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -511,20 +505,20 @@ extern BOOL vscp_evt_control_sendSetSecurityToken(uint8_t data0, uint8_t zone, u
 /**
  * Request new security token
  * 
- * @param[in] data0 Not used.
+ * @param[in] reserved Not used.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_control_sendRequestNewSecurityToken(uint8_t data0, uint8_t zone, uint8_t subZone)
+extern BOOL vscp_evt_control_sendRequestNewSecurityToken(uint8_t reserved, uint8_t zone, uint8_t subZone)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_CONTROL, VSCP_TYPE_CONTROL_REQUEST_SECURITY_TOKEN, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = data0;
+    txMsg.data[0] = reserved;
     size += 1;
 
     txMsg.data[1] = zone;
