@@ -5419,8 +5419,27 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Function</name>
                                     <description lang="en">Function (See below)</description>
+                                    <enumeration>
+                                        <enum id="0">Stop</enum>
+                                        <enum id="1">Pause</enum>
+                                        <enum id="2">Play</enum>
+                                        <enum id="3">Forward</enum>
+                                        <enum id="4">Rewind</enum>
+                                        <enum id="5">Fast Forward</enum>
+                                        <enum id="6">Fast Rewind</enum>
+                                        <enum id="7">Next Track</enum>
+                                        <enum id="30">Previous Track</enum>
+                                        <enum id="31">Toggle repeat mode</enum>
+                                        <enum id="32">Repeat mode ON</enum>
+                                        <enum id="33">Repeat mode OFF</enum>
+                                        <enum id="34">Toggle Shuffle mode</enum>
+                                        <enum id="35">Shuffle ON</enum>
+                                        <enum id="36">Shuffle mode OFF</enum>
+                                        <enum id="37">Fade in, Play</enum>
+                                        <enum id="38">Fade out, Stop</enum>
+                                    </enumeration>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
                                     <name lang="en">Zone</name>
@@ -5444,7 +5463,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Function</name>
                                     <description lang="en">Function</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5469,7 +5488,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Contrast</name>
                                     <description lang="en">A value between 0 and 127 indicates the specific contrast level to set. A value between 128 and 159 is change down by the specified number of contrast levels. A value between 160 and 191 is change up by the specified number of contrast levels. A value of 255 means that this is and extended event and that the specific contrast level is sent in byte 3 and after.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5494,7 +5513,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Focus</name>
                                     <description lang="en">A value between 0 and 127 indicates the specific focus level to set. A value between 128 and 159 is change down by the specified number of focus levels. A value between 160 and 191 is change up by the specified number of focus levels. A value of 255 means that this is and extended event and that the specific focus level is sent in byte 3 and after.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5519,7 +5538,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Tint</name>
                                     <description lang="en">A value between 0 and 127 indicates the specific tint level to set. A value between 128 and 159 is change down by the specified number of tint levels. A value between 160 and 191 is change up by the specified number of tint levels. A value of 255 means that this is and extended event and that the specific tint level is sent in byte 3 and after.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5544,7 +5563,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Reserved</name>
                                     <description lang="en">Reserved.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5569,7 +5588,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Brightness</name>
                                     <description lang="en">A value between 0 and 127 indicates the specific brightness level to set. A value between 128 and 159 is change down by the specified number of brightness levels. A value between 160 and 191 is change up by the specified number of brightness levels. A value of 255 means that this is and extended event and that the specific brightness level is sent in byte 3 and after.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5594,8 +5613,8 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
-                                    <description lang="en">Reserved.</description>
+                                    <name lang="en">Hue</name>
+                                    <description lang="en">A value between 0 and 127 indicates the specific hue level to set. A value between 128 and 159 is change down by the specified number of hue levels. A value between 160 and 191 is change up by the specified number of hue levels. A value of 255 means that this is and extended event and that the specific hue level is sent in byte 3 and after.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
                                     <name lang="en">Zone</name>
@@ -5619,7 +5638,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Bass</name>
                                     <description lang="en">A value between 0 and 127 indicates the specific bass level to set. A value between 128 and 159 is change down by the specified number of bass levels. A value between 160 and 191 is change up by the specified number of bass levels. A value of 255 means that this is and extended event and that the specific bass level is sent in byte 3 and after.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5644,7 +5663,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Treble</name>
                                     <description lang="en">0 A value between 0 and 127 indicates the specific treble level to set. A value between 128 and 159 is change down by the specified number of treble levels. A value between 160 and 191 is change up by the specified number of treble levels. A value of 255 means that this is and extended event and that the specific treble level is sent in byte 3 and after.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5669,7 +5688,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Volume</name>
                                     <description lang="en">A value between 0 and 127 indicates the specific volume level to set. A value between 128 and 159 is change down by the specified number of volume levels. A value between 160 and 191 is change up by the specified number of volume levels. A value of 255 means that this is and extended event and that the specific volume level is sent in byte 3 and after.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5694,7 +5713,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Volume</name>
                                     <description lang="en">A value between 0 and 127 indicates the specific volume level to set. A value between 128 and 159 is change down by the specified number of volume levels. A value between 160 and 191 is change up by the specified number of volume levels. A value of 255 means that this is and extended event and that the specific volume level is sent in byte 3 and after.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5719,7 +5738,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Volume</name>
                                     <description lang="en">A value between 0 and 127 indicates the specific volume level to set. A value between 128 and 159 is change down by the specified number of volume levels. A value between 160 and 191 is change up by the specified number of volume levels. A value of 255 means that this is and extended event and that the specific volume level is sent in byte 3 and after.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5744,7 +5763,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Volume</name>
                                     <description lang="en">A value between 0 and 127 indicates the specific volume level to set. A value between 128 and 159 is change down by the specified number of volume levels. A value between 160 and 191 is change up by the specified number of volume levels. A value of 255 means that this is and extended event and that the specific volume level is sent in byte 3 and after.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5769,7 +5788,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Volume</name>
                                     <description lang="en">A value between 0 and 127 indicates the specific volume level to set. A value between 128 and 159 is change down by the specified number of volume levels. A value between 160 and 191 is change up by the specified number of volume levels. A value of 255 means that this is and extended event and that the specific volume level is sent in byte 3 and after.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5814,7 +5833,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Disc No</name>
                                     <description lang="en">A value between 0 and 127 indicates the specific disk number. A value between 128 and 159 is change down by the specified number of disks. A value between 160 and 191 is change up by the specified number of disks. A value of 200 means select a random disk. A value of 255 means that this is and extended event and that the disk number is sent in byte 3 and after.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5839,7 +5858,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Track</name>
                                     <description lang="en">A value between 0 and 127 indicates the track number. A value between 128 and 159 is change down by the specified number of tracks. A value between 160 and 191 is change up by the specified number of tracks. A value of 200 means select a random track. A value of 255 means that this is and extended event and that the track number is sent in byte 3 and after.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5864,7 +5883,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Album</name>
                                     <description lang="en">A value between 0 and 127 indicates the album/play-list number. A value between 128 and 159 is change down by the specified number of albums/play-lists. A value between 160 and 191 is change up by the specified number of albums. A value of 200 means select a random album. A value of 255 means that this is and extended event and that the album number is sent in byte 3 and after.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5889,7 +5908,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Channel</name>
                                     <description lang="en">A value between 0 and 127 indicates the channel number. A value between 128 and 159 is change down by the specified number of channels. A value between 160 and 191 is change up by the specified number of channels. A value of 200 means select a random channel. A value of 255 means that this is and extended event and that the channel number is sent in byte 3 and after.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5914,7 +5933,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Page</name>
                                     <description lang="en">A value between 0 and 127 indicates the page number. A value between 128 and 159 is change down by the specified number of pages. A value between 160 and 191 is change up by the specified number of pages. A value of 200 means select a random page. A value of 255 means that this is and extended event and that the page number is sent in byte 3 and after.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5939,7 +5958,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Chapter</name>
                                     <description lang="en">A value between 0 and 127 indicates the chapter number. A value between 128 and 159 is change down by the specified number of chapters. A value between 160 and 191 is change up by the specified number of chapters. A value of 200 means select a random chapter. A value of 255 means that this is and extended event and that the chapter number is sent in byte 3 and after.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5964,7 +5983,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Format</name>
                                     <description lang="en">0 = Auto, 1 = Just, 2 = Norma,l 3 = Zoom.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5989,7 +6008,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Source</name>
                                     <description lang="en">Device code</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -6014,7 +6033,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Output</name>
                                     <description lang="en">Output Code</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -6039,8 +6058,14 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Function</name>
                                     <description lang="en">0 - Start to record, 1 - Stop record, 2 - Disable, AGC 3 - Enable AGC.</description>
+                                    <enumeration>
+                                        <enum id="0">Start to record</enum>
+                                        <enum id="1">Stop record</enum>
+                                        <enum id="2">Disable AGC</enum>
+                                        <enum id="3">Enable AGC</enum>
+                                    </enumeration>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
                                     <name lang="en">Zone</name>
@@ -6064,7 +6089,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Volume</name>
                                     <description lang="en">A value between 0 and 127 indicates the specific contrast level to set. A value between 128 and 159 is change down by the specified number of contrast levels. A value between 160 and 191 is change up by the specified number of contrast levels. A value of 255 means that this is and extended event and that the specific contrast level is sent in byte 3 and after.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -6089,7 +6114,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Tivo Code</name>
                                     <description lang="en">TIVO Code</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -6114,7 +6139,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Reserved</name>
                                     <description lang="en">Reserved.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -6139,7 +6164,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Reserved</name>
                                     <description lang="en">Reserved</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -6150,8 +6175,8 @@ Notes:
                                     <name lang="en">Sub-zone</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
-                                <element pos="3" type="uint8" length="2" optional="false">
-                                    <name lang="en">Data3</name>
+                                <element pos="3" type="uint8" length="5" optional="false">
+                                    <name lang="en">Pos</name>
                                     <description lang="en">Position in milliseconds, This is an integer with a size specified by the event size. This 0xFF, 0xFFFF, 0xFFFFFF, 0xFFFFFFFF and 0xFFFFFFFFFF is the maximum that can be sent for different sizes.</description>
                                 </element>
                             </elements>
@@ -6168,8 +6193,18 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Type</name>
                                     <description lang="en">Type of media information requested. 1 - Current Title, 1 - Get Folders, 2 - Get Disks, 3 - Get Tracks, 4 - Get Albums/Play list,s 5 - Get Channels, 6 - Get Pages, 7 - Get Chapters</description>
+                                    <enumeration>
+                                        <enum id="0">Current title</enum>
+                                        <enum id="1">Get folders</enum>
+                                        <enum id="2">Get disks</enum>
+                                        <enum id="3">Get tracks</enum>
+                                        <enum id="4">Get album/playlist</enum>
+                                        <enum id="5">Get channels</enum>
+                                        <enum id="6">Get pages</enum>
+                                        <enum id="7">Get chapters</enum>
+                                    </enumeration>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
                                     <name lang="en">Zone</name>
@@ -6193,7 +6228,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Item</name>
                                     <description lang="en">0-128 - Pos to remove from album/play-list A value of 255 means that this is and extended event and that the specific contrast level is sent in byte 3 and after.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -6218,7 +6253,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Reserved</name>
                                     <description lang="en">Reserved.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -6243,8 +6278,12 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Function</name>
                                     <description lang="en">0 - Do not overwrite if it already exists 1 - Overwrite if it exist.</description>
+                                    <enumeration>
+                                        <enum id="0">Do not overwrite if it already exists.</enum>
+                                        <enum id="1">Overwrite if it exist.</enum>
+                                    </enumeration>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
                                     <name lang="en">Zone</name>
@@ -6268,8 +6307,54 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data0</name>
+                                    <name lang="en">Control</name>
                                     <description lang="en">Control codes</description>
+                                    <enumeration>
+                                        <enum id="0">Active Title (URL).</enum>
+                                        <enum id="1">Set Title(URL).</enum>
+                                        <enum id="2">Active Folder(URL).</enum>
+                                        <enum id="3">Set Active Folder(URL).</enum>
+                                        <enum id="4">Artist(string).</enum>
+                                        <enum id="5">Year(string).</enum>
+                                        <enum id="6">Genre(string).</enum>
+                                        <enum id="7">Album(string).</enum>
+                                        <enum id="8">Comment(string).</enum>
+                                        <enum id="9">Track(integer).</enum>
+                                        <enum id="10">Picture(url).</enum>
+                                        <enum id="11">Sample rate(integer).</enum>
+                                        <enum id="12">Bit-rate(integer).</enum>
+                                        <enum id="13">Channels(integer).</enum>
+                                        <enum id="14">Media size bytes(integer).</enum>
+                                        <enum id="15">Time(string).</enum>
+                                        <enum id="16">Mpeg version(string).</enum>
+                                        <enum id="17">Mpeg layer(string).</enum>
+                                        <enum id="18">Frequency(integer).</enum>
+                                        <enum id="19">Channel Mode.</enum>
+                                        <enum id="20">CRC(integer).</enum>
+                                        <enum id="21">Copyright(string).</enum>
+                                        <enum id="22">Original(string).</enum>
+                                        <enum id="23">Emphasis.</enum>
+                                        <enum id="24">Media position in milliseconds(integer).</enum>
+                                        <enum id="25">Media-length in milliseconds(integer).</enum>
+                                        <enum id="26">Version(string).</enum>
+                                        <enum id="27">Album/Play list(string).</enum>
+                                        <enum id="28">Play file(URL).</enum>
+                                        <enum id="29">Add file to album/play-list(URL).</enum>
+                                        <enum id="30">Current Folder (URL).</enum>
+                                        <enum id="31">Folder content(URL).</enum>
+                                        <enum id="32">Set Folder(URL).</enum>
+                                        <enum id="33">Get Folder content(URL).</enum>
+                                        <enum id="34">Get Folder content albums/play-lists(URL).</enum>
+                                        <enum id="35">Get Folder content filter(string).</enum>
+                                        <enum id="36">Disks list(String).</enum>
+                                        <enum id="37">Folders list(String).</enum>
+                                        <enum id="38">Tracks list(String).</enum>
+                                        <enum id="39">Albums/Play list list(String).</enum>
+                                        <enum id="40">Channels list(String).</enum>
+                                        <enum id="41">Pages list(String).</enum>
+                                        <enum id="42">Chapters list(String).</enum>
+                                        <enum id="43">New Album/Play list(URL).</enum>
+                                    </enumeration>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
                                     <name lang="en">Zone</name>
@@ -6280,11 +6365,11 @@ Notes:
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
                                 <element pos="3" type="uint8" length="1" optional="false">
-                                    <name lang="en">Data3</name>
+                                    <name lang="en">Index</name>
                                     <description lang="en">Index. Base 0. Increase by one for every fragment of the title sent.</description>
                                 </element>
-                                <element pos="4" type="uint8" length="2" optional="false">
-                                    <name lang="en">Data4</name>
+                                <element pos="4" type="uint8" length="5" optional="false">
+                                    <name lang="en">Data</name>
                                     <description lang="en">Data.</description>
                                 </element>
                             </elements>
