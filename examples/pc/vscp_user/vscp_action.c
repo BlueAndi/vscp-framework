@@ -46,7 +46,7 @@
 
 #include <stdio.h>
 #include "log.h"
-#include "vscp_information.h"
+#include "vscp_evt_information.h"
 #include "lamp_sim.h"
 #include "vscp_class_l1.h"
 #include "vscp_type_control.h"
@@ -209,11 +209,11 @@ static void vscp_action_enableLamp(uint8_t par, BOOL enableIt)
                 /* Send lamp state */
                 if (FALSE == lamp_sim_getState(index))
                 {
-                    (void)vscp_information_sendOnEvent(index, 255, 255);
+                    (void)vscp_evt_information_sendOn(index, 255, 255);
                 }
                 else
                 {
-                    (void)vscp_information_sendOffEvent(index, 255, 255);
+                    (void)vscp_evt_information_sendOff(index, 255, 255);
                 }
 
                 /* Show the user the current lamp state */
@@ -275,11 +275,11 @@ static void vscp_action_toggleLamp(uint8_t par)
             /* Send lamp state */
             if (FALSE == lamp_sim_getState(index))
             {
-                (void)vscp_information_sendOnEvent(index, 255, 255);
+                (void)vscp_evt_information_sendOn(index, 255, 255);
             }
             else
             {
-                (void)vscp_information_sendOffEvent(index, 255, 255);
+                (void)vscp_evt_information_sendOff(index, 255, 255);
             }
 
             /* Show the user the current lamp state */
@@ -399,11 +399,11 @@ static void vscp_action_dimLamp(uint8_t par, vscp_RxMessage const * const msg)
                 /* Send lamp state */
                 if (FALSE == newState)
                 {
-                    (void)vscp_information_sendOnEvent(index, 255, 255);
+                    (void)vscp_evt_information_sendOn(index, 255, 255);
                 }
                 else
                 {
-                    (void)vscp_information_sendOffEvent(index, 255, 255);
+                    (void)vscp_evt_information_sendOff(index, 255, 255);
                 }
 
                 /* Show the user the current lamp state */

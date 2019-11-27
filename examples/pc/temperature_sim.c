@@ -47,8 +47,8 @@
 #include "platform.h"
 #include "vscp_thread.h"
 #include "vscp_core.h"
-#include "vscp_measurement.h"
-#include "vscp_measurezone.h"
+#include "vscp_evt_measurement.h"
+#include "vscp_evt_measurezone.h"
 #include "vscp_data_coding.h"
 #include "vscp_class_l1.h"
 #include "vscp_type_measurement.h"
@@ -221,8 +221,8 @@ static void* temperature_sim_thread(void* par)
 
             if (TRUE == vscp_core_isActive())
             {
-                (void)vscp_measurement_sendTemperatureEvent(0, 1, temperatureC, -2);
-                (void)vscp_measurezone_sendTemperatureEvent(0, 255, 255, temperatureK, -2);
+                (void)vscp_evt_measurement_sendTemperature(0, 1, temperatureC, -2);
+                (void)vscp_evt_measurezone_sendTemperature(0, 255, 255, temperatureK, -2);
             }
 
             vscp_thread_unlock();
