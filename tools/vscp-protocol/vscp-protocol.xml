@@ -6536,271 +6536,282 @@ Notes:
                     <name lang="en">Count</name>
                     <token>VSCP_TYPE_MEASUREMENT64_COUNT</token>
                     <description lang="en">This is a discrete value typical for a count. There is no unit for this measurement just a discrete value.</description>
-                    <frames />
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="double" length="1" optional="false">
+                                    <name lang="en">Value</name>
+                                    <description lang="en">The value is a "double" - IEEE-754, 64 Bits, double precision.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="2">
                     <name lang="en">Length/Distance</name>
                     <token>VSCP_TYPE_MEASUREMENT64_LENGTH</token>
                     <description lang="en">Default unit: Meter.\nThis is a measurement of a length or a distance.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="3">
                     <name lang="en">Mass</name>
                     <token>VSCP_TYPE_MEASUREMENT64_MASS</token>
                     <description lang="en">Default unit: Kilogram.\nThis is a measurement of a mass.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="4">
                     <name lang="en">Time</name>
                     <token>VSCP_TYPE_MEASUREMENT64_TIME</token>
                     <description lang="en">A time measurement.\nDefault unit: Seconds.\nOpt. unit: (1) Milliseconds. Absolute: (2) y-y-m-d-h-m-s (binary). String: (3) "HHMMSS".</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="5">
                     <name lang="en">Electric Current</name>
                     <token>VSCP_TYPE_MEASUREMENT64_ELECTRIC_CURRENT</token>
                     <description lang="en">Default unit: Ampere.\nThis is a measurement of an electric current.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="6">
                     <name lang="en">Temperature</name>
                     <token>VSCP_TYPE_MEASUREMENT64_TEMPERATURE</token>
                     <description lang="en">Default unit: Kelvin.\nOpt. unit: Degree Celsius (1), Fahrenheit (2)\nThis is a measurement of a temperature.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="7">
                     <name lang="en">Amount of substance</name>
                     <token>VSCP_TYPE_MEASUREMENT64_AMOUNT_OF_SUBSTANCE</token>
                     <description lang="en">Default unit: Mole.\nThis is a measurement of an amount of a substance.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="8">
                     <name lang="en">Luminous Intensity (Intensity of light)</name>
                     <token>VSCP_TYPE_MEASUREMENT64_INTENSITY_OF_LIGHT</token>
                     <description lang="en">Default unit: Candela.\nThis is a measurement of luminous intensity.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="9">
                     <name lang="en">Frequency</name>
                     <token>VSCP_TYPE_MEASUREMENT64_FREQUENCY</token>
                     <description lang="en">Default unit: Hertz.\nThis is a measurement of regular events during a second.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="10">
                     <name lang="en">Radioactivity and other random events</name>
                     <token>VSCP_TYPE_MEASUREMENT64_RADIOACTIVITY</token>
                     <description lang="en">Default unit: becquerel.\nOptional unit: curie (1)\nThis is a measurement of rates of things, which happen randomly, or are unpredictable.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="11">
                     <name lang="en">Force</name>
                     <token>VSCP_TYPE_MEASUREMENT64_FORCE</token>
                     <description lang="en">Default unit: newton.\nThis is a measurement of force.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="12">
                     <name lang="en">Pressure</name>
                     <token>VSCP_TYPE_MEASUREMENT64_PRESSURE</token>
                     <description lang="en">Default unit: pascal.\nOpt. unit: bar (1), psi (2)\nThis is a measurement of pressure.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="13">
                     <name lang="en">Energy</name>
                     <token>VSCP_TYPE_MEASUREMENT64_ENERGY</token>
                     <description lang="en">Default unit: Joule.\nOptional unit: KWh (1)\nThis is a measurement of energy.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="14">
                     <name lang="en">Power</name>
                     <token>VSCP_TYPE_MEASUREMENT64_POWER</token>
                     <description lang="en">Default unit: watt.\nOptional unit: Horse power (1).\nThis is a measurement of power.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="15">
                     <name lang="en">Electrical Charge</name>
                     <token>VSCP_TYPE_MEASUREMENT64_ELECTRICAL_CHARGE</token>
                     <description lang="en">Default unit: coulomb.\nThis is a measurement electrical charge.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="16">
                     <name lang="en">Electrical Potential (Voltage)</name>
                     <token>VSCP_TYPE_MEASUREMENT64_ELECTRICAL_POTENTIAL</token>
                     <description lang="en">Default unit: volt.\nThis is a measurement of electrical potential.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="17">
                     <name lang="en">Electrical Capacitance</name>
                     <token>VSCP_TYPE_MEASUREMENT64_ELECTRICAL_CAPACITANCE</token>
                     <description lang="en">Default unit: farad (F).\nThis is a measurement of electric capacitance.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="18">
                     <name lang="en">Electrical Resistance</name>
                     <token>VSCP_TYPE_MEASUREMENT64_ELECTRICAL_RESISTANCE</token>
                     <description lang="en">Default unit: ohm (Ω).\nThis is a measurement of resistance.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="19">
                     <name lang="en">Electrical Conductance</name>
                     <token>VSCP_TYPE_MEASUREMENT64_ELECTRICAL_CONDUCTANCE</token>
                     <description lang="en">Default unit: siemens.\nThis is a measurement of electrical conductance.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="20">
                     <name lang="en">Magnetic Field Strength</name>
                     <token>VSCP_TYPE_MEASUREMENT64_MAGNETIC_FIELD_STRENGTH</token>
                     <description lang="en">Default unit: amperes per meter (H).\nOptional units: teslas (B) (1)\nThis is a measurement of magnetic field strength.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="21">
                     <name lang="en">Magnetic Flux</name>
                     <token>VSCP_TYPE_MEASUREMENT64_MAGNETIC_FLUX</token>
                     <description lang="en">Default unit: weber (Wb).\nThis is a measurement of magnetic flux.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="22">
                     <name lang="en">Magnetic Flux Density</name>
                     <token>VSCP_TYPE_MEASUREMENT64_MAGNETIC_FLUX_DENSITY</token>
                     <description lang="en">Default unit: tesla (B).\nThis is a measurement of flux density or field strength for magnetic fields (also called the magnetic induction).</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="23">
                     <name lang="en">Inductance</name>
                     <token>VSCP_TYPE_MEASUREMENT64_INDUCTANCE</token>
                     <description lang="en">Default unit: henry (H).\nThis is a measurement of inductance.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="24">
                     <name lang="en">Luminous Flux</name>
                     <token>VSCP_TYPE_MEASUREMENT64_FLUX_OF_LIGHT</token>
                     <description lang="en">Default unit: Lumen (lm= cd * sr)\nThis is a measurement of luminous Flux.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="25">
                     <name lang="en">Illuminance</name>
                     <token>VSCP_TYPE_MEASUREMENT64_ILLUMINANCE</token>
                     <description lang="en">Default unit: lux (lx) ( lx = lm / m² )\nThis is used to express both Illuminance (incidence of light) and Luminous Emittance (emission of light).</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="26">
                     <name lang="en">Radiation dose</name>
                     <token>VSCP_TYPE_MEASUREMENT64_RADIATION_DOSE</token>
                     <description lang="en">Default unit: gray (Gy).\nOpt unit: sievert (Sv) (1).\nThis is a measurement of a radiation dose (Absorbed dose of ionizing radiation).</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="27">
                     <name lang="en">Catalytic activity</name>
                     <token>VSCP_TYPE_MEASUREMENT64_CATALYTIC_ACITIVITY</token>
                     <description lang="en">Default unit: katal (z).\nThis is a measurement of catalytic activity used in biochemistry.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="28">
                     <name lang="en">Volume</name>
                     <token>VSCP_TYPE_MEASUREMENT64_VOLUME</token>
                     <description lang="en">Default unit: cubic meter (m³)\nOpt. unit: Liter (dm³) (1), decilitre (100 cm³) (2), centilitre (10 cm³) (3), millilitre (cm³) (4) where unit 4 is only available for Level II measurement events where units can hold this value.\nThis is a measurement of volume.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="29">
                     <name lang="en">Sound intensity</name>
                     <token>VSCP_TYPE_MEASUREMENT64_SOUND_INTENSITY</token>
                     <description lang="en">Default unit: W/m2, watt per square meter.\nThis is a measurement of sound intensity (acoustic intensity).</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="30">
                     <name lang="en">Angle</name>
                     <token>VSCP_TYPE_MEASUREMENT64_ANGLE</token>
                     <description lang="en">Default unit: radian (rad) (Plane angles).\nOpt Unit: degree (1).\nOpt Unit: arcminute (2).\nOpt Unit: arcseconds (3).\nThis is a measurement of an angle.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="31">
                     <name lang="en">Position WGS 84</name>
                     <token>VSCP_TYPE_MEASUREMENT64_POSITION</token>
                     <description lang="en">Default unit: Longitude.\nOpt. unit: Latitude.\nThis is a measurement of a position as of WGS 84. Normally given as a floating point value. See ./class1.gps.md for a better candidate to use for position data.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="32">
                     <name lang="en">Speed</name>
                     <token>VSCP_TYPE_MEASUREMENT64_SPEED</token>
                     <description lang="en">Default unit: Meters per second.\nOptional unit: Kilometers per hour (1) Miles per hour (2)\nThis is a measurement of a speed.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="33">
                     <name lang="en">Acceleration</name>
                     <token>VSCP_TYPE_MEASUREMENT64_ACCELERATION</token>
                     <description lang="en">Default unit: Meters per second/second (m/s2).\nThis is a measurement of acceleration.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="34">
                     <name lang="en">Tension</name>
                     <token>VSCP_TYPE_MEASUREMENT64_TENSION</token>
                     <description lang="en">Default unit: N/m.\nThis is a measurement of tension.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="35">
                     <name lang="en">Damp/moist (Hygrometer reading)</name>
                     <token>VSCP_TYPE_MEASUREMENT64_HUMIDITY</token>
                     <description lang="en">Default unit: Relative percentage 0-100%.\nThis is a measurement of relative moistness (Humidity).</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="36">
                     <name lang="en">Flow</name>
                     <token>VSCP_TYPE_MEASUREMENT64_FLOW</token>
                     <description lang="en">Default unit: Cubic meters/second.\nOpt Unit: Liters/Second.\nThis is a measurement of flow.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="37">
                     <name lang="en">Thermal resistance</name>
                     <token>VSCP_TYPE_MEASUREMENT64_THERMAL_RESISTANCE</token>
                     <description lang="en">Default unit: Thermal ohm K/W.\nThis is a measurement of thermal resistance.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="38">
                     <name lang="en">Refractive (optical) power</name>
                     <token>VSCP_TYPE_MEASUREMENT64_REFRACTIVE_POWER</token>
                     <description lang="en">Default unit: dioptre (dpt) m-1.\nThis is a measurement of refractive (optical) power.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="39">
                     <name lang="en">Dynamic viscosity</name>
                     <token>VSCP_TYPE_MEASUREMENT64_DYNAMIC_VISCOSITY</token>
                     <description lang="en">Default unit: poiseuille (Pl)\nThis is a measurement of dynamic viscosity.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="40">
                     <name lang="en">Sound impedance</name>
                     <token>VSCP_TYPE_MEASUREMENT64_SOUND_IMPEDANCE</token>
                     <description lang="en">Default unit: rayl (Pa·s/m)\nThis is a measurement of sound impedance.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="41">
                     <name lang="en">Sound resistance</name>
                     <token>VSCP_TYPE_MEASUREMENT64_SOUND_RESISTANCE</token>
                     <description lang="en">Default unit: Acoustic ohm Pa · s/ m³.\nThis is a measurement of sound resistance.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="42">
                     <name lang="en">Electric elastance</name>
                     <token>VSCP_TYPE_MEASUREMENT64_ELECTRIC_ELASTANCE</token>
                     <description lang="en">Default unit: daraf (f-1).\nThis is a measurement of electric elasticity.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="43">
                     <name lang="en">Luminous energy</name>
                     <token>VSCP_TYPE_MEASUREMENT64_LUMINOUS_ENERGY</token>
                     <description lang="en">Default unit: talbot ( tb = lm * s)\nThis is a measurement of luminous energy.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="44">
                     <name lang="en">Luminance</name>
                     <token>VSCP_TYPE_MEASUREMENT64_LUMINANCE</token>
                     <description lang="en">Default unit: cd / m²) (non SI unit = nit)\nThis is a measurement of luminance.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="45">
                     <name lang="en">Chemical concentration</name>
                     <token>VSCP_TYPE_MEASUREMENT64_CHEMICAL_CONCENTRATION</token>
                     <description lang="en">Default unit: molal (mol/kg).\nThis is a measurement of chemical concentration.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="46">
                     <name lang="en">Reserved</name>
@@ -6811,7 +6822,7 @@ Notes:
                     <name lang="en">Dose equivalent</name>
                     <token>VSCP_TYPE_MEASUREMENT64_DOSE_EQVIVALENT</token>
                     <description lang="en">Default unit: sievert (J/Kg).\nThis is a measurement of dose equivalent.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="48">
                     <name lang="en">Reserved</name>
@@ -6822,73 +6833,73 @@ Notes:
                     <name lang="en">Dew Point</name>
                     <token>VSCP_TYPE_MEASUREMENT64_DEWPOINT</token>
                     <description lang="en">Default unit: Kelvin.\nOpt. unit: Degree Celsius (1), Fahrenheit (2)\nThis is a measurement of the Dew Point.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="50">
                     <name lang="en">Relative Level</name>
                     <token>VSCP_TYPE_MEASUREMENT64_RELATIVE_LEVEL</token>
                     <description lang="en">Default unit: Relative value.\nThis is a relative value for a level measurement without a unit. It is just relative to the min/max value for the selected data representation, typically percentage or per mille or similar.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="51">
                     <name lang="en">Altitude</name>
                     <token>VSCP_TYPE_MEASUREMENT64_ALTITUDE</token>
                     <description lang="en">Default unit: Meter.\nOpt. unit: Feet(1), inches (2)\nAltitude in meters.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="52">
                     <name lang="en">Area</name>
                     <token>VSCP_TYPE_MEASUREMENT64_AREA</token>
                     <description lang="en">Default unit: square meter (m²)\nArea in square meter.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="53">
                     <name lang="en">Radiant intensity</name>
                     <token>VSCP_TYPE_MEASUREMENT64_RADIANT_INTENSITY</token>
                     <description lang="en">Default unit: watt per steradian ( W / sr )\nRadiated power per room angle.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="54">
                     <name lang="en">Radiance</name>
                     <token>VSCP_TYPE_MEASUREMENT64_RADIANCE</token>
                     <description lang="en">Default unit: watt per steradian per square metre ( W / (sr * m²) )\nThis is the radiant flux emitted, reflected, transmitted or received by a surface.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="55">
                     <name lang="en">Irradiance, Exitance, Radiosity</name>
                     <token>VSCP_TYPE_MEASUREMENT64_IRRADIANCE</token>
                     <description lang="en">Default unit: watt per square metre ( W / m² )\nPower emitted from or striking onto a surface or area.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="56">
                     <name lang="en">Spectral radiance</name>
                     <token>VSCP_TYPE_MEASUREMENT64_SPECTRAL_RADIANCE</token>
                     <description lang="en">Default unit: watt per steradian per square metre per nm (W·sr-1·m-2·nm-1)\nOpt. unit: watt per steradian per meter3 (W·sr-1·m-3) (1), watt per steradian per square metre per hertz (W·sr-1·m-3) (2)\nRadiance of a surface per unit frequency or wavelength.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="57">
                     <name lang="en">Spectral irradiance</name>
                     <token>VSCP_TYPE_MEASUREMENT64_SPECTRAL_IRRADIANCE</token>
                     <description lang="en">Default unit: watt per square metre per nm (W·m-2·nm-1)\nOpt. unit: watt per metre3 (W·m-3) (1), watt per square metre per hertz (W·m-2·Hz-1) (2)\nIrradiance of a surface per unit frequency or wavelength.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="58">
                     <name lang="en">Sound pressure (acoustic pressure)</name>
                     <token>VSCP_TYPE_MEASUREMENT64_SOUND_PRESSURE</token>
                     <description lang="en">Default unit: pascal (Pa)\nThis is a measurement of sound pressure (acoustic pressure).</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="59">
                     <name lang="en">Sound energy density</name>
                     <token>VSCP_TYPE_MEASUREMENT64_SOUND_DENSITY</token>
                     <description lang="en">Default unit: pascal (Pa)\nSound energy density or sound density is the sound energy per unit volume.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="60">
                     <name lang="en">Sound level</name>
                     <token>VSCP_TYPE_MEASUREMENT64_SOUND_LEVEL</token>
                     <description lang="en">Default unit: decibel (dB)\nSound level expressed in decibel. This event is supplied for convenience.</description>
-                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
             </vscp-types>
         </vscp-class>
@@ -9568,6 +9579,14 @@ Notes:
         <type-definition>
             <name>uint32</name>
             <size>4</size>
+        </type-definition>
+        <type-definition>
+            <name>float</name>
+            <size>4</size>
+        </type-definition>
+        <type-definition>
+            <name>double</name>
+            <size>8</size>
         </type-definition>
     </type-definitions>
     

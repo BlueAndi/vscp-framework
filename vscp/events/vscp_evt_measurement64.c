@@ -87,43 +87,58 @@ extern BOOL vscp_evt_measurement64_sendGeneralEvent(void)
     return vscp_core_sendEvent(&txMsg);
 }
 
-/* "Count" not supported. No frame defined. */
+/**
+ * Count
+ * 
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_measurement64_sendCount(double_t value)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_COUNT, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendLengthDistance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendLengthDistance(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_LENGTH, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -133,38 +148,26 @@ extern BOOL vscp_evt_measurement64_sendLengthDistance(uint8_t dataCoding, uint8_
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendMass(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendMass(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_MASS, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -174,38 +177,26 @@ extern BOOL vscp_evt_measurement64_sendMass(uint8_t dataCoding, uint8_t const * 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendTime(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendTime(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_TIME, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -215,38 +206,26 @@ extern BOOL vscp_evt_measurement64_sendTime(uint8_t dataCoding, uint8_t const * 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendElectricCurrent(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendElectricCurrent(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_ELECTRIC_CURRENT, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -256,38 +235,26 @@ extern BOOL vscp_evt_measurement64_sendElectricCurrent(uint8_t dataCoding, uint8
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendTemperature(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendTemperature(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_TEMPERATURE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -297,38 +264,26 @@ extern BOOL vscp_evt_measurement64_sendTemperature(uint8_t dataCoding, uint8_t c
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendAmountOfSubstance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendAmountOfSubstance(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_AMOUNT_OF_SUBSTANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -338,38 +293,26 @@ extern BOOL vscp_evt_measurement64_sendAmountOfSubstance(uint8_t dataCoding, uin
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendLuminousIntensityIntensityOfLight(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendLuminousIntensityIntensityOfLight(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_INTENSITY_OF_LIGHT, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -379,38 +322,26 @@ extern BOOL vscp_evt_measurement64_sendLuminousIntensityIntensityOfLight(uint8_t
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendFrequency(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendFrequency(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_FREQUENCY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -420,38 +351,26 @@ extern BOOL vscp_evt_measurement64_sendFrequency(uint8_t dataCoding, uint8_t con
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendRadioactivityAndOtherRandomEvents(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendRadioactivityAndOtherRandomEvents(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_RADIOACTIVITY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -461,38 +380,26 @@ extern BOOL vscp_evt_measurement64_sendRadioactivityAndOtherRandomEvents(uint8_t
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendForce(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendForce(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_FORCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -502,38 +409,26 @@ extern BOOL vscp_evt_measurement64_sendForce(uint8_t dataCoding, uint8_t const *
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendPressure(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendPressure(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_PRESSURE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -543,38 +438,26 @@ extern BOOL vscp_evt_measurement64_sendPressure(uint8_t dataCoding, uint8_t cons
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendEnergy(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendEnergy(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_ENERGY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -584,38 +467,26 @@ extern BOOL vscp_evt_measurement64_sendEnergy(uint8_t dataCoding, uint8_t const 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendPower(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendPower(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_POWER, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -625,38 +496,26 @@ extern BOOL vscp_evt_measurement64_sendPower(uint8_t dataCoding, uint8_t const *
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendElectricalCharge(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendElectricalCharge(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_ELECTRICAL_CHARGE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -666,38 +525,26 @@ extern BOOL vscp_evt_measurement64_sendElectricalCharge(uint8_t dataCoding, uint
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendElectricalPotentialVoltage(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendElectricalPotentialVoltage(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_ELECTRICAL_POTENTIAL, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -707,38 +554,26 @@ extern BOOL vscp_evt_measurement64_sendElectricalPotentialVoltage(uint8_t dataCo
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendElectricalCapacitance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendElectricalCapacitance(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_ELECTRICAL_CAPACITANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -748,38 +583,26 @@ extern BOOL vscp_evt_measurement64_sendElectricalCapacitance(uint8_t dataCoding,
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendElectricalResistance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendElectricalResistance(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_ELECTRICAL_RESISTANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -789,38 +612,26 @@ extern BOOL vscp_evt_measurement64_sendElectricalResistance(uint8_t dataCoding, 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendElectricalConductance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendElectricalConductance(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_ELECTRICAL_CONDUCTANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -830,38 +641,26 @@ extern BOOL vscp_evt_measurement64_sendElectricalConductance(uint8_t dataCoding,
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendMagneticFieldStrength(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendMagneticFieldStrength(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_MAGNETIC_FIELD_STRENGTH, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -871,38 +670,26 @@ extern BOOL vscp_evt_measurement64_sendMagneticFieldStrength(uint8_t dataCoding,
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendMagneticFlux(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendMagneticFlux(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_MAGNETIC_FLUX, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -912,38 +699,26 @@ extern BOOL vscp_evt_measurement64_sendMagneticFlux(uint8_t dataCoding, uint8_t 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendMagneticFluxDensity(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendMagneticFluxDensity(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_MAGNETIC_FLUX_DENSITY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -953,38 +728,26 @@ extern BOOL vscp_evt_measurement64_sendMagneticFluxDensity(uint8_t dataCoding, u
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendInductance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendInductance(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_INDUCTANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -994,38 +757,26 @@ extern BOOL vscp_evt_measurement64_sendInductance(uint8_t dataCoding, uint8_t co
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendLuminousFlux(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendLuminousFlux(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_FLUX_OF_LIGHT, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -1035,38 +786,26 @@ extern BOOL vscp_evt_measurement64_sendLuminousFlux(uint8_t dataCoding, uint8_t 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendIlluminance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendIlluminance(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_ILLUMINANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -1076,38 +815,26 @@ extern BOOL vscp_evt_measurement64_sendIlluminance(uint8_t dataCoding, uint8_t c
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendRadiationDose(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendRadiationDose(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_RADIATION_DOSE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -1117,38 +844,26 @@ extern BOOL vscp_evt_measurement64_sendRadiationDose(uint8_t dataCoding, uint8_t
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendCatalyticActivity(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendCatalyticActivity(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_CATALYTIC_ACITIVITY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -1158,38 +873,26 @@ extern BOOL vscp_evt_measurement64_sendCatalyticActivity(uint8_t dataCoding, uin
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendVolume(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendVolume(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_VOLUME, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -1199,38 +902,26 @@ extern BOOL vscp_evt_measurement64_sendVolume(uint8_t dataCoding, uint8_t const 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendSoundIntensity(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendSoundIntensity(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_SOUND_INTENSITY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -1240,38 +931,26 @@ extern BOOL vscp_evt_measurement64_sendSoundIntensity(uint8_t dataCoding, uint8_
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendAngle(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendAngle(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_ANGLE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -1281,38 +960,26 @@ extern BOOL vscp_evt_measurement64_sendAngle(uint8_t dataCoding, uint8_t const *
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendPositionWgs84(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendPositionWgs84(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_POSITION, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -1322,38 +989,26 @@ extern BOOL vscp_evt_measurement64_sendPositionWgs84(uint8_t dataCoding, uint8_t
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendSpeed(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendSpeed(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_SPEED, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -1363,38 +1018,26 @@ extern BOOL vscp_evt_measurement64_sendSpeed(uint8_t dataCoding, uint8_t const *
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendAcceleration(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendAcceleration(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_ACCELERATION, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -1404,38 +1047,26 @@ extern BOOL vscp_evt_measurement64_sendAcceleration(uint8_t dataCoding, uint8_t 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendTension(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendTension(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_TENSION, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -1445,38 +1076,26 @@ extern BOOL vscp_evt_measurement64_sendTension(uint8_t dataCoding, uint8_t const
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendDampMoistHygrometerReading(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendDampMoistHygrometerReading(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_HUMIDITY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -1486,38 +1105,26 @@ extern BOOL vscp_evt_measurement64_sendDampMoistHygrometerReading(uint8_t dataCo
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendFlow(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendFlow(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_FLOW, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -1527,38 +1134,26 @@ extern BOOL vscp_evt_measurement64_sendFlow(uint8_t dataCoding, uint8_t const * 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendThermalResistance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendThermalResistance(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_THERMAL_RESISTANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -1568,38 +1163,26 @@ extern BOOL vscp_evt_measurement64_sendThermalResistance(uint8_t dataCoding, uin
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendRefractiveOpticalPower(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendRefractiveOpticalPower(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_REFRACTIVE_POWER, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -1609,38 +1192,26 @@ extern BOOL vscp_evt_measurement64_sendRefractiveOpticalPower(uint8_t dataCoding
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendDynamicViscosity(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendDynamicViscosity(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_DYNAMIC_VISCOSITY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -1650,38 +1221,26 @@ extern BOOL vscp_evt_measurement64_sendDynamicViscosity(uint8_t dataCoding, uint
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendSoundImpedance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendSoundImpedance(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_SOUND_IMPEDANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -1691,38 +1250,26 @@ extern BOOL vscp_evt_measurement64_sendSoundImpedance(uint8_t dataCoding, uint8_
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendSoundResistance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendSoundResistance(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_SOUND_RESISTANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -1732,38 +1279,26 @@ extern BOOL vscp_evt_measurement64_sendSoundResistance(uint8_t dataCoding, uint8
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendElectricElastance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendElectricElastance(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_ELECTRIC_ELASTANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -1773,38 +1308,26 @@ extern BOOL vscp_evt_measurement64_sendElectricElastance(uint8_t dataCoding, uin
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendLuminousEnergy(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendLuminousEnergy(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_LUMINOUS_ENERGY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -1814,38 +1337,26 @@ extern BOOL vscp_evt_measurement64_sendLuminousEnergy(uint8_t dataCoding, uint8_
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendLuminance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendLuminance(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_LUMINANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -1855,38 +1366,26 @@ extern BOOL vscp_evt_measurement64_sendLuminance(uint8_t dataCoding, uint8_t con
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendChemicalConcentration(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendChemicalConcentration(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_CHEMICAL_CONCENTRATION, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -1898,38 +1397,26 @@ extern BOOL vscp_evt_measurement64_sendChemicalConcentration(uint8_t dataCoding,
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendDoseEquivalent(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendDoseEquivalent(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_DOSE_EQVIVALENT, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -1941,38 +1428,26 @@ extern BOOL vscp_evt_measurement64_sendDoseEquivalent(uint8_t dataCoding, uint8_
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendDewPoint(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendDewPoint(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_DEWPOINT, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -1982,38 +1457,26 @@ extern BOOL vscp_evt_measurement64_sendDewPoint(uint8_t dataCoding, uint8_t cons
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendRelativeLevel(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendRelativeLevel(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_RELATIVE_LEVEL, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -2023,38 +1486,26 @@ extern BOOL vscp_evt_measurement64_sendRelativeLevel(uint8_t dataCoding, uint8_t
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendAltitude(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendAltitude(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_ALTITUDE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -2064,38 +1515,26 @@ extern BOOL vscp_evt_measurement64_sendAltitude(uint8_t dataCoding, uint8_t cons
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendArea(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendArea(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_AREA, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -2105,38 +1544,26 @@ extern BOOL vscp_evt_measurement64_sendArea(uint8_t dataCoding, uint8_t const * 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendRadiantIntensity(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendRadiantIntensity(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_RADIANT_INTENSITY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -2146,38 +1573,26 @@ extern BOOL vscp_evt_measurement64_sendRadiantIntensity(uint8_t dataCoding, uint
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendRadiance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendRadiance(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_RADIANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -2187,38 +1602,26 @@ extern BOOL vscp_evt_measurement64_sendRadiance(uint8_t dataCoding, uint8_t cons
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendIrradianceExitanceRadiosity(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendIrradianceExitanceRadiosity(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_IRRADIANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -2228,38 +1631,26 @@ extern BOOL vscp_evt_measurement64_sendIrradianceExitanceRadiosity(uint8_t dataC
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendSpectralRadiance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendSpectralRadiance(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_SPECTRAL_RADIANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -2269,38 +1660,26 @@ extern BOOL vscp_evt_measurement64_sendSpectralRadiance(uint8_t dataCoding, uint
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendSpectralIrradiance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendSpectralIrradiance(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_SPECTRAL_IRRADIANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -2310,38 +1689,26 @@ extern BOOL vscp_evt_measurement64_sendSpectralIrradiance(uint8_t dataCoding, ui
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendSoundPressureAcousticPressure(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendSoundPressureAcousticPressure(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_SOUND_PRESSURE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -2351,38 +1718,26 @@ extern BOOL vscp_evt_measurement64_sendSoundPressureAcousticPressure(uint8_t dat
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendSoundEnergyDensity(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendSoundEnergyDensity(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_SOUND_DENSITY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
@@ -2392,38 +1747,26 @@ extern BOOL vscp_evt_measurement64_sendSoundEnergyDensity(uint8_t dataCoding, ui
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement64_sendSoundLevel(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement64_sendSoundLevel(double_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_SOUND_LEVEL, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
 
     txMsg.dataNum = size;
 
