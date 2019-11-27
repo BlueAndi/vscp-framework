@@ -87,43 +87,50 @@ extern BOOL vscp_evt_measurement32_sendGeneralEvent(void)
     return vscp_core_sendEvent(&txMsg);
 }
 
-/* "Count" not supported. No frame defined. */
+/**
+ * Count
+ * 
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_measurement32_sendCount(float_t value)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_COUNT, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendLengthDistance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendLengthDistance(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_LENGTH, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -133,38 +140,22 @@ extern BOOL vscp_evt_measurement32_sendLengthDistance(uint8_t dataCoding, uint8_
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendMass(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendMass(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_MASS, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -174,38 +165,22 @@ extern BOOL vscp_evt_measurement32_sendMass(uint8_t dataCoding, uint8_t const * 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendTime(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendTime(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_TIME, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -215,38 +190,22 @@ extern BOOL vscp_evt_measurement32_sendTime(uint8_t dataCoding, uint8_t const * 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendElectricCurrent(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendElectricCurrent(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_ELECTRIC_CURRENT, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -256,38 +215,22 @@ extern BOOL vscp_evt_measurement32_sendElectricCurrent(uint8_t dataCoding, uint8
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendTemperature(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendTemperature(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_TEMPERATURE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -297,38 +240,22 @@ extern BOOL vscp_evt_measurement32_sendTemperature(uint8_t dataCoding, uint8_t c
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendAmountOfSubstance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendAmountOfSubstance(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_AMOUNT_OF_SUBSTANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -338,38 +265,22 @@ extern BOOL vscp_evt_measurement32_sendAmountOfSubstance(uint8_t dataCoding, uin
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendLuminousIntensityIntensityOfLight(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendLuminousIntensityIntensityOfLight(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_INTENSITY_OF_LIGHT, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -379,38 +290,22 @@ extern BOOL vscp_evt_measurement32_sendLuminousIntensityIntensityOfLight(uint8_t
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendFrequency(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendFrequency(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_FREQUENCY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -420,38 +315,22 @@ extern BOOL vscp_evt_measurement32_sendFrequency(uint8_t dataCoding, uint8_t con
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendRadioactivityAndOtherRandomEvents(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendRadioactivityAndOtherRandomEvents(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_RADIOACTIVITY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -461,38 +340,22 @@ extern BOOL vscp_evt_measurement32_sendRadioactivityAndOtherRandomEvents(uint8_t
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendForce(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendForce(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_FORCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -502,38 +365,22 @@ extern BOOL vscp_evt_measurement32_sendForce(uint8_t dataCoding, uint8_t const *
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendPressure(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendPressure(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_PRESSURE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -543,38 +390,22 @@ extern BOOL vscp_evt_measurement32_sendPressure(uint8_t dataCoding, uint8_t cons
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendEnergy(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendEnergy(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_ENERGY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -584,38 +415,22 @@ extern BOOL vscp_evt_measurement32_sendEnergy(uint8_t dataCoding, uint8_t const 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendPower(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendPower(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_POWER, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -625,38 +440,22 @@ extern BOOL vscp_evt_measurement32_sendPower(uint8_t dataCoding, uint8_t const *
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendElectricalCharge(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendElectricalCharge(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_ELECTRICAL_CHARGE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -666,38 +465,22 @@ extern BOOL vscp_evt_measurement32_sendElectricalCharge(uint8_t dataCoding, uint
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendElectricalPotentialVoltage(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendElectricalPotentialVoltage(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_ELECTRICAL_POTENTIAL, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -707,38 +490,22 @@ extern BOOL vscp_evt_measurement32_sendElectricalPotentialVoltage(uint8_t dataCo
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendElectricalCapacitance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendElectricalCapacitance(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_ELECTRICAL_CAPACITANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -748,38 +515,22 @@ extern BOOL vscp_evt_measurement32_sendElectricalCapacitance(uint8_t dataCoding,
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendElectricalResistance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendElectricalResistance(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_ELECTRICAL_RESISTANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -789,38 +540,22 @@ extern BOOL vscp_evt_measurement32_sendElectricalResistance(uint8_t dataCoding, 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendElectricalConductance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendElectricalConductance(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_ELECTRICAL_CONDUCTANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -830,38 +565,22 @@ extern BOOL vscp_evt_measurement32_sendElectricalConductance(uint8_t dataCoding,
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendMagneticFieldStrength(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendMagneticFieldStrength(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_MAGNETIC_FIELD_STRENGTH, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -871,38 +590,22 @@ extern BOOL vscp_evt_measurement32_sendMagneticFieldStrength(uint8_t dataCoding,
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendMagneticFlux(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendMagneticFlux(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_MAGNETIC_FLUX, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -912,38 +615,22 @@ extern BOOL vscp_evt_measurement32_sendMagneticFlux(uint8_t dataCoding, uint8_t 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendMagneticFluxDensity(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendMagneticFluxDensity(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_MAGNETIC_FLUX_DENSITY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -953,38 +640,22 @@ extern BOOL vscp_evt_measurement32_sendMagneticFluxDensity(uint8_t dataCoding, u
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendInductance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendInductance(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_INDUCTANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -994,38 +665,22 @@ extern BOOL vscp_evt_measurement32_sendInductance(uint8_t dataCoding, uint8_t co
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendLuminousFlux(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendLuminousFlux(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_FLUX_OF_LIGHT, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -1035,38 +690,22 @@ extern BOOL vscp_evt_measurement32_sendLuminousFlux(uint8_t dataCoding, uint8_t 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendIlluminance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendIlluminance(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_ILLUMINANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -1076,38 +715,22 @@ extern BOOL vscp_evt_measurement32_sendIlluminance(uint8_t dataCoding, uint8_t c
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendRadiationDose(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendRadiationDose(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_RADIATION_DOSE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -1117,38 +740,22 @@ extern BOOL vscp_evt_measurement32_sendRadiationDose(uint8_t dataCoding, uint8_t
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendCatalyticActivity(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendCatalyticActivity(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_CATALYTIC_ACITIVITY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -1158,38 +765,22 @@ extern BOOL vscp_evt_measurement32_sendCatalyticActivity(uint8_t dataCoding, uin
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendVolume(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendVolume(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_VOLUME, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -1199,38 +790,22 @@ extern BOOL vscp_evt_measurement32_sendVolume(uint8_t dataCoding, uint8_t const 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendSoundIntensity(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendSoundIntensity(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_SOUND_INTENSITY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -1240,38 +815,22 @@ extern BOOL vscp_evt_measurement32_sendSoundIntensity(uint8_t dataCoding, uint8_
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendAngle(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendAngle(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_ANGLE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -1281,38 +840,22 @@ extern BOOL vscp_evt_measurement32_sendAngle(uint8_t dataCoding, uint8_t const *
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendPositionWgs84(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendPositionWgs84(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_POSITION, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -1322,38 +865,22 @@ extern BOOL vscp_evt_measurement32_sendPositionWgs84(uint8_t dataCoding, uint8_t
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendSpeed(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendSpeed(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_SPEED, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -1363,38 +890,22 @@ extern BOOL vscp_evt_measurement32_sendSpeed(uint8_t dataCoding, uint8_t const *
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendAcceleration(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendAcceleration(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_ACCELERATION, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -1404,38 +915,22 @@ extern BOOL vscp_evt_measurement32_sendAcceleration(uint8_t dataCoding, uint8_t 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendTension(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendTension(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_TENSION, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -1445,38 +940,22 @@ extern BOOL vscp_evt_measurement32_sendTension(uint8_t dataCoding, uint8_t const
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendDampMoistHygrometerReading(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendDampMoistHygrometerReading(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_HUMIDITY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -1486,38 +965,22 @@ extern BOOL vscp_evt_measurement32_sendDampMoistHygrometerReading(uint8_t dataCo
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendFlow(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendFlow(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_FLOW, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -1527,38 +990,22 @@ extern BOOL vscp_evt_measurement32_sendFlow(uint8_t dataCoding, uint8_t const * 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendThermalResistance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendThermalResistance(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_THERMAL_RESISTANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -1568,38 +1015,22 @@ extern BOOL vscp_evt_measurement32_sendThermalResistance(uint8_t dataCoding, uin
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendRefractiveOpticalPower(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendRefractiveOpticalPower(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_REFRACTIVE_POWER, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -1609,38 +1040,22 @@ extern BOOL vscp_evt_measurement32_sendRefractiveOpticalPower(uint8_t dataCoding
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendDynamicViscosity(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendDynamicViscosity(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_DYNAMIC_VISCOSITY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -1650,38 +1065,22 @@ extern BOOL vscp_evt_measurement32_sendDynamicViscosity(uint8_t dataCoding, uint
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendSoundImpedance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendSoundImpedance(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_SOUND_IMPEDANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -1691,38 +1090,22 @@ extern BOOL vscp_evt_measurement32_sendSoundImpedance(uint8_t dataCoding, uint8_
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendSoundResistance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendSoundResistance(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_SOUND_RESISTANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -1732,38 +1115,22 @@ extern BOOL vscp_evt_measurement32_sendSoundResistance(uint8_t dataCoding, uint8
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendElectricElastance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendElectricElastance(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_ELECTRIC_ELASTANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -1773,38 +1140,22 @@ extern BOOL vscp_evt_measurement32_sendElectricElastance(uint8_t dataCoding, uin
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendLuminousEnergy(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendLuminousEnergy(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_LUMINOUS_ENERGY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -1814,38 +1165,22 @@ extern BOOL vscp_evt_measurement32_sendLuminousEnergy(uint8_t dataCoding, uint8_
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendLuminance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendLuminance(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_LUMINANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -1855,38 +1190,22 @@ extern BOOL vscp_evt_measurement32_sendLuminance(uint8_t dataCoding, uint8_t con
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendChemicalConcentration(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendChemicalConcentration(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_CHEMICAL_CONCENTRATION, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -1898,38 +1217,22 @@ extern BOOL vscp_evt_measurement32_sendChemicalConcentration(uint8_t dataCoding,
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendDoseEquivalent(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendDoseEquivalent(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_DOSE_EQVIVALENT, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -1941,38 +1244,22 @@ extern BOOL vscp_evt_measurement32_sendDoseEquivalent(uint8_t dataCoding, uint8_
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendDewPoint(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendDewPoint(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_DEWPOINT, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -1982,38 +1269,22 @@ extern BOOL vscp_evt_measurement32_sendDewPoint(uint8_t dataCoding, uint8_t cons
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendRelativeLevel(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendRelativeLevel(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_RELATIVE_LEVEL, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -2023,38 +1294,22 @@ extern BOOL vscp_evt_measurement32_sendRelativeLevel(uint8_t dataCoding, uint8_t
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendAltitude(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendAltitude(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_ALTITUDE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -2064,38 +1319,22 @@ extern BOOL vscp_evt_measurement32_sendAltitude(uint8_t dataCoding, uint8_t cons
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendArea(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendArea(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_AREA, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -2105,38 +1344,22 @@ extern BOOL vscp_evt_measurement32_sendArea(uint8_t dataCoding, uint8_t const * 
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendRadiantIntensity(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendRadiantIntensity(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_RADIANT_INTENSITY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -2146,38 +1369,22 @@ extern BOOL vscp_evt_measurement32_sendRadiantIntensity(uint8_t dataCoding, uint
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendRadiance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendRadiance(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_RADIANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -2187,38 +1394,22 @@ extern BOOL vscp_evt_measurement32_sendRadiance(uint8_t dataCoding, uint8_t cons
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendIrradianceExitanceRadiosity(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendIrradianceExitanceRadiosity(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_IRRADIANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -2228,38 +1419,22 @@ extern BOOL vscp_evt_measurement32_sendIrradianceExitanceRadiosity(uint8_t dataC
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendSpectralRadiance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendSpectralRadiance(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_SPECTRAL_RADIANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -2269,38 +1444,22 @@ extern BOOL vscp_evt_measurement32_sendSpectralRadiance(uint8_t dataCoding, uint
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendSpectralIrradiance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendSpectralIrradiance(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_SPECTRAL_IRRADIANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -2310,38 +1469,22 @@ extern BOOL vscp_evt_measurement32_sendSpectralIrradiance(uint8_t dataCoding, ui
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendSoundPressureAcousticPressure(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendSoundPressureAcousticPressure(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_SOUND_PRESSURE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -2351,38 +1494,22 @@ extern BOOL vscp_evt_measurement32_sendSoundPressureAcousticPressure(uint8_t dat
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendSoundEnergyDensity(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendSoundEnergyDensity(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_SOUND_DENSITY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 
@@ -2392,38 +1519,22 @@ extern BOOL vscp_evt_measurement32_sendSoundEnergyDensity(uint8_t dataCoding, ui
 /**
  * Count
  * 
- * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
- * @param[in] datasize Size in byte.
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_measurement32_sendSoundLevel(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_measurement32_sendSoundLevel(float_t value)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == data) || (0 == dataSize))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_SOUND_LEVEL, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
-    {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 4;
 
     txMsg.dataNum = size;
 

@@ -311,6 +311,9 @@ This transformation script generates the VSCP event modules.
                 <xsl:when test="@id = 60">
                     <xsl:text>#include &lt;math.h&gt;&LF;</xsl:text>
                 </xsl:when>
+                <xsl:when test="@id = 70">
+                    <xsl:text>#include &lt;math.h&gt;&LF;</xsl:text>
+                </xsl:when>
                 <xsl:otherwise>
                 </xsl:otherwise>
             </xsl:choose>
@@ -912,6 +915,43 @@ This transformation script generates the VSCP event modules.
                             <xsl:text>;&LF;</xsl:text>
 
                         </xsl:when>
+                        <xsl:when test="@type = 'float'">
+
+                            <xsl:value-of select="$indent" /> 
+                            <xsl:text>txMsg.data[</xsl:text>
+                            <xsl:value-of select="@pos + 4" />
+                            <xsl.text>] = ((uint8_t*)&amp;</xsl.text>
+                            <xsl:value-of select="$varContent" />
+                            <xsl:text>)[3];&LF;</xsl:text>
+
+                            <xsl:value-of select="$indent" /> 
+                            <xsl:text>txMsg.data[</xsl:text>
+                            <xsl:value-of select="@pos + 5" />
+                            <xsl.text>] = ((uint8_t*)&amp;</xsl.text>
+                            <xsl:value-of select="$varContent" />
+                            <xsl:text>)[2];&LF;</xsl:text>
+
+                            <xsl:value-of select="$indent" /> 
+                            <xsl:text>txMsg.data[</xsl:text>
+                            <xsl:value-of select="@pos + 6" />
+                            <xsl.text>] = ((uint8_t*)&amp;</xsl.text>
+                            <xsl:value-of select="$varContent" />
+                            <xsl:text>)[1];&LF;</xsl:text>
+
+                            <xsl:value-of select="$indent" /> 
+                            <xsl:text>txMsg.data[</xsl:text>
+                            <xsl:value-of select="@pos + 7" />
+                            <xsl.text>] = ((uint8_t*)&amp;</xsl.text>
+                            <xsl:value-of select="$varContent" />
+                            <xsl:text>)[0];&LF;</xsl:text>
+
+                            <xsl:value-of select="$indent" />
+                            <xsl:text>size += </xsl:text>
+                            <xsl:value-of select="/specification/type-definitions/type-definition[name/text() = 'float']/size" />
+                            <xsl:text>;&LF;</xsl:text>
+
+                        </xsl:when>
+
                         <xsl:when test="@type = 'double'">
 
                             <xsl:value-of select="$indent" /> 
