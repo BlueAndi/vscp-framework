@@ -77,15 +77,29 @@ SOURCES= main.c \
 		../../vscp/vscp_transport.c \
 		../../vscp/vscp_util.c \
 		../../vscp/bootloader/vscp_bootloader.c \
-		../../vscp/events/vscp_alarm.c \
-		../../vscp/events/vscp_control.c \
-		../../vscp/events/vscp_information.c \
-		../../vscp/events/vscp_log.c \
-		../../vscp/events/vscp_measurement.c \
-		../../vscp/events/vscp_measurezone.c \
-		../../vscp/events/vscp_security.c \
-		../../vscp/events/vscp_weather.c \
-		../../vscp/events/vscp_weather_forecast.c
+		../events/vscp_evt_alarm.c \
+		../events/vscp_evt_aol.c \
+		../events/vscp_evt_control.c \
+		../events/vscp_evt_data.c \
+		../events/vscp_evt_diagnostic.c \
+		../events/vscp_evt_display.c \
+		../events/vscp_evt_error.c \
+		../events/vscp_evt_gnss.c \
+		../events/vscp_evt_information.c \
+		../events/vscp_evt_ir.c \
+		../events/vscp_evt_log.c \
+		../events/vscp_evt_measurement.c \
+		../events/vscp_evt_measurement32.c \
+		../events/vscp_evt_measurement64.c \
+		../events/vscp_evt_measurezone.c \
+		../events/vscp_evt_multimedia.c \
+		../events/vscp_evt_phone.c \
+		../events/vscp_evt_protocol.c \
+		../events/vscp_evt_security.c \
+		../events/vscp_evt_setvaluezone.c \
+		../events/vscp_evt_weather.c \
+		../events/vscp_evt_weather_forecast.c \
+		../events/vscp_evt_wireless.c
 
 # Include all source pathes here like ../src1:../src2
 VPATH= ../../common:../../common/pc:../../common/pc/vscphelper:../../vscp:../../vscp/events:vscp_user:../../vscp/bootloader

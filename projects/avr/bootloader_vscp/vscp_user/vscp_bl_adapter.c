@@ -280,7 +280,7 @@ extern uint8_t  vscp_bl_adapter_readGUID(uint8_t index)
  */
 extern void vscp_bl_adapter_programBlock(uint32_t blockNo, uint8_t *buffer)
 {
-    uint32_t    addr    = blockNo * VSCP_PLATFORM_FLASH_PAGE_SIZE;
+    uint32_t    addr    = blockNo * VSCP_PLATFORM_PROG_MEM_BLOCK_SIZE;
     uint16_t    index   = 0u;
     uint8_t     sreg    = 0;
 
@@ -297,7 +297,7 @@ extern void vscp_bl_adapter_programBlock(uint32_t blockNo, uint8_t *buffer)
     /* Wait until the memory is erased. */
     boot_spm_busy_wait();
 
-    for (index = 0u; index < VSCP_PLATFORM_FLASH_PAGE_SIZE; index += 2u)
+    for (index = 0u; index < VSCP_PLATFORM_PROG_MEM_BLOCK_SIZE; index += 2u)
     {
         /* Set up little-endian word. */
         uint16_t leWord = *buffer;

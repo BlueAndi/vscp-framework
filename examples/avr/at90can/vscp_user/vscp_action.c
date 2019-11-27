@@ -45,7 +45,7 @@
 #if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM ) || VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION )
 
 #include "hw.h"
-#include "vscp_information.h"
+#include "vscp_evt_information.h"
 #include "vscp_util.h"
 
 /*******************************************************************************
@@ -113,13 +113,13 @@ extern void vscp_action_execute(uint8_t action, uint8_t par, vscp_RxMessage cons
     /* Enable status LED, no parameter */
     case VSCP_ACTION_001_ENABLE_STATUS_LED:
         HW_ENABLE_STATUS_LED();
-        vscp_information_sendOnEvent(0, 0xff, 0xff);
+        vscp_evt_information_sendOn(0, 0xff, 0xff);
         break;
 
     /* Disable status LED, no parameter */
     case VSCP_ACTION_002_DISABLE_STATUS_LED:
         HW_DISABLE_STATUS_LED();
-        vscp_information_sendOffEvent(0, 0xff, 0xff);
+        vscp_evt_information_sendOff(0, 0xff, 0xff);
         break;
 
     default:

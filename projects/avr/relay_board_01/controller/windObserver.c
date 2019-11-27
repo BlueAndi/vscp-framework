@@ -43,7 +43,7 @@
 #include "windObserver.h"
 #include <stddef.h>
 #include "windDrv.h"
-#include "vscp_weather.h"
+#include "vscp_evt_weather.h"
 #include "vscp_ps_user.h"
 
 /*******************************************************************************
@@ -125,7 +125,7 @@ extern void windObserver_process(void)
         {
             if (WINDOBSERVER_STATE_VERY_HIGH != windObserver_state)
             {
-                vscp_weather_sendVeryHighWindEvent(0, vscp_ps_user_readWindEventZone(), vscp_ps_user_readWindEventSubZone());
+                vscp_evt_weather_sendVeryHighWind(0, vscp_ps_user_readWindEventZone(), vscp_ps_user_readWindEventSubZone());
             }
 
             windObserver_state = WINDOBSERVER_STATE_VERY_HIGH;
@@ -135,7 +135,7 @@ extern void windObserver_process(void)
         {
             if (WINDOBSERVER_STATE_HIGH != windObserver_state)
             {
-                vscp_weather_sendHighWindEvent(0, vscp_ps_user_readWindEventZone(), vscp_ps_user_readWindEventSubZone());
+                vscp_evt_weather_sendHighWind(0, vscp_ps_user_readWindEventZone(), vscp_ps_user_readWindEventSubZone());
             }
 
             windObserver_state = WINDOBSERVER_STATE_HIGH;
@@ -145,7 +145,7 @@ extern void windObserver_process(void)
         {
             if (WINDOBSERVER_STATE_MEDIUM != windObserver_state)
             {
-                vscp_weather_sendMediumWindEvent(0, vscp_ps_user_readWindEventZone(), vscp_ps_user_readWindEventSubZone());
+                vscp_evt_weather_sendMediumWind(0, vscp_ps_user_readWindEventZone(), vscp_ps_user_readWindEventSubZone());
             }
 
             windObserver_state = WINDOBSERVER_STATE_MEDIUM;
@@ -155,7 +155,7 @@ extern void windObserver_process(void)
         {
             if (WINDOBSERVER_STATE_LOW != windObserver_state)
             {
-                vscp_weather_sendLowWindEvent(0, vscp_ps_user_readWindEventZone(), vscp_ps_user_readWindEventSubZone());
+                vscp_evt_weather_sendLowWind(0, vscp_ps_user_readWindEventZone(), vscp_ps_user_readWindEventSubZone());
             }
 
             windObserver_state = WINDOBSERVER_STATE_LOW;

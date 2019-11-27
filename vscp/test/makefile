@@ -66,15 +66,6 @@ SOURCES= main.c \
 		../vscp_ps.c \
 		../vscp_transport.c \
 		../vscp_util.c \
-		../events/vscp_alarm.c \
-		../events/vscp_control.c \
-		../events/vscp_information.c \
-		../events/vscp_log.c \
-		../events/vscp_measurement.c \
-		../events/vscp_measurezone.c \
-		../events/vscp_security.c \
-		../events/vscp_weather.c \
-		../events/vscp_weather_forecast.c \
 		../events/vscp_evt_alarm.c \
 		../events/vscp_evt_aol.c \
 		../events/vscp_evt_control.c \

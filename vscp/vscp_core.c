@@ -47,7 +47,7 @@
 #include "vscp_class_l1.h"
 #include "vscp_type_protocol.h"
 #include "vscp_type_information.h"
-#include "vscp_information.h"
+#include "vscp_evt_information.h"
 #include "vscp_ps.h"
 #include "vscp_timer.h"
 #include "vscp_app_reg.h"
@@ -1153,7 +1153,7 @@ static inline void  vscp_core_stateActive(void)
 #if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_CUSTOM_HEARTBEAT )
         (void)vscp_portable_sendNodeHeartbeatEvent();
 #else
-        (void)vscp_information_sendNodeHeartbeatEvent(0, vscp_dev_data_getNodeZone(), vscp_dev_data_getNodeSubZone());
+        (void)vscp_evt_information_sendNodeHeartbeat(0, vscp_dev_data_getNodeZone(), vscp_dev_data_getNodeSubZone());
 #endif
 
         /* Restart timer */

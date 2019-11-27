@@ -46,7 +46,7 @@
 
 #include "relay.h"
 #include "shutter.h"
-#include "vscp_information.h"
+#include "vscp_evt_information.h"
 #include "vscp_ps_user.h"
 
 /*******************************************************************************
@@ -305,13 +305,13 @@ static void vscp_action_activateRelay(uint8_t par, BOOL activate)
                     {
                         if (FALSE == activate)
                         {
-                            vscp_information_sendOffEvent(  index,
+                            vscp_evt_information_sendOff(   index,
                                                             vscp_ps_user_readRelayEventZone(index),
                                                             vscp_ps_user_readRelayEventSubZone(index));
                         }
                         else
                         {
-                            vscp_information_sendOnEvent(   index,
+                            vscp_evt_information_sendOn(    index,
                                                             vscp_ps_user_readRelayEventZone(index),
                                                             vscp_ps_user_readRelayEventSubZone(index));
                         }
@@ -360,13 +360,13 @@ static void vscp_action_toggleRelay(uint8_t par)
                     {
                         if (TRUE == isActive)
                         {
-                            vscp_information_sendOffEvent(  index,
+                            vscp_evt_information_sendOff(   index,
                                                             vscp_ps_user_readRelayEventZone(index),
                                                             vscp_ps_user_readRelayEventSubZone(index));
                         }
                         else
                         {
-                            vscp_information_sendOnEvent(   index,
+                            vscp_evt_information_sendOn(    index,
                                                             vscp_ps_user_readRelayEventZone(index),
                                                             vscp_ps_user_readRelayEventSubZone(index));
                         }

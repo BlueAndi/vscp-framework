@@ -91,6 +91,12 @@ extern "C"
     TYPES AND STRUCTURES
 *******************************************************************************/
 
+/** Single precision floatingpoint type. */
+typedef float float_t;
+
+/** Double precision floatingpoint type. */
+typedef double double_t;
+
 /*******************************************************************************
     VARIABLES
 *******************************************************************************/

@@ -62,7 +62,7 @@ This module contains the main entry point.
 #include "sys_sm.h"
 #include "watchdog.h"
 #include "can_monitor.h"
-#include "vscp_information.h"
+#include "vscp_evt_information.h"
 #include <avr/sleep.h>
 
 /*******************************************************************************
@@ -711,35 +711,35 @@ static void main_shutterCb(uint8_t nr, SHUTTER_DIR dir, SHUTTER_POS pos)
     {
         if (SHUTTER_DIR_UP == dir)
         {
-            (void)vscp_information_sendShutterUpEvent(nr,
-                                                      vscp_ps_user_readShutterEventZone(nr),
-                                                      vscp_ps_user_readShutterEventSubZone(nr));
+            (void)vscp_evt_information_sendShutterUp(nr,
+                                                     vscp_ps_user_readShutterEventZone(nr),
+                                                     vscp_ps_user_readShutterEventSubZone(nr));
         }
         else if (SHUTTER_DIR_DOWN == dir)
         {
-            (void)vscp_information_sendShutterDownEvent(nr,
-                                                        vscp_ps_user_readShutterEventZone(nr),
-                                                        vscp_ps_user_readShutterEventSubZone(nr));
+            (void)vscp_evt_information_sendShutterDown(nr,
+                                                       vscp_ps_user_readShutterEventZone(nr),
+                                                       vscp_ps_user_readShutterEventSubZone(nr));
         }
         else if (SHUTTER_DIR_STOP == dir)
         {
             if (SHUTTER_POS_TOP == pos)
             {
-                (void)vscp_information_sendShutterReachedTopEndEvent(nr,
-                                                                     vscp_ps_user_readShutterEventZone(nr),
-                                                                     vscp_ps_user_readShutterEventSubZone(nr));
+                (void)vscp_evt_information_sendShutterReachedTopEnd(nr,
+                                                                    vscp_ps_user_readShutterEventZone(nr),
+                                                                    vscp_ps_user_readShutterEventSubZone(nr));
             }
             else if (SHUTTER_POS_BOTTOM == pos)
             {
-                (void)vscp_information_sendShutterReachedBottomEndEvent(nr,
-                                                                        vscp_ps_user_readShutterEventZone(nr),
-                                                                        vscp_ps_user_readShutterEventSubZone(nr));
+                (void)vscp_evt_information_sendShutterReachedBottomEnd(nr,
+                                                                       vscp_ps_user_readShutterEventZone(nr),
+                                                                       vscp_ps_user_readShutterEventSubZone(nr));
             }
             else
             {
-                (void)vscp_information_sendStopEvent(nr,
-                                                     vscp_ps_user_readShutterEventZone(nr),
-                                                     vscp_ps_user_readShutterEventSubZone(nr));
+                (void)vscp_evt_information_sendStop(nr,
+                                                    vscp_ps_user_readShutterEventZone(nr),
+                                                    vscp_ps_user_readShutterEventSubZone(nr));
             }
         }
         else

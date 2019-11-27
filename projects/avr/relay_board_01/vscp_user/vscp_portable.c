@@ -208,7 +208,7 @@ extern void vscp_portable_provideEvent(vscp_RxMessage const * const msg)
     /* Set log level */
     if (VSCP_CLASS_L1_LOG == msg->vscpClass)
     {
-        if (VSCP_TYPE_LOG_LOG_START == msg->vscpType)
+        if (VSCP_TYPE_LOG_START == msg->vscpType)
         {
             if (1 == msg->dataNum)
             {
@@ -218,7 +218,7 @@ extern void vscp_portable_provideEvent(vscp_RxMessage const * const msg)
                 vscp_logger_setLogLevel(logLevel);
             }
         }
-        else if (VSCP_TYPE_LOG_LOG_STOP == msg->vscpType)
+        else if (VSCP_TYPE_LOG_STOP == msg->vscpType)
         {
             if (1 == msg->dataNum)
             {

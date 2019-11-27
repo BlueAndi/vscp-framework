@@ -268,32 +268,3 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg)
 /*******************************************************************************
     LOCAL FUNCTIONS
 *******************************************************************************/
-
-static status_t vscp_tp_adapter_transferSendBlocking(CAN_Type *base, uint8_t mbIdx, flexcan_frame_t *txFrame, )
-{
-	status_t	status	= kStatus_Fail;
-
-    /* Write Tx Message Buffer to initiate a data sending. */
-    if (kStatus_Success == FLEXCAN_WriteTxMb(base, mbIdx, txFrame))
-    {
-    	uint32_t 	tickStartValue 		= PIT_GetCurrentTimerCount(PIT, kPIT_Chnl_0);
-    	uint32_t 	tickCurrentValue	= tickStartValue;
-    	bool		isTimeout			= false;
-
-        /* Wait until CAN Message send out. */
-        while (!FLEXCAN_GetMbStatusFlags(base, 1 << mbIdx) && (false == timeout))
-        {
-        	isTimeout = (100u <= (PIT_GetCurrentTimerCount(PIT, kPIT_Chnl_0) - tickStartValue)) ? true : false;
-        }
-
-        /* Clean Tx Message Buffer Flag. */
-        FLEXCAN_ClearMbStatusFlags(base, 1 << mbIdx);
-
-        if (false == timeout)
-        {
-        	status = kStatus_Success;
-        }
-    }
-
-    return status;
-}
