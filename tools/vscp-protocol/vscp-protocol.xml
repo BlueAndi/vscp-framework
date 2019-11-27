@@ -8815,41 +8815,83 @@ Notes:
                     <name lang="en">Incoming call</name>
                     <token>VSCP_TYPE_PHONE_INCOMING_CALL</token>
                     <description lang="en">There is an incoming phone call. Usually a caller ID node just sends out numerical information. A database event can follow (later) that contains the real text information.\nPhone calls are reported in the following form\nfrom,to\nwhere from is the originating number and to is the receiving phone. Numbers is preferable presented in an international form. So a call from England to a Swedish phone should take the following form\n44-123-1122334,46-657-413430\nwhich is sent in tree frames. Some device can't separate country and area-code and therefore the form\n441231122334,46657413430\nwill also be valid.\na database connected application can later resolve this and present\nA customer,Eurosource\nThis is the type=8 event, database info, (see below). Note that the comma cant be used in the descriptive names.\nCalls from unlisted numbers are presented as\n,to</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">id</name>
+                                    <description lang="en">Id for the call. This is an incremental identity number for each call.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Index of phone event (base = 0). Each call can be broken up into fragments. This is the fragment number.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Total</name>
+                                    <description lang="en">Total number of events (fragments) for this call information.</description>
+                                </element>
+                                <element pos="3" type="uint8" length="5" optional="false">
+                                    <name lang="en">Info</name>
+                                    <description lang="en">Caller information. Number or real text information.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="2">
                     <name lang="en">Outgoing call</name>
                     <token>VSCP_TYPE_PHONE_OUTGOING_CALL</token>
                     <description lang="en">There is an outgoing phone call.</description>
+                    <frames-ref>specification/vscp-classes/100/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="3">
                     <name lang="en">Ring</name>
                     <token>VSCP_TYPE_PHONE_RING</token>
                     <description lang="en">This is a event indicating that there is a “ring” for this call.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">id</name>
+                                    <description lang="en">Id for the call. This is an incremental identity number for each call.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="4">
                     <name lang="en">Answer</name>
                     <token>VSCP_TYPE_PHONE_ANSWER</token>
                     <description lang="en">The call has been answered.</description>
+                    <frames-ref>specification/vscp-classes/100/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="5">
                     <name lang="en">Hangup</name>
                     <token>VSCP_TYPE_PHONE_HANGUP</token>
                     <description lang="en">The call has been terminated by the receiving end.</description>
+                    <frames-ref>specification/vscp-classes/100/vscp-types/3/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="6">
                     <name lang="en">Giveup</name>
                     <token>VSCP_TYPE_PHONE_GIVEUP</token>
                     <description lang="en">The call has been terminated by the originating end. byte</description>
+                    <frames-ref>specification/vscp-classes/100/vscp-types/3/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="7">
                     <name lang="en">Transfer</name>
                     <token>VSCP_TYPE_PHONE_TRANSFER</token>
                     <description lang="en">The call has been transferred. byte</description>
+                    <frames-ref>specification/vscp-classes/100/vscp-types/3/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="8">
                     <name lang="en">Database Info</name>
                     <token>VSCP_TYPE_PHONE_DATABASE_INFO</token>
                     <description lang="en">Call database info.</description>
+                    <frames-ref>specification/vscp-classes/100/vscp-types/1/frames</frames-ref>
                 </vscp-type>
             </vscp-types>
         </vscp-class>
@@ -8873,46 +8915,271 @@ Notes:
                     <name lang="en">Clear Display</name>
                     <token>VSCP_TYPE_DISPLAY_CLEAR_DISPLAY</token>
                     <description lang="en">Clear the display on displays in a certain zone,sub-zone.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Code</name>
+                                    <description lang="en">Code - not yet defined.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-zone</name>
+                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="2">
                     <name lang="en">Position cursor</name>
                     <token>VSCP_TYPE_DISPLAY_POSITION_CURSOR</token>
                     <description lang="en">Move the cursor to a specific position on displays in a certain zone,sub-zone.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Index.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-zone</name>
+                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                                <element pos="3" type="uint8" length="1" optional="false">
+                                    <name lang="en">Row</name>
+                                    <description lang="en">Row to move to (first row is 0).</description>
+                                </element>
+                                <element pos="4" type="uint8" length="1" optional="false">
+                                    <name lang="en">Column</name>
+                                    <description lang="en">Column to move to (first column is 0).</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="3">
                     <name lang="en">Write Display</name>
                     <token>VSCP_TYPE_DISPLAY_WRITE_DISPLAY</token>
                     <description lang="en">Write to display(s) in a certain zone,sub-zone. The update of the display is immediate.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Increase by one for each event sent for specific text to display.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-zone</name>
+                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                                <element pos="3" type="uint8" length="5" optional="false">
+                                    <name lang="en">Data</name>
+                                    <description lang="en">Display data.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="4">
                     <name lang="en">Write Display buffer</name>
                     <token>VSCP_TYPE_DISPLAY_WRITE_DISPLAY_BUFFER</token>
                     <description lang="en">Write to the buffers of displays in a certain zone,sub-zone. The update of the display is is not done right away but is instead done when the Show Buffer event is received by the display unit.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Increase by one for each event sent for specific text to display.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-zone</name>
+                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                                <element pos="3" type="uint8" length="5" optional="false">
+                                    <name lang="en">Data</name>
+                                    <description lang="en">Display data.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="5">
                     <name lang="en">Show Display Buffer</name>
                     <token>VSCP_TYPE_DISPLAY_SHOW_DISPLAY_BUFFER</token>
                     <description lang="en">Tells displays in a certain zone,sub-zone to display the content in their display buffers. The update of the display is immediate.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Increase by one for each event sent for specific text to display.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-zone</name>
+                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="6">
                     <name lang="en">Set Display Buffer Parameter</name>
                     <token>VSCP_TYPE_DISPLAY_SET_DISPLAY_BUFFER_PARAM</token>
                     <description lang="en">With this call a display buffer parameter can be sent to a display. This parameter is inserted at the escape position %pn in the string in the buffer when the buffer is transferred to the display.\nNote that there are no zone and sub-zone defined for this event and the escapes must instead be chosen to be distinct in a system. This means that &amp;p1 will be unique within a system and updating this parameter will update on all displays that has it defined.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Display parameter index.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Coding</name>
+                                    <description lang="en">Data coding byte as of VSCP Specification.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="6" optional="false">
+                                    <name lang="en">Data</name>
+                                    <description lang="en">Data as of coding.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="32">
                     <name lang="en">Show Text</name>
                     <token>VSCP_TYPE_DISPLAY_SHOW_TEXT</token>
                     <description lang="en">This event contains information that should be displayed on displays pointed out by zone/sub-zone.\nThis event can have the same functionality as Write Display or be set on an higher abstraction level.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Increase by one for each event sent for specific text to display.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-zone</name>
+                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                                <element pos="3" type="uint8" length="5" optional="false">
+                                    <name lang="en">Event</name>
+                                    <description lang="en">Event.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="48">
                     <name lang="en">Set LED</name>
                     <token>VSCP_TYPE_DISPLAY_SHOW_LED</token>
                     <description lang="en">This event contains information that should be displayed on LED(s) pointed out by zone/sub-zone.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Increase by one for each event sent for specific text to display.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-zone</name>
+                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                                <element pos="3" type="uint8" length="1" optional="false">
+                                    <name lang="en">State</name>
+                                    <description lang="en">0 =off, 1=on, 2=blink</description>
+                                    <enumeration>
+                                        <enum id="0">Off</enum>
+                                        <enum id="1">On</enum>
+                                        <enum id="2">Blink</enum>
+                                    </enumeration>
+                                </element>
+                                <element pos="4" type="uint32" length="1" optional="false">
+                                    <name lang="en">Blink period</name>
+                                    <description lang="en">Blink period in milliseconds.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="49">
                     <name lang="en">Set RGB Color</name>
                     <token>VSCP_TYPE_DISPLAY_SHOW_LED_COLOR</token>
                     <description lang="en">This event set the color for LED(s) pointed out by zone/sub-zone.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Increase by one for each event sent for specific text to display.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-zone</name>
+                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                                <element pos="3" type="uint8" length="1" optional="false">
+                                    <name lang="en">Red</name>
+                                    <description lang="en">Color R to display 0-255.</description>
+                                </element>
+                                <element pos="4" type="uint8" length="1" optional="false">
+                                    <name lang="en">Green</name>
+                                    <description lang="en">Color G to display 0-255.</description>
+                                </element>
+                                <element pos="5" type="uint8" length="1" optional="false">
+                                    <name lang="en">Blue</name>
+                                    <description lang="en">Color B to display 0-255.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
             </vscp-types>
         </vscp-class>

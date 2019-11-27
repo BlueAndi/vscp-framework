@@ -87,19 +87,291 @@ extern BOOL vscp_evt_phone_sendGeneralEvent(void)
     return vscp_core_sendEvent(&txMsg);
 }
 
-/* "Incoming call" not supported. No frame defined. */
+/**
+ * Incoming call
+ * 
+ * @param[in] id Id for the call. This is an incremental identity number for each call.
+ * @param[in] index Index of phone event (base = 0). Each call can be broken up into fragments. This
+ * is the fragment number.
+ * @param[in] total Total number of events (fragments) for this call information.
+ * @param[in] info Caller information. Number or real text information. (array[5])
+ * @param[in] infosize Size in byte.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_phone_sendIncomingCall(uint8_t id, uint8_t index, uint8_t total, uint8_t const * const info, uint8_t infoSize)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+    uint8_t         byteIndex   = 0;
 
-/* "Outgoing call" not supported. No frame defined. */
+    if ((NULL == info) || (0 == infoSize))
+    {
+        return FALSE;
+    }
 
-/* "Ring" not supported. No frame defined. */
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_PHONE, VSCP_TYPE_PHONE_INCOMING_CALL, VSCP_PRIORITY_3_NORMAL);
 
-/* "Answer" not supported. No frame defined. */
+    txMsg.data[0] = id;
+    size += 1;
 
-/* "Hangup" not supported. No frame defined. */
+    txMsg.data[1] = index;
+    size += 1;
 
-/* "Giveup" not supported. No frame defined. */
+    txMsg.data[2] = total;
+    size += 1;
 
-/* "Transfer" not supported. No frame defined. */
+    for(byteIndex = 0; byteIndex < infoSize; ++byteIndex)
+    {
+        txMsg.data[3 + byteIndex] = info[byteIndex];
+        size += 1;
 
-/* "Database Info" not supported. No frame defined. */
+        if (VSCP_L1_DATA_SIZE <= size)
+        {
+            break;
+        }
+    }
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Incoming call
+ * 
+ * @param[in] id Id for the call. This is an incremental identity number for each call.
+ * @param[in] index Index of phone event (base = 0). Each call can be broken up into fragments. This
+ * is the fragment number.
+ * @param[in] total Total number of events (fragments) for this call information.
+ * @param[in] info Caller information. Number or real text information. (array[5])
+ * @param[in] infosize Size in byte.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_phone_sendOutgoingCall(uint8_t id, uint8_t index, uint8_t total, uint8_t const * const info, uint8_t infoSize)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+    uint8_t         byteIndex   = 0;
+
+    if ((NULL == info) || (0 == infoSize))
+    {
+        return FALSE;
+    }
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_PHONE, VSCP_TYPE_PHONE_OUTGOING_CALL, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = id;
+    size += 1;
+
+    txMsg.data[1] = index;
+    size += 1;
+
+    txMsg.data[2] = total;
+    size += 1;
+
+    for(byteIndex = 0; byteIndex < infoSize; ++byteIndex)
+    {
+        txMsg.data[3 + byteIndex] = info[byteIndex];
+        size += 1;
+
+        if (VSCP_L1_DATA_SIZE <= size)
+        {
+            break;
+        }
+    }
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Ring
+ * 
+ * @param[in] id Id for the call. This is an incremental identity number for each call.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_phone_sendRing(uint8_t id)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_PHONE, VSCP_TYPE_PHONE_RING, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = id;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Incoming call
+ * 
+ * @param[in] id Id for the call. This is an incremental identity number for each call.
+ * @param[in] index Index of phone event (base = 0). Each call can be broken up into fragments. This
+ * is the fragment number.
+ * @param[in] total Total number of events (fragments) for this call information.
+ * @param[in] info Caller information. Number or real text information. (array[5])
+ * @param[in] infosize Size in byte.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_phone_sendAnswer(uint8_t id, uint8_t index, uint8_t total, uint8_t const * const info, uint8_t infoSize)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+    uint8_t         byteIndex   = 0;
+
+    if ((NULL == info) || (0 == infoSize))
+    {
+        return FALSE;
+    }
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_PHONE, VSCP_TYPE_PHONE_ANSWER, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = id;
+    size += 1;
+
+    txMsg.data[1] = index;
+    size += 1;
+
+    txMsg.data[2] = total;
+    size += 1;
+
+    for(byteIndex = 0; byteIndex < infoSize; ++byteIndex)
+    {
+        txMsg.data[3 + byteIndex] = info[byteIndex];
+        size += 1;
+
+        if (VSCP_L1_DATA_SIZE <= size)
+        {
+            break;
+        }
+    }
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Ring
+ * 
+ * @param[in] id Id for the call. This is an incremental identity number for each call.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_phone_sendHangup(uint8_t id)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_PHONE, VSCP_TYPE_PHONE_HANGUP, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = id;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Ring
+ * 
+ * @param[in] id Id for the call. This is an incremental identity number for each call.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_phone_sendGiveup(uint8_t id)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_PHONE, VSCP_TYPE_PHONE_GIVEUP, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = id;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Ring
+ * 
+ * @param[in] id Id for the call. This is an incremental identity number for each call.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_phone_sendTransfer(uint8_t id)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_PHONE, VSCP_TYPE_PHONE_TRANSFER, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = id;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Incoming call
+ * 
+ * @param[in] id Id for the call. This is an incremental identity number for each call.
+ * @param[in] index Index of phone event (base = 0). Each call can be broken up into fragments. This
+ * is the fragment number.
+ * @param[in] total Total number of events (fragments) for this call information.
+ * @param[in] info Caller information. Number or real text information. (array[5])
+ * @param[in] infosize Size in byte.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_phone_sendDatabaseInfo(uint8_t id, uint8_t index, uint8_t total, uint8_t const * const info, uint8_t infoSize)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+    uint8_t         byteIndex   = 0;
+
+    if ((NULL == info) || (0 == infoSize))
+    {
+        return FALSE;
+    }
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_PHONE, VSCP_TYPE_PHONE_DATABASE_INFO, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = id;
+    size += 1;
+
+    txMsg.data[1] = index;
+    size += 1;
+
+    txMsg.data[2] = total;
+    size += 1;
+
+    for(byteIndex = 0; byteIndex < infoSize; ++byteIndex)
+    {
+        txMsg.data[3 + byteIndex] = info[byteIndex];
+        size += 1;
+
+        if (VSCP_L1_DATA_SIZE <= size)
+        {
+            break;
+        }
+    }
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
 
