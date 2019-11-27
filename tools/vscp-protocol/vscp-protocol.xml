@@ -8113,261 +8113,355 @@ Notes:
                     <name lang="en">Season winter</name>
                     <token>VSCP_TYPE_WEATHER_SEASONS_WINTER</token>
                     <description lang="en">The winter season has started.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Index for sensor.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-zone</name>
+                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="2">
                     <name lang="en">Season spring</name>
                     <token>VSCP_TYPE_WEATHER_SEASONS_SPRING</token>
                     <description lang="en">The spring season has started.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="3">
                     <name lang="en">Season summer</name>
                     <token>VSCP_TYPE_WEATHER_SEASONS_SUMMER</token>
                     <description lang="en">The summer season has started.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="4">
                     <name lang="en">Autumn summer</name>
                     <token>VSCP_TYPE_WEATHER_SEASONS_AUTUMN</token>
                     <description lang="en">The autumn season has started.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="5">
                     <name lang="en">No wind</name>
                     <token>VSCP_TYPE_WEATHER_WIND_NONE</token>
                     <description lang="en">No wind</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="6">
                     <name lang="en">Low wind</name>
                     <token>VSCP_TYPE_WEATHER_WIND_LOW</token>
                     <description lang="en">Low wind speed conditions.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="7">
                     <name lang="en">Medium wind</name>
                     <token>VSCP_TYPE_WEATHER_WIND_MEDIUM</token>
                     <description lang="en">Medium wind speed conditions.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="8">
                     <name lang="en">High wind</name>
                     <token>VSCP_TYPE_WEATHER_WIND_HIGH</token>
                     <description lang="en">High wind speed conditions.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="9">
                     <name lang="en">Very high wind</name>
                     <token>VSCP_TYPE_WEATHER_WIND_VERY_HIGH</token>
                     <description lang="en">Very high wind speed conditions.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="10">
                     <name lang="en">Air foggy</name>
                     <token>VSCP_TYPE_WEATHER_AIR_FOGGY</token>
                     <description lang="en">Fogg.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="11">
                     <name lang="en">Air freezing</name>
                     <token>VSCP_TYPE_WEATHER_AIR_FREEZING</token>
                     <description lang="en">Freezing.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="12">
                     <name lang="en">Air Very cold</name>
                     <token>VSCP_TYPE_WEATHER_AIR_VERY_COLD</token>
                     <description lang="en">Cold</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="13">
                     <name lang="en">Air cold</name>
                     <token>VSCP_TYPE_WEATHER_AIR_COLD</token>
                     <description lang="en">Very cold</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="14">
                     <name lang="en">Air normal</name>
                     <token>VSCP_TYPE_WEATHER_AIR_NORMAL</token>
                     <description lang="en">Air normal</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="15">
                     <name lang="en">Air hot</name>
                     <token>VSCP_TYPE_WEATHER_AIR_HOT</token>
                     <description lang="en">Air hot</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="16">
                     <name lang="en">Air very hot</name>
                     <token>VSCP_TYPE_WEATHER_AIR_VERY_HOT</token>
                     <description lang="en">Air very hot</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="17">
                     <name lang="en">Pollution low</name>
                     <token>VSCP_TYPE_WEATHER_AIR_POLLUTION_LOW</token>
                     <description lang="en">Pollution low</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="18">
                     <name lang="en">Pollution medium</name>
                     <token>VSCP_TYPE_WEATHER_AIR_POLLUTION_MEDIUM</token>
                     <description lang="en">Pollution medium</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="19">
                     <name lang="en">Pollution high</name>
                     <token>VSCP_TYPE_WEATHER_AIR_POLLUTION_HIGH</token>
                     <description lang="en">Pollution high</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="20">
                     <name lang="en">Air humid</name>
                     <token>VSCP_TYPE_WEATHER_AIR_HUMID</token>
                     <description lang="en">Air humid</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="21">
                     <name lang="en">Air dry</name>
                     <token>VSCP_TYPE_WEATHER_AIR_DRY</token>
                     <description lang="en">Air dry</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="22">
                     <name lang="en">Soil humid</name>
                     <token>VSCP_TYPE_WEATHER_SOIL_HUMID</token>
                     <description lang="en">soil humid</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="23">
                     <name lang="en">Soil dry</name>
                     <token>VSCP_TYPE_WEATHER_SOIL_DRY</token>
                     <description lang="en">soil dry</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="24">
                     <name lang="en">Rain none</name>
                     <token>VSCP_TYPE_WEATHER_RAIN_NONE</token>
                     <description lang="en">Rain none</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="25">
                     <name lang="en">Rain light</name>
                     <token>VSCP_TYPE_WEATHER_RAIN_LIGHT</token>
                     <description lang="en">Rain light</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="26">
                     <name lang="en">Rain heavy</name>
                     <token>VSCP_TYPE_WEATHER_RAIN_HEAVY</token>
                     <description lang="en">Rain heavy</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="27">
                     <name lang="en">Rain very heavy</name>
                     <token>VSCP_TYPE_WEATHER_RAIN_VERY_HEAVY</token>
                     <description lang="en">Rain very heavy</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="28">
                     <name lang="en">Sun none</name>
                     <token>VSCP_TYPE_WEATHER_SUN_NONE</token>
                     <description lang="en">Sun none</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="29">
                     <name lang="en">Sun light</name>
                     <token>VSCP_TYPE_WEATHER_SUN_LIGHT</token>
                     <description lang="en">Sun light</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="30">
                     <name lang="en">Sun heavy</name>
                     <token>VSCP_TYPE_WEATHER_SUN_HEAVY</token>
                     <description lang="en">Sun heavy</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="31">
                     <name lang="en">Snow none</name>
                     <token>VSCP_TYPE_WEATHER_SNOW_NONE</token>
                     <description lang="en">Snow none.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="32">
                     <name lang="en">Snow light</name>
                     <token>VSCP_TYPE_WEATHER_SNOW_LIGHT</token>
                     <description lang="en">Snow light.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="33">
                     <name lang="en">Snow heavy</name>
                     <token>VSCP_TYPE_WEATHER_SNOW_HEAVY</token>
                     <description lang="en">Snow heavy.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="34">
                     <name lang="en">Dew point</name>
                     <token>VSCP_TYPE_WEATHER_DEW_POINT</token>
                     <description lang="en">Dew point.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="35">
                     <name lang="en">Storm</name>
                     <token>VSCP_TYPE_WEATHER_STORM</token>
                     <description lang="en">Storm.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="36">
                     <name lang="en">Flood</name>
                     <token>VSCP_TYPE_WEATHER_FLOOD</token>
                     <description lang="en">Flood.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="37">
                     <name lang="en">Earthquake</name>
                     <token>VSCP_TYPE_WEATHER_EARTHQUAKE</token>
                     <description lang="en">Earthquake</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="38">
                     <name lang="en">Nuclear disaster</name>
                     <token>VSCP_TYPE_WEATHER_NUCLEAR_DISASTER</token>
                     <description lang="en">Nuclera disaster</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="39">
                     <name lang="en">Fire</name>
                     <token>VSCP_TYPE_WEATHER_FIRE</token>
                     <description lang="en">Fire.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="40">
                     <name lang="en">Lightning</name>
                     <token>VSCP_TYPE_WEATHER_LIGHTNING</token>
                     <description lang="en">Lightning.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="41">
                     <name lang="en">UV Radiation low</name>
                     <token>VSCP_TYPE_WEATHER_UV_RADIATION_LOW</token>
                     <description lang="en">Radiation low.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="42">
                     <name lang="en">UV Radiation medium</name>
                     <token>VSCP_TYPE_WEATHER_UV_RADIATION_MEDIUM</token>
                     <description lang="en">Radiation medium.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="43">
                     <name lang="en">UV Radiation normal</name>
                     <token>VSCP_TYPE_WEATHER_UV_RADIATION_NORMAL</token>
                     <description lang="en">Radiation normal.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="44">
                     <name lang="en">UV Radiation high</name>
                     <token>VSCP_TYPE_WEATHER_UV_RADIATION_HIGH</token>
                     <description lang="en">Radiation high.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="45">
                     <name lang="en">UV Radiation very high</name>
                     <token>VSCP_TYPE_WEATHER_UV_RADIATION_VERY_HIGH</token>
                     <description lang="en">Radiation very high.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="46">
                     <name lang="en">Warning level 1</name>
                     <token>VSCP_TYPE_WEATHER_WARNING_LEVEL1</token>
                     <description lang="en">Warning level 1. This is the lowest varning level.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="47">
                     <name lang="en">Warning level 2</name>
                     <token>VSCP_TYPE_WEATHER_WARNING_LEVEL2</token>
                     <description lang="en">Warninglevel 2.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="48">
                     <name lang="en">Warning level 3</name>
                     <token>VSCP_TYPE_WEATHER_WARNING_LEVEL3</token>
                     <description lang="en">Warninglevel 3.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="49">
                     <name lang="en">Warning level 4</name>
                     <token>VSCP_TYPE_WEATHER_WARNING_LEVEL4</token>
                     <description lang="en">Warning level 4.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="50">
                     <name lang="en">Warning level 5</name>
                     <token>VSCP_TYPE_WEATHER_WARNING_LEVEL5</token>
                     <description lang="en">Warning level 5. This is the highest warning level.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="51">
                     <name lang="en">Armageddon</name>
                     <token>VSCP_TYPE_WEATHER_ARMAGEDON</token>
                     <description lang="en">The final warning level not seen by humans.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="52">
                     <name lang="en">UV Index</name>
                     <token>VSCP_TYPE_WEATHER_UV_INDEX</token>
                     <description lang="en">UV Index is an international scale for UV intensity which can have the range of 1-15 where 1 is very low radiation and a value over 10 is extremely high radiation.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Index for sensor.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-zone</name>
+                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                                <element pos="3" type="uint8" length="1" optional="false">
+                                    <name lang="en">UV index</name>
+                                    <description lang="en">UV index (0-15)</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>                    
                 </vscp-type>
             </vscp-types>
         </vscp-class>
@@ -8391,261 +8485,313 @@ Notes:
                     <name lang="en">Season winter</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_SEASONS_WINTER</token>
                     <description lang="en">The winter season has started.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="2">
                     <name lang="en">Season spring</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_SEASONS_SPRING</token>
                     <description lang="en">The spring season has started.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="3">
                     <name lang="en">Season summer</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_SEASONS_SUMMER</token>
                     <description lang="en">The summer season has started.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="4">
                     <name lang="en">Autumn summer</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_SEASONS_AUTUMN</token>
                     <description lang="en">The autumn season has started.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="5">
                     <name lang="en">No wind</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_WIND_NONE</token>
                     <description lang="en">No wind</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="6">
                     <name lang="en">Low wind</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_WIND_LOW</token>
                     <description lang="en">Low wind speed conditions.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="7">
                     <name lang="en">Medium wind</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_WIND_MEDIUM</token>
                     <description lang="en">Medium wind speed conditions.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="8">
                     <name lang="en">High wind</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_WIND_HIGH</token>
                     <description lang="en">High wind speed conditions.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="9">
                     <name lang="en">Very high wind</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_WIND_VERY_HIGH</token>
                     <description lang="en">Very high wind speed conditions.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="10">
                     <name lang="en">Air foggy</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_AIR_FOGGY</token>
                     <description lang="en">Fogg.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="11">
                     <name lang="en">Air freezing</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_AIR_FREEZING</token>
                     <description lang="en">Freezing.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="12">
                     <name lang="en">Air Very cold</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_AIR_VERY_COLD</token>
                     <description lang="en">Cold</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="13">
                     <name lang="en">Air cold</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_AIR_COLD</token>
                     <description lang="en">Very cold</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="14">
                     <name lang="en">Air normal</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_AIR_NORMAL</token>
                     <description lang="en">Air normal</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="15">
                     <name lang="en">Air hot</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_AIR_HOT</token>
                     <description lang="en">Air hot</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="16">
                     <name lang="en">Air very hot</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_AIR_VERY_HOT</token>
                     <description lang="en">Air very hot</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="17">
                     <name lang="en">Pollution low</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_AIR_POLLUTION_LOW</token>
                     <description lang="en">Pollution low</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="18">
                     <name lang="en">Pollution medium</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_AIR_POLLUTION_MEDIUM</token>
                     <description lang="en">Pollution medium</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="19">
                     <name lang="en">Pollution high</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_AIR_POLLUTION_HIGH</token>
                     <description lang="en">Pollution high</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="20">
                     <name lang="en">Air humid</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_AIR_HUMID</token>
                     <description lang="en">Air humid</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="21">
                     <name lang="en">Air dry</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_AIR_DRY</token>
                     <description lang="en">Air dry</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="22">
                     <name lang="en">Soil humid</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_SOIL_HUMID</token>
                     <description lang="en">soil humid</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="23">
                     <name lang="en">Soil dry</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_SOIL_DRY</token>
                     <description lang="en">soil dry</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="24">
                     <name lang="en">Rain none</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_RAIN_NONE</token>
                     <description lang="en">Rain none</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="25">
                     <name lang="en">Rain light</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_RAIN_LIGHT</token>
                     <description lang="en">Rain light</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="26">
                     <name lang="en">Rain heavy</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_RAIN_HEAVY</token>
                     <description lang="en">Rain heavy</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="27">
                     <name lang="en">Rain very heavy</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_RAIN_VERY_HEAVY</token>
                     <description lang="en">Rain very heavy</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="28">
                     <name lang="en">Sun none</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_SUN_NONE</token>
                     <description lang="en">Sun none</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="29">
                     <name lang="en">Sun light</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_SUN_LIGHT</token>
                     <description lang="en">Sun light</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="30">
                     <name lang="en">Sun heavy</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_SUN_HEAVY</token>
                     <description lang="en">Sun heavy</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="31">
                     <name lang="en">Snow none</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_SNOW_NONE</token>
                     <description lang="en">Snow none.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="32">
                     <name lang="en">Snow light</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_SNOW_LIGHT</token>
                     <description lang="en">Snow light.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="33">
                     <name lang="en">Snow heavy</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_SNOW_HEAVY</token>
                     <description lang="en">Snow heavy.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="34">
                     <name lang="en">Dew point</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_DEW_POINT</token>
                     <description lang="en">Dew point.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="35">
                     <name lang="en">Storm</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_STORM</token>
                     <description lang="en">Storm.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="36">
                     <name lang="en">Flood</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_FLOOD</token>
                     <description lang="en">Flood.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="37">
                     <name lang="en">Earthquake</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_EARTHQUAKE</token>
                     <description lang="en">Earthquake</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="38">
                     <name lang="en">Nuclear disaster</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_NUCLEAR_DISASTER</token>
                     <description lang="en">Nuclera disaster</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="39">
                     <name lang="en">Fire</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_FIRE</token>
                     <description lang="en">Fire.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="40">
                     <name lang="en">Lightning</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_LIGHTNING</token>
                     <description lang="en">Lightning.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="41">
                     <name lang="en">UV Radiation low</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_UV_RADIATION_LOW</token>
                     <description lang="en">Radiation low.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="42">
                     <name lang="en">UV Radiation medium</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_UV_RADIATION_MEDIUM</token>
                     <description lang="en">Radiation medium.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="43">
                     <name lang="en">UV Radiation normal</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_UV_RADIATION_NORMAL</token>
                     <description lang="en">Radiation normal.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="44">
                     <name lang="en">UV Radiation high</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_UV_RADIATION_HIGH</token>
                     <description lang="en">Radiation high.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="45">
                     <name lang="en">UV Radiation very high</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_UV_RADIATION_VERY_HIGH</token>
                     <description lang="en">Radiation very high.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="46">
                     <name lang="en">Warning level 1</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_WARNING_LEVEL1</token>
                     <description lang="en">Warning level 1. This is the lowest varning level.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="47">
                     <name lang="en">Warning level 2</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_WARNING_LEVEL2</token>
                     <description lang="en">Warninglevel 2.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="48">
                     <name lang="en">Warning level 3</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_WARNING_LEVEL3</token>
                     <description lang="en">Warninglevel 3.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="49">
                     <name lang="en">Warning level 4</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_WARNING_LEVEL4</token>
                     <description lang="en">Warning level 4.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="50">
                     <name lang="en">Warning level 5</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_WARNING_LEVEL5</token>
                     <description lang="en">Warning level 5. This is the highest warning level.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="51">
                     <name lang="en">Armageddon</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_ARMAGEDON</token>
                     <description lang="en">The final warning level not seen by humans.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="52">
                     <name lang="en">UV Index</name>
                     <token>VSCP_TYPE_WEATHER_FORECAST_UV_INDEX</token>
                     <description lang="en">UV Index is an international scale for UV intensity which can have the range of 1-15 where 1 is very low radiation and a value over 10 is extremely high radiation.</description>
+                    <frames-ref>specification/vscp-classes/90/vscp-types/52/frames</frames-ref>
                 </vscp-type>
             </vscp-types>
         </vscp-class>
