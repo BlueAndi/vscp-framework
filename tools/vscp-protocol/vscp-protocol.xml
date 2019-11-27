@@ -9203,26 +9203,158 @@ Notes:
                     <name lang="en">RC5 Send/Receive</name>
                     <token>VSCP_TYPE_REMOTE_RC5</token>
                     <description lang="en">A RC5 remote code. [http://www.xs4all.nl/~sbp/knowledge/ir/sirc.htm ]Use the VSCP abstract remote format if possible.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Code</name>
+                                    <description lang="en">RC5 code.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Adress</name>
+                                    <description lang="en">RC5 Address.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Repeat</name>
+                                    <description lang="en">Repeat count if any.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="3">
                     <name lang="en">SONY 12-bit Send/Receive</name>
                     <token>VSCP_TYPE_REMOTE_SONY12</token>
                     <description lang="en">A SONY remote code. [http://www.xs4all.nl/~sbp/knowledge/ir/sirc.htm] Use the VSCP abstract remote format if possible.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Code</name>
+                                    <description lang="en">SONY code.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Adress</name>
+                                    <description lang="en">SONY Address.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Repeat</name>
+                                    <description lang="en">Repeat count if any.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="32">
                     <name lang="en">LIRC (Linux Infrared Remote Control)</name>
                     <token>VSCP_TYPE_REMOTE_LIRC</token>
                     <description lang="en">Packed LIRC codes code. LRC Codes are normally sent as 64-bit codes or even larger codes. Only codes with a length less then 56 bits (7-bytes) are supported by VSCP and the most significant byte of the LIRC code is not transferred. http://www.lirc.org/</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Code6</name>
+                                    <description lang="en">LIRC Code, MSB</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Code5</name>
+                                    <description lang="en">LIRC Code</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Code4</name>
+                                    <description lang="en">LIRC Code</description>
+                                </element>
+                                <element pos="3" type="uint8" length="1" optional="false">
+                                    <name lang="en">Code3</name>
+                                    <description lang="en">LIRC Code</description>
+                                </element>
+                                <element pos="4" type="uint8" length="1" optional="false">
+                                    <name lang="en">Code2</name>
+                                    <description lang="en">LIRC Code</description>
+                                </element>
+                                <element pos="5" type="uint8" length="1" optional="false">
+                                    <name lang="en">Code1</name>
+                                    <description lang="en">LIRC Code</description>
+                                </element>
+                                <element pos="6" type="uint8" length="1" optional="false">
+                                    <name lang="en">Code0</name>
+                                    <description lang="en">LIRC Code, LSB</description>
+                                </element>
+                                <element pos="7" type="uint8" length="1" optional="false">
+                                    <name lang="en">Repeat</name>
+                                    <description lang="en">Repeat count if any.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="48">
                     <name lang="en">VSCP Abstract Remote Format</name>
                     <token>VSCP_TYPE_REMOTE_VSCP</token>
                     <description lang="en">Instead of sending codes that relates to a certain remote this format is general. And therefore more flexible</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint16" length="1" optional="false">
+                                    <name lang="en">Code</name>
+                                    <description lang="en">Code.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="3" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-zone</name>
+                                    <description lang="en">Sub-zone for which the event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                                <element pos="4" type="uint8" length="1" optional="false">
+                                    <name lang="en">Repeat</name>
+                                    <description lang="en">Repeat count if any.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="49">
                     <name lang="en">MAPito Remote Format</name>
                     <token>VSCP_TYPE_REMOTE_MAPITO</token>
                     <description lang="en">Instead of sending codes that relates to a certain remote this format is general. And therefore more flexible.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Repeat</name>
+                                    <description lang="en">Repeat count if any.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-zone</name>
+                                    <description lang="en">Sub-zone for which the event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                                <element pos="3" type="uint32" length="1" optional="false">
+                                    <name lang="en">Address</name>
+                                    <description lang="en">Control address.</description>
+                                </element>
+                                <element pos="7" type="uint8" length="1" optional="false">
+                                    <name lang="en">Key-code</name>
+                                    <description lang="en">Key-code.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
             </vscp-types>
         </vscp-class>
@@ -9246,11 +9378,39 @@ Notes:
                     <name lang="en">Position</name>
                     <token>VSCP_TYPE_GNSS_POSITION</token>
                     <description lang="en">Position information as decimal Latitude + Longitude.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="float" length="1" optional="false">
+                                    <name lang="en">Latitude</name>
+                                    <description lang="en">Latitude as floating point value.</description>
+                                </element>
+                                <element pos="4" type="float" length="1" optional="false">
+                                    <name lang="en">Longitude</name>
+                                    <description lang="en">Longitude as floating point value.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="2">
                     <name lang="en">Satellites</name>
                     <token>VSCP_TYPE_GNSS_SATELLITES</token>
                     <description lang="en">Number of satellites used.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Count</name>
+                                    <description lang="en">Number of satellites used.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
             </vscp-types>
         </vscp-class>
@@ -9274,6 +9434,18 @@ Notes:
                     <name lang="en">GSM Cell</name>
                     <token>VSCP_TYPE_WIRELESS_GSM_CELL</token>
                     <description lang="en">Event with ID for the GSM cell. Normally this is a 16-bit value but a 32-bit value is used in VSCP.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint32" length="1" optional="false">
+                                    <name lang="en">Count</name>
+                                    <description lang="en">GSM Cell ID.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
             </vscp-types>
         </vscp-class>
@@ -9297,396 +9469,498 @@ Notes:
                     <name lang="en">Overvoltage</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_OVERVOLTAGE</token>
                     <description lang="en">Over voltage has been diagnosed.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Index. Often used as an index for channels/subdevices within a module.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-zone</name>
+                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                                <element pos="3" type="uint8" length="5" optional="true">
+                                    <name lang="en">User</name>
+                                    <description lang="en">Can be present or not be present. If present the bytes give additional user specific information.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="2">
                     <name lang="en">Undervoltage</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_UNDERVOLTAGE</token>
                     <description lang="en">Under voltage has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="3">
                     <name lang="en">USB VBUS low</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_VBUS_LOW</token>
                     <description lang="en">Low voltage on USB VBUS has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="4">
                     <name lang="en">Battery voltage low</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_BATTERY_LOW</token>
                     <description lang="en">Low battery voltage has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="5">
                     <name lang="en">Battery full voltage</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_BATTERY_FULL</token>
                     <description lang="en">Battery full voltage has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="6">
                     <name lang="en">Battery error</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_BATTERY_ERROR</token>
                     <description lang="en">Battery error has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="7">
                     <name lang="en">Battery OK</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_BATTERY_OK</token>
                     <description lang="en">Functional battery has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="8">
                     <name lang="en">Over current</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_OVERCURRENT</token>
                     <description lang="en">Over current has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="9">
                     <name lang="en">Circuit error</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_CIRCUIT_ERROR</token>
                     <description lang="en">Circuit error has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="10">
                     <name lang="en">Short circuit</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_SHORT_CIRCUIT</token>
                     <description lang="en">Short circuit has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="11">
                     <name lang="en">Open Circuit</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_OPEN_CIRCUIT</token>
                     <description lang="en">Open Circuit has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="12">
                     <name lang="en">Moist</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_MOIST</token>
                     <description lang="en">Moist has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="13">
                     <name lang="en">Wire failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_WIRE_FAIL</token>
                     <description lang="en">Wire failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="14">
                     <name lang="en">Wireless faliure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_WIRELESS_FAIL</token>
                     <description lang="en">Wireless faliure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="15">
                     <name lang="en">IR failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_IR_FAIL</token>
                     <description lang="en">IR failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="16">
                     <name lang="en">1-wire failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_1WIRE_FAIL</token>
                     <description lang="en">1-wire failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="17">
                     <name lang="en">RS-222 failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_RS222_FAIL</token>
                     <description lang="en">RS-222 failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="18">
                     <name lang="en">RS-232 failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_RS232_FAIL</token>
                     <description lang="en">RS-232 failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="19">
                     <name lang="en">RS-423 failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_RS423_FAIL</token>
                     <description lang="en">RS-423 failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="20">
                     <name lang="en">RS-485 failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_RS485_FAIL</token>
                     <description lang="en">RS-485 failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="21">
                     <name lang="en">CAN failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_CAN_FAIL</token>
                     <description lang="en">CAN failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="22">
                     <name lang="en">LAN failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_LAN_FAIL</token>
                     <description lang="en">LAN failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="23">
                     <name lang="en">USB failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_USB_FAIL</token>
                     <description lang="en">USB failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="24">
                     <name lang="en">Wifi failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_WIFI_FAIL</token>
                     <description lang="en">Wifi failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="25">
                     <name lang="en">NFC/RFID failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_NFC_RFID_FAIL</token>
                     <description lang="en">NFC/RFID failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="26">
                     <name lang="en">Low signal</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_LOW_SIGNAL</token>
                     <description lang="en">Low signal has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="27">
                     <name lang="en">High signal</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_HIGH_SIGNAL</token>
                     <description lang="en">High signal has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="28">
                     <name lang="en">ADC failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_ADC_FAIL</token>
                     <description lang="en">ADC failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="29">
                     <name lang="en">ALU failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_ALU_FAIL</token>
                     <description lang="en">ALU failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="30">
                     <name lang="en">Assert</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_ASSERT</token>
                     <description lang="en">An assert has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="31">
                     <name lang="en">DAC failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_DAC_FAIL</token>
                     <description lang="en">DAC failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="32">
                     <name lang="en">DMA failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_DMA_FAIL</token>
                     <description lang="en">DMA failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="33">
                     <name lang="en">Ethernet failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_ETH_FAIL</token>
                     <description lang="en">Ethernet failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="34">
                     <name lang="en">Exception</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_EXCEPTION</token>
                     <description lang="en">Exception has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="35">
                     <name lang="en">FPU failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_FPU_FAIL</token>
                     <description lang="en">Floating point unit (FPU) failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="36">
                     <name lang="en">GPIO failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_GPIO_FAIL</token>
                     <description lang="en">General purpose I/O (GPIO) failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="37">
                     <name lang="en">I2C failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_I2C_FAIL</token>
                     <description lang="en">I2C failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="38">
                     <name lang="en">I2S failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_I2S_FAIL</token>
                     <description lang="en">I2C failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="39">
                     <name lang="en">Invalid configuration</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_INVALID_CONFIG</token>
                     <description lang="en">Invalid configuration has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="40">
                     <name lang="en">MMU failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_MMU_FAIL</token>
                     <description lang="en">Memory Management Unit (MMU) failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="41">
                     <name lang="en">NMI failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_NMI</token>
                     <description lang="en">Non mask-able interrupt (NMI) failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="42">
                     <name lang="en">Overheat</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_OVERHEAT</token>
                     <description lang="en">Overheat has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="43">
                     <name lang="en">PLL fail</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_PLL_FAIL</token>
                     <description lang="en">Phased Locked Loop (PLL) fail has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="44">
                     <name lang="en">POR failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_POR_FAIL</token>
                     <description lang="en">Power ON Reset (POR) fail has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="45">
                     <name lang="en">PWM failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_PWM_FAIL</token>
                     <description lang="en">Pulse Width Modulation (PWM) failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="46">
                     <name lang="en">RAM failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_RAM_FAIL</token>
                     <description lang="en">Random Access Memory (RAM) failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="47">
                     <name lang="en">ROM failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_ROM_FAIL</token>
                     <description lang="en">Read only memory (ROM) failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="48">
                     <name lang="en">SPI failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_SPI_FAIL</token>
                     <description lang="en">Serial peripheral interface (SPI) failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="49">
                     <name lang="en">Stack failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_STACK_FAIL</token>
                     <description lang="en">Stack failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="50">
                     <name lang="en">LIN bus failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_LIN_FAIL</token>
                     <description lang="en">LIN bus failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="51">
                     <name lang="en">UART failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_UART_FAIL</token>
                     <description lang="en">UART failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="52">
                     <name lang="en">Unhandled interrupt</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_UNHANDLED_INT</token>
                     <description lang="en">Unhandled interrupt has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="53">
                     <name lang="en">Memory failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_MEMORY_FAIL</token>
                     <description lang="en">Memory failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="54">
                     <name lang="en">Variable range failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_VARIABLE_RANGE</token>
                     <description lang="en">Variable range failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="55">
                     <name lang="en">WDT failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_WDT</token>
                     <description lang="en">Watch Dog Timer (WDT) failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="56">
                     <name lang="en">EEPROM failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_EEPROM_FAIL</token>
                     <description lang="en">EEPROM failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="57">
                     <name lang="en">Encryption failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_ENCRYPTION_FAIL</token>
                     <description lang="en">Encryption failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="58">
                     <name lang="en">Bad user input failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_BAD_USER_INPUT</token>
                     <description lang="en">Bad user input failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="59">
                     <name lang="en">Decryption failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_DECRYPTION_FAIL</token>
                     <description lang="en">Decryption failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="60">
                     <name lang="en">Noise</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_NOISE</token>
                     <description lang="en">Noise has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="61">
                     <name lang="en">Boot loader failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_BOOTLOADER_FAIL</token>
                     <description lang="en">Boot loader failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="62">
                     <name lang="en">Program flow failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_PROGRAMFLOW_FAIL</token>
                     <description lang="en">Program flow failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="63">
                     <name lang="en">RTC faiure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_RTC_FAIL</token>
                     <description lang="en">Real Time Clock (RTC) failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="64">
                     <name lang="en">System test failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_SYSTEM_TEST_FAIL</token>
                     <description lang="en">System test failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="65">
                     <name lang="en">Sensor failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_SENSOR_FAIL</token>
                     <description lang="en">Sensor failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="66">
                     <name lang="en">Safe state entered</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_SAFESTATE</token>
                     <description lang="en">Safe state entered has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="67">
                     <name lang="en">Signal implausible</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_SIGNAL_IMPLAUSIBLE</token>
                     <description lang="en">Signal implausible has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="68">
                     <name lang="en">Storage fail</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_STORAGE_FAIL</token>
                     <description lang="en">Storage fail has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="69">
                     <name lang="en">Self test OK</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_SELFTEST_FAIL</token>
                     <description lang="en">Self test OK has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="70">
                     <name lang="en">ESD/EMC/EMI failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_ESD_EMC_EMI</token>
                     <description lang="en">ESD/EMC/EMI failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="71">
                     <name lang="en">Timeout</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_TIMEOUT</token>
                     <description lang="en">Timeout has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="72">
                     <name lang="en">LCD failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_LCD_FAIL</token>
                     <description lang="en">LCD failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="73">
                     <name lang="en">Touch panel failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_TOUCHPANEL_FAIL</token>
                     <description lang="en">Touch panel failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="74">
                     <name lang="en">No load</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_NOLOAD</token>
                     <description lang="en">No load has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="75">
                     <name lang="en">Cooling failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_COOLING_FAIL</token>
                     <description lang="en">Cooling failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="76">
                     <name lang="en">Heating failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_HEATING_FAIL</token>
                     <description lang="en">Heating failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="77">
                     <name lang="en">Transmission failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_TX_FAIL</token>
                     <description lang="en">Transmission failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="78">
                     <name lang="en">Receiption failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_RX_FAIL</token>
                     <description lang="en">Receiption failure has been diagnosed.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="79">
                     <name lang="en">External IC failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_EXT_IC_FAIL</token>
                     <description lang="en">A failure in an external IC circuit has been detected.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
             </vscp-types>
         </vscp-class>
@@ -9699,86 +9973,126 @@ Notes:
                     <name lang="en">Success</name>
                     <token>VSCP_TYPE_ERROR_SUCCESS</token>
                     <description lang="en">This error message is used to report success, that is no error.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Index. Often used as an index for channels/subdevices within a module.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-zone</name>
+                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                                <element pos="3" type="uint8" length="5" optional="true">
+                                    <name lang="en">User</name>
+                                    <description lang="en">Can be present or not be present. If present the bytes give additional user specific information.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="1">
                     <name lang="en">Error</name>
                     <token>VSCP_TYPE_ERROR_ERROR</token>
                     <description lang="en">This error message is used to indicate an error condition.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="7">
                     <name lang="en">Channel error</name>
                     <token>VSCP_TYPE_ERROR_CHANNEL</token>
                     <description lang="en">This error message is used to indicate a (communication) channel problem.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="8">
                     <name lang="en">Fifo empty error</name>
                     <token>VSCP_TYPE_ERROR_FIFO_EMPTY</token>
                     <description lang="en">This error message is used to indicate a fifo empty problem.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="9">
                     <name lang="en">Fifo full error</name>
                     <token>VSCP_TYPE_ERROR_FIFO_FULL</token>
                     <description lang="en">This error message is used to indicate a fifo full problem.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="10">
                     <name lang="en">Fifo size error</name>
                     <token>VSCP_TYPE_ERROR_FIFO_SIZE</token>
                     <description lang="en">This error message is used to indicate a fifo size problem.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="11">
                     <name lang="en">Fifo wait error</name>
                     <token>VSCP_TYPE_ERROR_FIFO_WAIT</token>
                     <description lang="en">This error message is used to indicate a fifo wait problem.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="12">
                     <name lang="en">Generic error</name>
                     <token>VSCP_TYPE_ERROR_GENERIC</token>
                     <description lang="en">This error message is used to indicate a generic error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="13">
                     <name lang="en">Hardware error</name>
                     <token>VSCP_TYPE_ERROR_HARDWARE</token>
                     <description lang="en">This error message is used to indicate a hardware error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="14">
                     <name lang="en">initialization error</name>
                     <token>VSCP_TYPE_ERROR_INIT_FAIL</token>
                     <description lang="en">This error message is used to indicate a initialization error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="15">
                     <name lang="en">Missing initialization error</name>
                     <token>VSCP_TYPE_ERROR_INIT_MISSING</token>
                     <description lang="en">This error message is used to indicate a missing initialization error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="16">
                     <name lang="en">Initialization ready</name>
                     <token>VSCP_TYPE_ERROR_INIT_READY</token>
                     <description lang="en">This error message is used to indicate a initialization ready error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="17">
                     <name lang="en">Not supported</name>
                     <token>VSCP_TYPE_ERROR_NOT_SUPPORTED</token>
                     <description lang="en">This error message is used to indicate a not supported error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="18">
                     <name lang="en">Overrun error</name>
                     <token>VSCP_TYPE_ERROR_OVERRUN</token>
                     <description lang="en">This error message is used to indicate an overrun error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="19">
                     <name lang="en">Receiver empty error</name>
                     <token>VSCP_TYPE_ERROR_RCV_EMPTY</token>
                     <description lang="en">This error message is used to indicate a receiver empty error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="20">
                     <name lang="en">Register error</name>
                     <token>VSCP_TYPE_ERROR_REGISTER</token>
                     <description lang="en">This error message is used to indicate a register error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="21">
                     <name lang="en">Transmitter full error</name>
                     <token>VSCP_TYPE_ERROR_TRM_FULL</token>
                     <description lang="en">This error message is used to indicate a transmitter full error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="22">
                     <name lang="en">reserved</name>
@@ -9808,106 +10122,127 @@ Notes:
                     <name lang="en">Library error</name>
                     <token>VSCP_TYPE_ERROR_LIBRARY</token>
                     <description lang="en">This error message is used to indicate a library error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="29">
                     <name lang="en">Procedural address error</name>
                     <token>VSCP_TYPE_ERROR_PROCADDRESS</token>
                     <description lang="en">This error message is used to indicate a procedural address error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="30">
                     <name lang="en">Only one instance error</name>
                     <token>VSCP_TYPE_ERROR_ONLY_ONE_INSTANCE</token>
                     <description lang="en">This error message is used to indicate an only one instance error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="31">
                     <name lang="en">Sub driver error</name>
                     <token>VSCP_TYPE_ERROR_SUB_DRIVER</token>
                     <description lang="en">This error message is used to indicate a sub driver error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="32">
                     <name lang="en">Timeout error</name>
                     <token>VSCP_TYPE_ERROR_TIMEOUT</token>
                     <description lang="en">This error message is used to indicate a timeout error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="33">
                     <name lang="en">Not open error</name>
                     <token>VSCP_TYPE_ERROR_NOT_OPEN</token>
                     <description lang="en">This error message is used to indicate a not open error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="34">
                     <name lang="en">Parameter error</name>
                     <token>VSCP_TYPE_ERROR_PARAMETER</token>
                     <description lang="en">This error message is used to indicate a parameter error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="35">
                     <name lang="en">Memory error</name>
                     <token>VSCP_TYPE_ERROR_MEMORY</token>
                     <description lang="en">This error message is used to indicate a memory error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="36">
                     <name lang="en">Internal error</name>
                     <token>VSCP_TYPE_ERROR_INTERNAL</token>
                     <description lang="en">This error message is used to indicate a internal error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="37">
                     <name lang="en">Communication error</name>
                     <token>VSCP_TYPE_ERROR_COMMUNICATION</token>
                     <description lang="en">This error message is used to indicate a communication error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="38">
                     <name lang="en">User error</name>
                     <token>VSCP_TYPE_ERROR_USER</token>
                     <description lang="en">This error message is used to indicate a user error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="39">
                     <name lang="en">Password error</name>
                     <token>VSCP_TYPE_ERROR_PASSWORD</token>
                     <description lang="en">This error message is used to indicate a password error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="40">
                     <name lang="en">Connection error</name>
                     <token>VSCP_TYPE_ERROR_CONNECTION</token>
                     <description lang="en">This error message is used to indicate a connection error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="41">
                     <name lang="en">Invalid handle error</name>
                     <token>VSCP_TYPE_ERROR_INVALID_HANDLE</token>
                     <description lang="en">This error message is used to indicate a invalid handle error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="42">
                     <name lang="en">Operation failed error</name>
                     <token>VSCP_TYPE_ERROR_OPERATION_FAILED</token>
                     <description lang="en">This error message is used to indicate an operation failed error.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="43">
                     <name lang="en">Supplied buffer is to small to fit content</name>
                     <token>VSCP_TYPE_ERROR_BUFFER_SMALL</token>
                     <description lang="en">This error message is used to indicate that the supplied buffer is to small to fit content.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="44">
                     <name lang="en">Requested item is unknown</name>
                     <token>VSCP_TYPE_ERROR_ITEM_UNKNOWN</token>
                     <description lang="en">This error message is used to indicate that the requested item (remote variable) is unknown.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="45">
                     <name lang="en">Name is already in use</name>
                     <token>VSCP_TYPE_ERROR_NAME_USED</token>
                     <description lang="en">This error message is used to indicate that the name is already in use.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="46">
                     <name lang="en">Error when writing data</name>
                     <token>VSCP_TYPE_ERROR_DATA_WRITE</token>
                     <description lang="en">This error message is used to indicate an error when writing data.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="47">
                     <name lang="en">Operation stopped or aborted</name>
                     <token>VSCP_TYPE_ERROR_ABORTED</token>
                     <description lang="en">This error message is used to indicate a stopped or an aborted operation.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="48">
                     <name lang="en">Pointer with invalid value</name>
                     <token>VSCP_TYPE_ERROR_INVALID_POINTER</token>
                     <description lang="en">This error message is used to indicate a pointer with an invalid value.</description>
+                    <frames-ref>specification/vscp-classes/508/vscp-types/0/frames</frames-ref>
                 </vscp-type>
             </vscp-types>
         </vscp-class>
@@ -9931,21 +10266,81 @@ Notes:
                     <name lang="en">Log event</name>
                     <token>VSCP_TYPE_LOG_MESSAGE</token>
                     <description lang="en">Message for Log. Several frames have to be sent for a event that take up more the five bytes which is the maximum for each frame. In this case the zero based index (byte 2) should be increased for each frame.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Id</name>
+                                    <description lang="en">ID for event.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Log level</name>
+                                    <description lang="en">Log level for message.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Idx for this message.</description>
+                                </element>
+                                <element pos="3" type="uint8" length="5" optional="false">
+                                    <name lang="en">Msg</name>
+                                    <description lang="en">Message.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="2">
                     <name lang="en">Log Start</name>
                     <token>VSCP_TYPE_LOG_START</token>
                     <description lang="en">Start logging.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Id</name>
+                                    <description lang="en">ID for log.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="3">
                     <name lang="en">Log Stop</name>
                     <token>VSCP_TYPE_LOG_STOP</token>
                     <description lang="en">Stop logging.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Id</name>
+                                    <description lang="en">ID for log.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="4">
                     <name lang="en">Log Level</name>
                     <token>VSCP_TYPE_LOG_LEVEL</token>
                     <description lang="en">Set level for logging.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Level</name>
+                                    <description lang="en">ID for log byte 0 Log level.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
             </vscp-types>
         </vscp-class>

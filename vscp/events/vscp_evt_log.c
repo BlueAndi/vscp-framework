@@ -87,11 +87,118 @@ extern BOOL vscp_evt_log_sendGeneralEvent(void)
     return vscp_core_sendEvent(&txMsg);
 }
 
-/* "Log event" not supported. No frame defined. */
+/**
+ * Log event
+ * 
+ * @param[in] id ID for event.
+ * @param[in] logLevel Log level for message.
+ * @param[in] index Idx for this message.
+ * @param[in] msg Message. (array[5])
+ * @param[in] msgsize Size in byte.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_log_sendLogEvent(uint8_t id, uint8_t logLevel, uint8_t index, uint8_t const * const msg, uint8_t msgSize)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+    uint8_t         byteIndex   = 0;
 
-/* "Log Start" not supported. No frame defined. */
+    if ((NULL == msg) || (0 == msgSize))
+    {
+        return FALSE;
+    }
 
-/* "Log Stop" not supported. No frame defined. */
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_LOG, VSCP_TYPE_LOG_MESSAGE, VSCP_PRIORITY_3_NORMAL);
 
-/* "Log Level" not supported. No frame defined. */
+    txMsg.data[0] = id;
+    size += 1;
+
+    txMsg.data[1] = logLevel;
+    size += 1;
+
+    txMsg.data[2] = index;
+    size += 1;
+
+    for(byteIndex = 0; byteIndex < msgSize; ++byteIndex)
+    {
+        txMsg.data[3 + byteIndex] = msg[byteIndex];
+        size += 1;
+
+        if (VSCP_L1_DATA_SIZE <= size)
+        {
+            break;
+        }
+    }
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Log Start
+ * 
+ * @param[in] id ID for log.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_log_sendLogStart(uint8_t id)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_LOG, VSCP_TYPE_LOG_START, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = id;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Log Stop
+ * 
+ * @param[in] id ID for log.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_log_sendLogStop(uint8_t id)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_LOG, VSCP_TYPE_LOG_STOP, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = id;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Log Level
+ * 
+ * @param[in] level ID for log byte 0 Log level.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_log_sendLogLevel(uint8_t level)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_LOG, VSCP_TYPE_LOG_LEVEL, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = level;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
 

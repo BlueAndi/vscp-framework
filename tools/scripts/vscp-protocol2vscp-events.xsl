@@ -314,6 +314,9 @@ This transformation script generates the VSCP event modules.
                 <xsl:when test="@id = 70">
                     <xsl:text>#include &lt;math.h&gt;&LF;</xsl:text>
                 </xsl:when>
+                <xsl:when test="@id = 206">
+                    <xsl:text>#include &lt;math.h&gt;&LF;</xsl:text>
+                </xsl:when>
                 <xsl:otherwise>
                 </xsl:otherwise>
             </xsl:choose>

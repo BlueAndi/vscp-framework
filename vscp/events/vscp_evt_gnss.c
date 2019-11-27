@@ -87,7 +87,57 @@ extern BOOL vscp_evt_gnss_sendGeneralEvent(void)
     return vscp_core_sendEvent(&txMsg);
 }
 
-/* "Position" not supported. No frame defined. */
+/**
+ * Position
+ * 
+ * @param[in] latitude Latitude as floating point value.
+ * @param[in] longitude Longitude as floating point value.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_gnss_sendPosition(float_t latitude, float_t longitude)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
 
-/* "Satellites" not supported. No frame defined. */
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_GNSS, VSCP_TYPE_GNSS_POSITION, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[4] = ((uint8_t*)&latitude)[3];
+    txMsg.data[5] = ((uint8_t*)&latitude)[2];
+    txMsg.data[6] = ((uint8_t*)&latitude)[1];
+    txMsg.data[7] = ((uint8_t*)&latitude)[0];
+    size += 4;
+
+    txMsg.data[8] = ((uint8_t*)&longitude)[3];
+    txMsg.data[9] = ((uint8_t*)&longitude)[2];
+    txMsg.data[10] = ((uint8_t*)&longitude)[1];
+    txMsg.data[11] = ((uint8_t*)&longitude)[0];
+    size += 4;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Satellites
+ * 
+ * @param[in] count Number of satellites used.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_gnss_sendSatellites(uint8_t count)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_GNSS, VSCP_TYPE_GNSS_SATELLITES, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = count;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
 

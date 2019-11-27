@@ -87,5 +87,28 @@ extern BOOL vscp_evt_wireless_sendGeneralEvent(void)
     return vscp_core_sendEvent(&txMsg);
 }
 
-/* "GSM Cell" not supported. No frame defined. */
+/**
+ * GSM Cell
+ * 
+ * @param[in] count GSM Cell ID.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_wireless_sendGsmCell(uint32_t count)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_WIRELESS, VSCP_TYPE_WIRELESS_GSM_CELL, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = (uint8_t)((count >> 24) & 0xff);
+    txMsg.data[1] = (uint8_t)((count >> 18) & 0xff);
+    txMsg.data[2] = (uint8_t)((count >> 8) & 0xff);
+    txMsg.data[3] = (uint8_t)((count >> 0) & 0xff);
+    size += 4;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
 
