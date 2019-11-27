@@ -87,18 +87,72 @@ extern BOOL vscp_evt_setvaluezone_sendGeneralEvent(void)
     return vscp_core_sendEvent(&txMsg);
 }
 
-/* "Count" not supported. No frame defined. */
-
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendLengthDistance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendCount(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+    uint8_t         byteIndex   = 0;
+
+    if ((NULL == data) || (0 == dataSize))
+    {
+        return FALSE;
+    }
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_COUNT, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
+    size += 1;
+
+    for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
+    {
+        txMsg.data[4 + byteIndex] = data[byteIndex];
+        size += 1;
+
+        if (VSCP_L1_DATA_SIZE <= size)
+        {
+            break;
+        }
+    }
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Count
+ * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @param[in] dataCoding Data coding.
+ * @param[in] data Data with format defined by byte 0.  (array[4])
+ * @param[in] datasize Size in byte.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_setvaluezone_sendLengthDistance(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -111,12 +165,21 @@ extern BOOL vscp_evt_setvaluezone_sendLengthDistance(uint8_t dataCoding, uint8_t
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_LENGTH, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -133,13 +196,16 @@ extern BOOL vscp_evt_setvaluezone_sendLengthDistance(uint8_t dataCoding, uint8_t
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendMass(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendMass(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -152,12 +218,21 @@ extern BOOL vscp_evt_setvaluezone_sendMass(uint8_t dataCoding, uint8_t const * c
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_MASS, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -174,13 +249,16 @@ extern BOOL vscp_evt_setvaluezone_sendMass(uint8_t dataCoding, uint8_t const * c
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendTime(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendTime(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -193,12 +271,21 @@ extern BOOL vscp_evt_setvaluezone_sendTime(uint8_t dataCoding, uint8_t const * c
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_TIME, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -215,13 +302,16 @@ extern BOOL vscp_evt_setvaluezone_sendTime(uint8_t dataCoding, uint8_t const * c
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendElectricCurrent(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendElectricCurrent(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -234,12 +324,21 @@ extern BOOL vscp_evt_setvaluezone_sendElectricCurrent(uint8_t dataCoding, uint8_
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_ELECTRIC_CURRENT, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -256,13 +355,16 @@ extern BOOL vscp_evt_setvaluezone_sendElectricCurrent(uint8_t dataCoding, uint8_
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendTemperature(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendTemperature(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -275,12 +377,21 @@ extern BOOL vscp_evt_setvaluezone_sendTemperature(uint8_t dataCoding, uint8_t co
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_TEMPERATURE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -297,13 +408,16 @@ extern BOOL vscp_evt_setvaluezone_sendTemperature(uint8_t dataCoding, uint8_t co
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendAmountOfSubstance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendAmountOfSubstance(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -316,12 +430,21 @@ extern BOOL vscp_evt_setvaluezone_sendAmountOfSubstance(uint8_t dataCoding, uint
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_AMOUNT_OF_SUBSTANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -338,13 +461,16 @@ extern BOOL vscp_evt_setvaluezone_sendAmountOfSubstance(uint8_t dataCoding, uint
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendLuminousIntensityIntensityOfLight(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendLuminousIntensityIntensityOfLight(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -357,12 +483,21 @@ extern BOOL vscp_evt_setvaluezone_sendLuminousIntensityIntensityOfLight(uint8_t 
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_INTENSITY_OF_LIGHT, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -379,13 +514,16 @@ extern BOOL vscp_evt_setvaluezone_sendLuminousIntensityIntensityOfLight(uint8_t 
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendFrequency(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendFrequency(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -398,12 +536,21 @@ extern BOOL vscp_evt_setvaluezone_sendFrequency(uint8_t dataCoding, uint8_t cons
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_FREQUENCY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -420,13 +567,16 @@ extern BOOL vscp_evt_setvaluezone_sendFrequency(uint8_t dataCoding, uint8_t cons
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendRadioactivityAndOtherRandomEvents(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendRadioactivityAndOtherRandomEvents(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -439,12 +589,21 @@ extern BOOL vscp_evt_setvaluezone_sendRadioactivityAndOtherRandomEvents(uint8_t 
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_RADIOACTIVITY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -461,13 +620,16 @@ extern BOOL vscp_evt_setvaluezone_sendRadioactivityAndOtherRandomEvents(uint8_t 
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendForce(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendForce(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -480,12 +642,21 @@ extern BOOL vscp_evt_setvaluezone_sendForce(uint8_t dataCoding, uint8_t const * 
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_FORCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -502,13 +673,16 @@ extern BOOL vscp_evt_setvaluezone_sendForce(uint8_t dataCoding, uint8_t const * 
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendPressure(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendPressure(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -521,12 +695,21 @@ extern BOOL vscp_evt_setvaluezone_sendPressure(uint8_t dataCoding, uint8_t const
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_PRESSURE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -543,13 +726,16 @@ extern BOOL vscp_evt_setvaluezone_sendPressure(uint8_t dataCoding, uint8_t const
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendEnergy(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendEnergy(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -562,12 +748,21 @@ extern BOOL vscp_evt_setvaluezone_sendEnergy(uint8_t dataCoding, uint8_t const *
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_ENERGY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -584,13 +779,16 @@ extern BOOL vscp_evt_setvaluezone_sendEnergy(uint8_t dataCoding, uint8_t const *
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendPower(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendPower(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -603,12 +801,21 @@ extern BOOL vscp_evt_setvaluezone_sendPower(uint8_t dataCoding, uint8_t const * 
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_POWER, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -625,13 +832,16 @@ extern BOOL vscp_evt_setvaluezone_sendPower(uint8_t dataCoding, uint8_t const * 
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendElectricalCharge(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendElectricalCharge(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -644,12 +854,21 @@ extern BOOL vscp_evt_setvaluezone_sendElectricalCharge(uint8_t dataCoding, uint8
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_ELECTRICAL_CHARGE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -666,13 +885,16 @@ extern BOOL vscp_evt_setvaluezone_sendElectricalCharge(uint8_t dataCoding, uint8
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendElectricalPotentialVoltage(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendElectricalPotentialVoltage(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -685,12 +907,21 @@ extern BOOL vscp_evt_setvaluezone_sendElectricalPotentialVoltage(uint8_t dataCod
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_ELECTRICAL_POTENTIAL, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -707,13 +938,16 @@ extern BOOL vscp_evt_setvaluezone_sendElectricalPotentialVoltage(uint8_t dataCod
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendElectricalCapacitance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendElectricalCapacitance(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -726,12 +960,21 @@ extern BOOL vscp_evt_setvaluezone_sendElectricalCapacitance(uint8_t dataCoding, 
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_ELECTRICAL_CAPACITANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -748,13 +991,16 @@ extern BOOL vscp_evt_setvaluezone_sendElectricalCapacitance(uint8_t dataCoding, 
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendElectricalResistance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendElectricalResistance(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -767,12 +1013,21 @@ extern BOOL vscp_evt_setvaluezone_sendElectricalResistance(uint8_t dataCoding, u
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_ELECTRICAL_RESISTANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -789,13 +1044,16 @@ extern BOOL vscp_evt_setvaluezone_sendElectricalResistance(uint8_t dataCoding, u
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendElectricalConductance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendElectricalConductance(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -808,12 +1066,21 @@ extern BOOL vscp_evt_setvaluezone_sendElectricalConductance(uint8_t dataCoding, 
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_ELECTRICAL_CONDUCTANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -830,13 +1097,16 @@ extern BOOL vscp_evt_setvaluezone_sendElectricalConductance(uint8_t dataCoding, 
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendMagneticFieldStrength(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendMagneticFieldStrength(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -849,12 +1119,21 @@ extern BOOL vscp_evt_setvaluezone_sendMagneticFieldStrength(uint8_t dataCoding, 
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_MAGNETIC_FIELD_STRENGTH, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -871,13 +1150,16 @@ extern BOOL vscp_evt_setvaluezone_sendMagneticFieldStrength(uint8_t dataCoding, 
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendMagneticFlux(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendMagneticFlux(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -890,12 +1172,21 @@ extern BOOL vscp_evt_setvaluezone_sendMagneticFlux(uint8_t dataCoding, uint8_t c
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_MAGNETIC_FLUX, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -912,13 +1203,16 @@ extern BOOL vscp_evt_setvaluezone_sendMagneticFlux(uint8_t dataCoding, uint8_t c
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendMagneticFluxDensity(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendMagneticFluxDensity(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -931,12 +1225,21 @@ extern BOOL vscp_evt_setvaluezone_sendMagneticFluxDensity(uint8_t dataCoding, ui
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_MAGNETIC_FLUX_DENSITY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -953,13 +1256,16 @@ extern BOOL vscp_evt_setvaluezone_sendMagneticFluxDensity(uint8_t dataCoding, ui
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendInductance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendInductance(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -972,12 +1278,21 @@ extern BOOL vscp_evt_setvaluezone_sendInductance(uint8_t dataCoding, uint8_t con
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_INDUCTANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -994,13 +1309,16 @@ extern BOOL vscp_evt_setvaluezone_sendInductance(uint8_t dataCoding, uint8_t con
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendLuminousFlux(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendLuminousFlux(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -1013,12 +1331,21 @@ extern BOOL vscp_evt_setvaluezone_sendLuminousFlux(uint8_t dataCoding, uint8_t c
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_FLUX_OF_LIGHT, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -1035,13 +1362,16 @@ extern BOOL vscp_evt_setvaluezone_sendLuminousFlux(uint8_t dataCoding, uint8_t c
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendIlluminance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendIlluminance(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -1054,12 +1384,21 @@ extern BOOL vscp_evt_setvaluezone_sendIlluminance(uint8_t dataCoding, uint8_t co
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_ILLUMINANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -1076,13 +1415,16 @@ extern BOOL vscp_evt_setvaluezone_sendIlluminance(uint8_t dataCoding, uint8_t co
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendRadiationDose(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendRadiationDose(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -1095,12 +1437,21 @@ extern BOOL vscp_evt_setvaluezone_sendRadiationDose(uint8_t dataCoding, uint8_t 
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_RADIATION_DOSE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -1117,13 +1468,16 @@ extern BOOL vscp_evt_setvaluezone_sendRadiationDose(uint8_t dataCoding, uint8_t 
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendCatalyticActivity(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendCatalyticActivity(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -1136,12 +1490,21 @@ extern BOOL vscp_evt_setvaluezone_sendCatalyticActivity(uint8_t dataCoding, uint
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_CATALYTIC_ACITIVITY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -1158,13 +1521,16 @@ extern BOOL vscp_evt_setvaluezone_sendCatalyticActivity(uint8_t dataCoding, uint
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendVolume(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendVolume(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -1177,12 +1543,21 @@ extern BOOL vscp_evt_setvaluezone_sendVolume(uint8_t dataCoding, uint8_t const *
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_VOLUME, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -1199,13 +1574,16 @@ extern BOOL vscp_evt_setvaluezone_sendVolume(uint8_t dataCoding, uint8_t const *
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendSoundIntensity(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendSoundIntensity(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -1218,12 +1596,21 @@ extern BOOL vscp_evt_setvaluezone_sendSoundIntensity(uint8_t dataCoding, uint8_t
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_SOUND_INTENSITY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -1240,13 +1627,16 @@ extern BOOL vscp_evt_setvaluezone_sendSoundIntensity(uint8_t dataCoding, uint8_t
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendAngle(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendAngle(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -1259,12 +1649,21 @@ extern BOOL vscp_evt_setvaluezone_sendAngle(uint8_t dataCoding, uint8_t const * 
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_ANGLE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -1281,13 +1680,16 @@ extern BOOL vscp_evt_setvaluezone_sendAngle(uint8_t dataCoding, uint8_t const * 
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendPositionWgs84(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendPositionWgs84(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -1300,12 +1702,21 @@ extern BOOL vscp_evt_setvaluezone_sendPositionWgs84(uint8_t dataCoding, uint8_t 
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_POSITION, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -1322,13 +1733,16 @@ extern BOOL vscp_evt_setvaluezone_sendPositionWgs84(uint8_t dataCoding, uint8_t 
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendSpeed(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendSpeed(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -1341,12 +1755,21 @@ extern BOOL vscp_evt_setvaluezone_sendSpeed(uint8_t dataCoding, uint8_t const * 
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_SPEED, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -1363,13 +1786,16 @@ extern BOOL vscp_evt_setvaluezone_sendSpeed(uint8_t dataCoding, uint8_t const * 
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendAcceleration(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendAcceleration(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -1382,12 +1808,21 @@ extern BOOL vscp_evt_setvaluezone_sendAcceleration(uint8_t dataCoding, uint8_t c
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_ACCELERATION, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -1404,13 +1839,16 @@ extern BOOL vscp_evt_setvaluezone_sendAcceleration(uint8_t dataCoding, uint8_t c
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendTension(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendTension(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -1423,12 +1861,21 @@ extern BOOL vscp_evt_setvaluezone_sendTension(uint8_t dataCoding, uint8_t const 
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_TENSION, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -1445,13 +1892,16 @@ extern BOOL vscp_evt_setvaluezone_sendTension(uint8_t dataCoding, uint8_t const 
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendDampMoistHygrometerReading(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendDampMoistHygrometerReading(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -1464,12 +1914,21 @@ extern BOOL vscp_evt_setvaluezone_sendDampMoistHygrometerReading(uint8_t dataCod
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_HUMIDITY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -1486,13 +1945,16 @@ extern BOOL vscp_evt_setvaluezone_sendDampMoistHygrometerReading(uint8_t dataCod
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendFlow(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendFlow(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -1505,12 +1967,21 @@ extern BOOL vscp_evt_setvaluezone_sendFlow(uint8_t dataCoding, uint8_t const * c
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_FLOW, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -1527,13 +1998,16 @@ extern BOOL vscp_evt_setvaluezone_sendFlow(uint8_t dataCoding, uint8_t const * c
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendThermalResistance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendThermalResistance(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -1546,12 +2020,21 @@ extern BOOL vscp_evt_setvaluezone_sendThermalResistance(uint8_t dataCoding, uint
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_THERMAL_RESISTANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -1568,13 +2051,16 @@ extern BOOL vscp_evt_setvaluezone_sendThermalResistance(uint8_t dataCoding, uint
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendRefractiveOpticalPower(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendRefractiveOpticalPower(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -1587,12 +2073,21 @@ extern BOOL vscp_evt_setvaluezone_sendRefractiveOpticalPower(uint8_t dataCoding,
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_REFRACTIVE_POWER, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -1609,13 +2104,16 @@ extern BOOL vscp_evt_setvaluezone_sendRefractiveOpticalPower(uint8_t dataCoding,
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendDynamicViscosity(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendDynamicViscosity(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -1628,12 +2126,21 @@ extern BOOL vscp_evt_setvaluezone_sendDynamicViscosity(uint8_t dataCoding, uint8
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_DYNAMIC_VISCOSITY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -1650,13 +2157,16 @@ extern BOOL vscp_evt_setvaluezone_sendDynamicViscosity(uint8_t dataCoding, uint8
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendSoundImpedance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendSoundImpedance(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -1669,12 +2179,21 @@ extern BOOL vscp_evt_setvaluezone_sendSoundImpedance(uint8_t dataCoding, uint8_t
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_SOUND_IMPEDANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -1691,13 +2210,16 @@ extern BOOL vscp_evt_setvaluezone_sendSoundImpedance(uint8_t dataCoding, uint8_t
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendSoundResistance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendSoundResistance(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -1710,12 +2232,21 @@ extern BOOL vscp_evt_setvaluezone_sendSoundResistance(uint8_t dataCoding, uint8_
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_SOUND_RESISTANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -1732,13 +2263,16 @@ extern BOOL vscp_evt_setvaluezone_sendSoundResistance(uint8_t dataCoding, uint8_
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendElectricElastance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendElectricElastance(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -1751,12 +2285,21 @@ extern BOOL vscp_evt_setvaluezone_sendElectricElastance(uint8_t dataCoding, uint
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_ELECTRIC_ELASTANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -1773,13 +2316,16 @@ extern BOOL vscp_evt_setvaluezone_sendElectricElastance(uint8_t dataCoding, uint
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendLuminousEnergy(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendLuminousEnergy(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -1792,12 +2338,21 @@ extern BOOL vscp_evt_setvaluezone_sendLuminousEnergy(uint8_t dataCoding, uint8_t
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_LUMINOUS_ENERGY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -1814,13 +2369,16 @@ extern BOOL vscp_evt_setvaluezone_sendLuminousEnergy(uint8_t dataCoding, uint8_t
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendLuminance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendLuminance(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -1833,12 +2391,21 @@ extern BOOL vscp_evt_setvaluezone_sendLuminance(uint8_t dataCoding, uint8_t cons
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_LUMINANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -1855,13 +2422,16 @@ extern BOOL vscp_evt_setvaluezone_sendLuminance(uint8_t dataCoding, uint8_t cons
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendChemicalConcentration(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendChemicalConcentration(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -1874,12 +2444,21 @@ extern BOOL vscp_evt_setvaluezone_sendChemicalConcentration(uint8_t dataCoding, 
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_CHEMICAL_CONCENTRATION, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -1898,13 +2477,16 @@ extern BOOL vscp_evt_setvaluezone_sendChemicalConcentration(uint8_t dataCoding, 
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendDoseEquivalent(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendDoseEquivalent(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -1917,12 +2499,21 @@ extern BOOL vscp_evt_setvaluezone_sendDoseEquivalent(uint8_t dataCoding, uint8_t
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_DOSE_EQVIVALENT, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -1941,13 +2532,16 @@ extern BOOL vscp_evt_setvaluezone_sendDoseEquivalent(uint8_t dataCoding, uint8_t
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendDewPoint(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendDewPoint(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -1960,12 +2554,21 @@ extern BOOL vscp_evt_setvaluezone_sendDewPoint(uint8_t dataCoding, uint8_t const
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_DEWPOINT, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -1982,13 +2585,16 @@ extern BOOL vscp_evt_setvaluezone_sendDewPoint(uint8_t dataCoding, uint8_t const
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendRelativeLevel(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendRelativeLevel(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -2001,12 +2607,21 @@ extern BOOL vscp_evt_setvaluezone_sendRelativeLevel(uint8_t dataCoding, uint8_t 
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_RELATIVE_LEVEL, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -2023,13 +2638,16 @@ extern BOOL vscp_evt_setvaluezone_sendRelativeLevel(uint8_t dataCoding, uint8_t 
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendAltitude(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendAltitude(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -2042,12 +2660,21 @@ extern BOOL vscp_evt_setvaluezone_sendAltitude(uint8_t dataCoding, uint8_t const
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_ALTITUDE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -2064,13 +2691,16 @@ extern BOOL vscp_evt_setvaluezone_sendAltitude(uint8_t dataCoding, uint8_t const
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendArea(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendArea(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -2083,12 +2713,21 @@ extern BOOL vscp_evt_setvaluezone_sendArea(uint8_t dataCoding, uint8_t const * c
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_AREA, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -2105,13 +2744,16 @@ extern BOOL vscp_evt_setvaluezone_sendArea(uint8_t dataCoding, uint8_t const * c
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendRadiantIntensity(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendRadiantIntensity(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -2124,12 +2766,21 @@ extern BOOL vscp_evt_setvaluezone_sendRadiantIntensity(uint8_t dataCoding, uint8
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_RADIANT_INTENSITY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -2146,13 +2797,16 @@ extern BOOL vscp_evt_setvaluezone_sendRadiantIntensity(uint8_t dataCoding, uint8
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendRadiance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendRadiance(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -2165,12 +2819,21 @@ extern BOOL vscp_evt_setvaluezone_sendRadiance(uint8_t dataCoding, uint8_t const
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_RADIANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -2187,13 +2850,16 @@ extern BOOL vscp_evt_setvaluezone_sendRadiance(uint8_t dataCoding, uint8_t const
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendIrradianceExitanceRadiosity(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendIrradianceExitanceRadiosity(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -2206,12 +2872,21 @@ extern BOOL vscp_evt_setvaluezone_sendIrradianceExitanceRadiosity(uint8_t dataCo
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_IRRADIANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -2228,13 +2903,16 @@ extern BOOL vscp_evt_setvaluezone_sendIrradianceExitanceRadiosity(uint8_t dataCo
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendSpectralRadiance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendSpectralRadiance(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -2247,12 +2925,21 @@ extern BOOL vscp_evt_setvaluezone_sendSpectralRadiance(uint8_t dataCoding, uint8
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_SPECTRAL_RADIANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -2269,13 +2956,16 @@ extern BOOL vscp_evt_setvaluezone_sendSpectralRadiance(uint8_t dataCoding, uint8
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendSpectralIrradiance(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendSpectralIrradiance(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -2288,12 +2978,21 @@ extern BOOL vscp_evt_setvaluezone_sendSpectralIrradiance(uint8_t dataCoding, uin
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_SPECTRAL_IRRADIANCE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -2310,13 +3009,16 @@ extern BOOL vscp_evt_setvaluezone_sendSpectralIrradiance(uint8_t dataCoding, uin
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendSoundPressureAcousticPressure(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendSoundPressureAcousticPressure(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -2329,12 +3031,21 @@ extern BOOL vscp_evt_setvaluezone_sendSoundPressureAcousticPressure(uint8_t data
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_SOUND_PRESSURE, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -2351,13 +3062,16 @@ extern BOOL vscp_evt_setvaluezone_sendSoundPressureAcousticPressure(uint8_t data
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendSoundEnergyDensity(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendSoundEnergyDensity(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -2370,12 +3084,21 @@ extern BOOL vscp_evt_setvaluezone_sendSoundEnergyDensity(uint8_t dataCoding, uin
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_SOUND_DENSITY, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
@@ -2392,13 +3115,16 @@ extern BOOL vscp_evt_setvaluezone_sendSoundEnergyDensity(uint8_t dataCoding, uin
 /**
  * Count
  * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
  * @param[in] dataCoding Data coding.
- * @param[in] data Data with format defined by byte 0.  (array[7])
+ * @param[in] data Data with format defined by byte 0.  (array[4])
  * @param[in] datasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_setvaluezone_sendSoundLevel(uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
+extern BOOL vscp_evt_setvaluezone_sendSoundLevel(uint8_t index, uint8_t zone, uint8_t subZone, uint8_t dataCoding, uint8_t const * const data, uint8_t dataSize)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
@@ -2411,12 +3137,21 @@ extern BOOL vscp_evt_setvaluezone_sendSoundLevel(uint8_t dataCoding, uint8_t con
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SETVALUEZONE, VSCP_TYPE_SETVALUEZONE_SOUND_LEVEL, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.data[0] = dataCoding;
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.data[3] = dataCoding;
     size += 1;
 
     for(byteIndex = 0; byteIndex < dataSize; ++byteIndex)
     {
-        txMsg.data[1 + byteIndex] = data[byteIndex];
+        txMsg.data[4 + byteIndex] = data[byteIndex];
         size += 1;
 
         if (VSCP_L1_DATA_SIZE <= size)
