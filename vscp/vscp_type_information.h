@@ -575,6 +575,21 @@ extern "C"
  */
 #define VSCP_TYPE_INFORMATION_UPDATED                             80
 
+/**
+ * Something has been updated.
+ */
+#define VSCP_TYPE_INFORMATION_CONNECT                             81
+
+/**
+ * Something has been disconnected.
+ */
+#define VSCP_TYPE_INFORMATION_DISCONNECT                          82
+
+/**
+ * Something has been reconnected.
+ */
+#define VSCP_TYPE_INFORMATION_RECONNECT                           83
+
 /*******************************************************************************
     MACROS
 *******************************************************************************/

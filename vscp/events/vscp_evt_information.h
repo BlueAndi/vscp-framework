@@ -996,4 +996,37 @@ extern BOOL vscp_evt_information_sendFalling(uint8_t index, uint8_t zone, uint8_
  */
 extern BOOL vscp_evt_information_sendUpdated(uint8_t index, uint8_t zone, uint8_t subZone);
 
+/**
+ * Connect
+ * 
+ * @param[in] index Index for device. Set to zero if not used.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-Zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_information_sendConnect(uint8_t index, uint8_t zone, uint8_t subZone);
+
+/**
+ * Disconnect
+ * 
+ * @param[in] index Index for device. Set to zero if not used.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-Zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_information_sendDisconnect(uint8_t index, uint8_t zone, uint8_t subZone);
+
+/**
+ * Reconnect
+ * 
+ * @param[in] index Index for device. Set to zero if not used.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-Zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_information_sendReconnect(uint8_t index, uint8_t zone, uint8_t subZone);
+
 #endif  /* __VSCP_EVT_INFORMATION_H__ */
