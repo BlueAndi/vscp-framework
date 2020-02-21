@@ -1,4 +1,4 @@
-## 1.0.0 (not released yet)
+## 1.0.0
 
   - VSCP framework
     - Bugfixes:
