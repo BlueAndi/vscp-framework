@@ -5001,6 +5001,56 @@ Notes:
                         </frame>
                     </frames>
                 </vscp-type>
+                <vscp-type id="84">
+                    <name lang="en">Enter</name>
+                    <token>VSCP_TYPE_INFORMATION_ENTER</token>
+                    <description lang="en">Enter, something has been entered.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Index for device. Set to zero if not used.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
+                </vscp-type>
+                <vscp-type id="85">
+                    <name lang="en">Exit</name>
+                    <token>VSCP_TYPE_INFORMATION_EXIT</token>
+                    <description lang="en">Exit, something has been exited.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Index for device. Set to zero if not used.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
+                </vscp-type>
             </vscp-types>
         </vscp-class>
         <vscp-class id="30">
