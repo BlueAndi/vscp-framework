@@ -1,3 +1,10 @@
+## 1.1.0 (not released yet)
+
+  - VSCP framework
+    - Features:
+      - Added Enter/Exit CLASS1.INFORMATION events. Thanks troky!
+      - Updated CLASS1.CONTROL protocol and generated the corresponding event abstraction modules. Thanks troky!
+
 ## 1.0.0
 
   - VSCP framework

@@ -5001,6 +5001,56 @@ Notes:
                         </frame>
                     </frames>
                 </vscp-type>
+                <vscp-type id="84">
+                    <name lang="en">Enter</name>
+                    <token>VSCP_TYPE_INFORMATION_ENTER</token>
+                    <description lang="en">Enter, something has been entered.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Index for device. Set to zero if not used.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
+                </vscp-type>
+                <vscp-type id="85">
+                    <name lang="en">Exit</name>
+                    <token>VSCP_TYPE_INFORMATION_EXIT</token>
+                    <description lang="en">Exit, something has been exited.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Index for device. Set to zero if not used.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
+                </vscp-type>
             </vscp-types>
         </vscp-class>
         <vscp-class id="30">
@@ -5023,81 +5073,401 @@ Notes:
                     <name lang="en">Mute on/off</name>
                     <token>VSCP_TYPE_CONTROL_MUTE</token>
                     <description lang="en">Mute/Un-mute all sound generating nodes in a zone</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Command</name>
+                                    <description lang="en">If equal to zero no mute else mute.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="2">
                     <name lang="en">(All) Lamp(s) on/off</name>
                     <token>VSCP_TYPE_CONTROL_ALL_LAMPS</token>
                     <description lang="en">Turn on/off lamps on nodes in zone.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">State</name>
+                                    <description lang="en">If equal to zero off else on.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="3">
                     <name lang="en">Open</name>
                     <token>VSCP_TYPE_CONTROL_OPEN</token>
                     <description lang="en">Perform open on all nodes in zone.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific value.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="4">
                     <name lang="en">Close</name>
                     <token>VSCP_TYPE_CONTROL_CLOSE</token>
                     <description lang="en">Perform close on all nodes in zone.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific value.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="5">
                     <name lang="en">TurnOn</name>
                     <token>VSCP_TYPE_CONTROL_TURNON</token>
                     <description lang="en">Turn On a nodes in a zone/subzone.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific value.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="6">
                     <name lang="en">TurnOff</name>
                     <token>VSCP_TYPE_CONTROL_TURNOFF</token>
                     <description lang="en">Turn Off a nodes in a zone/subzone.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific value.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="7">
                     <name lang="en">Start</name>
                     <token>VSCP_TYPE_CONTROL_START</token>
                     <description lang="en">Start all nodes in a zone.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific value.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="8">
                     <name lang="en">Stop</name>
                     <token>VSCP_TYPE_CONTROL_STOP</token>
                     <description lang="en">Stop all nodes in zone.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific value.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="9">
                     <name lang="en">Reset</name>
                     <token>VSCP_TYPE_CONTROL_RESET</token>
                     <description lang="en">Perform Reset on all nodes in zone.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific value.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="10">
                     <name lang="en">Interrupt</name>
                     <token>VSCP_TYPE_CONTROL_INTERRUPT</token>
                     <description lang="en">Perform Interrupt on all nodes in zone.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Interrupt level</name>
+                                    <description lang="en">Interrupt level. (0 – 255 , zero is lowest interrupt level. ).</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="11">
                     <name lang="en">Sleep</name>
                     <token>VSCP_TYPE_CONTROL_SLEEP</token>
                     <description lang="en">Perform Sleep on all nodes in zone.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific value.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="12">
                     <name lang="en">Wakeup</name>
                     <token>VSCP_TYPE_CONTROL_WAKEUP</token>
                     <description lang="en">Wakeup all nodes in zone.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific value.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="13">
                     <name lang="en">Resume</name>
                     <token>VSCP_TYPE_CONTROL_RESUME</token>
                     <description lang="en">Resume all nodes in zone.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific value.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="14">
                     <name lang="en">Pause</name>
                     <token>VSCP_TYPE_CONTROL_PAUSE</token>
                     <description lang="en">Pause all nodes in zone.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific value.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="15">
                     <name lang="en">Activate</name>
                     <token>VSCP_TYPE_CONTROL_ACTIVATE</token>
                     <description lang="en">Activate all nodes in zone.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific value.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="16">
                     <name lang="en">Deactivate</name>
                     <token>VSCP_TYPE_CONTROL_DEACTIVATE</token>
                     <description lang="en">Deactivate all nodes in zone.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific value.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="17">
                     <name lang="en">Reserved for future use</name>
@@ -5118,121 +5488,625 @@ Notes:
                     <name lang="en">Dim lamp(s)</name>
                     <token>VSCP_TYPE_CONTROL_DIM_LAMPS</token>
                     <description lang="en">Dim all dimmer devices on a segment to a specified dim value.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Value</name>
+                                    <description lang="en">Value (0 – 100) . 0 = off, 100 = full on. 254 dim down one step. 255 dim up one step.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="21">
                     <name lang="en">Change Channel</name>
                     <token>VSCP_TYPE_CONTROL_CHANGE_CHANNEL</token>
                     <description lang="en">This is typical for changing TV channels or for changing AV amp input source etc.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Channel</name>
+                                    <description lang="en">A value between 0 and 127 indicates the channel number. A value between 128 to 157 is change down by the specified number of channels. A value between 160 to 191 is change up by the specified number of channels. A value of 255 means that this is an extended change channel event and that the channel number is sent in byte 3 and after if needed.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="22">
                     <name lang="en">Change Level</name>
                     <token>VSCP_TYPE_CONTROL_CHANGE_LEVEL</token>
                     <description lang="en">Change an absolute level.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Level</name>
+                                    <description lang="en">Absolute level.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="23">
                     <name lang="en">Relative Change Level</name>
                     <token>VSCP_TYPE_CONTROL_RELATIVE_CHANGE_LEVEL</token>
                     <description lang="en">Relative Change Level request</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Level</name>
+                                    <description lang="en">Relative level.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="24">
                     <name lang="en">Measurement Request</name>
                     <token>VSCP_TYPE_CONTROL_MEASUREMENT_REQUEST</token>
                     <description lang="en">Measurement Request</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Zero indicates all measurements supported by node should be sent (as separate events). Non-zero indicates a node specific index specifying which measurement to send.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="25">
                     <name lang="en">Stream Data</name>
                     <token>VSCP_TYPE_CONTROL_STREAM_DATA</token>
                     <description lang="en">Request to stream data</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Sequence number which is increase by one for each stream data event sent.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="7" optional="true">
+                                    <name lang="en">Data</name>
+                                    <description lang="en"> Stream data.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="26">
                     <name lang="en">Sync</name>
                     <token>VSCP_TYPE_CONTROL_SYNC</token>
                     <description lang="en">Synchronize events on a segment.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Sensor index for a sensor within a module (see data coding). 255 is all sensors.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="27">
                     <name lang="en">Zoned Stream Data</name>
                     <token>VSCP_TYPE_CONTROL_ZONED_STREAM_DATA</token>
                     <description lang="en">Request streamed data from nodes identified by zone/subzone.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Sequence number which is increase by one for each stream data event sent.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                                <element pos="3" type="uint8" length="5" optional="true">
+                                    <name lang="en">Data</name>
+                                    <description lang="en"> Stream data.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="28">
                     <name lang="en">Set Pre-set</name>
                     <token>VSCP_TYPE_CONTROL_SET_PRESET</token>
                     <description lang="en">Some nodes may have pre-set configurations to choose from. With this event a pre-set can be set for a zone/sub-zone.\nA node that receive and act on this event send CLASS1.INFORMATION,\nType=48 as a response event.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Preset code</name>
+                                    <description lang="en">Code for pre-set to set.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="29">
                     <name lang="en">Toggle state</name>
                     <token>VSCP_TYPE_CONTROL_TOGGLE_STATE</token>
                     <description lang="en">Toggle the state of a node.\nNote: This may be a bad design option as it often demands that the state should be known for the node on beforehand.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific value.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="30">
                     <name lang="en">Timed pulse on</name>
                     <token>VSCP_TYPE_CONTROL_TIMED_PULSE_ON</token>
                     <description lang="en">With this event it is possible to generate a timed pulse that is on for a specified time.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific value.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                                <element pos="3" type="uint8" length="1" optional="false">
+                                    <name lang="en">Control</name>
+                                    <description lang="en">Control byte.</description>
+                                </element>
+                                <element pos="4" type="uint32" length="1" optional="false">
+                                    <name lang="en">Time</name>
+                                    <description lang="en">Set time as a long with MSB in the first byte.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="31">
                     <name lang="en">Timed pulse off</name>
                     <token>VSCP_TYPE_CONTROL_TIMED_PULSE_OFF</token>
                     <description lang="en">With this event it is possible to generate a timed pulse that is off for a specified time.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific value.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                                <element pos="3" type="uint8" length="1" optional="false">
+                                    <name lang="en">Control</name>
+                                    <description lang="en">Control byte.</description>
+                                </element>
+                                <element pos="4" type="uint32" length="1" optional="false">
+                                    <name lang="en">Time</name>
+                                    <description lang="en">Set time as a long with MSB in the first byte.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="32">
                     <name lang="en">Set country/language</name>
                     <token>VSCP_TYPE_CONTROL_SET_COUNTRY_LANGUAGE</token>
                     <description lang="en">Set country and language.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Code</name>
+                                    <description lang="en">Country/Language code.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                                <element pos="3" type="uint8" length="4" optional="false">
+                                    <name lang="en">Code specific</name>
+                                    <description lang="en">Country/Language code specific</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="33">
                     <name lang="en">Big Change level</name>
                     <token>VSCP_TYPE_CONTROL_BIG_CHANGE_LEVEL</token>
                     <description lang="en">Big Change level can be used in situations when the one byte level of CLASS1.CONTROL, Type=22 is not enough.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Index.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                                <element pos="3" type="int32" length="1" optional="false">
+                                    <name lang="en">Level</name>
+                                    <description lang="en">Level as signed Integer. The range can be adjusted by the user by sending the needed number of bytes 1-5.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="34">
                     <name lang="en">Move shutter up</name>
                     <token>VSCP_TYPE_CONTROL_SHUTTER_UP</token>
                     <description lang="en">Move shutter up.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Index.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="35">
                     <name lang="en">Move shutter down</name>
                     <token>VSCP_TYPE_CONTROL_SHUTTER_DOWN</token>
                     <description lang="en">Move shutter down.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Index.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="36">
                     <name lang="en">Move shutter left</name>
                     <token>VSCP_TYPE_CONTROL_SHUTTER_LEFT</token>
                     <description lang="en">Move shutter left.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Index.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="37">
                     <name lang="en">Move shutter right</name>
                     <token>VSCP_TYPE_CONTROL_SHUTTER_RIGHT</token>
                     <description lang="en">Move shutter right.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Index.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="38">
                     <name lang="en">Move shutter to middle position</name>
                     <token>VSCP_TYPE_CONTROL_SHUTTER_MIDDLE</token>
                     <description lang="en">Move shutter to middle position.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Index.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="39">
                     <name lang="en">Move shutter to preset position</name>
                     <token>VSCP_TYPE_CONTROL_SHUTTER_PRESET</token>
                     <description lang="en">Move shutter to preset position.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
+                                    <description lang="en">Index.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="40">
                     <name lang="en">(All) Lamp(s) on</name>
                     <token>VSCP_TYPE_CONTROL_ALL_LAMPS_ON</token>
                     <description lang="en">Turn on all lamps in a zone.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific value.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="41">
                     <name lang="en">(All) Lamp(s) off</name>
                     <token>VSCP_TYPE_CONTROL_ALL_LAMPS_OFF</token>
                     <description lang="en">Turn off all lamps in a zone.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific value.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="42">
                     <name lang="en">Lock</name>
                     <token>VSCP_TYPE_CONTROL_LOCK</token>
                     <description lang="en">Lock devices in a zone.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific value.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="43">
                     <name lang="en">Unlock</name>
                     <token>VSCP_TYPE_CONTROL_UNLOCK</token>
                     <description lang="en">Unlock devices in a zone.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific value.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-Zone</name>
+                                    <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="44">
                     <name lang="en">PWM set</name>
