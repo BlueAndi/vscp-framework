@@ -5129,7 +5129,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">User specific</name>
+                                    <name lang="en">User specific</name>
                                     <description lang="en">User specific value.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5154,7 +5154,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">User specific</name>
+                                    <name lang="en">User specific</name>
                                     <description lang="en">User specific value.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5179,7 +5179,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">User specific</name>
+                                    <name lang="en">User specific</name>
                                     <description lang="en">User specific value.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5204,7 +5204,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">User specific</name>
+                                    <name lang="en">User specific</name>
                                     <description lang="en">User specific value.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5229,7 +5229,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">User specific</name>
+                                    <name lang="en">User specific</name>
                                     <description lang="en">User specific value.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5254,7 +5254,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">User specific</name>
+                                    <name lang="en">User specific</name>
                                     <description lang="en">User specific value.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5279,7 +5279,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">User specific</name>
+                                    <name lang="en">User specific</name>
                                     <description lang="en">User specific value.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5304,7 +5304,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">Interrupt level</name>
+                                    <name lang="en">Interrupt level</name>
                                     <description lang="en">Interrupt level. (0 – 255 , zero is lowest interrupt level. ).</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5329,7 +5329,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">User specific</name>
+                                    <name lang="en">User specific</name>
                                     <description lang="en">User specific value.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5354,7 +5354,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">User specific</name>
+                                    <name lang="en">User specific</name>
                                     <description lang="en">User specific value.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5379,7 +5379,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">User specific</name>
+                                    <name lang="en">User specific</name>
                                     <description lang="en">User specific value.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5404,7 +5404,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">User specific</name>
+                                    <name lang="en">User specific</name>
                                     <description lang="en">User specific value.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5429,7 +5429,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">User specific</name>
+                                    <name lang="en">User specific</name>
                                     <description lang="en">User specific value.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5454,7 +5454,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">User specific</name>
+                                    <name lang="en">User specific</name>
                                     <description lang="en">User specific value.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5494,7 +5494,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">Value</name>
+                                    <name lang="en">Value</name>
                                     <description lang="en">Value (0 – 100) . 0 = off, 100 = full on. 254 dim down one step. 255 dim up one step.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5519,7 +5519,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">Channel</name>
+                                    <name lang="en">Channel</name>
                                     <description lang="en">A value between 0 and 127 indicates the channel number. A value between 128 to 157 is change down by the specified number of channels. A value between 160 to 191 is change up by the specified number of channels. A value of 255 means that this is an extended change channel event and that the channel number is sent in byte 3 and after if needed.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5544,7 +5544,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">Level</name>
+                                    <name lang="en">Level</name>
                                     <description lang="en">Absolute level.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5569,7 +5569,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">Level</name>
+                                    <name lang="en">Level</name>
                                     <description lang="en">Relative level.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5594,7 +5594,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">Index</name>
+                                    <name lang="en">Index</name>
                                     <description lang="en">Zero indicates all measurements supported by node should be sent (as separate events). Non-zero indicates a node specific index specifying which measurement to send.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5619,12 +5619,12 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">Index</name>
+                                    <name lang="en">Index</name>
                                     <description lang="en">Sequence number which is increase by one for each stream data event sent.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="7" optional="true">
                                     <name lang="en">Data</name>
-                                    <description lang="en">	Stream data.</description>
+                                    <description lang="en"> Stream data.</description>
                                 </element>
                             </elements>
                         </frame>
@@ -5640,7 +5640,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">Index</name>
+                                    <name lang="en">Index</name>
                                     <description lang="en">Sensor index for a sensor within a module (see data coding). 255 is all sensors.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5665,7 +5665,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">Index</name>
+                                    <name lang="en">Index</name>
                                     <description lang="en">Sequence number which is increase by one for each stream data event sent.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5678,7 +5678,7 @@ Notes:
                                 </element>
                                 <element pos="3" type="uint8" length="5" optional="true">
                                     <name lang="en">Data</name>
-                                    <description lang="en">	Stream data.</description>
+                                    <description lang="en"> Stream data.</description>
                                 </element>
                             </elements>
                         </frame>
@@ -5694,7 +5694,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">Preset code</name>
+                                    <name lang="en">Preset code</name>
                                     <description lang="en">Code for pre-set to set.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5719,7 +5719,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">User specific</name>
+                                    <name lang="en">User specific</name>
                                     <description lang="en">User specific value.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5744,7 +5744,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">User specific</name>
+                                    <name lang="en">User specific</name>
                                     <description lang="en">User specific value.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5777,7 +5777,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">User specific</name>
+                                    <name lang="en">User specific</name>
                                     <description lang="en">User specific value.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5810,7 +5810,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">Code</name>
+                                    <name lang="en">Code</name>
                                     <description lang="en">Country/Language code.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5839,7 +5839,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">Index</name>
+                                    <name lang="en">Index</name>
                                     <description lang="en">Index.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5868,7 +5868,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">Index</name>
+                                    <name lang="en">Index</name>
                                     <description lang="en">Index.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5893,7 +5893,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">Index</name>
+                                    <name lang="en">Index</name>
                                     <description lang="en">Index.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5918,7 +5918,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">Index</name>
+                                    <name lang="en">Index</name>
                                     <description lang="en">Index.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5943,7 +5943,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">Index</name>
+                                    <name lang="en">Index</name>
                                     <description lang="en">Index.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5968,7 +5968,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">Index</name>
+                                    <name lang="en">Index</name>
                                     <description lang="en">Index.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -5993,7 +5993,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">Index</name>
+                                    <name lang="en">Index</name>
                                     <description lang="en">Index.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -6018,7 +6018,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">User specific</name>
+                                    <name lang="en">User specific</name>
                                     <description lang="en">User specific value.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -6043,7 +6043,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">User specific</name>
+                                    <name lang="en">User specific</name>
                                     <description lang="en">User specific value.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -6068,7 +6068,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">User specific</name>
+                                    <name lang="en">User specific</name>
                                     <description lang="en">User specific value.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
@@ -6093,7 +6093,7 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                	<name lang="en">User specific</name>
+                                    <name lang="en">User specific</name>
                                     <description lang="en">User specific value.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
