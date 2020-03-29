@@ -2761,3 +2761,63 @@ extern BOOL vscp_evt_information_sendReconnect(uint8_t index, uint8_t zone, uint
     return vscp_core_sendEvent(&txMsg);
 }
 
+/**
+ * Enter
+ * 
+ * @param[in] index Index for device. Set to zero if not used.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-Zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_information_sendEnter(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_ENTER, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Exit
+ * 
+ * @param[in] index Index for device. Set to zero if not used.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-Zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_information_sendExit(uint8_t index, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_EXIT, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = index;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
