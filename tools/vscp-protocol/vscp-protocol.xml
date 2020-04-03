@@ -10085,9 +10085,13 @@ Notes:
                                         <enum id="2">Blink</enum>
                                     </enumeration>
                                 </element>
-                                <element pos="4" type="uint32" length="1" optional="false">
-                                    <name lang="en">Blink period</name>
-                                    <description lang="en">Blink period in milliseconds.</description>
+                                <element pos="4" type="uint16" length="1" optional="false">
+                                    <name lang="en">Blink On period</name>
+                                    <description lang="en">Blink On period in milliseconds.</description>
+                                </element>
+                                <element pos="6" type="uint16" length="1" optional="false">
+                                    <name lang="en">Blink Off period</name>
+                                    <description lang="en">Blink Off period in milliseconds.</description>
                                 </element>
                             </elements>
                         </frame>
