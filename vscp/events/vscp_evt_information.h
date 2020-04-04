@@ -180,10 +180,12 @@ extern BOOL vscp_evt_information_sendClosed(uint8_t userSpecific, uint8_t zone, 
  * @param[in] userSpecific User specific value.
  * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
  * @param[in] subZone Sub-Zone for which event applies to (0-255). 255 is all sub-zones.
+ * @param[in] userData Optional user provided data. (optional) (array[5])
+ * @param[in] userDatasize Size in byte.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_information_sendNodeHeartbeat(uint8_t userSpecific, uint8_t zone, uint8_t subZone);
+extern BOOL vscp_evt_information_sendNodeHeartbeat(uint8_t userSpecific, uint8_t zone, uint8_t subZone, uint8_t const * const userData, uint8_t userDataSize);
 
 /**
  * Below limit
