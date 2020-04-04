@@ -3037,6 +3037,10 @@ Notes:
                                     <name lang="en">Sub-Zone</name>
                                     <description lang="en">Sub-Zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
+                                <element pos="3" type="uint8" length="5" optional="true">
+                                    <name lang="en">User data</name>
+                                    <description lang="en">Optional user provided data.</description>
+                                </element>
                             </elements>
                         </frame>
                     </frames>
