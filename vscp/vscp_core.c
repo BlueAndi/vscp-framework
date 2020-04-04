@@ -1153,7 +1153,7 @@ static inline void  vscp_core_stateActive(void)
 #if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_CUSTOM_HEARTBEAT )
         (void)vscp_portable_sendNodeHeartbeatEvent();
 #else
-        (void)vscp_evt_information_sendNodeHeartbeat(0, vscp_dev_data_getNodeZone(), vscp_dev_data_getNodeSubZone());
+        (void)vscp_evt_information_sendNodeHeartbeat(0, vscp_dev_data_getNodeZone(), vscp_dev_data_getNodeSubZone(), NULL, 0);
 #endif
 
         /* Restart timer */
