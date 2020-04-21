@@ -935,7 +935,7 @@ extern BOOL vscp_evt_control_sendTimedPulseOn(uint8_t userSpecific, uint8_t zone
     size += 1;
 
     txMsg.data[4] = (uint8_t)((time >> 24) & 0xff);
-    txMsg.data[5] = (uint8_t)((time >> 18) & 0xff);
+    txMsg.data[5] = (uint8_t)((time >> 16) & 0xff);
     txMsg.data[6] = (uint8_t)((time >> 8) & 0xff);
     txMsg.data[7] = (uint8_t)((time >> 0) & 0xff);
     size += 4;
@@ -976,7 +976,7 @@ extern BOOL vscp_evt_control_sendTimedPulseOff(uint8_t userSpecific, uint8_t zon
     size += 1;
 
     txMsg.data[4] = (uint8_t)((time >> 24) & 0xff);
-    txMsg.data[5] = (uint8_t)((time >> 18) & 0xff);
+    txMsg.data[5] = (uint8_t)((time >> 16) & 0xff);
     txMsg.data[6] = (uint8_t)((time >> 8) & 0xff);
     txMsg.data[7] = (uint8_t)((time >> 0) & 0xff);
     size += 4;

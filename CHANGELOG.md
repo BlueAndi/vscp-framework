@@ -4,6 +4,7 @@
     - Bugfixes:
       - CLASS1.DISPLAY Set LED fixed. Thanks troky!
       - CLASS1.INFORMATION Node Heartbeat fixed. Thanks troky!
+      - Bug in uint32 function parameter handling in the event abstraction fixed. Thanks troky!
     - Features:
       - Added Enter/Exit CLASS1.INFORMATION events. Thanks troky!
       - Updated CLASS1.CONTROL protocol and generated the corresponding event abstraction modules. Thanks troky!

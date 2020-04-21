@@ -896,7 +896,7 @@ This transformation script generates the VSCP event modules.
                             <xsl:value-of select="@pos + 1" />
                             <xsl.text>] = (uint8_t)((</xsl.text>
                             <xsl:value-of select="$varContent" />
-                            <xsl:text> &gt;&gt; 18) &amp; 0xff);&LF;</xsl:text>
+                            <xsl:text> &gt;&gt; 16) &amp; 0xff);&LF;</xsl:text>
 
                             <xsl:value-of select="$indent" />
                             <xsl:text>txMsg.data[</xsl:text>
