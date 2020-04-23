@@ -5,6 +5,10 @@
       - CLASS1.DISPLAY Set LED fixed. Thanks troky!
       - CLASS1.INFORMATION Node Heartbeat fixed. Thanks troky!
       - Bug in uint32 function parameter handling in the event abstraction fixed. Thanks troky!
+    - Improvements:
+      - If in the decision matrix the zone/sub-zone match is enabled and the received zone/sub-zone is 0xFF
+        (which applies to all zones/sub-zones), the decision matrix row will be considered. This way there is
+        no need anymore to add a separate decision matrix row to handle 0xFF zone/sub-zone. Thanks troky for the hint!
     - Features:
       - Added Enter/Exit CLASS1.INFORMATION events. Thanks troky!
       - Updated CLASS1.CONTROL protocol and generated the corresponding event abstraction modules. Thanks troky!
