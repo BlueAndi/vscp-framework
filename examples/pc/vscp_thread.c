@@ -266,7 +266,7 @@ static void* vscp_thread_frameworkThread(void* par)
         /* Application */
         if (FALSE == bootloaderMode)
         {
-            vscp_core_process();
+            (void)vscp_core_process();
 
             bootloaderMode = vscp_portable_isBootloaderRequested();
         }

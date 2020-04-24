@@ -449,7 +449,7 @@ extern void vscp_test_processNodeTheFirstTime(void)
 
     /* Process core */
     vscp_test_processTimers();
-    vscp_core_process();
+    CU_ASSERT_EQUAL(vscp_core_process(), FALSE);
 
     /* Initialization shall only start if explicit requested. */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_TP_ADAPTER_WRITE_MESSAGE], 0);
@@ -819,7 +819,7 @@ extern void vscp_test_init07(void)
     vscp_test_noMoreTimers = FALSE;
 
     /* ProcessVSCP core */
-    vscp_core_process();
+    CU_ASSERT_EQUAL(vscp_core_process(), FALSE);
 
     /* VSCP shall be in error state */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_PORTABLE_ERROR_STATE_ENTERED], 1);
@@ -2704,7 +2704,7 @@ extern void vscp_test_dm01(void)
 
     /* Process core */
     vscp_test_processTimers();
-    vscp_core_process();
+    CU_ASSERT_EQUAL(vscp_core_process(), TRUE);
 
     /* Only one action shall be executed */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_EXECUTE], 1);
@@ -2747,7 +2747,7 @@ extern void vscp_test_dm02(void)
 
     /* Process core */
     vscp_test_processTimers();
-    vscp_core_process();
+    CU_ASSERT_EQUAL(vscp_core_process(), TRUE);
 
     /* Two actions shall be executed */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_EXECUTE], 2);
@@ -2790,7 +2790,7 @@ extern void vscp_test_dm03(void)
 
     /* Process core */
     vscp_test_processTimers();
-    vscp_core_process();
+    CU_ASSERT_EQUAL(vscp_core_process(), TRUE);
 
     /* Three actions shall be executed */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_EXECUTE], 3);
@@ -2833,7 +2833,7 @@ extern void vscp_test_dm04(void)
 
     /* Process core */
     vscp_test_processTimers();
-    vscp_core_process();
+    CU_ASSERT_EQUAL(vscp_core_process(), TRUE);
 
     /* Four actions shall be executed */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_EXECUTE], 4);
@@ -2876,7 +2876,7 @@ extern void vscp_test_dm05(void)
 
     /* Process core */
     vscp_test_processTimers();
-    vscp_core_process();
+    CU_ASSERT_EQUAL(vscp_core_process(), TRUE);
 
     /* Three actions shall be executed */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_EXECUTE], 3);
@@ -2919,7 +2919,7 @@ extern void vscp_test_dm06(void)
 
     /* Process core */
     vscp_test_processTimers();
-    vscp_core_process();
+    CU_ASSERT_EQUAL(vscp_core_process(), TRUE);
 
     /* One action shall be executed */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_EXECUTE], 1);
@@ -2962,7 +2962,7 @@ extern void vscp_test_dm07(void)
 
     /* Process core */
     vscp_test_processTimers();
-    vscp_core_process();
+    CU_ASSERT_EQUAL(vscp_core_process(), TRUE);
 
     /* One action shall be executed */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_EXECUTE], 1);
@@ -3005,7 +3005,7 @@ extern void vscp_test_dm08(void)
 
     /* Process core */
     vscp_test_processTimers();
-    vscp_core_process();
+    CU_ASSERT_EQUAL(vscp_core_process(), TRUE);
 
     /* One action shall be executed */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_EXECUTE], 1);
@@ -3096,7 +3096,7 @@ extern void vscp_test_dmNG01(void)
 
     /* Process core */
     vscp_test_processTimers();
-    vscp_core_process();
+    CU_ASSERT_EQUAL(vscp_core_process(), TRUE);
 
     /* No action shall be executed */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_EXECUTE], 0);
@@ -3143,7 +3143,7 @@ extern void vscp_test_dmNG02(void)
 
     /* Process core */
     vscp_test_processTimers();
-    vscp_core_process();
+    CU_ASSERT_EQUAL(vscp_core_process(), TRUE);
 
     /* No action shall be executed */
     CU_ASSERT_EQUAL(vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_ACTION_EXECUTE], 1);
@@ -3423,13 +3423,18 @@ extern void vscp_test_tpAdatperInit(void)
 
 extern BOOL vscp_test_tpAdatperReadMessage(vscp_RxMessage * const msg)
 {
-    BOOL    status  = TRUE;
+    BOOL    status  = FALSE;
 
     CU_ASSERT_PTR_NOT_EQUAL_FATAL(msg, NULL);
 
     ++vscp_test_callCounter[VSCP_TEST_CALL_COUNTER_TP_ADAPTER_READ_MESSAGE];
 
     *msg = vscp_test_rxMessage;
+
+    if (0 != vscp_test_rxMessage.vscpType)
+    {
+        status = TRUE;
+    }
 
     /* Make message invalid */
     vscp_test_rxMessage.vscpType = 0;
@@ -3734,7 +3739,7 @@ static void vscp_test_waitForTxMessage(uint8_t min, uint16_t max)
     {
         /* Process core */
         vscp_test_processTimers();
-        vscp_core_process();
+        (void)vscp_core_process();
 
         --max;
     }

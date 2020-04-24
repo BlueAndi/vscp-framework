@@ -200,7 +200,7 @@ int main(void)
     for(;;)
     {
         /* Process VSCP framework */
-        vscp_core_process();
+        (void)vscp_core_process();
 
         /* Initialize the VSCP segment, because user pressed the segment
          * initialization button?

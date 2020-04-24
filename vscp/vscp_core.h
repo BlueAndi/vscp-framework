@@ -147,8 +147,15 @@ extern void vscp_core_restoreFactoryDefaultSettings(void);
 /**
  * This function process the whole VSCP core stack. Call it in a user defined
  * cyclic period.
+ *
+ * Note, for a fast handling of received events, this function returns TRUE in
+ * case a event was handled, otherwise FALSE. Call it e.g. in a loop until no
+ * event is handled anymore. If its not necessary in your application, just
+ * skip the return value.
+ *
+ * @return If a received event was handled, it will return TRUE otherwise FALSE.
  */
-extern void vscp_core_process(void);
+extern BOOL vscp_core_process(void);
 
 /**
  * This function reads the nickname id of the node.
@@ -194,7 +201,7 @@ extern uint32_t vscp_core_getTimeSinceEpoch(void);
  * Set the time since epoch 00:00:00 UTC, January 1, 1970.
  * Note, if a segment master is present, it will overwrite the time with its
  * heartbeat message.
- * 
+ *
  * @param[in] timestamp Unix timestamp
  */
 extern void vscp_core_setTimeSinceEpoch(uint32_t timestamp);

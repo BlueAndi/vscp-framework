@@ -12,7 +12,10 @@
     - Features:
       - Added Enter/Exit CLASS1.INFORMATION events. Thanks troky!
       - Updated CLASS1.CONTROL protocol and generated the corresponding event abstraction modules. Thanks troky!
-      
+      - The vscp_core_process() function returns now TRUE if a received event was handled, otherwise FALSE.
+        This can be used for a faster handling of received events, e.g. call it in a loop as long as events are
+        handled. But be aware about the watchdog. ;-)
+
 ## 1.0.0
 
   - VSCP framework
@@ -51,7 +54,7 @@
       - Fixed the GUID in the event, sent by the node. It must be always
         a combination of interface GUID and the node nickname id at LSB byte.
       - Fixed the default option of supported events.
-        
+
   - Projects
     - PC
       - All projects adapted according to the possible usage of vscphelper library in debug or release variant.
@@ -66,7 +69,7 @@
       - If your node shall send a custom heartbeat with user data and extended data,
         enable VSCP_CONFIG_ENABLE_CUSTOM_HEARTBEAT in your configuration. Find the function prototype in
         the vscp_portable.c module. Thanks troky!
-    
+
 ## 0.7.0
 
   - Common
@@ -121,7 +124,7 @@
       - Relay board 01
         - Features:
           - Decision matrix NG size increased to 512 bytes.
-        
+
 ## 0.5.0
 
   - Examples
@@ -135,8 +138,8 @@
         - Command line arguments changed, please use -h or --help to see how.
       - Bugfixes:
         - Setting the GUID via command line argument fixed.
-        - Fixed wrong compares for a empty strings.  
-  
+        - Fixed wrong compares for a empty strings.
+
   - Projects
     - AVR
       - Bootloader jumper
@@ -162,7 +165,7 @@
       - Bootloader can now handle shorter images too, but the image size has to be a multiple of the block size.
     - Bugfixes:
       - Bootloader CRC calculation of the whole image fixed.
-      
+
 ## 0.4.0
 
 Features:
@@ -185,10 +188,10 @@ Features:
     - Scheduler is monitored by watchdog.
     - Several minor improvements.
     - Logger module integrated for easier debugging.
-    
+
   - PC example
     - The node GUID can now be set via command line too, e. g. -guid00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:01
-    
+
 Bugfixes:
 
   - VSCP framework
@@ -196,7 +199,7 @@ Bugfixes:
 
   - AT90CAN32 example
     - MDF updated
-    
+
   - PC example
     - The L1 over L2 event to L1 event conversion missed to remove the interface GUID in case of 16 byte data.
     - Bootloader adapter programmed the page wrong (simulated).
@@ -206,7 +209,7 @@ Bugfixes:
   - Project: Relay board 01
     - Bootloader support enabled
     - MDF updated
-    
+
 ## 0.3.0
 
 Features:
@@ -228,7 +231,7 @@ Bugfixes:
     - L1 over L2 class C-define name fixed.
     - GUID check in the handling of enter boot loader mode event fixed.
     - CRC-CCITT calculation fixed, used by the boot loader.
-    
+
   - PC example
     - Sending events on linux failed, because the binary used packed structures, but the vscphelperlib.so not.
 
@@ -254,17 +257,17 @@ Features:
     - More events can now be sent on a higher abstraction. See ./vscp/events folder.
     - L1 over L2 event classes added.
     - Bootloader algorithm implemented. See ./vscp/bootloader folder.
-    
+
   - PC example
     - The pc example loads the standard and extended decision matrix from a xml file.
     - L1 over L2 events are supported now.
     - The node sends now periodically simulated temperature values.
     - The node simulates 8 lamps, which can be controlled via decision matrix.
-  
+
   - Bootloader Jumper is used for relay board 01 project in case of debugging purposes.
-  
+
   - Bootloader VSCP is used for relay board 01 project in case of the VSCP bootloader algorithm.
-  
+
 Bugfixes:
 
   - VSCP framework

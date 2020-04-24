@@ -191,7 +191,7 @@ int main(void)
         /* ----- System state independent jobs ----- */
 
         /* Process VSCP framework */
-        vscp_core_process();
+        (void)vscp_core_process();
 
         /* 10 ms period */
         if (TRUE == swTimer_getStatus(MAIN_SWTIMER_10MS_ID))
