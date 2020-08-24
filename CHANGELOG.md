@@ -1,3 +1,9 @@
+## 1.2.0 (not released yet)
+
+  - Common
+    - The AVR CAN library supports now the ATmega32/64/128M1 too. Thanks to onitake!
+    - The AVR CAN library contains some deprecated stuff, based on older days with winavr. One of them was updated. Thanks to onitake!
+
 ## 1.1.0
 
   - VSCP framework
