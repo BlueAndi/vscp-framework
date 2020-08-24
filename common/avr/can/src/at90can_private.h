@@ -47,7 +47,10 @@
 
 #if (defined (__AVR_AT90CAN32__) || \
      defined (__AVR_AT90CAN64__) || \
-     defined (__AVR_AT90CAN128__)) && \
+     defined (__AVR_AT90CAN128__) || \
+     defined (__AVR_ATmega32M1__) || \
+     defined (__AVR_ATmega64M1__) || \
+     defined (__AVR_ATmega128M1__)) && \
      BUILD_FOR_AT90CAN == 1
 
 #if F_CPU != 16000000UL
@@ -55,6 +58,15 @@
 #endif
 
 #define SUPPORT_FOR_AT90CAN__       1
+
+// ----------------------------------------------------------------------------
+// For AtmegaxxM1
+#ifndef CANIT_vect
+#define CANIT_vect CAN_INT_vect
+#endif
+#ifndef OVRIT_vect
+#define OVRIT_vect CAN_TOVF_vect
+#endif
 
 // ----------------------------------------------------------------------------
 
