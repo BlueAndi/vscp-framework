@@ -50,7 +50,7 @@
  *
  * can_sleep() and can_wakeup() functions by Frédéric Lamorce.
  *
- * \version     $Id: can.h 385 2014-12-20 23:22:13Z amerkle $
+ * \version     $Id: can.h 8086 2009-07-14 14:08:25Z fabian $
  */
 // ----------------------------------------------------------------------------
 
@@ -58,7 +58,15 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#ifndef CAN_CONFIG_LOADED
+#ifdef HAS_CAN_CONFIG_H
+/* try to load can_config.h */
+#include "can_config.h"
+#else
+/* try to load config.h - compatibility */
 #include "config.h"
+#endif
+#endif
 
 // ----------------------------------------------------------------------------
 /** \ingroup    can_interface
@@ -83,11 +91,6 @@ typedef enum {
     BITRATE_1_MBPS = 7,     // ungetestet
     BITRATE_MAX,            // must always be last
 } can_bitrate_t;
-
-/**
- * Pointer to program space.
- */
-typedef uint8_t pg_uint8_t;
 
 /**
  * \ingroup     can_interface
@@ -395,7 +398,7 @@ can_disable_filter(uint8_t number);
  * \warning Wird nur vom MCP2515 unterstuetzt.
  */
 extern void
-can_static_filter(const pg_uint8_t *filter_array);
+can_static_filter(const uint8_t *filter_array);
 
 // ----------------------------------------------------------------------------
 /**

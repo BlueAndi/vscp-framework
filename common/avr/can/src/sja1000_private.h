@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $Id: sja1000_private.h 120 2014-03-24 15:06:21Z amerkle $
+ * $Id$
  */
 // ----------------------------------------------------------------------------
 
@@ -39,7 +39,7 @@
  * \author  Henning Schepker
  * \author  Fabian Greif <fabian.greif@rwth-aachen.de>
  *
- * \version $Id: sja1000_private.h 120 2014-03-24 15:06:21Z amerkle $
+ * \version $Id$
  */
 // ----------------------------------------------------------------------------
 

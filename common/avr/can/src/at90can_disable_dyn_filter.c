@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $Id: at90can_disable_dyn_filter.c 120 2014-03-24 15:06:21Z amerkle $
+ * $Id: at90can_disable_dyn_filter.c 6721 2008-10-02 16:09:53Z fabian $
  */
 // ----------------------------------------------------------------------------
 

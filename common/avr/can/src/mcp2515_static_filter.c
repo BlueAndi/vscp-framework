@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $Id: mcp2515_static_filter.c 192 2014-09-23 17:54:28Z amerkle $
+ * $Id: mcp2515_static_filter.c 6564 2008-06-14 11:33:57Z fabian $
  */
 // ----------------------------------------------------------------------------
 
@@ -34,7 +34,7 @@
 // ----------------------------------------------------------------------------
 // Filter setzen
 
-void mcp2515_static_filter(const pg_uint8_t *filter)
+void mcp2515_static_filter(const uint8_t *filter)
 {
     // change to configuration mode
     mcp2515_bit_modify(CANCTRL, 0xe0, (1<<REQOP2));

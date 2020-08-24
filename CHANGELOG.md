@@ -3,6 +3,7 @@
   - Common
     - The AVR CAN library supports now the ATmega32/64/128M1 too. Thanks to onitake!
     - The AVR CAN library contains some deprecated stuff, based on older days with winavr. One of them was updated. Thanks to onitake!
+    - The AVR CAN library updated to revision of 22th august 2016 of https://github.com/dergraaf/avr-can-lib
 
 ## 1.1.0
 

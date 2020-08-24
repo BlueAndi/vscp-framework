@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $Id: mcp2515_read_id.c 120 2014-03-24 15:06:21Z amerkle $
+ * $Id: mcp2515_read_id.c 7224 2009-01-25 20:19:32Z fabian $
  */
 // ----------------------------------------------------------------------------
 

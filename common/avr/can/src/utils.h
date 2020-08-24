@@ -35,7 +35,7 @@
  * \defgroup utils_h Gruppe nützlicher Makros und Inline-Funktionen
  * \brief   Nützliche Makros und Funktionen.
  *
- * \version $Id: utils.h 120 2014-03-24 15:06:21Z amerkle $
+ * \version $Id: utils.h 8541 2010-03-15 22:01:12Z fabian $
  */
 // ----------------------------------------------------------------------------
 
@@ -303,7 +303,7 @@ static inline uint8_t swap (uint8_t x)
  */
 #if defined(DEBUG_LEVEL) && DEBUG_LEVEL
     #include <stdio.h>
-    #define DEBUG_PRINT(s, ...) do { static prog_char __s[] = (s); \
+    #define DEBUG_PRINT(s, ...) do { static const char __s[] PROGMEM = (s); \
                 printf_P(__s, ## __VA_ARGS__); } while (0)
 #else
     #define DEBUG_PRINT(s, ...)

@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $Id: at90can_send_buf_message.c 120 2014-03-24 15:06:21Z amerkle $
+ * $Id: at90can_send_buf_message.c 6837 2008-11-16 19:05:15Z fabian $
  */
 // -----------------------------------------------------------------------------
 
@@ -37,11 +37,11 @@
 uint8_t at90can_send_buffered_message(const can_t *msg)
 {
     // check if there is any free buffer left
-    #if CAN_FORCE_TX_ORDER
+#if CAN_FORCE_TX_ORDER
     if (_transmission_in_progress)
-    #else
+#else
     if (_find_free_mob() == 0xff)
-    #endif
+#endif
     {
         can_t *buf = can_buffer_get_enqueue_ptr(&can_tx_buffer);
 
@@ -59,6 +59,7 @@ uint8_t at90can_send_buffered_message(const can_t *msg)
         // to the queue.
         bool enqueued = false;
 
+#if CAN_FORCE_TX_ORDER
         ENTER_CRITICAL_SECTION;
         if (_transmission_in_progress)
         {
@@ -66,6 +67,7 @@ uint8_t at90can_send_buffered_message(const can_t *msg)
             enqueued = true;
         }
         LEAVE_CRITICAL_SECTION;
+#endif
 
         if (enqueued) {
             return 1;

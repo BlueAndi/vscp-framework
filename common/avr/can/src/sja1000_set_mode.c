@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $Id: sja1000_set_mode.c 120 2014-03-24 15:06:21Z amerkle $
+ * $Id: mcp2515_set_mode.c 5752 2008-01-14 09:30:21Z fabian $
  */
 // ----------------------------------------------------------------------------
 

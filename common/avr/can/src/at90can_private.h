@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $Id: at90can_private.h 120 2014-03-24 15:06:21Z amerkle $
+ * $Id: at90can_private.h 6910 2008-11-30 21:13:14Z fabian $
  */
 // ----------------------------------------------------------------------------
 
@@ -73,6 +73,8 @@
 #if CAN_RX_BUFFER_SIZE > 0
 extern can_buffer_t can_rx_buffer;
 #else
+// Indicates the number of MObs which have currently one received
+// message stored in them.
 extern volatile uint8_t _messages_waiting;
 #endif
 
@@ -104,17 +106,23 @@ extern uint8_t at90can_get_message(can_t *msg);
 
 // ----------------------------------------------------------------------------
 /**
- * \brief   Copy data form a message in RAM to the actual registers
+ * Copy data form a message in RAM to the actual registers.
+ *
  * \warning this function assumes CANPAGE to be set properly
  */
 extern void at90can_copy_message_to_mob(const can_t *msg);
 
 // ----------------------------------------------------------------------------
 /**
- * \brief   Copy data form a message the registers to RAM
+ * Copy data form a message the registers to RAM.
+ *
+ * \return true  if the message should be retrieved,
+ *         false if no valid message was available (only for
+ *               SUPPORT_EXTENDED_CANID = 0)
+ *
  * \warning this function assumes CANPAGE to be set properly
  */
-extern void at90can_copy_mob_to_message(can_t *msg);
+extern bool at90can_copy_mob_to_message(can_t *msg);
 
 // ----------------------------------------------------------------------------
 // enter standby mode => messages are not transmitted nor received

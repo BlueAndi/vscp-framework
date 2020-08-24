@@ -24,14 +24,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $Id: at90can_get_message.c 120 2014-03-24 15:06:21Z amerkle $
+ * $Id: at90can_get_message.c 7224 2009-01-25 20:19:32Z fabian $
  */
 // ----------------------------------------------------------------------------
 
 #include "at90can_private.h"
 #ifdef  SUPPORT_FOR_AT90CAN__
 
-void at90can_copy_mob_to_message(can_t *msg)
+bool at90can_copy_mob_to_message(can_t *msg)
 {
     // read status
     uint8_t cancdmob = CANCDMOB;
@@ -79,15 +79,7 @@ void at90can_copy_mob_to_message(can_t *msg)
 
     if (cancdmob & (1 << IDE))
     {
-        // mark message as processed
-        ENTER_CRITICAL_SECTION;
-        _messages_waiting--;
-        LEAVE_CRITICAL_SECTION;
-
-        // clear flags
-        CANCDMOB = (1 << CONMOB1);
-
-        return 0;
+        return false;
     }
     else
     {
@@ -114,6 +106,8 @@ void at90can_copy_mob_to_message(can_t *msg)
     #if SUPPORT_TIMESTAMPS
     msg->timestamp = CANSTM;
     #endif
+    
+    return true;
 }
 
 // ----------------------------------------------------------------------------
@@ -142,10 +136,11 @@ uint8_t at90can_get_message(can_t *msg)
         }
     }
 
-    if (!found)
+    if (!found) {
         return 0;       // should never happen
+    }
 
-    at90can_copy_mob_to_message( msg );
+    found = at90can_copy_mob_to_message( msg );
 
     #if CAN_RX_BUFFER_SIZE == 0
     // mark message as processed
@@ -160,7 +155,13 @@ uint8_t at90can_get_message(can_t *msg)
     // clear flags
     CANCDMOB = (1 << CONMOB1) | (CANCDMOB & (1 << IDE));
 
+    if (found) {
     return (mob + 1);
+    }
+    else {
+        // only if SUPPORT_EXTENDED_CANID=0 and a extended message was received
+        return 0;
+    }
 }
 
 #endif  // SUPPORT_FOR_AT90CAN__

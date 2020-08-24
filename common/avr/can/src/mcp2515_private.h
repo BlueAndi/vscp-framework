@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $Id: mcp2515_private.h 120 2014-03-24 15:06:21Z amerkle $
+ * $Id: mcp2515_private.h 6910 2008-11-30 21:13:14Z fabian $
  */
 // ----------------------------------------------------------------------------
 
@@ -36,7 +36,7 @@
  * \brief   defines only used inside the library
  *
  * \author  Fabian Greif <fabian.greif@rwth-aachen.de>
- * \version $Id: mcp2515_private.h 120 2014-03-24 15:06:21Z amerkle $
+ * \version $Id: mcp2515_private.h 6910 2008-11-30 21:13:14Z fabian $
  *
  * \todo    MCP2515_TXRTSn Pins nutzbar machen.
  */
@@ -61,8 +61,13 @@
         #define P_MISO  B,6
         #define P_SCK   B,7
         #define SUPPORT_FOR_MCP2515__
+    #elif defined(__AVR_AT90USB82__) || defined(__AVR_AT90USB162__)
+        #define P_MOSI  B,2
+        #define P_MISO  B,3
+        #define P_SCK   B,1
+        #define SUPPORT_FOR_MCP2515__
     #elif defined(__AVR_ATmega8__)  || defined(__AVR_ATmega48__) || \
-          defined(__AVR_ATmega88__) || defined(__AVR_ATmega168__) || (__AVR_ATmega328P__)
+          defined(__AVR_ATmega88__) || defined(__AVR_ATmega168__) || defined(__AVR_ATmega328P__)
         #define P_MOSI  B,3
         #define P_MISO  B,4
         #define P_SCK   B,5

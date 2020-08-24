@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $Id: mcp2515_set_mode.c 120 2014-03-24 15:06:21Z amerkle $
+ * $Id: mcp2515_set_mode.c 8086 2009-07-14 14:08:25Z fabian $
  */
 // ----------------------------------------------------------------------------
 

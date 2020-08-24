@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $Id: sja1000.c 120 2014-03-24 15:06:21Z amerkle $
+ * $Id$
  */
 // ----------------------------------------------------------------------------
 
@@ -74,7 +74,7 @@ uint8_t sja1000_read(uint8_t address)
 // ----------------------------------------------------------------------------
 // useable can-bitrates (for calculation see http://www.kvaser.com/index.htm)
 
-prog_char _sja1000_cnf[8][2] = {
+const uint8_t _sja1000_cnf[8][2] PROGMEM = {
     // 10 kbps
     {   0xe7,
         0x4d

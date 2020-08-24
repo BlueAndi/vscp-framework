@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $Id: mcp2515_defs.h 120 2014-03-24 15:06:21Z amerkle $
+ * $Id: mcp2515_defs.h 6611 2008-07-14 09:58:16Z fabian $
  */
 // ----------------------------------------------------------------------------
 

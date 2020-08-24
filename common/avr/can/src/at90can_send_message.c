@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $Id: at90can_send_message.c 120 2014-03-24 15:06:21Z amerkle $
+ * $Id: at90can_send_message.c 6837 2008-11-16 19:05:15Z fabian $
  */
 // ----------------------------------------------------------------------------
 
@@ -110,7 +110,7 @@ uint8_t at90can_send_message(const can_t *msg)
     ENTER_CRITICAL_SECTION;
     #if CAN_TX_BUFFER_SIZE == 0
         _free_buffer--;
-    #else
+    #elif CAN_FORCE_TX_ORDER
         _transmission_in_progress = 1;
     #endif
     LEAVE_CRITICAL_SECTION;

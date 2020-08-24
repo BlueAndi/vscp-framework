@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $Id: mcp2515.c 192 2014-09-23 17:54:28Z amerkle $
+ * $Id: mcp2515.c 8086 2009-07-14 14:08:25Z fabian $
  */
 // ----------------------------------------------------------------------------
 /* ---- Beispiel zum Einstellen des Bit Timings ----
@@ -125,7 +125,7 @@ uint8_t mcp2515_read_status(uint8_t type)
 
 // -------------------------------------------------------------------------
 
-const pg_uint8_t PROGMEM _mcp2515_cnf[8][3] = {
+const uint8_t _mcp2515_cnf[8][3] PROGMEM = {
     // 10 kbps
     {   0x04,
         0xb6,
