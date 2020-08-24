@@ -36,7 +36,7 @@
 
 // ----------------------------------------------------------------------------
 
-prog_char _at90can_cnf[8][3] = {
+PROGMEM const uint8_t _at90can_cnf[BITRATE_MAX][3] = {
     // 10 kbps
     {   0x7E,
         0x6E,
@@ -150,7 +150,7 @@ void _enable_mob_interrupt(uint8_t mob)
 
 bool at90can_init(uint8_t bitrate)
 {
-    if (bitrate >= 8)
+    if (bitrate >= BITRATE_MAX)
         return false;
 
     // switch CAN controller to reset mode

@@ -81,6 +81,7 @@ typedef enum {
     BITRATE_250_KBPS = 5,   // ungetestet
     BITRATE_500_KBPS = 6,   // ungetestet
     BITRATE_1_MBPS = 7,     // ungetestet
+    BITRATE_MAX,            // must always be last
 } can_bitrate_t;
 
 /**
