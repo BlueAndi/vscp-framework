@@ -34,7 +34,7 @@
   <documentation help="" />
   <offline-documentation help="" />
   <dependencies>
-    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.34.1" />
+    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.39.0" />
   </dependencies>
 </framework-data>
     </AsfFrameworkConfig>
@@ -202,6 +202,14 @@
     <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_aol.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_aol.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_configure.c">
+      <SubType>compile</SubType>
+      <Link>vscp\events\vscp_evt_configure.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_configure.h">
+      <SubType>compile</SubType>
+      <Link>vscp\events\vscp_evt_configure.h</Link>
     </Compile>
     <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_control.c">
       <SubType>compile</SubType>
@@ -450,6 +458,10 @@
     <Compile Include="..\..\..\..\..\vscp\vscp_type_alarm.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_type_alarm.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\vscp\vscp_type_configure.h">
+      <SubType>compile</SubType>
+      <Link>vscp\vscp_type_configure.h</Link>
     </Compile>
     <Compile Include="..\..\..\..\..\vscp\vscp_type_control.h">
       <SubType>compile</SubType>

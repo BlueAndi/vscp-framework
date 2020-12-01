@@ -5,6 +5,9 @@
     - The AVR CAN library contains some deprecated stuff, based on older days with winavr. One of them was updated. Thanks to onitake!
     - The AVR CAN library updated to revision of 22th august 2016 of https://github.com/dergraaf/avr-can-lib
 
+  - VSCP framework
+    - Added CLASS1.CONFIGURATION events. Thanks troky for updating the protocol definition!
+
 ## 1.1.0
 
   - VSCP framework

@@ -208,6 +208,11 @@ This transformation script generates the VSCP event modules.
                     <xsl:with-param name="baseName">ir</xsl:with-param>
                 </xsl:call-template>
             </xsl:when>
+            <xsl:when test="@id = 120">
+                <xsl:call-template name="createFile">
+                    <xsl:with-param name="baseName">configure</xsl:with-param>
+                </xsl:call-template>
+            </xsl:when>
             <xsl:when test="@id = 206">
                 <xsl:call-template name="createFile">
                     <xsl:with-param name="baseName">gnss</xsl:with-param>
