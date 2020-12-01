@@ -122,6 +122,9 @@ extern "C"
 /** VSCP level 1 class: IR Remote i/f */
 #define VSCP_CLASS_L1_IR                    110
 
+/** VSCP level 1 class: Configuration */
+#define VSCP_CLASS_L1_CONFIGURATION         120
+
 /** VSCP level 1 class: Position (GPS) */
 #define VSCP_CLASS_L1_GNSS                  206
 

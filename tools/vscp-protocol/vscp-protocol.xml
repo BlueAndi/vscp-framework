@@ -10324,6 +10324,12 @@ Notes:
                     <name lang="en">General event</name>
                     <token>VSCP_TYPE_CONFIGURATION_GENERAL</token>
                     <description lang="en">General Event.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                        </frame>
+                    </frames>
                 </vscp-type>
                 <vscp-type id="1">
                     <name lang="en">Load configuration</name>
@@ -10334,24 +10340,24 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
-                                    <name>Index</name>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
                                     <description lang="en">Index</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
-                                    <name>Zone</name>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
                                     <description lang="en">Zone</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
-                                    <name>Subzone</name>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Subzone</name>
                                     <description lang="en">Subzone</description>
                                 </element>
-                                <element pos="3" type="uint16_t" length="1" optional="false">
-                                    <name>ConfigurationId</name>
+                                <element pos="3" type="uint16" length="1" optional="false">
+                                    <name lang="en">ConfigurationId</name>
                                     <description lang="en">Configuration Id</description>
                                 </element>
-                                <element pos="5" type="uint8_t" length="1" optional="true">
-                                    <name>Control</name>
+                                <element pos="5" type="uint8" length="1" optional="true">
+                                    <name lang="en">Control</name>
                                     <description lang="en">Control byte (optional).</description>
                                     <bitfield>
                                         <bit pos="0">Reserved</bit>
@@ -10377,8 +10383,8 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint16_t" length="1" optional="false">
-                                    <name>ConfigurationId</name>
+                                <element pos="0" type="uint16" length="1" optional="false">
+                                    <name lang="en">ConfigurationId</name>
                                     <description lang="en">Configuration Id</description>
                                 </element>
                             </elements>
@@ -10394,8 +10400,8 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint16_t" length="1" optional="false">
-                                    <name>ConfigurationId</name>
+                                <element pos="0" type="uint16" length="1" optional="false">
+                                    <name lang="en">ConfigurationId</name>
                                     <description lang="en">Configuration Id</description>
                                 </element>
                             </elements>
@@ -10411,24 +10417,24 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
-                                    <name>Index</name>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
                                     <description lang="en">Index</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
-                                    <name>Zone</name>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
                                     <description lang="en">Zone</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
-                                    <name>Subzone</name>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Subzone</name>
                                     <description lang="en">Subzone</description>
                                 </element>
-                                <element pos="3" type="uint16_t" length="1" optional="false">
-                                    <name>ConfigurationId</name>
+                                <element pos="3" type="uint16" length="1" optional="false">
+                                    <name lang="en">ConfigurationId</name>
                                     <description lang="en">Configuration Id</description>
                                 </element>
-                                <element pos="5" type="uint8_t" length="1" optional="true">
-                                    <name>Control</name>
+                                <element pos="5" type="uint8" length="1" optional="true">
+                                    <name lang="en">Control</name>
                                     <description lang="en">Control byte (optional).</description>
                                     <bitfield>
                                         <bit pos="0">Reserved</bit>
@@ -10454,8 +10460,8 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint16_t" length="1" optional="false">
-                                    <name>ConfigurationId</name>
+                                <element pos="0" type="uint16" length="1" optional="false">
+                                    <name lang="en">ConfigurationId</name>
                                     <description lang="en">Configuration Id</description>
                                 </element>
                             </elements>
@@ -10471,8 +10477,8 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint16_t" length="1" optional="false">
-                                    <name>ConfigurationId</name>
+                                <element pos="0" type="uint16" length="1" optional="false">
+                                    <name lang="en">ConfigurationId</name>
                                     <description lang="en">Configuration Id</description>
                                 </element>
                             </elements>
@@ -10488,24 +10494,24 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
-                                    <name>Index</name>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
                                     <description lang="en">Index</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
-                                    <name>Zone</name>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
                                     <description lang="en">Zone</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
-                                    <name>Subzone</name>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Subzone</name>
                                     <description lang="en">Subzone</description>
                                 </element>
-                                <element pos="3" type="uint16_t" length="1" optional="false">
-                                    <name>ConfigurationId</name>
+                                <element pos="3" type="uint16" length="1" optional="false">
+                                    <name lang="en">ConfigurationId</name>
                                     <description lang="en">Configuration Id</description>
                                 </element>
-                                <element pos="5" type="uint8_t" length="1" optional="true">
-                                    <name>Control</name>
+                                <element pos="5" type="uint8" length="1" optional="true">
+                                    <name lang="en">Control</name>
                                     <description lang="en">Control byte (optional).</description>
                                     <bitfield>
                                         <bit pos="0">Reserved</bit>
@@ -10531,8 +10537,8 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                               <element pos="0" type="uint16_t" length="1" optional="false">
-                                    <name>ConfigurationId</name>
+                               <element pos="0" type="uint16" length="1" optional="false">
+                                    <name lang="en">ConfigurationId</name>
                                     <description lang="en">Configuration Id</description>
                                 </element>
                             </elements>
@@ -10548,8 +10554,8 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint16_t" length="1" optional="false">
-                                    <name>ConfigurationId</name>
+                                <element pos="0" type="uint16" length="1" optional="false">
+                                    <name lang="en">ConfigurationId</name>
                                     <description lang="en">Configuration Id</description>
                                 </element>
                             </elements>
@@ -10565,24 +10571,24 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
-                                    <name>Index</name>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
                                     <description lang="en">Index</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
-                                    <name>Zone</name>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
                                     <description lang="en">Zone</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
-                                    <name>Subzone</name>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Subzone</name>
                                     <description lang="en">Subzone</description>
                                 </element>
-                                <element pos="3" type="uint16_t" length="1" optional="false">
-                                    <name>ConfigurationId</name>
+                                <element pos="3" type="uint16" length="1" optional="false">
+                                    <name lang="en">ConfigurationId</name>
                                     <description lang="en">Configuration Id</description>
                                 </element>
-                                <element pos="5" type="uint8_t" length="1" optional="true">
-                                    <name>Control</name>
+                                <element pos="5" type="uint8" length="1" optional="true">
+                                    <name lang="en">Control</name>
                                     <description lang="en">Control byte (optional).</description>
                                     <bitfield>
                                         <bit pos="0">Reserved</bit>
@@ -10608,8 +10614,8 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint16_t" length="1" optional="false">
-                                    <name>ConfigurationId</name>
+                                <element pos="0" type="uint16" length="1" optional="false">
+                                    <name lang="en">ConfigurationId</name>
                                     <description lang="en">Configuration Id</description>
                                 </element>
                             </elements>
@@ -10625,8 +10631,8 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint16_t" length="1" optional="false">
-                                    <name>ConfigurationId</name>
+                                <element pos="0" type="uint16" length="1" optional="false">
+                                    <name lang="en">ConfigurationId</name>
                                     <description lang="en">Configuration Id</description>
                                 </element>
                             </elements>
@@ -10642,24 +10648,24 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
-                                    <name>Index</name>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
                                     <description lang="en">Index</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
-                                    <name>Zone</name>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
                                     <description lang="en">Zone</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
-                                    <name>Subzone</name>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Subzone</name>
                                     <description lang="en">Subzone</description>
                                 </element>
-                                <element pos="3" type="uint16_t" length="1" optional="false">
-                                    <name>ConfigurationId</name>
+                                <element pos="3" type="uint16" length="1" optional="false">
+                                    <name lang="en">ConfigurationId</name>
                                     <description lang="en">Configuration Id</description>
                                 </element>
-                                <element pos="5" type="uint8_t" length="1" optional="true">
-                                    <name>Control</name>
+                                <element pos="5" type="uint8" length="1" optional="true">
+                                    <name lang="en">Control</name>
                                     <description lang="en">Control byte (optional).</description>
                                     <bitfield>
                                         <bit pos="0">Reserved</bit>
@@ -10685,8 +10691,8 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint16_t" length="1" optional="false">
-                                    <name>ConfigurationId</name>
+                                <element pos="0" type="uint16" length="1" optional="false">
+                                    <name lang="en">ConfigurationId</name>
                                     <description lang="en">Configuration Id</description>
                                 </element>
                             </elements>
@@ -10702,8 +10708,8 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint16_t" length="1" optional="false">
-                                    <name>ConfigurationId</name>
+                                <element pos="0" type="uint16" length="1" optional="false">
+                                    <name lang="en">ConfigurationId</name>
                                     <description lang="en">Configuration Id</description>
                                 </element>
                             </elements>
@@ -10719,24 +10725,24 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
-                                    <name>Index</name>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
                                     <description lang="en">Index</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
-                                    <name>Zone</name>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
                                     <description lang="en">Zone</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
-                                    <name>Subzone</name>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Subzone</name>
                                     <description lang="en">Subzone</description>
                                 </element>
-                                <element pos="3" type="uint16_t" length="1" optional="false">
-                                    <name>ParameterId</name>
+                                <element pos="3" type="uint16" length="1" optional="false">
+                                    <name lang="en">ParameterId</name>
                                     <description lang="en">Parameter Id</description>
                                 </element>
-                                <element pos="5" type="uint16_t" length="1" optional="false">
-                                    <name>ParameterValue</name>
+                                <element pos="5" type="uint16" length="1" optional="false">
+                                    <name lang="en">ParameterValue</name>
                                     <description lang="en">Parameter value</description>
                                 </element>
                             </elements>
@@ -10752,20 +10758,20 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint8_t" length="1" optional="false">
-                                    <name>Index</name>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Index</name>
                                     <description lang="en">Index</description>
                                 </element>
-                                <element pos="1" type="uint8_t" length="1" optional="false">
-                                    <name>Zone</name>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
                                     <description lang="en">Zone</description>
                                 </element>
-                                <element pos="2" type="uint8_t" length="1" optional="false">
-                                    <name>Subzone</name>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Subzone</name>
                                     <description lang="en">Subzone</description>
                                 </element>
-                                <element pos="3" type="uint16_t" length="1" optional="false">
-                                    <name>ParameterId</name>
+                                <element pos="3" type="uint16" length="1" optional="false">
+                                    <name lang="en">ParameterId</name>
                                     <description lang="en">Parameter Id</description>
                                 </element>
                             </elements>
@@ -10781,12 +10787,12 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint16_t" length="1" optional="false">
-                                    <name>ParameterId</name>
+                                <element pos="0" type="uint16" length="1" optional="false">
+                                    <name lang="en">ParameterId</name>
                                     <description lang="en">Parameter Id</description>
                                 </element>
-                                <element pos="2" type="uint16_t" length="1" optional="false">
-                                    <name>ParameterValue</name>
+                                <element pos="2" type="uint16" length="1" optional="false">
+                                    <name lang="en">ParameterValue</name>
                                     <description lang="en">Parameter value</description>
                                 </element>
                             </elements>
@@ -10796,18 +10802,18 @@ Notes:
                 <vscp-type id="33">
                     <name lang="en">Set paramter negative acknowledge</name>
                     <token>VSCP_TYPE_CONFIGURATION_SET_PARAMETER_NACK</token>
-                    <description lang="en">should be sent by the node if it fails to set the new value.</description>
+                    <description lang="en">Should be sent by the node if it fails to set the new value.</description>
                     <frames>
                         <frame id="0">
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint16_t" length="1" optional="false">
-                                    <name>ParameterId</name>
+                                <element pos="0" type="uint16" length="1" optional="false">
+                                    <name lang="en">ParameterId</name>
                                     <description lang="en">Parameter Id</description>
                                 </element>
-                                <element pos="2" type="uint16_t" length="1" optional="false">
-                                    <name>ParameterValue</name>
+                                <element pos="2" type="uint16" length="1" optional="false">
+                                    <name lang="en">ParameterValue</name>
                                     <description lang="en">Parameter value</description>
                                 </element>
                             </elements>
@@ -11846,23 +11852,23 @@ Notes:
     <!-- Type definitions -->
     <type-definitions>
         <type-definition>
-            <name>uint8</name>
+            <name lang="en">uint8</name>
             <size>1</size>
         </type-definition>
         <type-definition>
-            <name>uint16</name>
+            <name lang="en">uint16</name>
             <size>2</size>
         </type-definition>
         <type-definition>
-            <name>uint32</name>
+            <name lang="en">uint32</name>
             <size>4</size>
         </type-definition>
         <type-definition>
-            <name>float</name>
+            <name lang="en">float</name>
             <size>4</size>
         </type-definition>
         <type-definition>
-            <name>double</name>
+            <name lang="en">double</name>
             <size>8</size>
         </type-definition>
     </type-definitions>

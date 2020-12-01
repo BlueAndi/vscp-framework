@@ -79,6 +79,7 @@ SOURCES= main.c \
 		../../vscp/bootloader/vscp_bootloader.c \
 		../events/vscp_evt_alarm.c \
 		../events/vscp_evt_aol.c \
+		../events/vscp_evt_configure.c \
 		../events/vscp_evt_control.c \
 		../events/vscp_evt_data.c \
 		../events/vscp_evt_diagnostic.c \
