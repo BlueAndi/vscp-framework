@@ -7,6 +7,8 @@
 
   - VSCP framework
     - Added CLASS1.CONFIGURATION events. Thanks troky for updating the protocol definition!
+    - Added CLASS1.INFORMATION VSCP_TYPE_INFORMATION_INCREMENTED and VSCP_TYPE_INFORMATION_DECREMENTED events added. Thanks troky for updating the protocol definition!
+    - Added CLASS1.CONTROL VSCP_TYPE_CONTROL_INCREMENT and VSCP_TYPE_CONTROL_DECREMENT events added. Thanks troky for updating the protocol definition!
 
 ## 1.1.0
 

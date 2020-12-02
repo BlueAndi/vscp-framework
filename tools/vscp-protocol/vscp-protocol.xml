@@ -5055,8 +5055,7 @@ Notes:
                         </frame>
                     </frames>
                 </vscp-type>
-            </vscp-types>
-            <vscp-type id="86">
+                <vscp-type id="86">
                     <name lang="en">Incremented</name>
                     <token>VSCP_TYPE_INFORMATION_INCREMENTED</token>
                     <description lang="en">This is meant to be used as a confirmation event for CLASS1.CONTROL, Type=52 events.</description>
@@ -5077,7 +5076,7 @@ Notes:
                                     <name lang="en">Subzone</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones</description>
                                 </element>
-                                <element pos="3" type="uint8" length="5" optional="false">
+                                <element pos="3" type="uint8" length="5" optional="true">
                                     <name lang="en">Incremented value</name>
                                     <description lang="en">Incremented value. The range can be adjusted by the user by sending just the needed number of bytes 1-5</description>
                                 </element>
@@ -5106,7 +5105,7 @@ Notes:
                                     <name lang="en">Subzone</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones</description>
                                 </element>
-                                <element pos="3" type="uint8" length="5" optional="false">
+                                <element pos="3" type="uint8" length="5" optional="true">
 								<name lang="en">Decremented value</name>
                                     <description lang="en">Decremented value. The range can be adjusted by the user by sending just the needed number of bytes 1-5</description>
                                 </element>
@@ -5114,6 +5113,7 @@ Notes:
                         </frame>
                     </frames>
                 </vscp-type>
+            </vscp-types>
         </vscp-class>
         <vscp-class id="30">
             <name lang="en">Control</name>
