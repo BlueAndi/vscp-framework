@@ -203,13 +203,13 @@
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_aol.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_configure.c">
+    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_configuration.c">
       <SubType>compile</SubType>
-      <Link>vscp\events\vscp_evt_configure.c</Link>
+      <Link>vscp\events\vscp_evt_configuration.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_configure.h">
+    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_configuration.h">
       <SubType>compile</SubType>
-      <Link>vscp\events\vscp_evt_configure.h</Link>
+      <Link>vscp\events\vscp_evt_configuration.h</Link>
     </Compile>
     <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_control.c">
       <SubType>compile</SubType>

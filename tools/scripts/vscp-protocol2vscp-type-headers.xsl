@@ -178,7 +178,7 @@ This transformation script generates the VSCP type C header files.
             </xsl:when>
             <xsl:when test="@id = 120">
                 <xsl:call-template name="createFile">
-                    <xsl:with-param name="moduleName">vscp_type_configure</xsl:with-param>
+                    <xsl:with-param name="moduleName">vscp_type_configuration</xsl:with-param>
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test="@id = 206">
