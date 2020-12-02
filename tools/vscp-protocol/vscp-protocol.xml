@@ -5055,6 +5055,64 @@ Notes:
                         </frame>
                     </frames>
                 </vscp-type>
+                <vscp-type id="86">
+                    <name lang="en">Incremented</name>
+                    <token>VSCP_TYPE_INFORMATION_INCREMENTED</token>
+                    <description lang="en">This is meant to be used as a confirmation event for CLASS1.CONTROL, Type=52 events.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Subzone</name>
+                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones</description>
+                                </element>
+                                <element pos="3" type="uint8" length="5" optional="true">
+                                    <name lang="en">Incremented value</name>
+                                    <description lang="en">Incremented value. The range can be adjusted by the user by sending just the needed number of bytes 1-5</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
+                </vscp-type>
+                <vscp-type id="87">
+                    <name lang="en">Decremented</name>
+                    <token>VSCP_TYPE_INFORMATION_DECREMENTED</token>
+                    <description lang="en">This is meant to be used as a confirmation event for CLASS1.CONTROL, Type=53 events.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Subzone</name>
+                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones</description>
+                                </element>
+                                <element pos="3" type="uint8" length="5" optional="true">
+								<name lang="en">Decremented value</name>
+                                    <description lang="en">Decremented value. The range can be adjusted by the user by sending just the needed number of bytes 1-5</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
+                </vscp-type>
             </vscp-types>
         </vscp-class>
         <vscp-class id="30">
@@ -6339,6 +6397,64 @@ Notes:
                                 <element pos="2" type="uint8" length="1" optional="false">
                                     <name lang="en">Sub-zone</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
+                </vscp-type>
+                <vscp-type id="52">
+                    <name lang="en">Increment</name>
+                    <token>VSCP_TYPE_CONTROL_INCREMENT</token>
+                    <description lang="en">Increment value.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific value.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Subzone</name>
+                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones</description>
+                                </element>
+                                <element pos="3" type="uint8" length="5" optional="true">
+                                    <name lang="en">Increment value</name>
+                                    <description lang="en">Increment as unsigned integer. The range can be adjusted by the user by sending just the needed number of bytes (1-5) which form the unsigned integer (MSB first). If omitted (or 0) 1 is assumed as default increment value</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
+                </vscp-type>
+                <vscp-type id="53">
+                    <name lang="en">Decrement</name>
+                    <token>VSCP_TYPE_CONTROL_DECREMENT</token>
+                    <description lang="en">Decrement value.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific value.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Subzone</name>
+                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones</description>
+                                </element>
+                                <element pos="3" type="uint8" length="5" optional="true">
+                                    <name lang="en">Decrement value</name>
+                                    <description lang="en">Decrement as unsigned integer. The range can be adjusted by the user by sending just the needed number of bytes (1-5) which form the unsigned integer (MSB first). If omitted (or 0) 1 is assumed as default decrement value</description>
                                 </element>
                             </elements>
                         </frame>

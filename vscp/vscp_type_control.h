@@ -335,6 +335,16 @@ extern "C"
  */
 #define VSCP_TYPE_CONTROL_REQUEST_SECURITY_TOKEN 51
 
+/**
+ * Increment value.
+ */
+#define VSCP_TYPE_CONTROL_INCREMENT              52
+
+/**
+ * Decrement value.
+ */
+#define VSCP_TYPE_CONTROL_DECREMENT              53
+
 /*******************************************************************************
     MACROS
 *******************************************************************************/
