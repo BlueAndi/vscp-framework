@@ -1510,6 +1510,15 @@ Notes:
                                     <name lang="en">Sub-zone</name>
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
                                 </element>
+                                <element pos="3" type="uint8" length="1" optional="true">
+                                    <name lang="en">Status</name>
+                                    <description lang="en">Optional status</description>
+                                    <enumeration>
+                                        <enum id="0">Security event occurred.</enum>
+                                        <enum id="1">Activated</enum>
+                                        <enum id="2">Inactivated</enum>
+                                    </enumeration>
+                                </element>
                             </elements>
                         </frame>
                     </frames>
