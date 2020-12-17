@@ -1084,3 +1084,123 @@ extern BOOL vscp_evt_security_sendPasswordError(uint8_t data0, uint8_t zone, uin
     return vscp_core_sendEvent(&txMsg);
 }
 
+/**
+ * Gas
+ * 
+ * @param[in] data0 User defined data.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_security_sendGas(uint8_t data0, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SECURITY, VSCP_TYPE_SECURITY_GAS, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = data0;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * In motion
+ * 
+ * @param[in] data0 User defined data.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_security_sendInMotion(uint8_t data0, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SECURITY, VSCP_TYPE_SECURITY_IN_MOTION, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = data0;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Not in motion
+ * 
+ * @param[in] data0 User defined data.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_security_sendNotInMotion(uint8_t data0, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SECURITY, VSCP_TYPE_SECURITY_NOT_IN_MOTION, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = data0;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Vibration
+ * 
+ * @param[in] data0 User defined data.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_security_sendVibration(uint8_t data0, uint8_t zone, uint8_t subZone)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_SECURITY, VSCP_TYPE_SECURITY_VIBRATION, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = data0;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subZone;
+    size += 1;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+

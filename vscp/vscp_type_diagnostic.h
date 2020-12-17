@@ -465,6 +465,16 @@ extern "C"
  */
 #define VSCP_TYPE_DIAGNOSTIC_EXT_IC_FAIL        79
 
+/**
+ * Charging of battery or similar has started or is in progress.
+ */
+#define VSCP_TYPE_DIAGNOSTIC_CHARGING_ON        80
+
+/**
+ * Charging of battery or similar has ended.
+ */
+#define VSCP_TYPE_DIAGNOSTIC_CHARGING_OFF       81
+
 /*******************************************************************************
     MACROS
 *******************************************************************************/

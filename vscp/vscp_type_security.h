@@ -241,6 +241,26 @@ extern "C"
  */
 #define VSCP_TYPE_SECURITY_PASSWORD_ERROR        33
 
+/**
+ * ...
+ */
+#define VSCP_TYPE_SECURITY_GAS                   34
+
+/**
+ * ...
+ */
+#define VSCP_TYPE_SECURITY_IN_MOTION             35
+
+/**
+ * ...
+ */
+#define VSCP_TYPE_SECURITY_NOT_IN_MOTION         36
+
+/**
+ * ...
+ */
+#define VSCP_TYPE_SECURITY_VIBRATION             37
+
 /*******************************************************************************
     MACROS
 *******************************************************************************/

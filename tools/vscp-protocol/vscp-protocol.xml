@@ -2323,6 +2323,106 @@ Notes:
                         </frame>
                     </frames>
                 </vscp-type>
+                <vscp-type id="34">
+                    <name lang="en">Gas</name>
+                    <token>VSCP_TYPE_SECURITY_GAS</token>
+                    <description lang="en">...</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Data0</name>
+                                    <description lang="en">User defined data.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-zone</name>
+                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
+                </vscp-type>
+                <vscp-type id="35">
+                    <name lang="en">In motion</name>
+                    <token>VSCP_TYPE_SECURITY_IN_MOTION</token>
+                    <description lang="en">...</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Data0</name>
+                                    <description lang="en">User defined data.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-zone</name>
+                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
+                </vscp-type>
+                <vscp-type id="36">
+                    <name lang="en">Not in motion</name>
+                    <token>VSCP_TYPE_SECURITY_NOT_IN_MOTION</token>
+                    <description lang="en">...</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Data0</name>
+                                    <description lang="en">User defined data.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-zone</name>
+                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
+                </vscp-type>
+                <vscp-type id="37">
+                    <name lang="en">Vibration</name>
+                    <token>VSCP_TYPE_SECURITY_VIBRATION</token>
+                    <description lang="en">...</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Data0</name>
+                                    <description lang="en">User defined data.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-zone</name>
+                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
+                </vscp-type>
             </vscp-types>
         </vscp-class>
         <vscp-class id="10">
@@ -2455,7 +2555,7 @@ Notes:
                 <vscp-type id="13">
                     <name lang="en">Energy</name>
                     <token>VSCP_TYPE_MEASUREMENT_ENERGY</token>
-                    <description lang="en">Default unit: Joule.\nOptional unit: KWh (1)\nThis is a measurement of energy.</description>
+                    <description lang="en">Default unit: Joule.\nOptional unit: KWh (1), Wh(2)\nThis is a measurement of energy.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="14">
@@ -2736,6 +2836,24 @@ Notes:
                     <name lang="en">Sound level</name>
                     <token>VSCP_TYPE_MEASUREMENT_SOUND_LEVEL</token>
                     <description lang="en">Default unit: decibel (dB)\nSound level expressed in decibel. This event is supplied for convenience.</description>
+                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                </vscp-type>
+                <vscp-type id="61">
+                    <name lang="en">Radiation dose (equivalent)</name>
+                    <token>VSCP_TYPE_MEASUREMENT_RADIATION_DOSE_EQ</token>
+                    <description lang="en">Default unit: sievert (Sv).\nOptional unit rem (1)\nThis is a measurement of a radiation dose (Equivalent dose of ionizing radiation).</description>
+                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                </vscp-type>
+                <vscp-type id="62">
+                    <name lang="en">Radiation dose (exposure)</name>
+                    <token>VSCP_TYPE_MEASUREMENT_RADIATION_DOSE_EXPOSURE</token>
+                    <description lang="en">Default unit: coulomb per kilogram (C/kg).\nOptional unit: Röntgen/R (1)\nThis is a measurement of a radiation dose (Exposed dose of ionizing radiation).</description>
+                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                </vscp-type>
+                <vscp-type id="63">
+                    <name lang="en">Power factor</name>
+                    <token>VSCP_TYPE_MEASUREMENT_POWER_FACTOR</token>
+                    <description lang="en">Default unit: Percent\nOptional unit: Röntgen/R (1)\nRatio between power in kW and apperant power in kVA.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
             </vscp-types>
@@ -11549,6 +11667,18 @@ Notes:
                     <name lang="en">External IC failure</name>
                     <token>VSCP_TYPE_DIAGNOSTIC_EXT_IC_FAIL</token>
                     <description lang="en">A failure in an external IC circuit has been detected.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
+                </vscp-type>
+                <vscp-type id="80">
+                    <name lang="en">Charging on</name>
+                    <token>VSCP_TYPE_DIAGNOSTIC_CHARGING_ON</token>
+                    <description lang="en">Charging of battery or similar has started or is in progress.</description>
+                    <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
+                </vscp-type>
+                <vscp-type id="81">
+                    <name lang="en">Charging off</name>
+                    <token>VSCP_TYPE_DIAGNOSTIC_CHARGING_OFF</token>
+                    <description lang="en">Charging of battery or similar has ended.</description>
                     <frames-ref>specification/vscp-classes/506/vscp-types/1/frames</frames-ref>
                 </vscp-type>
             </vscp-types>
