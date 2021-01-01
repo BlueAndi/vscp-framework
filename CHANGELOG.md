@@ -1,4 +1,4 @@
-## 1.2.0 (not released yet)
+## 1.2.0
 
   - Common
     - The AVR CAN library supports now the ATmega32/64/128M1 too. Thanks to onitake!
