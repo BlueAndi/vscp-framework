@@ -71,7 +71,7 @@ This module contains the main entry point.
 #define MAIN_PROG_NAME          "VSCP level 1 node"
 
 /** Copyright */
-#define MAIN_COPYRIGHT          "(c) 2014 - 2020 Andreas Merkle"
+#define MAIN_COPYRIGHT          "(c) 2014 - 2021 Andreas Merkle"
 
 /** Persistent memory filename */
 #define MAIN_EEPROM_FILENAME    "eeprom.asc"

@@ -64,7 +64,7 @@ This module contains the main entry point.
 #define MAIN_PROG_NAME                  "VSCP L1 programmer"
 
 /** Copyright */
-#define MAIN_COPYRIGHT                  "(c) 2014 - 2020 Andreas Merkle"
+#define MAIN_COPYRIGHT                  "(c) 2014 - 2021 Andreas Merkle"
 
 /** Default log level */
 #define MAIN_LOG_LEVEL_DEFAULT          (LOG_LEVEL_FATAL)
