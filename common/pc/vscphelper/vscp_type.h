@@ -16,7 +16,7 @@
  *
  * The MIT License (MIT)
  *
- * Copyright (c) 2000-2018 Ake Hedman, Grodans Paradis AB <info@grodansparadis.com>
+ * Copyright (C) 2000-2020 Ake Hedman, Grodans Paradis AB <info@grodansparadis.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -48,7 +48,7 @@
             !!!!!!!!!!!!!!!!!!!!  W A R N I N G  !!!!!!!!!!!!!!!!!!!!
                            This file is auto-generated
                 see https://github.com/grodansparadis/vscp-classes
-                        Generated: 2018-07-13 22:45:06.060067
+                        Generated: 2020-06-11 14:08:10.984084
 */
  
 #ifndef VSCP_TYPE_H
@@ -117,6 +117,7 @@
 #define VSCP_TYPE_ALARM_EMERGENCY_RESUME            9   /* Emergency Resume */
 #define VSCP_TYPE_ALARM_ARM                         10  /* Arm */
 #define VSCP_TYPE_ALARM_DISARM                      11  /* Disarm */
+#define VSCP_TYPE_ALARM_WATCHDOG                    12  /* Watchdog */
     
 /*  CLASS1.SECURITY = 2  -  Security */
 #define VSCP_TYPE_SECURITY_GENERAL                  0   /* General event */
@@ -140,6 +141,19 @@
 #define VSCP_TYPE_SECURITY_SOUND_DETECTED           18  /* Noise (sound) detected. */
 #define VSCP_TYPE_SECURITY_HARMFUL_SOUND_LEVEL      19  /* Harmful sound levels detected. */
 #define VSCP_TYPE_SECURITY_TAMPER                   20  /* Tamper detected. */
+#define VSCP_TYPE_SECURITY_AUTHENTICATED            21  /* Authenticated */
+#define VSCP_TYPE_SECURITY_UNAUTHENTICATED          22  /* Unauthenticated */
+#define VSCP_TYPE_SECURITY_AUTHORIZED               23  /* Authorized */
+#define VSCP_TYPE_SECURITY_UNAUTHORIZED             24  /* Unauthorized */
+#define VSCP_TYPE_SECURITY_ID_CHECK                 25  /* ID check */
+#define VSCP_TYPE_SECURITY_PIN_OK                   26  /* Valid pin */
+#define VSCP_TYPE_SECURITY_PIN_FAIL                 27  /* Invalid pin */
+#define VSCP_TYPE_SECURITY_PIN_WARNING              28  /* Pin warning */
+#define VSCP_TYPE_SECURITY_PIN_ERROR                29  /* Pin error */
+#define VSCP_TYPE_SECURITY_PASSWORD_OK              30  /* Valid password */
+#define VSCP_TYPE_SECURITY_PASSWORD_FAIL            31  /* Invalid password */
+#define VSCP_TYPE_SECURITY_PASSWORD_WARNING         32  /* Password warning */
+#define VSCP_TYPE_SECURITY_PASSWORD_ERROR           33  /* Password error */
     
 /*  CLASS1.MEASUREMENT = 10  -  Measurement */
 #define VSCP_TYPE_MEASUREMENT_GENERAL               0   /* General event */
@@ -168,7 +182,7 @@
 #define VSCP_TYPE_MEASUREMENT_INDUCTANCE            23  /* Inductance */
 #define VSCP_TYPE_MEASUREMENT_FLUX_OF_LIGHT         24  /* Luminous Flux */
 #define VSCP_TYPE_MEASUREMENT_ILLUMINANCE           25  /* Illuminance */
-#define VSCP_TYPE_MEASUREMENT_RADIATION_DOSE        26  /* Radiation dose */
+#define VSCP_TYPE_MEASUREMENT_RADIATION_DOSE_ABSORBED 26 /* Radiation dose (absorbed) */
 #define VSCP_TYPE_MEASUREMENT_CATALYTIC_ACITIVITY   27  /* Catalytic activity */
 #define VSCP_TYPE_MEASUREMENT_VOLUME                28  /* Volume */
 #define VSCP_TYPE_MEASUREMENT_SOUND_INTENSITY       29  /* Sound intensity */
@@ -187,9 +201,9 @@
 #define VSCP_TYPE_MEASUREMENT_ELECTRIC_ELASTANCE    42  /* Electric elastance */
 #define VSCP_TYPE_MEASUREMENT_LUMINOUS_ENERGY       43  /* Luminous energy */
 #define VSCP_TYPE_MEASUREMENT_LUMINANCE             44  /* Luminance */
-#define VSCP_TYPE_MEASUREMENT_CHEMICAL_CONCENTRATION 45 /* Chemical concentration */
-#define VSCP_TYPE_MEASUREMENT_RESERVED46            46  /* Reserved */
-#define VSCP_TYPE_MEASUREMENT_DOSE_EQVIVALENT       47  /* Dose equivalent */
+#define VSCP_TYPE_MEASUREMENT_CHEMICAL_CONCENTRATION_MOLAR 45 /* Chemical (molar) concentration */
+#define VSCP_TYPE_MEASUREMENT_CHEMICAL_CONCENTRATION_MASS 46 /* Chemical (mass) concentration */
+#define VSCP_TYPE_MEASUREMENT_DOSE_EQVIVALENT       47  /* Reserved */
 #define VSCP_TYPE_MEASUREMENT_RESERVED48            48  /* Reserved */
 #define VSCP_TYPE_MEASUREMENT_DEWPOINT              49  /* Dew Point */
 #define VSCP_TYPE_MEASUREMENT_RELATIVE_LEVEL        50  /* Relative Level */
@@ -203,6 +217,20 @@
 #define VSCP_TYPE_MEASUREMENT_SOUND_PRESSURE        58  /* Sound pressure (acoustic pressure) */
 #define VSCP_TYPE_MEASUREMENT_SOUND_DENSITY         59  /* Sound energy density */
 #define VSCP_TYPE_MEASUREMENT_SOUND_LEVEL           60  /* Sound level */
+#define VSCP_TYPE_MEASUREMENT_RADIATION_DOSE_EQ     61  /* Radiation dose (equivalent) */
+#define VSCP_TYPE_MEASUREMENT_RADIATION_DOSE_EXPOSURE 62 /* Radiation dose (exposure) */
+    
+/*  CLASS1.MEASUREMENTX1 = 11  -  Measurement */
+#define VSCP_TYPE_MEASUREMENTX1_GENERAL             0   /* General event */
+    
+/*  CLASS1.MEASUREMENTX2 = 12  -  Measurement */
+#define VSCP_TYPE_MEASUREMENTX2_GENERAL             0   /* General event */
+    
+/*  CLASS1.MEASUREMENTX3 = 13  -  Measurement */
+#define VSCP_TYPE_MEASUREMENTX3_GENERAL             0   /* General event */
+    
+/*  CLASS1.MEASUREMENTX4 = 14  -  Measurement */
+#define VSCP_TYPE_MEASUREMENTX4_GENERAL             0   /* General event */
     
 /*  CLASS1.DATA = 15  -  Data */
 #define VSCP_TYPE_DATA_GENERAL                      0   /* General event */
@@ -212,7 +240,6 @@
 #define VSCP_TYPE_DATA_RELATIVE_STRENGTH            4   /* Relative strength */
 #define VSCP_TYPE_DATA_SIGNAL_LEVEL                 5   /* Signal Level */
 #define VSCP_TYPE_DATA_SIGNAL_QUALITY               6   /* Signal Quality */
-#define VSCP_TYPE_DATA_COUNT                        7   /* Count value */
     
 /*  CLASS1.INFORMATION = 20  -  Information */
 #define VSCP_TYPE_INFORMATION_GENERAL               0   /* General event */
@@ -293,6 +320,14 @@
 #define VSCP_TYPE_INFORMATION_LOCK                  75  /* Lock */
 #define VSCP_TYPE_INFORMATION_UNLOCK                76  /* Unlock */
 #define VSCP_TYPE_INFORMATION_DATETIME              77  /* DateTime */
+#define VSCP_TYPE_INFORMATION_RISING                78  /* Rising */
+#define VSCP_TYPE_INFORMATION_FALLING               79  /* Falling */
+#define VSCP_TYPE_INFORMATION_UPDATED               80  /* Updated */
+#define VSCP_TYPE_INFORMATION_CONNECT               81  /* Connect */
+#define VSCP_TYPE_INFORMATION_DISCONNECT            82  /* Disconnect */
+#define VSCP_TYPE_INFORMATION_RECONNECT             83  /* Reconnect */
+#define VSCP_TYPE_INFORMATION_ENTER                 84  /* Enter */
+#define VSCP_TYPE_INFORMATION_EXIT                  85  /* Exit */
     
 /*  CLASS1.CONTROL = 30  -  Control */
 #define VSCP_TYPE_CONTROL_GENERAL                   0   /* General event */
@@ -339,6 +374,14 @@
 #define VSCP_TYPE_CONTROL_ALL_LAMPS_OFF             41  /* (All) Lamp(s) off */
 #define VSCP_TYPE_CONTROL_LOCK                      42  /* Lock */
 #define VSCP_TYPE_CONTROL_UNLOCK                    43  /* Unlock */
+#define VSCP_TYPE_CONTROL_PWM                       44  /* PWM set */
+#define VSCP_TYPE_CONTROL_TOKEN_LOCK                45  /* Lock with token */
+#define VSCP_TYPE_CONTROL_TOKEN_UNLOCK              46  /* Unlock with token */
+#define VSCP_TYPE_CONTROL_SET_SECURITY_LEVEL        47  /* Set security level */
+#define VSCP_TYPE_CONTROL_SET_SECURITY_PIN          48  /* Set security pin */
+#define VSCP_TYPE_CONTROL_SET_SECURITY_PASSWORD     49  /* Set security password */
+#define VSCP_TYPE_CONTROL_SET_SECURITY_TOKEN        50  /* Set security token */
+#define VSCP_TYPE_CONTROL_REQUEST_SECURITY_TOKEN    51  /* Request new security token */
     
 /*  CLASS1.MULTIMEDIA = 40  -  Multimedia */
 #define VSCP_TYPE_MULTIMEDIA_GENERAL                0   /* General event */
@@ -404,14 +447,62 @@
 /*  CLASS1.MEASUREMENT64 = 60  -  Double precision floating point measurement */
 /* 	Event types is the same as  CLASS1.MEASUREMENT = 10  -  Measurement */
     
+/*  CLASS1.MEASUREMENT64X1 = 61  -  Double precision floating point measurement */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX1 = 11  -  Measurement */
+    
+/*  CLASS1.MEASUREMENT64X2 = 62  -  Double precision floating point measurement */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX2 = 12  -  Measurement */
+    
+/*  CLASS1.MEASUREMENT64X3 = 63  -  Double precision floating point measurement */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX3 = 13  -  Measurement */
+    
+/*  CLASS1.MEASUREMENT64X4 = 64  -  Double precision floating point measurement */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX4 = 14  -  Measurement */
+    
 /*  CLASS1.MEASUREZONE = 65  -  Measurement with zone */
 /* 	Event types is the same as  CLASS1.MEASUREMENT = 10  -  Measurement */
+    
+/*  CLASS1.MEASUREZONEX1 = 66  -  Measurement with zone */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX1 = 11  -  Measurement */
+    
+/*  CLASS1.MEASUREZONEX2 = 67  -  Measurement with zone */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX2 = 12  -  Measurement */
+    
+/*  CLASS1.MEASUREZONEX3 = 68  -  Measurement with zone */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX3 = 13  -  Measurement */
+    
+/*  CLASS1.MEASUREZONEX4 = 69  -  Measurement with zone */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX4 = 14  -  Measurement */
     
 /*  CLASS1.MEASUREMENT32 = 70  -  Single precision floating point measurement */
 /* 	Event types is the same as  CLASS1.MEASUREMENT = 10  -  Measurement */
     
+/*  CLASS1.MEASUREMENT32X1 = 71  -  Single precision floating point measurement */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX1 = 11  -  Measurement */
+    
+/*  CLASS1.MEASUREMENT32X2 = 72  -  Single precision floating point measurement */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX2 = 12  -  Measurement */
+    
+/*  CLASS1.MEASUREMENT32X3 = 73  -  Single precision floating point measurement */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX3 = 13  -  Measurement */
+    
+/*  CLASS1.MEASUREMENT32X4 = 74  -  Single precision floating point measurement */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX4 = 14  -  Measurement */
+    
 /*  CLASS1.SETVALUEZONE = 85  -  Set value with zone */
 /* 	Event types is the same as  CLASS1.MEASUREMENT = 10  -  Measurement */
+    
+/*  CLASS1.SETVALUEZONEX1 = 86  -  Set value with zone */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX1 = 11  -  Measurement */
+    
+/*  CLASS1.SETVALUEZONEX2 = 87  -  Set value with zone */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX2 = 12  -  Measurement */
+    
+/*  CLASS1.SETVALUEZONEX3 = 88  -  Set value with zone */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX3 = 13  -  Measurement */
+    
+/*  CLASS1.SETVALUEZONEX4 = 89  -  Set value with zone */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX4 = 14  -  Measurement */
     
 /*  CLASS1.WEATHER = 90  -  Weather */
 #define VSCP_TYPE_WEATHER_GENERAL                   0   /* General event */
@@ -466,6 +557,7 @@
 #define VSCP_TYPE_WEATHER_WARNING_LEVEL4            49  /* Warning level 4 */
 #define VSCP_TYPE_WEATHER_WARNING_LEVEL5            50  /* Warning level 5 */
 #define VSCP_TYPE_WEATHER_ARMAGEDON                 51  /* Armageddon */
+#define VSCP_TYPE_WEATHER_UV_INDEX                  52  /* UV Index */
     
 /*  CLASS1.WEATHER_FORECAST = 95  -  Weather forecast */
 /* 	Event types is the same as  CLASS1.WEATHER = 90  -  Weather */
@@ -628,6 +720,9 @@
 #define VSCP_TYPE_ERROR_BUFFER_SMALL                43  /* Supplied buffer is to small to fit content */
 #define VSCP_TYPE_ERROR_ITEM_UNKNOWN                44  /* Requested item is unknown */
 #define VSCP_TYPE_ERROR_NAME_USED                   45  /* Name is already in use */
+#define VSCP_TYPE_ERROR_DATA_WRITE                  46  /* Error when writing data */
+#define VSCP_TYPE_ERROR_ABORTED                     47  /* Operation stopped or aborted */
+#define VSCP_TYPE_ERROR_INVALID_POINTER             48  /* Pointer with invalid value */
     
 /*  CLASS1.LOG = 509  -  Logging */
 #define VSCP_TYPE_LOG_GENERAL                       0   /* General event */
@@ -654,6 +749,18 @@
 /*  CLASS2.LEVEL1.MEASUREMENT = 522  -  Class2 Level I Measurements */
 /* 	Event types is the same as  CLASS1.MEASUREMENT = 10  -  Measurement */
     
+/*  CLASS2.LEVEL1.MEASUREMENTX1 = 523  -  Class2 Level I Measurements */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX1 = 11  -  Measurement */
+    
+/*  CLASS2.LEVEL1.MEASUREMENTX2 = 524  -  Class2 Level I Measurements */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX2 = 12  -  Measurement */
+    
+/*  CLASS2.LEVEL1.MEASUREMENTX3 = 525  -  Class2 Level I Measurements */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX3 = 13  -  Measurement */
+    
+/*  CLASS2.LEVEL1.MEASUREMENTX4 = 526  -  Class2 Level I Measurements */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX4 = 14  -  Measurement */
+    
 /*  CLASS2.LEVEL1.DATA = 527  -  Class2 Level I Data */
 /* 	Event types is the same as  CLASS1.DATA = 15  -  Data */
     
@@ -672,14 +779,62 @@
 /*  CLASS2.LEVEL1.MEASUREMENT64 = 572  -  Class2 Level I Measurement64 */
 /* 	Event types is the same as  CLASS1.MEASUREMENT = 10  -  Measurement */
     
+/*  CLASS2.LEVEL1.MEASUREMENT64X1 = 573  -  Class2 Level I Measurement64 */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX1 = 11  -  Measurement */
+    
+/*  CLASS2.LEVEL1.MEASUREMENT64X2 = 574  -  Class2 Level I Measurement64 */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX2 = 12  -  Measurement */
+    
+/*  CLASS2.LEVEL1.MEASUREMENT64X3 = 575  -  Class2 Level I Measurement64 */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX3 = 13  -  Measurement */
+    
+/*  CLASS2.LEVEL1.MEASUREMENT64X4 = 576  -  Class2 Level I Measurement64 */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX4 = 14  -  Measurement */
+    
 /*  CLASS2.LEVEL1.MEASUREZONE = 577  -  Class2 Level I Measurementzone */
 /* 	Event types is the same as  CLASS1.MEASUREMENT = 10  -  Measurement */
+    
+/*  CLASS2.LEVEL1.MEASUREZONEX1 = 578  -  Class2 Level I Measurementzone */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX1 = 11  -  Measurement */
+    
+/*  CLASS2.LEVEL1.MEASUREZONEX2 = 579  -  Class2 Level I Measurementzone */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX2 = 12  -  Measurement */
+    
+/*  CLASS2.LEVEL1.MEASUREZONEX3 = 580  -  Class2 Level I Measurementzone */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX3 = 13  -  Measurement */
+    
+/*  CLASS2.LEVEL1.MEASUREZONEX4 = 581  -  Class2 Level I Measurementzone */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX4 = 14  -  Measurement */
     
 /*  CLASS2.LEVEL1.MEASUREMENT32 = 582  -  Class2 Level I Measuremet32 */
 /* 	Event types is the same as  CLASS1.MEASUREMENT = 10  -  Measurement */
     
+/*  CLASS2.LEVEL1.MEASUREMENT32X1 = 583  -  Class2 Level I Measuremet32 */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX1 = 11  -  Measurement */
+    
+/*  CLASS2.LEVEL1.MEASUREMENT32X2 = 584  -  Class2 Level I Measuremet32 */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX2 = 12  -  Measurement */
+    
+/*  CLASS2.LEVEL1.MEASUREMENT32X3 = 585  -  Class2 Level I Measuremet32 */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX3 = 13  -  Measurement */
+    
+/*  CLASS2.LEVEL1.MEASUREMENT32X4 = 586  -  Class2 Level I Measuremet32 */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX4 = 14  -  Measurement */
+    
 /*  CLASS2.LEVEL1.SETVALUEZONE = 597  -  Class2 Level I SetValueZone */
 /* 	Event types is the same as  CLASS1.MEASUREMENT = 10  -  Measurement */
+    
+/*  CLASS2.LEVEL1.SETVALUEZONEX1 = 598  -  Class2 Level I SetValueZone */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX1 = 11  -  Measurement */
+    
+/*  CLASS2.LEVEL1.SETVALUEZONEX2 = 599  -  Class2 Level I SetValueZone */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX2 = 12  -  Measurement */
+    
+/*  CLASS2.LEVEL1.SETVALUEZONEX3 = 600  -  Class2 Level I SetValueZone */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX3 = 13  -  Measurement */
+    
+/*  CLASS2.LEVEL1.SETVALUEZONEX4 = 601  -  Class2 Level I SetValueZone */
+/* 	Event types is the same as  CLASS1.MEASUREMENTX4 = 14  -  Measurement */
     
 /*  CLASS2.LEVEL1.WEATHER = 602  -  Class2 Level I Weather */
 /* 	Event types is the same as  CLASS1.WEATHER = 90  -  Weather */
@@ -739,6 +894,11 @@
 #define VSCP2_TYPE_TEXT2SPEECH_GENERAL              0   /* General event */
 #define VSCP2_TYPE_TEXT2SPEECH_TALK                 1   /* Talk */
     
+/*  CLASS2.HLO = 1028  -  High Level Object */
+#define VSCP2_TYPE_HLO_GENERAL                      0   /* General event */
+#define VSCP2_TYPE_HLO_COMMAND                      1   /* HLO Command */
+#define VSCP2_TYPE_HLO_RESPONSE                     2   /* HLO Response */
+    
 /*  CLASS2.CUSTOM = 1029  -  Level II Custom */
 #define VSCP2_TYPE_CUSTOM_GENERAL                   0   /* General event */
     
@@ -756,31 +916,14 @@
 #define VSCP2_TYPE_VSCPD_LOOP                       1   /* Loop */
 #define VSCP2_TYPE_VSCPD_PAUSE                      3   /* Pause */
 #define VSCP2_TYPE_VSCPD_ACTIVATE                   4   /* Activate */
-#define VSCP2_TYPE_VSCPD_SECOND                     5   /* Second */
-#define VSCP2_TYPE_VSCPD_MINUTE                     6   /* Minute */
-#define VSCP2_TYPE_VSCPD_HOUR                       7   /* Hour */
-#define VSCP2_TYPE_VSCPD_NOON                       8   /* Noon */
-#define VSCP2_TYPE_VSCPD_MIDNIGHT                   9   /* Midnight */
-#define VSCP2_TYPE_VSCPD_WEEK                       11  /* Week */
-#define VSCP2_TYPE_VSCPD_MONTH                      12  /* Month */
-#define VSCP2_TYPE_VSCPD_QUARTER                    13  /* Quarter */
-#define VSCP2_TYPE_VSCPD_YEAR                       14  /* Year */
-#define VSCP2_TYPE_VSCPD_RANDOM_MINUTE              15  /* Random-minute */
-#define VSCP2_TYPE_VSCPD_RANDOM_HOUR                16  /* Random-hour */
-#define VSCP2_TYPE_VSCPD_RANDOM_DAY                 17  /* Random-day */
-#define VSCP2_TYPE_VSCPD_RANDOM_WEEK                18  /* Random-week */
-#define VSCP2_TYPE_VSCPD_RANDOM_MONTH               19  /* Random-month */
-#define VSCP2_TYPE_VSCPD_RANDOM_YEAR                20  /* Random-year */
-#define VSCP2_TYPE_VSCPD_DUSK                       21  /* Dusk */
-#define VSCP2_TYPE_VSCPD_DAWN                       22  /* Dawn */
-#define VSCP2_TYPE_VSCPD_STARTING_UP                23  /* Starting up */
-#define VSCP2_TYPE_VSCPD_SHUTTING_DOWN              24  /* Shutting down */
-#define VSCP2_TYPE_VSCPD_TIMER_STARTED              25  /* Timer started */
-#define VSCP2_TYPE_VSCPD_TIMER_PAUSED               26  /* Timer paused */
-#define VSCP2_TYPE_VSCPD_TIMER_RESUMED              27  /* Timer resumed */
-#define VSCP2_TYPE_VSCPD_TIMER_STOPPED              28  /* Timer stopped */
-#define VSCP2_TYPE_VSCPD_TIMER_ELLAPSED             29  /* Timer Elapsed */
-#define VSCP2_TYPE_VSCPD_NEW_CALCULATION            30  /* New Calculations */
+#define VSCP2_TYPE_VSCPD_STARTING_UP                5   /* Starting up */
+#define VSCP2_TYPE_VSCPD_SHUTTING_DOWN              6   /* Shutting down */
+#define VSCP2_TYPE_VSCPD_DRV3_START                 7   /* Start */
+#define VSCP2_TYPE_VSCPD_DRV3_STOP                  8   /* Stop */
+#define VSCP2_TYPE_VSCPD_DRV3_PAUSE                 9   /* Pause */
+#define VSCP2_TYPE_VSCPD_DRV3_RESUME                10  /* Resume */
+#define VSCP2_TYPE_VSCPD_DRV3_RESTART               11  /* Restart */
+#define VSCP2_TYPE_VSCPD_DRV3_CONFIG                12  /* Config */
  
 #endif
  

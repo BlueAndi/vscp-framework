@@ -1,3 +1,8 @@
+## 1.2.x (not released yet)
+
+  - Common
+    - vscphelperlib updated to v14.0.2 (note, the windows vscphelperlib is still v13.0.0).
+
 ## 1.2.0
 
   - Common
