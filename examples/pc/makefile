@@ -125,7 +125,7 @@ endif
 LIBPATH= -L../../common/pc/vscphelper/lib/$(BUILDOS)/$(BUILDTYPE)
 
 # Libraries (-l...)
-LIBRARIES= -lpthread -lvscphelper -lexpat
+LIBRARIES= -lpthread -lvscphelper -lexpat -lm
 
 # Windows specific part
 ifeq ($(OS),Windows_NT)
