@@ -46,3 +46,9 @@ before_script:
 script:
     - make debug
     - cd bin; ./vscp_test
+    - cd ../../../examples/pc
+    - make debug
+    - cd ../../projects/pc/logger
+    - make debug
+    - cd ../programmer
+    - make debug
