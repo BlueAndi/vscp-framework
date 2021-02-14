@@ -29,7 +29,7 @@ jobs:
       - name: Install vscphelper library
         run: |
           wget https://github.com/grodansparadis/vscp-helper-lib/releases/download/v14.0.2/libvscphelper14-dev_14.0.2-1_amd64.deb
-          sudo apt install ./libvscphelper14-dev_14.0.2-1_amd64
+          sudo apt install ./libvscphelper14-dev_14.0.2-1_amd64.deb
         
       - name: Build CUnit
         run: |
