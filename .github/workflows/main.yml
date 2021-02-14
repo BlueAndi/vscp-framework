@@ -28,9 +28,8 @@ jobs:
       # Dependencies
       - name: Install vscphelper library
         run: |
-          wget https://github.com/grodansparadis/vscp-helper-lib/releases/download/v14.0.2/libvscphelper14-dev_14.0.2-1_amd64.deb
-          sudo apt install ./libvscphelper14-dev_14.0.2-1_amd64.deb
-          ./libvscphelper14-dev_14.0.2-1_amd64.deb
+          sudo apt-get update
+          sudo apt-get install libvscphelper14-dev
         
       - name: Build CUnit
         run: |
