@@ -43,7 +43,6 @@ INCLUDES= -I. \
 		-Ivscp_user \
 		-I../../common \
 		-I../../common/pc \
-		-I../../common/pc/vscphelper \
 		-I../../vscp \
 		-I../../vscp/bootloader \
 		-I../../vscp/events
@@ -103,7 +102,7 @@ SOURCES= main.c \
 		../events/vscp_evt_wireless.c
 
 # Include all source pathes here like ../src1:../src2
-VPATH= ../../common:../../common/pc:../../common/pc/vscphelper:../../vscp:../../vscp/events:vscp_user:../../vscp/bootloader
+VPATH= ../../common:../../common/pc:../../vscp:../../vscp/events:vscp_user:../../vscp/bootloader
 
 # Determine build type
 ifeq ($(MAKECMDGOALS),debug)
@@ -122,7 +121,7 @@ BUILDOS= linux
 endif
 
 # Library search path (-L...)
-LIBPATH= -L../../common/pc/vscphelper/lib/$(BUILDOS)/$(BUILDTYPE)
+LIBPATH=
 
 # Libraries (-l...)
 LIBRARIES= -lm -ldl -lpthread -lvscphelper -lexpat
@@ -151,7 +150,7 @@ CFLAGS= -Wall -ffunction-sections -fdata-sections -fshort-enums -std=gnu99 -funs
 # -Wl,--cref        : Add cross reference to map file
 # -Wl,--gc-sections : Enable garbage collection of unused input sections
 # -Wl,-rpath='$$ORIGIN/../lib/linux' : Set shared object search path
-LDFLAGS= -Wall -Wl,-Map,$(BINDIR)/$(BIN).map -Wl,--cref -Wl,--gc-sections -Wl,-rpath='$$ORIGIN/../../../common/pc/vscphelper/lib/linux/$(BUILDTYPE)'
+LDFLAGS= -Wall -Wl,-Map,$(BINDIR)/$(BIN).map -Wl,--cref -Wl,--gc-sections
 
 ifeq ($(MAKECMDGOALS),debug)
 
@@ -193,7 +192,7 @@ OBJDIR= obj
 BINDIR= bin
 
 # Library directory
-LIBDIR= ../../common/pc/vscphelper/lib/$(BUILDOS)/$(BUILDTYPE)
+LIBDIR=
 
 # Remove path from .c files, rename to .o files and add object directory
 OBJECTS= $(addprefix $(OBJDIR)/,$(notdir $(SOURCES:%.c=%.o)))
