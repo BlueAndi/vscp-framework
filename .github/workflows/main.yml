@@ -43,3 +43,24 @@ jobs:
           cd bin
           ./vscp_test
           cd ../../..
+          
+      # Compile PC example
+      - name: Compile PC example
+        run: |
+          cd ./examples/pc
+          make debug
+          cd ../..
+          
+      # Compile PC logger
+      - name: Compile PC logger
+        run: |
+          cd ./projects/pc/logger
+          make debug
+          cd ../../..
+
+      # Compile PC programmer
+      - name: Compile PC programmer
+        run: |
+          cd ./projects/pc/programmer
+          make debug
+          cd ../../..
