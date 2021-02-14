@@ -4,7 +4,7 @@
 [![Repo Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Release](https://img.shields.io/github/release/BlueAndi/vscp-framework.svg)](https://github.com/BlueAndi/vscp-framework/releases)
 [![Coverity Scan Build Status](https://img.shields.io/coverity/scan/4825.svg)](https://scan.coverity.com/projects/4825?tab=overview)
-[![Build Status](https://travis-ci.org/BlueAndi/vscp-framework.svg?branch=master)](https://travis-ci.org/BlueAndi/vscp-framework)
+[![Build Status](https://github.com/BlueAndi/vscp-framework/workflows/CI/badge.svg?branch=master)](https://github.com/BlueAndi/vscp-framework/actions?query=workflow%3ACI)
 
 1. [VSCP](https://github.com/BlueAndi/vscp-framework#vscp)
 2. [Framework](https://github.com/BlueAndi/vscp-framework#framework)
