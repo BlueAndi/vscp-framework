@@ -817,4 +817,28 @@ extern BOOL vscp_evt_measurement_sendRadiationDoseExposure(uint8_t index, uint8_
  */
 extern BOOL vscp_evt_measurement_sendPowerFactor(uint8_t index, uint8_t unit, int32_t data, int8_t exp);
 
+/**
+ * Count
+ * 
+ * @param[in] index Index for sensor.
+ * @param[in] unit The unit of the data.
+ * @param[in] data The data as signed integer.
+ * @param[in] exp The exponent of the data (10^exponent).
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_measurement_sendReactivePower(uint8_t index, uint8_t unit, int32_t data, int8_t exp);
+
+/**
+ * Count
+ * 
+ * @param[in] index Index for sensor.
+ * @param[in] unit The unit of the data.
+ * @param[in] data The data as signed integer.
+ * @param[in] exp The exponent of the data (10^exponent).
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_measurement_sendReactiveEnergy(uint8_t index, uint8_t unit, int32_t data, int8_t exp);
+
 #endif  /* __VSCP_EVT_MEASUREMENT_H__ */

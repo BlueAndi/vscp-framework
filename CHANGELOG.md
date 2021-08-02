@@ -3,6 +3,11 @@
   - Common
     - vscphelperlib updated to v14.0.2 (note, the windows vscphelperlib is still v13.0.0).
 
+  - VSCP framework
+    - Added CLASS1.ALARM VSCP_TYPE_ALARM_RESET event added.
+    - Added CLASS1.MEASUREMENT VSCP_TYPE_MEASUREMENT_REACTIVE_POWER and VSCP_TYPE_MEASUREMENT_REACTIVE_ENERGY events added.
+    - Added CLASS1.INFORMATION VSCP_TYPE_INFORMATION_PROXIMITY_DETECTED event added.
+
 ## 1.2.0
 
   - Common

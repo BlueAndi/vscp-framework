@@ -1556,3 +1556,51 @@ extern BOOL vscp_evt_measurement_sendPowerFactor(uint8_t index, uint8_t unit, in
     return vscp_core_sendEvent(&txMsg);
 }
 
+/**
+ * Count
+ * 
+ * @param[in] index Index for sensor.
+ * @param[in] unit The unit of the data.
+ * @param[in] data The data as signed integer.
+ * @param[in] exp The exponent of the data (10^exponent).
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_measurement_sendReactivePower(uint8_t index, uint8_t unit, int32_t data, int8_t exp)
+{
+    vscp_TxMessage  txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_REACTIVE_POWER, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 1;
+    txMsg.data[0] = vscp_data_coding_getFormatByte(VSCP_DATA_CODING_REPRESENTATION_NORMALIZED_INTEGER, unit, index);
+
+    txMsg.dataNum += vscp_data_coding_int32ToNormalizedInteger(data, exp, &txMsg.data[1], VSCP_L1_DATA_SIZE - txMsg.dataNum);
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Count
+ * 
+ * @param[in] index Index for sensor.
+ * @param[in] unit The unit of the data.
+ * @param[in] data The data as signed integer.
+ * @param[in] exp The exponent of the data (10^exponent).
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_measurement_sendReactiveEnergy(uint8_t index, uint8_t unit, int32_t data, int8_t exp)
+{
+    vscp_TxMessage  txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT, VSCP_TYPE_MEASUREMENT_REACTIVE_ENERGY, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 1;
+    txMsg.data[0] = vscp_data_coding_getFormatByte(VSCP_DATA_CODING_REPRESENTATION_NORMALIZED_INTEGER, unit, index);
+
+    txMsg.dataNum += vscp_data_coding_int32ToNormalizedInteger(data, exp, &txMsg.data[1], VSCP_L1_DATA_SIZE - txMsg.dataNum);
+
+    return vscp_core_sendEvent(&txMsg);
+}
+

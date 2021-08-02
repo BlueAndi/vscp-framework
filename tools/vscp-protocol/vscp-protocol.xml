@@ -48,7 +48,7 @@ Notes:
 -->
 
 <!-- VSCP specification -->
-<specification version="1.11.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.blue-andi.de/vscp/xml-schema/vscp-protocol/1.0" xsi:schemaLocation="http://www.blue-andi.de/vscp/xml-schema/vscp-protocol/1.0 http://www.blue-andi.de/vscp/xml-schema/vscp-protocol/1.0/vscp-protocol-schema.xsd">
+<specification version="1.12.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.blue-andi.de/vscp/xml-schema/vscp-protocol/1.0" xsi:schemaLocation="http://www.blue-andi.de/vscp/xml-schema/vscp-protocol/1.0 http://www.blue-andi.de/vscp/xml-schema/vscp-protocol/1.0/vscp-protocol-schema.xsd">
 
     <vscp-classes>
     
@@ -1502,6 +1502,31 @@ Notes:
                         </frame>
                     </frames>
                 </vscp-type>
+                <vscp-type id="13">
+                    <name lang="en">Alarm reset</name>
+                    <token>VSCP_TYPE_ALARM_RESET</token>
+                    <description lang="en">Indicates a alarm reset condition.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Alarm register</name>
+                                    <description lang="en">Alarm byte from standard register 128/0x80.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones.</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Sub-zone</name>
+                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones.</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
+                </vscp-type>
             </vscp-types>
         </vscp-class>
         <vscp-class id="2">
@@ -2884,7 +2909,19 @@ Notes:
                 <vscp-type id="63">
                     <name lang="en">Power factor</name>
                     <token>VSCP_TYPE_MEASUREMENT_POWER_FACTOR</token>
-                    <description lang="en">Default unit: Percent\nOptional unit: Röntgen/R (1)\nRatio between power in kW and apperant power in kVA.</description>
+                    <description lang="en">Default unit: cos of phase angle.\nThis is a measurment of a power factor. Power factor is an expression of energy efficiency. It is usually expressed as a percentage - and the lower the percentage, the less efficient power usage is.</description>
+                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                </vscp-type>
+                <vscp-type id="64">
+                    <name lang="en">Reactive Power</name>
+                    <token>VSCP_TYPE_MEASUREMENT_REACTIVE_POWER</token>
+                    <description lang="en">Default unit: kVAr\nIn electric power transmission and distribution, volt-ampere reactive (VAr) is a unit of measurement of reactive power. Reactive power exists in AC circuit when the current and voltage are not in phase.</description>
+                    <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
+                </vscp-type>
+                <vscp-type id="65">
+                    <name lang="en">Reactive Energy</name>
+                    <token>VSCP_TYPE_MEASUREMENT_REACTIVE_ENERGY</token>
+                    <description lang="en">Default unit: kVArh\nReactive energy is the electrical energy produced, flowing or supplied by an electric circuit during a time interval, measured in units of kVArh or standard multiples thereof.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
             </vscp-types>
@@ -5264,8 +5301,25 @@ Notes:
                                     <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones</description>
                                 </element>
                                 <element pos="3" type="uint8" length="5" optional="true">
-								<name lang="en">Decremented value</name>
+                                <name lang="en">Decremented value</name>
                                     <description lang="en">Decremented value. The range can be adjusted by the user by sending just the needed number of bytes 1-5</description>
+                                </element>
+                            </elements>
+                        </frame>
+                    </frames>
+                </vscp-type>
+                <vscp-type id="88">
+                    <name lang="en">Proximity detected</name>
+                    <token>VSCP_TYPE_INFORMATION_PROXIMITY_DETECTED</token>
+                    <description lang="en">Proximity detected.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint16" length="1" optional="true">
+                                    <name lang="en">Proximity Level</name>
+                                    <description lang="en">Optional uint16 that sets proximity level if present.</description>
                                 </element>
                             </elements>
                         </frame>

@@ -2934,3 +2934,29 @@ extern BOOL vscp_evt_information_sendDecremented(uint8_t userSpecific, uint8_t z
     return vscp_core_sendEvent(&txMsg);
 }
 
+/**
+ * Proximity detected
+ * 
+ * @param[in] proximityLevel Optional uint16 that sets proximity level if present. (optional)
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_information_sendProximityDetected(uint16_t const * const proximityLevel)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_PROXIMITY_DETECTED, VSCP_PRIORITY_3_NORMAL);
+
+    if (NULL != proximityLevel)
+    {
+        txMsg.data[0] = (uint8_t)((*proximityLevel >> 8) & 0xff);
+        txMsg.data[1] = (uint8_t)((*proximityLevel >> 0) & 0xff);
+        size += 2;
+    }
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
