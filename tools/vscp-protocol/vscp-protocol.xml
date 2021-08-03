@@ -5317,7 +5317,19 @@ Notes:
                             <name lang="en" />
                             <description lang="en" />
                             <elements>
-                                <element pos="0" type="uint16" length="1" optional="true">
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">User specific</name>
+                                    <description lang="en">User specific.</description>
+                                </element>
+                                <element pos="1" type="uint8" length="1" optional="false">
+                                    <name lang="en">Zone</name>
+                                    <description lang="en">Zone for which event applies to (0-255). 255 is all zones</description>
+                                </element>
+                                <element pos="2" type="uint8" length="1" optional="false">
+                                    <name lang="en">Subzone</name>
+                                    <description lang="en">Sub-zone for which event applies to (0-255). 255 is all sub-zones</description>
+                                </element>
+                                <element pos="3" type="uint16" length="1" optional="true">
                                     <name lang="en">Proximity Level</name>
                                     <description lang="en">Optional uint16 that sets proximity level if present.</description>
                                 </element>

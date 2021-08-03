@@ -2937,21 +2937,33 @@ extern BOOL vscp_evt_information_sendDecremented(uint8_t userSpecific, uint8_t z
 /**
  * Proximity detected
  * 
+ * @param[in] userSpecific User specific.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones
+ * @param[in] subzone Sub-zone for which event applies to (0-255). 255 is all sub-zones
  * @param[in] proximityLevel Optional uint16 that sets proximity level if present. (optional)
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_information_sendProximityDetected(uint16_t const * const proximityLevel)
+extern BOOL vscp_evt_information_sendProximityDetected(uint8_t userSpecific, uint8_t zone, uint8_t subzone, uint16_t const * const proximityLevel)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_INFORMATION, VSCP_TYPE_INFORMATION_PROXIMITY_DETECTED, VSCP_PRIORITY_3_NORMAL);
 
+    txMsg.data[0] = userSpecific;
+    size += 1;
+
+    txMsg.data[1] = zone;
+    size += 1;
+
+    txMsg.data[2] = subzone;
+    size += 1;
+
     if (NULL != proximityLevel)
     {
-        txMsg.data[0] = (uint8_t)((*proximityLevel >> 8) & 0xff);
-        txMsg.data[1] = (uint8_t)((*proximityLevel >> 0) & 0xff);
+        txMsg.data[3] = (uint8_t)((*proximityLevel >> 8) & 0xff);
+        txMsg.data[4] = (uint8_t)((*proximityLevel >> 0) & 0xff);
         size += 2;
     }
 
