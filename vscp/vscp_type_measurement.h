@@ -263,7 +263,7 @@ extern "C"
  * Opt Unit: degree (1).
  * Opt Unit: arcminute (2).
  * Opt Unit: arcseconds (3).
- * This is a measurement of an angle.
+ * This is a measurement of an angle or a direction or similar.
  */
 #define VSCP_TYPE_MEASUREMENT_ANGLE                   30
 

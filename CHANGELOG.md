@@ -7,6 +7,8 @@
     - Added CLASS1.ALARM VSCP_TYPE_ALARM_RESET event added.
     - Added CLASS1.MEASUREMENT VSCP_TYPE_MEASUREMENT_REACTIVE_POWER and VSCP_TYPE_MEASUREMENT_REACTIVE_ENERGY events added.
     - Added CLASS1.INFORMATION VSCP_TYPE_INFORMATION_PROXIMITY_DETECTED event added.
+    - Bugfixes:
+      - The event description (doxygen) fixed for all events, which used the frame references in the protocol definition.
 
 ## 1.2.0
 

@@ -2711,9 +2711,9 @@ Notes:
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="30">
-                    <name lang="en">Angle</name>
+                    <name lang="en">Angle, direction or similar</name>
                     <token>VSCP_TYPE_MEASUREMENT_ANGLE</token>
-                    <description lang="en">Default unit: radian (rad) (Plane angles).\nOpt Unit: degree (1).\nOpt Unit: arcminute (2).\nOpt Unit: arcseconds (3).\nThis is a measurement of an angle.</description>
+                    <description lang="en">Default unit: radian (rad) (Plane angles).\nOpt Unit: degree (1).\nOpt Unit: arcminute (2).\nOpt Unit: arcseconds (3).\nThis is a measurement of an angle or a direction or similar.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="31">
