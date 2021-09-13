@@ -43,8 +43,8 @@ CUNITVERSION= 2.1-3
 
 # Includes
 INCLUDES= -I. \
-		-I.. \
-		-I../events \
+		-I../src \
+		-I../src/events \
 		-ICUnit-$(CUNITVERSION)/CUnit/Headers \
 		-IvscpUser
 
@@ -57,42 +57,42 @@ SOURCES= main.c \
 		vscpUser/vscp_ps_access.c \
 		vscpUser/vscp_tp_adapter.c \
 		vscpUser/vscp_timer.c \
-		../vscp_core.c \
-		../vscp_data_coding.c \
-		../vscp_dev_data.c \
-		../vscp_dm.c \
-		../vscp_dm_ng.c \
-		../vscp_logger.c \
-		../vscp_ps.c \
-		../vscp_transport.c \
-		../vscp_util.c \
-		../events/vscp_evt_alarm.c \
-		../events/vscp_evt_aol.c \
-		../events/vscp_evt_configuration.c \
-		../events/vscp_evt_control.c \
-		../events/vscp_evt_data.c \
-		../events/vscp_evt_diagnostic.c \
-		../events/vscp_evt_display.c \
-		../events/vscp_evt_error.c \
-		../events/vscp_evt_gnss.c \
-		../events/vscp_evt_information.c \
-		../events/vscp_evt_ir.c \
-		../events/vscp_evt_log.c \
-		../events/vscp_evt_measurement.c \
-		../events/vscp_evt_measurement32.c \
-		../events/vscp_evt_measurement64.c \
-		../events/vscp_evt_measurezone.c \
-		../events/vscp_evt_multimedia.c \
-		../events/vscp_evt_phone.c \
-		../events/vscp_evt_protocol.c \
-		../events/vscp_evt_security.c \
-		../events/vscp_evt_setvaluezone.c \
-		../events/vscp_evt_weather.c \
-		../events/vscp_evt_weather_forecast.c \
-		../events/vscp_evt_wireless.c
+		../src/vscp_core.c \
+		../src/vscp_data_coding.c \
+		../src/vscp_dev_data.c \
+		../src/vscp_dm.c \
+		../src/vscp_dm_ng.c \
+		../src/vscp_logger.c \
+		../src/vscp_ps.c \
+		../src/vscp_transport.c \
+		../src/vscp_util.c \
+		../src/events/vscp_evt_alarm.c \
+		../src/events/vscp_evt_aol.c \
+		../src/events/vscp_evt_configuration.c \
+		../src/events/vscp_evt_control.c \
+		../src/events/vscp_evt_data.c \
+		../src/events/vscp_evt_diagnostic.c \
+		../src/events/vscp_evt_display.c \
+		../src/events/vscp_evt_error.c \
+		../src/events/vscp_evt_gnss.c \
+		../src/events/vscp_evt_information.c \
+		../src/events/vscp_evt_ir.c \
+		../src/events/vscp_evt_log.c \
+		../src/events/vscp_evt_measurement.c \
+		../src/events/vscp_evt_measurement32.c \
+		../src/events/vscp_evt_measurement64.c \
+		../src/events/vscp_evt_measurezone.c \
+		../src/events/vscp_evt_multimedia.c \
+		../src/events/vscp_evt_phone.c \
+		../src/events/vscp_evt_protocol.c \
+		../src/events/vscp_evt_security.c \
+		../src/events/vscp_evt_setvaluezone.c \
+		../src/events/vscp_evt_weather.c \
+		../src/events/vscp_evt_weather_forecast.c \
+		../src/events/vscp_evt_wireless.c
 
 # Include all source pathes here like ../src1:../src2
-VPATH= ..:vscpUser:../events
+VPATH= ..:vscpUser:../src/events
 
 # Library search path
 LIBPATH= -LCUnit-$(CUNITVERSION)/CUnit/Sources/.libs
