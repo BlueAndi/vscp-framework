@@ -28,7 +28,7 @@ More information can be found on the main site http://www.vscp.org
 The VSCP software framework for level 1 devices provides several layers according to the [VSCP specification](https://docs.vscp.org/spec/latest).
 
 ### Core
-![core-diagram](https://github.com/BlueAndi/vscp-framework/blob/master/vscp/doc/doxfiles/vscp_modules.png)
+![core-diagram](https://github.com/BlueAndi/vscp-framework/blob/master/doc/doxfiles/vscp_modules.png)
 
 * The core functionality which has a built-in state machine to handle different use cases of the protocol and etc. (vscp\_core.[ch]). Right now it supports every mandatory event and some minor optional ones.
 * The decision matrix is handled separately (vscp\_dm.[ch]). It contains the standard decision matrix, as described in the VSCP specification and contains an additional extension.
@@ -57,7 +57,7 @@ how VSCP is integrated into your software:
 Templates exists for all of them, which makes it much easier to adapt it and less time. See in the templates folder.
 
 ### Event abstraction
-![core-diagram](https://github.com/BlueAndi/vscp-framework/blob/master/vscp/doc/doxfiles/vscp_event_modules.png)
+![core-diagram](https://github.com/BlueAndi/vscp-framework/blob/master/doc/doxfiles/vscp_event_modules.png)
 
 Using only the core, you have to assemble the VSCP events by yourself. If you want to deal only with parameter, which are
 VSCP independent, use the next upper layer, the event abstraction modules.
@@ -142,32 +142,25 @@ vscp_dev_data_config_overwrite.h
 ## Structure
 
 <pre>
-+---common              (Common sourcecode, used for examples and projects)
-|   +---avr             (Common sourcecode for Atmel AVR microcontrollers)
-|   \---pc              (Common sourcecode for PC)
++---doc                 (Documentation)
+|   +---doxfiles        (Doxygen related files)
+|   \---html            (Doxygen generated documentation in HTML)
 +---examples            (Examples which are showing how to use the VSCP framework)
 |   +---arm             (Examples with ARM based microcontrollers)
-|   +---avr             (Examples with Atmel AVR microcontrollers)
-|   \---pc              (PC example for windows and linux)
-+---projects            (Projects)
-|   +---avr             (Projects with Atmel AVR microcontrollers)
-|   \---pc              (PC projects)
-+---tools               (General tools, used by examples and projects)
-|   \---xslt            (XML transformation processor)
-\---vscp                (VSCP framework)
-    +---doc             (Documentation)
-    |   +---doxfiles    (Doxygen related files)
-    |   \---html        (Doxygen generated documentation in HTML)
-    +---events          (These modules are using the VSCP core to send CLASS1 dedicated events)
-    +---templates       (Templates of the files, which the user shall adapt to its needs)
-    \---test            (Test of the VSCP framework)
+|   \---avr             (Examples with Atmel AVR microcontrollers)
+|---src                 (VSCP framework)
+|   \---events          (These modules are using the VSCP core to send CLASS1 dedicated events)
++---templates           (Templates of the files, which the user shall adapt to its needs)
+|---test                (Test of the VSCP framework)
+\---tools               (General tools, used by examples and projects)
+    \---xslt            (XML transformation processor)
 </pre>
 
 ## Getting started
 
 This part shows you how to get the VSCP framework working in a "minimal" way:
 
-1. [Copy the VSCP framework to your project](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#copy-the-vscp-framework-to-your-project)
+1. [Get the VSCP framework to your project](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#get-the-vscp-framework-to-your-project)
 2. [Initialization of the VSCP framework](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#initialization-of-the-vscp-framework)
 3. [Processing of the VSCP framework](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#processing-of-the-vscp-framework)
 4. [VSCP framework timer](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#vscp-framework-timer)
@@ -177,18 +170,43 @@ This part shows you how to get the VSCP framework working in a "minimal" way:
 8. [Persistent memory](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#persistent-memory)
 9. [Ready to run](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#ready-to-run)
 
-### Copy the VSCP framework to your project
+### 1 Get the VSCP framework to your project
 
-1. Copy or link the VSCP framework (./vscp and ./vscp/events) to your project.
-2. Copy (!!do not link!!) all necessary template files (./vscp/templates) to your project. Recommended is a sub-directory "vscp_user".
+There are 3 possible integrations listed, there may be more of course.
+
+#### 1.1 Possibility 1: Copy it
+
+1. Copy or link the VSCP framework (./src and ./src/events) to your project.
+2. Copy (!!do not link!!) all necessary template files (./templates) to your project. Recommended is a sub-directory "vscp_user".
 3. Update your makefile or your project configuration.
- 
-### Initialization of the VSCP framework
+
+#### 1.2 Possibility 2: git submodule
+
+Initial add it.
+```
+git submodule add https://github.com/BlueAndi/vscp-framework
+```
+Later update it.
+```
+git submodule update --remote
+```
+
+#### 1.3 Possibility 3: PlatformIO
+
+Add ```vscp-framework``` with the required version to the platformio.ini configuration. Find more informations in the [PlatformIO documentation](https://docs.platformio.org/en/latest/projectconf/section_env_library.html#lib-deps).
+
+Example:
+```
+    lib_deps =
+        vscp-framework @ 2.0.0
+```
+
+### 2 Initialization of the VSCP framework
 
 The VSCP framework has to be initialized, before any function is used. This is simply done
 by calling the function vscp\_core\_init() during start-up.
 
-### Processing of the VSCP framework
+### 3 Processing of the VSCP framework
 
 The VSCP framework has to be called periodically to be able to react on incoming events.
 Call the process routine vscp\_core\_process() in a constant cyclic period. The period should be
@@ -197,7 +215,7 @@ communication bus, the event load on the bus and etc.
 
 The process routine handle all received VSCP events.
 
-### VSCP framework timer
+### 4 VSCP framework timer
 
 VSCP specifies several timing behaviour in different use cases. Therefore the framework needs some
 timers to achieve it.
@@ -216,29 +234,29 @@ Call the timer processing routine equal or lower than 1 s.
 Note, that never call vscp\_process() with a lower period, than vscp\_timer\_process(). Because vscp\_process() reacts
 on timer timeouts and vscp\_timer\_process() decrease only the timers, but doesn't do more.
 
-### VSCP transport adaption
+### 5 VSCP transport adaption
 
 Now its time to connect the VSCP framework to the communication bus. This can be done by implementing the transport
 adapter in the vscp\_tp\_adapter.c template file.
 
-### Control the VSCP lamp
+### 6 Control the VSCP lamp
 
 To see that something is happen on your embedded device, next step is to control the VSCP lamp (in most cases a LED).
 Update the function vscp\_portable\_setLampState() in the vscp\_portable.c module.
 
-### Connect the initialization button
+### 7 Connect the initialization button
 
 According to the VSCP specification, every embedded device should have a button to start the segment initialization.
 Hopefully you have one right now :-) and if it is pressed, call the function vscp\_core\_startNodeSegmentInit() in the
 vscp\_core.c module.
 
-### Persistent memory
+### 8 Persistent memory
 
 It is important that the VSCP framework can store data in a persistent memory, e.g. an EEPROM. Implement in the
 vscp\_ps\_access.c module the low level access to the persistent memory. Its quite easy, because only byte access
 functions are used, so you have one read and one write function to adapt.
 
-### Ready to run
+### 9 Ready to run
 
 Now the minimal sub set is done and your node hopefully starts up with a nickname discovery.
 
