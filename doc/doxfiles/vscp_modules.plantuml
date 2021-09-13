@@ -31,7 +31,7 @@ app ..> logger: uses
 app ..> core: process and uses
 app ..> timer: process
 
-logger .> core: uses
+logger ..> core: uses
 logger ..> ps: uses
 
 core ..> timer: uses
@@ -58,11 +58,11 @@ transport ..> transport_adapter: read and write
 device_data ..> ps: read
 device_data ..> portable: read
 
-transport_adapter ..> can: read and write
+transport_adapter ...> can: read and write
 
 ps_access ..> eeprom: read and write
 
-application_register .left.> ps_access: read and write
+application_register ..> ps_access: read and write
 
 note right of eeprom
     Use a real EEPROM or
@@ -74,5 +74,7 @@ note right of can
     Other physical transports
     are possible as well.
 end note
+
+core_modules -[hidden]------ adaption_modules
 
 @enduml
