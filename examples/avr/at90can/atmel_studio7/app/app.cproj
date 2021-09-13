@@ -62,8 +62,8 @@
             <Value>../../../common</Value>
             <Value>../../../driver</Value>
             <Value>../../../vscp_user</Value>
-            <Value>../../../../../../vscp</Value>
-            <Value>../../../../../../vscp/events</Value>
+            <Value>../../../../../../src</Value>
+            <Value>../../../../../../src/events</Value>
             <Value>%24(PackRepoDir)\atmel\ATmega_DFP\1.2.209\include</Value>
           </ListValues>
         </avrgcc.compiler.directories.IncludePaths>
@@ -105,8 +105,8 @@
             <Value>../../../common</Value>
             <Value>../../../driver</Value>
             <Value>../../../vscp_user</Value>
-            <Value>../../../../../../vscp</Value>
-            <Value>../../../../../../vscp/events</Value>
+            <Value>../../../../../../src</Value>
+            <Value>../../../../../../src/events</Value>
             <Value>%24(PackRepoDir)\atmel\ATmega_DFP\1.2.209\include</Value>
           </ListValues>
         </avrgcc.compiler.directories.IncludePaths>
@@ -131,327 +131,327 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_alarm.c">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_alarm.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_alarm.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_alarm.h">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_alarm.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_alarm.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_aol.c">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_aol.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_aol.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_aol.h">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_aol.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_aol.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_configuration.c">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_configuration.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_configuration.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_configuration.h">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_configuration.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_configuration.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_control.c">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_control.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_control.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_control.h">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_control.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_control.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_data.c">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_data.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_data.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_data.h">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_data.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_data.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_diagnostic.c">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_diagnostic.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_diagnostic.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_diagnostic.h">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_diagnostic.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_diagnostic.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_display.c">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_display.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_display.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_display.h">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_display.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_display.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_error.c">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_error.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_error.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_error.h">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_error.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_error.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_gnss.c">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_gnss.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_gnss.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_gnss.h">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_gnss.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_gnss.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_information.c">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_information.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_information.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_information.h">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_information.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_information.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_ir.c">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_ir.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_ir.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_ir.h">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_ir.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_ir.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_log.c">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_log.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_log.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_log.h">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_log.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_log.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_measurement.c">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_measurement.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_measurement.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_measurement.h">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_measurement.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_measurement.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_measurement32.c">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_measurement32.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_measurement32.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_measurement32.h">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_measurement32.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_measurement32.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_measurement64.c">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_measurement64.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_measurement64.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_measurement64.h">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_measurement64.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_measurement64.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_measurezone.c">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_measurezone.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_measurezone.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_measurezone.h">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_measurezone.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_measurezone.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_multimedia.c">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_multimedia.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_multimedia.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_multimedia.h">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_multimedia.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_multimedia.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_phone.c">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_phone.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_phone.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_phone.h">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_phone.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_phone.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_protocol.c">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_protocol.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_protocol.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_protocol.h">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_protocol.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_protocol.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_security.c">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_security.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_security.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_security.h">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_security.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_security.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_setvaluezone.c">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_setvaluezone.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_setvaluezone.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_setvaluezone.h">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_setvaluezone.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_setvaluezone.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_weather.c">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_weather.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_weather.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_weather.h">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_weather.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_weather.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_weather_forecast.c">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_weather_forecast.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_weather_forecast.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_weather_forecast.h">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_weather_forecast.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_weather_forecast.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_wireless.c">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_wireless.c">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_wireless.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\events\vscp_evt_wireless.h">
+    <Compile Include="..\..\..\..\..\src\events\vscp_evt_wireless.h">
       <SubType>compile</SubType>
       <Link>vscp\events\vscp_evt_wireless.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_class_l1.h">
+    <Compile Include="..\..\..\..\..\src\vscp_class_l1.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_class_l1.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_config.h">
+    <Compile Include="..\..\..\..\..\src\vscp_config.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_config.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_config_base.h">
+    <Compile Include="..\..\..\..\..\src\vscp_config_base.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_config_base.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_core.c">
+    <Compile Include="..\..\..\..\..\src\vscp_core.c">
       <SubType>compile</SubType>
       <Link>vscp\vscp_core.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_core.h">
+    <Compile Include="..\..\..\..\..\src\vscp_core.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_core.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_dev_data.c">
+    <Compile Include="..\..\..\..\..\src\vscp_dev_data.c">
       <SubType>compile</SubType>
       <Link>vscp\vscp_dev_data.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_dev_data.h">
+    <Compile Include="..\..\..\..\..\src\vscp_dev_data.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_dev_data.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_dev_data_config.h">
+    <Compile Include="..\..\..\..\..\src\vscp_dev_data_config.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_dev_data_config.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_dm.c">
+    <Compile Include="..\..\..\..\..\src\vscp_dm.c">
       <SubType>compile</SubType>
       <Link>vscp\vscp_dm.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_dm.h">
+    <Compile Include="..\..\..\..\..\src\vscp_dm.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_dm.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_dm_ng.c">
+    <Compile Include="..\..\..\..\..\src\vscp_dm_ng.c">
       <SubType>compile</SubType>
       <Link>vscp\vscp_dm_ng.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_dm_ng.h">
+    <Compile Include="..\..\..\..\..\src\vscp_dm_ng.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_dm_ng.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_logger.c">
+    <Compile Include="..\..\..\..\..\src\vscp_logger.c">
       <SubType>compile</SubType>
       <Link>vscp\vscp_logger.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_logger.h">
+    <Compile Include="..\..\..\..\..\src\vscp_logger.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_logger.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_ps.c">
+    <Compile Include="..\..\..\..\..\src\vscp_ps.c">
       <SubType>compile</SubType>
       <Link>vscp\vscp_ps.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_ps.h">
+    <Compile Include="..\..\..\..\..\src\vscp_ps.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_ps.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_transport.c">
+    <Compile Include="..\..\..\..\..\src\vscp_transport.c">
       <SubType>compile</SubType>
       <Link>vscp\vscp_transport.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_transport.h">
+    <Compile Include="..\..\..\..\..\src\vscp_transport.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_transport.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_types.h">
+    <Compile Include="..\..\..\..\..\src\vscp_types.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_types.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_type_alarm.h">
+    <Compile Include="..\..\..\..\..\src\vscp_type_alarm.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_type_alarm.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_type_configure.h">
+    <Compile Include="..\..\..\..\..\src\vscp_type_configure.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_type_configure.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_type_control.h">
+    <Compile Include="..\..\..\..\..\src\vscp_type_control.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_type_control.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_type_display.h">
+    <Compile Include="..\..\..\..\..\src\vscp_type_display.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_type_display.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_type_information.h">
+    <Compile Include="..\..\..\..\..\src\vscp_type_information.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_type_information.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_type_log.h">
+    <Compile Include="..\..\..\..\..\src\vscp_type_log.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_type_log.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_type_measurement.h">
+    <Compile Include="..\..\..\..\..\src\vscp_type_measurement.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_type_measurement.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_type_measurezone.h">
+    <Compile Include="..\..\..\..\..\src\vscp_type_measurezone.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_type_measurezone.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_type_phone.h">
+    <Compile Include="..\..\..\..\..\src\vscp_type_phone.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_type_phone.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_type_protocol.h">
+    <Compile Include="..\..\..\..\..\src\vscp_type_protocol.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_type_protocol.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_type_remote.h">
+    <Compile Include="..\..\..\..\..\src\vscp_type_remote.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_type_remote.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_type_security.h">
+    <Compile Include="..\..\..\..\..\src\vscp_type_security.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_type_security.h</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_util.c">
+    <Compile Include="..\..\..\..\..\src\vscp_util.c">
       <SubType>compile</SubType>
       <Link>vscp\vscp_util.c</Link>
     </Compile>
-    <Compile Include="..\..\..\..\..\vscp\vscp_util.h">
+    <Compile Include="..\..\..\..\..\src\vscp_util.h">
       <SubType>compile</SubType>
       <Link>vscp\vscp_util.h</Link>
     </Compile>
