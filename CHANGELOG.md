@@ -1,3 +1,8 @@
+## 2.0.0
+
+  VSCP-framework repository was restructured. The new structure is improved for providing it as PlatformIO libraray or to include
+  it as git submodule.
+
 ## 1.3.0
 
   - Common
