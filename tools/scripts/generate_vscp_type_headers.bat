@@ -30,6 +30,6 @@ del temp.tmp
 del /Q sed*
 
 rem Copy generated files to project
-copy /Y vscp_type*.h ..\..\vscp
+copy /Y vscp_type*.h ..\src
 
 del /Q vscp_type*.h
