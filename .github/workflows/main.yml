@@ -28,18 +28,18 @@ jobs:
       # Dependencies
       - name: Build CUnit
         run: |
-          cd ./vscp/test
+          cd ./test
           make cunit
           cd CUnit-2.1-3
           sudo make install
           sudo /sbin/ldconfig -v
-          cd ../../..
+          cd ../..
 
       # Run VSCP-framework test
       - name: Run VSCP-framework test
         run: |
-          cd ./vscp/test
+          cd ./src/test
           make debug
           cd bin
           ./vscp_test
-          cd ../../..
+          cd ../..
