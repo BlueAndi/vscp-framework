@@ -92,7 +92,7 @@ SOURCES= main.c \
 		../src/events/vscp_evt_wireless.c
 
 # Include all source pathes here like ../src1:../src2
-VPATH= ..:vscpUser:../src/events
+VPATH= ..:vscpUser:../src:../src/events
 
 # Library search path
 LIBPATH= -LCUnit-$(CUNITVERSION)/CUnit/Sources/.libs
