@@ -6,17 +6,38 @@
 [![Coverity Scan Build Status](https://img.shields.io/coverity/scan/4825.svg)](https://scan.coverity.com/projects/4825?tab=overview)
 [![Build Status](https://github.com/BlueAndi/vscp-framework/workflows/CI/badge.svg?branch=master)](https://github.com/BlueAndi/vscp-framework/actions?query=workflow%3ACI)
 
-1. [VSCP](https://github.com/BlueAndi/vscp-framework#vscp)
-2. [Framework](https://github.com/BlueAndi/vscp-framework#framework)
-3. [Structure](https://github.com/BlueAndi/vscp-framework#structure)
-4. [Getting started](https://github.com/BlueAndi/vscp-framework#getting-started)
-5. [Bootloader](https://github.com/BlueAndi/vscp-framework/tree/master/vscp/bootloader)
-6. [Typical infrastructure](https://github.com/BlueAndi/vscp-framework#typical-infrastructure)
-7. [Issues, Ideas and bugs](https://github.com/BlueAndi/vscp-framework#issues-ideas-and-bugs)
-8. [License](https://github.com/BlueAndi/vscp-framework#license)
-9. [Contribution]([https://](https://github.com/BlueAndi/vscp-framework#contribution))
+The VSCP software framework for level 1 devices provides several layers according to the [VSCP specification](https://docs.vscp.org/spec/latest).
 
-## VSCP
+- [VSCP L1 Framework](#vscp-l1-framework)
+- [VSCP](#vscp)
+- [Framework](#framework)
+  - [Core](#core)
+  - [Event Abstraction](#event-abstraction)
+  - [Configuration Parameters](#configuration-parameters)
+    - [Common](#common)
+    - [Device Data](#device-data)
+- [VSCP L1 Bootloader](#vscp-l1-bootloader)
+- [VSCP CLI Tools](#vscp-cli-tools)
+- [Structure](#structure)
+- [Getting Started](#getting-started)
+  - [1 Get The VSCP Framework To Your Project](#1-get-the-vscp-framework-to-your-project)
+    - [1.1 Possibility 1: Copy it](#11-possibility-1-copy-it)
+    - [1.2 Possibility 2: git submodule](#12-possibility-2-git-submodule)
+    - [1.3 Possibility 3: PlatformIO](#13-possibility-3-platformio)
+  - [2 Initialization Of The VSCP Framework](#2-initialization-of-the-vscp-framework)
+  - [3 Processing Of The VSCP Framework](#3-processing-of-the-vscp-framework)
+  - [4 VSCP Framework Timer](#4-vscp-framework-timer)
+  - [5 VSCP Transport Adaption](#5-vscp-transport-adaption)
+  - [6 Control The VSCP Lamp](#6-control-the-vscp-lamp)
+  - [7 Connect The Initialization Button](#7-connect-the-initialization-button)
+  - [8 Persistent Memory](#8-persistent-memory)
+  - [9 Ready To Run](#9-ready-to-run)
+- [Typical Infrastructure](#typical-infrastructure)
+- [Issues, Ideas And Bugs](#issues-ideas-and-bugs)
+- [License](#license)
+- [Contribution](#contribution)
+
+# VSCP
 
 <img src="https://github.com/grodansparadis/vscp_logo/raw/master/vscp_logo.jpg" width="200px" alt="Logo" />
 
@@ -24,10 +45,9 @@ The Very Simple Control Protocol (VSCP), an open and free protocol for IoT/m2m a
 
 More information can be found on the main site http://www.vscp.org
 
-## Framework
-The VSCP software framework for level 1 devices provides several layers according to the [VSCP specification](https://docs.vscp.org/spec/latest).
+# Framework
 
-### Core
+## Core
 ![core-diagram](https://github.com/BlueAndi/vscp-framework/blob/master/doc/doxfiles/vscp_modules.png)
 
 * The core functionality which has a built-in state machine to handle different use cases of the protocol and etc. (vscp\_core.[ch]). Right now it supports every mandatory event and some minor optional ones.
@@ -56,15 +76,15 @@ how VSCP is integrated into your software:
 
 Templates exists for all of them, which makes it much easier to adapt it and less time. See in the templates folder.
 
-### Event abstraction
+## Event Abstraction
 ![core-diagram](https://github.com/BlueAndi/vscp-framework/blob/master/doc/doxfiles/vscp_event_modules.png)
 
 Using only the core, you have to assemble the VSCP events by yourself. If you want to deal only with parameter, which are
 VSCP independent, use the next upper layer, the event abstraction modules.
 
-### Configuration parameters
+## Configuration Parameters
 
-#### Common
+### Common
 
 The following configuration parameters can be enable/disable/set in the
 ```
@@ -104,7 +124,7 @@ vscp_config_overwrite.h
 | <sub>VSCP\_CONFIG\_LOOPBACK\_STORAGE\_NUM<sub> | <sub>4<sub> | <sub>Number of messages in the loopback cyclic buffer. Note, that if you want to store up to 3 events, you have to configure 4, because of the technical implementation of the cyclic buffer.<sub> |
 | <sub>VSCP\_CONFIG\_START\_NODE\_PROBE\_NICKNAME<sub> | <sub>1<sub> | <sub>Number to start probing nickname from.<sub> |
 
-#### Device data
+### Device Data
 
 The following device data can be enable/disable/set in the
 ```
@@ -139,7 +159,15 @@ vscp_dev_data_config_overwrite.h
 | <sub>VSCP\_DEV\_DATA\_CONFIG\_STANDARD\_DEVICE\_FAMILY\_CODE<sub> | <sub>0x00000000<sub> | <sub>Standard device family code.<sub> |
 | <sub>VSCP\_DEV\_DATA\_CONFIG\_STANDARD\_DEVICE\_TYPE<sub> | <sub>0x00000000<sub> | <sub>Standard device type.<sub> |
 
-## Structure
+# VSCP L1 Bootloader
+
+A generic VSCP L1 bootloader: https://github.com/BlueAndi/vscp-bootloader
+
+# VSCP CLI Tools
+
+Some tools to maintain VSCP via command line interface: https://github.com/BlueAndi/vscp-cli-tools
+
+# Structure
 
 <pre>
 +---doc                 (Documentation)
@@ -156,7 +184,7 @@ vscp_dev_data_config_overwrite.h
     \---xslt            (XML transformation processor)
 </pre>
 
-## Getting started
+# Getting Started
 
 This part shows you how to get the VSCP framework working in a "minimal" way:
 
@@ -170,17 +198,17 @@ This part shows you how to get the VSCP framework working in a "minimal" way:
 8. [Persistent memory](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#persistent-memory)
 9. [Ready to run](https://github.com/BlueAndi/vscp-framework/blob/master/README.md#ready-to-run)
 
-### 1 Get the VSCP framework to your project
+## 1 Get The VSCP Framework To Your Project
 
 There are 3 possible integrations listed, there may be more of course.
 
-#### 1.1 Possibility 1: Copy it
+### 1.1 Possibility 1: Copy it
 
 1. Copy or link the VSCP framework (./src and ./src/events) to your project.
 2. Copy (!!do not link!!) all necessary template files (./templates) to your project. Recommended is a sub-directory "vscp_user".
 3. Update your makefile or your project configuration.
 
-#### 1.2 Possibility 2: git submodule
+### 1.2 Possibility 2: git submodule
 
 Initial add it.
 ```
@@ -191,7 +219,7 @@ Later update it.
 git submodule update --remote
 ```
 
-#### 1.3 Possibility 3: PlatformIO
+### 1.3 Possibility 3: PlatformIO
 
 Add ```vscp-framework``` with the required version to the platformio.ini configuration. Find more informations in the [PlatformIO documentation](https://docs.platformio.org/en/latest/projectconf/section_env_library.html#lib-deps).
 
@@ -201,12 +229,12 @@ Example:
         vscp-framework @ 2.0.0
 ```
 
-### 2 Initialization of the VSCP framework
+## 2 Initialization Of The VSCP Framework
 
 The VSCP framework has to be initialized, before any function is used. This is simply done
 by calling the function vscp\_core\_init() during start-up.
 
-### 3 Processing of the VSCP framework
+## 3 Processing Of The VSCP Framework
 
 The VSCP framework has to be called periodically to be able to react on incoming events.
 Call the process routine vscp\_core\_process() in a constant cyclic period. The period should be
@@ -215,7 +243,7 @@ communication bus, the event load on the bus and etc.
 
 The process routine handle all received VSCP events.
 
-### 4 VSCP framework timer
+## 4 VSCP Framework Timer
 
 VSCP specifies several timing behaviour in different use cases. Therefore the framework needs some
 timers to achieve it.
@@ -234,46 +262,46 @@ Call the timer processing routine equal or lower than 1 s.
 Note, that never call vscp\_process() with a lower period, than vscp\_timer\_process(). Because vscp\_process() reacts
 on timer timeouts and vscp\_timer\_process() decrease only the timers, but doesn't do more.
 
-### 5 VSCP transport adaption
+## 5 VSCP Transport Adaption
 
 Now its time to connect the VSCP framework to the communication bus. This can be done by implementing the transport
 adapter in the vscp\_tp\_adapter.c template file.
 
-### 6 Control the VSCP lamp
+## 6 Control The VSCP Lamp
 
 To see that something is happen on your embedded device, next step is to control the VSCP lamp (in most cases a LED).
 Update the function vscp\_portable\_setLampState() in the vscp\_portable.c module.
 
-### 7 Connect the initialization button
+## 7 Connect The Initialization Button
 
 According to the VSCP specification, every embedded device should have a button to start the segment initialization.
 Hopefully you have one right now :-) and if it is pressed, call the function vscp\_core\_startNodeSegmentInit() in the
 vscp\_core.c module.
 
-### 8 Persistent memory
+## 8 Persistent Memory
 
 It is important that the VSCP framework can store data in a persistent memory, e.g. an EEPROM. Implement in the
 vscp\_ps\_access.c module the low level access to the persistent memory. Its quite easy, because only byte access
 functions are used, so you have one read and one write function to adapt.
 
-### 9 Ready to run
+## 9 Ready To Run
 
 Now the minimal sub set is done and your node hopefully starts up with a nickname discovery.
 
 Have fun!
 
-## Typical infrastructure
+# Typical Infrastructure
 
 ![typical-infrastructure](https://github.com/BlueAndi/vscp-framework/blob/master/vscp/doc/doxfiles/vscp_typical_infrastructure.png)
 
-## Issues, Ideas and bugs
+# Issues, Ideas And Bugs
 
 If you have further ideas or you found some bugs, great! Create a [issue](https://github.com/BlueAndi/vscp-framework/issues) or if
 you are able and willing to fix it by yourself, clone the repository and create a pull request.
 
-## License
+# License
 The whole source code is published under the [MIT license](http://choosealicense.com/licenses/mit/).
 
-## Contribution
+# Contribution
 Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in the work by you, shall be licensed as above, without any
 additional terms or conditions.

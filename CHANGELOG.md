@@ -1,7 +1,13 @@
-## 2.0.0
+# Changelog
 
-  VSCP-framework repository was restructured. The new structure is improved for providing it as PlatformIO libraray or to include
-  it as git submodule.
+## 2.0.0 (not released yet)
+
+  VSCP-framework repository was restructured. The new structure is improved for providing it as PlatformIO libraray or to include it as git submodule.
+
+  The following was moved to a dediated repository:
+  * [VSCP bootloader](https://github.com/BlueAndi/vscp-bootloader) (original in /vscp/bootloader)
+  * [CLI tools](https://github.com/BlueAndi/vscp-cli-tools) (original in /projects/pc)
+  * [My Projects](https://github.com/BlueAndi/RelayBoard01) (original in /projects/avr)
 
 ## 1.3.0
 
