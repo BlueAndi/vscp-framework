@@ -38,7 +38,7 @@ jobs:
       # Run VSCP-framework test
       - name: Run VSCP-framework test
         run: |
-          cd ./src/test
+          cd ./test
           make debug
           cd bin
           ./vscp_test
