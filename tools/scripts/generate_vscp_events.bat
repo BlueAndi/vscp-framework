@@ -34,6 +34,6 @@ del temp.tmp
 del /Q sed*
 
 rem Copy generated files to project
-copy /Y vscp_evt_* ..\src\events
+copy /Y vscp_evt_* ..\..\src\events
 
 del /Q vscp_evt_*
