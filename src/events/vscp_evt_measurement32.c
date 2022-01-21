@@ -1541,3 +1541,128 @@ extern BOOL vscp_evt_measurement32_sendSoundLevel(float_t value)
     return vscp_core_sendEvent(&txMsg);
 }
 
+/**
+ * Radiation dose (equivalent)
+ * 
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_measurement32_sendRadiationDoseEquivalent(float_t value)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_RADIATION_DOSE_EQ, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = ((uint8_t*)&value)[3];
+    txMsg.data[1] = ((uint8_t*)&value)[2];
+    txMsg.data[2] = ((uint8_t*)&value)[1];
+    txMsg.data[3] = ((uint8_t*)&value)[0];
+    size += 4;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Radiation dose (exposure)
+ * 
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_measurement32_sendRadiationDoseExposure(float_t value)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_RADIATION_DOSE_EXPOSURE, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = ((uint8_t*)&value)[3];
+    txMsg.data[1] = ((uint8_t*)&value)[2];
+    txMsg.data[2] = ((uint8_t*)&value)[1];
+    txMsg.data[3] = ((uint8_t*)&value)[0];
+    size += 4;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Power factor
+ * 
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_measurement32_sendPowerFactor(float_t value)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_POWER_FACTOR, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = ((uint8_t*)&value)[3];
+    txMsg.data[1] = ((uint8_t*)&value)[2];
+    txMsg.data[2] = ((uint8_t*)&value)[1];
+    txMsg.data[3] = ((uint8_t*)&value)[0];
+    size += 4;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Reactive Power
+ * 
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_measurement32_sendReactivePower(float_t value)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_REACTIVE_POWER, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = ((uint8_t*)&value)[3];
+    txMsg.data[1] = ((uint8_t*)&value)[2];
+    txMsg.data[2] = ((uint8_t*)&value)[1];
+    txMsg.data[3] = ((uint8_t*)&value)[0];
+    size += 4;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Reactive Energy
+ * 
+ * @param[in] value The value is a "float" - IEEE-754, 32 Bits, single precision.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_measurement32_sendReactiveEnergy(float_t value)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT32, VSCP_TYPE_MEASUREMENT32_REACTIVE_ENERGY, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = ((uint8_t*)&value)[3];
+    txMsg.data[1] = ((uint8_t*)&value)[2];
+    txMsg.data[2] = ((uint8_t*)&value)[1];
+    txMsg.data[3] = ((uint8_t*)&value)[0];
+    size += 4;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+

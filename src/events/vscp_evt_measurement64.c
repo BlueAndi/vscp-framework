@@ -1773,3 +1773,148 @@ extern BOOL vscp_evt_measurement64_sendSoundLevel(double_t value)
     return vscp_core_sendEvent(&txMsg);
 }
 
+/**
+ * Radiation dose (equivalent)
+ * 
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_measurement64_sendRadiationDoseEquivalent(double_t value)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_RADIATION_DOSE_EQ, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Radiation dose (exposure)
+ * 
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_measurement64_sendRadiationDoseExposure(double_t value)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_RADIATION_DOSE_EXPOSURE, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Power factor
+ * 
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_measurement64_sendPowerFactor(double_t value)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_POWER_FACTOR, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Reactive Power
+ * 
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_measurement64_sendReactivePower(double_t value)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_REACTIVE_POWER, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Reactive Energy
+ * 
+ * @param[in] value The value is a "double" - IEEE-754, 64 Bits, double precision.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_measurement64_sendReactiveEnergy(double_t value)
+{
+    vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREMENT64, VSCP_TYPE_MEASUREMENT64_REACTIVE_ENERGY, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.data[0] = ((uint8_t*)&value)[7];
+    txMsg.data[1] = ((uint8_t*)&value)[6];
+    txMsg.data[2] = ((uint8_t*)&value)[5];
+    txMsg.data[3] = ((uint8_t*)&value)[4];
+    txMsg.data[4] = ((uint8_t*)&value)[3];
+    txMsg.data[5] = ((uint8_t*)&value)[2];
+    txMsg.data[6] = ((uint8_t*)&value)[1];
+    txMsg.data[7] = ((uint8_t*)&value)[0];
+    size += 8;
+
+    txMsg.dataNum = size;
+
+    return vscp_core_sendEvent(&txMsg);
+}
+

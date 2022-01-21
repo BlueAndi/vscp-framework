@@ -1658,3 +1658,138 @@ extern BOOL vscp_evt_measurezone_sendSoundLevel(uint8_t index, uint8_t zone, uin
     return vscp_core_sendEvent(&txMsg);
 }
 
+/**
+ * Radiation dose (equivalent)
+ * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @param[in] data The data as signed integer.
+ * @param[in] exp The exponent of the data (10^exponent).
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_measurezone_sendRadiationDoseEquivalent(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
+{
+    vscp_TxMessage  txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_RADIATION_DOSE_EQ, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    txMsg.dataNum += vscp_data_coding_int32ToNormalizedInteger(data, exp, &txMsg.data[3], VSCP_L1_DATA_SIZE - txMsg.dataNum);
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Radiation dose (exposure)
+ * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @param[in] data The data as signed integer.
+ * @param[in] exp The exponent of the data (10^exponent).
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_measurezone_sendRadiationDoseExposure(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
+{
+    vscp_TxMessage  txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_RADIATION_DOSE_EXPOSURE, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    txMsg.dataNum += vscp_data_coding_int32ToNormalizedInteger(data, exp, &txMsg.data[3], VSCP_L1_DATA_SIZE - txMsg.dataNum);
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Power factor
+ * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @param[in] data The data as signed integer.
+ * @param[in] exp The exponent of the data (10^exponent).
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_measurezone_sendPowerFactor(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
+{
+    vscp_TxMessage  txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_POWER_FACTOR, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    txMsg.dataNum += vscp_data_coding_int32ToNormalizedInteger(data, exp, &txMsg.data[3], VSCP_L1_DATA_SIZE - txMsg.dataNum);
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Reactive Power
+ * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @param[in] data The data as signed integer.
+ * @param[in] exp The exponent of the data (10^exponent).
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_measurezone_sendReactivePower(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
+{
+    vscp_TxMessage  txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_REACTIVE_POWER, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    txMsg.dataNum += vscp_data_coding_int32ToNormalizedInteger(data, exp, &txMsg.data[3], VSCP_L1_DATA_SIZE - txMsg.dataNum);
+
+    return vscp_core_sendEvent(&txMsg);
+}
+
+/**
+ * Reactive Energy
+ * 
+ * @param[in] index Index for sensor.
+ * @param[in] zone Zone for which event applies to (0-255). 255 is all zones.
+ * @param[in] subZone Sub-zone for which event applies to (0-255). 255 is all sub-zones.
+ * @param[in] data The data as signed integer.
+ * @param[in] exp The exponent of the data (10^exponent).
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_measurezone_sendReactiveEnergy(uint8_t index, uint8_t zone, uint8_t subZone, int32_t data, int8_t exp)
+{
+    vscp_TxMessage  txMsg;
+
+    vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_MEASUREZONE, VSCP_TYPE_MEASUREZONE_REACTIVE_ENERGY, VSCP_PRIORITY_3_NORMAL);
+
+    txMsg.dataNum = 3;
+    txMsg.data[0] = index;
+    txMsg.data[1] = zone;
+    txMsg.data[2] = subZone;
+
+    txMsg.dataNum += vscp_data_coding_int32ToNormalizedInteger(data, exp, &txMsg.data[3], VSCP_L1_DATA_SIZE - txMsg.dataNum);
+
+    return vscp_core_sendEvent(&txMsg);
+}
+

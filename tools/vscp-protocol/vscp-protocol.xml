@@ -1197,12 +1197,8 @@ Notes:
                             <description lang="en" />
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
-                                    <name lang="en">On/Off</name>
-                                    <description lang="en">Alarm is on/off.</description>
-                                    <enumeration>
-                                        <enum id="0">Off</enum>
-                                        <enum id="1">On</enum>
-                                    </enumeration>
+                                    <name lang="en">Alarm register</name>
+                                    <description lang="en">Alarm byte from standard register 128/0x80 or a code of choice describing the alarm.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
                                     <name lang="en">Zone</name>
@@ -1513,7 +1509,7 @@ Notes:
                             <elements>
                                 <element pos="0" type="uint8" length="1" optional="false">
                                     <name lang="en">Alarm register</name>
-                                    <description lang="en">Alarm byte from standard register 128/0x80.</description>
+                                    <description lang="en">Alarm byte from standard register 128/0x80 or a code of choice describing the alarm.</description>
                                 </element>
                                 <element pos="1" type="uint8" length="1" optional="false">
                                     <name lang="en">Zone</name>
@@ -2915,7 +2911,7 @@ Notes:
                 <vscp-type id="64">
                     <name lang="en">Reactive Power</name>
                     <token>VSCP_TYPE_MEASUREMENT_REACTIVE_POWER</token>
-                    <description lang="en">Default unit: kVAr\nIn electric power transmission and distribution, volt-ampere reactive (VAr) is a unit of measurement of reactive power. Reactive power exists in AC circuit when the current and voltage are not in phase.</description>
+                    <description lang="en">Default unit: VAr\nIn electric power transmission and distribution, volt-ampere reactive (VAr) is a unit of measurement of reactive power. Reactive power exists in AC circuit when the current and voltage are not in phase.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="65">
@@ -8194,6 +8190,36 @@ Notes:
                     <description lang="en">Default unit: decibel (dB)\nSound level expressed in decibel. This event is supplied for convenience.</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
+                <vscp-type id="61">
+                    <name lang="en">Radiation dose (equivalent)</name>
+                    <token>VSCP_TYPE_MEASUREMENT64_RADIATION_DOSE_EQ</token>
+                    <description lang="en">Default unit: sievert (Sv).\nOptional unit rem (1)\nThis is a measurement of a radiation dose (Equivalent dose of ionizing radiation).</description>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
+                </vscp-type>
+                <vscp-type id="62">
+                    <name lang="en">Radiation dose (exposure)</name>
+                    <token>VSCP_TYPE_MEASUREMENT64_RADIATION_DOSE_EXPOSURE</token>
+                    <description lang="en">Default unit: coulomb per kilogram (C/kg).\nOptional unit: Röntgen/R (1)\nThis is a measurement of a radiation dose (Exposed dose of ionizing radiation).</description>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
+                </vscp-type>
+                <vscp-type id="63">
+                    <name lang="en">Power factor</name>
+                    <token>VSCP_TYPE_MEASUREMENT64_POWER_FACTOR</token>
+                    <description lang="en">Default unit: cos of phase angle.\nThis is a measurment of a power factor. Power factor is an expression of energy efficiency. It is usually expressed as a percentage - and the lower the percentage, the less efficient power usage is.</description>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
+                </vscp-type>
+                <vscp-type id="64">
+                    <name lang="en">Reactive Power</name>
+                    <token>VSCP_TYPE_MEASUREMENT64_REACTIVE_POWER</token>
+                    <description lang="en">Default unit: VAr\nIn electric power transmission and distribution, volt-ampere reactive (VAr) is a unit of measurement of reactive power. Reactive power exists in AC circuit when the current and voltage are not in phase.</description>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
+                </vscp-type>
+                <vscp-type id="65">
+                    <name lang="en">Reactive Energy</name>
+                    <token>VSCP_TYPE_MEASUREMENT64_REACTIVE_ENERGY</token>
+                    <description lang="en">Default unit: kVArh\nReactive energy is the electrical energy produced, flowing or supplied by an electric circuit during a time interval, measured in units of kVArh or standard multiples thereof.</description>
+                    <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
+                </vscp-type>
             </vscp-types>
         </vscp-class>
         <vscp-class id="65">
@@ -8621,6 +8647,36 @@ Notes:
                     <description lang="en">Default unit: decibel (dB)\nSound level expressed in decibel. This event is supplied for convenience.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
+                <vscp-type id="61">
+                    <name lang="en">Radiation dose (equivalent)</name>
+                    <token>VSCP_TYPE_MEASUREZONE_RADIATION_DOSE_EQ</token>
+                    <description lang="en">Default unit: sievert (Sv).\nOptional unit rem (1)\nThis is a measurement of a radiation dose (Equivalent dose of ionizing radiation).</description>
+                    <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
+                </vscp-type>
+                <vscp-type id="62">
+                    <name lang="en">Radiation dose (exposure)</name>
+                    <token>VSCP_TYPE_MEASUREZONE_RADIATION_DOSE_EXPOSURE</token>
+                    <description lang="en">Default unit: coulomb per kilogram (C/kg).\nOptional unit: Röntgen/R (1)\nThis is a measurement of a radiation dose (Exposed dose of ionizing radiation).</description>
+                    <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
+                </vscp-type>
+                <vscp-type id="63">
+                    <name lang="en">Power factor</name>
+                    <token>VSCP_TYPE_MEASUREZONE_POWER_FACTOR</token>
+                    <description lang="en">Default unit: cos of phase angle.\nThis is a measurment of a power factor. Power factor is an expression of energy efficiency. It is usually expressed as a percentage - and the lower the percentage, the less efficient power usage is.</description>
+                    <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
+                </vscp-type>
+                <vscp-type id="64">
+                    <name lang="en">Reactive Power</name>
+                    <token>VSCP_TYPE_MEASUREZONE_REACTIVE_POWER</token>
+                    <description lang="en">Default unit: VAr\nIn electric power transmission and distribution, volt-ampere reactive (VAr) is a unit of measurement of reactive power. Reactive power exists in AC circuit when the current and voltage are not in phase.</description>
+                    <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
+                </vscp-type>
+                <vscp-type id="65">
+                    <name lang="en">Reactive Energy</name>
+                    <token>VSCP_TYPE_MEASUREZONE_REACTIVE_ENERGY</token>
+                    <description lang="en">Default unit: kVArh\nReactive energy is the electrical energy produced, flowing or supplied by an electric circuit during a time interval, measured in units of kVArh or standard multiples thereof.</description>
+                    <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
+                </vscp-type>
             </vscp-types>
         </vscp-class>
         <vscp-class id="70">
@@ -9006,6 +9062,36 @@ Notes:
                     <name lang="en">Sound level</name>
                     <token>VSCP_TYPE_MEASUREMENT32_SOUND_LEVEL</token>
                     <description lang="en">Default unit: decibel (dB)\nSound level expressed in decibel. This event is supplied for convenience.</description>
+                    <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
+                </vscp-type>
+                <vscp-type id="61">
+                    <name lang="en">Radiation dose (equivalent)</name>
+                    <token>VSCP_TYPE_MEASUREMENT32_RADIATION_DOSE_EQ</token>
+                    <description lang="en">Default unit: sievert (Sv).\nOptional unit rem (1)\nThis is a measurement of a radiation dose (Equivalent dose of ionizing radiation).</description>
+                    <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
+                </vscp-type>
+                <vscp-type id="62">
+                    <name lang="en">Radiation dose (exposure)</name>
+                    <token>VSCP_TYPE_MEASUREMENT32_RADIATION_DOSE_EXPOSURE</token>
+                    <description lang="en">Default unit: coulomb per kilogram (C/kg).\nOptional unit: Röntgen/R (1)\nThis is a measurement of a radiation dose (Exposed dose of ionizing radiation).</description>
+                    <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
+                </vscp-type>
+                <vscp-type id="63">
+                    <name lang="en">Power factor</name>
+                    <token>VSCP_TYPE_MEASUREMENT32_POWER_FACTOR</token>
+                    <description lang="en">Default unit: cos of phase angle.\nThis is a measurment of a power factor. Power factor is an expression of energy efficiency. It is usually expressed as a percentage - and the lower the percentage, the less efficient power usage is.</description>
+                    <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
+                </vscp-type>
+                <vscp-type id="64">
+                    <name lang="en">Reactive Power</name>
+                    <token>VSCP_TYPE_MEASUREMENT32_REACTIVE_POWER</token>
+                    <description lang="en">Default unit: VAr\nIn electric power transmission and distribution, volt-ampere reactive (VAr) is a unit of measurement of reactive power. Reactive power exists in AC circuit when the current and voltage are not in phase.</description>
+                    <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
+                </vscp-type>
+                <vscp-type id="65">
+                    <name lang="en">Reactive Energy</name>
+                    <token>VSCP_TYPE_MEASUREMENT32_REACTIVE_ENERGY</token>
+                    <description lang="en">Default unit: kVArh\nReactive energy is the electrical energy produced, flowing or supplied by an electric circuit during a time interval, measured in units of kVArh or standard multiples thereof.</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
             </vscp-types>
