@@ -48,7 +48,7 @@ More information can be found on the main site http://www.vscp.org
 # Framework
 
 ## Core
-![core-diagram](https://github.com/BlueAndi/vscp-framework/blob/master/doc/doxfiles/vscp_modules.png)
+![core-diagram](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/BlueAndi/vscp-framework/master/doc/doxfiles/vscp_modules.plantuml)
 
 * The core functionality which has a built-in state machine to handle different use cases of the protocol and etc. (vscp\_core.[ch]). Right now it supports every mandatory event and some minor optional ones.
 * The decision matrix is handled separately (vscp\_dm.[ch]). It contains the standard decision matrix, as described in the VSCP specification and contains an additional extension.
@@ -77,7 +77,7 @@ how VSCP is integrated into your software:
 Templates exists for all of them, which makes it much easier to adapt it and less time. See in the templates folder.
 
 ## Event Abstraction
-![core-diagram](https://github.com/BlueAndi/vscp-framework/blob/master/doc/doxfiles/vscp_event_modules.png)
+![core-diagram](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/BlueAndi/vscp-framework/master/doc/doxfiles/vscp_event_modules.plantuml)
 
 Using only the core, you have to assemble the VSCP events by yourself. If you want to deal only with parameter, which are
 VSCP independent, use the next upper layer, the event abstraction modules.
@@ -158,6 +158,7 @@ vscp_dev_data_config_overwrite.h
 | <sub>VSCP\_DEV\_DATA\_CONFIG\_VERSION\_SUB\_MINOR<sub> | <sub>0<sub> | <sub>Sub-minor firmware version (format: major.minor.sub-minor)<sub> |
 | <sub>VSCP\_DEV\_DATA\_CONFIG\_STANDARD\_DEVICE\_FAMILY\_CODE<sub> | <sub>0x00000000<sub> | <sub>Standard device family code.<sub> |
 | <sub>VSCP\_DEV\_DATA\_CONFIG\_STANDARD\_DEVICE\_TYPE<sub> | <sub>0x00000000<sub> | <sub>Standard device type.<sub> |
+| <sub>VSCP\_DEV\_DATA\_CONFIG\_FIRMWARE\_DEVICE\_CODE<sub> | <sub>0x0000<sub> | <sub>Firmware device code.<sub> |
 
 # VSCP L1 Bootloader
 
