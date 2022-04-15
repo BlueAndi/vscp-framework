@@ -179,9 +179,9 @@ extern BOOL vscp_tp_adapter_readMessage(vscp_RxMessage * const msg)
 	            msg->oAddr      = (uint8_t)((rxFrame.id >> 0) & 0x00ff);
 	            msg->hardCoded  = (uint8_t)((rxFrame.id >> 25) & 0x0001);
 	            msg->priority   = (VSCP_PRIORITY)((rxFrame.id >> 26) & 0x0007);
-	            msg->dataNum    = rxFrame.length;
+	            msg->dataSize   = rxFrame.length;
 
-	            for(index = 0; index < msg->dataNum; ++index)
+	            for(index = 0; index < msg->dataSize; ++index)
 	            {
 	            	/* Byte 0 - 3 */
 	            	if (4 < index)
@@ -226,7 +226,7 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg)
     BOOL    status  = FALSE;
 
     if ((NULL != msg) &&                        /* Message shall exists */
-        (VSCP_L1_DATA_SIZE >= msg->dataNum))    /* Number of data bytes is limited */
+        (VSCP_L1_DATA_SIZE >= msg->dataSize))    /* Number of data bytes is limited */
     {
     	uint8_t			index	= 0;
     	flexcan_frame_t	txFrame = { 0 };
@@ -239,9 +239,9 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg)
 									((uint32_t)msg->vscpClass << 16) |
 									((uint32_t)msg->vscpType << 8) |
 									((uint32_t)msg->oAddr));
-        txFrame.length = msg->dataNum;
+        txFrame.length = msg->dataSize;
 
-        for(index = 0; index < msg->dataNum; ++index)
+        for(index = 0; index < msg->dataSize; ++index)
         {
         	/* Byte 0 - 3 */
         	if (4 < index)

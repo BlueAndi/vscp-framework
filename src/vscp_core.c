@@ -650,7 +650,7 @@ extern void vscp_core_prepareTxMessage(vscp_TxMessage * const txMessage, uint16_
         txMessage->priority     = priority;
         txMessage->oAddr        = vscp_core_nickname;
         txMessage->hardCoded    = VSCP_CORE_HARD_CODED;
-        txMessage->dataNum      = 0;
+        txMessage->dataSize     = 0;
     }
 
     return;
@@ -851,7 +851,7 @@ static inline void  vscp_core_stateInit(void)
         txMessage.priority  = VSCP_PRIORITY_7_LOW;
         txMessage.oAddr     = vscp_core_nickname;
         txMessage.hardCoded = VSCP_CORE_HARD_CODED;
-        txMessage.dataNum   = 1;
+        txMessage.dataSize  = 1;
         txMessage.data[0]   = VSCP_NICKNAME_SEGMENT_MASTER;
 
         if (FALSE == vscp_transport_writeMessage(&txMessage))
@@ -917,7 +917,7 @@ static inline void  vscp_core_stateInit(void)
         txMessage.priority  = VSCP_PRIORITY_7_LOW;
         txMessage.oAddr     = vscp_core_nickname;
         txMessage.hardCoded = VSCP_CORE_HARD_CODED;
-        txMessage.dataNum   = 1;
+        txMessage.dataSize  = 1;
         txMessage.data[0]   = vscp_core_nickname_probe;
 
         if (FALSE == vscp_transport_writeMessage(&txMessage))
@@ -1044,7 +1044,7 @@ static inline void  vscp_core_statePreActive(void)
                 txMessage.priority  = VSCP_PRIORITY_7_LOW;
                 txMessage.oAddr     = vscp_core_nickname;
                 txMessage.hardCoded = VSCP_CORE_HARD_CODED;
-                txMessage.dataNum   = 0;
+                txMessage.dataSize  = 0;
 
                 (void)vscp_transport_writeMessage(&txMessage);
 
@@ -1084,7 +1084,7 @@ static inline void  vscp_core_changeToStateActive(void)
         txMessage.priority  = VSCP_PRIORITY_0_HIGH;
         txMessage.oAddr     = vscp_core_nickname;
         txMessage.hardCoded = VSCP_CORE_HARD_CODED;
-        txMessage.dataNum   = 1;
+        txMessage.dataSize  = 1;
         txMessage.data[0]   = vscp_core_nickname;
 
         (void)vscp_transport_writeMessage(&txMessage);
@@ -1556,7 +1556,7 @@ static inline void  vscp_core_handleProtocolClassType(void)
 static inline void  vscp_core_handleProtocolHeartbeat(void)
 {
     /* Check number of parameters. */
-    if (0 < vscp_core_rxMessage.dataNum)
+    if (0 < vscp_core_rxMessage.dataSize)
     {
         /* If the received segment controller CRC is different than the stored one,
          * it seems the node was moved to a new segment.
@@ -1576,7 +1576,7 @@ static inline void  vscp_core_handleProtocolHeartbeat(void)
         }
 
         /* If available, store time since epoch 00:00:00 UTC, January 1, 1970 */
-        if (5 <= vscp_core_rxMessage.dataNum)
+        if (5 <= vscp_core_rxMessage.dataSize)
         {
             vscp_core_timeSinceEpoch  = ((uint32_t)vscp_core_rxMessage.data[1]) << 24;
             vscp_core_timeSinceEpoch |= ((uint32_t)vscp_core_rxMessage.data[2]) << 16;
@@ -1603,7 +1603,7 @@ static inline void  vscp_core_handleProtocolHeartbeat(void)
 static inline void  vscp_core_handleProtocolNewNodeOnline(void)
 {
     /* Check number of parameters. */
-    if (1 == vscp_core_rxMessage.dataNum)
+    if (1 == vscp_core_rxMessage.dataSize)
     {
         /* Does this belongs to a node with the same nickname id? */
         if (vscp_core_nickname == vscp_core_rxMessage.data[0])
@@ -1616,7 +1616,7 @@ static inline void  vscp_core_handleProtocolNewNodeOnline(void)
             txMessage.priority  = VSCP_PRIORITY_0_HIGH;
             txMessage.oAddr     = vscp_core_nickname;
             txMessage.hardCoded = VSCP_CORE_HARD_CODED;
-            txMessage.dataNum   = 0;
+            txMessage.dataSize  = 0;
 
             (void)vscp_transport_writeMessage(&txMessage);
         }
@@ -1631,7 +1631,7 @@ static inline void  vscp_core_handleProtocolNewNodeOnline(void)
 static inline void  vscp_core_handleProtocolProbeAck(void)
 {
     /* Check number of parameters. */
-    if (0 == vscp_core_rxMessage.dataNum)
+    if (0 == vscp_core_rxMessage.dataSize)
     {
         /* Response from a node with the same nickname id? */
         if (vscp_core_nickname == vscp_core_rxMessage.oAddr)
@@ -1650,7 +1650,7 @@ static inline void  vscp_core_handleProtocolProbeAck(void)
 static inline void  vscp_core_handleProtocolSetNicknameId(void)
 {
     /* Check number of parameters. */
-    if (2 == vscp_core_rxMessage.dataNum)
+    if (2 == vscp_core_rxMessage.dataSize)
     {
         /* Change the node nickname id? */
         if (vscp_core_nickname == vscp_core_rxMessage.data[0])
@@ -1668,7 +1668,7 @@ static inline void  vscp_core_handleProtocolSetNicknameId(void)
                 txMessage.priority  = VSCP_PRIORITY_7_LOW;
                 txMessage.oAddr     = vscp_core_nickname;
                 txMessage.hardCoded = VSCP_CORE_HARD_CODED;
-                txMessage.dataNum   = 0;
+                txMessage.dataSize  = 0;
 
                 (void)vscp_transport_writeMessage(&txMessage);
             }
@@ -1684,25 +1684,25 @@ static inline void  vscp_core_handleProtocolSetNicknameId(void)
 static inline void  vscp_core_handleProtocolDropNicknameId(void)
 {
     /* Check number of parameters. */
-    if (0 < vscp_core_rxMessage.dataNum)
+    if (0 < vscp_core_rxMessage.dataSize)
     {
         /* Drop the node nickname id? */
         if (vscp_core_nickname == vscp_core_rxMessage.data[0])
         {
             /* Drop nickname and restart? */
-            if (1 == vscp_core_rxMessage.dataNum)
+            if (1 == vscp_core_rxMessage.dataSize)
             {
                 vscp_core_writeNicknameId(VSCP_NICKNAME_NOT_INIT);
                 vscp_core_changeToStateReset(0);
             }
             /* Additional flags received? */
-            else if ((2 == vscp_core_rxMessage.dataNum) ||
-                     (3 == vscp_core_rxMessage.dataNum))
+            else if ((2 == vscp_core_rxMessage.dataSize) ||
+                     (3 == vscp_core_rxMessage.dataSize))
             {
                 uint8_t waitTime    = 0;
 
                 /* Wait time received? */
-                if (3 == vscp_core_rxMessage.dataNum)
+                if (3 == vscp_core_rxMessage.dataSize)
                 {
                     waitTime = vscp_core_rxMessage.data[2];
                 }
@@ -1762,7 +1762,7 @@ static inline void  vscp_core_handleProtocolDropNicknameId(void)
 static inline void  vscp_core_handleProtocolReadRegister(void)
 {
     /* Check number of parameters. */
-    if (2 == vscp_core_rxMessage.dataNum)
+    if (2 == vscp_core_rxMessage.dataSize)
     {
         /* This node? */
         if (vscp_core_nickname == vscp_core_rxMessage.data[0])
@@ -1793,7 +1793,7 @@ static void vscp_core_sendRegisterReadWriteRsp(uint8_t addr, uint8_t value)
     txMessage.priority  = VSCP_PRIORITY_3_NORMAL;
     txMessage.oAddr     = vscp_core_nickname;
     txMessage.hardCoded = VSCP_CORE_HARD_CODED;
-    txMessage.dataNum   = 2;
+    txMessage.dataSize  = 2;
     txMessage.data[0]   = addr;
     txMessage.data[1]   = value;
 
@@ -2268,7 +2268,7 @@ static uint8_t  vscp_core_writeRegister(uint16_t page, uint8_t addr, uint8_t val
 static inline void  vscp_core_handleProtocolWriteRegister(void)
 {
     /* Check number of parameters. */
-    if (3 == vscp_core_rxMessage.dataNum)
+    if (3 == vscp_core_rxMessage.dataSize)
     {
         /* This node? */
         if (vscp_core_nickname == vscp_core_rxMessage.data[0])
@@ -2298,7 +2298,7 @@ static inline void  vscp_core_handleProtocolWriteRegister(void)
 static inline void  vscp_core_handleProtocolEnterBootLoaderMode(void)
 {
     /* Check number of parameters. */
-    if (8 == vscp_core_rxMessage.dataNum)
+    if (8 == vscp_core_rxMessage.dataSize)
     {
         /* This node? */
         if (vscp_core_nickname == vscp_core_rxMessage.data[0])
@@ -2327,7 +2327,7 @@ static inline void  vscp_core_handleProtocolEnterBootLoaderMode(void)
                 txMessage.priority  = VSCP_PRIORITY_3_NORMAL;
                 txMessage.oAddr     = vscp_core_nickname;
                 txMessage.hardCoded = VSCP_CORE_HARD_CODED;
-                txMessage.dataNum   = 1;
+                txMessage.dataSize  = 1;
                 txMessage.data[0]   = 0;   /* User defined error code - not used */
 
                 (void)vscp_transport_writeMessage(&txMessage);
@@ -2353,7 +2353,7 @@ static inline void  vscp_core_handleProtocolEnterBootLoaderMode(void)
             txMessage.priority  = VSCP_PRIORITY_3_NORMAL;
             txMessage.oAddr     = vscp_core_nickname;
             txMessage.hardCoded = VSCP_CORE_HARD_CODED;
-            txMessage.dataNum   = 1;
+            txMessage.dataSize  = 1;
             txMessage.data[0]   = 0;   /* User defined error code - not used */
 
             (void)vscp_transport_writeMessage(&txMessage);
@@ -2371,7 +2371,7 @@ static inline void  vscp_core_handleProtocolEnterBootLoaderMode(void)
 static inline void  vscp_core_handleProtocolGuidDropNickname(void)
 {
     /* Check number of parameters. */
-    if ((5 == vscp_core_rxMessage.dataNum) &&
+    if ((5 == vscp_core_rxMessage.dataSize) &&
         (4 > vscp_core_rxMessage.data[0]))
     {
         static uint8_t  status = 0;
@@ -2457,7 +2457,7 @@ static inline void  vscp_core_handleProtocolGuidDropNickname(void)
 static inline void  vscp_core_handleProtocolPageRead(void)
 {
     /* Check number of parameters. */
-    if (3 == vscp_core_rxMessage.dataNum)
+    if (3 == vscp_core_rxMessage.dataSize)
     {
         /* This node? */
         if (vscp_core_nickname == vscp_core_rxMessage.data[0])
@@ -2482,7 +2482,7 @@ static inline void  vscp_core_handleProtocolPageRead(void)
             txMessage.priority  = VSCP_PRIORITY_3_NORMAL;
             txMessage.oAddr     = vscp_core_nickname;
             txMessage.hardCoded = VSCP_CORE_HARD_CODED;
-            txMessage.dataNum   = VSCP_L1_DATA_SIZE;
+            txMessage.dataSize  = VSCP_L1_DATA_SIZE;
 
             /* Sequence number */
             txMessage.data[dataIndex] = 0;
@@ -2506,7 +2506,7 @@ static inline void  vscp_core_handleProtocolPageRead(void)
 
             if (1 < dataIndex)
             {
-                txMessage.dataNum = dataIndex;
+                txMessage.dataSize = dataIndex;
 
                 (void)vscp_transport_writeMessage(&txMessage);
             }
@@ -2522,7 +2522,7 @@ static inline void  vscp_core_handleProtocolPageRead(void)
 static inline void  vscp_core_handleProtocolPageWrite(void)
 {
     /* Check number of parameters. */
-    if (3 <= vscp_core_rxMessage.dataNum)
+    if (3 <= vscp_core_rxMessage.dataSize)
     {
         /* This node? */
         if (vscp_core_nickname == vscp_core_rxMessage.data[0])
@@ -2530,7 +2530,7 @@ static inline void  vscp_core_handleProtocolPageWrite(void)
             vscp_TxMessage  txMessage;
             uint8_t         addr        = vscp_core_rxMessage.data[1];
             uint8_t         index       = 0;
-            uint8_t         num         = vscp_core_rxMessage.dataNum - 2;
+            uint8_t         num         = vscp_core_rxMessage.dataSize - 2;
             uint8_t         dataIndex   = 0;
 
             /* If the number of bytes to read overflows the page, it will be
@@ -2561,7 +2561,7 @@ static inline void  vscp_core_handleProtocolPageWrite(void)
                 ++dataIndex;
             }
 
-            txMessage.dataNum = dataIndex;
+            txMessage.dataSize = dataIndex;
 
             (void)vscp_transport_writeMessage(&txMessage);
         }
@@ -2576,7 +2576,7 @@ static inline void  vscp_core_handleProtocolPageWrite(void)
 static inline void  vscp_core_handleProtocolIncrementRegister(void)
 {
     /* Check number of parameters. */
-    if (2 == vscp_core_rxMessage.dataNum)
+    if (2 == vscp_core_rxMessage.dataSize)
     {
         /* This node? */
         if (vscp_core_nickname == vscp_core_rxMessage.data[0])
@@ -2608,7 +2608,7 @@ static inline void  vscp_core_handleProtocolIncrementRegister(void)
 static inline void  vscp_core_handleProtocolDecrementRegister(void)
 {
     /* Check number of parameters. */
-    if (2 == vscp_core_rxMessage.dataNum)
+    if (2 == vscp_core_rxMessage.dataSize)
     {
         /* This node? */
         if (vscp_core_nickname == vscp_core_rxMessage.data[0])
@@ -2640,7 +2640,7 @@ static inline void  vscp_core_handleProtocolDecrementRegister(void)
 static inline void  vscp_core_handleProtocolWhoIsThere(void)
 {
     /* Check number of parameters. */
-    if (1 == vscp_core_rxMessage.dataNum)
+    if (1 == vscp_core_rxMessage.dataSize)
     {
         /* This node? */
         if ((vscp_core_nickname == vscp_core_rxMessage.data[0]) ||
@@ -2657,7 +2657,7 @@ static inline void  vscp_core_handleProtocolWhoIsThere(void)
             txMessage.priority  = VSCP_PRIORITY_3_NORMAL;
             txMessage.oAddr     = vscp_core_nickname;
             txMessage.hardCoded = VSCP_CORE_HARD_CODED;
-            txMessage.dataNum   = 8;
+            txMessage.dataSize  = 8;
 
             /* Row index */
             txMessage.data[dataIndex] = rowIndex;
@@ -2722,7 +2722,7 @@ static inline void  vscp_core_handleProtocolWhoIsThere(void)
 static inline void  vscp_core_handleProtocolGetDecisionMatrixInfo(void)
 {
     /* Check number of parameters. */
-    if (1 == vscp_core_rxMessage.dataNum)
+    if (1 == vscp_core_rxMessage.dataSize)
     {
         /* This node? */
         if (vscp_core_nickname == vscp_core_rxMessage.data[0])
@@ -2745,7 +2745,7 @@ static inline void  vscp_core_handleProtocolGetDecisionMatrixInfo(void)
             txMessage.priority  = VSCP_PRIORITY_3_NORMAL;
             txMessage.oAddr     = vscp_core_nickname;
             txMessage.hardCoded = VSCP_CORE_HARD_CODED;
-            txMessage.dataNum   = 4;
+            txMessage.dataSize  = 4;
             txMessage.data[0]   = matrixSize;
             txMessage.data[1]   = matrixOffset;
             txMessage.data[2]   = VSCP_UTIL_WORD_MSB(pageStart);
@@ -2765,7 +2765,7 @@ static inline void  vscp_core_handleProtocolGetDecisionMatrixInfo(void)
 static inline void  vscp_core_handleProtocolExtendedPageReadRegister(void)
 {
     /* Check number of parameters. */
-    if (4 <= vscp_core_rxMessage.dataNum)
+    if (4 <= vscp_core_rxMessage.dataSize)
     {
         /* This node? */
         if (vscp_core_nickname == vscp_core_rxMessage.data[0])
@@ -2775,7 +2775,7 @@ static inline void  vscp_core_handleProtocolExtendedPageReadRegister(void)
             vscp_core_extPageReadData.seq   = 0;
 
             /* Read more than one register? */
-            if (5 == vscp_core_rxMessage.dataNum)
+            if (5 == vscp_core_rxMessage.dataSize)
             {
                 vscp_core_extPageReadData.count = vscp_core_rxMessage.data[4];
 
@@ -2857,7 +2857,7 @@ static void vscp_core_extendedPageReadRegister(ExtPageRead * const data)
         while((VSCP_L1_DATA_SIZE > index) && (0 < count) && (FALSE == nextPage));
 
         /* Set event data size */
-        txMessage.dataNum = index;
+        txMessage.dataSize = index;
 
         if (TRUE == vscp_transport_writeMessage(&txMessage))
         {
@@ -2887,7 +2887,7 @@ static void vscp_core_extendedPageReadRegister(ExtPageRead * const data)
 static inline void  vscp_core_handleProtocolExtendedPageWriteRegister(void)
 {
     /* Check number of parameters. */
-    if (5 <= vscp_core_rxMessage.dataNum)
+    if (5 <= vscp_core_rxMessage.dataSize)
     {
         /* This node? */
         if (vscp_core_nickname == vscp_core_rxMessage.data[0])
@@ -2895,7 +2895,7 @@ static inline void  vscp_core_handleProtocolExtendedPageWriteRegister(void)
             vscp_TxMessage  txMessage;
             uint16_t        page        = (((uint16_t)vscp_core_rxMessage.data[1]) << 8) | (vscp_core_rxMessage.data[2]);
             uint8_t         addr        = vscp_core_rxMessage.data[3];
-            uint8_t         num         = vscp_core_rxMessage.dataNum - 4;
+            uint8_t         num         = vscp_core_rxMessage.dataSize - 4;
             uint8_t         index       = 0;
             uint8_t         dataIndex   = 0;
 
@@ -2931,7 +2931,7 @@ static inline void  vscp_core_handleProtocolExtendedPageWriteRegister(void)
                 ++dataIndex;
             }
 
-            txMessage.dataNum = dataIndex;
+            txMessage.dataSize = dataIndex;
 
             (void)vscp_transport_writeMessage(&txMessage);
         }

@@ -679,10 +679,10 @@ This transformation script generates the VSCP event modules.
                 <xsl:text>, VSCP_PRIORITY_3_NORMAL);&LF;</xsl:text>
                 <xsl:text>&LF;</xsl:text>
 
-                <xsl:text>&TAB;txMsg.dataNum = 1;&LF;</xsl:text>
+                <xsl:text>&TAB;txMsg.dataSize = 1;&LF;</xsl:text>
                 <xsl:text>&TAB;txMsg.data[0] = vscp_data_coding_getFormatByte(VSCP_DATA_CODING_REPRESENTATION_NORMALIZED_INTEGER, unit, index);&LF;</xsl:text>
                 <xsl:text>&LF;</xsl:text>
-                <xsl:text>&TAB;txMsg.dataNum += vscp_data_coding_int32ToNormalizedInteger(data, exp, &amp;txMsg.data[1], VSCP_L1_DATA_SIZE - txMsg.dataNum);&LF;</xsl:text>
+                <xsl:text>&TAB;txMsg.dataSize += vscp_data_coding_int32ToNormalizedInteger(data, exp, &amp;txMsg.data[1], VSCP_L1_DATA_SIZE - txMsg.dataSize);&LF;</xsl:text>
                 <xsl:text>&LF;</xsl:text>
                 <xsl:text>&TAB;return vscp_core_sendEvent(&amp;txMsg);&LF;</xsl:text>
             </xsl:when>
@@ -701,10 +701,10 @@ This transformation script generates the VSCP event modules.
                 <xsl:text>, VSCP_PRIORITY_3_NORMAL);&LF;</xsl:text>
                 <xsl:text>&LF;</xsl:text>
 
-                <xsl:text>&TAB;txMsg.dataNum = 1;&LF;</xsl:text>
+                <xsl:text>&TAB;txMsg.dataSize = 1;&LF;</xsl:text>
                 <xsl:text>&TAB;txMsg.data[0] = vscp_data_coding_getFormatByte(VSCP_DATA_CODING_REPRESENTATION_NORMALIZED_INTEGER, unit, index);&LF;</xsl:text>
                 <xsl:text>&LF;</xsl:text>
-                <xsl:text>&TAB;txMsg.dataNum += vscp_data_coding_int32ToNormalizedInteger(data, exp, &amp;txMsg.data[1], VSCP_L1_DATA_SIZE - txMsg.dataNum);&LF;</xsl:text>
+                <xsl:text>&TAB;txMsg.dataSize += vscp_data_coding_int32ToNormalizedInteger(data, exp, &amp;txMsg.data[1], VSCP_L1_DATA_SIZE - txMsg.dataSize);&LF;</xsl:text>
                 <xsl:text>&LF;</xsl:text>
                 <xsl:text>&TAB;return vscp_core_sendEvent(&amp;txMsg);&LF;</xsl:text>
             </xsl:when>
@@ -723,12 +723,12 @@ This transformation script generates the VSCP event modules.
                 <xsl:text>, VSCP_PRIORITY_3_NORMAL);&LF;</xsl:text>
                 <xsl:text>&LF;</xsl:text>
 
-                <xsl:text>&TAB;txMsg.dataNum = 3;&LF;</xsl:text>
+                <xsl:text>&TAB;txMsg.dataSize = 3;&LF;</xsl:text>
                 <xsl:text>&TAB;txMsg.data[0] = index;&LF;</xsl:text>
                 <xsl:text>&TAB;txMsg.data[1] = zone;&LF;</xsl:text>
                 <xsl:text>&TAB;txMsg.data[2] = subZone;&LF;</xsl:text>
                 <xsl:text>&LF;</xsl:text>
-                <xsl:text>&TAB;txMsg.dataNum += vscp_data_coding_int32ToNormalizedInteger(data, exp, &amp;txMsg.data[3], VSCP_L1_DATA_SIZE - txMsg.dataNum);&LF;</xsl:text>
+                <xsl:text>&TAB;txMsg.dataSize += vscp_data_coding_int32ToNormalizedInteger(data, exp, &amp;txMsg.data[3], VSCP_L1_DATA_SIZE - txMsg.dataSize);&LF;</xsl:text>
                 <xsl:text>&LF;</xsl:text>
                 <xsl:text>&TAB;return vscp_core_sendEvent(&amp;txMsg);&LF;</xsl:text>
             </xsl:when>
@@ -1041,13 +1041,13 @@ This transformation script generates the VSCP event modules.
                 </xsl:for-each>
 
                 <xsl:if test="not(/specification/vscp-classes/vscp-class[@id = $vscpClassId]/vscp-types/vscp-type[@id = $vscpTypeId]/frames/frame/elements/element)">
-                    <xsl:text>&TAB;txMsg.dataNum = 0;&LF;</xsl:text>
+                    <xsl:text>&TAB;txMsg.dataSize = 0;&LF;</xsl:text>
                     <xsl:text>&LF;</xsl:text>
                 </xsl:if>
 
                 <xsl:if test="/specification/vscp-classes/vscp-class[@id = $vscpClassId]/vscp-types/vscp-type[@id = $vscpTypeId]/frames/frame/elements/element">
                     <xsl:text>&LF;</xsl:text>
-                    <xsl:text>&TAB;txMsg.dataNum = size;&LF;</xsl:text>
+                    <xsl:text>&TAB;txMsg.dataSize = size;&LF;</xsl:text>
                     <xsl:text>&LF;</xsl:text>
                 </xsl:if>
 

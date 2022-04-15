@@ -308,7 +308,7 @@ typedef struct
     uint8_t         vscpType;                   /**< VSCP type */
     uint8_t         oAddr;                      /**< Message originating address */
     BOOL            hardCoded;                  /**< Is hard coded node (TRUE) or dynamic node (FALSE) */
-    uint8_t         dataNum;                    /**< Number of data bytes */
+    uint8_t         dataSize;                   /**< Number used of data bytes */
     /*@reldef@*/
     uint8_t         data[VSCP_L1_DATA_SIZE];    /**< Data */
 

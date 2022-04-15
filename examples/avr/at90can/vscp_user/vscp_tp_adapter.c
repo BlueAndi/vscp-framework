@@ -118,9 +118,9 @@ extern BOOL vscp_tp_adapter_readMessage(vscp_RxMessage * const msg)
             msg->oAddr      = (uint8_t)((canMsg.id >> 0) & 0x00ff);
             msg->hardCoded  = (uint8_t)((canMsg.id >> 25) & 0x0001);
             msg->priority   = (VSCP_PRIORITY)((canMsg.id >> 26) & 0x0007);
-            msg->dataNum    = canMsg.len;
+            msg->dataSize   = canMsg.len;
 
-            for(index = 0; index < msg->dataNum; ++index)
+            for(index = 0; index < msg->dataSize; ++index)
             {
                 msg->data[index] = canMsg.byte[index];
             }
@@ -145,7 +145,7 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg)
     BOOL    status  = FALSE;
 
     if ((NULL != msg) &&                        /* Message shall exists */
-        (VSCP_L1_DATA_SIZE >= msg->dataNum))    /* Number of data bytes is limited */
+        (VSCP_L1_DATA_SIZE >= msg->dataSize))    /* Number of data bytes is limited */
     {
         CANMsg  canMsg;
         uint8_t index       = 0;
@@ -158,9 +158,9 @@ extern BOOL vscp_tp_adapter_writeMessage(vscp_TxMessage const * const msg)
                           ( (unsigned long)msg->vscpType << 8) |
                           ( (unsigned long)msg->oAddr);
         canMsg.flags    = CAN_IDFLAG_EXTENDED;
-        canMsg.len      = msg->dataNum;
+        canMsg.len      = msg->dataSize;
 
-        for(index = 0; index < msg->dataNum; ++index)
+        for(index = 0; index < msg->dataSize; ++index)
         {
             canMsg.byte[index] = msg->data[index];
         }
