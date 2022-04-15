@@ -104,6 +104,9 @@
 /** Standard device type */
 #define VSCP_TEST_STD_DEVICE_TYPE               ((uint32_t)0x19283af1)
 
+/** Firmware device code */
+#define VSCP_TEST_FIRMWARE_DEVICE_CODE          ((uint32_t)0x00001234)
+
 /** GUID part 0 */
 #define VSCP_TEST_GUID_0                        ((uint32_t)0x10293847)
 
@@ -284,6 +287,8 @@ static vscp_test_RegTestLine    vscp_test_registerTestTable[]   =
     {   VSCP_REG_STD_DEV_TYPE_1,                VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_STD_DEVICE_TYPE >>  8) & 0xff,           "standard device type 1"        },
     {   VSCP_REG_STD_DEV_TYPE_0,                VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_STD_DEVICE_TYPE >>  0) & 0xff,           "standard device type 0"        },
     {   VSCP_REG_RESTORE_STD_CFG,               VSCP_TEST_REG_ACCESS_WRITE_ONLY,  vscp_test_getZero,          0,                                                  "restore default settings"      },
+    {   VSCP_REG_FIRMWARE_DEVICE_CODE_MSB,      VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_FIRMWARE_DEVICE_CODE >> 8) & 0xff,       "firmware device code MSB"      },
+    {   VSCP_REG_FIRMWARE_DEVICE_CODE_LSB,      VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_FIRMWARE_DEVICE_CODE >> 0) & 0xff,       "firmware device code LSB"      },
     {   VSCP_REG_GUID_15,                       VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_GUID_3 >> 24) & 0xff,                    "GUID 15"                       }, /* MSB */
     {   VSCP_REG_GUID_14,                       VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_GUID_3 >> 16) & 0xff,                    "GUID 14"                       },
     {   VSCP_REG_GUID_13,                       VSCP_TEST_REG_ACCESS_READ_ONLY,   NULL,                       (VSCP_TEST_GUID_3 >>  8) & 0xff,                    "GUID 13"                       },

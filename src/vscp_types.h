@@ -218,6 +218,12 @@ extern "C"
 /** VSCP register: restore default configuration */
 #define VSCP_REG_RESTORE_STD_CFG            (VSCP_REGISTER_VSCP_START_ADDR + 34)
 
+/** VSCP register: Firmware device code MSB */
+#define VSCP_REG_FIRMWARE_DEVICE_CODE_MSB   (VSCP_REGISTER_VSCP_START_ADDR + 35)
+
+/** VSCP register: Firmware device code LSB */
+#define VSCP_REG_FIRMWARE_DEVICE_CODE_LSB   (VSCP_REGISTER_VSCP_START_ADDR + 36)
+
 /** VSCP register: GUID byte 15 (MSB) */
 #define VSCP_REG_GUID_15                    (VSCP_REGISTER_VSCP_START_ADDR + 80)
 

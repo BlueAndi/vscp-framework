@@ -1935,6 +1935,14 @@ static uint8_t  vscp_core_readRegister(uint16_t page, uint8_t addr)
                 /* Write only */
                 break;
 
+            case VSCP_REG_FIRMWARE_DEVICE_CODE_MSB:
+                ret = VSCP_UTIL_WORD_MSB(vscp_dev_data_getFirmwareDeviceCode());
+                break;
+                
+            case VSCP_REG_FIRMWARE_DEVICE_CODE_LSB:
+                ret = VSCP_UTIL_WORD_LSB(vscp_dev_data_getFirmwareDeviceCode());
+                break;
+
             case VSCP_REG_GUID_15:
                 /*@fallthrough@*/
             case VSCP_REG_GUID_14:
@@ -2138,6 +2146,14 @@ static uint8_t  vscp_core_writeRegister(uint16_t page, uint8_t addr, uint8_t val
         case VSCP_REG_STD_DEV_TYPE_1:
             /*@fallthrough@*/
         case VSCP_REG_STD_DEV_TYPE_0:
+            /* Read only */
+            break;
+
+        case VSCP_REG_FIRMWARE_DEVICE_CODE_MSB:
+            /* Read only */
+            break;
+            
+        case VSCP_REG_FIRMWARE_DEVICE_CODE_LSB:
             /* Read only */
             break;
 
