@@ -136,7 +136,7 @@ static void vscp_core_stateInit(void);
 static void vscp_core_changeToStatePreActive(void);
 static void vscp_core_statePreActive(void);
 static void vscp_core_changeToStateActive(void);
-static void vscp_core_stateActive(void);
+static BOOL vscp_core_stateActive(void);
 static void vscp_core_changeToStateIdle(void);
 static void vscp_core_stateIdle(void);
 static void vscp_core_changeToStateReset(uint8_t timeout);
@@ -458,9 +458,9 @@ extern void vscp_core_restoreFactoryDefaultSettings(void)
  * cyclic period.
  *
  * Note, for a fast handling of received events, this function returns TRUE in
- * case a event was handled, otherwise FALSE. Call it e.g. in a loop until no
- * event is handled anymore. If its not necessary in your application, just
- * skip the return value.
+ * case a event was handled partly or completely, otherwise FALSE.
+ * Call it e.g. in a loop until no event is handled anymore. If its not
+ * necessary in your application, just skip the return value.
  *
  * @return If a received event was handled, it will return TRUE otherwise FALSE.
  */
@@ -513,7 +513,11 @@ extern BOOL vscp_core_process(void)
 
     /* Node is active and awaits something to do. */
     case STATE_ACTIVE:
-        vscp_core_stateActive();
+        if (TRUE == vscp_core_stateActive())
+        {
+            /* An extended page read may need more cycles to complete. */
+            isEventHandled = TRUE;
+        }
         break;
 
     /* Node goes offline */
@@ -1106,9 +1110,13 @@ static inline void  vscp_core_changeToStateActive(void)
 
 /**
  * Handles the active state.
+ * 
+ * @return If a event is handled partly or completely, it will return TRUE oterhwise FALSE.
  */
-static inline void  vscp_core_stateActive(void)
+static inline BOOL  vscp_core_stateActive(void)
 {
+    BOOL isEventHandled = FALSE;
+
     /* Valid message? */
     if (TRUE == vscp_core_rxMessageValid)
     {
@@ -1150,6 +1158,8 @@ static inline void  vscp_core_stateActive(void)
         vscp_dm_ng_executeActions(&vscp_core_rxMessage);
 
 #endif  /* VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_ENABLE_DM_NEXT_GENERATION ) */
+
+        isEventHandled = TRUE;
     }
 
 #if VSCP_CONFIG_BASE_IS_ENABLED( VSCP_CONFIG_HEARTBEAT_NODE )
@@ -1176,9 +1186,10 @@ static inline void  vscp_core_stateActive(void)
     if (0 < vscp_core_extPageReadData.count)
     {
         vscp_core_extendedPageReadRegister(&vscp_core_extPageReadData);
+        isEventHandled = TRUE;
     }
 
-    return;
+    return isEventHandled;
 }
 
 /**

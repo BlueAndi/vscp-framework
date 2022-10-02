@@ -149,9 +149,9 @@ extern void vscp_core_restoreFactoryDefaultSettings(void);
  * cyclic period.
  *
  * Note, for a fast handling of received events, this function returns TRUE in
- * case a event was handled, otherwise FALSE. Call it e.g. in a loop until no
- * event is handled anymore. If its not necessary in your application, just
- * skip the return value.
+ * case a event was handled partly or completely, otherwise FALSE.
+ * Call it e.g. in a loop until no event is handled anymore. If its not
+ * necessary in your application, just skip the return value.
  *
  * @return If a received event was handled, it will return TRUE otherwise FALSE.
  */
