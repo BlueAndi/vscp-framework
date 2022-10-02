@@ -10,8 +10,12 @@
   * [My Projects](https://github.com/BlueAndi/RelayBoard01) (original in /projects/avr)
 
   - VSCP framework
-    - Firmware device code added to register map, which was introduced with VSCP specification 1.13.0
-    - ```dataNum``` variable in the VSCP message renamed to ```dataSize```. You may need to update at least your transport layer adaption.
+    - New Features:
+      - Firmware device code added to register map, which was introduced with VSCP specification 1.13.0
+    - Improvements:
+      - ```dataNum``` variable in the VSCP message renamed to ```dataSize```. You may need to update at least your transport layer adaption.
+    - Bugfixes:
+      - The process routine will return now TRUE until a extended page register read is complete #43. Thanks to Kamil!
 
 ## 1.3.0
 
