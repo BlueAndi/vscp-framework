@@ -1,8 +1,8 @@
 {
     "name": "vscp-framework",
     "version": "2.0.0",
-    "keywords": "vscp, vscp-framework, automation, home automation",
     "description": "Very Simple Control Procotol (VSCP) Level 1 library with C interface.",
+    "keywords": "vscp, vscp-framework, automation, home automation",
     "repository": {
       "type": "git",
       "url": "https://github.com/BlueAndi/vscp-framework"
@@ -12,6 +12,7 @@
         "email": "vscp@blue-andi.de",
         "maintainer": true
     }],
+    "license": "MIT",
     "frameworks": "*",
     "platforms": "*"
 }
