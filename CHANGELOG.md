@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.0.0 (not released yet)
+## 2.0.0
 
   VSCP-framework repository was restructured. The new structure is improved for providing it as PlatformIO libraray or to include it as git submodule.
 
@@ -16,6 +16,9 @@
       - ```dataNum``` variable in the VSCP message renamed to ```dataSize```. You may need to update at least your transport layer adaption.
     - Bugfixes:
       - The process routine will return now TRUE until a extended page register read is complete #43. Thanks to Kamil!
+  - Examples
+    - avr90can
+      - VSCode and PlatformIO configuration added.
 
 ## 1.3.0
 
