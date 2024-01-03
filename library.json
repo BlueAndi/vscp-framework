@@ -14,5 +14,8 @@
     }],
     "license": "MIT",
     "frameworks": "*",
-    "platforms": "*"
+    "platforms": "*",
+    "build": {
+        "includeDir": "./src/events"
+    }
 }
