@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.3
+
+  * Add missing extern "C" sections to the event headers.
+  * Avoid using C++ keywords as function parameter name.
+
+## 2.0.2
+
+  * Changed recommended nickname discovery timeout from five to one second.
+
 ## 2.0.1
 
   Updates the library.json to include the ./src/events folder too.
