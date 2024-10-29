@@ -4025,12 +4025,12 @@ Notes:
                                     <description lang="en">Sequence number.</description>
                                 </element>
                                 <element pos="3" type="uint16" length="1" optional="false">
-                                    <name lang="en">Class</name>
-                                    <description lang="en">Class.</description>
+                                    <name lang="en">VSCP class</name>
+                                    <description lang="en">VSCP class.</description>
                                 </element>
                                 <element pos="5" type="uint16" length="1" optional="false">
-                                    <name lang="en">Type</name>
-                                    <description lang="en">Type.</description>
+                                    <name lang="en">VSCP type</name>
+                                    <description lang="en">VSCP type.</description>
                                 </element>
                             </elements>
                         </frame>

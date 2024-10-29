@@ -259,10 +259,8 @@ This transformation script generates the VSCP type C header files.
             </xsl:call-template>
             <xsl:text>&LF;</xsl:text>
 
-            <xsl:text>#ifdef __cplusplus&LF;</xsl:text>
-            <xsl:text>extern "C"&LF;</xsl:text>
-            <xsl:text>{&LF;</xsl:text>
-            <xsl:text>#endif&LF;</xsl:text>
+            <xsl:call-template name="ctools.externCBegin">
+            </xsl:call-template>
             <xsl:text>&LF;</xsl:text>
 
             <!-- Compiler switches -->
@@ -323,9 +321,8 @@ This transformation script generates the VSCP type C header files.
             </xsl:call-template>
             <xsl:text>&LF;</xsl:text>
 
-            <xsl:text>#ifdef __cplusplus&LF;</xsl:text>
-            <xsl:text>}&LF;</xsl:text>
-            <xsl:text>#endif&LF;</xsl:text>
+            <xsl:call-template name="ctools.externCEnd">
+            </xsl:call-template>
             <xsl:text>&LF;</xsl:text>
 
             <!-- Footer -->
