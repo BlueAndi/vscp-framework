@@ -252,6 +252,23 @@ Templates to support the generation of C-modules.
         </xsl:call-template>
     </xsl:template>
     
+    <!-- Generates the begin of a extern "C" section.
+    -->
+    <xsl:template name="ctools.externCBegin">
+        <xsl:text>#ifdef __cplusplus&LF;</xsl:text>
+        <xsl:text>extern "C"&LF;</xsl:text>
+        <xsl:text>{&LF;</xsl:text>
+        <xsl:text>#endif&LF;</xsl:text>
+    </xsl:template>
+
+    <!-- Generates the end of a extern "C" section.
+    -->
+    <xsl:template name="ctools.externCEnd">
+        <xsl:text>#ifdef __cplusplus&LF;</xsl:text>
+        <xsl:text>}&LF;</xsl:text>
+        <xsl:text>#endif&LF;</xsl:text>
+    </xsl:template>
+
     <!-- Private helper template, which limits every line in its length. Each line in the
          given string is limited separatly.
         @param  string  String

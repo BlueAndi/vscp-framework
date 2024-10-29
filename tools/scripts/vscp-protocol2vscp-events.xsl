@@ -326,6 +326,10 @@ This transformation script generates the VSCP event modules.
                 </xsl:otherwise>
             </xsl:choose>
             <xsl:text>&LF;</xsl:text>
+            
+            <xsl:call-template name="ctools.externCBegin">
+            </xsl:call-template>
+            <xsl:text>&LF;</xsl:text>
 
             <!-- Compiler switches -->
             <xsl:call-template name="ctools.generalBlock">
@@ -379,6 +383,10 @@ This transformation script generates the VSCP event modules.
                     <xsl:value-of select="$baseName" />
                 </xsl:with-param>
             </xsl:apply-templates>
+
+            <xsl:call-template name="ctools.externCEnd">
+            </xsl:call-template>
+            <xsl:text>&LF;</xsl:text>
 
             <!-- Footer -->
             <xsl:call-template name="ctools.hFooterBlock">
