@@ -48,7 +48,7 @@ Notes:
 -->
 
 <!-- VSCP specification -->
-<specification version="1.12.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.blue-andi.de/vscp/xml-schema/vscp-protocol/1.0" xsi:schemaLocation="http://www.blue-andi.de/vscp/xml-schema/vscp-protocol/1.0 http://www.blue-andi.de/vscp/xml-schema/vscp-protocol/1.0/vscp-protocol-schema.xsd">
+<specification version="1.13.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.blue-andi.de/vscp/xml-schema/vscp-protocol/1.0" xsi:schemaLocation="http://www.blue-andi.de/vscp/xml-schema/vscp-protocol/1.0 http://www.blue-andi.de/vscp/xml-schema/vscp-protocol/1.0/vscp-protocol-schema.xsd">
 
     <vscp-classes>
     
