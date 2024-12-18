@@ -1213,90 +1213,28 @@ extern BOOL vscp_evt_protocol_sendGetEventInterest(void)
  * Get event interest response.
  * 
  * @param[in] index Index.
- * @param[in] classBit9 Class bit 9.
- * @param[in] class1 Class 1.
- * @param[in] type1 Type 1. (array[4])
- * @param[in] type1size Size in byte.
- * @param[in] class2 Class 2.
- * @param[in] type2 Type 2. (array[4])
- * @param[in] type2size Size in byte.
- * @param[in] class3 Class 3.
- * @param[in] type3 Type 3. (array[4])
- * @param[in] type3size Size in byte.
+ * @param[in] class Class.
+ * @param[in] type Type.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_protocol_sendGetEventInterestResponse(uint8_t index, uint16_t classBit9, uint8_t class1, uint8_t const * const type1, uint8_t type1Size, uint8_t class2, uint8_t const * const type2, uint8_t type2Size, uint8_t class3, uint8_t const * const type3, uint8_t type3Size)
+extern BOOL vscp_evt_protocol_sendGetEventInterestResponse(uint8_t index, uint16_t class, uint16_t type)
 {
     vscp_TxMessage  txMsg;
     uint8_t         size    = 0;
-    uint8_t         byteIndex   = 0;
-
-    if ((NULL == type1) || (0 == type1Size))
-    {
-        return FALSE;
-    }
-
-    if ((NULL == type2) || (0 == type2Size))
-    {
-        return FALSE;
-    }
-
-    if ((NULL == type3) || (0 == type3Size))
-    {
-        return FALSE;
-    }
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_PROTOCOL, VSCP_TYPE_PROTOCOL_GET_EVENT_INTEREST_RESPONSE, VSCP_PRIORITY_3_NORMAL);
 
     txMsg.data[0] = index;
     size += 1;
 
-    txMsg.data[1] = (uint8_t)((classBit9 >> 8) & 0xff);
-    txMsg.data[2] = (uint8_t)((classBit9 >> 0) & 0xff);
+    txMsg.data[1] = (uint8_t)((class >> 8) & 0xff);
+    txMsg.data[2] = (uint8_t)((class >> 0) & 0xff);
     size += 2;
 
-    txMsg.data[2] = class1;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < type1Size; ++byteIndex)
-    {
-        txMsg.data[3 + byteIndex] = type1[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
-
-    txMsg.data[4] = class2;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < type2Size; ++byteIndex)
-    {
-        txMsg.data[5 + byteIndex] = type2[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
-
-    txMsg.data[6] = class3;
-    size += 1;
-
-    for(byteIndex = 0; byteIndex < type3Size; ++byteIndex)
-    {
-        txMsg.data[7 + byteIndex] = type3[byteIndex];
-        size += 1;
-
-        if (VSCP_L1_DATA_SIZE <= size)
-        {
-            break;
-        }
-    }
+    txMsg.data[3] = (uint8_t)((type >> 8) & 0xff);
+    txMsg.data[4] = (uint8_t)((type >> 0) & 0xff);
+    size += 2;
 
     txMsg.dataSize = size;
 

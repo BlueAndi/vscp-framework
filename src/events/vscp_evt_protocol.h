@@ -471,20 +471,12 @@ extern BOOL vscp_evt_protocol_sendGetEventInterest(void);
  * Get event interest response.
  * 
  * @param[in] index Index.
- * @param[in] classBit9 Class bit 9.
- * @param[in] class1 Class 1.
- * @param[in] type1 Type 1. (array[4])
- * @param[in] type1size Size in byte.
- * @param[in] class2 Class 2.
- * @param[in] type2 Type 2. (array[4])
- * @param[in] type2size Size in byte.
- * @param[in] class3 Class 3.
- * @param[in] type3 Type 3. (array[4])
- * @param[in] type3size Size in byte.
+ * @param[in] class Class.
+ * @param[in] type Type.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_protocol_sendGetEventInterestResponse(uint8_t index, uint16_t classBit9, uint8_t class1, uint8_t const * const type1, uint8_t type1Size, uint8_t class2, uint8_t const * const type2, uint8_t type2Size, uint8_t class3, uint8_t const * const type3, uint8_t type3Size);
+extern BOOL vscp_evt_protocol_sendGetEventInterestResponse(uint8_t index, uint16_t class, uint16_t type);
 
 /**
  * Activate new image ACK.

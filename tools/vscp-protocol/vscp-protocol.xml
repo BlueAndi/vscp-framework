@@ -1057,40 +1057,12 @@ Notes:
                                     <description lang="en">Index.</description>
                                 </element>
                                 <element pos="1" type="uint16" length="1" optional="false">
-                                    <name lang="en">Class bit 9</name>
-                                    <description lang="en">Class bit 9.</description>
-                                    <bitfield>
-                                        <bit pos="0">Bit 9 for class 1</bit>
-                                        <bit pos="1">Bit 9 for class 2</bit>
-                                        <bit pos="2">Bit 9 for class 3</bit>
-                                        <bit pos="3">All Type 1 is recognized (set type to zero). </bit>
-                                        <bit pos="4">All Type 2 is recognized (set type to zero). </bit>
-                                        <bit pos="5">All Type 3 is recognized (set type to zero). </bit>
-                                    </bitfield>
+                                    <name lang="en">Class</name>
+                                    <description lang="en">Class.</description>
                                 </element>
-                                <element pos="2" type="uint8" length="1" optional="false">
-                                    <name lang="en">Class 1</name>
-                                    <description lang="en">Class 1.</description>
-                                </element>
-                                <element pos="3" type="uint8" length="4" optional="false">
-                                    <name lang="en">Type 1</name>
-                                    <description lang="en">Type 1.</description>
-                                </element>
-                                <element pos="4" type="uint8" length="1" optional="false">
-                                    <name lang="en">Class 2</name>
-                                    <description lang="en">Class 2.</description>
-                                </element>
-                                <element pos="5" type="uint8" length="4" optional="false">
-                                    <name lang="en">Type 2</name>
-                                    <description lang="en">Type 2.</description>
-                                </element>
-                                <element pos="6" type="uint8" length="1" optional="false">
-                                    <name lang="en">Class 3</name>
-                                    <description lang="en">Class 3.</description>
-                                </element>
-                                <element pos="7" type="uint8" length="4" optional="false">
-                                    <name lang="en">Type 3</name>
-                                    <description lang="en">Type 3.</description>
+                                <element pos="3" type="uint16" length="1" optional="false">
+                                    <name lang="en">Type</name>
+                                    <description lang="en">Type.</description>
                                 </element>
                             </elements>
                         </frame>
@@ -10520,7 +10492,7 @@ Notes:
                 </vscp-type>
                 <vscp-type id="48">
                     <name lang="en">Set LED</name>
-                    <token>VSCP_TYPE_DISPLAY_SHOW_LED</token>
+                    <token>VSCP_TYPE_DISPLAY_SET_LED</token>
                     <description lang="en">This event contains information that should be displayed on LED(s) pointed out by zone/sub-zone.</description>
                     <frames>
                         <frame id="0">
@@ -10562,8 +10534,8 @@ Notes:
                 </vscp-type>
                 <vscp-type id="49">
                     <name lang="en">Set RGB Color</name>
-                    <token>VSCP_TYPE_DISPLAY_SHOW_LED_COLOR</token>
-                    <description lang="en">This event set the color for LED(s) pointed out by zone/sub-zone.</description>
+                    <token>VSCP_TYPE_DISPLAY_SET_COLOR</token>
+                    <description lang="en">This event set the color for LED(s) (or similar device) pointed out by zone/sub-zone.</description>
                     <frames>
                         <frame id="0">
                             <name lang="en" />
