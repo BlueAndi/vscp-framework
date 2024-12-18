@@ -240,22 +240,22 @@ extern BOOL vscp_evt_protocol_sendBlockData(uint8_t const * const data, uint8_t 
 /**
  * ACK data block.
  * 
- * @param[in] blockCrc CRC for block.
- * @param[in] writePointer Write pointer.
+ * @param[in] blockCrc The CRC is calculated over the block data only.
+ * @param[in] blockToWrite The block to write is the block that was sent in the last block data event.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_protocol_sendAckDataBlock(uint16_t blockCrc, uint32_t writePointer);
+extern BOOL vscp_evt_protocol_sendAckDataBlock(uint16_t blockCrc, uint32_t blockToWrite);
 
 /**
  * NACK data block.
  * 
  * @param[in] errorCode User defined error code.
- * @param[in] writePointer Write pointer.
+ * @param[in] blockToWrite The block to write is the block that was sent in the last block data event.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_protocol_sendNackDataBlock(uint8_t errorCode, uint32_t writePointer);
+extern BOOL vscp_evt_protocol_sendNackDataBlock(uint8_t errorCode, uint32_t blockToWrite);
 
 /**
  * Program data block.
@@ -288,7 +288,8 @@ extern BOOL vscp_evt_protocol_sendNackProgramDataBlock(uint8_t errorCode, uint32
 /**
  * Activate new image.
  * 
- * @param[in] crc CRC of full flash data block.
+ * @param[in] crc Sum of all CRC of blocks that was transferred to the node up to this point (all
+ * memory types).
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
@@ -500,18 +501,39 @@ extern BOOL vscp_evt_protocol_sendActivateNewImageAck(void);
 extern BOOL vscp_evt_protocol_sendActivateNewImageNack(void);
 
 /**
- * Block data transfer ACK.
+ * Start block ACK.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_protocol_sendBlockDataTransferAck(void);
+extern BOOL vscp_evt_protocol_sendStartBlockAck(void);
 
 /**
- * Block data transfer NACK.
+ * Start block NACK.
  * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_protocol_sendBlockDataTransferNack(void);
+extern BOOL vscp_evt_protocol_sendStartBlockNack(void);
+
+/**
+ * Block Data Chunk ACK.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_protocol_sendBlockDataChunkAck(void);
+
+/**
+ * Block Data Chunk NACK.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_protocol_sendBlockDataChunkNack(void);
+
+/**
+ * Bootloader CHECK.
+ * 
+ * @return If event is sent, it will return TRUE otherwise FALSE.
+ */
+extern BOOL vscp_evt_protocol_sendBootloaderCheck(void);
 
 #ifdef __cplusplus
 }

@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.0
+
+  * Supports the new events:
+    * Type=52 (0x34) - Block Data Chunk ACK.
+    * Type=53 (0x35) - Block Data Chunk NACK.
+    * Type=54 (0x36) - Bootloader CHECK.
+  * Measurement related events updated.
+
 ## 2.0.3
 
   * Add missing extern "C" sections to the event headers.
