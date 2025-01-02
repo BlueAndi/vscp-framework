@@ -1196,15 +1196,21 @@ extern BOOL vscp_evt_protocol_sendExtendedPageReadWriteResponse(uint8_t index, u
 /**
  * Get event interest.
  * 
+ * @param[in] nodeAddress Node address.
+ * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_protocol_sendGetEventInterest(void)
+extern BOOL vscp_evt_protocol_sendGetEventInterest(uint8_t nodeAddress)
 {
     vscp_TxMessage  txMsg;
+    uint8_t         size    = 0;
 
     vscp_core_prepareTxMessage(&txMsg, VSCP_CLASS_L1_PROTOCOL, VSCP_TYPE_PROTOCOL_GET_EVENT_INTEREST, VSCP_PRIORITY_3_NORMAL);
 
-    txMsg.dataSize = 0;
+    txMsg.data[0] = nodeAddress;
+    size += 1;
+
+    txMsg.dataSize = size;
 
     return vscp_core_sendEvent(&txMsg);
 }

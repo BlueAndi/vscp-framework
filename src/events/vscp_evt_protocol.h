@@ -463,9 +463,11 @@ extern BOOL vscp_evt_protocol_sendExtendedPageReadWriteResponse(uint8_t index, u
 /**
  * Get event interest.
  * 
+ * @param[in] nodeAddress Node address.
+ * 
  * @return If event is sent, it will return TRUE otherwise FALSE.
  */
-extern BOOL vscp_evt_protocol_sendGetEventInterest(void);
+extern BOOL vscp_evt_protocol_sendGetEventInterest(uint8_t nodeAddress);
 
 /**
  * Get event interest response.

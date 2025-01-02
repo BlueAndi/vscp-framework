@@ -1040,6 +1040,12 @@ Notes:
                         <frame id="0">
                             <name lang="en" />
                             <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Node address</name>
+                                    <description lang="en">Node address.</description>
+                                </element>
+                            </elements>
                         </frame>
                     </frames>
                 </vscp-type>

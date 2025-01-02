@@ -2,11 +2,12 @@
 
 ## 2.1.0
 
-  * Supports the new events:
+  * Supports the new VSCP_CLASS_L1_PROTOCOL events:
     * Type=52 (0x34) - Block Data Chunk ACK.
     * Type=53 (0x35) - Block Data Chunk NACK.
     * Type=54 (0x36) - Bootloader CHECK.
   * Measurement related events updated.
+  * Fixed VSCP_CLASS_L1_PROTOCOL Type=40 (0x28) Missing parameter node address added.
 
 ## 2.0.3
 
