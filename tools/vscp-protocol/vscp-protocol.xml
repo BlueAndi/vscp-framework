@@ -2903,7 +2903,7 @@ Notes:
                 </vscp-type>
                 <vscp-type id="61">
                     <name lang="en">Radiation dose (equivalent)</name>
-                    <token>VSCP_TYPE_MEASUREMENT_RADIATION_DOSE_EQ</token>
+                    <token>VSCP_TYPE_MEASUREMENT_DOSE_EQUIVALENT</token>
                     <description lang="en">Default unit: sievert (Sv).\nOptional unit rem (1)\nThis is a measurement of a radiation dose (Equivalent dose of ionizing radiation).</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
@@ -6573,7 +6573,7 @@ Notes:
                                 </element>
                                 <element pos="3" type="uint8" length="5" optional="false">
                                     <name lang="en">Security password</name>
-                                    <description lang="en">Security password. This password can be 1-5 bytes and length of event is set accordingly. It should be interpreted as an UTF-8 string with a length set bt event data length - 3</description>
+                                    <description lang="en">Security password. This password can be 1-5 bytes and length of event is set accordingly. It should be interpreted as a UTF-8 string of length equal to the event data length minus 3 bytes</description>
                                 </element>
                             </elements>
                         </frame>
@@ -8203,7 +8203,7 @@ Notes:
                 </vscp-type>
                 <vscp-type id="61">
                     <name lang="en">Radiation dose (equivalent)</name>
-                    <token>VSCP_TYPE_MEASUREMENT64_RADIATION_DOSE_EQ</token>
+                    <token>VSCP_TYPE_MEASUREMENT64_DOSE_EQUIVALENT</token>
                     <description lang="en">Default unit: sievert (Sv).\nOptional unit rem (1)\nThis is a measurement of a radiation dose (Equivalent dose of ionizing radiation).</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
@@ -8660,7 +8660,7 @@ Notes:
                 </vscp-type>
                 <vscp-type id="61">
                     <name lang="en">Radiation dose (equivalent)</name>
-                    <token>VSCP_TYPE_MEASUREZONE_RADIATION_DOSE_EQ</token>
+                    <token>VSCP_TYPE_MEASUREZONE_DOSE_EQUIVALENT</token>
                     <description lang="en">Default unit: sievert (Sv).\nOptional unit rem (1)\nThis is a measurement of a radiation dose (Equivalent dose of ionizing radiation).</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
@@ -9077,7 +9077,7 @@ Notes:
                 </vscp-type>
                 <vscp-type id="61">
                     <name lang="en">Radiation dose (equivalent)</name>
-                    <token>VSCP_TYPE_MEASUREMENT32_RADIATION_DOSE_EQ</token>
+                    <token>VSCP_TYPE_MEASUREMENT32_DOSE_EQUIVALENT</token>
                     <description lang="en">Default unit: sievert (Sv).\nOptional unit rem (1)\nThis is a measurement of a radiation dose (Equivalent dose of ionizing radiation).</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
