@@ -2618,13 +2618,13 @@ Notes:
                 <vscp-type id="13">
                     <name lang="en">Energy</name>
                     <token>VSCP_TYPE_MEASUREMENT_ENERGY</token>
-                    <description lang="en">Default unit: Joule.\nOptional unit: KWh (1), Wh(2)\nThis is a measurement of energy.</description>
+                    <description lang="en">Default unit: Joule.\nOptional unit: kWh (1), Wh (2), eV (electron volt) (3)\nThis is a measurement of energy.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="14">
                     <name lang="en">Power</name>
                     <token>VSCP_TYPE_MEASUREMENT_POWER</token>
-                    <description lang="en">Default unit: watt.\nOptional unit: Horse power (1).\nThis is a measurement of power.</description>
+                    <description lang="en">Default unit: watt.\nOptional unit: Horse power Metric (1), Horse power Imperial (2).\nThis is a measurement of power.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="15">
@@ -2660,7 +2660,7 @@ Notes:
                 <vscp-type id="20">
                     <name lang="en">Magnetic Field Strength</name>
                     <token>VSCP_TYPE_MEASUREMENT_MAGNETIC_FIELD_STRENGTH</token>
-                    <description lang="en">Default unit: amperes per meter (H).\nOptional units: teslas (B) (1)\nThis is a measurement of magnetic field strength.</description>
+                    <description lang="en">Default unit: amperes per meter (H).\nOptional units: Oersted (Oe) (1)\nThis is a measurement of magnetic field strength.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="21">
@@ -2708,7 +2708,7 @@ Notes:
                 <vscp-type id="28">
                     <name lang="en">Volume</name>
                     <token>VSCP_TYPE_MEASUREMENT_VOLUME</token>
-                    <description lang="en">Default unit: cubic meter (m³)\nOpt. unit: Liter (dm³) (1), decilitre (100 cm³) (2), centilitre (10 cm³) (3), millilitre (cm³) (4) where unit 4 is only available for Level II measurement events where units can hold this value.\nThis is a measurement of volume.</description>
+                    <description lang="en">Default unit: cubic meter (m³)\nOpt. unit: Liter (dm³) (1), millilitre (cm³) (2), decilitre (100 cm³) (3), centilitre (10 cm³) (4), millilitre (cm³) (4) where unit 4 is only available for Level II measurement events where units can hold this value.\nThis is a measurement of volume.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="29">
@@ -2732,13 +2732,13 @@ Notes:
                 <vscp-type id="32">
                     <name lang="en">Speed</name>
                     <token>VSCP_TYPE_MEASUREMENT_SPEED</token>
-                    <description lang="en">Default unit: Meters per second.\nOptional unit: Kilometers per hour (1) Miles per hour (2)\nThis is a measurement of a speed.</description>
+                    <description lang="en">Default unit: Meters per second.\nOptional unit: Kilometers per hour (1), Miles per hour (2)\nThis is a measurement of a speed.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="33">
                     <name lang="en">Acceleration</name>
                     <token>VSCP_TYPE_MEASUREMENT_ACCELERATION</token>
-                    <description lang="en">Default unit: Meters per second/second (m/s2).\nThis is a measurement of acceleration.</description>
+                    <description lang="en">Default unit: Meter per second squared (m/s²).\nThis is a measurement of acceleration.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="34">
@@ -2792,7 +2792,7 @@ Notes:
                 <vscp-type id="42">
                     <name lang="en">Electric elastance</name>
                     <token>VSCP_TYPE_MEASUREMENT_ELECTRIC_ELASTANCE</token>
-                    <description lang="en">Default unit: daraf (f-1).\nThis is a measurement of electric elasticity.</description>
+                    <description lang="en">Default unit: daraf (F-1).\nThis is a measurement of electric elasticity.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="43">
@@ -2850,7 +2850,7 @@ Notes:
                 <vscp-type id="52">
                     <name lang="en">Area</name>
                     <token>VSCP_TYPE_MEASUREMENT_AREA</token>
-                    <description lang="en">Default unit: square meter (m²)\nArea in square meter.</description>
+                    <description lang="en">Default unit: square meter (m²)\nOpt. unit: are (1), hectare (2), square kilometer (km²)\nArea in square meter.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="53">
@@ -7918,13 +7918,13 @@ Notes:
                 <vscp-type id="13">
                     <name lang="en">Energy</name>
                     <token>VSCP_TYPE_MEASUREMENT64_ENERGY</token>
-                    <description lang="en">Default unit: Joule.\nOptional unit: KWh (1)\nThis is a measurement of energy.</description>
+                    <description lang="en">Default unit: Joule.\nOptional unit: kWh (1), Wh (2), eV (electron volt) (3)\nThis is a measurement of energy.</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="14">
                     <name lang="en">Power</name>
                     <token>VSCP_TYPE_MEASUREMENT64_POWER</token>
-                    <description lang="en">Default unit: watt.\nOptional unit: Horse power (1).\nThis is a measurement of power.</description>
+                    <description lang="en">Default unit: watt.\nOptional unit: Horse power Metric (1), Horse power Imperial (2).\nThis is a measurement of power.</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="15">
@@ -7960,7 +7960,7 @@ Notes:
                 <vscp-type id="20">
                     <name lang="en">Magnetic Field Strength</name>
                     <token>VSCP_TYPE_MEASUREMENT64_MAGNETIC_FIELD_STRENGTH</token>
-                    <description lang="en">Default unit: amperes per meter (H).\nOptional units: teslas (B) (1)\nThis is a measurement of magnetic field strength.</description>
+                    <description lang="en">Default unit: amperes per meter (H).\nOptional units: Oersted (Oe) (1)\nThis is a measurement of magnetic field strength.</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="21">
@@ -8008,7 +8008,7 @@ Notes:
                 <vscp-type id="28">
                     <name lang="en">Volume</name>
                     <token>VSCP_TYPE_MEASUREMENT64_VOLUME</token>
-                    <description lang="en">Default unit: cubic meter (m³)\nOpt. unit: Liter (dm³) (1), decilitre (100 cm³) (2), centilitre (10 cm³) (3), millilitre (cm³) (4) where unit 4 is only available for Level II measurement events where units can hold this value.\nThis is a measurement of volume.</description>
+                    <description lang="en">Default unit: cubic meter (m³)\nOpt. unit: Liter (dm³) (1), millilitre (cm³) (2), decilitre (100 cm³) (3), centilitre (10 cm³) (4), millilitre (cm³) (4) where unit 4 is only available for Level II measurement events where units can hold this value.\nThis is a measurement of volume.</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="29">
@@ -8032,13 +8032,13 @@ Notes:
                 <vscp-type id="32">
                     <name lang="en">Speed</name>
                     <token>VSCP_TYPE_MEASUREMENT64_SPEED</token>
-                    <description lang="en">Default unit: Meters per second.\nOptional unit: Kilometers per hour (1) Miles per hour (2)\nThis is a measurement of a speed.</description>
+                    <description lang="en">Default unit: Meters per second.\nOptional unit: Kilometers per hour (1), Miles per hour (2)\nThis is a measurement of a speed.</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="33">
                     <name lang="en">Acceleration</name>
                     <token>VSCP_TYPE_MEASUREMENT64_ACCELERATION</token>
-                    <description lang="en">Default unit: Meters per second/second (m/s2).\nThis is a measurement of acceleration.</description>
+                    <description lang="en">Default unit: Meter per second squared (m/s²).\nThis is a measurement of acceleration.</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="34">
@@ -8092,7 +8092,7 @@ Notes:
                 <vscp-type id="42">
                     <name lang="en">Electric elastance</name>
                     <token>VSCP_TYPE_MEASUREMENT64_ELECTRIC_ELASTANCE</token>
-                    <description lang="en">Default unit: daraf (f-1).\nThis is a measurement of electric elasticity.</description>
+                    <description lang="en">Default unit: daraf (F-1).\nThis is a measurement of electric elasticity.</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="43">
@@ -8150,7 +8150,7 @@ Notes:
                 <vscp-type id="52">
                     <name lang="en">Area</name>
                     <token>VSCP_TYPE_MEASUREMENT64_AREA</token>
-                    <description lang="en">Default unit: square meter (m²)\nArea in square meter.</description>
+                    <description lang="en">Default unit: square meter (m²)\nOpt. unit: are (1), hectare (2), square kilometer (km²)\nArea in square meter.</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="53">
@@ -8375,13 +8375,13 @@ Notes:
                 <vscp-type id="13">
                     <name lang="en">Energy</name>
                     <token>VSCP_TYPE_MEASUREZONE_ENERGY</token>
-                    <description lang="en">Default unit: Joule.\nOptional unit: KWh (1)\nThis is a measurement of energy.</description>
+                    <description lang="en">Default unit: Joule.\nOptional unit: kWh (1), Wh (2), eV (electron volt) (3)\nThis is a measurement of energy.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="14">
                     <name lang="en">Power</name>
                     <token>VSCP_TYPE_MEASUREZONE_POWER</token>
-                    <description lang="en">Default unit: watt.\nOptional unit: Horse power (1).\nThis is a measurement of power.</description>
+                    <description lang="en">Default unit: watt.\nOptional unit: Horse power Metric (1), Horse power Imperial (2).\nThis is a measurement of power.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="15">
@@ -8417,7 +8417,7 @@ Notes:
                 <vscp-type id="20">
                     <name lang="en">Magnetic Field Strength</name>
                     <token>VSCP_TYPE_MEASUREZONE_MAGNETIC_FIELD_STRENGTH</token>
-                    <description lang="en">Default unit: amperes per meter (H).\nOptional units: teslas (B) (1)\nThis is a measurement of magnetic field strength.</description>
+                    <description lang="en">Default unit: amperes per meter (H).\nOptional units: Oersted (Oe) (1)\nThis is a measurement of magnetic field strength.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="21">
@@ -8465,7 +8465,7 @@ Notes:
                 <vscp-type id="28">
                     <name lang="en">Volume</name>
                     <token>VSCP_TYPE_MEASUREZONE_VOLUME</token>
-                    <description lang="en">Default unit: cubic meter (m³)\nOpt. unit: Liter (dm³) (1), decilitre (100 cm³) (2), centilitre (10 cm³) (3), millilitre (cm³) (4) where unit 4 is only available for Level II measurement events where units can hold this value.\nThis is a measurement of volume.</description>
+                    <description lang="en">Default unit: cubic meter (m³)\nOpt. unit: Liter (dm³) (1), millilitre (cm³) (2), decilitre (100 cm³) (3), centilitre (10 cm³) (4), millilitre (cm³) (4) where unit 4 is only available for Level II measurement events where units can hold this value.\nThis is a measurement of volume.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="29">
@@ -8489,13 +8489,13 @@ Notes:
                 <vscp-type id="32">
                     <name lang="en">Speed</name>
                     <token>VSCP_TYPE_MEASUREZONE_SPEED</token>
-                    <description lang="en">Default unit: Meters per second.\nOptional unit: Kilometers per hour (1) Miles per hour (2)\nThis is a measurement of a speed.</description>
+                    <description lang="en">Default unit: Meters per second.\nOptional unit: Kilometers per hour (1), Miles per hour (2)\nThis is a measurement of a speed.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="33">
                     <name lang="en">Acceleration</name>
                     <token>VSCP_TYPE_MEASUREZONE_ACCELERATION</token>
-                    <description lang="en">Default unit: Meters per second/second (m/s2).\nThis is a measurement of acceleration.</description>
+                    <description lang="en">Default unit: Meter per second squared (m/s²).\nThis is a measurement of acceleration.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="34">
@@ -8549,7 +8549,7 @@ Notes:
                 <vscp-type id="42">
                     <name lang="en">Electric elastance</name>
                     <token>VSCP_TYPE_MEASUREZONE_ELECTRIC_ELASTANCE</token>
-                    <description lang="en">Default unit: daraf (f-1).\nThis is a measurement of electric elasticity.</description>
+                    <description lang="en">Default unit: daraf (F-1).\nThis is a measurement of electric elasticity.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="43">
@@ -8607,7 +8607,7 @@ Notes:
                 <vscp-type id="52">
                     <name lang="en">Area</name>
                     <token>VSCP_TYPE_MEASUREZONE_AREA</token>
-                    <description lang="en">Default unit: square meter (m²)\nArea in square meter.</description>
+                    <description lang="en">Default unit: square meter (m²)\nOpt. unit: are (1), hectare (2), square kilometer (km²)\nArea in square meter.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="53">
@@ -8792,13 +8792,13 @@ Notes:
                 <vscp-type id="13">
                     <name lang="en">Energy</name>
                     <token>VSCP_TYPE_MEASUREMENT32_ENERGY</token>
-                    <description lang="en">Default unit: Joule.\nOptional unit: KWh (1)\nThis is a measurement of energy.</description>
+                    <description lang="en">Default unit: Joule.\nOptional unit: kWh (1), Wh (2), eV (electron volt) (3)\nThis is a measurement of energy.</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="14">
                     <name lang="en">Power</name>
                     <token>VSCP_TYPE_MEASUREMENT32_POWER</token>
-                    <description lang="en">Default unit: watt.\nOptional unit: Horse power (1).\nThis is a measurement of power.</description>
+                    <description lang="en">Default unit: watt.\nOptional unit: Horse power Metric (1), Horse power Imperial (2).\nThis is a measurement of power.</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="15">
@@ -8834,7 +8834,7 @@ Notes:
                 <vscp-type id="20">
                     <name lang="en">Magnetic Field Strength</name>
                     <token>VSCP_TYPE_MEASUREMENT32_MAGNETIC_FIELD_STRENGTH</token>
-                    <description lang="en">Default unit: amperes per meter (H).\nOptional units: teslas (B) (1)\nThis is a measurement of magnetic field strength.</description>
+                    <description lang="en">Default unit: amperes per meter (H).\nOptional units: Oersted (Oe) (1)\nThis is a measurement of magnetic field strength.</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="21">
@@ -8882,7 +8882,7 @@ Notes:
                 <vscp-type id="28">
                     <name lang="en">Volume</name>
                     <token>VSCP_TYPE_MEASUREMENT32_VOLUME</token>
-                    <description lang="en">Default unit: cubic meter (m³)\nOpt. unit: Liter (dm³) (1), decilitre (100 cm³) (2), centilitre (10 cm³) (3), millilitre (cm³) (4) where unit 4 is only available for Level II measurement events where units can hold this value.\nThis is a measurement of volume.</description>
+                    <description lang="en">Default unit: cubic meter (m³)\nOpt. unit: Liter (dm³) (1), millilitre (cm³) (2), decilitre (100 cm³) (3), centilitre (10 cm³) (4), millilitre (cm³) (4) where unit 4 is only available for Level II measurement events where units can hold this value.\nThis is a measurement of volume.</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="29">
@@ -8906,13 +8906,13 @@ Notes:
                 <vscp-type id="32">
                     <name lang="en">Speed</name>
                     <token>VSCP_TYPE_MEASUREMENT32_SPEED</token>
-                    <description lang="en">Default unit: Meters per second.\nOptional unit: Kilometers per hour (1) Miles per hour (2)\nThis is a measurement of a speed.</description>
+                    <description lang="en">Default unit: Meters per second.\nOptional unit: Kilometers per hour (1), Miles per hour (2)\nThis is a measurement of a speed.</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="33">
                     <name lang="en">Acceleration</name>
                     <token>VSCP_TYPE_MEASUREMENT32_ACCELERATION</token>
-                    <description lang="en">Default unit: Meters per second/second (m/s2).\nThis is a measurement of acceleration.</description>
+                    <description lang="en">Default unit: Meter per second squared (m/s²).\nThis is a measurement of acceleration.</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="34">
@@ -8966,7 +8966,7 @@ Notes:
                 <vscp-type id="42">
                     <name lang="en">Electric elastance</name>
                     <token>VSCP_TYPE_MEASUREMENT32_ELECTRIC_ELASTANCE</token>
-                    <description lang="en">Default unit: daraf (f-1).\nThis is a measurement of electric elasticity.</description>
+                    <description lang="en">Default unit: daraf (F-1).\nThis is a measurement of electric elasticity.</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="43">
@@ -9024,7 +9024,7 @@ Notes:
                 <vscp-type id="52">
                     <name lang="en">Area</name>
                     <token>VSCP_TYPE_MEASUREMENT32_AREA</token>
-                    <description lang="en">Default unit: square meter (m²)\nArea in square meter.</description>
+                    <description lang="en">Default unit: square meter (m²)\nOpt. unit: are (1), hectare (2), square kilometer (km²)\nArea in square meter.</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="53">
@@ -9198,13 +9198,13 @@ Notes:
                 <vscp-type id="13">
                     <name lang="en">Energy</name>
                     <token>VSCP_TYPE_SETVALUEZONE_ENERGY</token>
-                    <description lang="en">Default unit: Joule.\nOptional unit: KWh (1)\nThis is a measurement of energy.</description>
+                    <description lang="en">Default unit: Joule.\nOptional unit: kWh (1), Wh (2), eV (electron volt) (3)\nThis is a measurement of energy.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="14">
                     <name lang="en">Power</name>
                     <token>VSCP_TYPE_SETVALUEZONE_POWER</token>
-                    <description lang="en">Default unit: watt.\nOptional unit: Horse power (1).\nThis is a measurement of power.</description>
+                    <description lang="en">Default unit: watt.\nOptional unit: Horse power Metric (1), Horse power Imperial (2).\nThis is a measurement of power.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="15">
@@ -9240,7 +9240,7 @@ Notes:
                 <vscp-type id="20">
                     <name lang="en">Magnetic Field Strength</name>
                     <token>VSCP_TYPE_SETVALUEZONE_MAGNETIC_FIELD_STRENGTH</token>
-                    <description lang="en">Default unit: amperes per meter (H).\nOptional units: teslas (B) (1)\nThis is a measurement of magnetic field strength.</description>
+                    <description lang="en">Default unit: amperes per meter (H).\nOptional units: Oersted (Oe) (1)\nThis is a measurement of magnetic field strength.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="21">
@@ -9288,7 +9288,7 @@ Notes:
                 <vscp-type id="28">
                     <name lang="en">Volume</name>
                     <token>VSCP_TYPE_SETVALUEZONE_VOLUME</token>
-                    <description lang="en">Default unit: cubic meter (m³)\nOpt. unit: Liter (dm³) (1), decilitre (100 cm³) (2), centilitre (10 cm³) (3), millilitre (cm³) (4) where unit 4 is only available for Level II measurement events where units can hold this value.\nThis is a measurement of volume.</description>
+                    <description lang="en">Default unit: cubic meter (m³)\nOpt. unit: Liter (dm³) (1), millilitre (cm³) (2), decilitre (100 cm³) (3), centilitre (10 cm³) (4), millilitre (cm³) (4) where unit 4 is only available for Level II measurement events where units can hold this value.\nThis is a measurement of volume.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="29">
@@ -9312,13 +9312,13 @@ Notes:
                 <vscp-type id="32">
                     <name lang="en">Speed</name>
                     <token>VSCP_TYPE_SETVALUEZONE_SPEED</token>
-                    <description lang="en">Default unit: Meters per second.\nOptional unit: Kilometers per hour (1) Miles per hour (2)\nThis is a measurement of a speed.</description>
+                    <description lang="en">Default unit: Meters per second.\nOptional unit: Kilometers per hour (1), Miles per hour (2)\nThis is a measurement of a speed.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="33">
                     <name lang="en">Acceleration</name>
                     <token>VSCP_TYPE_SETVALUEZONE_ACCELERATION</token>
-                    <description lang="en">Default unit: Meters per second/second (m/s2).\nThis is a measurement of acceleration.</description>
+                    <description lang="en">Default unit: Meter per second squared (m/s²).\nThis is a measurement of acceleration.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="34">
@@ -9372,7 +9372,7 @@ Notes:
                 <vscp-type id="42">
                     <name lang="en">Electric elastance</name>
                     <token>VSCP_TYPE_SETVALUEZONE_ELECTRIC_ELASTANCE</token>
-                    <description lang="en">Default unit: daraf (f-1).\nThis is a measurement of electric elasticity.</description>
+                    <description lang="en">Default unit: daraf (F-1).\nThis is a measurement of electric elasticity.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="43">
@@ -9430,7 +9430,7 @@ Notes:
                 <vscp-type id="52">
                     <name lang="en">Area</name>
                     <token>VSCP_TYPE_SETVALUEZONE_AREA</token>
-                    <description lang="en">Default unit: square meter (m²)\nArea in square meter.</description>
+                    <description lang="en">Default unit: square meter (m²)\nOpt. unit: are (1), hectare (2), square kilometer (km²)\nArea in square meter.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="53">
