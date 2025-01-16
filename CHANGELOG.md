@@ -2,6 +2,7 @@
 
 ## 2.1.0
 
+  * Updated to VSCP v1.15.9.
   * Supports the new VSCP_CLASS_L1_PROTOCOL events:
     * Type=52 (0x34) - Block Data Chunk ACK.
     * Type=53 (0x35) - Block Data Chunk NACK.
