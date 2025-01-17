@@ -1,6 +1,6 @@
 {
     "name": "vscp-framework",
-    "version": "2.0.3",
+    "version": "2.1.0",
     "description": "Very Simple Control Procotol (VSCP) Level 1 library with C interface.",
     "keywords": "vscp, vscp-framework, automation, home automation",
     "repository": {

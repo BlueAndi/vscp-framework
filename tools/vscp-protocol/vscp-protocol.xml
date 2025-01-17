@@ -4,7 +4,7 @@
 
 The MIT License (MIT)
 
-Copyright (c) 2014 - 2024 Andreas Merkle
+Copyright (c) 2014 - 2025 Andreas Merkle
 http://www.blue-andi.de
 vscp@blue-andi.de
 
@@ -404,11 +404,11 @@ Notes:
                             <elements>
                                 <element pos="0" type="uint16" length="1" optional="false">
                                     <name lang="en">Block CRC</name>
-                                    <description lang="en">CRC for block.</description>
+                                    <description lang="en">The CRC is calculated over the block data only.</description>
                                 </element>
                                 <element pos="2" type="uint32" length="1" optional="false">
-                                    <name lang="en">Write pointer</name>
-                                    <description lang="en">Write pointer.</description>
+                                    <name lang="en">Block to write</name>
+                                    <description lang="en">The block to write is the block that was sent in the last block data event.</description>
                                 </element>
                             </elements>
                         </frame>
@@ -417,7 +417,7 @@ Notes:
                 <vscp-type id="18">
                     <name lang="en">NACK data block.</name>
                     <token>VSCP_TYPE_PROTOCOL_BLOCK_DATA_NACK</token>
-                    <description lang="en">Not mandatory. Only needed if a VSCP boot-loader algorithm is used.\nNACK the reception of data block. This event has no meaning for any node that is not in boot mode and should be disregarded.</description>
+                    <description lang="en">Not mandatory. Only needed if a VSCP boot-loader algorithm is used.\nNACK the reception of data block. This event has no meaning for any node that is not in boot mode and should be disregarded.\nThe state machine of the node that is loaded with firmware should accept new start block data events after this event. Other memory types can be programmed.</description>
                     <frames>
                         <frame id="0">
                             <name lang="en" />
@@ -428,8 +428,8 @@ Notes:
                                     <description lang="en">User defined error code.</description>
                                 </element>
                                 <element pos="1" type="uint32" length="1" optional="false">
-                                    <name lang="en">Write pointer</name>
-                                    <description lang="en">Write pointer.</description>
+                                    <name lang="en">Block to write</name>
+                                    <description lang="en">The block to write is the block that was sent in the last block data event.</description>
                                 </element>
                             </elements>
                         </frame>
@@ -438,7 +438,7 @@ Notes:
                 <vscp-type id="19">
                     <name lang="en">Program data block.</name>
                     <token>VSCP_TYPE_PROTOCOL_PROGRAM_BLOCK_DATA</token>
-                    <description lang="en">Not mandatory. Only needed if a VSCP boot-loader algorithm is used.\nRequest from a node to program a data block that has been uploaded and confirmed. This event has no meaning for any node that is not in boot mode and should be disregarded.</description>
+                    <description lang="en">Not mandatory. Only needed if a VSCP boot-loader algorithm is used.\nRequest from a node to program a data block that has been uploaded and confirmed. This event has no meaning for any node that is not in boot mode and should be disregarded.\nSent only if the block was successfully received and confirmed by checking the crc for the full block. The block number is the number of the block that was sent in the last block data event.</description>
                     <frames>
                         <frame id="0">
                             <name lang="en" />
@@ -493,7 +493,7 @@ Notes:
                 <vscp-type id="22">
                     <name lang="en">Activate new image.</name>
                     <token>VSCP_TYPE_PROTOCOL_ACTIVATE_NEW_IMAGE</token>
-                    <description lang="en">Not mandatory. Only needed if a VSCP boot-loader algorithm is used.\nThis command is sent as the last command during the boot-loader sequence. It resets the device and starts it up using the newly loaded code. The 16-bit CRC for the entire program block is sent as an argument. This must be correct for the reset/activation to be performed. NACK boot loader mode will be sent if the CRC is not correct and the node will not leave boot loader mode.</description>
+                    <description lang="en">Not mandatory. Only needed if a VSCP boot-loader algorithm is used.\nThis command is sent as the last command during the boot-loader sequence. It resets the device and starts it up using the newly loaded code. The 16-bit sum of all CRC blocks that was transferred to the node (all memory types) is sent as an argument. This sum should be checked and be correct for the reset/activation to be performed. Activate new image NACK will be sent if the CRC is not correct and the node will not leave boot loader mode.\nIf just one memory type is programmed, the CRC sum is the same as the CRC for the programmed block. This can be used as an alternative way to program different memory types, that is enter boot loader mode, program an area, and then activate the new image, and then enter boot loader mode again and program another area, and so on.</description>
                     <frames>
                         <frame id="0">
                             <name lang="en" />
@@ -501,7 +501,7 @@ Notes:
                             <elements>
                                 <element pos="0" type="uint16" length="1" optional="false">
                                     <name lang="en">CRC</name>
-                                    <description lang="en">CRC of full flash data block.</description>
+                                    <description lang="en">Sum of all CRC of blocks that was transferred to the node up to this point (all memory types).</description>
                                 </element>
                             </elements>
                         </frame>
@@ -1040,6 +1040,12 @@ Notes:
                         <frame id="0">
                             <name lang="en" />
                             <description lang="en" />
+                            <elements>
+                                <element pos="0" type="uint8" length="1" optional="false">
+                                    <name lang="en">Node address</name>
+                                    <description lang="en">Node address.</description>
+                                </element>
+                            </elements>
                         </frame>
                     </frames>
                 </vscp-type>
@@ -1057,40 +1063,12 @@ Notes:
                                     <description lang="en">Index.</description>
                                 </element>
                                 <element pos="1" type="uint16" length="1" optional="false">
-                                    <name lang="en">Class bit 9</name>
-                                    <description lang="en">Class bit 9.</description>
-                                    <bitfield>
-                                        <bit pos="0">Bit 9 for class 1</bit>
-                                        <bit pos="1">Bit 9 for class 2</bit>
-                                        <bit pos="2">Bit 9 for class 3</bit>
-                                        <bit pos="3">All Type 1 is recognized (set type to zero). </bit>
-                                        <bit pos="4">All Type 2 is recognized (set type to zero). </bit>
-                                        <bit pos="5">All Type 3 is recognized (set type to zero). </bit>
-                                    </bitfield>
+                                    <name lang="en">Class</name>
+                                    <description lang="en">Class.</description>
                                 </element>
-                                <element pos="2" type="uint8" length="1" optional="false">
-                                    <name lang="en">Class 1</name>
-                                    <description lang="en">Class 1.</description>
-                                </element>
-                                <element pos="3" type="uint8" length="4" optional="false">
-                                    <name lang="en">Type 1</name>
-                                    <description lang="en">Type 1.</description>
-                                </element>
-                                <element pos="4" type="uint8" length="1" optional="false">
-                                    <name lang="en">Class 2</name>
-                                    <description lang="en">Class 2.</description>
-                                </element>
-                                <element pos="5" type="uint8" length="4" optional="false">
-                                    <name lang="en">Type 2</name>
-                                    <description lang="en">Type 2.</description>
-                                </element>
-                                <element pos="6" type="uint8" length="1" optional="false">
-                                    <name lang="en">Class 3</name>
-                                    <description lang="en">Class 3.</description>
-                                </element>
-                                <element pos="7" type="uint8" length="4" optional="false">
-                                    <name lang="en">Type 3</name>
-                                    <description lang="en">Type 3.</description>
+                                <element pos="3" type="uint16" length="1" optional="false">
+                                    <name lang="en">Type</name>
+                                    <description lang="en">Type.</description>
                                 </element>
                             </elements>
                         </frame>
@@ -1119,9 +1097,9 @@ Notes:
                     </frames>
                 </vscp-type>
                 <vscp-type id="50">
-                    <name lang="en">Block data transfer ACK.</name>
+                    <name lang="en">Start block ACK.</name>
                     <token>VSCP_TYPE_PROTOCOL_START_BLOCK_ACK</token>
-                    <description lang="en">Not mandatory Only needed if a VSCP boot loader algorithm is used.\nPart of the VSCP boot-loader functionality. This is the positive response after a node received a CLASS1.PROTOCOL, Type=16 (Block data) event. It is sent by the node as a validation that it can handle the block data transfer.</description>
+                    <description lang="en">Not mandatory Only needed if a VSCP boot loader algorithm is used.\nPart of the VSCP boot-loader functionality. This is the positive response after a node received a CLASS1.PROTOCOL, Type=15 (Block data) event (a part of a block). It is sent by the node as a validation that it can handle the block data transfer.</description>
                     <frames>
                         <frame id="0">
                             <name lang="en" />
@@ -1130,9 +1108,42 @@ Notes:
                     </frames>
                 </vscp-type>
                 <vscp-type id="51">
-                    <name lang="en">Block data transfer NACK.</name>
+                    <name lang="en">Start block NACK.</name>
                     <token>VSCP_TYPE_PROTOCOL_START_BLOCK_NACK</token>
-                    <description lang="en">Not mandatory. Only needed if a VSCP boot-loader algorithm is used.\nPart of the VSCP boot-loader functionality. This is the negative response after a node received a CLASS1.PROTOCOL, Type=16 (Block data) event. It is sent by the node as an indication that it can NOT handle the block data transfer.</description>
+                    <description lang="en">Not mandatory. Only needed if a VSCP boot-loader algorithm is used.\nPart of the VSCP boot-loader functionality. This is the negative response after a node received a CLASS1.PROTOCOL, Type=15 (Block data) event (a part of a block). It is sent by the node as an indication that it can NOT handle the block data transfer.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                        </frame>
+                    </frames>
+                </vscp-type>
+                <vscp-type id="52">
+                    <name lang="en">Block Data Chunk ACK.</name>
+                    <token>VSCP_TYPE_PROTOCOL_BLOCK_CHUNK_ACK</token>
+                    <description lang="en">Not mandatory. Only needed if a VSCP boot-loader algorithm is used.\nPart of the VSCP boot-loader functionality. This is the positive response after a node received CLASS1.PROTOCOL, Type=16 (Block data) event (a part of a block). It is sent by the node as a validation that it can handle the block data transfer.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                        </frame>
+                    </frames>
+                </vscp-type>
+                <vscp-type id="53">
+                    <name lang="en">Block Data Chunk NACK.</name>
+                    <token>VSCP_TYPE_PROTOCOL_BLOCK_CHUNK_NACK</token>
+                    <description lang="en">Not mandatory. Only needed if a VSCP boot-loader algorithm is used.\nPart of the VSCP boot-loader functionality. This is the negative response after a node received CLASS1.PROTOCOL, Type=16 (Block data) event (a part of a block). It is sent by the node as an indication that it can NOT handle the block data transfer.</description>
+                    <frames>
+                        <frame id="0">
+                            <name lang="en" />
+                            <description lang="en" />
+                        </frame>
+                    </frames>
+                </vscp-type>
+                <vscp-type id="54">
+                    <name lang="en">Bootloader CHECK.</name>
+                    <token>VSCP_TYPE_PROTOCOL_BOOT_LOADER_CHECK</token>
+                    <description lang="en">Not mandatory. Only needed if a VSCP boot-loader algorithm is used.\nPart of the VSCP boot-loader functionality. This event is a way to check if a device is already in bootloader mode. A device that is in bootloader mode should respond with a CLASS1.PROTOCOL, Type=13 (ACK boot loader mode) event regardless of the internal state it is in.</description>
                     <frames>
                         <frame id="0">
                             <name lang="en" />
@@ -2607,13 +2618,13 @@ Notes:
                 <vscp-type id="13">
                     <name lang="en">Energy</name>
                     <token>VSCP_TYPE_MEASUREMENT_ENERGY</token>
-                    <description lang="en">Default unit: Joule.\nOptional unit: KWh (1), Wh(2)\nThis is a measurement of energy.</description>
+                    <description lang="en">Default unit: Joule.\nOptional unit: kWh (1), Wh (2), eV (electron volt) (3)\nThis is a measurement of energy.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="14">
                     <name lang="en">Power</name>
                     <token>VSCP_TYPE_MEASUREMENT_POWER</token>
-                    <description lang="en">Default unit: watt.\nOptional unit: Horse power (1).\nThis is a measurement of power.</description>
+                    <description lang="en">Default unit: watt.\nOptional unit: Horse power Metric (1), Horse power Imperial (2).\nThis is a measurement of power.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="15">
@@ -2649,7 +2660,7 @@ Notes:
                 <vscp-type id="20">
                     <name lang="en">Magnetic Field Strength</name>
                     <token>VSCP_TYPE_MEASUREMENT_MAGNETIC_FIELD_STRENGTH</token>
-                    <description lang="en">Default unit: amperes per meter (H).\nOptional units: teslas (B) (1)\nThis is a measurement of magnetic field strength.</description>
+                    <description lang="en">Default unit: amperes per meter (H).\nOptional units: Oersted (Oe) (1)\nThis is a measurement of magnetic field strength.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="21">
@@ -2661,7 +2672,7 @@ Notes:
                 <vscp-type id="22">
                     <name lang="en">Magnetic Flux Density</name>
                     <token>VSCP_TYPE_MEASUREMENT_MAGNETIC_FLUX_DENSITY</token>
-                    <description lang="en">Default unit: tesla (B).\nThis is a measurement of flux density or field strength for magnetic fields (also called the magnetic induction).</description>
+                    <description lang="en">Default unit: tesla (B).\nOptional units: Gauss (1)\nThis is a measurement of flux density or field strength for magnetic fields (also called the magnetic induction).</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="23">
@@ -2683,21 +2694,21 @@ Notes:
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="26">
-                    <name lang="en">Radiation dose</name>
-                    <token>VSCP_TYPE_MEASUREMENT_RADIATION_DOSE</token>
-                    <description lang="en">Default unit: gray (Gy).\nOpt unit: sievert (Sv) (1).\nThis is a measurement of a radiation dose (Absorbed dose of ionizing radiation).</description>
+                    <name lang="en">Radiation dose (absorbed)</name>
+                    <token>VSCP_TYPE_MEASUREMENT_RADIATION_DOSE_ABSORBED</token>
+                    <description lang="en">Default unit: gray (Gy).\nThis is a measurement of a radiation dose (Absorbed dose of ionizing radiation).</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="27">
                     <name lang="en">Catalytic activity</name>
                     <token>VSCP_TYPE_MEASUREMENT_CATALYTIC_ACITIVITY</token>
-                    <description lang="en">Default unit: katal (z).\nThis is a measurement of catalytic activity used in biochemistry.</description>
+                    <description lang="en">Default unit: katal (kat).\nThis is a measurement of catalytic activity used in biochemistry.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="28">
                     <name lang="en">Volume</name>
                     <token>VSCP_TYPE_MEASUREMENT_VOLUME</token>
-                    <description lang="en">Default unit: cubic meter (m³)\nOpt. unit: Liter (dm³) (1), decilitre (100 cm³) (2), centilitre (10 cm³) (3), millilitre (cm³) (4) where unit 4 is only available for Level II measurement events where units can hold this value.\nThis is a measurement of volume.</description>
+                    <description lang="en">Default unit: cubic meter (m³)\nOpt. unit: Liter (dm³) (1), millilitre (cm³) (2), decilitre (100 cm³) (3), centilitre (10 cm³) (4), millilitre (cm³) (4) where unit 4 is only available for Level II measurement events where units can hold this value.\nThis is a measurement of volume.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="29">
@@ -2715,19 +2726,19 @@ Notes:
                 <vscp-type id="31">
                     <name lang="en">Position WGS 84</name>
                     <token>VSCP_TYPE_MEASUREMENT_POSITION</token>
-                    <description lang="en">Default unit: Longitude.\nOpt. unit: Latitude.\nThis is a measurement of a position as of WGS 84. Normally given as a floating point value. See ./class1.gps.md for a better candidate to use for position data.</description>
+                    <description lang="en">Default unit: Longitude.\nOpt. unit: Latitude.\nThis is a (decimal) measurement of a position as of WGS 84. Normally given as a floating point value. See ./class1.gps.md for a better candidate to use for position data.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="32">
                     <name lang="en">Speed</name>
                     <token>VSCP_TYPE_MEASUREMENT_SPEED</token>
-                    <description lang="en">Default unit: Meters per second.\nOptional unit: Kilometers per hour (1) Miles per hour (2)\nThis is a measurement of a speed.</description>
+                    <description lang="en">Default unit: Meters per second.\nOptional unit: Kilometers per hour (1), Miles per hour (2)\nThis is a measurement of a speed.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="33">
                     <name lang="en">Acceleration</name>
                     <token>VSCP_TYPE_MEASUREMENT_ACCELERATION</token>
-                    <description lang="en">Default unit: Meters per second/second (m/s2).\nThis is a measurement of acceleration.</description>
+                    <description lang="en">Default unit: Meter per second squared (m/s²).\nThis is a measurement of acceleration.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="34">
@@ -2763,7 +2774,7 @@ Notes:
                 <vscp-type id="39">
                     <name lang="en">Dynamic viscosity</name>
                     <token>VSCP_TYPE_MEASUREMENT_DYNAMIC_VISCOSITY</token>
-                    <description lang="en">Default unit: poiseuille (Pl)\nThis is a measurement of dynamic viscosity.</description>
+                    <description lang="en">Default unit: pascal second\nOptional units: poiseuille (Pl) = 1, poise (P) = 2\nThis is a measurement of dynamic viscosity.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="40">
@@ -2781,7 +2792,7 @@ Notes:
                 <vscp-type id="42">
                     <name lang="en">Electric elastance</name>
                     <token>VSCP_TYPE_MEASUREMENT_ELECTRIC_ELASTANCE</token>
-                    <description lang="en">Default unit: daraf (f-1).\nThis is a measurement of electric elasticity.</description>
+                    <description lang="en">Default unit: daraf (F-1).\nThis is a measurement of electric elasticity.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="43">
@@ -2797,20 +2808,20 @@ Notes:
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="45">
-                    <name lang="en">Chemical concentration</name>
-                    <token>VSCP_TYPE_MEASUREMENT_CHEMICAL_CONCENTRATION</token>
-                    <description lang="en">Default unit: molal (mol/kg).\nThis is a measurement of chemical concentration.</description>
+                    <name lang="en">Chemical (molar) concentration</name>
+                    <token>VSCP_TYPE_MEASUREMENT_CHEMICAL_CONCENTRATION_MOLAR</token>
+                    <description lang="en">Default unit: mol/m³.\nThis is a measurement of chemical mol/ppm/percent concentration.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="46">
-                    <name lang="en">Reserved</name>
-                    <token>VSCP_TYPE_MEASUREMENT_RESERVED46</token>
-                    <description lang="en">Reserved (previously was doublet of Type= 26, don't use any longer!)</description>
+                    <name lang="en">Chemical (mass) concentration</name>
+                    <token>VSCP_TYPE_MEASUREMENT_CHEMICAL_CONCENTRATION_MASS</token>
+                    <description lang="en">Default unit: mol/m³.\nThis is a measurement of chemical mass concentration.</description>
                 </vscp-type>
                 <vscp-type id="47">
-                    <name lang="en">Dose equivalent</name>
-                    <token>VSCP_TYPE_MEASUREMENT_DOSE_EQVIVALENT</token>
-                    <description lang="en">Default unit: sievert (J/Kg).\nThis is a measurement of dose equivalent.</description>
+                    <name lang="en">Reserved</name>
+                    <token>VSCP_TYPE_MEASUREMENT_RESERVED47</token>
+                    <description lang="en">Reserved.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="48">
@@ -2839,7 +2850,7 @@ Notes:
                 <vscp-type id="52">
                     <name lang="en">Area</name>
                     <token>VSCP_TYPE_MEASUREMENT_AREA</token>
-                    <description lang="en">Default unit: square meter (m²)\nArea in square meter.</description>
+                    <description lang="en">Default unit: square meter (m²)\nOpt. unit: are (1), hectare (2), square kilometer (km²)\nArea in square meter.</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="53">
@@ -2892,7 +2903,7 @@ Notes:
                 </vscp-type>
                 <vscp-type id="61">
                     <name lang="en">Radiation dose (equivalent)</name>
-                    <token>VSCP_TYPE_MEASUREMENT_RADIATION_DOSE_EQ</token>
+                    <token>VSCP_TYPE_MEASUREMENT_DOSE_EQUIVALENT</token>
                     <description lang="en">Default unit: sievert (Sv).\nOptional unit rem (1)\nThis is a measurement of a radiation dose (Equivalent dose of ionizing radiation).</description>
                     <frames-ref>specification/vscp-classes/10/vscp-types/1/frames</frames-ref>
                 </vscp-type>
@@ -6562,7 +6573,7 @@ Notes:
                                 </element>
                                 <element pos="3" type="uint8" length="5" optional="false">
                                     <name lang="en">Security password</name>
-                                    <description lang="en">Security password. This password can be 1-5 bytes and length of event is set accordingly. It should be interpreted as an UTF-8 string with a length set bt event data length - 3</description>
+                                    <description lang="en">Security password. This password can be 1-5 bytes and length of event is set accordingly. It should be interpreted as a UTF-8 string of length equal to the event data length minus 3 bytes</description>
                                 </element>
                             </elements>
                         </frame>
@@ -7907,13 +7918,13 @@ Notes:
                 <vscp-type id="13">
                     <name lang="en">Energy</name>
                     <token>VSCP_TYPE_MEASUREMENT64_ENERGY</token>
-                    <description lang="en">Default unit: Joule.\nOptional unit: KWh (1)\nThis is a measurement of energy.</description>
+                    <description lang="en">Default unit: Joule.\nOptional unit: kWh (1), Wh (2), eV (electron volt) (3)\nThis is a measurement of energy.</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="14">
                     <name lang="en">Power</name>
                     <token>VSCP_TYPE_MEASUREMENT64_POWER</token>
-                    <description lang="en">Default unit: watt.\nOptional unit: Horse power (1).\nThis is a measurement of power.</description>
+                    <description lang="en">Default unit: watt.\nOptional unit: Horse power Metric (1), Horse power Imperial (2).\nThis is a measurement of power.</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="15">
@@ -7949,7 +7960,7 @@ Notes:
                 <vscp-type id="20">
                     <name lang="en">Magnetic Field Strength</name>
                     <token>VSCP_TYPE_MEASUREMENT64_MAGNETIC_FIELD_STRENGTH</token>
-                    <description lang="en">Default unit: amperes per meter (H).\nOptional units: teslas (B) (1)\nThis is a measurement of magnetic field strength.</description>
+                    <description lang="en">Default unit: amperes per meter (H).\nOptional units: Oersted (Oe) (1)\nThis is a measurement of magnetic field strength.</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="21">
@@ -7961,7 +7972,7 @@ Notes:
                 <vscp-type id="22">
                     <name lang="en">Magnetic Flux Density</name>
                     <token>VSCP_TYPE_MEASUREMENT64_MAGNETIC_FLUX_DENSITY</token>
-                    <description lang="en">Default unit: tesla (B).\nThis is a measurement of flux density or field strength for magnetic fields (also called the magnetic induction).</description>
+                    <description lang="en">Default unit: tesla (B).\nOptional units: Gauss (1)\nThis is a measurement of flux density or field strength for magnetic fields (also called the magnetic induction).</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="23">
@@ -7983,21 +7994,21 @@ Notes:
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="26">
-                    <name lang="en">Radiation dose</name>
-                    <token>VSCP_TYPE_MEASUREMENT64_RADIATION_DOSE</token>
-                    <description lang="en">Default unit: gray (Gy).\nOpt unit: sievert (Sv) (1).\nThis is a measurement of a radiation dose (Absorbed dose of ionizing radiation).</description>
+                    <name lang="en">Radiation dose (absorbed)</name>
+                    <token>VSCP_TYPE_MEASUREMENT64_RADIATION_DOSE_ABSORBED</token>
+                    <description lang="en">Default unit: gray (Gy).\nThis is a measurement of a radiation dose (Absorbed dose of ionizing radiation).</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="27">
                     <name lang="en">Catalytic activity</name>
                     <token>VSCP_TYPE_MEASUREMENT64_CATALYTIC_ACITIVITY</token>
-                    <description lang="en">Default unit: katal (z).\nThis is a measurement of catalytic activity used in biochemistry.</description>
+                    <description lang="en">Default unit: katal (kat).\nThis is a measurement of catalytic activity used in biochemistry.</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="28">
                     <name lang="en">Volume</name>
                     <token>VSCP_TYPE_MEASUREMENT64_VOLUME</token>
-                    <description lang="en">Default unit: cubic meter (m³)\nOpt. unit: Liter (dm³) (1), decilitre (100 cm³) (2), centilitre (10 cm³) (3), millilitre (cm³) (4) where unit 4 is only available for Level II measurement events where units can hold this value.\nThis is a measurement of volume.</description>
+                    <description lang="en">Default unit: cubic meter (m³)\nOpt. unit: Liter (dm³) (1), millilitre (cm³) (2), decilitre (100 cm³) (3), centilitre (10 cm³) (4), millilitre (cm³) (4) where unit 4 is only available for Level II measurement events where units can hold this value.\nThis is a measurement of volume.</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="29">
@@ -8015,19 +8026,19 @@ Notes:
                 <vscp-type id="31">
                     <name lang="en">Position WGS 84</name>
                     <token>VSCP_TYPE_MEASUREMENT64_POSITION</token>
-                    <description lang="en">Default unit: Longitude.\nOpt. unit: Latitude.\nThis is a measurement of a position as of WGS 84. Normally given as a floating point value. See ./class1.gps.md for a better candidate to use for position data.</description>
+                    <description lang="en">Default unit: Longitude.\nOpt. unit: Latitude.\nThis is a (decimal) measurement of a position as of WGS 84. Normally given as a floating point value. See ./class1.gps.md for a better candidate to use for position data.</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="32">
                     <name lang="en">Speed</name>
                     <token>VSCP_TYPE_MEASUREMENT64_SPEED</token>
-                    <description lang="en">Default unit: Meters per second.\nOptional unit: Kilometers per hour (1) Miles per hour (2)\nThis is a measurement of a speed.</description>
+                    <description lang="en">Default unit: Meters per second.\nOptional unit: Kilometers per hour (1), Miles per hour (2)\nThis is a measurement of a speed.</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="33">
                     <name lang="en">Acceleration</name>
                     <token>VSCP_TYPE_MEASUREMENT64_ACCELERATION</token>
-                    <description lang="en">Default unit: Meters per second/second (m/s2).\nThis is a measurement of acceleration.</description>
+                    <description lang="en">Default unit: Meter per second squared (m/s²).\nThis is a measurement of acceleration.</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="34">
@@ -8063,7 +8074,7 @@ Notes:
                 <vscp-type id="39">
                     <name lang="en">Dynamic viscosity</name>
                     <token>VSCP_TYPE_MEASUREMENT64_DYNAMIC_VISCOSITY</token>
-                    <description lang="en">Default unit: poiseuille (Pl)\nThis is a measurement of dynamic viscosity.</description>
+                    <description lang="en">Default unit: pascal second\nOptional units: poiseuille (Pl) = 1, poise (P) = 2\nThis is a measurement of dynamic viscosity.</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="40">
@@ -8081,7 +8092,7 @@ Notes:
                 <vscp-type id="42">
                     <name lang="en">Electric elastance</name>
                     <token>VSCP_TYPE_MEASUREMENT64_ELECTRIC_ELASTANCE</token>
-                    <description lang="en">Default unit: daraf (f-1).\nThis is a measurement of electric elasticity.</description>
+                    <description lang="en">Default unit: daraf (F-1).\nThis is a measurement of electric elasticity.</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="43">
@@ -8097,20 +8108,20 @@ Notes:
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="45">
-                    <name lang="en">Chemical concentration</name>
-                    <token>VSCP_TYPE_MEASUREMENT64_CHEMICAL_CONCENTRATION</token>
-                    <description lang="en">Default unit: molal (mol/kg).\nThis is a measurement of chemical concentration.</description>
+                    <name lang="en">Chemical (molar) concentration</name>
+                    <token>VSCP_TYPE_MEASUREMENT64_CHEMICAL_CONCENTRATION_MOLAR</token>
+                    <description lang="en">Default unit: mol/m³.\nThis is a measurement of chemical mol/ppm/percent concentration.</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="46">
-                    <name lang="en">Reserved</name>
-                    <token>VSCP_TYPE_MEASUREMENT64_RESERVED46</token>
-                    <description lang="en">Reserved (previously was doublet of Type= 26, don't use any longer!)</description>
+                    <name lang="en">Chemical (mass) concentration</name>
+                    <token>VSCP_TYPE_MEASUREMENT64_CHEMICAL_CONCENTRATION_MASS</token>
+                    <description lang="en">Default unit: mol/m³.\nThis is a measurement of chemical mass concentration.</description>
                 </vscp-type>
                 <vscp-type id="47">
-                    <name lang="en">Dose equivalent</name>
-                    <token>VSCP_TYPE_MEASUREMENT64_DOSE_EQVIVALENT</token>
-                    <description lang="en">Default unit: sievert (J/Kg).\nThis is a measurement of dose equivalent.</description>
+                    <name lang="en">Reserved</name>
+                    <token>VSCP_TYPE_MEASUREMENT64_RESERVED47</token>
+                    <description lang="en">Reserved.</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="48">
@@ -8139,7 +8150,7 @@ Notes:
                 <vscp-type id="52">
                     <name lang="en">Area</name>
                     <token>VSCP_TYPE_MEASUREMENT64_AREA</token>
-                    <description lang="en">Default unit: square meter (m²)\nArea in square meter.</description>
+                    <description lang="en">Default unit: square meter (m²)\nOpt. unit: are (1), hectare (2), square kilometer (km²)\nArea in square meter.</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="53">
@@ -8192,7 +8203,7 @@ Notes:
                 </vscp-type>
                 <vscp-type id="61">
                     <name lang="en">Radiation dose (equivalent)</name>
-                    <token>VSCP_TYPE_MEASUREMENT64_RADIATION_DOSE_EQ</token>
+                    <token>VSCP_TYPE_MEASUREMENT64_DOSE_EQUIVALENT</token>
                     <description lang="en">Default unit: sievert (Sv).\nOptional unit rem (1)\nThis is a measurement of a radiation dose (Equivalent dose of ionizing radiation).</description>
                     <frames-ref>specification/vscp-classes/60/vscp-types/1/frames</frames-ref>
                 </vscp-type>
@@ -8364,13 +8375,13 @@ Notes:
                 <vscp-type id="13">
                     <name lang="en">Energy</name>
                     <token>VSCP_TYPE_MEASUREZONE_ENERGY</token>
-                    <description lang="en">Default unit: Joule.\nOptional unit: KWh (1)\nThis is a measurement of energy.</description>
+                    <description lang="en">Default unit: Joule.\nOptional unit: kWh (1), Wh (2), eV (electron volt) (3)\nThis is a measurement of energy.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="14">
                     <name lang="en">Power</name>
                     <token>VSCP_TYPE_MEASUREZONE_POWER</token>
-                    <description lang="en">Default unit: watt.\nOptional unit: Horse power (1).\nThis is a measurement of power.</description>
+                    <description lang="en">Default unit: watt.\nOptional unit: Horse power Metric (1), Horse power Imperial (2).\nThis is a measurement of power.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="15">
@@ -8406,7 +8417,7 @@ Notes:
                 <vscp-type id="20">
                     <name lang="en">Magnetic Field Strength</name>
                     <token>VSCP_TYPE_MEASUREZONE_MAGNETIC_FIELD_STRENGTH</token>
-                    <description lang="en">Default unit: amperes per meter (H).\nOptional units: teslas (B) (1)\nThis is a measurement of magnetic field strength.</description>
+                    <description lang="en">Default unit: amperes per meter (H).\nOptional units: Oersted (Oe) (1)\nThis is a measurement of magnetic field strength.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="21">
@@ -8418,7 +8429,7 @@ Notes:
                 <vscp-type id="22">
                     <name lang="en">Magnetic Flux Density</name>
                     <token>VSCP_TYPE_MEASUREZONE_MAGNETIC_FLUX_DENSITY</token>
-                    <description lang="en">Default unit: tesla (B).\nThis is a measurement of flux density or field strength for magnetic fields (also called the magnetic induction).</description>
+                    <description lang="en">Default unit: tesla (B).\nOptional units: Gauss (1)\nThis is a measurement of flux density or field strength for magnetic fields (also called the magnetic induction).</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="23">
@@ -8440,21 +8451,21 @@ Notes:
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="26">
-                    <name lang="en">Radiation dose</name>
-                    <token>VSCP_TYPE_MEASUREZONE_RADIATION_DOSE</token>
-                    <description lang="en">Default unit: gray (Gy).\nOpt unit: sievert (Sv) (1).\nThis is a measurement of a radiation dose (Absorbed dose of ionizing radiation).</description>
+                    <name lang="en">Radiation dose (absorbed)</name>
+                    <token>VSCP_TYPE_MEASUREZONE_RADIATION_DOSE_ABSORBED</token>
+                    <description lang="en">Default unit: gray (Gy).\nThis is a measurement of a radiation dose (Absorbed dose of ionizing radiation).</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="27">
                     <name lang="en">Catalytic activity</name>
                     <token>VSCP_TYPE_MEASUREZONE_CATALYTIC_ACITIVITY</token>
-                    <description lang="en">Default unit: katal (z).\nThis is a measurement of catalytic activity used in biochemistry.</description>
+                    <description lang="en">Default unit: katal (kat).\nThis is a measurement of catalytic activity used in biochemistry.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="28">
                     <name lang="en">Volume</name>
                     <token>VSCP_TYPE_MEASUREZONE_VOLUME</token>
-                    <description lang="en">Default unit: cubic meter (m³)\nOpt. unit: Liter (dm³) (1), decilitre (100 cm³) (2), centilitre (10 cm³) (3), millilitre (cm³) (4) where unit 4 is only available for Level II measurement events where units can hold this value.\nThis is a measurement of volume.</description>
+                    <description lang="en">Default unit: cubic meter (m³)\nOpt. unit: Liter (dm³) (1), millilitre (cm³) (2), decilitre (100 cm³) (3), centilitre (10 cm³) (4), millilitre (cm³) (4) where unit 4 is only available for Level II measurement events where units can hold this value.\nThis is a measurement of volume.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="29">
@@ -8472,19 +8483,19 @@ Notes:
                 <vscp-type id="31">
                     <name lang="en">Position WGS 84</name>
                     <token>VSCP_TYPE_MEASUREZONE_POSITION</token>
-                    <description lang="en">Default unit: Longitude.\nOpt. unit: Latitude.\nThis is a measurement of a position as of WGS 84. Normally given as a floating point value. See ./class1.gps.md for a better candidate to use for position data.</description>
+                    <description lang="en">Default unit: Longitude.\nOpt. unit: Latitude.\nThis is a (decimal) measurement of a position as of WGS 84. Normally given as a floating point value. See ./class1.gps.md for a better candidate to use for position data.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="32">
                     <name lang="en">Speed</name>
                     <token>VSCP_TYPE_MEASUREZONE_SPEED</token>
-                    <description lang="en">Default unit: Meters per second.\nOptional unit: Kilometers per hour (1) Miles per hour (2)\nThis is a measurement of a speed.</description>
+                    <description lang="en">Default unit: Meters per second.\nOptional unit: Kilometers per hour (1), Miles per hour (2)\nThis is a measurement of a speed.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="33">
                     <name lang="en">Acceleration</name>
                     <token>VSCP_TYPE_MEASUREZONE_ACCELERATION</token>
-                    <description lang="en">Default unit: Meters per second/second (m/s2).\nThis is a measurement of acceleration.</description>
+                    <description lang="en">Default unit: Meter per second squared (m/s²).\nThis is a measurement of acceleration.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="34">
@@ -8520,7 +8531,7 @@ Notes:
                 <vscp-type id="39">
                     <name lang="en">Dynamic viscosity</name>
                     <token>VSCP_TYPE_MEASUREZONE_DYNAMIC_VISCOSITY</token>
-                    <description lang="en">Default unit: poiseuille (Pl)\nThis is a measurement of dynamic viscosity.</description>
+                    <description lang="en">Default unit: pascal second\nOptional units: poiseuille (Pl) = 1, poise (P) = 2\nThis is a measurement of dynamic viscosity.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="40">
@@ -8538,7 +8549,7 @@ Notes:
                 <vscp-type id="42">
                     <name lang="en">Electric elastance</name>
                     <token>VSCP_TYPE_MEASUREZONE_ELECTRIC_ELASTANCE</token>
-                    <description lang="en">Default unit: daraf (f-1).\nThis is a measurement of electric elasticity.</description>
+                    <description lang="en">Default unit: daraf (F-1).\nThis is a measurement of electric elasticity.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="43">
@@ -8554,20 +8565,20 @@ Notes:
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="45">
-                    <name lang="en">Chemical concentration</name>
-                    <token>VSCP_TYPE_MEASUREZONE_CHEMICAL_CONCENTRATION</token>
-                    <description lang="en">Default unit: molal (mol/kg).\nThis is a measurement of chemical concentration.</description>
+                    <name lang="en">Chemical (molar) concentration</name>
+                    <token>VSCP_TYPE_MEASUREZONE_CHEMICAL_CONCENTRATION_MOLAR</token>
+                    <description lang="en">Default unit: mol/m³.\nThis is a measurement of chemical mol/ppm/percent concentration.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="46">
-                    <name lang="en">Reserved</name>
-                    <token>VSCP_TYPE_MEASUREZONE_RESERVED46</token>
-                    <description lang="en">Reserved (previously was doublet of Type= 26, don't use any longer!)</description>
+                    <name lang="en">Chemical (mass) concentration</name>
+                    <token>VSCP_TYPE_MEASUREZONE_CHEMICAL_CONCENTRATION_MASS</token>
+                    <description lang="en">Default unit: mol/m³.\nThis is a measurement of chemical mass concentration.</description>
                 </vscp-type>
                 <vscp-type id="47">
-                    <name lang="en">Dose equivalent</name>
-                    <token>VSCP_TYPE_MEASUREZONE_DOSE_EQVIVALENT</token>
-                    <description lang="en">Default unit: sievert (J/Kg).\nThis is a measurement of dose equivalent.</description>
+                    <name lang="en">Reserved</name>
+                    <token>VSCP_TYPE_MEASUREZONE_RESERVED47</token>
+                    <description lang="en">Reserved.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="48">
@@ -8596,7 +8607,7 @@ Notes:
                 <vscp-type id="52">
                     <name lang="en">Area</name>
                     <token>VSCP_TYPE_MEASUREZONE_AREA</token>
-                    <description lang="en">Default unit: square meter (m²)\nArea in square meter.</description>
+                    <description lang="en">Default unit: square meter (m²)\nOpt. unit: are (1), hectare (2), square kilometer (km²)\nArea in square meter.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="53">
@@ -8649,7 +8660,7 @@ Notes:
                 </vscp-type>
                 <vscp-type id="61">
                     <name lang="en">Radiation dose (equivalent)</name>
-                    <token>VSCP_TYPE_MEASUREZONE_RADIATION_DOSE_EQ</token>
+                    <token>VSCP_TYPE_MEASUREZONE_DOSE_EQUIVALENT</token>
                     <description lang="en">Default unit: sievert (Sv).\nOptional unit rem (1)\nThis is a measurement of a radiation dose (Equivalent dose of ionizing radiation).</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
@@ -8781,13 +8792,13 @@ Notes:
                 <vscp-type id="13">
                     <name lang="en">Energy</name>
                     <token>VSCP_TYPE_MEASUREMENT32_ENERGY</token>
-                    <description lang="en">Default unit: Joule.\nOptional unit: KWh (1)\nThis is a measurement of energy.</description>
+                    <description lang="en">Default unit: Joule.\nOptional unit: kWh (1), Wh (2), eV (electron volt) (3)\nThis is a measurement of energy.</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="14">
                     <name lang="en">Power</name>
                     <token>VSCP_TYPE_MEASUREMENT32_POWER</token>
-                    <description lang="en">Default unit: watt.\nOptional unit: Horse power (1).\nThis is a measurement of power.</description>
+                    <description lang="en">Default unit: watt.\nOptional unit: Horse power Metric (1), Horse power Imperial (2).\nThis is a measurement of power.</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="15">
@@ -8823,7 +8834,7 @@ Notes:
                 <vscp-type id="20">
                     <name lang="en">Magnetic Field Strength</name>
                     <token>VSCP_TYPE_MEASUREMENT32_MAGNETIC_FIELD_STRENGTH</token>
-                    <description lang="en">Default unit: amperes per meter (H).\nOptional units: teslas (B) (1)\nThis is a measurement of magnetic field strength.</description>
+                    <description lang="en">Default unit: amperes per meter (H).\nOptional units: Oersted (Oe) (1)\nThis is a measurement of magnetic field strength.</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="21">
@@ -8835,7 +8846,7 @@ Notes:
                 <vscp-type id="22">
                     <name lang="en">Magnetic Flux Density</name>
                     <token>VSCP_TYPE_MEASUREMENT32_MAGNETIC_FLUX_DENSITY</token>
-                    <description lang="en">Default unit: tesla (B).\nThis is a measurement of flux density or field strength for magnetic fields (also called the magnetic induction).</description>
+                    <description lang="en">Default unit: tesla (B).\nOptional units: Gauss (1)\nThis is a measurement of flux density or field strength for magnetic fields (also called the magnetic induction).</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="23">
@@ -8857,21 +8868,21 @@ Notes:
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="26">
-                    <name lang="en">Radiation dose</name>
-                    <token>VSCP_TYPE_MEASUREMENT32_RADIATION_DOSE</token>
-                    <description lang="en">Default unit: gray (Gy).\nOpt unit: sievert (Sv) (1).\nThis is a measurement of a radiation dose (Absorbed dose of ionizing radiation).</description>
+                    <name lang="en">Radiation dose (absorbed)</name>
+                    <token>VSCP_TYPE_MEASUREMENT32_RADIATION_DOSE_ABSORBED</token>
+                    <description lang="en">Default unit: gray (Gy).\nThis is a measurement of a radiation dose (Absorbed dose of ionizing radiation).</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="27">
                     <name lang="en">Catalytic activity</name>
                     <token>VSCP_TYPE_MEASUREMENT32_CATALYTIC_ACITIVITY</token>
-                    <description lang="en">Default unit: katal (z).\nThis is a measurement of catalytic activity used in biochemistry.</description>
+                    <description lang="en">Default unit: katal (kat).\nThis is a measurement of catalytic activity used in biochemistry.</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="28">
                     <name lang="en">Volume</name>
                     <token>VSCP_TYPE_MEASUREMENT32_VOLUME</token>
-                    <description lang="en">Default unit: cubic meter (m³)\nOpt. unit: Liter (dm³) (1), decilitre (100 cm³) (2), centilitre (10 cm³) (3), millilitre (cm³) (4) where unit 4 is only available for Level II measurement events where units can hold this value.\nThis is a measurement of volume.</description>
+                    <description lang="en">Default unit: cubic meter (m³)\nOpt. unit: Liter (dm³) (1), millilitre (cm³) (2), decilitre (100 cm³) (3), centilitre (10 cm³) (4), millilitre (cm³) (4) where unit 4 is only available for Level II measurement events where units can hold this value.\nThis is a measurement of volume.</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="29">
@@ -8889,19 +8900,19 @@ Notes:
                 <vscp-type id="31">
                     <name lang="en">Position WGS 84</name>
                     <token>VSCP_TYPE_MEASUREMENT32_POSITION</token>
-                    <description lang="en">Default unit: Longitude.\nOpt. unit: Latitude.\nThis is a measurement of a position as of WGS 84. Normally given as a floating point value. See ./class1.gps.md for a better candidate to use for position data.</description>
+                    <description lang="en">Default unit: Longitude.\nOpt. unit: Latitude.\nThis is a (decimal) measurement of a position as of WGS 84. Normally given as a floating point value. See ./class1.gps.md for a better candidate to use for position data.</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="32">
                     <name lang="en">Speed</name>
                     <token>VSCP_TYPE_MEASUREMENT32_SPEED</token>
-                    <description lang="en">Default unit: Meters per second.\nOptional unit: Kilometers per hour (1) Miles per hour (2)\nThis is a measurement of a speed.</description>
+                    <description lang="en">Default unit: Meters per second.\nOptional unit: Kilometers per hour (1), Miles per hour (2)\nThis is a measurement of a speed.</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="33">
                     <name lang="en">Acceleration</name>
                     <token>VSCP_TYPE_MEASUREMENT32_ACCELERATION</token>
-                    <description lang="en">Default unit: Meters per second/second (m/s2).\nThis is a measurement of acceleration.</description>
+                    <description lang="en">Default unit: Meter per second squared (m/s²).\nThis is a measurement of acceleration.</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="34">
@@ -8937,7 +8948,7 @@ Notes:
                 <vscp-type id="39">
                     <name lang="en">Dynamic viscosity</name>
                     <token>VSCP_TYPE_MEASUREMENT32_DYNAMIC_VISCOSITY</token>
-                    <description lang="en">Default unit: poiseuille (Pl)\nThis is a measurement of dynamic viscosity.</description>
+                    <description lang="en">Default unit: pascal second\nOptional units: poiseuille (Pl) = 1, poise (P) = 2\nThis is a measurement of dynamic viscosity.</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="40">
@@ -8955,7 +8966,7 @@ Notes:
                 <vscp-type id="42">
                     <name lang="en">Electric elastance</name>
                     <token>VSCP_TYPE_MEASUREMENT32_ELECTRIC_ELASTANCE</token>
-                    <description lang="en">Default unit: daraf (f-1).\nThis is a measurement of electric elasticity.</description>
+                    <description lang="en">Default unit: daraf (F-1).\nThis is a measurement of electric elasticity.</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="43">
@@ -8971,20 +8982,20 @@ Notes:
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="45">
-                    <name lang="en">Chemical concentration</name>
-                    <token>VSCP_TYPE_MEASUREMENT32_CHEMICAL_CONCENTRATION</token>
-                    <description lang="en">Default unit: molal (mol/kg).\nThis is a measurement of chemical concentration.</description>
+                    <name lang="en">Chemical (molar) concentration</name>
+                    <token>VSCP_TYPE_MEASUREMENT32_CHEMICAL_CONCENTRATION_MOLAR</token>
+                    <description lang="en">Default unit: mol/m³.\nThis is a measurement of chemical mol/ppm/percent concentration.</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="46">
-                    <name lang="en">Reserved</name>
-                    <token>VSCP_TYPE_MEASUREMENT32_RESERVED46</token>
-                    <description lang="en">Reserved (previously was doublet of Type= 26, don't use any longer!)</description>
+                    <name lang="en">Chemical (mass) concentration</name>
+                    <token>VSCP_TYPE_MEASUREMENT32_CHEMICAL_CONCENTRATION_MASS</token>
+                    <description lang="en">Default unit: mol/m³.\nThis is a measurement of chemical mass concentration.</description>
                 </vscp-type>
                 <vscp-type id="47">
-                    <name lang="en">Dose equivalent</name>
-                    <token>VSCP_TYPE_MEASUREMENT32_DOSE_EQVIVALENT</token>
-                    <description lang="en">Default unit: sievert (J/Kg).\nThis is a measurement of dose equivalent.</description>
+                    <name lang="en">Reserved</name>
+                    <token>VSCP_TYPE_MEASUREMENT32_RESERVED47</token>
+                    <description lang="en">Reserved.</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="48">
@@ -9013,7 +9024,7 @@ Notes:
                 <vscp-type id="52">
                     <name lang="en">Area</name>
                     <token>VSCP_TYPE_MEASUREMENT32_AREA</token>
-                    <description lang="en">Default unit: square meter (m²)\nArea in square meter.</description>
+                    <description lang="en">Default unit: square meter (m²)\nOpt. unit: are (1), hectare (2), square kilometer (km²)\nArea in square meter.</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="53">
@@ -9066,7 +9077,7 @@ Notes:
                 </vscp-type>
                 <vscp-type id="61">
                     <name lang="en">Radiation dose (equivalent)</name>
-                    <token>VSCP_TYPE_MEASUREMENT32_RADIATION_DOSE_EQ</token>
+                    <token>VSCP_TYPE_MEASUREMENT32_DOSE_EQUIVALENT</token>
                     <description lang="en">Default unit: sievert (Sv).\nOptional unit rem (1)\nThis is a measurement of a radiation dose (Equivalent dose of ionizing radiation).</description>
                     <frames-ref>specification/vscp-classes/70/vscp-types/1/frames</frames-ref>
                 </vscp-type>
@@ -9187,13 +9198,13 @@ Notes:
                 <vscp-type id="13">
                     <name lang="en">Energy</name>
                     <token>VSCP_TYPE_SETVALUEZONE_ENERGY</token>
-                    <description lang="en">Default unit: Joule.\nOptional unit: KWh (1)\nThis is a measurement of energy.</description>
+                    <description lang="en">Default unit: Joule.\nOptional unit: kWh (1), Wh (2), eV (electron volt) (3)\nThis is a measurement of energy.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="14">
                     <name lang="en">Power</name>
                     <token>VSCP_TYPE_SETVALUEZONE_POWER</token>
-                    <description lang="en">Default unit: watt.\nOptional unit: Horse power (1).\nThis is a measurement of power.</description>
+                    <description lang="en">Default unit: watt.\nOptional unit: Horse power Metric (1), Horse power Imperial (2).\nThis is a measurement of power.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="15">
@@ -9229,7 +9240,7 @@ Notes:
                 <vscp-type id="20">
                     <name lang="en">Magnetic Field Strength</name>
                     <token>VSCP_TYPE_SETVALUEZONE_MAGNETIC_FIELD_STRENGTH</token>
-                    <description lang="en">Default unit: amperes per meter (H).\nOptional units: teslas (B) (1)\nThis is a measurement of magnetic field strength.</description>
+                    <description lang="en">Default unit: amperes per meter (H).\nOptional units: Oersted (Oe) (1)\nThis is a measurement of magnetic field strength.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="21">
@@ -9241,7 +9252,7 @@ Notes:
                 <vscp-type id="22">
                     <name lang="en">Magnetic Flux Density</name>
                     <token>VSCP_TYPE_SETVALUEZONE_MAGNETIC_FLUX_DENSITY</token>
-                    <description lang="en">Default unit: tesla (B).\nThis is a measurement of flux density or field strength for magnetic fields (also called the magnetic induction).</description>
+                    <description lang="en">Default unit: tesla (B).\nOptional units: Gauss (1)\nThis is a measurement of flux density or field strength for magnetic fields (also called the magnetic induction).</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="23">
@@ -9271,13 +9282,13 @@ Notes:
                 <vscp-type id="27">
                     <name lang="en">Catalytic activity</name>
                     <token>VSCP_TYPE_SETVALUEZONE_CATALYTIC_ACITIVITY</token>
-                    <description lang="en">Default unit: katal (z).\nThis is a measurement of catalytic activity used in biochemistry.</description>
+                    <description lang="en">Default unit: katal (kat).\nThis is a measurement of catalytic activity used in biochemistry.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="28">
                     <name lang="en">Volume</name>
                     <token>VSCP_TYPE_SETVALUEZONE_VOLUME</token>
-                    <description lang="en">Default unit: cubic meter (m³)\nOpt. unit: Liter (dm³) (1), decilitre (100 cm³) (2), centilitre (10 cm³) (3), millilitre (cm³) (4) where unit 4 is only available for Level II measurement events where units can hold this value.\nThis is a measurement of volume.</description>
+                    <description lang="en">Default unit: cubic meter (m³)\nOpt. unit: Liter (dm³) (1), millilitre (cm³) (2), decilitre (100 cm³) (3), centilitre (10 cm³) (4), millilitre (cm³) (4) where unit 4 is only available for Level II measurement events where units can hold this value.\nThis is a measurement of volume.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="29">
@@ -9295,19 +9306,19 @@ Notes:
                 <vscp-type id="31">
                     <name lang="en">Position WGS 84</name>
                     <token>VSCP_TYPE_SETVALUEZONE_POSITION</token>
-                    <description lang="en">Default unit: Longitude.\nOpt. unit: Latitude.\nThis is a measurement of a position as of WGS 84. Normally given as a floating point value. See ./class1.gps.md for a better candidate to use for position data.</description>
+                    <description lang="en">Default unit: Longitude.\nOpt. unit: Latitude.\nThis is a (decimal) measurement of a position as of WGS 84. Normally given as a floating point value. See ./class1.gps.md for a better candidate to use for position data.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="32">
                     <name lang="en">Speed</name>
                     <token>VSCP_TYPE_SETVALUEZONE_SPEED</token>
-                    <description lang="en">Default unit: Meters per second.\nOptional unit: Kilometers per hour (1) Miles per hour (2)\nThis is a measurement of a speed.</description>
+                    <description lang="en">Default unit: Meters per second.\nOptional unit: Kilometers per hour (1), Miles per hour (2)\nThis is a measurement of a speed.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="33">
                     <name lang="en">Acceleration</name>
                     <token>VSCP_TYPE_SETVALUEZONE_ACCELERATION</token>
-                    <description lang="en">Default unit: Meters per second/second (m/s2).\nThis is a measurement of acceleration.</description>
+                    <description lang="en">Default unit: Meter per second squared (m/s²).\nThis is a measurement of acceleration.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="34">
@@ -9343,7 +9354,7 @@ Notes:
                 <vscp-type id="39">
                     <name lang="en">Dynamic viscosity</name>
                     <token>VSCP_TYPE_SETVALUEZONE_DYNAMIC_VISCOSITY</token>
-                    <description lang="en">Default unit: poiseuille (Pl)\nThis is a measurement of dynamic viscosity.</description>
+                    <description lang="en">Default unit: pascal second\nOptional units: poiseuille (Pl) = 1, poise (P) = 2\nThis is a measurement of dynamic viscosity.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="40">
@@ -9361,7 +9372,7 @@ Notes:
                 <vscp-type id="42">
                     <name lang="en">Electric elastance</name>
                     <token>VSCP_TYPE_SETVALUEZONE_ELECTRIC_ELASTANCE</token>
-                    <description lang="en">Default unit: daraf (f-1).\nThis is a measurement of electric elasticity.</description>
+                    <description lang="en">Default unit: daraf (F-1).\nThis is a measurement of electric elasticity.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="43">
@@ -9377,20 +9388,20 @@ Notes:
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="45">
-                    <name lang="en">Chemical concentration</name>
-                    <token>VSCP_TYPE_SETVALUEZONE_CHEMICAL_CONCENTRATION</token>
-                    <description lang="en">Default unit: molal (mol/kg).\nThis is a measurement of chemical concentration.</description>
+                    <name lang="en">Chemical (molar) concentration</name>
+                    <token>VSCP_TYPE_SETVALUEZONE_CHEMICAL_CONCENTRATION_MOLAR</token>
+                    <description lang="en">Default unit: mol/m³.\nThis is a measurement of chemical mol/ppm/percent concentration.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="46">
-                    <name lang="en">Reserved</name>
-                    <token>VSCP_TYPE_SETVALUEZONE_RESERVED46</token>
-                    <description lang="en">Reserved (previously was doublet of Type= 26, don't use any longer!)</description>
+                    <name lang="en">Chemical (mass) concentration</name>
+                    <token>VSCP_TYPE_SETVALUEZONE_CHEMICAL_CONCENTRATION_MASS</token>
+                    <description lang="en">Default unit: mol/m³.\nThis is a measurement of chemical mass concentration.</description>
                 </vscp-type>
                 <vscp-type id="47">
-                    <name lang="en">Dose equivalent</name>
-                    <token>VSCP_TYPE_SETVALUEZONE_DOSE_EQVIVALENT</token>
-                    <description lang="en">Default unit: sievert (J/Kg).\nThis is a measurement of dose equivalent.</description>
+                    <name lang="en">Reserved</name>
+                    <token>VSCP_TYPE_SETVALUEZONE_RESERVED47</token>
+                    <description lang="en">Reserved.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="48">
@@ -9419,7 +9430,7 @@ Notes:
                 <vscp-type id="52">
                     <name lang="en">Area</name>
                     <token>VSCP_TYPE_SETVALUEZONE_AREA</token>
-                    <description lang="en">Default unit: square meter (m²)\nArea in square meter.</description>
+                    <description lang="en">Default unit: square meter (m²)\nOpt. unit: are (1), hectare (2), square kilometer (km²)\nArea in square meter.</description>
                     <frames-ref>specification/vscp-classes/65/vscp-types/1/frames</frames-ref>
                 </vscp-type>
                 <vscp-type id="53">
@@ -10487,7 +10498,7 @@ Notes:
                 </vscp-type>
                 <vscp-type id="48">
                     <name lang="en">Set LED</name>
-                    <token>VSCP_TYPE_DISPLAY_SHOW_LED</token>
+                    <token>VSCP_TYPE_DISPLAY_SET_LED</token>
                     <description lang="en">This event contains information that should be displayed on LED(s) pointed out by zone/sub-zone.</description>
                     <frames>
                         <frame id="0">
@@ -10529,8 +10540,8 @@ Notes:
                 </vscp-type>
                 <vscp-type id="49">
                     <name lang="en">Set RGB Color</name>
-                    <token>VSCP_TYPE_DISPLAY_SHOW_LED_COLOR</token>
-                    <description lang="en">This event set the color for LED(s) pointed out by zone/sub-zone.</description>
+                    <token>VSCP_TYPE_DISPLAY_SET_COLOR</token>
+                    <description lang="en">This event set the color for LED(s) (or similar device) pointed out by zone/sub-zone.</description>
                     <frames>
                         <frame id="0">
                             <name lang="en" />

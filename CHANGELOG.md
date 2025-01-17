@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.1.0
+
+  * Updated to VSCP v1.15.9.
+  * Supports the new VSCP_CLASS_L1_PROTOCOL events:
+    * Type=52 (0x34) - Block Data Chunk ACK.
+    * Type=53 (0x35) - Block Data Chunk NACK.
+    * Type=54 (0x36) - Bootloader CHECK.
+  * Measurement related events updated.
+  * Fixed VSCP_CLASS_L1_PROTOCOL Type=40 (0x28) Missing parameter node address added.
+  * A lot of unit changes in the measurement realted classes.
+
 ## 2.0.3
 
   * Add missing extern "C" sections to the event headers.
