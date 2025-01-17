@@ -9,6 +9,7 @@
     * Type=54 (0x36) - Bootloader CHECK.
   * Measurement related events updated.
   * Fixed VSCP_CLASS_L1_PROTOCOL Type=40 (0x28) Missing parameter node address added.
+  * A lot of unit changes in the measurement realted classes.
 
 ## 2.0.3
 
