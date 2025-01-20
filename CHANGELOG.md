@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.3.0
+
+- Updated to VSCP v1.1.5.10.
+- Class 1 Protocol, Type 55, VSCP_TYPE_PROTOCOL_BOOT_LOADER_ABORT added.
+- Class 1 Protocol, Type 56, VSCP_TYPE_PROTOCOL_BOOT_LOADER_ABORT_ACK added.
+- Class 1 Protocol, Type 57, VSCP_TYPE_PROTOCOL_BOOT_LOADER_ABORT_NACK added.
+
 ## 2.2.0
 
 - Type=17 (0x11) - Set all devices off
