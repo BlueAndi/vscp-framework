@@ -62,6 +62,238 @@ Templates to support the generation of C-modules.
     ****************************************************************************
     -->
     
+    <!-- Create a C header file. -->
+    <xsl:template name="ctools.createHeaderFile">
+        <xsl:param name="license" />
+        <xsl:param name="briefDesc" />
+        <xsl:param name="moduleName" />
+        <xsl:param name="author" />
+        <xsl:param name="description" />
+        <xsl:param name="doxygenGroupDef" select="''" />
+        <xsl:param name="includes" />
+        <xsl:param name="compilerSwitches" select="''" />
+        <xsl:param name="constants" select="''" />
+        <xsl:param name="macros" select="''" />
+        <xsl:param name="typesAndStructures" select="''" />
+        <xsl:param name="globalVariables" select="''" />
+        <xsl:param name="functions" select="''" />
+
+        <xsl:result-document href="{$moduleName}.h">
+            <!-- Header -->
+            <xsl:call-template name="ctools.hHeaderBlock">
+                <xsl:with-param name="license">
+                    <xsl:value-of select="$license" />
+                </xsl:with-param>
+                <xsl:with-param name="briefDesc">
+                    <xsl:value-of select="$briefDesc" />
+                </xsl:with-param>
+                <xsl:with-param name="moduleName">
+                    <xsl:value-of select="$moduleName" />
+                </xsl:with-param>
+                <xsl:with-param name="author">
+                    <xsl:value-of select="$author" />
+                </xsl:with-param>
+                <xsl:with-param name="description">
+                    <xsl:value-of select="$description" />
+                </xsl:with-param>
+            </xsl:call-template>
+            <xsl:text>&LF;</xsl:text>
+
+            <!-- Doxygen group definition begin -->
+            <xsl:if test="string-length($doxygenGroupDef) &gt; 0">
+                <xsl:value-of select="$doxygenGroupDef" />
+                <xsl:text>&LF;</xsl:text>
+            </xsl:if>
+
+            <!-- Includes -->
+            <xsl:call-template name="ctools.generalBlock">
+                <xsl:with-param name="name">
+                    <xsl:text>INCLUDES</xsl:text>
+                </xsl:with-param>
+            </xsl:call-template>
+            <xsl:value-of select="$includes" />
+            <xsl:text>&LF;</xsl:text>
+            
+            <xsl:call-template name="ctools.externCBegin">
+            </xsl:call-template>
+            <xsl:text>&LF;</xsl:text>
+
+            <!-- Compiler switches -->
+            <xsl:call-template name="ctools.generalBlock">
+                <xsl:with-param name="name">
+                    <xsl:text>COMPILER SWITCHES</xsl:text>
+                </xsl:with-param>
+            </xsl:call-template>
+            <xsl:value-of select="$compilerSwitches" />
+            <xsl:text>&LF;</xsl:text>
+
+            <!-- Constants -->
+            <xsl:call-template name="ctools.generalBlock">
+                <xsl:with-param name="name">
+                    <xsl:text>CONSTANTS</xsl:text>
+                </xsl:with-param>
+            </xsl:call-template>
+            <xsl:value-of select="$constants" />
+            <xsl:text>&LF;</xsl:text>
+
+            <!-- Macros -->
+            <xsl:call-template name="ctools.generalBlock">
+                <xsl:with-param name="name">
+                    <xsl:text>MACROS</xsl:text>
+                </xsl:with-param>
+            </xsl:call-template>
+            <xsl:value-of select="$macros" />
+            <xsl:text>&LF;</xsl:text>
+
+            <!-- Types and structures -->
+            <xsl:call-template name="ctools.generalBlock">
+                <xsl:with-param name="name">
+                    <xsl:text>TYPES AND STRUCTURES</xsl:text>
+                </xsl:with-param>
+            </xsl:call-template>
+            <xsl:value-of select="$typesAndStructures" />
+            <xsl:text>&LF;</xsl:text>
+
+            <!-- Global variables -->
+            <xsl:call-template name="ctools.generalBlock">
+                <xsl:with-param name="name">
+                    <xsl:text>VARIABLES</xsl:text>
+                </xsl:with-param>
+            </xsl:call-template>
+            <xsl:value-of select="$globalVariables" />
+            <xsl:text>&LF;</xsl:text>
+
+            <!-- Functions -->
+            <xsl:call-template name="ctools.generalBlock">
+                <xsl:with-param name="name">
+                    <xsl:text>FUNCTIONS</xsl:text>
+                </xsl:with-param>
+            </xsl:call-template>
+            <xsl:text>&LF;</xsl:text>
+            <xsl:value-of select="$functions" />
+
+            <xsl:call-template name="ctools.externCEnd">
+            </xsl:call-template>
+            <xsl:text>&LF;</xsl:text>
+
+            <!-- Footer -->
+            <xsl:call-template name="ctools.hFooterBlock">
+                <xsl:with-param name="moduleName">
+                    <xsl:value-of select="$moduleName" />
+                </xsl:with-param>
+            </xsl:call-template>
+
+            <!-- Doxygen group definition end -->
+            <xsl:if test="string-length($doxygenGroupDef) &gt; 0">
+                <xsl:text>&LF;</xsl:text>
+                <xsl:text>/** @} */&LF;</xsl:text>
+            </xsl:if>
+
+        </xsl:result-document>
+    </xsl:template>
+
+    <!-- Create a C source file. -->
+    <xsl:template name="ctools.createSourceFile">
+        <xsl:param name="license" />
+        <xsl:param name="briefDesc" />
+        <xsl:param name="moduleName" />
+        <xsl:param name="author" />
+        <xsl:param name="includes" select="''" />
+        <xsl:param name="compilerSwitches" select="''" />
+        <xsl:param name="constants" select="''" />
+        <xsl:param name="macros" select="''" />
+        <xsl:param name="typesAndStructures" select="''" />
+        <xsl:param name="globalVariables" select="''" />
+        <xsl:param name="functions" select="''" />
+
+        <xsl:result-document href="{$moduleName}.c">
+            <!-- Header -->
+            <xsl:call-template name="ctools.cHeaderBlock">
+                <xsl:with-param name="license">
+                    <xsl:value-of select="$license" />
+                </xsl:with-param>
+                <xsl:with-param name="briefDesc">
+                    <xsl:value-of select="$briefDesc" />
+                </xsl:with-param>
+                <xsl:with-param name="moduleName">
+                    <xsl:value-of select="$moduleName" />
+                </xsl:with-param>
+                <xsl:with-param name="author">
+                    <xsl:value-of select="$author" />
+                </xsl:with-param>
+            </xsl:call-template>
+            <xsl:text>&LF;</xsl:text>
+
+            <!-- Includes -->
+            <xsl:call-template name="ctools.generalBlock">
+                <xsl:with-param name="name">
+                    <xsl:text>INCLUDES</xsl:text>
+                </xsl:with-param>
+            </xsl:call-template>
+            <xsl:value-of select="$includes" />
+            <xsl:text>&LF;</xsl:text>
+
+            <!-- Compiler switches -->
+            <xsl:call-template name="ctools.generalBlock">
+                <xsl:with-param name="name">
+                    <xsl:text>COMPILER SWITCHES</xsl:text>
+                </xsl:with-param>
+            </xsl:call-template>
+            <xsl:value-of select="$compilerSwitches" />
+            <xsl:text>&LF;</xsl:text>
+
+            <!-- Constants -->
+            <xsl:call-template name="ctools.generalBlock">
+                <xsl:with-param name="name">
+                    <xsl:text>CONSTANTS</xsl:text>
+                </xsl:with-param>
+            </xsl:call-template>
+            <xsl:value-of select="$constants" />
+            <xsl:text>&LF;</xsl:text>
+
+            <!-- Macros -->
+            <xsl:call-template name="ctools.generalBlock">
+                <xsl:with-param name="name">
+                    <xsl:text>MACROS</xsl:text>
+                </xsl:with-param>
+            </xsl:call-template>
+            <xsl:value-of select="$macros" />
+            <xsl:text>&LF;</xsl:text>
+
+            <!-- Types and structures -->
+            <xsl:call-template name="ctools.generalBlock">
+                <xsl:with-param name="name">
+                    <xsl:text>TYPES AND STRUCTURES</xsl:text>
+                </xsl:with-param>
+            </xsl:call-template>
+            <xsl:value-of select="$typesAndStructures" />
+            <xsl:text>&LF;</xsl:text>
+
+            <!-- Global variables -->
+            <xsl:call-template name="ctools.generalBlock">
+                <xsl:with-param name="name">
+                    <xsl:text>VARIABLES</xsl:text>
+                </xsl:with-param>
+            </xsl:call-template>
+            <xsl:value-of select="$globalVariables" />
+            <xsl:text>&LF;</xsl:text>
+
+            <!-- Functions -->
+            <xsl:call-template name="ctools.generalBlock">
+                <xsl:with-param name="name">
+                    <xsl:text>FUNCTIONS</xsl:text>
+                </xsl:with-param>
+            </xsl:call-template>
+            <xsl:text>&LF;</xsl:text>
+            <xsl:value-of select="$functions" />
+
+            <!-- Footer -->
+            <xsl:call-template name="ctools.cFooterBlock">
+            </xsl:call-template>
+
+        </xsl:result-document>
+    </xsl:template>
+
     <!-- Header block of a .h file.
         @param  briefDesc   Brief description
         @param  moduleName  Module name (file name without extension)

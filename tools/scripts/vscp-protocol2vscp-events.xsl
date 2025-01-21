@@ -282,120 +282,53 @@ This transformation script generates the VSCP event modules.
         <xsl:value-of select="$moduleName" />
         <xsl:text>.h&LF;</xsl:text>
 
-        <xsl:result-document href="{$moduleName}.h">
-            <!-- Header -->
-            <xsl:call-template name="ctools.hHeaderBlock">
-                <xsl:with-param name="license">
-                    <xsl:value-of select="$global.license" />
-                </xsl:with-param>
-                <xsl:with-param name="briefDesc">
-                    <xsl:value-of select="name[@lang='en']" />
-                </xsl:with-param>
-                <xsl:with-param name="moduleName">
-                    <xsl:value-of select="$moduleName" />
-                </xsl:with-param>
-                <xsl:with-param name="author">
-                    <xsl:value-of select="$global.author" />
-                </xsl:with-param>
-                <xsl:with-param name="description">
-                    <xsl:value-of select="description[@lang='en']" />
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
-
-            <!-- Includes -->
-            <xsl:call-template name="ctools.generalBlock">
-                <xsl:with-param name="name">
-                    <xsl:text>INCLUDES</xsl:text>
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>#include &lt;stdint.h&gt;&LF;</xsl:text>
-            <xsl:text>#include "vscp_platform.h"&LF;</xsl:text>
-            <!-- Exception handling for special classes. -->
-            <xsl:choose>
-                <xsl:when test="@id = 60">
-                    <xsl:text>#include &lt;math.h&gt;&LF;</xsl:text>
-                </xsl:when>
-                <xsl:when test="@id = 70">
-                    <xsl:text>#include &lt;math.h&gt;&LF;</xsl:text>
-                </xsl:when>
-                <xsl:when test="@id = 206">
-                    <xsl:text>#include &lt;math.h&gt;&LF;</xsl:text>
-                </xsl:when>
-                <xsl:otherwise>
-                </xsl:otherwise>
-            </xsl:choose>
-            <xsl:text>&LF;</xsl:text>
+        <xsl:call-template name="ctools.createHeaderFile">
+            <xsl:with-param name="moduleName">
+                <xsl:value-of select="$moduleName" />
+            </xsl:with-param>
+            <xsl:with-param name="license">
+                <xsl:value-of select="$global.license" />
+            </xsl:with-param>
+            <xsl:with-param name="author">
+                <xsl:value-of select="$global.author" />
+            </xsl:with-param>
+            <xsl:with-param name="briefDesc">
+                <xsl:value-of select="name[@lang='en']" />
+            </xsl:with-param>
+            <xsl:with-param name="description">
+                <xsl:value-of select="description[@lang='en']" />
+            </xsl:with-param>
             
-            <xsl:call-template name="ctools.externCBegin">
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
-
-            <!-- Compiler switches -->
-            <xsl:call-template name="ctools.generalBlock">
-                <xsl:with-param name="name">
-                    <xsl:text>COMPILER SWITCHES</xsl:text>
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
-
-            <!-- Constants -->
-            <xsl:call-template name="ctools.generalBlock">
-                <xsl:with-param name="name">
-                    <xsl:text>CONSTANTS</xsl:text>
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
-
-            <!-- Macros -->
-            <xsl:call-template name="ctools.generalBlock">
-                <xsl:with-param name="name">
-                    <xsl:text>MACROS</xsl:text>
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
-
-            <!-- Types and structures -->
-            <xsl:call-template name="ctools.generalBlock">
-                <xsl:with-param name="name">
-                    <xsl:text>TYPES AND STRUCTURES</xsl:text>
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
-
-            <!-- Global variables -->
-            <xsl:call-template name="ctools.generalBlock">
-                <xsl:with-param name="name">
-                    <xsl:text>VARIABLES</xsl:text>
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
+            <!-- Includes -->
+            <xsl:with-param name="includes">
+                <xsl:text>#include &lt;stdint.h&gt;&LF;</xsl:text>
+                <xsl:text>#include "vscp_platform.h"&LF;</xsl:text>
+                <!-- Exception handling for special classes. -->
+                <xsl:choose>
+                    <xsl:when test="@id = 60">
+                        <xsl:text>#include &lt;math.h&gt;&LF;</xsl:text>
+                    </xsl:when>
+                    <xsl:when test="@id = 70">
+                        <xsl:text>#include &lt;math.h&gt;&LF;</xsl:text>
+                    </xsl:when>
+                    <xsl:when test="@id = 206">
+                        <xsl:text>#include &lt;math.h&gt;&LF;</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:with-param>
 
             <!-- Functions -->
-            <xsl:call-template name="ctools.generalBlock">
-                <xsl:with-param name="name">
-                    <xsl:text>FUNCTIONS</xsl:text>
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
-            <xsl:apply-templates select="vscp-types/vscp-type[token]" mode="h">
-                <xsl:with-param name="baseName">
-                    <xsl:value-of select="$baseName" />
-                </xsl:with-param>
-            </xsl:apply-templates>
+            <xsl:with-param name="functions">
+                <xsl:apply-templates select="vscp-types/vscp-type[token]" mode="h">
+                    <xsl:with-param name="baseName">
+                        <xsl:value-of select="$baseName" />
+                    </xsl:with-param>
+                </xsl:apply-templates>
+            </xsl:with-param>
 
-            <xsl:call-template name="ctools.externCEnd">
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
-
-            <!-- Footer -->
-            <xsl:call-template name="ctools.hFooterBlock">
-                <xsl:with-param name="moduleName">
-                    <xsl:value-of select="$moduleName" />
-                </xsl:with-param>
-            </xsl:call-template>
-
-        </xsl:result-document>
+        </xsl:call-template>
     </xsl:template>
 
     <!--
@@ -416,110 +349,54 @@ This transformation script generates the VSCP event modules.
         <xsl:value-of select="$moduleName" />
         <xsl:text>.c&LF;</xsl:text>
 
-        <xsl:result-document href="{$moduleName}.c">
-            <!-- Header -->
-            <xsl:call-template name="ctools.cHeaderBlock">
-                <xsl:with-param name="license">
-                    <xsl:value-of select="$global.license" />
-                </xsl:with-param>
-                <xsl:with-param name="briefDesc">
-                    <xsl:value-of select="name[@lang='en']" />
-                </xsl:with-param>
-                <xsl:with-param name="moduleName">
-                    <xsl:value-of select="$moduleName" />
-                </xsl:with-param>
-                <xsl:with-param name="author">
-                    <xsl:value-of select="$global.author" />
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
+        <xsl:call-template name="ctools.createSourceFile">
+            <xsl:with-param name="moduleName">
+                <xsl:value-of select="$moduleName" />
+            </xsl:with-param>
+            <xsl:with-param name="license">
+                <xsl:value-of select="$global.license" />
+            </xsl:with-param>
+            <xsl:with-param name="author">
+                <xsl:value-of select="$global.author" />
+            </xsl:with-param>
+            <xsl:with-param name="briefDesc">
+                <xsl:value-of select="name[@lang='en']" />
+            </xsl:with-param>
 
             <!-- Includes -->
-            <xsl:call-template name="ctools.generalBlock">
-                <xsl:with-param name="name">
-                    <xsl:text>INCLUDES</xsl:text>
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>#include "</xsl:text><xsl:value-of select="$moduleName" /><xsl:text>.h"&LF;</xsl:text>
-            <xsl:text>#include "vscp_core.h"&LF;</xsl:text>
-            <xsl:text>#include "vscp_class_l1.h"&LF;</xsl:text>
-            <xsl:text>#include "vscp_type_</xsl:text>
-            <xsl:value-of select="$baseName" />
-            <xsl:text>.h"&LF;</xsl:text>
-            <!-- Exception handling for special classes. -->
-            <xsl:choose>
-                <xsl:when test="@id = 10">
-                    <xsl:text>#include "vscp_data_coding.h"&LF;</xsl:text>
-                </xsl:when>
-                <xsl:when test="@id = 15">
-                    <xsl:text>#include "vscp_data_coding.h"&LF;</xsl:text>
-                </xsl:when>
-                <xsl:when test="@id = 65">
-                    <xsl:text>#include "vscp_data_coding.h"&LF;</xsl:text>
-                </xsl:when>
-                <xsl:otherwise>
-                </xsl:otherwise>
-            </xsl:choose>
-            <xsl:text>&LF;</xsl:text>
-
-            <!-- Compiler switches -->
-            <xsl:call-template name="ctools.generalBlock">
-                <xsl:with-param name="name">
-                    <xsl:text>COMPILER SWITCHES</xsl:text>
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
-
-            <!-- Constants -->
-            <xsl:call-template name="ctools.generalBlock">
-                <xsl:with-param name="name">
-                    <xsl:text>CONSTANTS</xsl:text>
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
-
-            <!-- Macros -->
-            <xsl:call-template name="ctools.generalBlock">
-                <xsl:with-param name="name">
-                    <xsl:text>MACROS</xsl:text>
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
-
-            <!-- Types and structures -->
-            <xsl:call-template name="ctools.generalBlock">
-                <xsl:with-param name="name">
-                    <xsl:text>TYPES AND STRUCTURES</xsl:text>
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
-
-            <!-- Global variables -->
-            <xsl:call-template name="ctools.generalBlock">
-                <xsl:with-param name="name">
-                    <xsl:text>VARIABLES</xsl:text>
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
+            <xsl:with-param name="includes">
+                <xsl:text>#include "</xsl:text><xsl:value-of select="$moduleName" /><xsl:text>.h"&LF;</xsl:text>
+                <xsl:text>#include "vscp_core.h"&LF;</xsl:text>
+                <xsl:text>#include "vscp_class_l1.h"&LF;</xsl:text>
+                <xsl:text>#include "vscp_type_</xsl:text>
+                <xsl:value-of select="$baseName" />
+                <xsl:text>.h"&LF;</xsl:text>
+                <!-- Exception handling for special classes. -->
+                <xsl:choose>
+                    <xsl:when test="@id = 10">
+                        <xsl:text>#include "vscp_data_coding.h"&LF;</xsl:text>
+                    </xsl:when>
+                    <xsl:when test="@id = 15">
+                        <xsl:text>#include "vscp_data_coding.h"&LF;</xsl:text>
+                    </xsl:when>
+                    <xsl:when test="@id = 65">
+                        <xsl:text>#include "vscp_data_coding.h"&LF;</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:with-param>
 
             <!-- Functions -->
-            <xsl:call-template name="ctools.generalBlock">
-                <xsl:with-param name="name">
-                    <xsl:text>FUNCTIONS</xsl:text>
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
-            <xsl:apply-templates select="vscp-types/vscp-type[token]" mode="c">
-                <xsl:with-param name="baseName">
-                    <xsl:value-of select="$baseName" />
-                </xsl:with-param>
-            </xsl:apply-templates>
+            <xsl:with-param name="functions">
+                <xsl:apply-templates select="vscp-types/vscp-type[token]" mode="c">
+                    <xsl:with-param name="baseName">
+                        <xsl:value-of select="$baseName" />
+                    </xsl:with-param>
+                </xsl:apply-templates>
+            </xsl:with-param>
 
-            <!-- Footer -->
-            <xsl:call-template name="ctools.cFooterBlock">
-            </xsl:call-template>
-
-        </xsl:result-document>
+        </xsl:call-template>
     </xsl:template>
 
     <!--

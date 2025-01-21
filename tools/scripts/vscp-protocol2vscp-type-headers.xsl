@@ -222,125 +222,52 @@ This transformation script generates the VSCP type C header files.
         <xsl:value-of select="$moduleName" />
         <xsl:text>.h&LF;</xsl:text>
 
-        <xsl:result-document href="{$moduleName}.h">
-            <!-- Header -->
-            <xsl:call-template name="ctools.hHeaderBlock">
-                <xsl:with-param name="license">
-                    <xsl:value-of select="$global.license" />
-                </xsl:with-param>
-                <xsl:with-param name="briefDesc">
-                    <xsl:value-of select="name[@lang='en']" />
-                </xsl:with-param>
-                <xsl:with-param name="moduleName">
-                    <xsl:value-of select="$moduleName" />
-                </xsl:with-param>
-                <xsl:with-param name="author">
-                    <xsl:value-of select="$global.author" />
-                </xsl:with-param>
-                <xsl:with-param name="description">
-                    <xsl:value-of select="description[@lang='en']" />
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
+        <xsl:call-template name="ctools.createHeaderFile">
+            <xsl:with-param name="license">
+                <xsl:value-of select="$global.license" />
+            </xsl:with-param>
+            <xsl:with-param name="briefDesc">
+                <xsl:value-of select="name[@lang='en']" />
+            </xsl:with-param>
+            <xsl:with-param name="moduleName">
+                <xsl:value-of select="$moduleName" />
+            </xsl:with-param>
+            <xsl:with-param name="author">
+                <xsl:value-of select="$global.author" />
+            </xsl:with-param>
+            <xsl:with-param name="description">
+                <xsl:value-of select="description[@lang='en']" />
+            </xsl:with-param>
 
-            <!-- Doxygen comment block -->
-            <xsl:text>/** @defgroup </xsl:text><xsl:value-of select="$moduleName" /><xsl:text> </xsl:text><xsl:value-of select="name[@lang='en']" /><xsl:text>&LF;</xsl:text>
-            <xsl:text> * Level 1 protocol class types&LF;</xsl:text>
-            <xsl:text> * @{&LF;</xsl:text>
-            <xsl:text> * @ingroup vscp_l1&LF;</xsl:text>
-            <xsl:text> */&LF;</xsl:text>
-            <xsl:text>&LF;</xsl:text>
-
-            <!-- Includes -->
-            <xsl:call-template name="ctools.generalBlock">
-                <xsl:with-param name="name">
-                    <xsl:text>INCLUDES</xsl:text>
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
-
-            <xsl:call-template name="ctools.externCBegin">
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
-
-            <!-- Compiler switches -->
-            <xsl:call-template name="ctools.generalBlock">
-                <xsl:with-param name="name">
-                    <xsl:text>COMPILER SWITCHES</xsl:text>
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
-
+            <!-- Doxygen group definition -->
+            <xsl:with-param name="doxygenGroupDef">
+                <xsl:text>/** @defgroup </xsl:text><xsl:value-of select="$moduleName" /><xsl:text> </xsl:text><xsl:value-of select="name[@lang='en']" /><xsl:text>&LF;</xsl:text>
+                <xsl:text> * Level 1 protocol class types&LF;</xsl:text>
+                <xsl:text> * @{&LF;</xsl:text>
+                <xsl:text> * @ingroup vscp_l1&LF;</xsl:text>
+                <xsl:text> */&LF;</xsl:text>
+            </xsl:with-param>
+            
             <!-- Constants -->
-            <xsl:call-template name="ctools.generalBlock">
-                <xsl:with-param name="name">
-                    <xsl:text>CONSTANTS</xsl:text>
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
-            <xsl:apply-templates select="vscp-types/vscp-type[token]">
-                <xsl:with-param name="maxLen">
-                    <xsl:for-each select="vscp-types/vscp-type">
-                        <xsl:sort select="string-length(token)" order="descending" data-type="number"/>
-                        <xsl:if test="position() = 1">
-                            <xsl:value-of select="string-length(token)"/>
-                        </xsl:if>
-                    </xsl:for-each>
-                </xsl:with-param> 
-            </xsl:apply-templates>
-
-            <!-- Macros -->
-            <xsl:call-template name="ctools.generalBlock">
-                <xsl:with-param name="name">
-                    <xsl:text>MACROS</xsl:text>
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
-
-            <!-- Types and structures -->
-            <xsl:call-template name="ctools.generalBlock">
-                <xsl:with-param name="name">
-                    <xsl:text>TYPES AND STRUCTURES</xsl:text>
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
-
-            <!-- Global variables -->
-            <xsl:call-template name="ctools.generalBlock">
-                <xsl:with-param name="name">
-                    <xsl:text>VARIABLES</xsl:text>
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
-
-            <!-- Functions -->
-            <xsl:call-template name="ctools.generalBlock">
-                <xsl:with-param name="name">
-                    <xsl:text>FUNCTIONS</xsl:text>
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
-
-            <xsl:call-template name="ctools.externCEnd">
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
-
-            <!-- Footer -->
-            <xsl:call-template name="ctools.hFooterBlock">
-                <xsl:with-param name="moduleName">
-                    <xsl:value-of select="$moduleName" />
-                </xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&LF;</xsl:text>
-
-            <xsl:text>/** @} */&LF;</xsl:text>
-
-        </xsl:result-document>
+            <xsl:with-param name="constants">
+                <xsl:apply-templates select="vscp-types/vscp-type[token]">
+                    <xsl:with-param name="maxLen">
+                        <xsl:for-each select="vscp-types/vscp-type">
+                            <xsl:sort select="string-length(token)" order="descending" data-type="number"/>
+                            <xsl:if test="position() = 1">
+                                <xsl:value-of select="string-length(token)"/>
+                            </xsl:if>
+                        </xsl:for-each>
+                    </xsl:with-param> 
+                </xsl:apply-templates>
+            </xsl:with-param>
+        </xsl:call-template>
     </xsl:template>
 
     <!-- Create a #define for each vscp-type  -->
     <xsl:template match="vscp-type">
         <xsl:param name="maxLen" />
+        <xsl:text>&LF;</xsl:text>
         <xsl:call-template name="ctools.define">
             <xsl:with-param name="comment">
                 <xsl:analyze-string select="description[@lang='en']" regex="\\n">
@@ -364,7 +291,6 @@ This transformation script generates the VSCP type C header files.
                 <xsl:value-of select="@id" />
             </xsl:with-param>
         </xsl:call-template>
-        <xsl:text>&LF;</xsl:text>
     </xsl:template>
 
     <xsl:template name="addSpaces">
