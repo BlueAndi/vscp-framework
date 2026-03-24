@@ -5,6 +5,7 @@
 [![Release](https://img.shields.io/github/release/BlueAndi/vscp-framework.svg)](https://github.com/BlueAndi/vscp-framework/releases)
 [![Coverity Scan Build Status](https://img.shields.io/coverity/scan/4825.svg)](https://scan.coverity.com/projects/4825?tab=overview)
 [![Build Status](https://github.com/BlueAndi/vscp-framework/workflows/CI/badge.svg?branch=master)](https://github.com/BlueAndi/vscp-framework/actions?query=workflow%3ACI)
+[![Hypercommit](https://img.shields.io/badge/Hypercommit-DB2475)](https://hypercommit.com/vscp-framework)
 
 The VSCP software framework for level 1 devices provides several layers according to the [VSCP specification](https://docs.vscp.org/spec/latest).
 
